@@ -367,33 +367,33 @@ class CalendarDate {
 			$format=trim($format, ',. ;/-');
 		}
 		// Build up the formated date, character at a time
-		$str='';
-		foreach (str_split($format) as $code)
-			switch ($code) {
-			case 'd': $str.=$this->FormatDayZeros(); break;
-			case 'j': $str.=$this->FormatDay(); break;
-			case 'l': $str.=$this->FormatLongWeekday(); break;
-			case 'D': $str.=$this->FormatShortWeekday(); break;
-			case 'N': $str.=$this->FormatISOWeekday(); break;
-			case 'S': $str.=$this->FormatOrdinalSuffix(); break;
-			case 'w': $str.=$this->FormatNumericWeekday(); break;
-			case 'z': $str.=$this->FormatDayOfYear(); break;
-			case 'F': $str.=$this->FormatLongMonth(); break;
-			case 'm': $str.=$this->FormatMonthZeros(); break;
-			case 'M': $str.=$this->FormatShortMonth(); break;
-			case 'n': $str.=$this->FormatMonth(); break;
-			case 't': $str.=$this->DaysInMonth(); break;
-			case 'L': $str.=(int)$this->IsLeapYear(); break;
-			case 'Y': $str.=$this->FormatLongYear(); break;
-			case 'y': $str.=$this->FormatShortYear(); break;
-			// The 4 extensions might be useful for re-formatting gedcom dates.
-			case '@': $str.=$this->CALENDAR_ESCAPE(); break;
-			case 'A': $str.=$this->FormatGedcomDay(); break;
-			case 'O': $str.=$this->FormatGedcomMonth(); break;
-			case 'E': $str.=$this->FormatGedcomYear(); break;
-			default:  $str.=$code; break;
+		preg_match_all('/%[^%]/', $format, $matches);
+		foreach ($matches[0] as $match) {
+			switch ($match) {
+			case '%d': $format=str_replace($match, $this->FormatDayZeros(),       $format); break;
+			case '%j': $format=str_replace($match, $this->FormatDay(),            $format); break;
+			case '%l': $format=str_replace($match, $this->FormatLongWeekday(),    $format); break;
+			case '%D': $format=str_replace($match, $this->FormatShortWeekday(),   $format); break;
+			case '%N': $format=str_replace($match, $this->FormatISOWeekday(),     $format); break;
+			case '%S': $format=str_replace($match, $this->FormatOrdinalSuffix(),  $format); break;
+			case '%w': $format=str_replace($match, $this->FormatNumericWeekday(), $format); break;
+			case '%z': $format=str_replace($match, $this->FormatDayOfYear(),      $format); break;
+			case '%F': $format=str_replace($match, $this->FormatLongMonth(),      $format); break;
+			case '%m': $format=str_replace($match, $this->FormatMonthZeros(),     $format); break;
+			case '%M': $format=str_replace($match, $this->FormatShortMonth(),     $format); break;
+			case '%n': $format=str_replace($match, $this->FormatMonth(),          $format); break;
+			case '%t': $format=str_replace($match, $this->DaysInMonth(),          $format); break;
+			case '%L': $format=str_replace($match, (int)$this->IsLeapYear(),      $format); break;
+			case '%Y': $format=str_replace($match, $this->FormatLongYear(),       $format); break;
+			case '%y': $format=str_replace($match, $this->FormatShortYear(),      $format); break;
+			// These 4 extensions are useful for re-formatting gedcom dates.
+			case '%@': $format=str_replace($match, $this->CALENDAR_ESCAPE(),      $format); break;
+			case '%A': $format=str_replace($match, $this->FormatGedcomDay(),      $format); break;
+			case '%O': $format=str_replace($match, $this->FormatGedcomMonth(),    $format); break;
+			case '%E': $format=str_replace($match, $this->FormatGedcomYear(),     $format); break;
 			}
-		return $str;
+		}
+		return $format;
 	}
 
 	// Functions to extract bits of the date in various formats.  Individual calendars
@@ -1299,15 +1299,11 @@ class GedcomDate {
 	function Display($url=false, $date_fmt=null, $cal_fmts=null) {
 		global $lang_short_cut, $LANGUAGE, $TEXT_DIRECTION, $DATE_FORMAT, $CALENDAR_FORMAT;
 
-		// EXPERIMENTAL CODE for [ 1050249 ] Privacy: year instead of complete date in public views
-		// TODO If feedback is positive, create a GUI option to edit it.
-		global $PUBLIC_DATE_FORMAT;
-		if (!empty($PUBLIC_DATE_FORMAT) && is_null($date_fmt) && !PGV_USER_ID)
-			$date_fmt=$PUBLIC_DATE_FORMAT;
-
 		// Convert dates to given calendars and given formats
-		if (!$date_fmt)
-			$date_fmt=$DATE_FORMAT;
+		if (!$date_fmt) {
+			// I18N: This is the format string for full dates, such as 14 October 1908.  See http://php.net/date for codes
+			$date_fmt=i18n::noop('%j %F %Y');
+		}
 		if (is_null($cal_fmts))
 			$cal_fmts=explode('_and_', $CALENDAR_FORMAT);
 
@@ -1325,7 +1321,6 @@ class GedcomDate {
 		else
 			$d2=$this->date2->Format($date_fmt);
 		$q3='';
-		// Localise the date
 		$func($q1, $d1, $q2, $d2, $q3);
 		// Convert to other calendars, if requested
 		$conv1='';
@@ -1382,8 +1377,23 @@ class GedcomDate {
 				$d2='<a href="'.$this->date2->CalendarURL($date_fmt).'">'.$d2.'</a>';
 		}
 
+		// Localise the date
+		// TODO, use separate translations for nominative, genitive, etc.
+		switch ($q1.$q2) {
+		case '':       $tmp=$d1.$conv1; break;
+		case 'abt':    /* I18N: Gedcom ABT dates     */ $tmp=i18n::translate('about %s',            $d1.$conv1); break;
+		case 'cal':    /* I18N: Gedcom CAL dates     */ $tmp=i18n::translate('calculated %s',       $d1.$conv1); break;
+		case 'est':    /* I18N: Gedcom EST dates     */ $tmp=i18n::translate('estimated %s',        $d1.$conv1); break;
+		case 'int':    /* I18N: Gedcom INT dates     */ $tmp=i18n::translate('interpreted %s (%s)', $d1.$conv1, $this->text); break;
+		case 'bef':    /* I18N: Gedcom BEF dates     */ $tmp=i18n::translate('before %s',           $d1.$conv1); break;
+		case 'aft':    /* I18N: Gedcom AFT dates     */ $tmp=i18n::translate('after %s',            $d1.$conv1); break;
+		case 'from':   /* I18N: Gedcom FROM dates    */ $tmp=i18n::translate('from %s',             $d1.$conv1); break;
+		case 'to':     /* I18N: Gedcom TO dates      */ $tmp=i18n::translate('to %s',               $d1.$conv1); break;
+		case 'betand': /* I18N: Gedcom BET-AND dates */ $tmp=i18n::translate('between %s and %s',   $d1.$conv1, $d2.$conv2); break;
+		case 'fromto': /* I18N: Gedcom FROM-TO dates */ $tmp=i18n::translate('from %s to %s',       $d1.$conv1, $d2.$conv2); break;
+		}
+
 		// Return at least one printable character, for better formatting in tables.
-		$tmp=trim("{$q1} {$d1}{$conv1} {$q2} {$d2}{$conv2} {$q3} {$this->text}");
 		if (strip_tags($tmp)=='')
 			return '&nbsp;';
 		else
@@ -1525,13 +1535,5 @@ class GedcomDate {
 
 // Localise a date.  This is a default function, and may be overridden in extras.xx.php
 function DefaultDateLocalisation(&$q1, &$d1, &$q2, &$d2, &$q3) {
-	global $pgv_lang;
-
-	if ($q1) {
-		$q1=$pgv_lang[$q1];
-	}
-	if ($q2) {
-		$q2=$pgv_lang[$q2];
-	}
 }
 ?>

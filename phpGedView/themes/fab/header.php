@@ -118,10 +118,8 @@ if ($view!='simple') {
 				echo ' | <li><a href="javascript:;" onclick="window.open(\'edit_changes.php\',\'_blank\',\'width=600,height=500,resizable=1,scrollbars=1\'); return false;" style="color:red;">', i18n::translate('Pending Changes'), '</a></li>';
 			}
 			echo ' | ', MenuBar::getFavouritesMenu()->getMenuAsList();
-			global $ENABLE_MULTI_LANGUAGE, $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES;
-			if ($ENABLE_MULTI_LANGUAGE) {
-				echo ' | ', MenuBar::getLanguageMenu()->getMenuAsList();
-			}
+			echo ' | ', MenuBar::getLanguageMenu()->getMenuAsList();
+			global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES;
 			if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {
 				echo ' | ', MenuBar::getThemeMenu()->getMenuAsList();
 			}

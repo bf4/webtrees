@@ -36,7 +36,6 @@ define('PGV_FUNCTIONS_EL_PHP', '');
 // Localise a date.
 ////////////////////////////////////////////////////////////////////////////////
 function date_localisation_el(&$q1, &$d1, &$q2, &$d2, &$q3) {
-	global $pgv_lang;
 	static $NOMINATIVE_MONTHS=null;
 	static $GENITIVE_MONTHS=null;
 
@@ -50,11 +49,6 @@ function date_localisation_el(&$q1, &$d1, &$q2, &$d2, &$q3) {
 		$d1=preg_replace("/(\d+ ){$NOMINATIVE_MONTHS[$i]}/", "$1{$GENITIVE_MONTHS[$i]}", $d1);
 		$d2=preg_replace("/(\d+ ){$NOMINATIVE_MONTHS[$i]}/", "$1{$GENITIVE_MONTHS[$i]}", $d2);
 	}
-
-	// The qualifiers are simple translations
-	if (isset($pgv_lang[$q1]))
-		$q1=$pgv_lang[$q1];
-	if (isset($pgv_lang[$q2]))
-		$q2=$pgv_lang[$q2];
 }
+
 ?>

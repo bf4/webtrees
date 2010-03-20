@@ -60,8 +60,6 @@ if($SESSION_HIDE_GOOGLEMAP == "empty") {
 		$SESSION_HIDE_GOOGLEMAP = "false";
 }
 
-loadLangFile("googlemap:lang");
-
 class googlemap_Tab extends Tab {
 
 	public function getPreLoadContent() {

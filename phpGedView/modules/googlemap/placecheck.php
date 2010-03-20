@@ -37,8 +37,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 require PGV_ROOT.'/modules/googlemap/googlemap.php'; // gives access to googlemap functions
 
-loadLangFile("googlemap:lang, googlemap:help_text");
-
 $action   =safe_POST     ('action'                                              );
 $gedcom_id=safe_POST     ('gedcom_id', array_keys(get_all_gedcoms()), PGV_GED_ID);
 $openinnew=safe_POST_bool('openinnew'                                           );

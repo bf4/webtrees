@@ -58,8 +58,6 @@ if (PGV_DB::isConnected() && PGV_ADMIN_USER_EXISTS && !PGV_USER_IS_ADMIN) {
 	exit;
 }
 
-loadLangFile('pgv_admin, pgv_confighelp, pgv_help');
-
 ob_start();  // in order for the download function to work, we have to buffer and discard the regular output
 
 // Build the HTML that needs to precede the </head> tag
@@ -487,8 +485,6 @@ print "</body></html>";
  * @return boolean
  */
 function checkEnvironment() {
-	global $pgv_lang;
-
 	$success = true;
 	echo "<h4>".i18n::translate('Checking for errors...')."</h4>";
 	echo "<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
@@ -622,7 +618,6 @@ function checkEnvironment() {
 
 function printDBForm() {
 	global $DBHOST, $DBNAME, $DBPASS, $DBPORT, $DBTYPE, $DBUSER, $DB_UTF8_COLLATION, $TBLPREFIX;
-	global $pgv_lang;
 	$i=1;
 	if (isset($_SESSION['install_config']['DBHOST'])) $DBHOST = $_SESSION['install_config']['DBHOST'];
 	if (isset($_SESSION['install_config']['DBNAME'])) $DBNAME =$_SESSION['install_config']['DBNAME'];
@@ -701,7 +696,6 @@ function printConfigForm(){
 	global $PGV_SMTP_ACTIVE, $PGV_SMTP_HOST, $PGV_SMTP_HELO, $PGV_SMTP_PORT, $PGV_SMTP_AUTH, $PGV_SMTP_AUTH_USER, $PGV_SMTP_AUTH_PASS, $PGV_SMTP_SSL, $PGV_SMTP_FROM_NAME;
 	global $LOGIN_URL, $PGV_SESSION_SAVE_PATH, $PGV_SESSION_TIME, $COMMIT_COMMAND, $PGV_MEMORY_LIMIT, $MAX_VIEWS;
 	global $MAX_VIEW_TIME, $INDEX_DIRECTORY;
-	global $pgv_lang;
 
 	$i=1;
 	if (isset($_SESSION['install_config']['INDEX_DIRECTORY'])) $INDEX_DIRECTORY = $_SESSION['install_config']['INDEX_DIRECTORY'];
@@ -952,7 +946,7 @@ function printConfigForm(){
 }
 
 function printLanguageForm() {
-	global $pgv_lang, $pgv_language, $pgv_lang_use, $pgv_lang_self;
+	global $pgv_language, $pgv_lang_use, $pgv_lang_self;
 
 	//-- override old values with session values
 	if (isset($_SESSION['install_config']['NEW_LANGS'])) {
@@ -1037,7 +1031,6 @@ function printLanguageForm() {
 }
 
 function printAdminUserForm() {
-	global $pgv_lang;
 	if (!adminUserExists()) {
 	?>
 			<script language="JavaScript" type="text/javascript">

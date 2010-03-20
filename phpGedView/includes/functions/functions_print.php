@@ -110,7 +110,6 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				$personlinks .= "<a href=\"".encode_url("pedigree.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&PEDIGREE_GENERATIONS={$OLD_PGENS}&talloffset={$talloffset}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1><b>".i18n::translate('Pedigree Tree')."</b></a>";
 
 				if (file_exists(PGV_ROOT.'modules/googlemap/pedigree_map.php')) {
-					loadLangFile('googlemap:lang');
 					if ($TEXT_DIRECTION=="ltr") $title = i18n::translate('Pedigree Map').": ".$pid;
 					else $title = $pid." :".i18n::translate('Pedigree Map');
 					$personlinks .= "<br /><a href=\"".encode_url("module.php?mod=googlemap&pgvaction=pedigree_map&rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".i18n::translate('Pedigree Map')."</b></a>";
@@ -436,7 +435,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	global $BROWSERTYPE, $SEARCH_SPIDER;
 	global $view, $cart;
 	global $CHARACTER_SET, $PGV_IMAGE_DIR, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD, $INDEX_DIRECTORY;
-	global $QUERY_STRING, $action, $query, $changelanguage, $theme_name;
+	global $QUERY_STRING, $action, $query, $theme_name;
 	global $FAVICON, $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile;
 	global $PGV_IMAGES, $TEXT_DIRECTION, $ONLOADFUNCTION, $REQUIRE_AUTHENTICATION, $SHOW_SOURCES, $ENABLE_RSS, $RSS_FORMAT;
 	global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE;
@@ -481,10 +480,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		}
 	}
 	$javascript = '';
-	if (isset($changelanguage))
-		$query_string=normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE=");
-	else
-		$query_string = $QUERY_STRING;
+	$query_string = $QUERY_STRING;
 	if ($view!='preview' && $view!='simple') {
 		$old_META_AUTHOR = $META_AUTHOR;
 		$old_META_PUBLISHER = $META_PUBLISHER;
@@ -728,26 +724,20 @@ function execution_stats() {
 
 //-- print a form to change the language
 function print_lang_form($option=0) {
-	global $ENABLE_MULTI_LANGUAGE;
-
-	if ($ENABLE_MULTI_LANGUAGE) {
-		//-- don't show the form if there is only one language enabled
-		$language_menu=MenuBar::getLanguageMenu();
-		if (count($language_menu->submenus)<2) {
-			return;
-		}
-
-		echo '<div class="lang_form">';
-		switch($option) {
-		case 1:
-			echo $language_menu->getMenu();
-			break;
-		default:
-			echo $language_menu->getMenuAsDropdown();
-			break;
-		}
-		echo '</div>';
+	$language_menu=MenuBar::getLanguageMenu();
+	if (count($language_menu->submenus)<2) {
+		return;
 	}
+	echo '<div class="lang_form">';
+	switch($option) {
+	case 1:
+		echo $language_menu->getMenu();
+		break;
+	default:
+		echo $language_menu->getMenuAsDropdown();
+		break;
+	}
+	echo '</div>';
 }
 /**
 * print user links

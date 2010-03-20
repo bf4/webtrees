@@ -39,7 +39,6 @@ global $lang_short_cut, $LANGUAGE, $reorder, $GEDCOM, $LB_AL_HEAD_LINKS;
 
 $reorder=safe_get('reorder', '1', '0');
 
-loadLangFile("lightbox:lang");
 /*
 if (!file_exists("modules/googlemap/defaultconfig.php")) {
 	$tabno = "7";

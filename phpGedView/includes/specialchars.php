@@ -52,8 +52,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_SPECIALCHARS_PHP', '');
 
-loadLangFile("pgv_confighelp");
-
 $specialchar_languages = array(
 	"af" => "Afrikaans",
 	"cs" => i18n::translate('Czech'), // Czech

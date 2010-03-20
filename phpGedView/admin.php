@@ -42,10 +42,6 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 	}
 }
 
-require_once('includes/classes/class_module.php');
-
-loadLangFile("pgv_confighelp");
-
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 if (isset($_REQUEST['logfilename'])) $logfilename = $_REQUEST['logfilename'];
 

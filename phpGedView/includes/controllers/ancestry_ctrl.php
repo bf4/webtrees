@@ -37,8 +37,6 @@ define('PGV_ANCESTRY_CTRL_PHP', '');
 require_once PGV_ROOT.'includes/functions/functions_charts.php';
 require_once PGV_ROOT.'includes/controllers/basecontrol.php';
 
-loadLangFile("pgv_confighelp");
-
 // -- array of GEDCOM elements that will be found but should not be displayed
 $nonfacts[] = "FAMS";
 $nonfacts[] = "FAMC";

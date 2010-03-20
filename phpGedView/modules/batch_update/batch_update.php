@@ -38,7 +38,6 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 	exit;
 }
 
-loadLangFile('batch_update:lang');
 require PGV_ROOT.'includes/functions/functions_edit.php';
 
 class batch_update {

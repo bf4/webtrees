@@ -40,12 +40,8 @@ if (get_user_setting(PGV_USER_ID, 'editaccount')!='Y') {
 	exit;
 }
 
-// Load language variables
-loadLangFile('pgv_confighelp, pgv_admin, pgv_editor');
-
 // Valid values for form variables
 $ALL_ACTIONS=array('update');
-$ALL_CONTACT_METHODS=array('messaging', 'messaging2', 'messaging3', 'mailto', 'none');
 $ALL_DEFAULT_TABS=array(0=>'personal_facts', 1=>'notes', 2=>'ssourcess', 3=>'media', 4=>'relatives', -1=>'all', -2=>'lasttab');
 $ALL_THEMES_DIRS=array();
 foreach (get_theme_names() as $themename=>$themedir) {
@@ -59,12 +55,12 @@ $form_firstname     =safe_POST('form_firstname');
 $form_lastname      =safe_POST('form_lastname' );
 $form_pass1         =safe_POST('form_pass1',          PGV_REGEX_PASSWORD);
 $form_pass2         =safe_POST('form_pass2',          PGV_REGEX_PASSWORD);
-$form_email         =safe_POST('form_email',          PGV_REGEX_EMAIL,               'email@example.com');
-$form_rootid        =safe_POST('form_rootid',         PGV_REGEX_XREF,                PGV_USER_ROOT_ID   );
-$form_theme         =safe_POST('form_theme',          $ALL_THEME_DIRS,               $THEME_DIR         );
-$form_language      =safe_POST('form_language',       array_keys($pgv_language),     $LANGUAGE          );
-$form_contact_method=safe_POST('form_contact_method', $ALL_CONTACT_METHODS,          $CONTACT_METHOD    );
-$form_default_tab   =safe_POST('form_default_tab',    array_keys($ALL_DEFAULT_TABS), $GEDCOM_DEFAULT_TAB);
+$form_email         =safe_POST('form_email',          PGV_REGEX_EMAIL,                         'email@example.com');
+$form_rootid        =safe_POST('form_rootid',         PGV_REGEX_XREF,                          PGV_USER_ROOT_ID   );
+$form_theme         =safe_POST('form_theme',          $ALL_THEME_DIRS,                         $THEME_DIR         );
+$form_language      =safe_POST('form_language',       array_keys(i18n::installed_languages()), $LANGUAGE          );
+$form_contact_method=safe_POST('form_contact_method');
+$form_default_tab   =safe_POST('form_default_tab',    array_keys($ALL_DEFAULT_TABS),           $GEDCOM_DEFAULT_TAB);
 $form_visible_online=safe_POST('form_visible_online', 'Y', 'N');
 
 // Respond to form action
@@ -219,21 +215,11 @@ echo '<tr><td class="descriptionbox wrap">';
 echo i18n::translate('Confirm Password'), help_link('edituser_conf_password'), '</td><td class="optionbox">';
 echo '<input type="password" name="form_pass2" tabindex="', ++$tab, '" /></td></tr>';
 
-if ($ENABLE_MULTI_LANGUAGE) {
-	echo '<tr><td class="descriptionbox wrap">';
-	echo i18n::translate('Change Language'), help_link('edituser_change_lang'), '</td><td class="optionbox" valign="top">';
-	echo '<select name="form_language" tabindex="', ++$tab, '">';
-	foreach ($pgv_language as $key=> $value) {
-		if ($language_settings[$key]["pgv_lang_use"]) {
-			echo '<option value="', $key, '"';
-			if ($key==get_user_setting(PGV_USER_ID, 'language')) {
-				echo ' selected="selected"';
-			}
-			echo '>', $pgv_lang[$key], '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-}
+echo '<tr><td class="descriptionbox wrap">';
+echo i18n::translate('Change Language'), help_link('edituser_change_lang');
+echo '</td><td class="optionbox" valign="top">';
+echo edit_field_language('form_language', get_user_setting(PGV_USER_ID, 'language'), 'tabindex="'.(++$tab).'"');
+echo '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
 echo i18n::translate('Email Address'), help_link('edituser_email'), '</td><td class="optionbox" valign="top">';
@@ -255,18 +241,10 @@ if ($ALLOW_USER_THEMES) {
 }
 
 echo '<tr><td class="descriptionbox wrap">';
-echo i18n::translate('Preferred Contact Method'), help_link('edituser_user_contact'), '</td><td class="optionbox">';
-echo '<select name="form_contact_method" tabindex="', ++$tab, '">';
-foreach ($ALL_CONTACT_METHODS as $key=>$value) {
-	if ($PGV_STORE_MESSAGES || $key>=2) {
-		echo '<option value="', $value, '"';
-		if ($value==get_user_setting(PGV_USER_ID, 'contactmethod')) {
-			echo ' selected="selected"';
-		}
-		echo '>', $pgv_lang[$value], '</option>';
-	}
-}
-echo '</select></td></tr>';
+echo i18n::translate('Preferred Contact Method'), help_link('edituser_user_contact');
+echo '</td><td class="optionbox">';
+echo edit_field_contact('form_contact_method', get_user_setting(PGV_USER_ID, 'contactmethod'), 'tabindex="'.(++$tab).'"');
+echo '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
 echo i18n::translate('Visible to other users when online'), help_link('useradmin_visibleonline'), '</td><td class="optionbox">';
@@ -284,7 +262,7 @@ foreach ($ALL_DEFAULT_TABS as $key=>$value) {
 	if ($key==get_user_setting(PGV_USER_ID, 'defaulttab')) {
 		echo ' selected="selected"';
 	}
-	echo '>', $pgv_lang[$value], '</option>';
+	echo '>', $value, '</option>';
 }
 echo '</select></td></tr>';
 

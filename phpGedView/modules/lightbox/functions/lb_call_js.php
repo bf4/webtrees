@@ -36,8 +36,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 global $tabno, $LB_MUSIC_FILE, $LB_SS_SPEED, $LB_TRANSITION, $TEXT_DIRECTION;
 
-loadLangFile("lightbox:lang");
-
 // Get Javascript variables from lb_config.php ---------------------------
 //			require_once PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
 //			if ($theme_name=="Minimal") {

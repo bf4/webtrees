@@ -34,9 +34,6 @@ $controller = new IndividualController();
 $controller->init(); 
 echo "<link href =\"modules/GEDFact_assistant/css/gf_styles.css\" 	rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />";
 
-// loadLangFile("lb_lang, gm_lang");	// Load Lightbox & GoogleMap language files
-// loadLangFile("lightbox:lang");
-
 global $USE_THUMBS_MAIN, $mediacnt, $tabno;
 global $linkToID;
 global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;

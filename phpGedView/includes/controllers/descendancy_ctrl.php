@@ -37,8 +37,6 @@ define('PGV_DESCENDANCY_PHP', '');
 require_once PGV_ROOT.'includes/controllers/basecontrol.php';
 require_once PGV_ROOT.'includes/functions/functions_charts.php';
 
-loadLangFile("pgv_confighelp");
-
 require_once PGV_ROOT.'includes/classes/class_person.php';
 
 // -- array of GEDCOM elements that will be found but should not be displayed

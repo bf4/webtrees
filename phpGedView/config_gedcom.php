@@ -42,8 +42,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 global $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
 
-//-- assign the default language.  User can override this setting if $ENABLE_MULTI_LANGUAGE = true
-$LANGUAGE = "english";
+$LANGUAGE = "en";
 
 $CALENDAR_FORMAT = "gregorian";			//-- Translate dates to the specified Calendar
 										//-- options are gregorian, julian, french, jewish, jewish_and_gregorian,
@@ -57,8 +56,6 @@ $CHARACTER_SET = "UTF-8";				//-- This is the character set of your gedcom file.
 										//-- WINDOWS here.
 										//-- NOTE: PHP does NOT support UNICODE so don't try it :-)
 
-$ENABLE_MULTI_LANGUAGE = true;			//-- set to true to give users the option of selecting a different language from
-										//-- a dropdown list in the footer and default to the language they have set in their browser settings
 $DEFAULT_PEDIGREE_GENERATIONS = "4";	// -- set the default number of generations to display on the pedigree charts
 $MAX_PEDIGREE_GENERATIONS = "10";		// -- set the max number of generations to display on the pedigree charts
 $MAX_DESCENDANCY_GENERATIONS = "15";	// -- set the max number of generations to display on the descendancy charts

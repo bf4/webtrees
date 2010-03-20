@@ -33,8 +33,6 @@
 define('PGV_SCRIPT_NAME', 'editgedcoms.php');
 require './config.php';
 
-loadLangFile("pgv_confighelp");
-
 $all_gedcoms=get_all_gedcoms();
 asort($all_gedcoms);
 $action     =safe_GET('action', array('delete', 'setdefault'));

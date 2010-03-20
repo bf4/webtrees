@@ -65,12 +65,7 @@ if ($action=='login') {
 			$_SESSION['usertime']=time();
 		}
 		$_SESSION['timediff']=time()-$_SESSION['usertime'];
-		$MyLanguage = get_user_setting($user_id, 'language');
-		if ($MyLanguage) {
-			if (isset($_SESSION['CLANGUAGE'])) {
-				$_SESSION['CLANGUAGE'] = $MyLanguage;
-			}
-		}
+		$_SESSION['locale']=get_user_setting($user_id, 'language');
 
 		// If we have no access rights to the current gedcom, switch to one where we do
 		if (!userIsAdmin($user_id)) {

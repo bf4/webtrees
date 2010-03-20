@@ -3481,103 +3481,6 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
 }
 
 /**
- *	Load language files
- *	Load the contents of a specified language file
- *
- *	The input parameter lists the types of language files that should be loaded.
- *
- *	This routine will always load the English version of the specified language
- *	files first, followed by the same set of files in the currently active language.
- *	After that, the "extra.xx.php" files will always be loaded, but not trying for
- *	English first.
- *
- *	To load the "help_text.xx.php" file set, you'd call this function thus:
- *		loadLangFile("pgv_help");
- *	To load the "configure_help.xx.php" and the "faqlist.xx.php" file set, the function
- *	would be called thus:
- *		loadLangFile("pgv_confighelp, pgv_faqlib");
- *	To load all files, call the function this way:
- *		loadLangFile("all");
- *	To load the file XXX for module YYY, call
- *		loadLangFile("YYY:XXX");
- */
-function loadLangFile($fileListNames="", $lang="") {
-	global $pgv_language, $confighelpfile, $helptextfile, $adminfile, $editorfile, $countryfile, $faqlistfile, $extrafile;
-	global $LANGUAGE, $lang_short_cut, $lng_codes, $lng_synonyms;
-	global $pgv_lang, $faqlist;
-	if (empty($lang)) $lang=$LANGUAGE;
-	$allLists = "pgv_lang, pgv_confighelp, pgv_help, pgv_admin, pgv_editor, pgv_faqlib";
-
-	// Empty list or "all" means "load complete file set"
-	if (empty($fileListNames) || $fileListNames=="all")
-		$fileListNames = $allLists;
-
-	// Split input into a list of file types
-	$fileListNames = str_replace(array(";", " "), array(",", ""), $fileListNames);
-	$list = explode(",", $fileListNames);
-
-	// Work on each input file type
-	foreach ($list as $fileListName) {
-		switch ($fileListName) {
-		case "pgv_lang":
-			$fileName1 = $pgv_language["english"];
-			$fileName2 = $pgv_language[$lang];
-			break;
-		case "pgv_confighelp":
-			$fileName1 = $confighelpfile["english"];
-			$fileName2 = $confighelpfile[$lang];
-			break;
-		case "pgv_help":
-			$fileName1 = $helptextfile["english"];
-			$fileName2 = $helptextfile[$lang];
-			break;
-		case "pgv_admin":
-			$fileName1 = $adminfile["english"];
-			$fileName2 = $adminfile[$lang];
-			break;
-		case "pgv_editor":
-			$fileName1 = $editorfile["english"];
-			$fileName2 = $editorfile[$lang];
-			break;
-		case "pgv_faqlib":
-			$fileName1 = $faqlistfile["english"];
-			$fileName2 = $faqlistfile[$lang];
-			break;
-		default:
-			if (preg_match('/(.+):(.+)/', $fileListName, $match)) {
-				$fileName1 = 'modules/'.$match[1].'/languages/'.$match[2].'.'.$lang_short_cut['english'].'.php';
-				$fileName2 = 'modules/'.$match[1].'/languages/'.$match[2].'.'.$lang_short_cut[$lang].'.php';
-				break;
-			} else {
-				continue 2;
-			}
-		}
-		if (file_exists($fileName1)) {
-			require $fileName1;
-		}
-		if ($lang!='english' && file_exists($fileName2)) {
-			require $fileName2;
-		}
-	}
-
-	// Now that the variables have been loaded in the desired language, load the optional
-	// "extra.xx.php" file so that they can be over-ridden as desired by the site Admin
-	// For compatibility reasons, we'll first look for optional file "lang.xx.extra.php"
-	//
-	// In contrast to the preceding logic, we will NOT first load the English extra.xx.php
-	// file when trying for other languages.
-	//
-	if (file_exists(PGV_ROOT.'languages/lang.'.$lang_short_cut[$lang].'.extra.php')) {
-		require PGV_ROOT.'languages/lang.'.$lang_short_cut[$lang].'.extra.php';
-	}
-	if (file_exists($extrafile[$lang])) {
-		require $extrafile[$lang];
-	}
-
-}
-
-
-/**
  *	Load language variables
  *	Set language-dependent global variables
  *
@@ -3591,7 +3494,7 @@ function loadLangFile($fileListNames="", $lang="") {
  */
 function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $LANGUAGE, $lang_short_cut;
-	global $pgv_lang, $faqlist;
+	global $faqlist;
 	global $pgv_language, $adminfile, $editorfile, $extrafile, $pgv_lang_self;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array;
 	global $DATE_FORMAT, $DATE_FORMAT_array, $CONFIGURED;
@@ -3621,46 +3524,11 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	if (!isset($pgv_language[$desiredLanguage])) $desiredLanguage = "english";
 
 	// Make sure we start with a clean slate
-	$pgv_lang = $pgv_lang_self;
 	$faqlist = array();
-
-	if ($forceLoad) {
-		$LANGUAGE = "english";
-		require $pgv_language[$LANGUAGE];			// Load English
-
-		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
-		$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
-		$TIME_FORMAT	= $TIME_FORMAT_array[$LANGUAGE];
-		$WEEK_START		= $WEEK_START_array[$LANGUAGE];
-		$NAME_REVERSE	= $NAME_REVERSE_array[$LANGUAGE];
-
-		// Load functions that are specific to the active language
-		$file = PGV_ROOT.'includes/extras/functions.'.$lang_short_cut[$LANGUAGE].'.php';
-		if (file_exists($file)) {
-			require_once $file;
-		}
-		// load admin lang keys
-		$file = $adminfile[$LANGUAGE];
-		if (file_exists($file)) {
-			if (!$CONFIGURED || !PGV_DB::isConnected() || !PGV_ADMIN_USER_EXISTS || PGV_USER_GEDCOM_ADMIN) {
-				require $file;
-			}
-		}
-		// load the edit lang keys
-		$file = $editorfile[$LANGUAGE];
-		if (file_exists($file)) {
-			if (!PGV_DB::isConnected() || !PGV_ADMIN_USER_EXISTS || PGV_USER_GEDCOM_ADMIN || PGV_USER_CAN_EDIT) {
-				require $file;
-			}
-		}
-	}
 
 	if ($desiredLanguage!=$LANGUAGE) {
 		$LANGUAGE = $desiredLanguage;
 		$file = $pgv_language[$LANGUAGE];
-		if (file_exists($file)) {
-			require $file;  // Load the requested language
-		}
 
 		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
 		$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
@@ -3674,30 +3542,6 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 			require_once $file;
 		}
 
-		// load admin lang keys
-		$file = $adminfile[$LANGUAGE];
-		if (file_exists($file)) {
-			if (!$CONFIGURED || !PGV_DB::isConnected() || !PGV_ADMIN_USER_EXISTS || PGV_USER_GEDCOM_ADMIN) {
-				require $file;
-			}
-		}
-		// load the edit lang keys
-		$file = $editorfile[$LANGUAGE];
-		if (file_exists($file)) {
-			if (!PGV_DB::isConnected() || !PGV_ADMIN_USER_EXISTS || PGV_USER_CAN_EDIT) {
-				require $file;
-			}
-		}
-	}
-
-	// load the extra language file
-	$file = PGV_ROOT.'languages/lang.'.$lang_short_cut[$LANGUAGE].'.extra.php';
-	if (file_exists($file)) {
-		require $file;
-	}
-	$file = $extrafile[$LANGUAGE];
-	if (file_exists($file)) {
-		require $file;
 	}
 
 	// Special formatting options; R selects conversion to a language-dependent calendar.

@@ -32,8 +32,6 @@
 define('PGV_SCRIPT_NAME', 'editlang_edit_settings.php');
 require './config.php';
 
-loadLangFile("pgv_confighelp");
-
 $action              =safe_REQUEST($_REQUEST, 'action',                PGV_REGEX_UNSAFE);
 $ln                  =safe_REQUEST($_REQUEST, 'ln',                    PGV_REGEX_UNSAFE);
 $new_shortcut        =safe_REQUEST($_REQUEST, 'new_shortcut',          PGV_REGEX_UNSAFE);

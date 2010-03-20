@@ -263,20 +263,6 @@ if (file_exists($INDEX_DIRECTORY.'lang_settings.php')) {
 	$Languages_Default = false;
 }
 
-//-- build array of active languages (required for config override check)
-$pgv_lang_use = array();
-foreach ($language_settings as $key => $value) {
-	$pgv_lang_use[$key] = $value['pgv_lang_use'];
-}
-// Don't let incoming request change to an unsupported or inactive language
-if (isset($_REQUEST['NEWLANGUAGE'])) {
-	if (empty($pgv_lang_use[$_REQUEST['NEWLANGUAGE']])) {
-		unset($_REQUEST['NEWLANGUAGE']);
-	} elseif (!$pgv_lang_use[$_REQUEST['NEWLANGUAGE']]) {
-		unset($_REQUEST['NEWLANGUAGE']);
-	}
-}
-
 /**
  * Cleanup some variables
  */
@@ -440,36 +426,11 @@ if (empty($PEDIGREE_GENERATIONS)) {
 	$PEDIGREE_GENERATIONS=$DEFAULT_PEDIGREE_GENERATIONS;
 }
 
-// Language selection
-if (isset($_GET['lang'])) {
-	try {
-		// Request to change language?
-		$locale=Zend_Locale::findLocale($_GET['lang']);
-	} catch (Zend_Locale_Exception $ex) {
-		// Invalid locale? Revert to default.
-		$locale=Zend_Locale::findLocale('auto');
-	}
-	// Remember this choice.
-	$_SESSION['Zend_Locale']=$locale;
-} elseif (isset($_SESSION['Zend_Locale'])) {
-	// Previously selected language
-	$locale=Zend_Locale::findLocale($_SESSION['Zend_Locale']);
-} else {
-	// Default language
-	$locale=Zend_Locale::findLocale('auto');
-	$_SESSION['Zend_Locale']=$locale;
-}
-// Load language
-$translate=new Zend_Translate('gettext', PGV_ROOT.'language/', $locale, array('scan'=>Zend_Translate::LOCALE_FILENAME, 'disableNotices'=>true));
-// Make the locale and translation adapter available to the rest of the Zend Framework
-Zend_Registry::set('Zend_Locale',    $locale);
-Zend_Registry::set('Zend_Translate', $translate);
-unset($locale, $translate);
-
+// With no parameters, init() looks to the environment to choose a language
 require PGV_ROOT.'includes/classes/class_i18n.php';
-i18n::init();
+define('WT_LOCALE', i18n::init());
 
-// Application configuration data - things that aren't (yet) user-editable
+// Application configuration data - things that aren't (yet?) user-editable
 require PGV_ROOT.'includes/config_data.php';
 
 // Tell the database to sort/compare using the language's preferred collatation settings
@@ -481,7 +442,6 @@ try {
 	PGV_DB::exec("SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'");
 }
 
-// Remember our language selection
 
 /* Re-build the various language-related arrays
  *  Note:
@@ -541,61 +501,13 @@ foreach ($language_settings as $key => $value) {
 	$WEEK_START_array[$key]     =$value['WEEK_START'];
 	$TEXT_DIRECTION_array[$key] =$value['TEXT_DIRECTION'];
 	$NAME_REVERSE_array[$key]   =$value['NAME_REVERSE'];
-
-	$pgv_lang["lang_name_$key"] =$value['pgv_lang_self'];
-}
-
-// -- Determine which of PGV's supported languages is topmost in the browser's language list
-if ((empty($LANGUAGE) || $ENABLE_MULTI_LANGUAGE) && empty($_SESSION['CLANGUAGE']) && empty($SEARCH_SPIDER)) {
-	if (isset($HTTP_ACCEPT_LANGUAGE)) {
-		$browserLangPrefs = $HTTP_ACCEPT_LANGUAGE;
-	} elseif (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-		$browserLangPrefs = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-	} else {
-		$browserLangPrefs = 'en';
-	}
-	// Seach list of supported languages for this Browser's preferred page languages
-	$browserLangList = preg_split('/(,\s*)|(;\s*)/', $browserLangPrefs);
-	if (empty($LANGUAGE)) $LANGUAGE = 'english';		// Use English if we can't match any of the browser's preferred languages
-	foreach ($browserLangList as $browserLang) {
-		$browserLang = strtolower(trim($browserLang)).';';
-		foreach ($pgv_lang_use as $language => $active) {
-			if ($CONFIGURED && !$active) continue;	// Don't consider any language marked as "inactive"
-			if (strpos($lang_langcode[$language], $browserLang) === false) continue;
-			$LANGUAGE = $language;	// We have a match
-			break 2;
-		}
-	}
-}
-
-// -- If the user's profile specifies a preference, use that
-$thisUser = getUserId();
-if ($thisUser) $LANGUAGE = get_user_setting($thisUser, 'language');
-
-// -- If the user previously selected a language from the menu, use that
-if (empty($SEARCH_SPIDER)) {
-	if (!empty($_SESSION['CLANGUAGE'])) {
-		$LANGUAGE = $_SESSION['CLANGUAGE'];
-	} else {
-		$_SESSION['CLANGUAGE'] = $LANGUAGE;
-	}
-}
-
-// -- Finally, we'll see whether the user has now selected a preferred language from the menu
-if ($ENABLE_MULTI_LANGUAGE && empty($SEARCH_SPIDER)) {
-	if (isset($_REQUEST['changelanguage']) && strtolower($_REQUEST['changelanguage'])=='yes') {
-		if (!empty($_REQUEST['NEWLANGUAGE']) && isset($pgv_language[strtolower($_REQUEST['NEWLANGUAGE'])])) {
-			$LANGUAGE = strtolower($_REQUEST['NEWLANGUAGE']);
-			$_SESSION['CLANGUAGE'] = $LANGUAGE;
-		}
-	}
 }
 
 //-- load the privacy functions
 require PGV_ROOT.'includes/functions/functions_privacy.php';
 
-// The curren't user's profile - from functions in authentication.php
-define('PGV_USER_ID',           getUserId     ());
+// The current user's profile - from functions in authentication.php
+define('PGV_USER_ID', getUserId());
 if (PGV_DB::isConnected()) {
 	define('PGV_USER_NAME',         getUserName   ());
 	define('PGV_USER_IS_ADMIN',     userIsAdmin   (PGV_USER_ID));
@@ -671,7 +583,6 @@ if (PGV_SCRIPT_NAME!='install.php' && PGV_SCRIPT_NAME!='help_text.php') {
 	}
 	$cart = $_SESSION['cart'];
 
-	$_SESSION['CLANGUAGE'] = $LANGUAGE;
 	if (!isset($_SESSION['timediff'])) {
 		$_SESSION['timediff'] = 0;
 	}
@@ -723,13 +634,6 @@ if ($SHOW_COUNTER && !$SEARCH_SPIDER) {
 	require PGV_ROOT.'includes/hitcount.php';
 } else {
 	$hitCount='';
-}
-
-if ($Languages_Default) {            // If Languages not yet configured
-	$pgv_lang_use['english'] = false;  //  disable English
-	$pgv_lang_use[$LANGUAGE] = true; //  and enable according to Browser pref.
-	$language_settings['english']['pgv_lang_use'] = false;
-	$language_settings[$LANGUAGE]['pgv_lang_use'] = true;
 }
 
 // Characters with weak-directionality can confuse the browser's BIDI algorithm.

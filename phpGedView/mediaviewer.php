@@ -62,8 +62,6 @@ if (PGV_USE_LIGHTBOX) {
 }
 // LBox  ============================================================================
 
-loadLangFile("lightbox:lang");
-
 //The next set of code draws the table that displays information about the person
 ?>
 <table width="70%">

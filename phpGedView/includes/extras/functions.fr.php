@@ -45,17 +45,10 @@ function ordinal_suffix_fr($n) {
 // Localise a date. "[qualifier] date [qualifier date] [qualifier]"
 ////////////////////////////////////////////////////////////////////////////////
 function date_localisation_fr(&$q1, &$d1, &$q2, &$d2, &$q3) {
-	global $pgv_lang;
-
 	// Years in the french republican calendar are displayed in roman numerals.
 	// They need a prefix of "an"
 	$d1=preg_replace("/(\b[IVX]+$)/", "an $1", $d1);
 	$d2=preg_replace("/(\b[IVX]+$)/", "an $1", $d2);
-
-	if (isset($pgv_lang[$q1]))
-		$q1=$pgv_lang[$q1];
-	if (isset($pgv_lang[$q2]))
-		$q2=$pgv_lang[$q2];
 }
 
 ?>

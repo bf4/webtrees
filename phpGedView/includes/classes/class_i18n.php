@@ -37,24 +37,60 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_I18N_PHP', '');
 
-require_once PGV_ROOT.'library/Zend/Translate.php';
-
 class i18n {
-	static private $collation;
+	static private $locale='';
+	static private $dir='';
 	static private $long_date_format;
 	static private $short_date_format;
 	static private $time_format_hm;
 	static private $time_format_hms;
 	static private $list_separator;
 	static private $list_separator_last;
-	static private $text_direction;
 
 	// Initialise the translation adapter with a locale setting.
-	// 'auto' means look at the HTTP_ACCEPT_LANGUAGE value.
-	static public function init() {
-		// By using specially named strings to store language parameters, we can store all the
-		// settings, translations and other support for each language in one file.
-		// This makes it simple for users to add/remove/share languages.
+	// If null is passed, work out which language is needed from the environment.
+	static public function init($locale=null) {
+		$installed_languages=self::installed_languages();
+		if (is_null($locale) || !array_key_exists($locale, $installed_languages)) {
+			// Choose a locale
+			if (isset($_GET['lang']) && array_key_exists($_GET['lang'], $installed_languages)) {
+				// Requested in the URL
+				$locale=$_GET['lang'];
+			} elseif (isset($_SESSION['locale']) && array_key_exists($_SESSION['locale'], $installed_languages)) {
+				// Rembered from a previous visit
+				$locale=$_SESSION['locale'];
+			} else {
+				// If the client has absolutely no preference, choose one for them.
+				if (in_array('en', $installed_languages)) {
+					$locale='en';
+				} else {
+					$tmp=array_keys($installed_languages);
+					$locale=$tmp[0];
+				}
+				if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+					// Browser preference
+					$prefs=array();
+					foreach (explode(',', str_replace(' ', '', $_SERVER['HTTP_ACCEPT_LANGUAGE'])) as $pref) {
+						list($l, $q)=explode(';q=', $pref.';q=1.0');
+						$prefs[$l]=(float)$q;
+					}
+					arsort($prefs);
+					foreach (array_keys($prefs) as $pref) {
+						if (array_key_exists($pref, $installed_languages)) {
+							$locale=$pref;
+							break;
+						}
+					}
+				}
+			}
+		}
+		// We now have a valid locale.  Save it and load it.
+		$_SESSION['locale']=$locale;
+		$translate=new Zend_Translate('gettext', PGV_ROOT.'language/'.$locale.'.mo', $locale);
+		// TODO: This is where we would use $translate->addTranslation() to add module translations
+		// Make the locale and translation adapter available to the rest of the Zend Framework
+		Zend_Registry::set('Zend_Locale',    $locale);
+		Zend_Registry::set('Zend_Translate', $translate);
 
 		// I18N: This is the format string for full dates, such as 14 October 1908.  See http://php.net/date for codes
 		self::$long_date_format=i18n::noop('LANGUAGE_LONG_DATE_FORMAT');
@@ -65,9 +101,42 @@ class i18n {
 		// I18N: This is the puncutation symbol used to separate items in a list.  e.g. the <comma><space> in "red, green, yellow and blue"
 		self::$time_format_hms=i18n::noop('LANGUAGE_TIME_FORMAT_HMS');
 		// I18N: This is the format string for times with hours and seconds, such as 10:23pm.  See http://php.net/date for codes
+
+		// THIS CODE IS TEMPORARY, WHILE WE MIGRATE TO GETTEXT()
+		global $TEXT_DIRECTION;
+		$localeData=Zend_Locale_Data::getList($locale, 'layout');
+		$TEXT_DIRECTION=$localeData['characters']=='right-to-left' ? 'rtl' : 'ltr';
+
+		self::$locale=$locale;
+		self::$dir=$TEXT_DIRECTION;
+
+
+		// I18N: This is the puncutation symbol used to separate the first items in a list.  e.g. the <comma><space> in "red, green, yellow and blue"
 		self::$list_separator=i18n::noop('LANGUAGE_LIST_SEPARATOR');
-		// I18N: This is the puncutation symbol used to separate the final items in a list.  e.g. the <space><comma><space> in "red, green, yellow and blue"
+		// I18N: This is the puncutation symbol used to separate the final items in a list.  e.g. the <space>and<space> in "red, green, yellow and blue"
 		self::$list_separator_last=i18n::noop('LANGUAGE_LIST_SEPARATOR_LAST');
+
+		return $locale;
+	}
+
+	// Check which languages are installed
+	static public function installed_languages() {
+		if (isset($_SESSION['installed_languages'])) {
+			return $_SESSION['installed_languages'];
+		} else {
+			$_SESSION['installed_languages']=array();
+			$d=opendir(PGV_ROOT.'language');
+			while (($f=readdir($d))!==false) {
+				if (preg_match('/^([a-zA-Z0-9_]+)\.mo$/', $f, $match)) {
+					$_SESSION['installed_languages'][$match[1]]=Zend_Locale::getTranslation($match[1], 'language', $match[1]);
+				}
+			}
+			closedir($d);
+			if (empty($_SESSION['installed_languages'])) {
+				die('There are no lanuages installed.  You must include at least one xx.mo file in /language/');
+			}
+			return $_SESSION['installed_languages'];
+		}
 	}
 
 	// echo i18n::translate('Hello World!');
@@ -90,7 +159,7 @@ class i18n {
 	// Similar to translate, but do perform "no operation" on it.
 	// This is necessary to fetch a format string (containing % characters) without
 	// performing sustitution of arguments.
-	static private function noop($string) {
+	static public function noop($string) {
 		return Zend_Registry::get('Zend_Translate')->_($string);
 	}
 

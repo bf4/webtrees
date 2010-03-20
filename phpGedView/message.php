@@ -30,8 +30,6 @@
 define('PGV_SCRIPT_NAME', 'message.php');
 require './config.php';
 
-loadLangFile("pgv_confighelp");
-
 print_simple_header(i18n::translate('PhpGedView Message'));
 
 $subject   =isset($_REQUEST['subject'   ]) ? $_REQUEST['subject'   ] : '';

@@ -47,7 +47,6 @@ print_header($controller->getPageTitle());
 if (PGV_USE_LIGHTBOX) {
 	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
 	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
-	loadLangFile('lightbox:lang');
 }
 
 if (!$controller->note){

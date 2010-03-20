@@ -441,11 +441,7 @@ function addMessage($message) {
 	}
 
 	// Switch to the "from" user's language
-	$oldLanguage = $LANGUAGE;
-	$from_lang=get_user_setting($user_id_from, 'language');
-	if ($from_lang && $LANGUAGE!=$from_lang) {
-		loadLanguage($from_lang, true);
-	}
+	i18n::init(get_user_setting($user_id_from, 'language'));
 
 	//-- setup the message body for the "from" user
 	$email2 = $message["body"];
@@ -500,10 +496,7 @@ function addMessage($message) {
 	}
 
 	//-- Load the "to" users language
-	$to_lang=get_user_setting($user_id_to, 'language');
-	if ($to_lang && $LANGUAGE!=$to_lang) {
-		loadLanguage($to_lang, true);
-	}
+	i18n::init(get_user_setting($user_id_to, 'language'));
 	if (isset($message["from_name"]))
 		$message["body"] = i18n::translate('Your Name:')." ".$message["from_name"]."\r\n".i18n::translate('Email Address:')." ".$message["from_email"]."\r\n\r\n".$message["body"];
 	//-- [ phpgedview-Feature Requests-1588353 ] Supress admin IP address in Outgoing PGV Email
@@ -546,8 +539,7 @@ function addMessage($message) {
 			pgvMail($to, $from, $subject1, $email1);
 	}
 
-	if ($LANGUAGE!=$oldLanguage)
-		loadLanguage($oldLanguage, true);			// restore language settings if needed
+	i18n::init(WT_LOCALE); // restore language settings if needed
 
 	return true;
 }

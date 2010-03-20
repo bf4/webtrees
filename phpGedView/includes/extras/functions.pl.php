@@ -36,7 +36,6 @@ define('PGV_FUNCTIONS_PL_PHP', '');
 // Localise a date. Lokalizacja daty.
 ////////////////////////////////////////////////////////////////////////////////
 function date_localisation_pl(&$q1, &$d1, &$q2, &$d2, &$q3) {
-	global $pgv_lang;
 	static $NOMINATIVE_MONTHS=NULL;
 	static $GENITIVE_MONTHS=NULL;
 	static $INSTRUMENTAL_MONTHS=NULL;
@@ -80,21 +79,12 @@ function date_localisation_pl(&$q1, &$d1, &$q2, &$d2, &$q3) {
 			$d2=preg_replace("/^{$NOMINATIVE_MONTHS[$i]}/", $INSTRUMENTAL_MONTHS[$i], $d2);
 		break;
 	}
-
-	// The qualifiers are simple translations
-	if (isset($pgv_lang[$q1]))
-		$q1=$pgv_lang[$q1];
-	if ($q2=="and")
-		$q2="a";
-	else if (isset($pgv_lang[$q2]))
-		$q2=$pgv_lang[$q2];
 }
+
 ////////////////////////////////////////////////////////////////////////////////
 // Localise an age. Lokalizacja wieku.
 ////////////////////////////////////////////////////////////////////////////////
 function age_localisation_pl(&$agestring, &$show_years) {
-	global $pgv_lang;
-
 	$show_years=true;
 	$agestring=preg_replace(
 		array(
@@ -159,8 +149,6 @@ function age_localisation_pl(&$agestring, &$show_years) {
 	);
 }
 function age2_localisation_pl($years) {
-	global $pgv_lang;
-
 	if ($years==1) $years .= " ".i18n::translate('year');
 	else if ($years > 1 && $years < 5) $years .= " ".i18n::translate('years');
 	else if (substr($years, -1, 1) > 1 && substr($years, -1, 1) < 5 && substr($years, -2, 1) != 1) $years .= " ".i18n::translate('years');
@@ -171,8 +159,6 @@ function age2_localisation_pl($years) {
 // Localise a date differences. Lokalizacja różnic dat.
 ////////////////////////////////////////////////////////////////////////////////
 function date_diff_localisation_pl(&$label, &$gap) {
-	global $pgv_lang;
-
 	$yrs = round($gap/12);
 	if ($gap == 12 || $gap == -12) $label .= $yrs." ".i18n::translate('year'); // 1 rok
 	else if (($yrs > 1 && $yrs < 5) || ($yrs < -1 && $yrs > -5)) $label .= $yrs." ".i18n::translate('years'); // 2-4 lata
@@ -186,8 +172,6 @@ function date_diff_localisation_pl(&$label, &$gap) {
 // Localise a number of people. Lokalizacja liczby osób.
 ////////////////////////////////////////////////////////////////////////////////
 function num_people_localisation_pl(&$count) {
-	global $pgv_lang;
-
 	if ($count == 1)
 		print "<br /><b>".$count." ".i18n::translate('Individual')."</b>"; // 1 osoba
 	else if ($count > 1 && $count < 5)
@@ -359,8 +343,6 @@ function cr_facts_localisation_pl(&$factrec, &$fact, &$explode_fact, &$pid) {
 // Localise the relationships. Lokalizacja pokrewieństwa.
 ////////////////////////////////////////////////////////////////////////////////
 function rela_localisation_pl(&$rela, &$pid2) {
-	global $pgv_lang;
-
 	if (isset($pid2)) {
 		$record = Person::getInstance($pid2);
 		if (!empty($record)) {

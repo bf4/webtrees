@@ -54,8 +54,6 @@ require './config.php';
 require_once PGV_ROOT.'includes/functions/functions_import.php';
 require_once PGV_ROOT.'includes/functions/functions_export.php';
 
-loadLangFile("pgv_confighelp");
-
 if (!PGV_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=uploadgedcom.php");
 	exit;
@@ -864,8 +862,6 @@ $GEDCOM_FILE = get_gedcom_setting($ged_id, 'path');
 $FILE = $ged;
 $TITLE = get_gedcom_setting($ged_id, 'title');
 require get_config_file($ged_id);
-if ($LANGUAGE <> $_SESSION["CLANGUAGE"])
-$LANGUAGE = $_SESSION["CLANGUAGE"];
 
 $temp2 = $THEME_DIR;
 $THEME_DIR = $temp;

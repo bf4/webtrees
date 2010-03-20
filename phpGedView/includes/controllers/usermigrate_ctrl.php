@@ -42,8 +42,6 @@ define('PGV_USERMIGRATE_CTRL_PHP', '');
 require_once PGV_ROOT.'includes/controllers/basecontrol.php';
 require_once PGV_ROOT.'includes/functions/functions_export.php';
 
-loadLangFile("pgv_confighelp");
-
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
 if (PGV_SCRIPT_NAME=='usermigrate_cli.php') {

@@ -33,9 +33,6 @@ require_once 'includes/controllers/individual_ctrl.php';
 $controller = new IndividualController(); 
 $controller->init(); 
 
-//	To load the file XXX for module YYY, call
-	loadLangFile("GEDFact_assistant:lang");
-
 global $USE_THUMBS_MAIN, $mediacnt, $tabno;
 global $linkToID;
 global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;

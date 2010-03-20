@@ -34,8 +34,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-loadLangFile("pgv_confighelp, sitemap:lang, sitemap:help_text");
-
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
 if (!PGV_USER_IS_ADMIN) {

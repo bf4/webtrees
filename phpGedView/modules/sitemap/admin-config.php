@@ -36,8 +36,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-loadLangFile("sitemap:lang, sitemap:help_text");
-
 if (PGV_USER_IS_ADMIN) { ?>
    <tr>
 	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo i18n::translate('Sitemap'); ?></td>

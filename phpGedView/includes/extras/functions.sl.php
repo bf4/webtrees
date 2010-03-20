@@ -36,7 +36,6 @@ define('PGV_FUNCTIONS_SL_PHP', '');
 // Localise a date. Lokalizacja datumov
 ////////////////////////////////////////////////////////////////////////////////
 function date_localisation_sl(&$q1, &$d1, &$q2, &$d2, &$q3) {
-	global $pgv_lang;
 	static $NOMINATIVE_MONTHS=NULL;
 	static $GENITIVE_MONTHS=NULL;
 	static $INSTRUMENTAL_MONTHS=NULL;
@@ -80,20 +79,12 @@ function date_localisation_sl(&$q1, &$d1, &$q2, &$d2, &$q3) {
 			$d2=preg_replace("/^{$NOMINATIVE_MONTHS[$i]}/", $INSTRUMENTAL_MONTHS[$i], $d2);
 		break;
 	}
-
-	// The qualifiers are simple translations
-	if (isset($pgv_lang[$q1]))
-		$q1=$pgv_lang[$q1];
-	if (isset($pgv_lang[$q2]))
-		$q2=$pgv_lang[$q2];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Localise an age. Lokalizacja starosti.
 ////////////////////////////////////////////////////////////////////////////////
 function age_localisation_sl(&$agestring, &$show_years) {
-	global $pgv_lang;
-
 	$show_years=true;
 	$agestring=preg_replace(
 		array(
@@ -133,8 +124,6 @@ function age_localisation_sl(&$agestring, &$show_years) {
 // Localise a date differences. Lokalizacja razlik datumov.
 ////////////////////////////////////////////////////////////////////////////////
 function date_diff_localisation_sl(&$label, &$gap) {
-	global $pgv_lang;
-
 	$yrs = round($gap/12);
 	if ($gap == 12 || $gap == -12) $label .= $yrs." ".i18n::translate('year'); // 1 leto
 	else if (($yrs == 2 ) || ($yrs == -2 )) $label .= $yrs." leti"; // 2 leti
@@ -149,8 +138,6 @@ function date_diff_localisation_sl(&$label, &$gap) {
 // Localise a number of people. Lokalizacija števila oseb. //Glej  lifespan.php
 ////////////////////////////////////////////////////////////////////////////////
 function num_people_localisation_sl(&$count) {
-	global $pgv_lang;
-
 	if ($count == 1)
 		print "<br /><b>".$count." ".i18n::translate('Individual')."</b>"; // 1 oseba
 	else if ($count == 2)

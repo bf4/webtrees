@@ -31,8 +31,6 @@ define('PGV_SCRIPT_NAME', 'medialist.php');
 require './config.php';
 require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 
-loadLangFile("lightbox:lang");
-
 // $LB_SS_SPEED = "5";
 $level = safe_GET("level", "", "0");
 $action = safe_GET('action');

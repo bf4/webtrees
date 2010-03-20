@@ -42,8 +42,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 require PGV_ROOT.'modules/googlemap/googlemap.php';
 require PGV_ROOT.'includes/controllers/pedigree_ctrl.php';
 
-loadLangFile("googlemap:lang, googlemap:help_text");
-
 // Default is show for both of these.
 $hideflags = safe_GET('hideflags');
 $hidelines = safe_GET('hidelines');

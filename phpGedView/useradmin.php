@@ -33,8 +33,6 @@ define('PGV_SCRIPT_NAME', 'useradmin.php');
 require './config.php';
 require_once PGV_ROOT.'includes/functions/functions_edit.php';
 
-loadLangFile('pgv_confighelp');
-
 // Only admin users can access this page
 if (!PGV_USER_IS_ADMIN) {
 	$loginURL = "$LOGIN_URL?url=".urlencode(PGV_SCRIPT_NAME."?".$QUERY_STRING);
@@ -44,7 +42,6 @@ if (!PGV_USER_IS_ADMIN) {
 
 // Valid values for form variables
 $ALL_ACTIONS=array('cleanup', 'cleanup2', 'createform', 'createuser', 'deleteuser', 'edituser', 'edituser2', 'listusers');
-$ALL_CONTACT_METHODS=array('messaging', 'messaging2', 'messaging3', 'mailto', 'none');
 $ALL_DEFAULT_TABS=array(0=>'personal_facts', 1=>'notes', 2=>'ssourcess', 3=>'media', 4=>'relatives', -1=>'all', -2=>'lasttab');
 $ALL_THEMES_DIRS=array();
 foreach (get_theme_names() as $themename=>$themedir) {
@@ -60,18 +57,18 @@ $ALL_EDIT_OPTIONS=array(
 
 // Extract form actions (GET overrides POST if both set)
 $action                  =safe_POST('action',  $ALL_ACTIONS);
-$usrlang                 =safe_POST('usrlang', array_keys($pgv_language));
+$usrlang                 =safe_POST('usrlang', array_keys(i18n::installed_languages()));
 $username                =safe_POST('username', PGV_REGEX_USERNAME);
 $filter                  =safe_POST('filter'   );
 $sort                    =safe_POST('sort'     );
 $ged                     =safe_POST('ged'      );
 
-$action                  =safe_GET('action',   $ALL_ACTIONS,              $action);
-$usrlang                 =safe_GET('usrlang',  array_keys($pgv_language), $usrlang);
-$username                =safe_GET('username', PGV_REGEX_USERNAME,        $username);
-$filter                  =safe_GET('filter',   PGV_REGEX_NOSCRIPT,        $filter);
-$sort                    =safe_GET('sort',     PGV_REGEX_NOSCRIPT,        $sort);
-$ged                     =safe_GET('ged',      PGV_REGEX_NOSCRIPT,        $ged);
+$action                  =safe_GET('action',   $ALL_ACTIONS,                            $action);
+$usrlang                 =safe_GET('usrlang',  array_keys(i18n::installed_languages()), $usrlang);
+$username                =safe_GET('username', PGV_REGEX_USERNAME,                      $username);
+$filter                  =safe_GET('filter',   PGV_REGEX_NOSCRIPT,                      $filter);
+$sort                    =safe_GET('sort',     PGV_REGEX_NOSCRIPT,                      $sort);
+$ged                     =safe_GET('ged',      PGV_REGEX_NOSCRIPT,                      $ged);
 
 // Extract form variables
 $oldusername             =safe_POST('oldusername',  PGV_REGEX_USERNAME);
@@ -81,8 +78,8 @@ $pass1                   =safe_POST('pass1',        PGV_REGEX_PASSWORD);
 $pass2                   =safe_POST('pass2',        PGV_REGEX_PASSWORD);
 $emailaddress            =safe_POST('emailaddress', PGV_REGEX_EMAIL);
 $user_theme              =safe_POST('user_theme',               $ALL_THEME_DIRS);
-$user_language           =safe_POST('user_language',            array_keys($pgv_language), $LANGUAGE);
-$new_contact_method      =safe_POST('new_contact_method',       $ALL_CONTACT_METHODS, $CONTACT_METHOD);
+$user_language           =safe_POST('user_language',            array_keys(i18n::installed_languages()), $LANGUAGE);
+$new_contact_method      =safe_POST('new_contact_method');
 $new_default_tab         =safe_POST('new_default_tab',          array_keys($ALL_DEFAULT_TABS), $GEDCOM_DEFAULT_TAB);
 $new_comment             =safe_POST('new_comment',              PGV_REGEX_UNSAFE);
 $new_comment_exp         =safe_POST('new_comment_exp'           );
@@ -192,9 +189,7 @@ if ($action=='createuser' || $action=='edituser2') {
 				}
 				// If we're verifying a new user, send them a message to let them know
 				if ($newly_verified && $action=='edituser2') {
-					if ($LANGUAGE != $user_language) {
-						loadLanguage($user_language);
-					}
+					i18n::init($user_language);
 					$serverURL = rtrim($SERVER_URL, '/');
 					$message=array();
 					$message["to"]=$username;
@@ -399,21 +394,12 @@ if ($action=="edituser") {
 	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Email Address'), help_link('useradmin_email'); ?></td><td class="optionbox wrap"><input type="text" name="emailaddress" tabindex="<?php echo ++$tab; ?>" dir="ltr" value="<?php echo get_user_setting($user_id, 'email'); ?>" size="50" /></td></tr>
 	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('User verified himself'), help_link('useradmin_verified'); ?></td><td class="optionbox wrap"><input type="checkbox" name="verified" tabindex="<?php echo ++$tab; ?>" value="yes" <?php if (get_user_setting($user_id, 'verified')=="yes") echo "checked=\"checked\""; ?> /></td></tr>
 	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('User approved by Admin'), help_link('useradmin_verbyadmin'); ?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php echo ++$tab; ?>" value="yes" <?php if (get_user_setting($user_id, 'verified_by_admin')=="yes") echo "checked=\"checked\""; ?> /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Change Language'), help_link('edituser_change_lang'); ?></td><td class="optionbox wrap" valign="top"><?php
-	if ($ENABLE_MULTI_LANGUAGE) {
-		$tab++;
-		echo "<select name=\"user_language\" tabindex=\"", $tab, "\" dir=\"ltr\" style=\"{ font-size: 9pt; }\">";
-		foreach ($pgv_language as $key => $value) {
-			if ($language_settings[$key]["pgv_lang_use"]) {
-				echo "\n\t\t\t<option value=\"$key\"";
-				if ($key == get_user_setting($user_id, 'language')) echo " selected=\"selected\"";
-				echo ">" . $pgv_lang[$key] . "</option>";
-			}
-		}
-		echo "</select>\n\t\t";
-	}
-	else echo "&nbsp;";
-	?></td></tr>
+	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Change Language'), help_link('edituser_change_lang'); ?></td><td class="optionbox wrap" valign="top">
+	<?php
+		echo edit_field_language('user_language', get_user_setting($user_id, 'language'), 'tabindex="'.(++$tab).'"');
+
+	?>
+	</td></tr>
 	<?php
 	if ($ALLOW_USER_THEMES) {
 		?>
@@ -434,22 +420,10 @@ if ($action=="edituser") {
 	?>
 	<tr>
 	<td class="descriptionbox wrap"><?php echo i18n::translate('Preferred Contact Method'), help_link('useradmin_user_contact'); ?></td>
-	<td class="optionbox wrap"><select name="new_contact_method" tabindex="<?php echo ++$tab; ?>">
+	<td class="optionbox wrap">
 	<?php
-	if ($PGV_STORE_MESSAGES) {
-		?>
-		<option value="messaging" <?php if (get_user_setting($user_id, 'contactmethod')=='messaging') echo "selected=\"selected\""; ?>><?php echo i18n::translate('PhpGedView internal messaging'); ?></option>
-		<option value="messaging2" <?php if (get_user_setting($user_id, 'contactmethod')=='messaging2') echo "selected=\"selected\""; ?>><?php echo i18n::translate('Internal messaging with emails'); ?></option>
-		<?php
-	} else {
-		?>
-		<option value="messaging3" <?php if (get_user_setting($user_id, 'contactmethod')=='messaging3') echo "selected=\"selected\""; ?>><?php echo i18n::translate('PhpGedView sends emails with no storage'); ?></option>
-		<?php
-	}
+		echo edit_field_contact('new_contact_method', get_user_setting(PGV_USER_ID, 'contactmethod'), 'tabindex="'.(++$tab).'"');
 	?>
-	<option value="mailto" <?php if (get_user_setting($user_id, 'contactmethod')=='mailto') echo "selected=\"selected\""; ?>><?php echo i18n::translate('Mailto link'); ?></option>
-	<option value="none" <?php if (get_user_setting($user_id, 'contactmethod')=='none') echo "selected=\"selected\""; ?>><?php echo i18n::translate('No contact method'); ?></option>
-	</select>
 	</td>
 	</tr>
 	<tr>
@@ -469,7 +443,7 @@ if ($action=="edituser") {
 		if (get_user_setting($user_id, 'defaulttab')==$key) {
 			echo ' selected="selected"';
 		}
-		echo '>', $pgv_lang[$value], '</option>';
+		echo '>', $value, '</option>';
 	}
 	?>
 	</select>
@@ -525,8 +499,6 @@ if ($action == "listusers") {
 
 	// First filter the users, otherwise the javascript to unfold priviledges gets disturbed
 	foreach($users as $user_id=>$user_name) {
-		if (!isset($language_settings[get_user_setting($user_id, 'language')]))
-			set_user_setting($user_id, 'language', $LANGUAGE);
 		if ($filter == "warnings") {
 			if (get_user_setting($user_id, 'comment_exp')) {
 				if ((strtotime(get_user_setting($user_id, 'comment_exp')) == "-1") || (strtotime(get_user_setting($user_id, 'comment_exp')) >= time("U"))) unset($users[$user_id]);
@@ -627,7 +599,7 @@ if ($action == "listusers") {
 			echo "<br /><img class=\"adminicon\" align=\"top\" alt=\"{$tempTitle}\" title=\"{$tempTitle}\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}\" />";
 		}
 		echo "</td>\n";
-		echo "\t<td class=\"optionbox wrap\">", $pgv_lang["lang_name_".get_user_setting($user_id, 'language')], "</td>\n";
+		echo "\t<td class=\"optionbox wrap\">", Zend_Locale::getTranslation(get_user_setting($user_id, 'language'), 'language', WT_LOCALE), "</td>\n";
 		echo "\t<td class=\"optionbox\">";
 		echo "<a href=\"javascript: ", i18n::translate('Privileges'), "\" onclick=\"expand_layer('user-geds", $k, "'); return false;\"><img id=\"user-geds", $k, "_img\" src=\"", $PGV_IMAGE_DIR, "/";
 		if ($showprivs == false) echo $PGV_IMAGES["plus"]["other"];
@@ -642,14 +614,20 @@ if ($action == "listusers") {
 			echo "<li class=\"warning\">", i18n::translate('User can administer'), "</li>\n";
 		}
 		foreach ($all_gedcoms as $ged_id=>$ged_name) {
-			$vval = get_user_gedcom_setting($user_id, $ged_id, 'canedit');
-			if ($vval == "") $vval = "none";
+			switch (get_user_gedcom_setting($user_id, $ged_id, 'canedit')) {
+			case 'admin':  echo '<li class="warning">', i18n::translate('Admin GEDCOM'); break;
+			case 'accept': echo '<li class="warning">', i18n::translate('Accept'); break;
+			case 'edit':   echo '<li>', i18n::translate('Edit'); break;
+			case 'access': echo '<li>', i18n::translate('Access'); break;
+			case 'none':
+			default:       echo '<li>', i18n::translate('None'); break;
+			}
 			$uged = get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
-			if ($vval=="accept" || $vval=="admin") echo "<li class=\"warning\">";
-			else echo "<li>";
-			echo $pgv_lang[$vval], " ";
-			if ($uged != "") echo "<a href=\"", encode_url("individual.php?pid={$uged}&ged={$ged_name}"), "\">", $ged_name, "</a></li>\n";
-			else echo $ged_name, "</li>\n";
+			if ($uged) {
+				echo ' <a href="individual.php?pid=', $uged, '&amp;ged=', urlencode($ged_name), '">', $ged_name, '</a></li>';
+			} else {
+				echo ' ', $ged_name, '</li>';
+			}
 		}
 		echo "</ul>";
 		echo "</div>";
@@ -830,22 +808,8 @@ if ($action == "createform") {
 		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('User approved by Admin'), help_link('useradmin_verbyadmin');  ?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php echo ++$tab; ?>" value="yes" checked="checked" /></td></tr>
 		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Change Language'), help_link('useradmin_change_lang'); ?></td><td class="optionbox wrap" valign="top"><?php
 
-		$user_lang = get_user_setting(PGV_USER_ID, 'language');
-		if ($ENABLE_MULTI_LANGUAGE) {
-			$tab++;
-			echo "<select name=\"user_language\" tabindex=\"", $tab, "\" style=\"{ font-size: 9pt; }\">";
-			foreach ($pgv_language as $key => $value) {
-				if ($language_settings[$key]["pgv_lang_use"]) {
-					echo "\n\t\t\t<option value=\"$key\"";
-					if ($key == $user_lang) {
-						echo " selected=\"selected\"";
-					}
-					echo ">" . $pgv_lang[$key] . "</option>";
-				}
-			}
-			echo "</select>\n\t\t";
-		}
-		else echo "&nbsp;";
+		$tab++;
+		echo edit_field_language('user_language', get_user_setting(PGV_USER_ID, 'language'), 'tabindex="'.$tab.'"');
 		?></td></tr>
 		<?php if ($ALLOW_USER_THEMES) { ?>
 			<tr><td class="descriptionbox wrap" valign="top" align="left"><?php echo i18n::translate('My Theme'), help_link('useradmin_user_theme'); ?></td><td class="optionbox wrap" valign="top">
@@ -862,16 +826,10 @@ if ($action == "createform") {
 		<?php } ?>
 		<tr>
 			<td class="descriptionbox wrap"><?php echo i18n::translate('Preferred Contact Method'), help_link('useradmin_user_contact');  ?></td>
-			<td class="optionbox wrap"><select name="new_contact_method" tabindex="<?php echo ++$tab; ?>">
-			<?php if ($PGV_STORE_MESSAGES) { ?>
-				<option value="messaging"><?php echo i18n::translate('PhpGedView internal messaging'); ?></option>
-				<option value="messaging2" selected="selected"><?php echo i18n::translate('Internal messaging with emails'); ?></option>
-			<?php } else { ?>
-				<option value="messaging3" selected="selected"><?php echo i18n::translate('PhpGedView sends emails with no storage'); ?></option>
-			<?php } ?>
-				<option value="mailto"><?php echo i18n::translate('Mailto link'); ?></option>
-				<option value="none"><?php echo i18n::translate('No contact method'); ?></option>
-			</select>
+			<td class="optionbox wrap">
+	<?php
+		echo edit_field_contact('new_contact_method', $PGV_STORE_MESSAGES ? 'messaging2' : 'messaging3', 'tabindex="'.(++$tab).'"');
+	?>
 			</td>
 		</tr>
 		<tr>
@@ -891,7 +849,7 @@ if ($action == "createform") {
 				if ($GEDCOM_DEFAULT_TAB==$key) {
 					echo ' selected="selected"';
 				}
-				echo '>', $pgv_lang[$value], '</option>';
+				echo '>', $value, '</option>';
 			}
 			?>
 			</select>
@@ -1140,11 +1098,11 @@ if ($action == "cleanup2") {
 			}
 		}
 		if ($user_lang=get_user_setting($user_id, 'language')) {
-			if (isset($userlang[$pgv_lang["lang_name_".$user_lang]]))
-				$userlang[$pgv_lang["lang_name_".$user_lang]]["number"]++;
+			if (isset($userlang[$user_lang]))
+				$userlang[$user_lang]["number"]++;
 			else {
-				$userlang[$pgv_lang["lang_name_".$user_lang]]["langname"] = $user_lang;
-				$userlang[$pgv_lang["lang_name_".$user_lang]]["number"] = 1;
+				$userlang[$user_lang]["langname"] = Zend_Locale::getTranslation($user_lang, 'language', WT_LOCALE);
+				$userlang[$user_lang]["number"] = 1;
 			}
 		}
 	}
@@ -1182,10 +1140,9 @@ if ($action == "cleanup2") {
 	else echo "<a href=\"useradmin.php?action=listusers&amp;filter=admunver\">", i18n::translate('Unverified by Administrator'), "</a>";
 	echo "</td><td class=\"font11\">", $nverusers, "</td></tr>";
 
-	asort($userlang);
 	echo "<tr valign=\"middle\"><td class=\"font11\">", i18n::translate('Users\' languages'), "</td>";
 	foreach ($userlang as $key=>$ulang) {
-		echo "\t<td><a href=\"", encode_url("useradmin.php?action=listusers&filter=language&usrlang=".$ulang["langname"]), "\">", $key, "</a></td><td>", $ulang["number"], "</td></tr><tr class=\"vmiddle\"><td></td>\n";
+		echo '<td><a href="useradmin.php?action=listusers&amp;filter=language&amp;usrlang=', $key, '">', $ulang['langname'], '</a></td><td>', $ulang['number'], '</td></tr><tr class="vmiddle"><td></td>';
 	}
 	echo "</tr></table>";
 	echo "</td></tr></table>";

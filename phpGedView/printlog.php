@@ -35,8 +35,6 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 	exit;
 }
 
-loadLangFile("pgv_confighelp");
-
 print_simple_header(i18n::translate('Print logfile'));
 
 $logfile=safe_GET('logfile');

@@ -36,19 +36,12 @@ define('PGV_FUNCTIONS_AR_PHP', '');
 // Localise a date. "[qualifier] date [qualifier date] [qualifier]"
 ////////////////////////////////////////////////////////////////////////////////
 function date_localisation_ar(&$q1, &$d1, &$q2, &$d2, &$q3) {
-	global $pgv_lang;
-
 	// Simple substitution of arabic digits
 	$latin =array('0', '1', '2', '3', '4', '5', '6' ,'7', '8', '9' );
 	$arabic=array('٠','١','٢','٣','٤','٥','٦','٧','٨','٩');
 
 	$d1=str_replace($latin, $arabic, $d1);
 	$d2=str_replace($latin, $arabic, $d2);
-
-	if (isset($pgv_lang[$q1]))
-		$q1=$pgv_lang[$q1];
-	if (isset($pgv_lang[$q2]))
-		$q2=$pgv_lang[$q2];
 }
 
 ?>

@@ -55,8 +55,6 @@ function write_access_option_numeric($checkVar) {
 	echo ">".i18n::translate('Hide even from admin users')."</option>\n";
 }
 
-loadLangFile("pgv_confighelp");
-
 $action = safe_POST('action');
 
 $modules = PGVModule::getInstalledList();

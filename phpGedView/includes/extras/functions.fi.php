@@ -41,28 +41,9 @@ define('PGV_FUNCTIONS_FI_PHP', '');
 // Localise a date. "[qualifier] date [qualifier date] [qualifier]"
 ////////////////////////////////////////////////////////////////////////////////
 function date_localisation_fi(&$q1, &$d1, &$q2, &$d2, &$q3) {
-	global $pgv_lang;
-
-	if ($q2=='') {
-		// If there is only one date, certain qualifiers go after it
-		if ($q1=='aft' || $q1=='to' || $q1=='from') {
-			$q2=$q1;
-			$q1='';
-		}
-	} else {
-		// If two dates, just use a dash
-		$q1='';
-		$q2='-';
-	}
-
 	// Constant 'ta' is appended to the Finnish month values, if a day value exists
 	$d1=preg_replace("/(\b\d{1,2}\D+kuu\b)/", "$1ta", $d1);
 	$d2=preg_replace("/(\b\d{1,2}\D+kuu\b)/", "$1ta", $d2);
-
-	if (isset($pgv_lang[$q1]))
-		$q1=$pgv_lang[$q1];
-	if (isset($pgv_lang[$q2]))
-		$q2=$pgv_lang[$q2];
 }
 
 //-- functions to calculate finnish specific genitive names

@@ -33,8 +33,7 @@
 
 define('PGV_SCRIPT_NAME', 'login_register.php');
 require './config.php';
-
-loadLangFile("pgv_confighelp");
+require PGV_ROOT.'includes/functions/functions_edit.php';
 
 $action         =safe_POST('action');
 $user_firstname =safe_POST('user_firstname');
@@ -45,7 +44,7 @@ $user_name      =safe_POST('user_name',       PGV_REGEX_USERNAME);
 $user_email     =safe_POST('user_email',      PGV_REGEX_EMAIL);
 $user_password01=safe_POST('user_password01', PGV_REGEX_PASSWORD);
 $user_password02=safe_POST('user_password02', PGV_REGEX_PASSWORD);
-$user_language  =safe_POST('user_language');
+$user_language  =safe_POST('user_language', array_keys(i18n::installed_languages()), WT_LOCALE);
 $user_gedcomid  =safe_POST('user_gedcomid');
 $user_comments  =safe_POST('user_comments');
 $user_password  =safe_POST('user_password');
@@ -121,8 +120,7 @@ switch ($action) {
 				set_user_setting($user_id, 'pwrequested', 1);
 
 				// switch language to user settings
-				$oldLanguage = $LANGUAGE;
-				if ($LANGUAGE != get_user_setting($user_id, 'language')) loadLanguage(get_user_setting($user_id, 'language'), true);
+				i18n::init(get_user_setting($user_id, 'language'));
 				$newuserName=getUserFullName($user_id);
 
 				$mail_body = "";
@@ -148,7 +146,7 @@ switch ($action) {
 				<?php
 				AddToLog("Password request was sent to user: ".$user_name);
 
-				if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage, true);   // Reset language
+				i18n::init(WT_LOCALE);   // Reset language
 			}
 		}
 		print "</div>";
@@ -291,28 +289,12 @@ switch ($action) {
 						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Desired password'), help_link('edituser_password'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="password" name="user_password01" value="" tabindex="<?php echo $i++;?>" /> *</td></tr>
 						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Confirm Password'), help_link('edituser_conf_password'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="password" name="user_password02" value="" tabindex="<?php echo $i++;?>" /> *</td></tr>
 						<?php
-						if ($ENABLE_MULTI_LANGUAGE) {
-							echo "<tr><td class=\"descriptionbox wrap ", $TEXT_DIRECTION, "\">";
-							echo i18n::translate('Change Language'), help_link('edituser_change_lang');
-							echo "</td><td class=\"optionbox ", $TEXT_DIRECTION, "\"><select name=\"user_language\" tabindex=\"", $i++, "\">";
-							foreach ($pgv_language as $key => $value) {
-								if ($language_settings[$key]["pgv_lang_use"]) {
-									echo "\n\t\t\t<option value=\"", $key, "\"";
-									if (!$user_language_false) {
-										echo " selected=\"selected\"";
-									} elseif ($key == $LANGUAGE) {
-										echo " selected=\"selected\"";
-									}
-									echo ">", $pgv_lang[$key], "</option>";
-								}
-							}
-							echo "</select>\n\t\t";
-							echo "</td></tr>\n";
-						} else {
-							echo "<input type=\"hidden\" name=\"user_language\" value=\"", $LANGUAGE, "\" />";
-						}
-						?>
-						<?php if ($REQUIRE_AUTHENTICATION && $SHOW_LIVING_NAMES>=$PRIV_PUBLIC) { ?>
+						echo "<tr><td class=\"descriptionbox wrap ", $TEXT_DIRECTION, "\">";
+						echo i18n::translate('Change Language'), help_link('edituser_change_lang');
+						echo '</td><td class="optionbox ', $TEXT_DIRECTION, '">';
+						echo edit_field_language('user_language', WT_LOCALE, $extra='tabindex="'.(++$i).'"');
+						echo '</td></tr>';
+						if ($REQUIRE_AUTHENTICATION && $SHOW_LIVING_NAMES>=$PRIV_PUBLIC) { ?>
 						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('GEDCOM INDI record ID'), help_link('register_gedcomid'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>" valign="top" ><input type="text" size="10" name="user_gedcomid" id="user_gedcomid" value="" tabindex="<?php echo $i++;?>" /><?php print_findindi_link("user_gedcomid",""); ?></td></tr>
 						<?php } ?>
 						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Comments'), help_link('register_comments'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>" valign="top" ><textarea cols="50" rows="5" name="user_comments" tabindex="<?php echo $i++;?>"><?php if (!$user_comments_false) echo $user_comments;?></textarea> *</td></tr>
@@ -412,8 +394,7 @@ switch ($action) {
 				}
 				if ($user_created_ok) {
 					// switch to the user's language
-					$oldLanguage = $LANGUAGE;
-					if ($LANGUAGE != $user_language) loadLanguage($user_language, true);
+					i18n::init($user_language);
 
  					if ($NAME_REVERSE) $fullName = $user_lastname." ".$user_firstname;
 					else $fullName = $user_firstname." ".$user_lastname;
@@ -439,8 +420,7 @@ switch ($action) {
 					pgvMail($user_email, $PHPGEDVIEW_EMAIL, i18n::translate('Your registration at %s', PGV_SERVER_NAME.PGV_SCRIPT_PATH), $mail_body);
 
 					// switch language to webmaster settings
-					$adm_lang=get_user_setting($WEBMASTER_EMAIL, 'language');
-					if ($adm_lang && $LANGUAGE!=$adm_lang) loadLanguage($adm_lang, true);
+					i18n::init(get_user_setting($WEBMASTER_EMAIL, 'language'));
 
 					$mail_body = "";
 					$mail_body .= i18n::translate('Hello Administrator ...') . "\r\n\r\n";
@@ -469,7 +449,7 @@ switch ($action) {
 					addMessage($message);
 
 					// switch language to user's settings
-					if ($LANGUAGE != $user_language) loadLanguage($user_language, true);
+					i18n::init($user_language);
 					?>
 					<table class="center facts_table">
 						<tr><td class="wrap <?php print $TEXT_DIRECTION; ?>"><?php print i18n::translate('Hello %s ...<br />Thank you for your registration.', $user_firstname." ".$user_lastname); ?><br /><br />
@@ -480,7 +460,7 @@ switch ($action) {
 						</td></tr>
 					</table>
 					<?php
-					if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage, true);		// Reset language
+					i18n::init(WT_LOCALE); // Reset language
 				}
 				print "</div>";
 			} else {
@@ -502,8 +482,7 @@ switch ($action) {
 		// Change to the new user's language
 		$oldLanguage = $LANGUAGE;
 		$user_id=get_user_id($user_name);
-		$user_lang=get_user_setting($user_id, 'language');
-		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang, true);
+		i18n::init(get_user_setting($user_id, 'language'));
 
 		print_header(i18n::translate('User verification'));
 		print "<div class=\"center\">";
@@ -536,9 +515,7 @@ switch ($action) {
 
 		// Change to the new user's language
 		$user_id=get_user_id($user_name);
-		$user_lang=get_user_setting($user_id, 'language');
-		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang, true);
-		$oldLanguage = $LANGUAGE;
+		i18n::init(get_user_setting($user_id, 'language'));
 
 		print_header(i18n::translate('User verification')); // <-- better verification of authentication code
 		print "<div class=\"center\">";
@@ -560,8 +537,7 @@ switch ($action) {
 				AddToLog("User verified: ".$user_name);
 
 				// switch language to webmaster settings
-				$adm_lang=get_user_setting($WEBMASTER_EMAIL, 'language');
-				if ($adm_lang && $LANGUAGE!=$adm_lang) loadLanguage($adm_lang, true);
+				i18n::init(get_user_setting($WEBMASTER_EMAIL, 'language'));
 
 				$mail_body = "";
 				$mail_body .= i18n::translate('Hello Administrator ...') . "\r\n\r\n";
@@ -587,7 +563,7 @@ switch ($action) {
 				$message["no_from"] = true;
 				addMessage($message);
 
-				if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage, true);		// Reset language
+				i18n::init(WT_LOCALE); // Reset language
 
 				print "<br /><br />".i18n::translate('You have confirmed your request to become a registered user.')."<br /><br />";
 				if ($REQUIRE_ADMIN_AUTH_REGISTRATION) print i18n::translate('The Administrator has been informed.  As soon as he gives you permission to login, you can login with your user name and password.');

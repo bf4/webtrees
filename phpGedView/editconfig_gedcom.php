@@ -32,6 +32,7 @@
 
 define('PGV_SCRIPT_NAME', 'editconfig_gedcom.php');
 require './config.php';
+require PGV_ROOT.'includes/functions/functions_edit.php';
 
 // editconfig.php and uploadgedcom.php make extensive use of
 // import_request_variables and are heavily inter-dependent.
@@ -89,8 +90,6 @@ function GetGEDFromZIP($zipfile, $extract=true) {
 	}
 	return $zipfile;
 }
-
-loadLangFile("pgv_confighelp, pgv_help");
 
 if (isset($_REQUEST['path'])) $path = $_REQUEST['path'];
 if (isset($_REQUEST['oldged'])) $oldged = $_REQUEST['oldged'];
@@ -313,7 +312,6 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$DISPLAY_JEWISH_THOUSANDS\s*=\s*.*;/', "\$DISPLAY_JEWISH_THOUSANDS = ".$boolarray[$_POST["NEW_DISPLAY_JEWISH_THOUSANDS"]].";", $configtext);
 	$configtext = preg_replace('/\$EDIT_AUTOCLOSE\s*=\s*.*;/', "\$EDIT_AUTOCLOSE = ".$boolarray[$_POST["NEW_EDIT_AUTOCLOSE"]].";", $configtext);
 	$configtext = preg_replace('/\$ENABLE_AUTOCOMPLETE\s*=\s*.*;/', "\$ENABLE_AUTOCOMPLETE = ".$boolarray[$_POST["NEW_ENABLE_AUTOCOMPLETE"]].";", $configtext);
-	$configtext = preg_replace('/\$ENABLE_MULTI_LANGUAGE\s*=\s*.*;/', "\$ENABLE_MULTI_LANGUAGE = ".$boolarray[$_POST["NEW_ENABLE_MULTI_LANGUAGE"]].";", $configtext);
 	$configtext = preg_replace('/\$ENABLE_RSS\s*=\s*.*;/', "\$ENABLE_RSS = ".$boolarray[$_POST["NEW_ENABLE_RSS"]].";", $configtext);
 	$configtext = preg_replace('/\$EXPAND_NOTES\s*=\s*.*;/', "\$EXPAND_NOTES = ".$boolarray[$_POST["NEW_EXPAND_NOTES"]].";", $configtext);
 	$configtext = preg_replace('/\$EXPAND_RELATIVES_EVENTS\s*=\s*.*;/', "\$EXPAND_RELATIVES_EVENTS = ".$boolarray[$_POST["NEW_EXPAND_RELATIVES_EVENTS"]].";", $configtext);
@@ -927,22 +925,9 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('GEDCOM Basics')."\" onclic
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Language'), help_link('LANGUAGE'); ?>
 		</td>
-		<td class="optionbox"><input type="hidden" name="changelanguage" value="yes" />
-		<select name="GEDCOMLANG" dir="ltr" onfocus="getHelp('LANGUAGE');" tabindex="<?php echo ++$i; ?>">
+		<td class="optionbox">
 		<?php
-			foreach ($pgv_language as $key=>$value) {
-			if ($language_settings[$key]["pgv_lang_use"]) {
-					print "\n\t\t\t<option value=\"$key\"";
-					if ($GEDCOMLANG==$key) print " selected=\"selected\"";
-					print ">".$pgv_lang[$key]."</option>";
-				}
-			}
-			print "</select>";
-			if (!file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
-				print "<br /><span class=\"error\">";
-				print i18n::translate('You have not configured the languages your site will support.<br />PhpGedView will use its default actions.');
-				print "</span>";
-			}
+			echo edit_field_language('GEDCOMLANG', $GEDCOMLANG, 'dir="ltr" onfocus="getHelp(\'LANGUAGE\');" tabindex="'.(++$i).'"');
 		?>
 		</td>
 	</tr>
@@ -2206,23 +2191,6 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('User Options')."\" onclick
 ?></td></tr></table>
 <div id="user-options" style="display: none">
 <table class="facts_table">
-	<tr>
-		<td class="descriptionbox wrap width20">
-			<?php echo i18n::translate('Allow user to change language'), help_link('ENABLE_MULTI_LANGUAGE'); ?>
-		</td>
-		<td class="optionbox"><select name="NEW_ENABLE_MULTI_LANGUAGE" onfocus="getHelp('ENABLE_MULTI_LANGUAGE');" tabindex="<?php echo ++$i; ?>" >
-				<option value="yes" <?php if ($ENABLE_MULTI_LANGUAGE) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$ENABLE_MULTI_LANGUAGE) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
-			<?php
-				if (!file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
-					print "<br /><span class=\"error\">";
-					print i18n::translate('You have not configured the languages your site will support.<br />PhpGedView will use its default actions.');
-					print "</span>";
-				}
-			?>
-		</td>
-	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show contextual <b>?</b> Help links'), help_link('SHOW_CONTEXT_HELP'); ?>

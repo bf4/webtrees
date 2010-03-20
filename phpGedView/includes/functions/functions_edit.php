@@ -72,6 +72,28 @@ function edit_field_yes_no($name, $selected='', $extra='') {
 	);
 }
 
+// Print an edit control for a contact method field
+function edit_field_contact($name, $selected='', $extra='') {
+	global $PGV_STORE_MESSAGES;
+	// Different ways to contact the users
+	$CONTACT_METHODS=array(
+		'messaging' =>i18n::translate('PhpGedView internal messaging'),
+		'messaging2'=>i18n::translate('Internal messaging with emails'),
+		'messaging3'=>i18n::translate('PhpGedView sends emails with no storage'),
+		'mailto'    =>i18n::translate('Mailto link'),
+		'none'      =>i18n::translate('No contact'),
+	);
+	if (!$PGV_STORE_MESSAGES) {
+		unset($CONTACT_METHODS['messaging'], $CONTACT_METHODS['messaging2']);
+	}
+	return select_edit_control($name, $CONTACT_METHODS, null, $selected, $extra);
+}
+
+// Print an edit control for a language field
+function edit_field_language($name, $selected='', $extra='') {
+	return select_edit_control($name, i18n::installed_languages(), null, $selected, $extra);
+}
+
 // Print an edit control for a ADOP field
 function edit_field_adop($name, $selected='', $extra='') {
 	global $ADOP_CODES;
@@ -87,6 +109,7 @@ function edit_field_pedi($name, $selected='', $extra='') {
 // Print an edit control for a RELA field
 function edit_field_rela($name, $selected='', $extra='') {
 	global $RELA_CODES;
+	uasort($RELA_CODES, 'strcasecmp');
 	// The user is allowed to specify values that aren't in the list.
 	if (!array_key_exists($selected, $RELA_CODES)) {
 		$RELA_CODES[$selected]=$selected;

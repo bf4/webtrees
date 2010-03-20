@@ -35,9 +35,6 @@
 // CONFIG notes. Below are some comments that point to where this script can be customized.
 // Note: Make sure to include a <tbody></tbody> in your table's HTML
 
-//	To load the file XXX for module YYY, call
-	loadLangFile("GEDFact_assistant:lang");
-	
 ?>
 <script src="modules/GEDFact_assistant/_CENS/js/chapman_codes.js" type="text/javascript"></script>
 <script>

@@ -2981,11 +2981,6 @@ case 'ENABLE_CLIPPINGS_CART':
 	$text=i18n::translate('The clippings cart allows users to add people to a temporary file that they can download in GEDCOM format for subsequent import into their genealogy software.');
 	break;
 
-case 'ENABLE_MULTI_LANGUAGE':
-	$title=i18n::translate('Allow user to change language');
-	$text=i18n::translate('Set to <b>Yes</b> to allow users to override the site\'s default language.  They can do this through their browser\'s preferred language configuration, configuration options on their Account page, or through links or buttons on most PhpGedView pages.');
-	break;
-
 case 'ENABLE_RSS':
 	$title=i18n::translate('Enable RSS');
 	$text=i18n::translate('This option lets you disable the RSS feature.<br /><br />RSS lets users monitor your site for changes to the Index page without actually visiting your site periodically.  If too many users make use of this feature or if the refresh frequency set by these users is too high, RSS can use up too much bandwidth or server capacity.<br /><br />This <a href=\'http://en.wikipedia.org/wiki/RSS\' target=\'_blank\' title=\'Wikipedia article\'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats.');

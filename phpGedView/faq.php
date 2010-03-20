@@ -32,8 +32,6 @@
 define('PGV_SCRIPT_NAME', 'faq.php');
 require './config.php';
 
-loadLangFile("pgv_confighelp");
-
 global $PGV_IMAGES, $faqs;
 
 // -- print html header information
@@ -232,8 +230,6 @@ if ($action == "edit") {
 }
 
 if ($action == "show") {
-	loadLangFile("pgv_faqlib");
-
 	$faqs = get_faq_data();
 	echo '<table class="list_table width100">';
 	if (count($faqs) == 0) {

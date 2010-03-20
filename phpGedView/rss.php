@@ -34,13 +34,6 @@
 define('PGV_SCRIPT_NAME', 'rss.php');
 require './config.php';
 
-if (isset($_SESSION["CLANGUAGE"])) $oldlang = $_SESSION["CLANGUAGE"];
-else $oldlang = "english";
-if (!empty($lang)) {
-	$changelanguage = "yes";
-	$NEWLANGUAGE = $lang;
-}
-
 require_once PGV_ROOT.'includes/classes/class_feedcreator.php';
 require_once PGV_ROOT.'includes/functions/functions_rss.php';
 require_once PGV_ROOT.'includes/index_cache.php';
@@ -340,7 +333,5 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 	saveCachedBlock($cacheControl, $rssStyle, $content);
 	ob_end_flush();
 }
- //-- preserve the old language by storing it back in the session
-$_SESSION['CLANGUAGE'] = $oldlang;
 
 ?>
