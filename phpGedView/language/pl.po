@@ -1847,7 +1847,7 @@ msgstr "Zobacz połączenia"
 #: ../edit_privacy.php:704
 #: ../edit_privacy.php:751
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: ../manageservers.php:363
 #: ../manageservers.php:438
@@ -3269,7 +3269,7 @@ msgstr "hebrajski i gregoriański"
 #: ../editconfig_gedcom.php:994
 #: ../calendar.php:293
 msgid "Hijri"
-msgstr ""
+msgstr "muzułmański"
 
 #: ../editconfig_gedcom.php:995
 #: ../includes/specialchars.php:83
@@ -3344,7 +3344,7 @@ msgstr "Limit czasu PHP:"
 #: ../editconfig_gedcom.php:1149
 #: ../editconfig_gedcom.php:1150
 msgid "Multimedia"
-msgstr ""
+msgstr "Multimedia"
 
 #: ../editconfig_gedcom.php:1157
 #: ../help_text.php:3240
@@ -4249,7 +4249,7 @@ msgstr "%s nie może zostać pobrany."
 #: ../uploadgedcom.php:1116
 #: ../usermigrate.php:146
 msgid "Import"
-msgstr ""
+msgstr "Import"
 
 #: ../editgedcoms.php:188
 msgid "This GEDCOM has not yet been imported."
@@ -4601,7 +4601,7 @@ msgstr "Zarządzaj zakładkami"
 
 #: ../module_admin.php:195
 msgid "Manage Sidebars"
-msgstr ""
+msgstr "Zarządzaj Panelem"
 
 #: ../module_admin.php:202
 #: ../editlang_edit_settings.php:188
@@ -4639,11 +4639,11 @@ msgstr "Zakładka?"
 
 #: ../module_admin.php:208
 msgid "Menu?"
-msgstr ""
+msgstr "Menu?"
 
 #: ../module_admin.php:209
 msgid "Sidebar?"
-msgstr ""
+msgstr "Panel?"
 
 #: ../module_admin.php:210
 #: ../module_admin.php:255
@@ -5720,7 +5720,7 @@ msgstr "Podstawowy"
 #: ../branches.php:84
 #: ../search.php:365
 msgid "Daitch-Mokotoff"
-msgstr ""
+msgstr "Daitch-Mokotoff"
 
 #: ../branches.php:108
 msgid "Direct line ancestors-ancestors"
@@ -7303,35 +7303,35 @@ msgstr "Poniższa wiadomość została nadesłana na twoje konto od "
 #: ../includes/sort_tables_utf8.php:78
 #: ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
-msgstr ""
+msgstr "(לא-ידוע)"
 
 #: ../includes/sort_tables_utf8.php:79
 #: ../includes/sort_tables_utf8.php:89
 msgid "(غير معروف)"
-msgstr ""
+msgstr "(غير معروف)"
 
 #: ../includes/sort_tables_utf8.php:80
 #: ../includes/sort_tables_utf8.php:90
 msgid "(άγνωστος/η)"
-msgstr ""
+msgstr "(άγνωστος/η)"
 
 #: ../includes/sort_tables_utf8.php:81
 #: ../includes/sort_tables_utf8.php:91
 msgid "(неопределено)"
-msgstr ""
+msgstr "(неопределено)"
 
 #: ../includes/sort_tables_utf8.php:82
 #: ../includes/sort_tables_utf8.php:92
 msgid "(未知)"
-msgstr ""
+msgstr "(未知)"
 
 #: ../includes/sort_tables_utf8.php:83
 msgid "(vô danh)"
-msgstr ""
+msgstr "(vô danh)"
 
 #: ../includes/sort_tables_utf8.php:93
 msgid "(không biết tuổi)"
-msgstr ""
+msgstr "(không biết tuổi)"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
@@ -8750,7 +8750,7 @@ msgstr "Więcej informacji udziela"
 
 #: ../includes/functions/functions_print.php:1340
 msgid "?"
-msgstr ""
+msgstr "?"
 
 #: ../includes/functions/functions_print.php:1661
 msgid "Relationship"
@@ -8798,7 +8798,7 @@ msgstr "Kod Świątyni Mormońskiej:"
 
 #: ../includes/functions/functions_print.php:2016
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: ../includes/functions/functions_print.php:2097
 #: ../help_text.php:3814
@@ -11052,7 +11052,7 @@ msgstr[2] "%d zalogowanych użytkowników"
 
 #: ../includes/classes/class_sidebar.php:57
 msgid "Sidebar"
-msgstr ""
+msgstr "Panel"
 
 #: ../includes/classes/class_treenav.php:171
 msgid "View this tree in the full page interactive tree"
@@ -11669,7 +11669,7 @@ msgstr "Brat przyrodni"
 #: ../includes/controllers/individual_ctrl.php:853
 #: ../includes/controllers/individual_ctrl.php:854
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #: ../includes/controllers/individual_ctrl.php:840
 msgid "Ex-Spouse"
@@ -11765,7 +11765,7 @@ msgstr "Wykres statystyk"
 #: ../statisticsplot.php:932
 #: ../statisticsplot.php:991
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #: ../statisticsplot.php:951
 msgid "Month of birth of first child in a relation"
@@ -11816,7 +11816,7 @@ msgstr "Zarządzaj konfiguracją Lightbox-Album"
 
 #: ../modules/lightbox/pgv_module.php:18
 msgid "Lightbox"
-msgstr ""
+msgstr "Lightbox"
 
 #: ../modules/lightbox/lb_editconfig.php:53
 #: ../modules/googlemap/places.php:162
@@ -11998,7 +11998,7 @@ msgstr "Zamknij"
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:48
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:53
 msgid "Album"
-msgstr ""
+msgstr "Album"
 
 #: ../modules/lightbox/functions/lb_indi_doors_0.php:58
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:61
@@ -12288,7 +12288,7 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/census_1_ctrl.php:105
 msgid "Add/Insert Blank Row"
-msgstr ""
+msgstr "Dodaj/wstaw pustą linię"
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:47
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:39
@@ -13166,7 +13166,7 @@ msgstr "Lista wszystkich miejsc z danego pliku GEDCOM. Domyślnie NIE BĘDĄ ZA�
 
 #: ../modules/googlemap/pgv_module.php:18
 msgid "Googlemap"
-msgstr ""
+msgstr "Googlemap"
 
 #: ../modules/googlemap/places_edit.php:646
 msgid "Use this value"
@@ -13210,19 +13210,19 @@ msgstr "Maksimum"
 
 #: ../modules/googlemap/places_edit.php:791
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: ../modules/googlemap/places_edit.php:792
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: ../modules/googlemap/places_edit.php:801
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #: ../modules/googlemap/places_edit.php:802
 msgid "W"
-msgstr ""
+msgstr "W"
 
 #: ../modules/googlemap/places_edit.php:812
 #: ../modules/googlemap/places_edit.php:820
@@ -13340,7 +13340,7 @@ msgstr "Współczynnik powiększenia mapy"
 
 #: ../modules/googlemap/editconfig.php:325
 msgid "Min."
-msgstr ""
+msgstr "Min."
 
 #: ../modules/googlemap/editconfig.php:330
 msgid "Max."
@@ -22460,7 +22460,7 @@ msgstr "Blok diagramów pozwala umieścić na stronie głównej lub stronie port
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."
