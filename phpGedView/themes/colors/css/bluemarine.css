@@ -1625,7 +1625,7 @@ dt {
 .ui-widget-content a 						{ color:#336699; }
 .ui-widget-content a:hover 					{ color:#336699; text-decoration:underline;}
 
-.ui-tabs .ui-tabs-nav 						{ border-color:#888888; background: #9DA5B4; }
+.ui-tabs .ui-tabs-nav 						{ border-color:#888888; background: #6598cb; opacity: 0.67;}
 .ui-tabs .ui-tabs-nav li 					{ border-color:#888888; background: #efefee;}
 .ui-tabs .ui-tabs-nav li a 					{ color:#555555; padding: .2em .3em .2em .3em;  }
 .ui-tabs .ui-tabs-nav li:hover				{ color:red; background: #e0e7ff;}
