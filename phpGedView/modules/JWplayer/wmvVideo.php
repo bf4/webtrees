@@ -55,7 +55,7 @@ $wmvVideo=decrypt(safe_GET('wmvVideo'));
 	var cfg = {
 		file:'<?php echo $wmvVideo; ?>',
 		<?php if (preg_match("/\.mp3$/i", $wmvVideo)) { ?>
-			logo:'images/audio.png',
+			logo:'modules/JWplayer/audio.png',
 		<?php } ?>
 		autostart:'true',
 		overstretch:'true',
