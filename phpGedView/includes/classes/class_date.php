@@ -405,13 +405,13 @@ class CalendarDate {
 		}
 		// Don't show exact details for inexact dates
 		if (!$this->d) {
-			$format=str_replace(array('d', 'j', 'l', 'D', 'N', 'S', 'w', 'z'), '', $format);
+			$format=str_replace(array('%d', '%j', '%l', '%D', '%N', '%S', '%w', '%z'), '', $format);
 		}
 		if (!$this->m) {
-			$format=str_replace(array('F', 'm', 'M', 'n', 't'), '', $format);
+			$format=str_replace(array('%F', '%m', '%M', '%n', '%t'), '', $format);
 		}
 		if (!$this->y) {
-			$format=str_replace(array('t', 'L', 'G', 'y', 'Y'), '', $format);
+			$format=str_replace(array('%t', '%L', '%G', '%y', '%Y'), '', $format);
 		}
 		// If we've trimmed the format, also trim the punctuation
 		if (!$this->d || !$this->m || !$this->y) {
