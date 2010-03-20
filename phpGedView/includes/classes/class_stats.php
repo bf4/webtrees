@@ -1790,7 +1790,7 @@ class stats {
 				$half = floor(count($counter)/2);
 				$chtt = substr_replace(i18n::translate('Average age related to death century'), '|', $counter[$half], 1);
 			}
-			return '<img src="'.encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chm=D,FF0000,2,0,3,1|N*f1*,000000,0,-1,11,1|N*f1*,000000,1,-1,11,1&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chtt={$chtt}&amp;chd={$chd}&amp;chco=0000FF,FFA0CB,FF0000&amp;chbh=20,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}&amp;chdl=".i18n::translate('Male').'|'.i18n::translate('Female').'|'.i18n::translate('Average age at death'))."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".i18n::translate('Average age related to death century')."\" title=\"".i18n::translate('Average age related to death century')."\" />";
+			return '<img src="'.encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chm=D,FF0000,2,0,3,1|N*f1*,000000,0,-1,11,1|N*f1*,000000,1,-1,11,1&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chtt={$chtt}&amp;chd={$chd}&amp;chco=0000FF,FFA0CB,FF0000&amp;chbh=20,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}&amp;chdl=".i18n::translate('Males').'|'.i18n::translate('Females').'|'.i18n::translate('Average age at death'))."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".i18n::translate('Average age related to death century')."\" title=\"".i18n::translate('Average age related to death century')."\" />";
 		} else {
 			$sex_search = '';
 			$years = '';
@@ -2670,7 +2670,7 @@ class stats {
 				$half = floor(count($counter)/2);
 				$chtt = substr_replace(i18n::translate('Average age in century of marriage'), '|', $counter[$half], 1);
 			}
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chm=D,FF0000,2,0,3,1|{$chmm}{$chmf}&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chtt={$chtt}&amp;chd={$chd}&amp;chco=0000FF,FFA0CB,FF0000&amp;chbh=20,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}&amp;chdl=".i18n::translate('Male')."|".i18n::translate('Female')."|".i18n::translate('Average age'))."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".i18n::translate('Average age in century of marriage')."\" title=\"".i18n::translate('Average age in century of marriage')."\" />";
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chm=D,FF0000,2,0,3,1|{$chmm}{$chmf}&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chtt={$chtt}&amp;chd={$chd}&amp;chco=0000FF,FFA0CB,FF0000&amp;chbh=20,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}&amp;chdl=".i18n::translate('Males')."|".i18n::translate('Females')."|".i18n::translate('Average age'))."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".i18n::translate('Average age in century of marriage')."\" title=\"".i18n::translate('Average age in century of marriage')."\" />";
 		} else {
 			$years = '';
 			if ($year1>=0 && $year2>=0) {

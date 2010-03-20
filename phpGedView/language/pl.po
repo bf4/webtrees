@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Fab\n"
+"Project-Id-Version: webtrees\n"
 "Report-Msgid-Bugs-To: i18n@webtrees.net\n"
 "POT-Creation-Date: 2010-03-19 06:59+0000\n"
 "PO-Revision-Date: \n"
@@ -10942,14 +10942,14 @@ msgstr "nieznane"
 #: ../includes/classes/class_stats.php:743
 #: ../includes/classes/class_stats.php:745
 msgid "Living"
-msgstr "Żyjący(a)"
+msgstr "Żyjący"
 
 #: ../includes/classes/class_stats.php:734
 #: ../includes/classes/class_stats.php:737
 #: ../includes/classes/class_stats.php:744
 #: ../includes/classes/class_stats.php:746
 msgid "Dead"
-msgstr "Zmarłych"
+msgstr "Zmarli"
 
 #: ../includes/classes/class_stats.php:1191
 msgid "Highest population"
