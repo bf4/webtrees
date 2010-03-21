@@ -65,7 +65,7 @@ if (!$controller->isPrintPreview()) {
 		?>
 	<table>
 		<tr><td class="person<?php print $col; ?>" style="padding: 5px" valign="top">
-			<?php echo i18n::translate('Add another person to chart'), help_link('add_person'), '<br />', i18n::translate('Person ID:'); ?>
+			<?php echo i18n::translate('Add another person to chart'), help_link('add_person'), '<br />', i18n::translate('Person ID'); ?>
 			<input class="pedigree_form" type="text" size="5" id="newpid" name="newpid" />
 			<?php print_findindi_link("newpid",""); ?>
 			<br />
@@ -322,17 +322,10 @@ var oldMx = 0;
 		<td><input type="button" value="<?php print i18n::translate('Clear Chart'); ?>" onclick="window.location = 'lifespan.php?clear=1';" /></td>
 		</tr>
 	</table>
-	<?php if(count($controller->people) > 0){
-	// Allow special processing for different languages
-	$func="num_people_localisation_{$lang_short_cut[$LANGUAGE]}";
-	if (!function_exists($func)) {
-		if(count($controller->people) == 1) print "<br /><b>".count($controller->people)." ".i18n::translate('Individual')."</b>";
-		else print "<br /><b>".count($controller->people)." ".i18n::translate('Individuals')."</b>";
-	}
-	else
-		// Localise the num of people
-		$func(count($controller->people));
-	} ?>
+	<?php 
+	$people = count($controller->people);
+	print "<br /><b>".i18n::plural('%d Individual', '%d Individuals', $people, $people)."</b>";
+	?>
 </form>
 <?php } ?>
 </td></tr></table>
