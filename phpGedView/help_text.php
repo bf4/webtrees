@@ -5170,7 +5170,7 @@ case 'menu':
 	break;
 
 case 'menu_help':
-	$title=i18n::translate('Index Page Menus')
+	$title=i18n::translate('Index Page Menus');
 	$text=i18n::translate('<div class="name_head"><center><b>MENUS</b></center></div><br />The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href="#menu_fam">Welcome page</a><br /></li><li><a href="#menu_myged">My Page</a><br /></li><li><a href="#menu_charts">Charts</a><br /></li><li><a href="#menu_lists">Lists</a><br /></li><li><a href="#menu_annical">Anniversary Calendar</a><br /></li><li><a href="#menu_clip">Family Tree Clippings Cart</a><br /></li><li><a href="#menu_search">Search</a><br /></li><li><a href="#menu_help">Help</a></li></ul>');
 	break;
 
