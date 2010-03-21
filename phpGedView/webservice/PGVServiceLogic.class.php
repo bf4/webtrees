@@ -672,7 +672,7 @@ class PGVServiceLogic extends GenealogyService {
 				$date = new GedcomDate($array_querys['BIRTHDATE']);
 				$date = $date->MinDate();
 				//$day="", $month="", $year="", $fact="", $allgeds=false, $ANDOR="AND")
-				$results_from_birth_date = search_indis_dates($date->d,$date->Format('O'),$date->y,'BIRT');
+				$results_from_birth_date = search_indis_dates($date->d,$date->Format('%O'),$date->y,'BIRT');
 			} else {
 				$both_dates_exist = false;
 			}
@@ -681,7 +681,7 @@ class PGVServiceLogic extends GenealogyService {
 			if (array_key_exists('DEATHDATE', $array_querys)) {
 				$date = new GedcomDate($array_querys['DEATHDATE']);
 				$date = $date->MinDate();
-				$results_from_death_date = search_indis_dates($date->d,$date->Format('O'),$date->y,'DEAT');
+				$results_from_death_date = search_indis_dates($date->d,$date->Format('%O'),$date->y,'DEAT');
 			} else {
 				$both_dates_exist = false;
 			}

@@ -184,7 +184,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 				$content .= "</td>";
 
 				$today=new JewishDate($yahrzeit['jd']);
-				$td=new GedcomDate($today->Format('@ A O E'));
+				$td=new GedcomDate($today->Format('%@ %A %O %E'));
 
 				// death/yahrzeit event date
 				$content .= "<td class=\"list_value_wrap\">";

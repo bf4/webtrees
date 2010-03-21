@@ -194,7 +194,7 @@ class Person extends GedcomRecord {
 	* @return string the year of birth
 	*/
 	function getBirthYear(){
-		return $this->getBirthDate()->MinDate()->Format('Y');
+		return $this->getBirthDate()->MinDate()->Format('%Y');
 	}
 
 	/**
@@ -248,7 +248,7 @@ class Person extends GedcomRecord {
 	* @return string the year of death
 	*/
 	function getDeathYear() {
-		return $this->getDeathDate()->MinDate()->Format('Y');
+		return $this->getDeathDate()->MinDate()->Format('%Y');
 	}
 
 	/**

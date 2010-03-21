@@ -197,9 +197,9 @@ class GrampsExport {
 		// Since no calendar is specified, should we always convert to gregorian?
 		$date=$date->convert_to_cal('gregorian');
 		return
-			($date->y==0 ? '????' : $date->Format('Y')) .'-'.
-			($date->m==0 ? '??'   : $date->Format('m')) .'-'.
-			($date->d==0 ? '??'   : $date->Format('d'));
+			($date->y==0 ? '????' : $date->Format('%Y')) .'-'.
+			($date->m==0 ? '??'   : $date->Format('%m')) .'-'.
+			($date->d==0 ? '??'   : $date->Format('%d'));
 	}
 
 	/**

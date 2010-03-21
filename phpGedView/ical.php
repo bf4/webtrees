@@ -238,9 +238,9 @@ function getIcalDate($gedDate, $endDate=false){
 	$date = $date->MinDate();
 	$date = $date->convert_to_cal('gregorian');
 
-	$tmp = $date->Format('Y');
-	$tmp.=($date->m) ? $date->Format('m') : '00';
-	$tmp.=($date->d) ? $date->Format('d') : '00';
+	$tmp = $date->Format('%Y');
+	$tmp.=($date->m) ? $date->Format('%m') : '00';
+	$tmp.=($date->d) ? $date->Format('%d') : '00';
 
 	return $tmp;
 }
