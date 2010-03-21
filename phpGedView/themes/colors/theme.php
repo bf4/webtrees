@@ -32,11 +32,26 @@ if (!defined('PGV_PHPGEDVIEW')) {
         exit;
 }
 /**
- * Check to see if there was a sub color change and if so
- * set the subColor variable to that new value
- *
+ *  Define the default palette to be used.  Set $subColor
+ *  to one of the collowing values to determine the default:
+ *  
+ *    aquamarine,
+ *    ash,
+ *    belgianchocolate,
+ *    bluelagoon,
+ *    bluemarine,
+ *    coldday,
+ *    greenbeam,
+ *    mediterranio,
+ *    mercury,
+ *    nocturnal,
+ *    olivia,
+ *    pinkplastic,
+ *    shinytomato,
+ *    tealtop
  */
-$subColor = "ash"; // this is the default color
+
+$subColor = "ash"; // this is the default palette
 
 if (isset($_SESSION['newColor']))  {
 	$subColor = $_SESSION['newColor'];
