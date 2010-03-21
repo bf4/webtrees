@@ -2474,7 +2474,7 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 	case 'spobro': return /* I18N: brother-in-law */ i18n::translate('spouses\'s brother');
 
 	case 'browif': return /* I18N: sister-in-law  */ i18n::translate('brother\'s wife');
-	case 'sishub': return /* I18N: brother-in-law */ i18n::translate('sister\'s husband');
+	case 'sishus': return /* I18N: brother-in-law */ i18n::translate('sister\'s husband');
 
 	case 'husmot': return /* I18N: mother-in-law  */ i18n::translate('husband\'s mother');
 	case 'wifmot': return /* I18N: mother-in-law  */ i18n::translate('wife\'s mother');
@@ -2619,12 +2619,19 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 	case 'parparbro': return /* I18N: great-uncle       */ i18n::translate('parent\'s parent\'s brother');
 	case 'parparsib': return /* I18N: great-aunt/uncle  */ i18n::translate('parent\'s parent\'s sibling');
 	
-	case 'motbrowif': return /* I18N: aunt                       */ i18n::translate('mother\'s brother\'s wife');
-	case 'motsishus': return /* I18N: uncle                      */ i18n::translate('mother\'s sister\'s husband');
-	case 'fatbrowif': return /* I18N: aunt                       */ i18n::translate('father\'s brother\'s wife');
-	case 'fatsishus': return /* I18N: uncle                      */ i18n::translate('father\'s sister\'s husband');
-	case 'parbrowif': return /* I18N: aunt                       */ i18n::translate('parent\'s brother\'s wife');
-	case 'parsishus': return /* I18N: uncle                      */ i18n::translate('parent\'s sister\'s husband');
+	case 'brodauhus': return /* I18N: nephew-in-law     */ i18n::translate('brother\'s daughter\'s husband');
+	case 'brosonwif': return /* I18N: niece-in-law      */ i18n::translate('brother\'s son\'s wife');
+	case 'sisdauhus': return /* I18N: nephew-in-law     */ i18n::translate('sisters\'s daughter\'s husband');
+	case 'sissonwif': return /* I18N: niece-in-law      */ i18n::translate('sisters\'s son\'s wife');
+	case 'sibdauhus': return /* I18N: nephew-in-law     */ i18n::translate('sibling\'s daughter\'s husband');
+	case 'sibsonwif': return /* I18N: niece-in-law      */ i18n::translate('sibling\'s son\'s wife');
+	
+	case 'motbrowif': return /* I18N: aunt              */ i18n::translate('mother\'s brother\'s wife');
+	case 'motsishus': return /* I18N: uncle             */ i18n::translate('mother\'s sister\'s husband');
+	case 'fatbrowif': return /* I18N: aunt              */ i18n::translate('father\'s brother\'s wife');
+	case 'fatsishus': return /* I18N: uncle             */ i18n::translate('father\'s sister\'s husband');
+	case 'parbrowif': return /* I18N: aunt              */ i18n::translate('parent\'s brother\'s wife');
+	case 'parsishus': return /* I18N: uncle             */ i18n::translate('parent\'s sister\'s husband');
 	}
 
 	// Look for generic/pattern relationships.
@@ -2831,6 +2838,9 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 
 	// We don't have a specific name for this relationship, and we can't match it with a pattern.
 	// Just spell it out.
+
+	// TODO: long relationships are a bit ridiculous - although tecnically correct.
+	// Perhaps translate long paths as "a distant blood relative", or "a distant relative by marriage"
 	switch (substr($path, 0, 3)) {
 	case 'mot': $relationship=i18n::translate('mother'  ); break;
 	case 'fat': $relationship=i18n::translate('father'  ); break;
