@@ -1051,7 +1051,7 @@ class MenuBar
 		$fileCount=0;
 		$dir = opendir($filePath); # Open the path
 		while ($file = readdir($dir)) { 
-  			if (eregi("\.css",$file)) { # Look at only files with a .css extension
+  			if (!substr_compare($file, '.css', -4)) { # Look at only files with a .css extension
     		$len = strlen($file);
     		$file = substr($file,0,$len-4);  # Remove .css 
     		$colorList[] = $file;
