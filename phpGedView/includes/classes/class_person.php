@@ -1278,7 +1278,7 @@ class Person extends GedcomRecord {
 				if ($sdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sdate)<=0 && GedcomDate::Compare($sdate, $this->getEstimatedDeathDate())<=0) {
 					$srec=preg_replace('/^1 .*/', '1 _'.$sEvent->getTag().'_SPOU ', $srec);
 					$srec.="\n".get_sub_record(2, '2 ASSO @'.$this->xref.'@', $srec);
-					switch ($souse->getSex()) {
+					switch ($spouse->getSex()) {
 					case 'M': $srec.="\n2 ASSO @".$spouse->getXref()."@\n3 RELA hus";
 					case 'F': $srec.="\n2 ASSO @".$spouse->getXref()."@\n3 RELA wif";
 					case 'U': $srec.="\n2 ASSO @".$spouse->getXref()."@\n3 RELA spo";
