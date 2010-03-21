@@ -944,7 +944,17 @@ class Person extends GedcomRecord {
 
 		if (is_null($person)) return;
 		if (!$SHOW_RELATIVES_EVENTS) return;
-		if ($sosa>7) return; // sosa max for recursive call
+
+		switch ($sosa) {
+		case 1: $rela=''; break;
+		case 2: $rela='fat'; break;
+		case 3: $rela='mot'; break;
+		case 4: $rela='fatfat'; break;
+		case 5: $rela='fatmot'; break;
+		case 6: $rela='motfat'; break;
+		case 7: $rela='motmot'; break;
+		default: return; // End recursion at G-G-Parent
+		}
 
 		$fams = $person->getChildFamilies();
 		// Only include events between birth and death
@@ -973,10 +983,10 @@ class Person extends GedcomRecord {
 								if (!$sEvent->canShow()) {
 									$factrec .= "\n2 RESN privacy";
 								}
-								if ($parent->getSex()=='M') {
-									$factrec.="\n2 ASSO @".$parent->getXref()."@\n3 RELA *sosa_".($sosa*2);
-								} elseif ($parent->getSex()=='F') {
-									$factrec.="\n2 ASSO @".$parent->getXref()."@\n3 RELA *sosa_".($sosa*2+1);
+								if ($parent->getSex()=='F') {
+									$factrec.="\n2 ASSO @".$parent->getXref()."@\n3 RELA ".$rela."mot";
+								} else {
+									$factrec.="\n2 ASSO @".$parent->getXref()."@\n3 RELA ".$rela."fat";
 								}
 								$event=new Event($factrec, 0);
 								$event->setParentObject($this);
@@ -1007,10 +1017,6 @@ class Person extends GedcomRecord {
 						$fact='_MARR_MOTH';
 						$rela='mother';
 					}
-				} else {
-					// Not currently used.  Do we want separate grandmother/grandfather events?
-					$fact='_MARR_GPAR';
-					$rela='grandparent';
 				}
 				if (strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 					$sfamids = $parent->getSpouseFamilies();
@@ -1272,7 +1278,11 @@ class Person extends GedcomRecord {
 				if ($sdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sdate)<=0 && GedcomDate::Compare($sdate, $this->getEstimatedDeathDate())<=0) {
 					$srec=preg_replace('/^1 .*/', '1 _'.$sEvent->getTag().'_SPOU ', $srec);
 					$srec.="\n".get_sub_record(2, '2 ASSO @'.$this->xref.'@', $srec);
-					$srec.="\n2 ASSO @".$spouse->getXref()."@\n3 RELA *spouse";
+					switch ($souse->getSex()) {
+					case 'M': $srec.="\n2 ASSO @".$spouse->getXref()."@\n3 RELA hus";
+					case 'F': $srec.="\n2 ASSO @".$spouse->getXref()."@\n3 RELA wif";
+					case 'U': $srec.="\n2 ASSO @".$spouse->getXref()."@\n3 RELA spo";
+					}
 					$event = new Event($srec, 0);
 					$event->setParentObject($this);
 					$this->indifacts[] = $event;
