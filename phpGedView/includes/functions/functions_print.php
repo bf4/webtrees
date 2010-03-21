@@ -110,6 +110,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				$personlinks .= "<a href=\"".encode_url("pedigree.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&PEDIGREE_GENERATIONS={$OLD_PGENS}&talloffset={$talloffset}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1><b>".i18n::translate('Pedigree Tree')."</b></a>";
 
 				if (file_exists(PGV_ROOT.'modules/googlemap/pedigree_map.php')) {
+					loadLangFile('googlemap:lang');
 					if ($TEXT_DIRECTION=="ltr") $title = i18n::translate('Pedigree Map').": ".$pid;
 					else $title = $pid." :".i18n::translate('Pedigree Map');
 					$personlinks .= "<br /><a href=\"".encode_url("module.php?mod=googlemap&pgvaction=pedigree_map&rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".i18n::translate('Pedigree Map')."</b></a>";
@@ -435,7 +436,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	global $BROWSERTYPE, $SEARCH_SPIDER;
 	global $view, $cart;
 	global $CHARACTER_SET, $PGV_IMAGE_DIR, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD, $INDEX_DIRECTORY;
-	global $QUERY_STRING, $action, $query, $theme_name;
+	global $QUERY_STRING, $action, $query, $changelanguage, $theme_name;
 	global $FAVICON, $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile;
 	global $PGV_IMAGES, $TEXT_DIRECTION, $ONLOADFUNCTION, $REQUIRE_AUTHENTICATION, $SHOW_SOURCES, $ENABLE_RSS, $RSS_FORMAT;
 	global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE;
@@ -480,7 +481,10 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		}
 	}
 	$javascript = '';
-	$query_string = $QUERY_STRING;
+	if (isset($changelanguage))
+		$query_string=normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE=");
+	else
+		$query_string = $QUERY_STRING;
 	if ($view!='preview' && $view!='simple') {
 		$old_META_AUTHOR = $META_AUTHOR;
 		$old_META_PUBLISHER = $META_PUBLISHER;
@@ -724,20 +728,26 @@ function execution_stats() {
 
 //-- print a form to change the language
 function print_lang_form($option=0) {
-	$language_menu=MenuBar::getLanguageMenu();
-	if (count($language_menu->submenus)<2) {
-		return;
+	global $ENABLE_MULTI_LANGUAGE;
+
+	if ($ENABLE_MULTI_LANGUAGE) {
+		//-- don't show the form if there is only one language enabled
+		$language_menu=MenuBar::getLanguageMenu();
+		if (count($language_menu->submenus)<2) {
+			return;
+		}
+
+		echo '<div class="lang_form">';
+		switch($option) {
+		case 1:
+			echo $language_menu->getMenu();
+			break;
+		default:
+			echo $language_menu->getMenuAsDropdown();
+			break;
+		}
+		echo '</div>';
 	}
-	echo '<div class="lang_form">';
-	switch($option) {
-	case 1:
-		echo $language_menu->getMenu();
-		break;
-	default:
-		echo $language_menu->getMenuAsDropdown();
-		break;
-	}
-	echo '</div>';
 }
 /**
 * print user links
@@ -1390,6 +1400,26 @@ function write_align_with_textdir_check($t_dir, $return=false)
 	if ($return) return $out;
 	echo $out;
 }
+//-- print color theme sub type change dropdown box
+function print_color_dropdown($style=0) {
+	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES;
+
+	if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {
+		echo '<div class="color_form">';
+		$color_menu=MenuBar::getColorMenu();
+		switch ($style) {
+		case 0:
+			echo $color_menu->getMenuAsDropdown();
+			break;
+		case 1:
+			echo $color_menu->getMenu();
+			break;
+		}
+		echo '</div>';
+	} else {
+		echo '&nbsp;';
+	}
+}
 //-- print theme change dropdown box
 function print_theme_dropdown($style=0) {
 	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES;
@@ -1410,7 +1440,6 @@ function print_theme_dropdown($style=0) {
 		echo '&nbsp;';
 	}
 }
-
 /**
 * Prepare text with parenthesis for printing
 * Convert & to &amp; for xhtml compliance
@@ -2178,18 +2207,18 @@ function init_calendar_popup() {
 	echo
 		PGV_JS_START,
 		'cal_setMonthNames(',
-			'"', i18n::translate_c('NOMINATIVE', 'January'), '",',
-			'"', i18n::translate_c('NOMINATIVE', 'February'), '",',
-			'"', i18n::translate_c('NOMINATIVE', 'March'), '",',
-			'"', i18n::translate_c('NOMINATIVE', 'April'), '",',
-			'"', i18n::translate_c('NOMINATIVE', 'May'), '",',
-			'"', i18n::translate_c('NOMINATIVE', 'June'), '",',
-			'"', i18n::translate_c('NOMINATIVE', 'July'), '",',
-			'"', i18n::translate_c('NOMINATIVE', 'August'), '",',
-			'"', i18n::translate_c('NOMINATIVE', 'September'), '",',
-			'"', i18n::translate_c('NOMINATIVE', 'October'), '",',
-			'"', i18n::translate_c('NOMINATIVE', 'November'), '",',
-			'"', i18n::translate_c('NOMINATIVE', 'December'), '");',
+			'"', i18n::translate('January'), '",',
+			'"', i18n::translate('February'), '",',
+			'"', i18n::translate('March'), '",',
+			'"', i18n::translate('April'), '",',
+			'"', i18n::translate('May'), '",',
+			'"', i18n::translate('June'), '",',
+			'"', i18n::translate('July'), '",',
+			'"', i18n::translate('August'), '",',
+			'"', i18n::translate('September'), '",',
+			'"', i18n::translate('October'), '",',
+			'"', i18n::translate('November'), '",',
+			'"', i18n::translate('December'), '");',
 			'cal_setDayHeaders(',
 			'"', i18n::translate('Sun'), '",',
 			'"', i18n::translate('Mon'), '",',

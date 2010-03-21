@@ -107,7 +107,7 @@ class MenuBar
 		}
 
 		//-- main menu
-		$menu = new Menu(i18n::translate('My Page'), "index.php?ctype=user", "down");
+		$menu = new Menu(i18n::translate('MyGedView Portal'), "index.php?ctype=user", "down");
 		if (!empty($PGV_IMAGES["mygedview"]["large"])) {
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["large"]);
 		} elseif (!empty($PGV_IMAGES["gedcom"]["large"])) {
@@ -248,6 +248,7 @@ class MenuBar
 		if (file_exists(PGV_ROOT.'statistics.php')) $menuList["statistics"] = i18n::translate('Statistics');
 		if (file_exists(PGV_ROOT.'treenav.php')) $menuList["treenav"] = i18n::translate('Interactive Tree');
 		if (file_exists(PGV_ROOT.'modules/googlemap/pedigree_map.php')) {
+			loadLangFile('googlemap:lang');
 			$menuList["pedigree_map"] = i18n::translate('Pedigree Map');//added for pedigree_map
 		}
 		asort($menuList);
@@ -990,8 +991,7 @@ class MenuBar
 		$menu->addSubmenu($submenu);
 		return $menu;
 	}
-
-	/**
+		/**
 	* get the menu with links change to each theme
 	* @return Menu the menu item
 	*/
@@ -1035,28 +1035,102 @@ class MenuBar
 		}
 	}
 	/**
+	* get the menu with links change to each color themes subcolor type
+	* @return Menu the menu item
+	*/
+	static function getColorMenu() {
+		global $SEARCH_SPIDER, $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR;
+		
+		$current=get_user_setting(PGV_USER_ID, 'theme');
+		$all_themes=get_theme_names();
+		if (!array_key_exists($current, $all_themes)) {
+			$current=$THEME_DIR;		
+		}
+		$filePath = $THEME_DIR . "css/";
+		$string="";
+		$fileCount=0;
+		$dir = opendir($filePath); # Open the path
+		while ($file = readdir($dir)) { 
+  			if (eregi("\.css",$file)) { # Look at only files with a .css extension
+    		$len = strlen($file);
+    		$file = substr($file,0,$len-4);  # Remove .css 
+    		$colorList[] = $file;
+    		sort ($colorList); # Sort array
+    		$fileCount++;
+  			}
+		}
+		if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES && !$SEARCH_SPIDER) {
+			isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
+			$frompage = PGV_SCRIPT_NAME.decode_url($tqstring);
+			if (isset($_REQUEST['mod'])) {
+				if (!strstr($frompage, "?")) {
+					if (!strstr($frompage, "%3F")) ;
+					else $frompage .= "?";
+				}
+				if (!strstr($frompage, "&mod") || !strstr($frompage, "?mod")) $frompage .= "&mod=".$_REQUEST['mod'];
+			}
+			if (substr($frompage,-1) == "?") $frompage = substr($frompage,0,-1);
+			if (substr($frompage,-1) == "&") $frompage = substr($frompage,0,-1);
+			// encode frompage address in other case we lost the all variables on theme change
+			$frompage = base64_encode($frompage);
+			$menu=new Menu(i18n::translate('Change Color'));
+			$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu', "icon_small_theme");
+			foreach ($colorList as $colorChoice) {
+				$submenu=new Menu($colorChoice, encode_url("colorchange.php?frompage={$frompage}&mycolor={$colorChoice}"));
+				$menu->addSubMenu($submenu);
+			}
+			return $menu;
+		} else {
+			return new Menu('', '');
+		}
+	}
+	/**
 	* get the menu with links to change language
 	* @return Menu the menu item
 	*/
 	static function getLanguageMenu() {
-		global $QUERY_STRING, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
+		global $ENABLE_MULTI_LANGUAGE, $LANGUAGE, $language_settings, $lang_short_cut, $QUERY_STRING, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
-		$menu=new Menu(i18n::translate('Change Language'), '#', 'down');
-		$menu->addClass("langmenuitem$ff", "langmenuitem_hover$ff", "submenu$ff");
-
-		foreach (i18n::installed_languages() as $lang=>$name) {
-			$submenu=new Menu($name, PGV_SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;lang='.$lang));
-			if ($lang==WT_LOCALE) {
-				$submenu->addClass('favsubmenuitem_selected', 'favsubmenuitem_hover');
-			} else {
-				$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
-			}
-			$menu->addSubMenu($submenu);
+		if (PGV_USER_ID) {
+			$current=$LANGUAGE;
+		} else {
+			$current=get_user_setting(PGV_USER_ID, 'language');
 		}
-		if (count($menu->submenus)>1) {
-			return $menu;
+
+		if ($ENABLE_MULTI_LANGUAGE) {
+			$menu=new Menu(i18n::translate('Change Language'), '#', 'down');
+			$menu->addClass("langmenuitem$ff", "langmenuitem_hover$ff", "submenu$ff");
+
+
+/* NEW CODE FOR USE WHEN WE SWITCH TO GETTEXT
+		$d=opendir(PGV_ROOT.'language');
+		while (($f=readdir($d))!==false) {
+			if (preg_match('/^([a-zA-Z0-9_]+).mo$/', $f, $m)) {
+				$_SESSION['ALL_LANGUAGES'][$m[1]]=Zend_Locale::getTranslation($m[1], 'language', $m[1]);
+			}
+		}
+		closedir($d);
+		ksort($_SESSION['ALL_LANGUAGES']);
+*/			
+
+			foreach ($language_settings as $lang=>$language) {
+				if ($language['pgv_lang_use'] && isset($language['pgv_lang_self']) && isset($language['pgv_language'])) {
+					$submenu=new Menu($language['pgv_lang_self'], PGV_SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;changelanguage=yes&amp;NEWLANGUAGE='.$lang.'&amp;lang='.$lang_short_cut[$lang]));
+					if ($lang==$LANGUAGE) {
+						$submenu->addClass('favsubmenuitem_selected', 'favsubmenuitem_hover');
+					} else {
+						$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
+					}
+					$menu->addSubMenu($submenu);
+				}
+			}
+			if (count($menu->submenus)>1) {
+				return $menu;
+			} else {
+				return new Menu('', '');
+			}
 		} else {
 			return new Menu('', '');
 		}
