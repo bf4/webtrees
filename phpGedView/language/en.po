@@ -8435,7 +8435,7 @@ msgstr "step-brother"
 #. I18N: step-sister
 #: ../includes/functions/functions.php:2581
 msgid "parent's spouse's daughter"
-msgstr "step-brother"
+msgstr "step-sister"
 
 #. I18N: step-sibling
 #: ../includes/functions/functions.php:2582
