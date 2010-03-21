@@ -110,7 +110,6 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				$personlinks .= "<a href=\"".encode_url("pedigree.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&PEDIGREE_GENERATIONS={$OLD_PGENS}&talloffset={$talloffset}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1><b>".i18n::translate('Pedigree Tree')."</b></a>";
 
 				if (file_exists(PGV_ROOT.'modules/googlemap/pedigree_map.php')) {
-					loadLangFile('googlemap:lang');
 					if ($TEXT_DIRECTION=="ltr") $title = i18n::translate('Pedigree Map').": ".$pid;
 					else $title = $pid." :".i18n::translate('Pedigree Map');
 					$personlinks .= "<br /><a href=\"".encode_url("module.php?mod=googlemap&pgvaction=pedigree_map&rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".i18n::translate('Pedigree Map')."</b></a>";
@@ -436,7 +435,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	global $BROWSERTYPE, $SEARCH_SPIDER;
 	global $view, $cart;
 	global $CHARACTER_SET, $PGV_IMAGE_DIR, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD, $INDEX_DIRECTORY;
-	global $QUERY_STRING, $action, $query, $changelanguage, $theme_name;
+	global $QUERY_STRING, $action, $query, $theme_name;
 	global $FAVICON, $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile;
 	global $PGV_IMAGES, $TEXT_DIRECTION, $ONLOADFUNCTION, $REQUIRE_AUTHENTICATION, $SHOW_SOURCES, $ENABLE_RSS, $RSS_FORMAT;
 	global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE;
@@ -481,10 +480,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		}
 	}
 	$javascript = '';
-	if (isset($changelanguage))
-		$query_string=normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE=");
-	else
-		$query_string = $QUERY_STRING;
+	$query_string = $QUERY_STRING;
 	if ($view!='preview' && $view!='simple') {
 		$old_META_AUTHOR = $META_AUTHOR;
 		$old_META_PUBLISHER = $META_PUBLISHER;
@@ -728,26 +724,20 @@ function execution_stats() {
 
 //-- print a form to change the language
 function print_lang_form($option=0) {
-	global $ENABLE_MULTI_LANGUAGE;
-
-	if ($ENABLE_MULTI_LANGUAGE) {
-		//-- don't show the form if there is only one language enabled
-		$language_menu=MenuBar::getLanguageMenu();
-		if (count($language_menu->submenus)<2) {
-			return;
-		}
-
-		echo '<div class="lang_form">';
-		switch($option) {
-		case 1:
-			echo $language_menu->getMenu();
-			break;
-		default:
-			echo $language_menu->getMenuAsDropdown();
-			break;
-		}
-		echo '</div>';
+	$language_menu=MenuBar::getLanguageMenu();
+	if (count($language_menu->submenus)<2) {
+		return;
 	}
+	echo '<div class="lang_form">';
+	switch($option) {
+	case 1:
+		echo $language_menu->getMenu();
+		break;
+	default:
+		echo $language_menu->getMenuAsDropdown();
+		break;
+	}
+	echo '</div>';
 }
 /**
 * print user links
@@ -1440,6 +1430,7 @@ function print_theme_dropdown($style=0) {
 		echo '&nbsp;';
 	}
 }
+
 /**
 * Prepare text with parenthesis for printing
 * Convert & to &amp; for xhtml compliance
@@ -1695,19 +1686,44 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 		$person=Person::getInstance($amatch[1]);
 		if ($person) {
 			$name=$person->getFullName();
-			if (preg_match('/^1 _[A-Z]+_[A-Z]+/', $factrec)) {
-				// An automatically generated "event of a close relative"
-				preg_match('/\n3 RELA (.+)/', $amatch[0], $rmatch);
-				$relationship=get_relationship_name_from_path($rmatch[1], $pid, $amatch[1]);
-				$label='';
-			} else {
-				// An naturally occuring ASSO event
-				$relationship=get_relationship_name(get_relationship($pid, $amatch[1], true, 4));
-				if (!$relationship) {
-					$relationship=i18n::translate('Relationship Chart');
+			switch ($type) {
+			case 'INDI':
+				if (preg_match('/^1 _[A-Z]+_[A-Z]+/', $factrec)) {
+					// An automatically generated "event of a close relative"
+					preg_match('/\n3 RELA (.+)/', $amatch[0], $rmatch);
+					$relationship=get_relationship_name_from_path($rmatch[1], $pid, $amatch[1]);
+					$label='';
+				} else {
+					// An naturally occuring ASSO event
+					$relationship=get_relationship_name(get_relationship($pid, $amatch[1], true, 4));
+					if (!$relationship) {
+						$relationship=i18n::translate('Relationship Chart');
+					}
 				}
+				$relationship=' - <a href="relationship.php?pid1='.$pid.'&amp;pid2='.$amatch[1].'&amp;ged='.urlencode(PGV_GEDCOM).'">'.$relationship.'</a>';
+				break;
+			case 'FAM':
+				$relationship='';
+				$famrec = find_family_record($pid, PGV_GED_ID);
+				if ($famrec) {
+					$parents = find_parents_in_record($famrec);
+					if ($parents["HUSB"]) {
+						$relationship1=get_relationship_name(get_relationship($parents["HUSB"], $amatch[1], true, 4));
+						if (!$relationship1) {
+							$relationship1=i18n::translate('Relationship Chart');
+						}
+						$relationship.=' - <a href="relationship.php?pid1='.$parents["HUSB"].'&amp;pid2='.$amatch[1].'&amp;ged='.urlencode(PGV_GEDCOM).'">'.$relationship1.'<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sex']['small'].'" class="gender_image" /></a>';
+					}
+					if ($parents["WIFE"]) {
+						$relationship2=get_relationship_name(get_relationship($parents["WIFE"], $amatch[1], true, 4));
+						if (!$relationship2) {
+							$relationship2=i18n::translate('Relationship Chart');
+						}
+						$relationship.=' - <a href="relationship.php?pid1='.$parents["WIFE"].'&amp;pid2='.$amatch[1].'&amp;ged='.urlencode(PGV_GEDCOM).'">'.$relationship2.'<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sexf']['small'].'" class="gender_image" /></a>';
+					}
+				}
+				break;
 			}
-			$relationship=' - <a href="relationship.php?pid1='.$pid.'&amp;pid2='.$amatch[1].'&amp;ged='.urlencode(PGV_GEDCOM).'">'.$relationship.'</a>';
 		} else {
 			$name=$amatch[1];
 			$relationship='';
@@ -2182,18 +2198,18 @@ function init_calendar_popup() {
 	echo
 		PGV_JS_START,
 		'cal_setMonthNames(',
-			'"', i18n::translate('January'), '",',
-			'"', i18n::translate('February'), '",',
-			'"', i18n::translate('March'), '",',
-			'"', i18n::translate('April'), '",',
-			'"', i18n::translate('May'), '",',
-			'"', i18n::translate('June'), '",',
-			'"', i18n::translate('July'), '",',
-			'"', i18n::translate('August'), '",',
-			'"', i18n::translate('September'), '",',
-			'"', i18n::translate('October'), '",',
-			'"', i18n::translate('November'), '",',
-			'"', i18n::translate('December'), '");',
+			'"', i18n::translate_c('NOMINATIVE', 'January'), '",',
+			'"', i18n::translate_c('NOMINATIVE', 'February'), '",',
+			'"', i18n::translate_c('NOMINATIVE', 'March'), '",',
+			'"', i18n::translate_c('NOMINATIVE', 'April'), '",',
+			'"', i18n::translate_c('NOMINATIVE', 'May'), '",',
+			'"', i18n::translate_c('NOMINATIVE', 'June'), '",',
+			'"', i18n::translate_c('NOMINATIVE', 'July'), '",',
+			'"', i18n::translate_c('NOMINATIVE', 'August'), '",',
+			'"', i18n::translate_c('NOMINATIVE', 'September'), '",',
+			'"', i18n::translate_c('NOMINATIVE', 'October'), '",',
+			'"', i18n::translate_c('NOMINATIVE', 'November'), '",',
+			'"', i18n::translate_c('NOMINATIVE', 'December'), '");',
 			'cal_setDayHeaders(',
 			'"', i18n::translate('Sun'), '",',
 			'"', i18n::translate('Mon'), '",',
