@@ -114,7 +114,7 @@ function edit_field_rela($name, $selected='', $extra='') {
 	if (!array_key_exists($selected, $RELA_CODES)) {
 		$RELA_CODES[$selected]=$selected;
 	}
-	return select_edit_control($name, $RELA_CODES, null, $selected, $extra);
+	return select_edit_control($name, $RELA_CODES, '', $selected, $extra);
 }
 
 //-- this function creates a new unique connection
