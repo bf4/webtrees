@@ -455,7 +455,7 @@ class stats_ui extends stats
 
 ///////////////////////////////////////////////////////////////////////////////
 // System                                                                    //
-// Only allowed in GEDCOM Welcome page, not user portals for security.       //
+// Only allowed in GEDCOM Home Page, not user portals for security.       //
 ///////////////////////////////////////////////////////////////////////////////
 
 	static function includeFile($params=null) {

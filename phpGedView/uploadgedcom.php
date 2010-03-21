@@ -1099,7 +1099,7 @@ if ($stage == 1) {
 	$importtime = $importtime + $exectime;
 	$exec_text = i18n::translate('Execution time:');
 	$go_pedi = i18n::translate('Click here to go to the Pedigree tree.');
-	$go_welc = i18n::translate('Welcome page');
+	$go_welc = i18n::translate('Home Page');
 	if ($LANGUAGE == "french" || $LANGUAGE == "italian") {
 		echo PGV_JS_START, "complete_progress($importtime, \"$exec_text\", \"$go_pedi\", \"$go_welc\");", PGV_JS_END;
 	} else {

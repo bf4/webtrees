@@ -2893,12 +2893,12 @@ case 'COMMON_NAMES_ADD':
 
 case 'COMMON_NAMES_REMOVE':
 	$title=i18n::translate('Names to remove from Common Surnames (comma separated)');
-	$text=i18n::translate('If you want to remove a surname from the Common Surname list without increasing the threshold value, you can do that by entering the surname here.  If more than one surname is entered, they must be separated by a comma. <b>Surnames are case-sensitive.</b>  Surnames entered here will also be removed from the Top-10 list on the Welcome page.');
+	$text=i18n::translate('If you want to remove a surname from the Common Surname list without increasing the threshold value, you can do that by entering the surname here.  If more than one surname is entered, they must be separated by a comma. <b>Surnames are case-sensitive.</b>  Surnames entered here will also be removed from the Top-10 list on the Home Page.');
 	break;
 
 case 'COMMON_NAMES_THRESHOLD':
 	$title=i18n::translate('Min. no. of occurrences to be a "Common Surname"');
-	$text=i18n::translate('This is the number of times that a surname must occur before it shows up in the Common Surname list on the Welcome page.');
+	$text=i18n::translate('This is the number of times that a surname must occur before it shows up in the Common Surname list on the Home Page.');
 	break;
 
 case 'CONTACT_EMAIL':
@@ -3198,7 +3198,7 @@ case 'META_DESCRIPTION':
 
 case 'META_KEYWORDS':
 	$title=i18n::translate('Keywords META tag');
-	$text=i18n::translate('The value to place in the Keywords meta tag in the HTML page header.  Some search engines will use the Keywords meta tag to help index your page.<br /><br />The Most Common Surnames list that appears in the GEDCOM Statistics block on your Welcome page can also be added to anything you enter here.');
+	$text=i18n::translate('The value to place in the Keywords meta tag in the HTML page header.  Some search engines will use the Keywords meta tag to help index your page.<br /><br />The Most Common Surnames list that appears in the GEDCOM Statistics block on your Home Page can also be added to anything you enter here.');
 	break;
 
 case 'META_PAGE_TOPIC':
@@ -3238,7 +3238,7 @@ case 'MULTI_MEDIA':
 
 case 'PAGE_AFTER_LOGIN':
 	$title=i18n::translate('Page to show after Login');
-	$text=i18n::translate('Which page should users see after they have logged in?<br /><br />The choice made here determines whether a successful Login causes the Welcome or the MyGedView page to appear when the login is done from the Welcome page.<br /><br />A Login done from the link at the top of every other page will return the user to that page.');
+	$text=i18n::translate('Which page should users see after they have logged in?<br /><br />The choice made here determines whether a successful Login causes the Welcome or the MyGedView page to appear when the login is done from the Home Page.<br /><br />A Login done from the link at the top of every other page will return the user to that page.');
 	break;
 
 case 'PEDIGREE_FULL_DETAILS':
@@ -4127,7 +4127,7 @@ case 'box_width':
 
 case 'cache_life':
 	$title=i18n::translate('Cache file life');
-	$text=i18n::translate('To improve performance, this PhpGedCom Welcome Page block is saved as a cache file.  You can control how often this block\'s cache file is refreshed.<br /><br /><ul><li><b>-1</b> means that the cache file is never refreshed automatically.  To get a fresh copy, you need to delete all cache files.  You can do this on the Customize Welcome Page page.</li><li><b>0</b> (Zero) means that this block is never cached, and every time the block is displayed on the PhpGedView Welcome page, you see a fresh copy.  This setting is used automatically for blocks that change frequently, such as the Logged In Users and the Random Media blocks.</li><li><b>1</b> (One) means that a fresh copy of this block\'s cache file is created daily, <b>2</b> means that a fresh copy is created every two days, <b>7</b> means that a fresh copy is created weekly, etc.</li></ul>');
+	$text=i18n::translate('To improve performance, this PhpGedCom Welcome Page block is saved as a cache file.  You can control how often this block\'s cache file is refreshed.<br /><br /><ul><li><b>-1</b> means that the cache file is never refreshed automatically.  To get a fresh copy, you need to delete all cache files.  You can do this on the Customize Welcome Page page.</li><li><b>0</b> (Zero) means that this block is never cached, and every time the block is displayed on the PhpGedView Home Page, you see a fresh copy.  This setting is used automatically for blocks that change frequently, such as the Logged In Users and the Random Media blocks.</li><li><b>1</b> (One) means that a fresh copy of this block\'s cache file is created daily, <b>2</b> means that a fresh copy is created every two days, <b>7</b> means that a fresh copy is created weekly, etc.</li></ul>');
 	break;
 
 case 'cal_dowload':
@@ -4162,7 +4162,7 @@ case 'cleanup_places':
 
 case 'clear_cache':
 	$title=i18n::translate('Clear cache files');
-	$text=i18n::translate('In order to improve performance, several of the blocks on the PhpGedView Welcome page are saved as cache files in the index directory.  The cache files for most blocks are refreshed once each day, but there may be times when you want to refresh them manually.<br /><br />This button allows you to refresh the cache files when necessary.');
+	$text=i18n::translate('In order to improve performance, several of the blocks on the PhpGedView Home Page are saved as cache files in the index directory.  The cache files for most blocks are refreshed once each day, but there may be times when you want to refresh them manually.<br /><br />This button allows you to refresh the cache files when necessary.');
 	break;
 
 case 'click_here':
@@ -4808,7 +4808,7 @@ case 'index_add_favorites':
 
 case 'index_charts':
 	$title=i18n::translate('Charts Block');
-	$text=i18n::translate('This block allows a pedigree, descendancy, or hourglass chart to appear on the Welcome or the MyGedView page.  Because of space limitations, the charts should be placed only on the left side of the page.<br /><br />When this block appears on the Welcome page, the root person and the type of chart to be displayed are determined by the administrator.  When this block appears on the user\'s personalized MyGedView page, these options are determined by the user.<br /><br />The behavior of these charts is identical to their behavior when they are called up from the menus.  Click on the box of a person to see more details about them.');
+	$text=i18n::translate('This block allows a pedigree, descendancy, or hourglass chart to appear on the Welcome or the MyGedView page.  Because of space limitations, the charts should be placed only on the left side of the page.<br /><br />When this block appears on the Home Page, the root person and the type of chart to be displayed are determined by the administrator.  When this block appears on the user\'s personalized MyGedView page, these options are determined by the user.<br /><br />The behavior of these charts is identical to their behavior when they are called up from the menus.  Click on the box of a person to see more details about them.');
 	break;
 
 case 'index_common_given_names':
@@ -4843,7 +4843,7 @@ case 'index_gedcom_news':
 
 case 'index':
 	$title=i18n::translate('Welcome Page');
-	$text=i18n::translate('This page is the Welcome page. It welcomes you to the selected <a href="#def_gedcom">GEDCOM</a> file. You can return to this page by selecting Welcome Page from the top menu. If there are multiple GEDCOMs on this site, you can select a GEDCOM from the drop-down menu.<br /><br />This Help page contains information about:<ul><li><a href="#index_portal"><b>Welcome Page</b></a></li><li><a href="#header"><b>Header Area</b></a></li><li><a href="#menu"><b>Menus</b></a></li><li><a href="#header_general"><b>General Information</b></a></li><li><a href="#def"><b>Definitions</b></a></li></ul>');
+	$text=i18n::translate('This page is the Home Page. It welcomes you to the selected <a href="#def_gedcom">GEDCOM</a> file. You can return to this page by selecting Welcome Page from the top menu. If there are multiple GEDCOMs on this site, you can select a GEDCOM from the drop-down menu.<br /><br />This Help page contains information about:<ul><li><a href="#index_portal"><b>Welcome Page</b></a></li><li><a href="#header"><b>Header Area</b></a></li><li><a href="#menu"><b>Menus</b></a></li><li><a href="#header_general"><b>General Information</b></a></li><li><a href="#def"><b>Definitions</b></a></li></ul>');
 	break;
 
 case 'index_htmlplus_compat':
@@ -4903,7 +4903,7 @@ case 'index_portal_head':
 */
 case 'index_portal':
 	$title=i18n::translate('The Welcome Page');
-	$text=i18n::translate('The Welcome page consists of several separate blocks, and can be customized. On sites that have more than one genealogical database, you may see a different Welcome page for each.  Depending on how the administrator customized the site, you may see any of the following blocks on the Welcome page:<ul><li><a href="#index_welcome"><b>Welcome</b></a></li><li><a href="#index_login"><b>Login</b></a></li><li><a href="#index_events"><b>Upcoming events</b></a></li><li><a href="#index_onthisday"><b>On this Day in Your History</b></a></li><li><a href="#index_charts"><b>Charts</b></a></li><li><a href="#index_favorites"><b>GEDCOM Favorites</b></a></li><li><a href="#index_stats"><b>GEDCOM Statistics</b></a></li><li><a href="#index_common_surnames"><b>Most Common Surnames</b></a></li><li><a href="#index_media"><b>Random Media</b></a></li><li><a href="#index_loggedin"><b>Logged in Users</b></a></li><li><a href="#gedcom_news"><b>GEDCOM News</b></a></li><li><a href="#recent_changes"><b>Recent Changes</b></a></li></ul>');
+	$text=i18n::translate('The Home Page consists of several separate blocks, and can be customized. On sites that have more than one genealogical database, you may see a different Home Page for each.  Depending on how the administrator customized the site, you may see any of the following blocks on the Home Page:<ul><li><a href="#index_welcome"><b>Welcome</b></a></li><li><a href="#index_login"><b>Login</b></a></li><li><a href="#index_events"><b>Upcoming events</b></a></li><li><a href="#index_onthisday"><b>On this Day in Your History</b></a></li><li><a href="#index_charts"><b>Charts</b></a></li><li><a href="#index_favorites"><b>GEDCOM Favorites</b></a></li><li><a href="#index_stats"><b>GEDCOM Statistics</b></a></li><li><a href="#index_common_surnames"><b>Most Common Surnames</b></a></li><li><a href="#index_media"><b>Random Media</b></a></li><li><a href="#index_loggedin"><b>Logged in Users</b></a></li><li><a href="#gedcom_news"><b>GEDCOM News</b></a></li><li><a href="#recent_changes"><b>Recent Changes</b></a></li></ul>');
 	break;
 
 case 'index_stats':
@@ -5043,7 +5043,7 @@ case 'login_buttons_aut':
 
 case 'login_buttons':
 	$title=i18n::translate('Login Buttons');
-	$text=i18n::translate('Here you see two buttons to login to the system.<br /><br />The page you will be taken to or sent back to depends on which button you click after typing your user name and password.<br /><ul><li>The <b>Login</b> button<br />If you click this button, you will return to the page you were just on, but with logged-in access rights.<br /><br />For example, if you click <b>Login</b> when you were at the Pedigree page, you will return to that same page.  If you click this button when you were on the main Welcome page, you will be taken to My Page.</li><li>The <b>Admin</b> button<br />If you have Admin rights, you can click this button to go directly to the main Administration page.</li></ul>');
+	$text=i18n::translate('Here you see two buttons to login to the system.<br /><br />The page you will be taken to or sent back to depends on which button you click after typing your user name and password.<br /><ul><li>The <b>Login</b> button<br />If you click this button, you will return to the page you were just on, but with logged-in access rights.<br /><br />For example, if you click <b>Login</b> when you were at the Pedigree page, you will return to that same page.  If you click this button when you were on the main Home Page, you will be taken to My Page.</li><li>The <b>Admin</b> button<br />If you have Admin rights, you can click this button to go directly to the main Administration page.</li></ul>');
 	break;
 
 case 'login_page':
@@ -5103,16 +5103,16 @@ case 'menu_clip':
 
 case 'menu_famtree':
 	$title=i18n::translate('Family Tree Menu');
-	$text=i18n::translate('All of this site\'s available genealogical databases are listed in this menu. Each database has its own customized Welcome page, like this one.  If there is only one database at this site, there is no sub-menu under the Welcome Page icon.');
+	$text=i18n::translate('All of this site\'s available genealogical databases are listed in this menu. Each database has its own customized Home Page, like this one.  If there is only one database at this site, there is no sub-menu under the Welcome Page icon.');
 	break;
 
 case 'menu':
 	$title=i18n::translate('Menus');
-	$text=i18n::translate('The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href="#menu_fam">Welcome page</a><br /></li><li><a href="#menu_myged">My Page</a><br /></li><li><a href="#menu_charts">Charts</a><br /></li><li><a href="#menu_lists">Lists</a><br /></li><li><a href="#menu_annical">Anniversary Calendar</a><br /></li><li><a href="#menu_clip">Family Tree Clippings Cart</a><br /></li><li><a href="#menu_search">Search</a><br /></li><li><a href="#menu_help">Help</a></li></ul>');
+	$text=i18n::translate('The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href="#menu_fam">Home Page</a><br /></li><li><a href="#menu_myged">My Page</a><br /></li><li><a href="#menu_charts">Charts</a><br /></li><li><a href="#menu_lists">Lists</a><br /></li><li><a href="#menu_annical">Anniversary Calendar</a><br /></li><li><a href="#menu_clip">Family Tree Clippings Cart</a><br /></li><li><a href="#menu_search">Search</a><br /></li><li><a href="#menu_help">Help</a></li></ul>');
 	break;
 /*
 case 'menu_help':
-	$title=i18n::translate('<div class="name_head"><center><b>MENUS</b></center></div><br />The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href="#menu_fam">Welcome page</a><br /></li><li><a href="#menu_myged">My Page</a><br /></li><li><a href="#menu_charts">Charts</a><br /></li><li><a href="#menu_lists">Lists</a><br /></li><li><a href="#menu_annical">Anniversary Calendar</a><br /></li><li><a href="#menu_clip">Family Tree Clippings Cart</a><br /></li><li><a href="#menu_search">Search</a><br /></li><li><a href="#menu_help">Help</a></li></ul>');
+	$title=i18n::translate('<div class="name_head"><center><b>MENUS</b></center></div><br />The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href="#menu_fam">Home Page</a><br /></li><li><a href="#menu_myged">My Page</a><br /></li><li><a href="#menu_charts">Charts</a><br /></li><li><a href="#menu_lists">Lists</a><br /></li><li><a href="#menu_annical">Anniversary Calendar</a><br /></li><li><a href="#menu_clip">Family Tree Clippings Cart</a><br /></li><li><a href="#menu_search">Search</a><br /></li><li><a href="#menu_help">Help</a></li></ul>');
 	$text=i18n::translate('#pgv_lang[help_help_items]#');
 	break;
 */
@@ -5203,7 +5203,7 @@ case 'mygedview_myjournal':
 
 case 'mygedview_portal':
 	$title=i18n::translate('My Page');
-	$text=i18n::translate('This is your Personal page.<br /><br />Here you will find easy links to access your personal data such as <b>My Account</b>, <b>My Indi</b> (this is your Individual Information page), and <b>My Pedigree</b>.  You can have blocks with <b>Messages</b>, a <b>Journal</b> (like a Notepad) and many more.<br /><br />The layout of this page is similar to the Welcome page that you see when you first access this site.  While the parts of the Welcome page are selected by the site administrator, you can select what parts to include on this personalized page.  You will find the link to customize this page in the Welcome block or separately when the Welcome block is not present.<br /><br />You can choose from the following blocks:<ul><li><a href="#mygedview_welcome"><b>Welcome</b></a></li><li><a href="#mygedview_customize"><b>Customize MyGedView</b></a></li><li><a href="#mygedview_message"><b>Messages</b></a></li><li><a href="#mygedview_events"><b>Upcoming events</b></a></li><li><a href="#mygedview_onthisday"><b>On this Day in Your History</b></a></li><li><a href="#mygedview_charts"><b>Charts</b></a></li><li><a href="#mygedview_favorites"><b>My Favorites</b></a></li><li><a href="#mygedview_stats"><b>GEDCOM Statistics</b></a></li><li><a href="#mygedview_myjournal"><b>My Journal</b></a></li><li><a href="#mygedview_media"><b>Random Media</b></a></li><li><a href="#mygedview_loggedin"><b>Logged In Users</b></a></li><li><a href="#mygedview_recent_changes"><b>Recent Changes</b></a></li></ul>');
+	$text=i18n::translate('This is your Personal page.<br /><br />Here you will find easy links to access your personal data such as <b>My Account</b>, <b>My Indi</b> (this is your Individual Information page), and <b>My Pedigree</b>.  You can have blocks with <b>Messages</b>, a <b>Journal</b> (like a Notepad) and many more.<br /><br />The layout of this page is similar to the Home Page that you see when you first access this site.  While the parts of the Home Page are selected by the site administrator, you can select what parts to include on this personalized page.  You will find the link to customize this page in the Welcome block or separately when the Welcome block is not present.<br /><br />You can choose from the following blocks:<ul><li><a href="#mygedview_welcome"><b>Welcome</b></a></li><li><a href="#mygedview_customize"><b>Customize MyGedView</b></a></li><li><a href="#mygedview_message"><b>Messages</b></a></li><li><a href="#mygedview_events"><b>Upcoming events</b></a></li><li><a href="#mygedview_onthisday"><b>On this Day in Your History</b></a></li><li><a href="#mygedview_charts"><b>Charts</b></a></li><li><a href="#mygedview_favorites"><b>My Favorites</b></a></li><li><a href="#mygedview_stats"><b>GEDCOM Statistics</b></a></li><li><a href="#mygedview_myjournal"><b>My Journal</b></a></li><li><a href="#mygedview_media"><b>Random Media</b></a></li><li><a href="#mygedview_loggedin"><b>Logged In Users</b></a></li><li><a href="#mygedview_recent_changes"><b>Recent Changes</b></a></li></ul>');
 	break;
 
 case 'mygedview_welcome':
@@ -5448,7 +5448,7 @@ case 'rootid':
 
 case 'rss_feed':
 	$title=i18n::translate('RSS FEED SETTINGS');
-	$text=i18n::translate('The ATOM/RSS feed available in PhpGedView allows anyone to view, using a suitable feed aggregator, the contents of your site\'s Welcome page without visiting the site. Most aggregators will pop up a notice letting the user know when something has changed on a page being monitored. This essentially allows anyone to monitor your PhpGedView site without needing to visit it regularly.<br /><br />The Feed block is used to customize the link to the feed, allowing specific feed types (most readers can deal with most types so this can usually be left at the default), and the specific module you would like in your feed. The language of the feed and the GEDCOM used will be based on the language and GEDCOM active in PhpGedView when you select the feed.<br /><br />The types of feed that can be generated include ATOM, RSS 2.0, RSS 1.0, RSS 0.92, HTML and JavaScript. The first four types are for feed aggregators, while JavaScript and HTML are meant to enable inclusion of the feeds in other web pages.  Note that the numbers of the RSS feed indicate different styles, not a different version.<br /><br />There is an option to select authentication that will log the user in, and allow the user to view, using a suitable RSS aggregator, any information that he could normally view if logged in. Basic Authentication uses <i>Basic HTTP Authentication</i> to log the user in. Future enhancements might allow <i>Digest Authentication</i>.<br /><br />This <a href=\'http://en.wikipedia.org/wiki/RSS_(file_format)\' target=\'_blank\' alt=\'Wikipedia article\' title=\'Wikipedia article\'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats. <i>Basic HTTP Authentication</i> is discussed in this <a href=\'http://en.wikipedia.org/wiki/Basic_authentication_scheme\' target=\'_blank\' alt=\'Wikipedia article\' title=\'Wikipedia article\'><b>Wikipedia article</b></a>, while <i>Digest Authentication</i> is discussed in this <a http://en.wikipedia.org/wiki/Digest_access_authentication\' target=\'_blank\' alt=\'Wikipedia article\' title=\'Wikipedia article\'><b>Wikipedia article</b></a>.');
+	$text=i18n::translate('The ATOM/RSS feed available in PhpGedView allows anyone to view, using a suitable feed aggregator, the contents of your site\'s Home Page without visiting the site. Most aggregators will pop up a notice letting the user know when something has changed on a page being monitored. This essentially allows anyone to monitor your PhpGedView site without needing to visit it regularly.<br /><br />The Feed block is used to customize the link to the feed, allowing specific feed types (most readers can deal with most types so this can usually be left at the default), and the specific module you would like in your feed. The language of the feed and the GEDCOM used will be based on the language and GEDCOM active in PhpGedView when you select the feed.<br /><br />The types of feed that can be generated include ATOM, RSS 2.0, RSS 1.0, RSS 0.92, HTML and JavaScript. The first four types are for feed aggregators, while JavaScript and HTML are meant to enable inclusion of the feeds in other web pages.  Note that the numbers of the RSS feed indicate different styles, not a different version.<br /><br />There is an option to select authentication that will log the user in, and allow the user to view, using a suitable RSS aggregator, any information that he could normally view if logged in. Basic Authentication uses <i>Basic HTTP Authentication</i> to log the user in. Future enhancements might allow <i>Digest Authentication</i>.<br /><br />This <a href=\'http://en.wikipedia.org/wiki/RSS_(file_format)\' target=\'_blank\' alt=\'Wikipedia article\' title=\'Wikipedia article\'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats. <i>Basic HTTP Authentication</i> is discussed in this <a href=\'http://en.wikipedia.org/wiki/Basic_authentication_scheme\' target=\'_blank\' alt=\'Wikipedia article\' title=\'Wikipedia article\'><b>Wikipedia article</b></a>, while <i>Digest Authentication</i> is discussed in this <a http://en.wikipedia.org/wiki/Digest_access_authentication\' target=\'_blank\' alt=\'Wikipedia article\' title=\'Wikipedia article\'><b>Wikipedia article</b></a>.');
 	break;
 
 case 'savelang':

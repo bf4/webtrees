@@ -64,7 +64,7 @@ class MenuBar
 
 		if ($TEXT_DIRECTION=='rtl') $ff='_rtl'; else $ff='';
 		//-- main menu
-		$menu = new Menu(i18n::translate('Welcome page'), 'index.php?ctype=gedcom', 'down');
+		$menu = new Menu(i18n::translate('Home Page'), 'index.php?ctype=gedcom', 'down');
 		if (!empty($PGV_IMAGES['gedcom']['large']))
 			$menu->addIcon($PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedcom']['large']);
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", 'icon_large_gedcom');

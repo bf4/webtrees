@@ -339,7 +339,7 @@ echo PGV_JS_START;
  * @param string block 	the method name of the block to call (e.g. 'print_random_media')
  * @param string side 	the side of the page the block is on (e.g. 'main' or 'right')
  * @param int bindex 	the number of the block on that side, first block = 0
- * @param string ctype 	shows whether block is on Welcome or MyGedView page ('gedcom' or 'user')
+ * @param string ctype 	shows whether block is on Welcome or My Page ('gedcom' or 'user')
  * @param boolean loading  Whether or not to show the loading message
  */
 	function ajaxBlock(targetId, block, side, bindex, ctype, loading) {
@@ -450,7 +450,7 @@ if ($ctype=="user" && !$welcome_block_present) {
 if ($ctype=="gedcom" && !$gedcom_block_present) {
 	if (PGV_USER_IS_ADMIN) {
 		print "<div align=\"center\" style=\"width: 99%;\">";
-		print "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name={$GEDCOM}&ctype=gedcom", false)."', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".i18n::translate('Customize this GEDCOM Welcome page')."</a>";
+		print "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name={$GEDCOM}&ctype=gedcom", false)."', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".i18n::translate('Customize this GEDCOM Home Page')."</a>";
 		print "</div>";
 	}
 }
