@@ -1658,6 +1658,11 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 	// Level 2 ASSO
 	preg_match_all('/\n2 ASSO @('.PGV_REGEX_XREF.')@(\n[3-9].*)*/', $factrec, $amatches, PREG_SET_ORDER);
 	foreach ($amatches as $amatch) {
+		if (preg_match('/\n3 RELA (.+)/', $amatch[0], $rmatch)) {
+			$label='<span class="label">'.$rmatch[1].':</span> ';
+		} else {
+			$label='';
+		}
 		$person=Person::getInstance($amatch[1]);
 		if ($person) {
 			$name=$person->getFullName();
@@ -1666,15 +1671,16 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				if (preg_match('/^1 _[A-Z]+_[A-Z]+/', $factrec)) {
 					// An automatically generated "event of a close relative"
 					preg_match('/\n3 RELA (.+)/', $amatch[0], $rmatch);
-					$relationship=i18n::translate($rmatch[1]);
+					$relationship=get_relationship_name_from_path($rmatch[1], $pid, $amatch[1]);
+					$label='';
 				} else {
 					// An naturally occuring ASSO event
 					$relationship=get_relationship_name(get_relationship($pid, $amatch[1], true, 4));
 					if (!$relationship) {
 						$relationship=i18n::translate('Relationship Chart');
 					}
-				$relationship=' - <a href="relationship.php?pid1='.$pid.'&amp;pid2='.$amatch[1].'&amp;ged='.urlencode(PGV_GEDCOM).'">'.$relationship.'</a>';
 				}
+				$relationship=' - <a href="relationship.php?pid1='.$pid.'&amp;pid2='.$amatch[1].'&amp;ged='.urlencode(PGV_GEDCOM).'">'.$relationship.'</a>';
 				break;
 			case 'FAM':
 				$relationship='';
@@ -1705,12 +1711,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 		if ($SHOW_ID_NUMBERS) {
 			$name.=' ('.$amatch[1].')';
 		}
-		if (preg_match('/\n3 RELA (.+)/', $amatch[0], $rmatch)) {
-			$label='<span class="label">'.$rmatch[1].':</span> ';
-		} else {
-			$label='';
-		}
-		echo $label, '<a href="', $person->getLinkUrl().'">', $name, '</a>', $relationship;
+		echo '<br/>', $label, '<a href="', $person->getLinkUrl().'">', $name, '</a>', $relationship;
 	}
 }
 

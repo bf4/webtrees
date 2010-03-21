@@ -2310,7 +2310,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 	return $resnode;
 }
 
-// Convert the result of get_relationship into a relationship name.
+// Convert the result of get_relationship() into a relationship name.
 function get_relationship_name($nodes) {
 	if (!is_array($nodes)) {
 		return '';
@@ -2345,7 +2345,17 @@ function get_relationship_name($nodes) {
 	foreach ($path as $rel) {
 		$combined_path.=substr($rel, 0, 3);
 	}
-	switch ($combined_path) {
+
+	return get_relationship_name_from_path($combined_path, $pid1, $pid2);
+}
+
+function get_relationship_name_from_path($path, $pid1, $pid2) {
+	if (!preg_match('/^(mot|fat|par|hus|wif|spo|son|dau|chi|bro|sis|sib)*$/', $path)) {
+		// TODO: Update all the "3 RELA " values in class_person
+		return '<span class="error">'.$path.'</span>';
+	}
+
+	switch ($path) {
 	case '': return i18n::translate('self');
 	
 		//  Level One relationships
@@ -2621,9 +2631,9 @@ function get_relationship_name($nodes) {
 	// TODO: these are heavily based on english relationship names.
 	// We need feedback from other languages to improve this.
 	// Dutch has special names for 8 generations of great-great-..., so these need explicit naming
-	if (preg_match('/^((?:mot|fat|par)*)(bro|sis|sib)$/', $combined_path, $match)) {
+	if (preg_match('/^((?:mot|fat|par)*)(bro|sis|sib)$/', $path, $match)) {
 		$up=strlen($match[1])/3;
-		$last=substr($combined_path, -3, 3);
+		$last=substr($path, -3, 3);
 		switch ($up) {
 		case 3:
 			switch ($last) {
@@ -2676,9 +2686,9 @@ function get_relationship_name($nodes) {
 			break;
 		}
 	}
-	if (preg_match('/^((?:mot|fat|par)*)$/', $combined_path, $match)) {
+	if (preg_match('/^((?:mot|fat|par)*)$/', $path, $match)) {
 		$up=strlen($match[1])/3;
-		$last=substr($combined_path, -3, 3);
+		$last=substr($path, -3, 3);
 		switch ($up) {
 		case 4:
 			switch ($last) {
@@ -2731,9 +2741,9 @@ function get_relationship_name($nodes) {
 			break;
 		}
 	}
-	if (preg_match('/^((?:son|dau|chi)*)$/', $combined_path, $match)) {
+	if (preg_match('/^((?:son|dau|chi)*)$/', $path, $match)) {
 		$down=strlen($match[1])/3;
-		$last=substr($combined_path, -3, 3);
+		$last=substr($path, -3, 3);
 		switch ($up) {
 		case 4:
 			switch ($last) {
@@ -2786,10 +2796,10 @@ function get_relationship_name($nodes) {
 			break;
 		}
 	}
-	if (preg_match('/^((?:mot|fat|par)+)(?:bro|sis|sib)((?:son|dau|chi)+)$/', $combined_path, $match)) {
+	if (preg_match('/^((?:mot|fat|par)+)(?:bro|sis|sib)((?:son|dau|chi)+)$/', $path, $match)) {
 		$up  =strlen($match[1])/3;
 		$down=strlen($match[2])/3;
-		$last=substr($combined_path, -3, 3);
+		$last=substr($path, -3, 3);
 		// Cousins.  http://en.wikipedia.org/wiki/File:CousinTree.svg
 		if ($up==$down) {
 			switch ($last) {
@@ -2821,35 +2831,35 @@ function get_relationship_name($nodes) {
 
 	// We don't have a specific name for this relationship, and we can't match it with a pattern.
 	// Just spell it out.
-	switch (array_pop($path)) {
-	case 'mother':   $relationship=i18n::translate('mother'  ); break;
-	case 'father':   $relationship=i18n::translate('father'  ); break;
-	case 'parent':   $relationship=i18n::translate('parent'  ); break;
-	case 'husband':  $relationship=i18n::translate('husband' ); break;
-	case 'wife':     $relationship=i18n::translate('wife'    ); break;
-	case 'spouse':   $relationship=i18n::translate('spouse'  ); break;
-	case 'brother':  $relationship=i18n::translate('brother' ); break;
-	case 'sister':   $relationship=i18n::translate('sister'  ); break;
-	case 'sibling':  $relationship=i18n::translate('sibling' ); break;
-	case 'son':      $relationship=i18n::translate('son'     ); break;
-	case 'daughter': $relationship=i18n::translate('daughter'); break;
-	case 'child':    $relationship=i18n::translate('child'   ); break;
+	switch (substr($path, 0, 3)) {
+	case 'mot': $relationship=i18n::translate('mother'  ); break;
+	case 'fat': $relationship=i18n::translate('father'  ); break;
+	case 'par': $relationship=i18n::translate('parent'  ); break;
+	case 'hus': $relationship=i18n::translate('husband' ); break;
+	case 'wif': $relationship=i18n::translate('wife'    ); break;
+	case 'spo': $relationship=i18n::translate('spouse'  ); break;
+	case 'bro': $relationship=i18n::translate('brother' ); break;
+	case 'sis': $relationship=i18n::translate('sister'  ); break;
+	case 'sib': $relationship=i18n::translate('sibling' ); break;
+	case 'son': $relationship=i18n::translate('son'     ); break;
+	case 'dau': $relationship=i18n::translate('daughter'); break;
+	case 'chi': $relationship=i18n::translate('child'   ); break;
 	}
-	while ($path) {
-		switch (array_pop($path)) {
+	while (($path=substr($path, 4))!='') {
+		switch (substr($path, 0, 3)) {
 			// I18N: These strings are used to build paths of relationships, such as "father's wife's husband's brother"
-		case 'mother':   $relationship=i18n::translate('mother\'s %s',   $relationship); break;
-		case 'father':   $relationship=i18n::translate('father\'s %s',   $relationship); break;
-		case 'parent':   $relationship=i18n::translate('parent\'s %s',   $relationship); break;
-		case 'husband':  $relationship=i18n::translate('husband\'s %s',  $relationship); break;
-		case 'wife':     $relationship=i18n::translate('wife\'s %s',     $relationship); break;
-		case 'spouse':   $relationship=i18n::translate('spouse\'s %s',   $relationship); break;
-		case 'brother':  $relationship=i18n::translate('brother\'s %s',  $relationship); break;
-		case 'sister':   $relationship=i18n::translate('sister\'s %s',   $relationship); break;
-		case 'sibling':  $relationship=i18n::translate('sibling\'s %s',  $relationship); break;
-		case 'son':      $relationship=i18n::translate('son\'s %s',      $relationship); break;
-		case 'daughter': $relationship=i18n::translate('daughter\'s %s', $relationship); break;
-		case 'child':    $relationship=i18n::translate('child\'s %s',    $relationship); break;
+		case 'mot': $relationship=i18n::translate('mother\'s %s',   $relationship); break;
+		case 'fat': $relationship=i18n::translate('father\'s %s',   $relationship); break;
+		case 'par': $relationship=i18n::translate('parent\'s %s',   $relationship); break;
+		case 'hus': $relationship=i18n::translate('husband\'s %s',  $relationship); break;
+		case 'wif': $relationship=i18n::translate('wife\'s %s',     $relationship); break;
+		case 'spo': $relationship=i18n::translate('spouse\'s %s',   $relationship); break;
+		case 'bro': $relationship=i18n::translate('brother\'s %s',  $relationship); break;
+		case 'sis': $relationship=i18n::translate('sister\'s %s',   $relationship); break;
+		case 'sib': $relationship=i18n::translate('sibling\'s %s',  $relationship); break;
+		case 'son': $relationship=i18n::translate('son\'s %s',      $relationship); break;
+		case 'dau': $relationship=i18n::translate('daughter\'s %s', $relationship); break;
+		case 'chi': $relationship=i18n::translate('child\'s %s',    $relationship); break;
 		}
 	}
 	return $relationship;
