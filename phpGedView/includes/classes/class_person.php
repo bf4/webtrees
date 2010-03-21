@@ -1382,7 +1382,11 @@ class Person extends GedcomRecord {
 							break;
 						}
 					}
-					if (!$found) $this->indifacts[] = new Event($factrec, 0);
+					if (!$found){
+						$event = new Event($factrec);
+						$event->setParentObject($this);
+						$this->indifacts[] = $event;
+					}
 				}
 			}
 		}
