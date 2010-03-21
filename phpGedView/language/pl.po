@@ -9478,47 +9478,47 @@ msgstr "zięć"
 #. I18N: step-son
 #: ../includes/functions/functions.php:2479
 msgid "husband's son"
-msgstr ""
+msgstr "pasierb"
 
 #. I18N: step-son
 #: ../includes/functions/functions.php:2480
 msgid "wife's son"
-msgstr ""
+msgstr "pasierb"
 
 #. I18N: step-son
 #: ../includes/functions/functions.php:2481
 msgid "spouses's son"
-msgstr ""
+msgstr "pasierb"
 
 #. I18N: step-daughter
 #: ../includes/functions/functions.php:2482
 msgid "husband's daughter"
-msgstr ""
+msgstr "pasierbica"
 
 #. I18N: step-daughter
 #: ../includes/functions/functions.php:2483
 msgid "wife's daughter"
-msgstr ""
+msgstr "pasierbica"
 
 #. I18N: step-daughter
 #: ../includes/functions/functions.php:2484
 msgid "spouses's daughter"
-msgstr ""
+msgstr "pasierbica"
 
 #. I18N: step-child
 #: ../includes/functions/functions.php:2485
 msgid "husband's child"
-msgstr ""
+msgstr "dziecko przybrane"
 
 #. I18N: step-child
 #: ../includes/functions/functions.php:2486
 msgid "wife's child"
-msgstr ""
+msgstr "dziecko przybrane"
 
 #. I18N: step-child
 #: ../includes/functions/functions.php:2487
 msgid "spouses's child"
-msgstr ""
+msgstr "dziecko przybrane"
 
 #. I18N: great-grandmother
 #: ../includes/functions/functions.php:2490
@@ -10000,32 +10000,32 @@ msgstr "rodzeństwo przybrane"
 #. I18N: aunt
 #: ../includes/functions/functions.php:2612
 msgid "mother's brother's wife"
-msgstr ""
+msgstr "ciotka"
 
 #. I18N: uncle
 #: ../includes/functions/functions.php:2613
 msgid "mother's sister's husband"
-msgstr ""
+msgstr "wuj"
 
 #. I18N: aunt
 #: ../includes/functions/functions.php:2614
 msgid "father's brother's wife"
-msgstr ""
+msgstr "stryjenka"
 
 #. I18N: uncle
 #: ../includes/functions/functions.php:2615
 msgid "father's sister's husband"
-msgstr ""
+msgstr "wuj"
 
 #. I18N: aunt
 #: ../includes/functions/functions.php:2616
 msgid "parent's brother's wife"
-msgstr ""
+msgstr "stryjenka"
 
 #. I18N: uncle
 #: ../includes/functions/functions.php:2617
 msgid "parent's sister's husband"
-msgstr ""
+msgstr "wuj"
 
 #: ../includes/functions/functions.php:2630
 #: ../includes/functions/functions.php:2637
@@ -10977,282 +10977,282 @@ msgstr "%d p.n.e."
 #: ../includes/classes/class_date.php:777
 msgctxt "NOMINATIVE"
 msgid "Tishrei"
-msgstr ""
+msgstr "tiszri"
 
 #: ../includes/classes/class_date.php:778
 msgctxt "NOMINATIVE"
 msgid "Heshvan"
-msgstr ""
+msgstr "cheszwan"
 
 #: ../includes/classes/class_date.php:779
 msgctxt "NOMINATIVE"
 msgid "Kislev"
-msgstr ""
+msgstr "kislew"
 
 #: ../includes/classes/class_date.php:780
 msgctxt "NOMINATIVE"
 msgid "Tevet"
-msgstr ""
+msgstr "tewet"
 
 #: ../includes/classes/class_date.php:781
 msgctxt "NOMINATIVE"
 msgid "Shevat"
-msgstr ""
+msgstr "szwat"
 
 #: ../includes/classes/class_date.php:782
 msgctxt "NOMINATIVE"
 msgid "Adar"
-msgstr ""
+msgstr "adar"
 
 #: ../includes/classes/class_date.php:782
 msgctxt "NOMINATIVE"
 msgid "Adar I"
-msgstr ""
+msgstr "adar I"
 
 #: ../includes/classes/class_date.php:783
 msgctxt "NOMINATIVE"
 msgid "Adar II"
-msgstr ""
+msgstr "adar II"
 
 #: ../includes/classes/class_date.php:784
 msgctxt "NOMINATIVE"
 msgid "Nissan"
-msgstr ""
+msgstr "nisan"
 
 #: ../includes/classes/class_date.php:785
 msgctxt "NOMINATIVE"
 msgid "Iyar"
-msgstr ""
+msgstr "ijar"
 
 #: ../includes/classes/class_date.php:786
 msgctxt "NOMINATIVE"
 msgid "Sivan"
-msgstr ""
+msgstr "siwan"
 
 #: ../includes/classes/class_date.php:787
 msgctxt "NOMINATIVE"
 msgid "Tamuz"
-msgstr ""
+msgstr "tamuz"
 
 #: ../includes/classes/class_date.php:788
 msgctxt "NOMINATIVE"
 msgid "Av"
-msgstr ""
+msgstr "aw"
 
 #: ../includes/classes/class_date.php:789
 msgctxt "NOMINATIVE"
 msgid "Elul"
-msgstr ""
+msgstr "elul"
 
 #: ../includes/classes/class_date.php:795
 msgctxt "GENITIVE"
 msgid "Tishrei"
-msgstr ""
+msgstr "tiszri"
 
 #: ../includes/classes/class_date.php:796
 msgctxt "GENITIVE"
 msgid "Heshvan"
-msgstr ""
+msgstr "cheszwan"
 
 #: ../includes/classes/class_date.php:797
 msgctxt "GENITIVE"
 msgid "Kislev"
-msgstr ""
+msgstr "kislew"
 
 #: ../includes/classes/class_date.php:798
 msgctxt "GENITIVE"
 msgid "Tevet"
-msgstr ""
+msgstr "tewet"
 
 #: ../includes/classes/class_date.php:799
 msgctxt "GENITIVE"
 msgid "Shevat"
-msgstr ""
+msgstr "szwat"
 
 #: ../includes/classes/class_date.php:800
 msgctxt "GENITIVE"
 msgid "Adar"
-msgstr ""
+msgstr "adar"
 
 #: ../includes/classes/class_date.php:800
 msgctxt "GENITIVE"
 msgid "Adar I"
-msgstr ""
+msgstr "adar I"
 
 #: ../includes/classes/class_date.php:801
 msgctxt "GENITIVE"
 msgid "Adar II"
-msgstr ""
+msgstr "adar II"
 
 #: ../includes/classes/class_date.php:802
 msgctxt "GENITIVE"
 msgid "Nissan"
-msgstr ""
+msgstr "nisan"
 
 #: ../includes/classes/class_date.php:803
 msgctxt "GENITIVE"
 msgid "Iyar"
-msgstr ""
+msgstr "ijar"
 
 #: ../includes/classes/class_date.php:804
 msgctxt "GENITIVE"
 msgid "Sivan"
-msgstr ""
+msgstr "siwan"
 
 #: ../includes/classes/class_date.php:805
 msgctxt "GENITIVE"
 msgid "Tamuz"
-msgstr ""
+msgstr "tamuz"
 
 #: ../includes/classes/class_date.php:806
 msgctxt "GENITIVE"
 msgid "Av"
-msgstr ""
+msgstr "aw"
 
 #: ../includes/classes/class_date.php:807
 msgctxt "GENITIVE"
 msgid "Elul"
-msgstr ""
+msgstr "elul"
 
 #: ../includes/classes/class_date.php:813
 msgctxt "LOCATIVE"
 msgid "Tishrei"
-msgstr ""
+msgstr "tiszri"
 
 #: ../includes/classes/class_date.php:814
 msgctxt "LOCATIVE"
 msgid "Heshvan"
-msgstr ""
+msgstr "cheszwan"
 
 #: ../includes/classes/class_date.php:815
 msgctxt "LOCATIVE"
 msgid "Kislev"
-msgstr ""
+msgstr "kislew"
 
 #: ../includes/classes/class_date.php:816
 msgctxt "LOCATIVE"
 msgid "Tevet"
-msgstr ""
+msgstr "tewet"
 
 #: ../includes/classes/class_date.php:817
 msgctxt "LOCATIVE"
 msgid "Shevat"
-msgstr ""
+msgstr "szwat"
 
 #: ../includes/classes/class_date.php:818
 msgctxt "LOCATIVE"
 msgid "Adar"
-msgstr ""
+msgstr "adar"
 
 #: ../includes/classes/class_date.php:818
 msgctxt "LOCATIVE"
 msgid "Adar I"
-msgstr ""
+msgstr "adar I"
 
 #: ../includes/classes/class_date.php:819
 msgctxt "LOCATIVE"
 msgid "Adar II"
-msgstr ""
+msgstr "adar II"
 
 #: ../includes/classes/class_date.php:820
 msgctxt "LOCATIVE"
 msgid "Nissan"
-msgstr ""
+msgstr "nisan"
 
 #: ../includes/classes/class_date.php:821
 msgctxt "LOCATIVE"
 msgid "Iyar"
-msgstr ""
+msgstr "ijar"
 
 #: ../includes/classes/class_date.php:822
 msgctxt "LOCATIVE"
 msgid "Sivan"
-msgstr ""
+msgstr "siwan"
 
 #: ../includes/classes/class_date.php:823
 msgctxt "LOCATIVE"
 msgid "Tamuz"
-msgstr ""
+msgstr "tamuz"
 
 #: ../includes/classes/class_date.php:824
 msgctxt "LOCATIVE"
 msgid "Av"
-msgstr ""
+msgstr "aw"
 
 #: ../includes/classes/class_date.php:825
 msgctxt "LOCATIVE"
 msgid "Elul"
-msgstr ""
+msgstr "elul"
 
 #: ../includes/classes/class_date.php:831
 msgctxt "INSTRUMENTAL"
 msgid "Tishrei"
-msgstr ""
+msgstr "tiszri"
 
 #: ../includes/classes/class_date.php:832
 msgctxt "INSTRUMENTAL"
 msgid "Heshvan"
-msgstr ""
+msgstr "cheszwan"
 
 #: ../includes/classes/class_date.php:833
 msgctxt "INSTRUMENTAL"
 msgid "Kislev"
-msgstr ""
+msgstr "kislew"
 
 #: ../includes/classes/class_date.php:834
 msgctxt "INSTRUMENTAL"
 msgid "Tevet"
-msgstr ""
+msgstr "tewet"
 
 #: ../includes/classes/class_date.php:835
 msgctxt "INSTRUMENTAL"
 msgid "Shevat"
-msgstr ""
+msgstr "szwat"
 
 #: ../includes/classes/class_date.php:836
 msgctxt "INSTRUMENTAL"
 msgid "Adar"
-msgstr ""
+msgstr "adar"
 
 #: ../includes/classes/class_date.php:836
 msgctxt "INSTRUMENTAL"
 msgid "Adar I"
-msgstr ""
+msgstr "adar I"
 
 #: ../includes/classes/class_date.php:837
 msgctxt "INSTRUMENTAL"
 msgid "Adar II"
-msgstr ""
+msgstr "adar II"
 
 #: ../includes/classes/class_date.php:838
 msgctxt "INSTRUMENTAL"
 msgid "Nissan"
-msgstr ""
+msgstr "nisan"
 
 #: ../includes/classes/class_date.php:839
 msgctxt "INSTRUMENTAL"
 msgid "Iyar"
-msgstr ""
+msgstr "ijar"
 
 #: ../includes/classes/class_date.php:840
 msgctxt "INSTRUMENTAL"
 msgid "Sivan"
-msgstr ""
+msgstr "siwan"
 
 #: ../includes/classes/class_date.php:841
 msgctxt "INSTRUMENTAL"
 msgid "Tamuz"
-msgstr ""
+msgstr "tamuz"
 
 #: ../includes/classes/class_date.php:842
 msgctxt "INSTRUMENTAL"
 msgid "Av"
-msgstr ""
+msgstr "aw"
 
 #: ../includes/classes/class_date.php:843
 msgctxt "INSTRUMENTAL"
 msgid "Elul"
-msgstr ""
+msgstr "elul"
 
 #: ../includes/classes/class_date.php:850
 msgid "Tishrei"
@@ -11341,262 +11341,262 @@ msgstr "ראשון"
 #: ../includes/classes/class_date.php:1082
 msgctxt "NOMINATIVE"
 msgid "Vendémiaire"
-msgstr ""
+msgstr "Vendémiaire"
 
 #: ../includes/classes/class_date.php:1083
 msgctxt "NOMINATIVE"
 msgid "Brumaire"
-msgstr ""
+msgstr "Brumaire"
 
 #: ../includes/classes/class_date.php:1084
 msgctxt "NOMINATIVE"
 msgid "Frimaire"
-msgstr ""
+msgstr "Frimaire"
 
 #: ../includes/classes/class_date.php:1085
 msgctxt "NOMINATIVE"
 msgid "Nivôse"
-msgstr ""
+msgstr "Nivôse"
 
 #: ../includes/classes/class_date.php:1086
 msgctxt "NOMINATIVE"
 msgid "Pluviôse"
-msgstr ""
+msgstr "Pluviôse"
 
 #: ../includes/classes/class_date.php:1087
 msgctxt "NOMINATIVE"
 msgid "Ventôse"
-msgstr ""
+msgstr "Ventôse"
 
 #: ../includes/classes/class_date.php:1088
 msgctxt "NOMINATIVE"
 msgid "Germinal"
-msgstr ""
+msgstr "Germinal"
 
 #: ../includes/classes/class_date.php:1089
 msgctxt "NOMINATIVE"
 msgid "Floréal"
-msgstr ""
+msgstr "Floréal"
 
 #: ../includes/classes/class_date.php:1090
 msgctxt "NOMINATIVE"
 msgid "Prairial"
-msgstr ""
+msgstr "Prairial"
 
 #: ../includes/classes/class_date.php:1091
 msgctxt "NOMINATIVE"
 msgid "Messidor"
-msgstr ""
+msgstr "Messidor"
 
 #: ../includes/classes/class_date.php:1092
 msgctxt "NOMINATIVE"
 msgid "Thermidor"
-msgstr ""
+msgstr "Thermidor"
 
 #: ../includes/classes/class_date.php:1093
 msgctxt "NOMINATIVE"
 msgid "Fructidor"
-msgstr ""
+msgstr "Fructidor"
 
 #: ../includes/classes/class_date.php:1094
 msgctxt "NOMINATIVE"
 msgid "jours complémentaires"
-msgstr ""
+msgstr "Dni Sankiulotów"
 
 #: ../includes/classes/class_date.php:1099
 msgctxt "GENITIVE"
 msgid "Vendémiaire"
-msgstr ""
+msgstr "Vendémiaire"
 
 #: ../includes/classes/class_date.php:1100
 msgctxt "GENITIVE"
 msgid "Brumaire"
-msgstr ""
+msgstr "Brumaire"
 
 #: ../includes/classes/class_date.php:1101
 msgctxt "GENITIVE"
 msgid "Frimaire"
-msgstr ""
+msgstr "Frimaire"
 
 #: ../includes/classes/class_date.php:1102
 msgctxt "GENITIVE"
 msgid "Nivôse"
-msgstr ""
+msgstr "Nivôse"
 
 #: ../includes/classes/class_date.php:1103
 msgctxt "GENITIVE"
 msgid "Pluviôse"
-msgstr ""
+msgstr "Pluviôse"
 
 #: ../includes/classes/class_date.php:1104
 msgctxt "GENITIVE"
 msgid "Ventôse"
-msgstr ""
+msgstr "Ventôse"
 
 #: ../includes/classes/class_date.php:1105
 msgctxt "GENITIVE"
 msgid "Germinal"
-msgstr ""
+msgstr "Germinal"
 
 #: ../includes/classes/class_date.php:1106
 msgctxt "GENITIVE"
 msgid "Floréal"
-msgstr ""
+msgstr "Floréal"
 
 #: ../includes/classes/class_date.php:1107
 msgctxt "GENITIVE"
 msgid "Prairial"
-msgstr ""
+msgstr "Prairial"
 
 #: ../includes/classes/class_date.php:1108
 msgctxt "GENITIVE"
 msgid "Messidor"
-msgstr ""
+msgstr "Messidor"
 
 #: ../includes/classes/class_date.php:1109
 msgctxt "GENITIVE"
 msgid "Thermidor"
-msgstr ""
+msgstr "Thermidor"
 
 #: ../includes/classes/class_date.php:1110
 msgctxt "GENITIVE"
 msgid "Fructidor"
-msgstr ""
+msgstr "Fructidor"
 
 #: ../includes/classes/class_date.php:1111
 msgctxt "GENITIVE"
 msgid "jours complémentaires"
-msgstr ""
+msgstr "Dni Sankiulotów"
 
 #: ../includes/classes/class_date.php:1116
 msgctxt "LOCATIVE"
 msgid "Vendémiaire"
-msgstr ""
+msgstr "Vendémiaire"
 
 #: ../includes/classes/class_date.php:1117
 msgctxt "LOCATIVE"
 msgid "Brumaire"
-msgstr ""
+msgstr "Brumaire"
 
 #: ../includes/classes/class_date.php:1118
 msgctxt "LOCATIVE"
 msgid "Frimaire"
-msgstr ""
+msgstr "Frimaire"
 
 #: ../includes/classes/class_date.php:1119
 msgctxt "LOCATIVE"
 msgid "Nivôse"
-msgstr ""
+msgstr "Nivôse"
 
 #: ../includes/classes/class_date.php:1120
 msgctxt "LOCATIVE"
 msgid "Pluviôse"
-msgstr ""
+msgstr "Pluviôse"
 
 #: ../includes/classes/class_date.php:1121
 msgctxt "LOCATIVE"
 msgid "Ventôse"
-msgstr ""
+msgstr "Ventôse"
 
 #: ../includes/classes/class_date.php:1122
 msgctxt "LOCATIVE"
 msgid "Germinal"
-msgstr ""
+msgstr "Germinal"
 
 #: ../includes/classes/class_date.php:1123
 msgctxt "LOCATIVE"
 msgid "Floréal"
-msgstr ""
+msgstr "Floréal"
 
 #: ../includes/classes/class_date.php:1124
 msgctxt "LOCATIVE"
 msgid "Prairial"
-msgstr ""
+msgstr "Prairial"
 
 #: ../includes/classes/class_date.php:1125
 msgctxt "LOCATIVE"
 msgid "Messidor"
-msgstr ""
+msgstr "Messidor"
 
 #: ../includes/classes/class_date.php:1126
 msgctxt "LOCATIVE"
 msgid "Thermidor"
-msgstr ""
+msgstr "Thermidor"
 
 #: ../includes/classes/class_date.php:1127
 msgctxt "LOCATIVE"
 msgid "Fructidor"
-msgstr ""
+msgstr "Fructidor"
 
 #: ../includes/classes/class_date.php:1128
 msgctxt "LOCATIVE"
 msgid "jours complémentaires"
-msgstr ""
+msgstr "Dni Sankiulotów"
 
 #: ../includes/classes/class_date.php:1133
 msgctxt "INSTRUMENTAL"
 msgid "Vendémiaire"
-msgstr ""
+msgstr "Vendémiaire"
 
 #: ../includes/classes/class_date.php:1134
 msgctxt "INSTRUMENTAL"
 msgid "Brumaire"
-msgstr ""
+msgstr "Brumaire"
 
 #: ../includes/classes/class_date.php:1135
 msgctxt "INSTRUMENTAL"
 msgid "Frimaire"
-msgstr ""
+msgstr "Frimaire"
 
 #: ../includes/classes/class_date.php:1136
 msgctxt "INSTRUMENTAL"
 msgid "Nivôse"
-msgstr ""
+msgstr "Nivôse"
 
 #: ../includes/classes/class_date.php:1137
 msgctxt "INSTRUMENTAL"
 msgid "Pluviôse"
-msgstr ""
+msgstr "Pluviôse"
 
 #: ../includes/classes/class_date.php:1138
 msgctxt "INSTRUMENTAL"
 msgid "Ventôse"
-msgstr ""
+msgstr "Ventôse"
 
 #: ../includes/classes/class_date.php:1139
 msgctxt "INSTRUMENTAL"
 msgid "Germinal"
-msgstr ""
+msgstr "Germinal"
 
 #: ../includes/classes/class_date.php:1140
 msgctxt "INSTRUMENTAL"
 msgid "Floréal"
-msgstr ""
+msgstr "Floréal"
 
 #: ../includes/classes/class_date.php:1141
 msgctxt "INSTRUMENTAL"
 msgid "Prairial"
-msgstr ""
+msgstr "Prairial"
 
 #: ../includes/classes/class_date.php:1142
 msgctxt "INSTRUMENTAL"
 msgid "Messidor"
-msgstr ""
+msgstr "Messidor"
 
 #: ../includes/classes/class_date.php:1143
 msgctxt "INSTRUMENTAL"
 msgid "Thermidor"
-msgstr ""
+msgstr "Thermidor"
 
 #: ../includes/classes/class_date.php:1144
 msgctxt "INSTRUMENTAL"
 msgid "Fructidor"
-msgstr ""
+msgstr "Fructidor"
 
 #: ../includes/classes/class_date.php:1145
 msgctxt "INSTRUMENTAL"
 msgid "jours complémentaires"
-msgstr ""
+msgstr "Dni Sankiulotów"
 
 #: ../includes/classes/class_date.php:1174
 msgid "Primidi"
@@ -11641,242 +11641,242 @@ msgstr "Decidi"
 #: ../includes/classes/class_date.php:1242
 msgctxt "NOMINATIVE"
 msgid "Muharram"
-msgstr ""
+msgstr "muharram"
 
 #: ../includes/classes/class_date.php:1243
 msgctxt "NOMINATIVE"
 msgid "Safar"
-msgstr ""
+msgstr "safar"
 
 #: ../includes/classes/class_date.php:1244
 msgctxt "NOMINATIVE"
 msgid "Rabi' al-awwal"
-msgstr ""
+msgstr "rabi al-awwal"
 
 #: ../includes/classes/class_date.php:1245
 msgctxt "NOMINATIVE"
 msgid "Rabi' al-thani"
-msgstr ""
+msgstr "rabi as-sani"
 
 #: ../includes/classes/class_date.php:1246
 msgctxt "NOMINATIVE"
 msgid "Jumada al-awwal"
-msgstr ""
+msgstr "dżumada al-ula"
 
 #: ../includes/classes/class_date.php:1247
 msgctxt "NOMINATIVE"
 msgid "Jumada al-thani"
-msgstr ""
+msgstr "dżumada as-sani"
 
 #: ../includes/classes/class_date.php:1248
 msgctxt "NOMINATIVE"
 msgid "Rajab"
-msgstr ""
+msgstr "radżab"
 
 #: ../includes/classes/class_date.php:1249
 msgctxt "NOMINATIVE"
 msgid "Sha'aban"
-msgstr ""
+msgstr "szaban"
 
 #: ../includes/classes/class_date.php:1250
 msgctxt "NOMINATIVE"
 msgid "Ramadan"
-msgstr ""
+msgstr "ramadan"
 
 #: ../includes/classes/class_date.php:1251
 msgctxt "NOMINATIVE"
 msgid "Shawwal"
-msgstr ""
+msgstr "szawwal"
 
 #: ../includes/classes/class_date.php:1252
 msgctxt "NOMINATIVE"
 msgid "Dhu al-Qi'dah"
-msgstr ""
+msgstr "zu al-kada"
 
 #: ../includes/classes/class_date.php:1253
 msgctxt "NOMINATIVE"
 msgid "Dhu al-Hijjah"
-msgstr ""
+msgstr "zu al-hidżdża"
 
 #: ../includes/classes/class_date.php:1259
 msgctxt "GENITIVE"
 msgid "Muharram"
-msgstr ""
+msgstr "muharram"
 
 #: ../includes/classes/class_date.php:1260
 msgctxt "GENITIVE"
 msgid "Safar"
-msgstr ""
+msgstr "safar"
 
 #: ../includes/classes/class_date.php:1261
 msgctxt "GENITIVE"
 msgid "Rabi' al-awwal"
-msgstr ""
+msgstr "rabi al-awwal"
 
 #: ../includes/classes/class_date.php:1262
 msgctxt "GENITIVE"
 msgid "Rabi' al-thani"
-msgstr ""
+msgstr "rabi as-sani"
 
 #: ../includes/classes/class_date.php:1263
 msgctxt "GENITIVE"
 msgid "Jumada al-awwal"
-msgstr ""
+msgstr "dżumada al-ula"
 
 #: ../includes/classes/class_date.php:1264
 msgctxt "GENITIVE"
 msgid "Jumada al-thani"
-msgstr ""
+msgstr "dżumada as-sani"
 
 #: ../includes/classes/class_date.php:1265
 msgctxt "GENITIVE"
 msgid "Rajab"
-msgstr ""
+msgstr "radżab"
 
 #: ../includes/classes/class_date.php:1266
 msgctxt "GENITIVE"
 msgid "Sha'aban"
-msgstr ""
+msgstr "szaban"
 
 #: ../includes/classes/class_date.php:1267
 msgctxt "GENITIVE"
 msgid "Ramadan"
-msgstr ""
+msgstr "ramadan"
 
 #: ../includes/classes/class_date.php:1268
 msgctxt "GENITIVE"
 msgid "Shawwal"
-msgstr ""
+msgstr "szawwal"
 
 #: ../includes/classes/class_date.php:1269
 msgctxt "GENITIVE"
 msgid "Dhu al-Qi'dah"
-msgstr ""
+msgstr "zu al-kada"
 
 #: ../includes/classes/class_date.php:1270
 msgctxt "GENITIVE"
 msgid "Dhu al-Hijjah"
-msgstr ""
+msgstr "zu al-hidżdża"
 
 #: ../includes/classes/class_date.php:1276
 msgctxt "LOCATIVE"
 msgid "Muharram"
-msgstr ""
+msgstr "muharram"
 
 #: ../includes/classes/class_date.php:1277
 msgctxt "LOCATIVE"
 msgid "Safar"
-msgstr ""
+msgstr "safar"
 
 #: ../includes/classes/class_date.php:1278
 msgctxt "LOCATIVE"
 msgid "Rabi' al-awwal"
-msgstr ""
+msgstr "rabi al-awwal"
 
 #: ../includes/classes/class_date.php:1279
 msgctxt "LOCATIVE"
 msgid "Rabi' al-thani"
-msgstr ""
+msgstr "rabi as-sani"
 
 #: ../includes/classes/class_date.php:1280
 msgctxt "LOCATIVE"
 msgid "Jumada al-awwal"
-msgstr ""
+msgstr "dżumada al-ula"
 
 #: ../includes/classes/class_date.php:1281
 msgctxt "LOCATIVE"
 msgid "Jumada al-thani"
-msgstr ""
+msgstr "dżumada as-sani"
 
 #: ../includes/classes/class_date.php:1282
 msgctxt "LOCATIVE"
 msgid "Rajab"
-msgstr ""
+msgstr "radżab"
 
 #: ../includes/classes/class_date.php:1283
 msgctxt "LOCATIVE"
 msgid "Sha'aban"
-msgstr ""
+msgstr "szaban"
 
 #: ../includes/classes/class_date.php:1284
 msgctxt "LOCATIVE"
 msgid "Ramadan"
-msgstr ""
+msgstr "ramadan"
 
 #: ../includes/classes/class_date.php:1285
 msgctxt "LOCATIVE"
 msgid "Shawwal"
-msgstr ""
+msgstr "szawwal"
 
 #: ../includes/classes/class_date.php:1286
 msgctxt "LOCATIVE"
 msgid "Dhu al-Qi'dah"
-msgstr ""
+msgstr "zu al-kada"
 
 #: ../includes/classes/class_date.php:1287
 msgctxt "LOCATIVE"
 msgid "Dhu al-Hijjah"
-msgstr ""
+msgstr "zu al-hidżdża"
 
 #: ../includes/classes/class_date.php:1293
 msgctxt "INSTRUMENTAL"
 msgid "Muharram"
-msgstr ""
+msgstr "muharram"
 
 #: ../includes/classes/class_date.php:1294
 msgctxt "INSTRUMENTAL"
 msgid "Safar"
-msgstr ""
+msgstr "safar"
 
 #: ../includes/classes/class_date.php:1295
 msgctxt "INSTRUMENTAL"
 msgid "Rabi' al-awwal"
-msgstr ""
+msgstr "rabi al-awwal"
 
 #: ../includes/classes/class_date.php:1296
 msgctxt "INSTRUMENTAL"
 msgid "Rabi' al-thani"
-msgstr ""
+msgstr "rabi as-sani"
 
 #: ../includes/classes/class_date.php:1297
 msgctxt "INSTRUMENTAL"
 msgid "Jumada al-awwal"
-msgstr ""
+msgstr "dżumada al-ula"
 
 #: ../includes/classes/class_date.php:1298
 msgctxt "INSTRUMENTAL"
 msgid "Jumada al-thani"
-msgstr ""
+msgstr "dżumada as-sani"
 
 #: ../includes/classes/class_date.php:1299
 msgctxt "INSTRUMENTAL"
 msgid "Rajab"
-msgstr ""
+msgstr "radżab"
 
 #: ../includes/classes/class_date.php:1300
 msgctxt "INSTRUMENTAL"
 msgid "Sha'aban"
-msgstr ""
+msgstr "szaban"
 
 #: ../includes/classes/class_date.php:1301
 msgctxt "INSTRUMENTAL"
 msgid "Ramadan"
-msgstr ""
+msgstr "ramadan"
 
 #: ../includes/classes/class_date.php:1302
 msgctxt "INSTRUMENTAL"
 msgid "Shawwal"
-msgstr ""
+msgstr "szawwal"
 
 #: ../includes/classes/class_date.php:1303
 msgctxt "INSTRUMENTAL"
 msgid "Dhu al-Qi'dah"
-msgstr ""
+msgstr "zu al-kada"
 
 #: ../includes/classes/class_date.php:1304
 msgctxt "INSTRUMENTAL"
 msgid "Dhu al-Hijjah"
-msgstr ""
+msgstr "zu al-hidżdża"
 
 #. I18N: This is the format string for full dates, such as 14 October 1908.  See http://php.net/date for codes
 #: ../includes/classes/class_date.php:1563
@@ -19506,7 +19506,7 @@ msgstr "Waga"
 #: ../help_text.php:2418
 #: ../blocks/yahrzeit.php:159
 msgid "_YART"
-msgstr "Yahrzeit"
+msgstr "Jorcajt"
 
 #. I18N: This is the GEDCOM label for "Brit Mila of a child"
 #: ../help_text.php:2424
@@ -23142,7 +23142,7 @@ msgstr ""
 
 #: ../help_text.php:5826
 msgid "This block shows you Yahrzeiten that are coming up in the near future.<br /><br />Yahrzeiten (singular: Yahrzeit) are anniversaries of a person's death.  These anniversaries are observed in the Jewish tradition; they are no longer in common use in other traditions.  «Yahrzeit» can also be spelled «Jahrzeit» or «Yartzeit».<br /><br />The Administrator determines how far ahead the block will look.  You can further refine the block's display of upcoming Yahrzeiten through configuration options."
-msgstr "Ten blok pokazuje nadchodzące wydarzenia Yahrzeit (rocznice śmierci).<br /><br />Rocznice te występują tylko w kulturze żydowskiej."
+msgstr "Ten blok pokazuje nadchodzące wydarzenia Jorcajt (rocznice śmierci).<br /><br />Rocznice te występują tylko w kulturze żydowskiej."
 
 #: ../help_text.php:5830
 msgid "zip"
@@ -23609,11 +23609,11 @@ msgstr "Zalogowani użytkownicy"
 #: ../blocks/yahrzeit.php:40
 #: ../blocks/yahrzeit.php:88
 msgid "Upcoming Yahrzeiten"
-msgstr "Yahrzeit (rocznice śmierci)"
+msgstr "Jorcajt (rocznice śmierci)"
 
 #: ../blocks/yahrzeit.php:41
 msgid "The Upcoming Yahrzeiten block shows anniversaries of death dates that will occur in the near future.  You can configure the period shown, and the Administrator can configure how far into the future this block will look."
-msgstr "Blok Yahrzeit (rocznice śmierci) pokazuje rocznice śmierci, które wydarzą się w niedalekiej przyszłości. Możesz skonfigurować okres do pokazania, a Administrator może skonfigurować jak daleko w przyszłość ten blok będzie sięgał."
+msgstr "Blok Jorcajt (rocznice śmierci) pokazuje rocznice śmierci, które wydarzą się w niedalekiej przyszłości. Możesz skonfigurować okres do pokazania, a Administrator może skonfigurować jak daleko w przyszłość ten blok będzie sięgał."
 
 #: ../blocks/gedcom_block.php:39
 msgid "GEDCOM Welcome"
