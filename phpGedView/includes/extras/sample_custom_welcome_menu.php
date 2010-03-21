@@ -27,9 +27,9 @@
 * @version $Id$
 */
 /*
-* This is a sample customizable sub-menu for the Welcome menu in the top links of each page.
+* This is a sample customizable sub-menu for the Home Page menu in the top links of each page.
 *
-* To make this sub-menu appear within the Welcome menu, this file needs to be named
+* To make this sub-menu appear within the Home Page menu, this file needs to be named
 * "custom_welcome_menu.php". Furthermore, the individual sub-menu entries need to
 * be valid. You can remove the extra comments but, for copyright reasons, the first comment
 * block at the top of this file should be retained.

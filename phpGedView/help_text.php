@@ -3238,7 +3238,7 @@ case 'MULTI_MEDIA':
 
 case 'PAGE_AFTER_LOGIN':
 	$title=i18n::translate('Page to show after Login');
-	$text=i18n::translate('Which page should users see after they have logged in?<br /><br />The choice made here determines whether a successful Login causes the Welcome or the MyGedView page to appear when the login is done from the Home Page.<br /><br />A Login done from the link at the top of every other page will return the user to that page.');
+	$text=i18n::translate('Which page should users see after they have logged in?<br /><br />The choice made here determines whether a successful Login causes the Home or My Page to appear when the login is done from the Home Page.<br /><br />A Login done from the link at the top of every other page will return the user to that page.');
 	break;
 
 case 'PEDIGREE_FULL_DETAILS':
@@ -4127,7 +4127,7 @@ case 'box_width':
 
 case 'cache_life':
 	$title=i18n::translate('Cache file life');
-	$text=i18n::translate('To improve performance, this PhpGedCom Welcome Page block is saved as a cache file.  You can control how often this block\'s cache file is refreshed.<br /><br /><ul><li><b>-1</b> means that the cache file is never refreshed automatically.  To get a fresh copy, you need to delete all cache files.  You can do this on the Customize Welcome Page page.</li><li><b>0</b> (Zero) means that this block is never cached, and every time the block is displayed on the PhpGedView Home Page, you see a fresh copy.  This setting is used automatically for blocks that change frequently, such as the Logged In Users and the Random Media blocks.</li><li><b>1</b> (One) means that a fresh copy of this block\'s cache file is created daily, <b>2</b> means that a fresh copy is created every two days, <b>7</b> means that a fresh copy is created weekly, etc.</li></ul>');
+	$text=i18n::translate('To improve performance, this webtrees Home Page block is saved as a cache file.  You can control how often this block\'s cache file is refreshed.<br /><br /><ul><li><b>-1</b> means that the cache file is never refreshed automatically.  To get a fresh copy, you need to delete all cache files.  You can do this on the Customize Home Page screen.</li><li><b>0</b> (Zero) means that this block is never cached, and every time the block is displayed on the webtrees Home Page, you see a fresh copy.  This setting is used automatically for blocks that change frequently, such as the Logged In Users and the Random Media blocks.</li><li><b>1</b> (One) means that a fresh copy of this block\'s cache file is created daily, <b>2</b> means that a fresh copy is created every two days, <b>7</b> means that a fresh copy is created weekly, etc.</li></ul>');
 	break;
 
 case 'cal_dowload':
@@ -4808,7 +4808,7 @@ case 'index_add_favorites':
 
 case 'index_charts':
 	$title=i18n::translate('Charts Block');
-	$text=i18n::translate('This block allows a pedigree, descendancy, or hourglass chart to appear on the Welcome or the MyGedView page.  Because of space limitations, the charts should be placed only on the left side of the page.<br /><br />When this block appears on the Home Page, the root person and the type of chart to be displayed are determined by the administrator.  When this block appears on the user\'s personalized MyGedView page, these options are determined by the user.<br /><br />The behavior of these charts is identical to their behavior when they are called up from the menus.  Click on the box of a person to see more details about them.');
+	$text=i18n::translate('This block allows a pedigree, descendancy, or hourglass chart to appear on the Home or My Page.  Because of space limitations, the charts should be placed only on the left side of the page.<br /><br />When this block appears on the Home Page, the root person and the type of chart to be displayed are determined by the administrator.  When this block appears on the user\'s personalized MyGedView page, these options are determined by the user.<br /><br />The behavior of these charts is identical to their behavior when they are called up from the menus.  Click on the box of a person to see more details about them.');
 	break;
 
 case 'index_common_given_names':
@@ -4842,7 +4842,7 @@ case 'index_gedcom_news':
 	break;
 
 case 'index':
-	$title=i18n::translate('Welcome Page');
+	$title=i18n::translate('Home Page');
 	$text=i18n::translate('This page is the Home Page. It welcomes you to the selected <a href="#def_gedcom">GEDCOM</a> file. You can return to this page by selecting Welcome Page from the top menu. If there are multiple GEDCOMs on this site, you can select a GEDCOM from the drop-down menu.<br /><br />This Help page contains information about:<ul><li><a href="#index_portal"><b>Welcome Page</b></a></li><li><a href="#header"><b>Header Area</b></a></li><li><a href="#menu"><b>Menus</b></a></li><li><a href="#header_general"><b>General Information</b></a></li><li><a href="#def"><b>Definitions</b></a></li></ul>');
 	break;
 
@@ -4898,11 +4898,11 @@ case 'index_onthisday':
 /*
 case 'index_portal_head':
 	$title=i18n::translate('index_portal_head');
-	$text=i18n::translate('<div class="name_head"><center><b>THE WELCOME PAGE</b></center></div>');
+	$text=i18n::translate('<div class="name_head"><center><b>THE HOME PAGE</b></center></div>');
 	break;
 */
 case 'index_portal':
-	$title=i18n::translate('The Welcome Page');
+	$title=i18n::translate('The Home Page');
 	$text=i18n::translate('The Home Page consists of several separate blocks, and can be customized. On sites that have more than one genealogical database, you may see a different Home Page for each.  Depending on how the administrator customized the site, you may see any of the following blocks on the Home Page:<ul><li><a href="#index_welcome"><b>Welcome</b></a></li><li><a href="#index_login"><b>Login</b></a></li><li><a href="#index_events"><b>Upcoming events</b></a></li><li><a href="#index_onthisday"><b>On this Day in Your History</b></a></li><li><a href="#index_charts"><b>Charts</b></a></li><li><a href="#index_favorites"><b>GEDCOM Favorites</b></a></li><li><a href="#index_stats"><b>GEDCOM Statistics</b></a></li><li><a href="#index_common_surnames"><b>Most Common Surnames</b></a></li><li><a href="#index_media"><b>Random Media</b></a></li><li><a href="#index_loggedin"><b>Logged in Users</b></a></li><li><a href="#gedcom_news"><b>GEDCOM News</b></a></li><li><a href="#recent_changes"><b>Recent Changes</b></a></li></ul>');
 	break;
 
@@ -5817,8 +5817,8 @@ case 'week_start':
 	break;
 
 case 'welcome_new':
-	$title=i18n::translate('Welcome to your new PhpGedView website.');
-	$text=i18n::translate('Since you are seeing this page, you have successfully installed PhpGedView on your server and are ready to begin configuring it to your requirements.<br />This Help page will guide you through the configuration process.  As you enter different fields, this window will provide you with help information about the field you are in.  You may close this window; to open it again click on one of the "?" question marks next to the field label.');
+	$title=i18n::translate('Welcome to your new webtrees site.');
+	$text=i18n::translate('Since you are seeing this page, you have successfully installed webtrees on your server and are ready to begin configuring it to your requirements.<br />This Help page will guide you through the configuration process.  As you enter different fields, this window will provide you with help information about the field you are in.  You may close this window; to open it again click on one of the "?" question marks next to the field label.');
 	break;
 
 case 'yahrzeit':

@@ -1277,7 +1277,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 * print a gedcom title linked to the gedcom portal
 *
 * This function will print the HTML to link the current gedcom title back to the
-* gedcom portal welcome page
+* gedcom Home Page
 * @author John Finlay
 */
 function print_gedcom_title_link($InHeader=FALSE) {

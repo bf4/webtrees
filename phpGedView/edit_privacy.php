@@ -261,7 +261,7 @@ if ($action=="update") {
  	$gedcomprivname = $GEDCOM."_priv.php";
  	check_in($logline, $gedcomprivname, $INDEX_DIRECTORY);
 
- 	//-- delete the cache files for the welcome page blocks
+ 	//-- delete the cache files for the Home Page blocks
 	require_once PGV_ROOT.'includes/index_cache.php';
 	clearCache();
 }

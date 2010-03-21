@@ -41,7 +41,7 @@ require_once PGV_ROOT.'includes/controllers/hourglass_ctrl.php';
 require_once PGV_ROOT.'includes/classes/class_treenav.php';
 
 $PGV_BLOCKS["print_charts_block"]["name"]		= i18n::translate('Charts Block');
-$PGV_BLOCKS["print_charts_block"]["descr"]		= i18n::translate('The Charts block allows you to place a chart on the Welcome or My Page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart.');
+$PGV_BLOCKS["print_charts_block"]["descr"]		= i18n::translate('The Charts block allows you to place a chart on the Home or My Page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart.');
 $PGV_BLOCKS["print_charts_block"]["canconfig"]	= true;
 $PGV_BLOCKS["print_charts_block"]["config"]		= array(
 	"cache"=>1,

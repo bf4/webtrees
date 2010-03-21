@@ -971,7 +971,7 @@ DATABASE to Index
  7.  User Migrate will try to create the following files:
        - authenticate.php  - user accounts and settings
        - favorites.dat     - user and GEDCOM favorites
-       - blocks.dat        - block layout of Welcome and MyGedView pages
+       - blocks.dat        - block layout of Home and My Pages
        - news.dat          - User and GEDCOM news
        - messages.dat      - User messages
      If any of the files already exist in your index directory, you will be 
