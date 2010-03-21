@@ -7799,47 +7799,47 @@ msgstr "aunt/uncle"
 #. I18N: nephew
 #: ../includes/functions/functions.php:2449
 msgid "brother's son"
-msgstr ""
+msgstr "nephew"
 
 #. I18N: niece
 #: ../includes/functions/functions.php:2450
 msgid "brother's daughter"
-msgstr ""
+msgstr "niece"
 
 #. I18N: nephew/neice
 #: ../includes/functions/functions.php:2451
 msgid "brother's child"
-msgstr ""
+msgstr "nephew/neice"
 
 #. I18N: nephew
 #: ../includes/functions/functions.php:2452
 msgid "sister's son"
-msgstr ""
+msgstr "nephew"
 
 #. I18N: niece
 #: ../includes/functions/functions.php:2453
 msgid "sister's daughter"
-msgstr ""
+msgstr "niece"
 
 #. I18N: nephew/neice
 #: ../includes/functions/functions.php:2454
 msgid "sister's child"
-msgstr ""
+msgstr "nephew/neice"
 
 #. I18N: nephew
 #: ../includes/functions/functions.php:2455
 msgid "sibling's son"
-msgstr ""
+msgstr "nephew"
 
 #. I18N: niece
 #: ../includes/functions/functions.php:2456
 msgid "sibling's daughter"
-msgstr ""
+msgstr "niece"
 
 #. I18N: nephew/neice
 #: ../includes/functions/functions.php:2457
 msgid "sibling's child"
-msgstr ""
+msgstr "nephew/neice"
 
 #. I18N: sister-in-law
 #: ../includes/functions/functions.php:2459
