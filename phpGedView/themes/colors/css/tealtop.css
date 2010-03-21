@@ -63,8 +63,8 @@ background:#d2f4e6;
 /*	Define Link Color					*/
 
 a {
-color:#1b5f41;
-text-decoration:none;
+color:#333333;
+text-decoration: none;
 }
 
 a.link:link, a.link:visited, a.link:active, a.link:hover, .menuitem a,
@@ -73,7 +73,8 @@ color:#1b5f41;
 }
 
 a:hover { 
-text-decoration:underline;
+color: #34775a;
+text-decoration: none;
 }
 
 /*	Define Alert Color					*/
@@ -809,6 +810,7 @@ letter-spacing: .2px;
 }
 
 .date {
+color: #333;
 font-weight: bold;
 }
 
