@@ -1631,9 +1631,9 @@ dt {
 .ui-tabs .ui-tabs-nav li:hover				{ color:red; background: #f0f2f5;}
 .ui-tabs .ui-tabs-nav li a:hover			{ color:#3f728d; text-decoration:underline;}
 
-.ui-tabs-nav li.ui-tabs-selected  	 		{ color:3f728d; border-color: #888888; background:#707070;}
+.ui-tabs-nav li.ui-tabs-selected  	 		{ color:3f728d; border-color: #888888; background:#ffffff;}
 .ui-tabs-nav li.ui-tabs-selected a	 		{ font-weight:600; color:3f728d;}
-.ui-tabs-nav li.ui-tabs-selected a:hover	{ font-weight:600; color:3f728d; background:#707070; }
+.ui-tabs-nav li.ui-tabs-selected a:hover	{ font-weight:600; color:3f728d; background:#ffffff; }
 .ui-tabs-nav li.ui-tabs-selected:hover		{ background:#efefee; }
 .ui-tabs .ui-tabs-panel	 					{ background:#fff; }
 
