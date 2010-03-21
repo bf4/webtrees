@@ -6784,7 +6784,7 @@ msgstr ""
 #: ../includes/functions/functions_print_lists.php:505
 #: ../includes/functions/functions_print.php:1893 ../help_text.php:84
 msgid "AGE"
-msgstr "AGE"
+msgstr "Age"
 
 #. I18N: This is the GEDCOM label for "Married Name"
 #: ../includes/functions/functions_print_lists.php:193 ../help_text.php:2172
@@ -15890,17 +15890,17 @@ msgstr "b."
 #. I18N: This is the GEDCOM label for "Birth Date"
 #: ../help_text.php:220
 msgid "BIRT:DATE"
-msgstr "BIRT"
+msgstr "Birth Date"
 
 #. I18N: This is the GEDCOM label for "Birth Place"
 #: ../help_text.php:226
 msgid "BIRT:PLAC"
-msgstr "BIRT"
+msgstr "Birth Place"
 
 #. I18N: This is the GEDCOM label for "Birth Source"
 #: ../help_text.php:232
 msgid "BIRT:SOUR"
-msgstr "BIRT"
+msgstr "Birth Source"
 
 #. I18N: This is the GEDCOM label for "Blessing"
 #: ../help_text.php:238
