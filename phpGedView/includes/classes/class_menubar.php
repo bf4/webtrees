@@ -1073,7 +1073,7 @@ class MenuBar
 			if (substr($frompage,-1) == "&") $frompage = substr($frompage,0,-1);
 			// encode frompage address in other case we lost the all variables on theme change
 			$frompage = base64_encode($frompage);
-			$menu=new Menu(i18n::translate('Change Color'));
+			$menu=new Menu(i18n::translate('Color Palette'));
 			$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu', "icon_small_theme");
 			foreach ($colorList as $colorChoice) {
 				$submenu=new Menu($colorChoice, encode_url("colorchange.php?frompage={$frompage}&mycolor={$colorChoice}"));
