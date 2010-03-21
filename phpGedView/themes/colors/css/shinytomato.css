@@ -1,6 +1,6 @@
 /**
  ** Style for the Shinny Tomato Theme    
- ** @version $Id: ash.css 7424 2010-03-14 14:20:29Z rob $
+ ** @version $Id: ash.css 7548 2010-03-20 11:51:29Z rob $
  */
 
 .something {
@@ -32,6 +32,7 @@ padding:0px;
 .list_label a,
 .facts_label,
 .facts_label a,
+.facts_label .date,
 .facts_label03,
 .facts_table h2,
 .facts_table .ltr .descriptionbox a, 
@@ -69,11 +70,11 @@ text-decoration: none;
 
 a.link:link, a.link:visited, a.link:active, a.link:hover, .menuitem a,
 .nameZoom {
-color:#c70000;
+color:#333333;
 }
 
 a:hover { 
-color: #f21107;
+color: #f21107 ;
 text-decoration: none;
 }
 
@@ -1624,18 +1625,18 @@ dt {
 
 /* Tabs --------------------------------*/
 .ui-widget-content 							{ color:black; border-color:#999999;  }
-.ui-widget-content a 						{ color:#c70000; }
-.ui-widget-content a:hover 					{ color:#c70000; text-decoration:underline;}
+.ui-widget-content a 						{ color:#333333; }
+.ui-widget-content a:hover 					{ color: red; }
 
 .ui-tabs .ui-tabs-nav 						{ border-color:#888888; background: #f21107; opacity: 0.67;}
 .ui-tabs .ui-tabs-nav li 					{ border-color:#888888; background: #efefee;}
 .ui-tabs .ui-tabs-nav li a 					{ color:#555555; padding: .2em .3em .2em .3em;  }
 .ui-tabs .ui-tabs-nav li:hover				{ color:red; background: #f0eaf0;}
-.ui-tabs .ui-tabs-nav li a:hover			{ color:#c70000; text-decoration:underline;}
+.ui-tabs .ui-tabs-nav li a:hover			{ color:#2f416f; text-decoration:underline;}
 
-.ui-tabs-nav li.ui-tabs-selected  	 		{ color:c70000; border-color: #888888; background:#ffffff;}
-.ui-tabs-nav li.ui-tabs-selected a	 		{ font-weight:600; color:c70000;}
-.ui-tabs-nav li.ui-tabs-selected a:hover	{ font-weight:600; color:c70000; background:#ffffff; }
+.ui-tabs-nav li.ui-tabs-selected  	 		{ color:2f416f; border-color: #888888; background:#ffffff;}
+.ui-tabs-nav li.ui-tabs-selected a	 		{ font-weight:600; color:2f416f;}
+.ui-tabs-nav li.ui-tabs-selected a:hover	{ font-weight:600; color:2f416f; background:#ffffff; }
 .ui-tabs-nav li.ui-tabs-selected:hover		{ background:#efefee; }
 .ui-tabs .ui-tabs-panel	 					{ background:#fff; }
 
@@ -1668,7 +1669,7 @@ dt {
 
 /* Navigator and Flyout menu Styles --------*/
 .nam a:hover{
-color:#2a416f;
+color: red;
 }
 .flyout {
 	color:#000000; 
@@ -1682,7 +1683,7 @@ color:#2a416f;
 	margin-left:-40px;
 }
 .flyout2 a:hover{
- color:#c70000; 
+ color:#2f416f; 
  text-decoration:underline !important;
 }
 #flyout3, #flyout3 a, #phusb, #pwife, #shusb, #swife, #spouse {
