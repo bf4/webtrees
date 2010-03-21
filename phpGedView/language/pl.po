@@ -8897,73 +8897,73 @@ msgstr "Inne wydarzenie"
 #: ../includes/classes/class_date.php:152
 msgctxt "NOMINATIVE"
 msgid "January"
-msgstr ""
+msgstr "styczeń"
 
 #: ../includes/functions/functions_print.php:2174
 #: ../includes/classes/class_date.php:153
 msgctxt "NOMINATIVE"
 msgid "February"
-msgstr ""
+msgstr "luty"
 
 #: ../includes/functions/functions_print.php:2175
 #: ../includes/classes/class_date.php:154
 msgctxt "NOMINATIVE"
 msgid "March"
-msgstr ""
+msgstr "marzec"
 
 #: ../includes/functions/functions_print.php:2176
 #: ../includes/classes/class_date.php:155
 msgctxt "NOMINATIVE"
 msgid "April"
-msgstr ""
+msgstr "kwiecień"
 
 #: ../includes/functions/functions_print.php:2177
 #: ../includes/classes/class_date.php:156
 msgctxt "NOMINATIVE"
 msgid "May"
-msgstr ""
+msgstr "maj"
 
 #: ../includes/functions/functions_print.php:2178
 #: ../includes/classes/class_date.php:157
 msgctxt "NOMINATIVE"
 msgid "June"
-msgstr ""
+msgstr "czerwiec"
 
 #: ../includes/functions/functions_print.php:2179
 #: ../includes/classes/class_date.php:158
 msgctxt "NOMINATIVE"
 msgid "July"
-msgstr ""
+msgstr "lipiec"
 
 #: ../includes/functions/functions_print.php:2180
 #: ../includes/classes/class_date.php:159
 msgctxt "NOMINATIVE"
 msgid "August"
-msgstr ""
+msgstr "sierpień"
 
 #: ../includes/functions/functions_print.php:2181
 #: ../includes/classes/class_date.php:160
 msgctxt "NOMINATIVE"
 msgid "September"
-msgstr ""
+msgstr "wrzesień"
 
 #: ../includes/functions/functions_print.php:2182
 #: ../includes/classes/class_date.php:161
 msgctxt "NOMINATIVE"
 msgid "October"
-msgstr ""
+msgstr "październik"
 
 #: ../includes/functions/functions_print.php:2183
 #: ../includes/classes/class_date.php:162
 msgctxt "NOMINATIVE"
 msgid "November"
-msgstr ""
+msgstr "listopad"
 
 #: ../includes/functions/functions_print.php:2184
 #: ../includes/classes/class_date.php:163
 msgctxt "NOMINATIVE"
 msgid "December"
-msgstr ""
+msgstr "grudzień"
 
 #: ../includes/functions/functions_print.php:2186
 #: ../includes/classes/class_date.php:280
@@ -10740,182 +10740,182 @@ msgstr "Zmień motyw"
 #: ../includes/classes/class_date.php:169
 msgctxt "GENITIVE"
 msgid "January"
-msgstr ""
+msgstr "stycznia"
 
 #: ../includes/classes/class_date.php:170
 msgctxt "GENITIVE"
 msgid "February"
-msgstr ""
+msgstr "lutego"
 
 #: ../includes/classes/class_date.php:171
 msgctxt "GENITIVE"
 msgid "March"
-msgstr ""
+msgstr "marca"
 
 #: ../includes/classes/class_date.php:172
 msgctxt "GENITIVE"
 msgid "April"
-msgstr ""
+msgstr "kwietnia"
 
 #: ../includes/classes/class_date.php:173
 msgctxt "GENITIVE"
 msgid "May"
-msgstr ""
+msgstr "maja"
 
 #: ../includes/classes/class_date.php:174
 msgctxt "GENITIVE"
 msgid "June"
-msgstr ""
+msgstr "czerwca"
 
 #: ../includes/classes/class_date.php:175
 msgctxt "GENITIVE"
 msgid "July"
-msgstr ""
+msgstr "lipca"
 
 #: ../includes/classes/class_date.php:176
 msgctxt "GENITIVE"
 msgid "August"
-msgstr ""
+msgstr "sierpnia"
 
 #: ../includes/classes/class_date.php:177
 msgctxt "GENITIVE"
 msgid "September"
-msgstr ""
+msgstr "września"
 
 #: ../includes/classes/class_date.php:178
 msgctxt "GENITIVE"
 msgid "October"
-msgstr ""
+msgstr "października"
 
 #: ../includes/classes/class_date.php:179
 msgctxt "GENITIVE"
 msgid "November"
-msgstr ""
+msgstr "listopada"
 
 #: ../includes/classes/class_date.php:180
 msgctxt "GENITIVE"
 msgid "December"
-msgstr ""
+msgstr "grudnia"
 
 #: ../includes/classes/class_date.php:186
 msgctxt "LOCATIVE"
 msgid "January"
-msgstr ""
+msgstr "styczniu"
 
 #: ../includes/classes/class_date.php:187
 msgctxt "LOCATIVE"
 msgid "February"
-msgstr ""
+msgstr "lutym"
 
 #: ../includes/classes/class_date.php:188
 msgctxt "LOCATIVE"
 msgid "March"
-msgstr ""
+msgstr "marcu"
 
 #: ../includes/classes/class_date.php:189
 msgctxt "LOCATIVE"
 msgid "April"
-msgstr ""
+msgstr "kwietniu"
 
 #: ../includes/classes/class_date.php:190
 msgctxt "LOCATIVE"
 msgid "May"
-msgstr ""
+msgstr "maju"
 
 #: ../includes/classes/class_date.php:191
 msgctxt "LOCATIVE"
 msgid "June"
-msgstr ""
+msgstr "czerwcu"
 
 #: ../includes/classes/class_date.php:192
 msgctxt "LOCATIVE"
 msgid "July"
-msgstr ""
+msgstr "lipcu"
 
 #: ../includes/classes/class_date.php:193
 msgctxt "LOCATIVE"
 msgid "August"
-msgstr ""
+msgstr "sierpniu"
 
 #: ../includes/classes/class_date.php:194
 msgctxt "LOCATIVE"
 msgid "September"
-msgstr ""
+msgstr "wrześniu"
 
 #: ../includes/classes/class_date.php:195
 msgctxt "LOCATIVE"
 msgid "October"
-msgstr ""
+msgstr "październiku"
 
 #: ../includes/classes/class_date.php:196
 msgctxt "LOCATIVE"
 msgid "November"
-msgstr ""
+msgstr "listopadzie"
 
 #: ../includes/classes/class_date.php:197
 msgctxt "LOCATIVE"
 msgid "December"
-msgstr ""
+msgstr "grudniu"
 
 #: ../includes/classes/class_date.php:203
 msgctxt "INSTRUMENTAL"
 msgid "January"
-msgstr ""
+msgstr "styczniem"
 
 #: ../includes/classes/class_date.php:204
 msgctxt "INSTRUMENTAL"
 msgid "February"
-msgstr ""
+msgstr "lutym"
 
 #: ../includes/classes/class_date.php:205
 msgctxt "INSTRUMENTAL"
 msgid "March"
-msgstr ""
+msgstr "marcem"
 
 #: ../includes/classes/class_date.php:206
 msgctxt "INSTRUMENTAL"
 msgid "April"
-msgstr ""
+msgstr "kwietniem"
 
 #: ../includes/classes/class_date.php:207
 msgctxt "INSTRUMENTAL"
 msgid "May"
-msgstr ""
+msgstr "majem"
 
 #: ../includes/classes/class_date.php:208
 msgctxt "INSTRUMENTAL"
 msgid "June"
-msgstr ""
+msgstr "czerwcem"
 
 #: ../includes/classes/class_date.php:209
 msgctxt "INSTRUMENTAL"
 msgid "July"
-msgstr ""
+msgstr "lipcem"
 
 #: ../includes/classes/class_date.php:210
 msgctxt "INSTRUMENTAL"
 msgid "August"
-msgstr ""
+msgstr "sierpniem"
 
 #: ../includes/classes/class_date.php:211
 msgctxt "INSTRUMENTAL"
 msgid "September"
-msgstr ""
+msgstr "wrześniem"
 
 #: ../includes/classes/class_date.php:212
 msgctxt "INSTRUMENTAL"
 msgid "October"
-msgstr ""
+msgstr "październikiem"
 
 #: ../includes/classes/class_date.php:213
 msgctxt "INSTRUMENTAL"
 msgid "November"
-msgstr ""
+msgstr "listopadem"
 
 #: ../includes/classes/class_date.php:214
 msgctxt "INSTRUMENTAL"
 msgid "December"
-msgstr ""
+msgstr "grudniem"
 
 #: ../includes/classes/class_date.php:220
 #: ../statisticsplot.php:731
@@ -10929,19 +10929,19 @@ msgstr "lut"
 
 #: ../includes/classes/class_date.php:222
 msgid "Mar"
-msgstr ""
+msgstr "mar"
 
 #: ../includes/classes/class_date.php:223
 msgid "Apr"
-msgstr ""
+msgstr "kwi"
 
 #: ../includes/classes/class_date.php:225
 msgid "Jun"
-msgstr ""
+msgstr "cze"
 
 #: ../includes/classes/class_date.php:226
 msgid "Jul"
-msgstr ""
+msgstr "lip"
 
 #: ../includes/classes/class_date.php:227
 #: ../statisticsplot.php:738
@@ -10972,7 +10972,7 @@ msgstr "gru"
 #: ../includes/classes/class_date.php:739
 #, php-format
 msgid "%d B.C."
-msgstr ""
+msgstr "%d p.n.e."
 
 #: ../includes/classes/class_date.php:777
 msgctxt "NOMINATIVE"
@@ -18290,7 +18290,7 @@ msgstr "Akt ślubu"
 #. I18N: This is a very short abbreviation for the label "Marriage", to be used on genealogy charts
 #: ../help_text.php:936
 msgid "ABBREV_MARR"
-msgstr "Małż."
+msgstr "Śl."
 
 #. I18N: This is the GEDCOM label for "Marriage Date"
 #: ../help_text.php:942
