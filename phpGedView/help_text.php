@@ -3931,122 +3931,122 @@ case 'age_differences':
 
 case 'ah10':
 	$title=i18n::translate('_GEDCOM: Administration page');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah11':
 	$title=i18n::translate('_GEDCOM: Configure');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah12':
 	$title=i18n::translate('_GEDCOM: Import');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah13':
 	$title=i18n::translate('_GEDCOM: Upload');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah14':
 	$title=i18n::translate('_GEDCOM: Validate');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah15':
 	$title=i18n::translate('_GEDCOM: Convert ANSI to UTF-8');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah16':
 	$title=i18n::translate('_GEDCOM: Privacy settings');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah17':
 	$title=i18n::translate('_User Administration');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah18':
 	$title=i18n::translate('_Administration');
-	$text=i18n::translate('');
+	$text='';
 	break;
 	
 case 'ah19':
 	$title=i18n::translate('_GEDCOM: Media tool');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah20':
 	$title=i18n::translate('_GEDCOM: Change Individual ID to ...');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah21':
 	$title=i18n::translate('_Translator tools');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah23':
 	$title=i18n::translate('_Configure supported languages');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah24':
 	$title=i18n::translate('_User Information migrate (Index --&gt;&gt; SQL)');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah25':
 	$title=i18n::translate('_PhpGedView backup');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah26':
 	$title=i18n::translate('_FAQ List: Edit');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah2':
 	$title=i18n::translate('_Configure PhpGedView');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah3':
 	$title=i18n::translate('_GEDCOM: Add vs Upload');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah4':
 	$title=i18n::translate('_GEDCOM: Configuration file');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah5':
 	$title=i18n::translate('_GEDCOM: Default');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah6':
 	$title=i18n::translate('_GEDCOM: Delete');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah7':
 	$title=i18n::translate('_GEDCOM: Add');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah8':
 	$title=i18n::translate('_GEDCOM: Create new');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'ah9':
 	$title=i18n::translate('_GEDCOM: Download');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'alpha':
