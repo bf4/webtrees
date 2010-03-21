@@ -107,7 +107,7 @@ class MenuBar
 		}
 
 		//-- main menu
-		$menu = new Menu(i18n::translate('MyGedView Portal'), "index.php?ctype=user", "down");
+		$menu = new Menu(i18n::translate('My Page'), "index.php?ctype=user", "down");
 		if (!empty($PGV_IMAGES["mygedview"]["large"])) {
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["large"]);
 		} elseif (!empty($PGV_IMAGES["gedcom"]["large"])) {
@@ -248,7 +248,6 @@ class MenuBar
 		if (file_exists(PGV_ROOT.'statistics.php')) $menuList["statistics"] = i18n::translate('Statistics');
 		if (file_exists(PGV_ROOT.'treenav.php')) $menuList["treenav"] = i18n::translate('Interactive Tree');
 		if (file_exists(PGV_ROOT.'modules/googlemap/pedigree_map.php')) {
-			loadLangFile('googlemap:lang');
 			$menuList["pedigree_map"] = i18n::translate('Pedigree Map');//added for pedigree_map
 		}
 		asort($menuList);
@@ -991,7 +990,8 @@ class MenuBar
 		$menu->addSubmenu($submenu);
 		return $menu;
 	}
-		/**
+
+	/**
 	* get the menu with links change to each theme
 	* @return Menu the menu item
 	*/
@@ -1089,48 +1089,24 @@ class MenuBar
 	* @return Menu the menu item
 	*/
 	static function getLanguageMenu() {
-		global $ENABLE_MULTI_LANGUAGE, $LANGUAGE, $language_settings, $lang_short_cut, $QUERY_STRING, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
+		global $QUERY_STRING, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
-		if (PGV_USER_ID) {
-			$current=$LANGUAGE;
-		} else {
-			$current=get_user_setting(PGV_USER_ID, 'language');
-		}
+		$menu=new Menu(i18n::translate('Change Language'), '#', 'down');
+		$menu->addClass("langmenuitem$ff", "langmenuitem_hover$ff", "submenu$ff");
 
-		if ($ENABLE_MULTI_LANGUAGE) {
-			$menu=new Menu(i18n::translate('Change Language'), '#', 'down');
-			$menu->addClass("langmenuitem$ff", "langmenuitem_hover$ff", "submenu$ff");
-
-
-/* NEW CODE FOR USE WHEN WE SWITCH TO GETTEXT
-		$d=opendir(PGV_ROOT.'language');
-		while (($f=readdir($d))!==false) {
-			if (preg_match('/^([a-zA-Z0-9_]+).mo$/', $f, $m)) {
-				$_SESSION['ALL_LANGUAGES'][$m[1]]=Zend_Locale::getTranslation($m[1], 'language', $m[1]);
-			}
-		}
-		closedir($d);
-		ksort($_SESSION['ALL_LANGUAGES']);
-*/			
-
-			foreach ($language_settings as $lang=>$language) {
-				if ($language['pgv_lang_use'] && isset($language['pgv_lang_self']) && isset($language['pgv_language'])) {
-					$submenu=new Menu($language['pgv_lang_self'], PGV_SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;changelanguage=yes&amp;NEWLANGUAGE='.$lang.'&amp;lang='.$lang_short_cut[$lang]));
-					if ($lang==$LANGUAGE) {
-						$submenu->addClass('favsubmenuitem_selected', 'favsubmenuitem_hover');
-					} else {
-						$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
-					}
-					$menu->addSubMenu($submenu);
-				}
-			}
-			if (count($menu->submenus)>1) {
-				return $menu;
+		foreach (i18n::installed_languages() as $lang=>$name) {
+			$submenu=new Menu($name, PGV_SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;lang='.$lang));
+			if ($lang==WT_LOCALE) {
+				$submenu->addClass('favsubmenuitem_selected', 'favsubmenuitem_hover');
 			} else {
-				return new Menu('', '');
+				$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
 			}
+			$menu->addSubMenu($submenu);
+		}
+		if (count($menu->submenus)>1) {
+			return $menu;
 		} else {
 			return new Menu('', '');
 		}
