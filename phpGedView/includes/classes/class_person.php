@@ -1082,50 +1082,50 @@ class Person extends GedcomRecord {
 				$childrec =$child->getGedcomRecord();
 				$sex = $child->getSex();
 				// children
-				$rela='child';
-				if ($sex=='F') $rela='daughter';
+				$rela='chi';
+				if ($sex=='F') $rela='dau';
 				if ($sex=='M') $rela='son';
 				// grandchildren
 				if ($option=='_GCHI') {
-					$rela='grandchild';
-					if ($sex=='F') $rela='granddaughter';
-					if ($sex=='M') $rela='grandson';
+					$rela='chichi';
+					if ($sex=='F') $rela='chidau';
+					if ($sex=='M') $rela='chison';
 				}
 				// great-grandchildren
 				if ($option=='_GGCH') {
-					$rela='greatgrandchild';
-					if ($sex=='F') $rela='greatgranddaughter';
-					if ($sex=='M') $rela='greatgrandson';
+					$rela='chichichi';
+					if ($sex=='F') $rela='chichidau';
+					if ($sex=='M') $rela='chichison';
 				}
 				// stepsiblings
 				if ($option=='_HSIB') {
-					$rela='halfsibling';
-					if ($sex=='F') $rela='halfsister';
-					if ($sex=='M') $rela='halfbrother';
+					$rela='parchi';
+					if ($sex=='F') $rela='pardau';
+					if ($sex=='M') $rela='parson';
 				}
 				// siblings
 				if ($option=='_SIBL') {
-					$rela='sibling';
-					if ($sex=='F') $rela='sister';
-					if ($sex=='M') $rela='brother';
+					$rela='sib';
+					if ($sex=='F') $rela='sis';
+					if ($sex=='M') $rela='bro';
 				}
 				// uncles/aunts
 				if ($option=='_FSIB' or $option=='_MSIB') {
-					$rela='uncle/aunt';
-					if ($sex=='F') $rela='aunt';
-					if ($sex=='M') $rela='uncle';
+					$rela='parsib';
+					if ($sex=='F') $rela='parsis';
+					if ($sex=='M') $rela='parbro';
 				}
 				// firstcousins
 				if ($option=='_COUS') {
-					$rela='firstcousin';
-					if ($sex=='F') $rela='femalecousin';
-					if ($sex=='M') $rela='malecousin';
+					$rela='parsibchi';
+					if ($sex=='F') $rela='parsibdau';
+					if ($sex=='M') $rela='parsibson';
 				}
 				// nephew/niece
 				if ($option=='_NEPH') {
-					$rela='nephew/niece';
-					if ($sex=='F') $rela='niece';
-					if ($sex=='M') $rela='nephew';
+					$rela='sibchi';
+					if ($sex=='F') $rela='sibdau';
+					if ($sex=='M') $rela='sibson';
 				}
 				// add child birth
 				if (strstr($SHOW_RELATIVES_EVENTS, '_BIRT'.$option)) {
@@ -1140,26 +1140,7 @@ class Person extends GedcomRecord {
 							if (!$sEvent->canShow()) {
 								$factrec.='\n2 RESN privacy';
 							}
-							if (strstr($srec, 'twin')) {
-								$rela_sex = Person::getInstance($spid)->getSex();
-								$rela='twin';
-								if ($rela_sex=='F') {
-									$rela='twin_sister';
-								} elseif ($rela_sex=='M') {
-									$rela='twin_brother';
-								}
-							}
-							$factrec.="\n2 ASSO @".$spid."@\n3 RELA *".$rela;
-
-							// add parents on grandchildren, cousin or nephew's birth
-							if ($option=='_GCHI' || $option=='_GGCH' || $option=='_COUS' || $option=='_NEPH') {
-								if ($family->getHusbId()) {
-									$factrec.="\n2 ASSO @".$family->getHusbId()."@\n3 RELA *father";
-								}
-								if ($family->getWifeId()) {
-									$factrec.="\n2 ASSO @".$family->getWifeId()."@\n3 RELA *mother";
-								}
-							}
+							$factrec.="\n2 ASSO @".$spid."@\n3 RELA ".$rela;
 							$event = new Event($factrec, 0);
 							$event->setParentObject($this);
 							$this->indifacts[]=$event;
@@ -1179,7 +1160,7 @@ class Person extends GedcomRecord {
 							if (!$sEvent->canShow()) {
 								$factrec.='\n2 RESN privacy';
 							}
-							$factrec.="\n2 ASSO @".$spid."@\n3 RELA *".$rela;
+							$factrec.="\n2 ASSO @".$spid."@\n3 RELA ".$rela;
 							$event = new Event($factrec, 0);
 							$event->setParentObject($this);
 							$this->indifacts[] = $event;
@@ -1198,27 +1179,13 @@ class Person extends GedcomRecord {
 							if (!$sEvent->canShow()) {
 								$factrec.='\n2 RESN privacy';
 							}
-							$factrec.="\n2 ASSO @".$spid."@\n3 RELA *".$rela;
-							if ($rela=='son') {
-								$rela2='daughter_in_law';
-							} elseif ($rela=='daughter') {
-								$rela2='son_in_law';
-							} elseif ($rela=='brother' || $rela=='halfbrother') {
-								$rela2='sister_in_law';
-							} elseif ($rela=='sister' || $rela=='halfsister') {
-								$rela2='brother_in_law';
-							} elseif ($rela=='uncle') {
-								$rela2='aunt_in_law';
-							} elseif ($rela=='aunt') {
-								$rela2='uncle_in_law';
-							} elseif ($rela=='malecousin') {
-								$rela2='f_cousin_in_law';
-							} elseif ($rela=='femalecousin') {
-								$rela2='m_cousin_in_law';
-							} else {
-								$rela2='spouse';
+							switch ($sex) {
+							case 'M': $rela2=$rela.'wif'; break;
+							case 'F': $rela2=$rela.'hus'; break;
+							case 'U': $rela2=$rela.'spo'; break;
 							}
-							$factrec.="\n2 ASSO @".$sfamily->getSpouseId($spid)."@\n3 RELA *".$rela2;
+							$factrec.="\n2 ASSO @".$spid."@\n3 RELA ".$rela;
+							$factrec.="\n2 ASSO @".$sfamily->getSpouseId($spid)."@\n3 RELA ".$rela2;
 							$event = new Event($factrec, 0);
 							$event->setParentObject($this);
 							$this->indifacts[] = $event;
