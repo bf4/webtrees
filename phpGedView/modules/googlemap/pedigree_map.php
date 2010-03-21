@@ -153,7 +153,7 @@ if (!$controller->isPrintPreview()) {
 		<table class="pedigree_table <?php echo $TEXT_DIRECTION; ?>" width="555">
 			<tr>
 				<td colspan="5" class="topbottombar" style="text-align:center; ">
-					<?php echo i18n::translate('Pedigree Chart Options'); ?>
+					<?php echo i18n::translate('Pedigree Map Options'); ?>
 				</td>
 			</tr>
 			<tr>
