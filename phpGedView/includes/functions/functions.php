@@ -369,73 +369,6 @@ function update_site_config($newconfig, $return = false) {
 	return true;
 }
 
-// Save the languages the user has chosen to have active on the website
-function update_lang_settings() {
-	global $INDEX_DIRECTORY, $language_settings, $languages, $pgv_language, $lang_short_cut, $pgv_lang_self, $pgv_lang_use, $confighelpfile, $helptextfile;
-	global $adminfile, $countryfile, $faqlistfile, $extrafile, $ALPHABET_lower, $ALPHABET_upper, $DATE_FORMAT_array, $editorfile, $lang_langcode;
-	global $DICTIONARY_SORT, $MULTI_LETTER_ALPHABET, $MULTI_LETTER_EQUIV, $NAME_REVERSE_array, $TEXT_DIRECTION_array, $TIME_FORMAT_array, $WEEK_START_array, $COLLATION;
-
-	$Filename = $INDEX_DIRECTORY . "lang_settings.php";
-	if (!file_exists($Filename)) {
-		copy(PGV_ROOT.'includes/lang_settings_std.php', $Filename);
-	}
-
-	$error = "";
-	if ($file_array = file($Filename)) {
-		@copy($Filename, $Filename . ".old");
-		if ($fp = @fopen($Filename, "w")) {
-			for ($x = 0; $x < count($file_array); $x++) {
-				fwrite($fp, $file_array[$x]);
-				$dDummy00 = trim($file_array[$x]);
-				if ($dDummy00 == "//-- NEVER manually delete or edit this entry and every line below this entry! --START--//") {
-					break;
-				}
-			}
-			fwrite($fp, PGV_EOL);
-			fwrite($fp, "// Array definition of language_settings".PGV_EOL);
-			fwrite($fp, "\$language_settings = array();".PGV_EOL);
-			foreach ($language_settings as $key => $value) {
-//				if (!isset($languages[$key]) || (isset($pgv_language[$key]) && !file_exists($pgv_language[$key]))) continue;
-				if (!isset($languages[$key])) continue;
-				fwrite($fp, PGV_EOL);
-				fwrite($fp, "//-- settings for {$languages[$key]}".PGV_EOL);
-				fwrite($fp, "\$language_settings['{$languages[$key]}']=array(".PGV_EOL);
-				fwrite($fp, "'pgv_langname'=>'{$languages[$key]}',".PGV_EOL);
-				fwrite($fp, "'pgv_lang_use'=>".($pgv_lang_use[$key]?'true':'false').",".PGV_EOL);
-				fwrite($fp, "'pgv_lang_self'=>'{$pgv_lang_self[$key]}',".PGV_EOL);
-				fwrite($fp, "'lang_short_cut'=>'{$lang_short_cut[$key]}',".PGV_EOL);
-				fwrite($fp, "'langcode'=>'{$lang_langcode[$key]}',".PGV_EOL);
-				fwrite($fp, "'pgv_language'=>'{$pgv_language[$key]}',".PGV_EOL);
-				fwrite($fp, "'confighelpfile'=>'{$confighelpfile[$key]}',".PGV_EOL);
-				fwrite($fp, "'helptextfile'=>'{$helptextfile[$key]}',".PGV_EOL);
-				fwrite($fp, "'adminfile'=>'{$adminfile[$key]}',".PGV_EOL);
-				fwrite($fp, "'editorfile'=>'{$editorfile[$key]}',".PGV_EOL);
-				fwrite($fp, "'countryfile'=>'{$countryfile[$key]}',".PGV_EOL);
-				fwrite($fp, "'faqlistfile'=>'{$faqlistfile[$key]}',".PGV_EOL);
-				fwrite($fp, "'extrafile'=>'{$extrafile[$key]}',".PGV_EOL);
-				fwrite($fp, "'DATE_FORMAT'=>'{$DATE_FORMAT_array[$key]}',".PGV_EOL);
-				fwrite($fp, "'TIME_FORMAT'=>'{$TIME_FORMAT_array[$key]}',".PGV_EOL);
-				fwrite($fp, "'WEEK_START'=>'{$WEEK_START_array[$key]}',".PGV_EOL);
-				fwrite($fp, "'TEXT_DIRECTION'=>'{$TEXT_DIRECTION_array[$key]}',".PGV_EOL);
-				fwrite($fp, "'NAME_REVERSE'=>".($NAME_REVERSE_array[$key]?'true':'false').",".PGV_EOL);
-				fwrite($fp, "'ALPHABET_upper'=>'{$ALPHABET_upper[$key]}',".PGV_EOL);
-				fwrite($fp, "'ALPHABET_lower'=>'{$ALPHABET_lower[$key]}',".PGV_EOL);
-				fwrite($fp, "'MULTI_LETTER_ALPHABET'=>'{$MULTI_LETTER_ALPHABET[$key]}',".PGV_EOL);
-				fwrite($fp, "'MULTI_LETTER_EQUIV'=>'{$MULTI_LETTER_EQUIV[$key]}',".PGV_EOL);
-				fwrite($fp, "'DICTIONARY_SORT'=>".($DICTIONARY_SORT[$key]?'true':'false').",".PGV_EOL);
-				fwrite($fp, "'COLLATION'=>'{$COLLATION[$key]}'".PGV_EOL);
-				fwrite($fp, ");".PGV_EOL);
-			}
-			fwrite($fp, PGV_EOL);
-			fwrite($fp, "?>".PGV_EOL);
-			fclose($fp);
-		$logline = AddToLog("lang_settings.php updated");
- 		check_in($logline, $Filename, $INDEX_DIRECTORY);
-		} else $error = "lang_config_write_error";
-	} else $error = "lang_set_file_read_error";
-	return $error;
-}
-
 // This functions checks if an existing file is physically writeable
 // The standard PHP function only checks for the R/O attribute and doesn't
 // detect authorisation by ACL.
@@ -3548,22 +3481,6 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 			require_once $file;
 		}
 
-	}
-
-	// Special formatting options; R selects conversion to a language-dependent calendar.
-	// i.e. a French user will see conversion to the french calendar, a Hebrew user will
-	// see conversion to the hebrew calendar, etc.
-	if (strpos($DATE_FORMAT, 'R')!==false) {
-		switch ($LANGUAGE) {
-		case 'french':
-		case 'hebrew':
-		case 'arabic':
-			// Two ways of doing this:
-			$CALENDAR_FORMAT=$LANGUAGE; // override gedcom calendar choice
-			// if (strpos($CALENDAR_FORMAT, $LANGUAGE)===false) $CALENDAR_FORMAT.="_and_{$language}"; // add to gedcom calendar choice
-			break;
-		}
-		$DATE_FORMAT=trim(str_replace('R', '', $DATE_FORMAT));
 	}
 
 /**
