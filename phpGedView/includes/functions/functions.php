@@ -3524,7 +3524,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $MULTI_LETTER_ALPHABET, $digraph, $trigraph, $quadgraph, $digraphAll, $trigraphAll, $quadgraphAll;
 	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $UCDiacritOrder, $LCDiacritWhole, $LCDiacritStrip, $LCDiacritOrder;
 	global $unknownNN, $unknownPN;
-	global $JEWISH_ASHKENAZ_PRONUNCIATION, $CALENDAR_FORMAT;
+	global $CALENDAR_FORMAT;
 	global $DBTYPE, $DB_UTF8_COLLATION, $COLLATION, $DBCOLLATE;
 
 	if (!isset($pgv_language[$desiredLanguage])) $desiredLanguage = "english";

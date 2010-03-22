@@ -332,7 +332,6 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$INDI_FACTS_ADD\s*=\s*".*";/', "\$INDI_FACTS_ADD = \"".$_POST["NEW_INDI_FACTS_ADD"]."\";", $configtext);
 	$configtext = preg_replace('/\$INDI_FACTS_QUICK\s*=\s*".*";/', "\$INDI_FACTS_QUICK = \"".$_POST["NEW_INDI_FACTS_QUICK"]."\";", $configtext);
 	$configtext = preg_replace('/\$INDI_FACTS_UNIQUE\s*=\s*".*";/', "\$INDI_FACTS_UNIQUE = \"".$_POST["NEW_INDI_FACTS_UNIQUE"]."\";", $configtext);
-	$configtext = preg_replace('/\$JEWISH_ASHKENAZ_PRONUNCIATION\s*=\s*.*;/', "\$JEWISH_ASHKENAZ_PRONUNCIATION = ".$boolarray[$_POST["NEW_JEWISH_ASHKENAZ_PRONUNCIATION"]].";", $configtext);
 	$configtext = preg_replace('/\$LANGUAGE\s*=\s*".*";/', "\$LANGUAGE = \"".$_POST["GEDCOMLANG"]."\";", $configtext);
 	$configtext = preg_replace('/\$LINK_ICONS\s*=\s*\".*\";/', "\$LINK_ICONS = \"".$_POST["NEW_LINK_ICONS"]."\";", $configtext);
 	$configtext = preg_replace('/\$MAX_DESCENDANCY_GENERATIONS\s*=\s*".*";/', "\$MAX_DESCENDANCY_GENERATIONS = \"".$_POST["NEW_MAX_DESCENDANCY_GENERATIONS"]."\";", $configtext);
@@ -1005,14 +1004,6 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('GEDCOM Basics')."\" onclic
 		</td>
 		<td class="optionbox">
 			<?php echo edit_field_yes_no('NEW_DISPLAY_JEWISH_GERESHAYIM', $DISPLAY_JEWISH_GERESHAYIM, 'onfocus="getHelp(\'DISPLAY_JEWISH_GERESHAYIM\');"'); ?>
-		</td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap width20">
-			<?php echo i18n::translate('Jewish Ashkenaz pronunciation'), help_link('JEWISH_ASHKENAZ_PRONUNCIATION'); ?>
-		</td>
-		<td class="optionbox">
-			<?php echo edit_field_yes_no('NEW_JEWISH_ASHKENAZ_PRONUNCIATION', $JEWISH_ASHKENAZ_PRONUNCIATION, 'onfocus="getHelp(\'JEWISH_ASHKENAZ_PRONUNCIATION\');"'); ?>
 		</td>
 	</tr>
 	</table>

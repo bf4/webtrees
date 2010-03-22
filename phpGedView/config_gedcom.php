@@ -49,7 +49,6 @@ $CALENDAR_FORMAT = "gregorian";			//-- Translate dates to the specified Calendar
 										//-- hebrew, hebrew_and_gregorian
 $DISPLAY_JEWISH_THOUSANDS = false;		//-- show Alafim in Jewish dates Similar to php 5.0 CAL_JEWISH_ADD_ALAFIM
 $DISPLAY_JEWISH_GERESHAYIM = true;		//-- show single and double quotes in Hebrew dates. Similar to php 5.0 CAL_JEWISH_ADD_GERESHAYIM
-$JEWISH_ASHKENAZ_PRONUNCIATION = true;	//-- Jewish pronunciation option
 
 $CHARACTER_SET = "UTF-8";				//-- This is the character set of your gedcom file.  UTF-8 is the default and should work for
 										//-- almost all sites.  If you export your gedcom using ibm windows encoding, then you should put

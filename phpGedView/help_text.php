@@ -3110,11 +3110,6 @@ case 'INDI_FACTS_UNIQUE':
 	$text=i18n::translate('This is the list of GEDCOM facts that your users can only add <u>once</u> to individuals.  For example, if BIRT is in this list, users will not be able to add more than one BIRT record to an individual.  Fact names that appear in this list must not also appear in the <i>Individual Add Facts</i> list.');
 	break;
 
-case 'JEWISH_ASHKENAZ_PRONUNCIATION':
-	$title=i18n::translate('Jewish Ashkenaz pronunciation');
-	$text=i18n::translate('Use Jewish Ashkenazi pronunciations.<br /><br />When set to <b>Yes</b> the months Cheshvan and Teves will be spelled with Ashkenazi pronunciation.  Setting it to <b>No</b> will change the months to Hesvan and Tevet.  This only affects the Jewish setting.  The Hebrew setting will always use the Hebrew alphabet.');
-	break;
-
 case 'LANGUAGE':
 	$title=i18n::translate('Language');
 	$text=i18n::translate('Assign the default language for the site.<br /><br />When the <b>Allow user to change language</b> option is set, users can override this setting through their browser\'s preferred language configuration, configuration options on their Account page, or through links or buttons on most PhpGedView pages.');
