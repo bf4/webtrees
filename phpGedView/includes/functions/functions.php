@@ -3448,7 +3448,7 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
 function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $LANGUAGE, $lang_short_cut;
 	global $faqlist;
-	global $pgv_language, $adminfile, $editorfile, $extrafile, $pgv_lang_self;
+	global $pgv_language, $pgv_lang_self;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array;
 	global $DATE_FORMAT, $DATE_FORMAT_array, $CONFIGURED;
 	global $TIME_FORMAT, $TIME_FORMAT_array;

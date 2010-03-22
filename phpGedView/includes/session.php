@@ -242,10 +242,6 @@ if (!isset($_SERVER['REQUEST_URI']))  {
 	}
 }
 
-//-- load file for language settings
-require PGV_ROOT.'includes/lang_settings_std.php';
-$Languages_Default = true;
-
 /**
  * Cleanup some variables
  */
@@ -431,19 +427,16 @@ try {
  *  This code existed in both lang_settings_std.php and in lang_settings.php.
  *  It has been removed from both files and inserted here, where it belongs.
  */
+//-- load file for language settings
+require PGV_ROOT.'includes/lang_settings_std.php';
 $languages            =array();
 $pgv_lang_use         =array();
 $pgv_lang_self        =array();
 $lang_short_cut       =array();
 $lang_langcode        =array();
 $pgv_language         =array();
-$confighelpfile       =array();
-$helptextfile         =array();
-$adminfile            =array();
-$editorfile           =array();
 $countryfile          =array();
 $faqlistfile          =array();
-$extrafile            =array();
 $factsarray           =array();
 $pgv_lang_name        =array();
 $ALPHABET_upper       =array();
@@ -466,13 +459,8 @@ foreach ($language_settings as $key => $value) {
 	$lang_short_cut[$key]       =$value['lang_short_cut'];
 	$lang_langcode[$key]        =$value['langcode'];
 	$pgv_language[$key]         =$value['pgv_language'];
-	$confighelpfile[$key]       =$value['confighelpfile'];
-	$helptextfile[$key]         =$value['helptextfile'];
-	$adminfile[$key]            =$value['adminfile'];
-	$editorfile[$key]           =$value['editorfile'];
 	$countryfile[$key]          =$value['countryfile'];
 	$faqlistfile[$key]          =$value['faqlistfile'];
-	$extrafile[$key]            =$value['extrafile'];
 	$ALPHABET_upper[$key]       =$value['ALPHABET_upper'];
 	$ALPHABET_lower[$key]       =$value['ALPHABET_lower'];
 	$MULTI_LETTER_ALPHABET[$key]=$value['MULTI_LETTER_ALPHABET'];
