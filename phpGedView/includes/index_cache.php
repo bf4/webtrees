@@ -41,7 +41,7 @@ define('PGV_INDEX_CACHE_PHP', '');
  * @return boolean  returns false if the block could not be loaded from cache
  */
 function loadCachedBlock($block, $index) {
-	global $PGV_BLOCKS, $INDEX_DIRECTORY, $theme_name, $LANGUAGE, $GEDCOM;
+	global $PGV_BLOCKS, $INDEX_DIRECTORY, $theme_name, $lang_short_cut, $LANGUAGE, $GEDCOM;
 
 	//-- ignore caching when DEBUG is set
 	//-- ignore caching for logged in users
@@ -57,7 +57,7 @@ function loadCachedBlock($block, $index) {
 	}
 	if ($cacheLife==0) return false;
 
-	$fname = "{$INDEX_DIRECTORY}/cache/{$theme_name}/".WT_LOCALE."/{$GEDCOM}/{$index}_{$block[0]}";
+	$fname = "{$INDEX_DIRECTORY}/cache/{$theme_name}/{$lang_short_cut[$LANGUAGE]}/{$GEDCOM}/{$index}_{$block[0]}";
 	if (file_exists($fname)) {
 		// Check for expired cache (<0: no expiry), 0: immediate, >0: expires in x days)  Zero already checked
 		if ($cacheLife > 0) {
@@ -81,7 +81,7 @@ function loadCachedBlock($block, $index) {
  * @return boolean  returns false if the block could not be saved to cache
  */
 function saveCachedBlock($block, $index, $content) {
-	global $PGV_BLOCKS, $INDEX_DIRECTORY, $theme_name, $LANGUAGE, $GEDCOM;
+	global $PGV_BLOCKS, $INDEX_DIRECTORY, $theme_name, $lang_short_cut, $LANGUAGE, $GEDCOM;
 
 	//-- ignore caching when DEBUG is set
 	//-- ignore caching for logged in users
@@ -106,7 +106,7 @@ function saveCachedBlock($block, $index, $content) {
 	$fname .= "/".$theme_name;
 	@mkdir($fname);
 
-	$fname .= "/".WT_LOCALE;
+	$fname .= "/".$lang_short_cut[$LANGUAGE];
 	@mkdir($fname);
 
 	$fname .= "/".$GEDCOM;
@@ -155,7 +155,7 @@ function removeDir($dir) {
  * clears the cache files
  */
 function clearCache() {
-	global $INDEX_DIRECTORY;
+	global $PGV_BLOCKS, $INDEX_DIRECTORY, $lang_short_cut, $LANGUAGE, $GEDCOM;
 
 	removeDir("{$INDEX_DIRECTORY}/cache");
 }

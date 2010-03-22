@@ -680,7 +680,7 @@ if (isset($content) && $content==1) {
 			echo i18n::translate('boundaries for date periods:'), help_link('stat_gwz'), '<br />';
 
 			// Allow special processing for different languages
-			$func="date_localisation_".WT_LOCALE;
+			$func="date_localisation_{$lang_short_cut[$LANGUAGE]}";
 			if (!function_exists($func))
 				$func="DefaultDateLocalisation";
 			// Localise the date

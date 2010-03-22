@@ -84,7 +84,7 @@ if (empty($language_filter)) {
 	if (!empty($_SESSION["language_filter"])) {
 		$language_filter=$_SESSION["language_filter"];
 	} else {
-		$language_filter=WT_LOCALE;
+		$language_filter=$lang_short_cut[$LANGUAGE];
 	}
 }
 require PGV_ROOT.'includes/specialchars.php';

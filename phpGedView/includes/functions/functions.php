@@ -62,7 +62,7 @@ require_once PGV_ROOT.'includes/functions/functions_UTF8.php';
 // checked).  This lets us use the syntax safe_GET('my_checkbox', 'yes', 'no')
 //
 // NOTE: when using listboxes, $regex can be an array of valid values.  For
-// example, you can use safe_POST('var', array_keys($var), $VAR)
+// example, you can use safe_POST('lang', array_keys($pgv_language), $LANGUAGE)
 // to validate against a list of valid languages and supply a sensible default.
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -3446,8 +3446,9 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
  *
  */
 function loadLanguage($desiredLanguage="english", $forceLoad=false) {
-	global $LANGUAGE;
+	global $LANGUAGE, $lang_short_cut;
 	global $faqlist;
+	global $pgv_language, $pgv_lang_self;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array;
 	global $DATE_FORMAT, $DATE_FORMAT_array, $CONFIGURED;
 	global $TIME_FORMAT, $TIME_FORMAT_array;
@@ -3457,23 +3458,29 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $UCDiacritOrder, $LCDiacritWhole, $LCDiacritStrip, $LCDiacritOrder;
 	global $unknownNN, $unknownPN;
 	global $CALENDAR_FORMAT;
-	global $DBTYPE, $DB_UTF8_COLLATION, $DBCOLLATE;
+	global $DBTYPE, $DB_UTF8_COLLATION, $COLLATION, $DBCOLLATE;
+
+	if (!isset($pgv_language[$desiredLanguage])) $desiredLanguage = "english";
 
 	// Make sure we start with a clean slate
 	$faqlist = array();
 
-	$LANGUAGE = $desiredLanguage;
+	if ($desiredLanguage!=$LANGUAGE) {
+		$LANGUAGE = $desiredLanguage;
+		$file = $pgv_language[$LANGUAGE];
 
-	$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
-	$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
-	$TIME_FORMAT	= $TIME_FORMAT_array[$LANGUAGE];
-	$WEEK_START		= $WEEK_START_array[$LANGUAGE];
-	$NAME_REVERSE	= $NAME_REVERSE_array[$LANGUAGE];
+		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
+		$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
+		$TIME_FORMAT	= $TIME_FORMAT_array[$LANGUAGE];
+		$WEEK_START		= $WEEK_START_array[$LANGUAGE];
+		$NAME_REVERSE	= $NAME_REVERSE_array[$LANGUAGE];
 
-	// Load functions that are specific to the active language
-	$file = PGV_ROOT.'includes/extras/functions.'.WT_LOCALE.'.php';
-	if (file_exists($file)) {
-		require_once $file;
+		// Load functions that are specific to the active language
+		$file = PGV_ROOT.'includes/extras/functions.'.$lang_short_cut[$LANGUAGE].'.php';
+		if (file_exists($file)) {
+			require_once $file;
+		}
+
 	}
 
 /**

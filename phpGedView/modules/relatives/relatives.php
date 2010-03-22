@@ -69,7 +69,7 @@ class relatives_Tab extends Tab {
 	function printParentsRows(&$family, &$people, $type) {
 		global $personcount, $pgv_changes;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
-		global $LANGUAGE;
+		global $lang_short_cut, $LANGUAGE;
 		$elderdate = "";
 		//-- new father/husband
 		$styleadd = "";
@@ -198,7 +198,7 @@ class relatives_Tab extends Tab {
 					}
 					else if (get_sub_record(1, "1 _NMR", find_family_record($famid, PGV_GED_ID))) {
 						// Allow special processing for different languages
-						$func="fact_NMR_localisation_".WT_LOCALE;
+						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 						if (function_exists($func)) {
 							// Localise the _NMR facts
 							echo i18n::translate($func("_NMR", $famid));
@@ -208,7 +208,7 @@ class relatives_Tab extends Tab {
 					}
 					else if (get_sub_record(1, "1 _NMAR", find_family_record($famid, PGV_GED_ID))) {
 						// Allow special processing for different languages
-						$func="fact_NMR_localisation_".WT_LOCALE;
+						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 						if (function_exists($func)) {
 							// Localise the _NMR facts
 							echo i18n::translate($func("_NMAR", $famid));

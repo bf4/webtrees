@@ -442,7 +442,7 @@ function print_indi_table($datalist, $legend="", $option="") {
  */
 function print_fam_table($datalist, $legend="", $option="") {
 	global $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $LANGUAGE;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $lang_short_cut, $LANGUAGE;
 
 	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") return;
 	if (count($datalist)<1) return;
@@ -661,7 +661,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 			}
 		} else if (get_sub_record(1, "1 _NMR", $family->getGedcomRecord())) {
 			// Allow special processing for different languages
-			$func="fact_NMR_localisation_".WT_LOCALE;
+			$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 			if (function_exists($func)) {
 				// Localise the _NMR facts
 				echo '<div>', i18n::translate($func("_NMR", $family->getXref())), '<a name="9999999"></a></div>';
@@ -670,7 +670,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 			}
 		} else if (get_sub_record(1, "1 _NMAR", $family->getGedcomRecord())) {
 			// Allow special processing for different languages
-			$func="fact_NMR_localisation_".WT_LOCALE;
+			$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 			if (function_exists($func)) {
 				// Localise the _NMR facts
 				echo '<div>', i18n::translate($func("_NMAR", $family->getXref())), '<a name="9999999"></a></div>';

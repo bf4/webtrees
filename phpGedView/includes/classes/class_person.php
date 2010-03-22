@@ -510,7 +510,7 @@ class Person extends GedcomRecord {
 	* @return string
 	*/
 	function getLabel($elderdate='', $counter=0) {
-		global $TEXT_DIRECTION;
+		global $lang_short_cut, $LANGUAGE, $TEXT_DIRECTION;
 		$label = '';
 		$gap = 0;
 		if (is_object($elderdate) && $elderdate->isOK()) {
@@ -532,7 +532,7 @@ class Person extends GedcomRecord {
 				$gap = round($gap*12/365.25); // months
 
 				// Allow special processing for different languages
-				$func="date_diff_localisation_".WT_LOCALE;
+				$func="date_diff_localisation_{$lang_short_cut[$LANGUAGE]}";
 				if (!function_exists($func))
 					$func='DefaultGetLabel';
 				// Localise the age diff
@@ -1290,6 +1290,7 @@ class Person extends GedcomRecord {
 	*
 	*/
 	function add_historical_facts() {
+		global $LANGUAGE, $lang_short_cut;
 		global $SHOW_RELATIVES_EVENTS;
 		if (!$SHOW_RELATIVES_EVENTS) return;
 
@@ -1298,8 +1299,8 @@ class Person extends GedcomRecord {
 		$dDate=$this->getEstimatedDeathDate();
 		if (!$bDate->isOK()) return;
 
-		if ($SHOW_RELATIVES_EVENTS && file_exists(PGV_ROOT.'languages/histo.'.WT_LOCALE.'.php')) {
-			require PGV_ROOT.'languages/histo.'.WT_LOCALE.'.php';
+		if ($SHOW_RELATIVES_EVENTS && file_exists(PGV_ROOT.'languages/histo.'.$lang_short_cut[$LANGUAGE].'.php')) {
+			require PGV_ROOT.'languages/histo.'.$lang_short_cut[$LANGUAGE].'.php';
 			foreach ($histo as $indexval=>$hrec) {
 				$sdate=new GedcomDate(get_gedcom_value('DATE', 2, $hrec, '', false));
 				if ($sdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sdate)<=0 && GedcomDate::Compare($sdate, $this->getEstimatedDeathDate())<=0) {

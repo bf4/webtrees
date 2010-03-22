@@ -39,7 +39,7 @@ class personal_facts_Tab extends Tab {
 	public function getContent() {
 		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $EXPAND_RELATIVES_EVENTS;
 		global $n_chil, $n_gchi, $n_ggch;
-		global $EXPAND_RELATIVES_EVENTS, $LANGUAGE;
+		global $EXPAND_RELATIVES_EVENTS, $LANGUAGE, $lang_short_cut;
 		global $NAV_FACTS;
 
 		/*if (isset($_COOKIE['row_rela'])) $EXPAND_RELATIVES_EVENTS = ($_COOKIE['row_rela']);
@@ -72,7 +72,7 @@ class personal_facts_Tab extends Tab {
 				<td class="descriptionbox rela">
 					<input id="checkbox_rela_facts" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_rela');" />
 					<label for="checkbox_rela_facts"><?php echo i18n::translate('Events of close relatives')?></label>
-					<?php if (file_exists("languages/histo.".WT_LOCALE.".php")) {?>
+					<?php if (file_exists("languages/histo.".$lang_short_cut[$LANGUAGE].".php")) {?>
 						<input id="checkbox_histo" type="checkbox" <?php if ($EXPAND_HISTO_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_histo');" />
 						<label for="checkbox_histo"><?php echo i18n::translate('Historical facts')?></label>
 					<?php }?>

@@ -35,7 +35,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-global $LANGUAGE, $reorder, $GEDCOM, $LB_AL_HEAD_LINKS;
+global $lang_short_cut, $LANGUAGE, $reorder, $GEDCOM, $LB_AL_HEAD_LINKS;
 
 $reorder=safe_get('reorder', '1', '0');
 
@@ -50,7 +50,7 @@ $tabno=safe_get('tab');
 
 // The following is temporary, until the handling of the Lightbox Help system
 // is adjusted to match the usual PhpGedView practice
-$lbHelpFile = "modules/lightbox/languages/help.".WT_LOCALE.".php";
+$lbHelpFile = "modules/lightbox/languages/help.".$lang_short_cut[$LANGUAGE].".php";
 if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_text.en.php";
 
 ?>

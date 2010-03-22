@@ -471,6 +471,7 @@ class IndividualControllerRoot extends BaseController {
 	*/
 	function print_name_record(&$event) {
 		global $UNDERLINE_NAME_QUOTES, $NAME_REVERSE;
+		global $lang_short_cut, $LANGUAGE;
 
 		if (!$event->canShowDetails()) {
 			return false;
@@ -500,7 +501,7 @@ class IndividualControllerRoot extends BaseController {
 			if (($fact!="SOUR")&&($fact!="NOTE")) {
 				if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA") {
 					// Allow special processing for different languages
-					$func="fact_AKA_localisation_".WT_LOCALE;
+					$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
 					if (function_exists($func)) {
 						// Localise the AKA fact
 						$func($fact, $this->pid);

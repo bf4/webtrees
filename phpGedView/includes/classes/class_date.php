@@ -490,7 +490,8 @@ class CalendarDate {
 	}
 
 	function FormatOrdinalSuffix() {
-		$func="ordinal_suffix_".WT_LOCALE;
+		global $lang_short_cut, $LANGUAGE;
+		$func="ordinal_suffix_{$lang_short_cut[$LANGUAGE]}";
 
 		if (function_exists($func))
 			return $func($this->d);
@@ -1554,7 +1555,7 @@ class GedcomDate {
 	// Convert a date to the prefered format and calendar(s) display.
 	// Optionally make the date a URL to the calendar.
 	function Display($url=false, $date_fmt=null, $cal_fmts=null) {
-		global $TEXT_DIRECTION, $DATE_FORMAT, $CALENDAR_FORMAT;
+		global $lang_short_cut, $LANGUAGE, $TEXT_DIRECTION, $DATE_FORMAT, $CALENDAR_FORMAT;
 
 		// Convert dates to given calendars and given formats
 		if (!$date_fmt) {
@@ -1564,7 +1565,7 @@ class GedcomDate {
 			$cal_fmts=explode('_and_', $CALENDAR_FORMAT);
 
 		// Allow special processing for different languages
-		$func="date_localisation_".WT_LOCALE;
+		$func="date_localisation_{$lang_short_cut[$LANGUAGE]}";
 		if (!function_exists($func))
 			$func="DefaultDateLocalisation";
 

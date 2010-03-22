@@ -185,7 +185,7 @@ if ($display=="hierarchy") {
 			$mapname = $country;
 			$areaname = $parent[0];
 			$imgfile = "places/".$country."/".$mapname.".gif";
-			$mapfile = "places/".$country."/".$country.".".WT_LOCALE.".htm";
+			$mapfile = "places/".$country."/".$country.".".$lang_short_cut[$LANGUAGE].".htm";
 			if (!file_exists($mapfile)) $mapfile = "places/".$country."/".$country.".htm";
 			if ($level>1) {
 				$state = $parent[1];
