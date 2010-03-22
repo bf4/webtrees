@@ -8474,7 +8474,7 @@ msgstr "niece-in-law"
 #. I18N: nephew-in-law
 #: ../includes/functions/functions.php:2626
 msgid "sibling's daughter's husband"
-msgstr "sibling's daughter's husband"
+msgstr "nephew-in-law"
 
 #. I18N: niece-in-law
 #: ../includes/functions/functions.php:2627
