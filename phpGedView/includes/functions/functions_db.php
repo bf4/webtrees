@@ -251,7 +251,6 @@ function db_collation_digraphs() {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_salpha($marnm, $fams, $ged_id) {
-	// TODO: this is quite slow.  Are the counts really useful, or would a "limit 1" be better
 	// TODO: this isn't picking up the collation_connection setting. Do we *really* need to add a collation suffix to every literal string?
 	global $TBLPREFIX;
 
@@ -271,12 +270,10 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 		if ($fams) {
 			$query.=" JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
 		}
-		$query.=" WHERE n_file=?";
+		$query.=" WHERE n_file=? AND n_surn LIKE '{$letter}%'";
 		foreach ($alphabet as $letter2) {
-			if ($letter==$letter2) {
-				$query.="AND n_surn LIKE '{$letter2}%'";
-			} else {
-				$query.="AND n_surn NOT LIKE '{$letter2}%'";
+			if ($letter!=$letter2 && strpos($letter, $letter2)!==0) {
+				$query.=" AND n_surn NOT LIKE '{$letter2}%'";
 			}
 		}
 		$alphas[$letter]=PGV_DB::prepare($query)->execute(array(PGV_GED_ID))->fetchOne();
