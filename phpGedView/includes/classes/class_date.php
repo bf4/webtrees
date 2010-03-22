@@ -1559,8 +1559,7 @@ class GedcomDate {
 
 		// Convert dates to given calendars and given formats
 		if (!$date_fmt) {
-			// I18N: This is the format string for full dates, such as 14 October 1908.  See http://php.net/date for codes
-			$date_fmt=i18n::noop('%j %F %Y');
+			$date_fmt=$DATE_FORMAT;
 		}
 		if (is_null($cal_fmts))
 			$cal_fmts=explode('_and_', $CALENDAR_FORMAT);

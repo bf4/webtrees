@@ -245,23 +245,6 @@ if (!isset($_SERVER['REQUEST_URI']))  {
 //-- load file for language settings
 require PGV_ROOT.'includes/lang_settings_std.php';
 $Languages_Default = true;
-if (file_exists($INDEX_DIRECTORY.'lang_settings.php')) {
-	$DefaultSettings = $language_settings; // Save default settings, so we can merge properly
-	require $INDEX_DIRECTORY.'lang_settings.php';
-	$ConfiguredSettings = $language_settings; // Save configured settings, same reason
-	$language_settings = array_merge($DefaultSettings, $ConfiguredSettings); // Copy new langs into config
-	// Now copy new language settings into existing configuration
-	foreach ($DefaultSettings as $lang => $settings) {
-		foreach ($settings as $key => $value) {
-			if (!isset($language_settings[$lang][$key])) {
-				$language_settings[$lang][$key] = $value;
-			}
-		}
-	}
-	unset($DefaultSettings);
-	unset($ConfiguredSettings); // We don't need these any more
-	$Languages_Default = false;
-}
 
 /**
  * Cleanup some variables

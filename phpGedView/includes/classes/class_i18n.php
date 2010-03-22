@@ -92,17 +92,28 @@ class i18n {
 		Zend_Registry::set('Zend_Locale',    $locale);
 		Zend_Registry::set('Zend_Translate', $translate);
 
-		// I18N: This is the format string for full dates, such as 14 October 1908.  See http://php.net/date for codes
-		self::$long_date_format=i18n::noop('LANGUAGE_LONG_DATE_FORMAT');
-		// I18N: This is the format string for short dates, such as 14 Oct 1908.  See http://php.net/date for codes
-		self::$short_date_format=i18n::noop('LANGUAGE_SHORT_DATE_FORMAT');
-		// I18N: This is the format string for times with hours, minutes and seconds, such as 10:23:12pm.  See http://php.net/date for codes
-		self::$time_format_hm=i18n::noop('LANGUAGE_TIME_FORMAT_HM');
-		// I18N: This is the puncutation symbol used to separate items in a list.  e.g. the <comma><space> in "red, green, yellow and blue"
-		self::$time_format_hms=i18n::noop('LANGUAGE_TIME_FORMAT_HMS');
-		// I18N: This is the format string for times with hours and seconds, such as 10:23pm.  See http://php.net/date for codes
+		// Extract language settings from the translation file
+		global $DATE_FORMAT; // I18N: This is the format string for full dates.  See http://php.net/date for codes
+		$DATE_FORMAT=self::noop('%j %F %Y');
+		global $TIME_FORMAT; // I18N: This a the format string for the time-of-day.  See http://php.net/date for codes
+		$TIME_FORMAT=self::noop('%g:%i:%s%a');
+		$TIME_FORMAT=str_replace('%', '', $TIME_FORMAT); // Temporary - for compatibility
+		global $ALPHABET_upper; // Alphabetic sorting sequence (upper-case letters), used by webtrees to sort strings
+		$ALPHABET_upper=self::noop('ALPHABET_upper=ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+		list(, $ALPHABET_upper)=explode('=', $ALPHABET_upper);
+		global $ALPHABET_lower; // Alphabetic sorting sequence (lower-case letters), used by webtrees to sort strings
+		$ALPHABET_lower=self::noop('ALPHABET_lower=abcdefghijklmnopqrstuvwxyz');
+		list(, $ALPHABET_lower)=explode('=', $ALPHABET_lower);
+		global $WEEK_START; // I18N: This is the first day of the week on calendars. 0=Sunday, 1=Monday...
+		$WEEK_START=self::noop('WEEK_START=0');
+		list(, $WEEK_START)=explode('=', $WEEK_START);
+		global $MULTI_LETTER_ALPHABET; // I18N: semicolon separated list of digraphs
+		$MULTI_LETTER_ALPHABET=self::noop('MULTI_LETTER_ALPHABET=');
+		list(, $MULTI_LETTER_ALPHABET)=explode('=', $MULTI_LETTER_ALPHABET);
+		global $DICTIONARY_SORT; // I18N: 1=>ignore diacrics when sorting, 0=>letters with diacritics are distinct
+		$DICTIONARY_SORT=self::noop('DICTIONARY_SORT=1');
+		list(, $DICTIONARY_SORT)=explode('=', $DICTIONARY_SORT);
 
-		// THIS CODE IS TEMPORARY, WHILE WE MIGRATE TO GETTEXT()
 		global $TEXT_DIRECTION;
 		$localeData=Zend_Locale_Data::getList($locale, 'layout');
 		$TEXT_DIRECTION=$localeData['characters']=='right-to-left' ? 'rtl' : 'ltr';
