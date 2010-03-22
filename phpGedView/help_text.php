@@ -45,230 +45,230 @@ switch ($help) {
 	//////////////////////////////////////////////////////////////////////////////
 case 'ABBR':
 	// I18N: This is the GEDCOM label for "Abbreviation"
-	$title=i18n::translate('Abbreviation');
-	$text=i18n::translate('Use this field for storing an abbreviated version of a title.  This field is used in conjunction with the title field on sources.  By default PGV will first use the title and then the abbreviated title.<br /><br />According to the GEDCOM 5.5 specification, "this entry is to provide a short title used for sorting, filing, and retrieving source records (pg 62)."<br /><br />In PhpGedView the abbreviated title is optional, but in other genealogical programs it is required.');
+	$title=i18n::translate('ABBR');
+	$text=i18n::translate('Abbreviation');
 	break;
 
 case 'ADDR':
 	// I18N: This is the GEDCOM label for "Address"
-	$title=i18n::translate('Address');
-	$text=i18n::translate('Enter the address into the field just as you would write it on an envelope.<br /><br />Leave this field blank if you do not want to include an address.');
+	$title=i18n::translate('ADDR');
+	$text=i18n::translate('Address');
 	break;
 
 case 'ADR1':	
 	// I18N: This is the GEDCOM label for "Address 1"
-	$title=i18n::translate('Address 1');
-	$text='';
+	$title=i18n::translate('ADR1');
+	$text=i18n::translate('Address 1');
 	break;
 
 case 'ADR2':	
 	// I18N: This is the GEDCOM label for "Address 2"
-	$title=i18n::translate('Address 2');
-	$text='';
+	$title=i18n::translate('ADR2');
+	$text=i18n::translate('Address 2');
 	break;
 
 case 'ADOP':
 	// I18N: This is the GEDCOM label for "Adoption"
-	$title=i18n::translate('Adoption');
-	$text='';
+	$title=i18n::translate('ADOP');
+	$text=i18n::translate('Adoption');
 	break;
 
 case 'AFN':	
 	// I18N: This is the GEDCOM label for "Ancestral File Number (AFN)"
-	$title=i18n::translate('Ancestral File Number');
-	$text='';
+	$title=i18n::translate('AFN');
+	$text=i18n::translate('Ancestral File Number');
 	break;
 
 case 'AGE':	
 	// I18N: This is the GEDCOM label for "Age"
-	$title=i18n::translate('Age');
-	$text='';
+	$title=i18n::translate('AGE');
+	$text=i18n::translate('Age');
 	break;
 
 case 'AGNC':
 	// I18N: This is the GEDCOM label for ""
-	$title=i18n::translate('Agency');
-	$text=i18n::translate('The organization, institution, corporation, person, or other entity that has authority.<br /><br />For example, an employer of a person, or a church that administered rites or events, or an organization responsible for creating and/or archiving records.');
+	$title=i18n::translate('AGNC');
+	$text=i18n::translate('Agency');
 	break;
 
 case 'ALIA':	
 	// I18N: This is the GEDCOM label for "Alias"
-	$title=i18n::translate('Alias');
-	$text='';
+	$title=i18n::translate('ALIA');
+	$text=i18n::translate('Alias');
 	break;
 
 case 'ANCE':	
 	// I18N: This is the GEDCOM label for "Ancestors"
-	$title=i18n::translate('Ancestors');
-	$text='';
+	$title=i18n::translate('ANCE');
+	$text=i18n::translate('Ancestors');
 	break;
 
 case 'ANCI':	
 	// I18N: This is the GEDCOM label for "Ancestors Interest"
-	$title=i18n::translate('Ancestors Interest');
-	$text='';
+	$title=i18n::translate('ANCI');
+	$text=i18n::translate('Ancestors Interest');
 	break;
 
 case 'ANUL':	
 	// I18N: This is the GEDCOM label for "Annulment"
-	$title=i18n::translate('Annulment');
-	$text='';
+	$title=i18n::translate('ANUL');
+	$text=i18n::translate('Annulment');
 	break;
 
 case 'ASSO':
 	// I18N: This is the GEDCOM label for "Associate"
-	$title=i18n::translate('Associate');
-	$text=i18n::translate('Enter associate GEDCOM ID.');
+	$title=i18n::translate('ASSO');
+	$text=i18n::translate('Associate');
 	break;
 
 case 'AUTH':	
 	// I18N: This is the GEDCOM label for "Author"
-	$title=i18n::translate('Author');
-	$text='';
+	$title=i18n::translate('AUTH');
+	$text=i18n::translate('Author');
 	break;
 
 case 'BAPL':	
 	// I18N: This is the GEDCOM label for "LDS Baptism"
-	$title=i18n::translate('LDS Baptism');
-	$text='';
+	$title=i18n::translate('BAPL');
+	$text=i18n::translate('LDS Baptism');
 	break;
 
 case 'BAPM':	
 	// I18N: This is the GEDCOM label for "Baptism"
-	$title=i18n::translate('Baptism');
+	$title=i18n::translate('BAPM');
 	// I18N: This is a very short abbreviation for the label "Baptism", to be used on genealogy charts
 	$abbrev=i18n::translate('ba.');
-	$text='';
+	$text=i18n::translate('Baptism');
 	break;
 
 case 'BAPM:DATE':	
 	// I18N: This is the GEDCOM label for "Baptism Date"
-	$title=i18n::translate('Baptism Date');
-	$text='';
+	$title=i18n::translate('BAPM:DATE');
+	$text=i18n::translate('Baptism Date');
 	break;
 
 case 'BAPM:PLAC':	
 	// I18N: This is the GEDCOM label for "Baptism Place"
-	$title=i18n::translate('Baptism Place');
-	$text='';
+	$title=i18n::translate('BAPM:PLAC');
+	$text=i18n::translate('Baptism Place');
 	break;
 
 case 'BAPM:SOUR':	
 	// I18N: This is the GEDCOM label for "Baptism Source"
-	$title=i18n::translate('Baptism Source');
-	$text='';
+	$title=i18n::translate('BAPM:SOUR');
+	$text=i18n::translate('Baptism Source');
 	break;
 
 case 'BARM':	
 	// I18N: This is the GEDCOM label for "Bar Mitzvah"
-	$title=i18n::translate('Bar Mitzvah');
-	$text='';
+	$title=i18n::translate('BARM');
+	$text=i18n::translate('Bar Mitzvah');
 	break;
 
 case 'BARM:DATE':	
 	// I18N: This is the GEDCOM label for "Bar Mitzvah Date"
-	$title=i18n::translate('Bar Mitzvah Date');
-	$text='';
+	$title=i18n::translate('BARM:DATE');
+	$text=i18n::translate('Bar Mitzvah Date');
 	break;
 
 case 'BARM:PLAC':	
 	// I18N: This is the GEDCOM label for "Bar Mitzvah Place"
-	$title=i18n::translate('Bar Mitzvah Place');
-	$text='';
+	$title=i18n::translate('BARM:PLAC');
+	$text=i18n::translate('Bar Mitzvah Place');
 	break;
 
 case 'BARM:SOUR':	
 	// I18N: This is the GEDCOM label for "Bar Mitzvah Source"
-	$title=i18n::translate('Bar Mitzvah Source');
-	$text='';
+	$title=i18n::translate('BARM:SOUR');
+	$text=i18n::translate('Bar Mitzvah Source');
 	break;
 
 case 'BASM':	
 	// I18N: This is the GEDCOM label for "Bas Mitzvah"
-	$title=i18n::translate('Bas Mitzvah');
-	$text='';
+	$title=i18n::translate('BASM');
+	$text=i18n::translate('Bas Mitzvah');
 	break;
 
 case 'BASM:DATE':	
 	// I18N: This is the GEDCOM label for "Bas Mitzvah Date"
-	$title=i18n::translate('Bas Mitzvah Date');
-	$text='';
+	$title=i18n::translate('BASM:DATE');
+	$text=i18n::translate('Bas Mitzvah Date');
 	break;
 
 case 'BASM:PLAC':	
 	// I18N: This is the GEDCOM label for "Bas Mitzvah Place"
-	$title=i18n::translate('Bas Mitzvah Place');
-	$text='';
+	$title=i18n::translate('BASM:PLAC');
+	$text=i18n::translate('Bas Mitzvah Place');
 	break;
 
 case 'BASM:SOUR':	
 	// I18N: This is the GEDCOM label for "Bas Mitzvah Source"
-	$title=i18n::translate('Bas Mitzvah Source');
-	$text='';
+	$title=i18n::translate('BASM:SOUR');
+	$text=i18n::translate('Bas Mitzvah Source');
 	break;
 
 case 'BIRT':	
 	// I18N: This is the GEDCOM label for "Birth"
-	$title=i18n::translate('Birth');
+	$title=i18n::translate('BIRT');
 	// I18N: This is a very short abbreviation for the label "Birth", to be used on genealogy charts
 	$abbr=i18n::translate('b.');
-	$text='';
+	$text=i18n::translate('Birth');
 	break;
 
 case 'BIRT:DATE':	
 	// I18N: This is the GEDCOM label for "Birth Date"
-	$title=i18n::translate('Birth Date');
-	$text='';
+	$title=i18n::translate('BIRT:DATE');
+	$text=i18n::translate('Birth Date');
 	break;
 
 case 'BIRT:PLAC':	
 	// I18N: This is the GEDCOM label for "Birth Place"
-	$title=i18n::translate('Birth Place');
-	$text='';
+	$title=i18n::translate('BIRT:PLAC');
+	$text=i18n::translate('Birth Place');
 	break;
 
 case 'BIRT:SOUR':	
 	// I18N: This is the GEDCOM label for "Birth Source"
-	$title=i18n::translate('Birth Source');
-	$text='';
+	$title=i18n::translate('BIRT:SOUR');
+	$text=i18n::translate('Birth Source');
 	break;
 
 case 'BLES':	
 	// I18N: This is the GEDCOM label for "Blessing"
-	$title=i18n::translate('Blessing');
-	$text='';
+	$title=i18n::translate('BLES');
+	$text=i18n::translate('Blessing');
 	break;
 
 case 'BLOB':	
 	// I18N: This is the GEDCOM label for "Binary Data Object"
-	$title=i18n::translate('Binary Data Object');
-	$text='';
+	$title=i18n::translate('BLOB');
+	$text=i18n::translate('Binary Data Object');
 	break;
 
 case 'BURI':	
 	// I18N: This is the GEDCOM label for "Burial"
-	$title=i18n::translate('Burial');
+	$title=i18n::translate('BURI');
 	// I18N: This is a very short abbreviation for the label "Burial", to be used on genealogy charts
 	$abbr=i18n::translate('bu.');
-	$text=('Burial');
+	$text=i18n::translate('Burial');
 	break;
 
 case 'BURI:DATE':	
 	// I18N: This is the GEDCOM label for "Burial Date"
-	$title=i18n::translate('Burial Date');
-	$text='';
+	$title=i18n::translate('BURI:DATE');
+	$text=i18n::translate('Burial Date');
 	break;
 
 case 'BURI:PLAC':	
 	// I18N: This is the GEDCOM label for "Burial Place"
-	$title=i18n::translate('Burial Place');
-	$text='';
+	$title=i18n::translate('BURI:PLAC');
+	$text=i18n::translate('Burial Place');
 	break;
 
 case 'BURI:SOUR':	
 	// I18N: This is the GEDCOM label for "Burial Source"
-	$title=i18n::translate('Burial Source');
-	$text='';
+	$title=i18n::translate('BURI:SOUR');
+	$text=i18n::translate('Burial Source');
 	break;
 
 case 'CALN':	
@@ -291,8 +291,8 @@ case 'CAUS':
 
 case 'CEME':
 	// I18N: This is the GEDCOM label for "Cemetery"
-	$title=i18n::translate('Cemetery');
-	$text=i18n::translate('Enter the name of the cemetery or other resting place where individual is buried.');
+	$title=i18n::translate('CEME');
+	$text=i18n::translate('Cemetery');
 	break;
 
 case 'CENS':	
@@ -764,7 +764,7 @@ case 'FAMS:SPOUSE:DEAT:PLAC':
 case 'FAX':
 	// I18N: This is the GEDCOM label for "FAX"
 	$title=i18n::translate('FAX');
-	$text=i18n::translate('Enter the FAX number including the country and area code.<br /><br />Leave this field blank if you do not want to include a FAX number.  For example, a number in Germany might be +49 25859 56 76 89 and a number in USA or Canada might be +1 888 555-1212.');
+	$text='';
 	break;
 
 case 'FCOM':	
@@ -793,8 +793,8 @@ case 'FCOM:SOUR':
 
 case 'FILE':
 	// I18N: This is the GEDCOM label for "External File"
-	$title=i18n::translate('External File');
-	$text=i18n::translate('This is the most important field in the multimedia object record.  It indicates which file to use. At the very minimum, you need to enter the file\'s name.  Depending on your settings, more information about the file\'s location may be helpful.<br /><br />You can use the <b>Find Media</b> link to help you locate media items that have already been uploaded to the site.<br /><br />See <a href="readme.txt" target="_blank"><b>Readme.txt</b></a> for more information.');
+	$title=i18n::translate('FILE');
+	$text=i18n::translate('External File');
 	break;
 
 case 'FONE':	
@@ -805,8 +805,8 @@ case 'FONE':
 
 case 'FORM':
 	// I18N: This is the GEDCOM label for "Format"
-	$title=i18n::translate('Format');
-	$text=i18n::translate('This is an optional field that can be used to enter the file format of the multimedia object.  Some genealogy programs may look at this field to determine how to handle the item.  However, since media do not transfer across computer systems very well, this field is not very important.');
+	$title=i18n::translate('FORM');
+	$text=i18n::translate('Format');
 	break;
 
 case 'GEDC':	
@@ -818,7 +818,7 @@ case 'GEDC':
 case 'GIVN':
 	// I18N: This is the GEDCOM label for "Given Names"
 	$title=i18n::translate('GIVN');
-	$text=i18n::translate('In this field you should enter the given names for the person.  As an example, in the name "John Robert Finlay", the given names that should be entered here are "John Robert"');
+	$text=i18n::translate('Given Names');
 	break;
 
 case 'GRAD':	
@@ -993,8 +993,8 @@ case 'MEDI':
 
 case 'NAME':
 	// I18N: This is the GEDCOM label for "Name"
-	$title=i18n::translate('Name');
-	$text=i18n::translate('This is the most important field in a person\'s Name record.<br /><br />This field should be filled automatically as the other fields are filled in, but it is provided so that you can edit the information according to your personal preference.<br /><br />The name in this field should be entered according to the GEDCOM 5.5.1 standards with the surname surrounded by forward slashes "/".  As an example, the name "John Robert Finlay Jr." should be entered like this: "John Robert /Finlay/ Jr.".');
+	$title=i18n::translate('NAME');
+	$text=i18n::translate('Name');
 	break;
 
 case 'NAME:FONE':	
@@ -1023,14 +1023,14 @@ case 'NATU':
 
 case 'NCHI':
 	// I18N: This is the GEDCOM label for "Number of Children"
-	$title=i18n::translate('Number of Children');
-	$text=i18n::translate('Enter the number of children for this individual or family. This is an optional field.');
+	$title=i18n::translate('NCHI');
+	$text=i18n::translate('Number of Children');
 	break;
 
 case 'NICK':
 	// I18N: This is the GEDCOM label for "Nickname"
-	$title=i18n::translate('Nickname');
-	$text=i18n::translate('In this field you should enter any nicknames for the person.<br />This is an optional field.<br /><br />Ways to add a nickname:<ul><li>Select <b>modify name</b> then enter nickname and save</li><li>Select <b>add new name</b> then enter nickname AND name and save</li><li>Select <b>edit GEDCOM record</b> to add multiple [2&nbsp;NICK] records subordinate to the main [1&nbsp;NAME] record.</li></ul>');
+	$title=i18n::translate('NICK');
+	$text=i18n::translate('Nickname');
 	break;
 
 case 'NMR':	
@@ -1041,20 +1041,20 @@ case 'NMR':
 
 case 'NOTE':
 	// I18N: This is the GEDCOM label for "Note"
-	$title=i18n::translate('Note');
-	$text=i18n::translate('Notes are free-form text and will appear in the Fact Details section of the page.');
+	$title=i18n::translate('NOTE');
+	$text=i18n::translate('Note');
 	break;
 
 case 'NPFX':
 	// I18N: This is the GEDCOM label for "Prefix"
-	$title=i18n::translate('Name Prefix');
-	$text=i18n::translate('This optional field allows you to enter a name prefix such as "Dr." or "Adm."');
+	$title=i18n::translate('NPFX');
+	$text=i18n::translate('Name Prefix');
 	break;
 
 case 'NSFX':
 	// I18N: This is the GEDCOM label for "Suffix"
-	$title=i18n::translate('Name Suffix');
-	$text=i18n::translate('In this optional field you should enter the name suffix for the person.  Examples of name suffixes are "Sr.", "Jr.", and "III".');
+	$title=i18n::translate('NSFX');
+	$text=i18n::translate('Name Suffix');
 	break;
 
 case 'OBJE':	
@@ -1083,26 +1083,26 @@ case 'ORDN':
 
 case 'PAGE':
 	// I18N: This is the GEDCOM label for "Citation Details"
-	$title=i18n::translate('Citation Details');
-	$text=i18n::translate('In the Citation Details field you would enter the page number or other information that might help someone find the information in the source.');
+	$title=i18n::translate('PAGE');
+	$text=i18n::translate('Citation Details');
 	break;
 
 case 'PEDI':
 	// I18N: This is the GEDCOM label for "Pedigree"
-	$title=i18n::translate('Pedigree');
-	$text=i18n::translate('This field describes the relationship of the child to its family.  The possibilities are:<ul><li><b>unknown</b>&nbsp;&nbsp;&nbsp;The child\'s relationship to its family cannot be determined.  When this option is selected, the Pedigree field will not be copied into the database.<br /><br /></li><li><b>Birth</b>&nbsp;&nbsp;&nbsp;This option indicates that the child is related to its family by birth.<br /><br /></li><li><b>Adopted</b>&nbsp;&nbsp;&nbsp;This option indicates that the child was adopted by its family.  This does <i>not</i> indicate that there is no blood relationship between the child and its family; it shows that the child was adopted by the family in question sometime after the child\'s birth.<br /><br /></li><li><b>Foster</b>&nbsp;&nbsp;&nbsp;This option indicates that the child is a foster child of the family.  Usually, there is no blood relationship between the child and its family.<br /><br /></li><li><b>Sealing</b>&nbsp;&nbsp;&nbsp;The child was sealed to its family in an LDS <i>sealing</i> ceremony.  A child sealing is performed when the parents were sealed to each other after the birth of the child.  Children born after the parents\' sealing are automatically sealed to the family.<br /><br /></li></ul>');
+	$title=i18n::translate('PEDI');
+	$text=i18n::translate('Pedigree');
 	break;
 
 case 'PHON':
 	// I18N: This is the GEDCOM label for "Phone"
-	$title=i18n::translate('Phone');
-	$text=i18n::translate('Enter the phone number including the country and area code.<br /><br />Leave this field blank if you do not want to include a phone number.  For example, a number in Germany might be +49 25859 56 76 89 and a number in USA or Canada might be +1 888 555-1212.');
+	$title=i18n::translate('PHON');
+	$text=i18n::translate('Phone');
 	break;
 
 case 'PLAC':
 	// I18N: This is the GEDCOM label for "Place"
-	$title=i18n::translate('Place');
-	$text=i18n::translate('Places should be entered according to the standards for genealogy.  In genealogy, places are recorded with the most specific information about the place first and then working up to the least specific place last, using commas to separate the different place levels.  The level at which you record the place information should represent the levels of government or church where vital records for that place are kept.<br /><br />For example, a place like Salt Lake City would be entered as "Salt Lake City, Salt Lake, Utah, USA".<br /><br />Let\'s examine each part of this place.  The first part, "Salt Lake City," is the city or township where the event occurred.  In some countries, there may be municipalities or districts inside a city which are important to note.  In that case, they should come before the city.  The next part, "Salt Lake," is the county.  "Utah" is the state, and "USA" is the country.  It is important to note each place because genealogical records are kept by the governments of each level.<br /><br />If a level of the place is unknown, you should leave a space between the commas.  Suppose, in the example above, you didn\'t know the county for Salt Lake City.  You should then record it like this: "Salt Lake City, , Utah, USA".  Suppose you only know that a person was born in Utah.  You would enter the information like this: ", , Utah, USA".  <br /><br />You can use the <b>Find Place</b> link to help you find places that already exist in the database.');
+	$title=i18n::translate('PLAC');
+	$text=i18n::translate('Place');
 	break;
 
 case 'PLAC:FONE':	
@@ -1149,8 +1149,8 @@ case 'PUBL':
 
 case 'QUAY':
 	// I18N: This is the GEDCOM label for "Quality of Data"
-	$title=i18n::translate('Quality of Data');
-	$text=i18n::translate('You would use this field to record the quality or reliability of the data found in this source.  Many genealogy applications use a number in the field. <b>3</b> might mean that the data is a primary source, <b>2</b> might mean that it was a secondary source, <b>1</b> might mean the information is questionable, and <b>0</b> might mean that the source is unreliable.');
+	$title=i18n::translate('QUAY');
+	$text=i18n::translate('Quality of Data');
 	break;
 
 case 'REFN':	
@@ -1161,8 +1161,8 @@ case 'REFN':
 
 case 'RELA':
 	// I18N: This is the GEDCOM label for "Relationship"
-	$title=i18n::translate('Relationship');
-	$text=i18n::translate('Select a relationship name from the list. Selecting <b>Godfather</b> means: <i>This associate is the Godfather of the current individual</i>.');
+	$title=i18n::translate('RELA');
+	$text=i18n::translate('Relationship');
 	break;
 
 case 'RELI':	
@@ -1185,8 +1185,8 @@ case 'RESI':
 
 case 'RESN':
 	// I18N: This is the GEDCOM label for "Restriction"
-	$title=i18n::translate('Setting Restrictions on Facts');
-	$text=i18n::translate('Apart from general privacy settings, PhpGedView has the ability to set restrictions on viewing and editing fact information for individuals and families. The restrictions can be set by anyone who is allowed to edit the information, unless privacy or formerly set restrictions prohibit this.<br /><br />The following values can be used:<br /><ul><li><b>None</b><br />Site administrators, GEDCOM administrators, and users who have rights to edit can change the information. Fact information can be viewed according to privacy settings as applied by the administrator.</li><li><b>Do not change</b><br />This setting has no influence on the visibility of the fact data. It restricts editing rights to site administrators and GEDCOM administrators. If the information applies to the user himself, he can also view and, assuming he has editing rights, edit it.</li><li><b>Privacy</b><br />Site administrators and GEDCOM administrators can view and edit the information. If the information applies to the user himself, he can also view and, assuming he has editing rights, edit it. It will be hidden from all other users regardless of their login status.</li><li><b>Confidential</b><br />Only site administrators and GEDCOM administrators can view and edit the information. It will be hidden from all other users regardless of their login status.</li></ul><br /><table><tr><th></th><th colspan="2">Admin</th><th colspan="2">Owner</th><th colspan="2">Others</th></tr><tr><th></th><th>R</th><th>W</th><th>R</th><th>W</th><th>R</th><th>W</th></tr><tr><td><img src="images/RESN_none.gif" alt="" /> None</td><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th></tr><tr><td><img src="images/RESN_locked.gif" alt="" /> Do not change</td><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th></tr><tr><td><img src="images/RESN_privacy.gif" alt="" /> Privacy</td><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th></tr><tr><td><img src="images/RESN_confidential.gif" alt="" /> Confidential</td><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th></tr></table><ul><li>R : can read</li><li>W : can edit</li><li><img src="images/checked_qm.gif" alt="" /> : depends on global privacy settings</li></ul>');
+	$title=i18n::translate('RESN');
+	$text=i18n::translate('Restriction');
 	break;
 
 case 'RETI':	
@@ -1215,8 +1215,8 @@ case 'ROLE':
 
 case 'ROMN':
 	// I18N: This is the GEDCOM label for "Romanized"
-	$title=i18n::translate('Romanized');
-	$text=i18n::translate('In many cultures it is customary to have a traditional name spelled in the traditional characters and also a romanized version of the name as it would be spelled or pronounced in languages based on the Latin alphabet, such as English.<br /><br />If you prefer to use a non-Latin alphabet such as Hebrew, Greek, Russian, Chinese, or Arabic to enter the name in the standard name fields, then you can use this field to enter the same name using the Latin alphabet.  Both versions of the name will appear in lists and charts.<br /><br />Although this field is labelled "Romanized", it is not restricted to containing only characters based on the Latin alphabet.  This might be of use with Japanese names, where three different alphabets may occur.');
+	$title=i18n::translate('ROMN');
+	$text=i18n::translate('Romanized');
 	break;
 
 case 'SERV':	
@@ -1227,14 +1227,14 @@ case 'SERV':
 
 case 'SEX':
 	// I18N: This is the GEDCOM label for "Gender"
-	$title=i18n::translate('Gender');
-	$text=i18n::translate('Choose the appropriate gender from the drop-down list.  The <b>unknown</b> option indicates that the gender is unknown.');
+	$title=i18n::translate('SEX');
+	$text=i18n::translate('Gender');
 	break;
 
 case 'SHARED_NOTE':
 	// I18N: This is the GEDCOM label for "Shared Note"
-	$title=i18n::translate('Shared Note');
-	$text=i18n::translate('Shared Notes are free-form text and will appear in the Fact Details section of the page.<br /><br />Each shared note can be linked to more than one person, family, source, or event.');
+	$title=i18n::translate('SHARED_NOTE');
+	$text=i18n::translate('Shared Note');
 	break;
 
 case 'SLGC':	
@@ -1251,14 +1251,14 @@ case 'SLGS':
 
 case 'SOUR':
 	// I18N: This is the GEDCOM label for "Source"
-	$title=i18n::translate('Source');
-	$text=i18n::translate('This field allows you to change the source record that this fact\'s source citation links to.  This field takes a Source ID.  Beside the field will be listed the title of the current source ID.  Use the <b>Find ID</b> link to look up the source\'s ID number.  To remove the entire citation, make this field blank.');
+	$title=i18n::translate('SOUR');
+	$text=i18n::translate('Source');
 	break;
 
 case 'SPFX':
 	// I18N: This is the GEDCOM label for "Surname Prefix"
-	$title=i18n::translate('Surname Prefix');
-	$text=i18n::translate('Enter or select from the list words that precede the main part of the Surname.  Examples of such words are <b>von</b> Braun, <b>van der</b> Kloot, <b>de</b> Graaf, etc.');
+	$title=i18n::translate('SPFX');
+	$text=i18n::translate('Surname Prefix');
 	break;
 
 case 'SSN':	
@@ -1275,8 +1275,8 @@ case 'STAE':
 
 case 'STAT':
 	// I18N: This is the GEDCOM label for "Status"
-	$title=i18n::translate('Status');
-	$text=i18n::translate('This is an optional status field and is used mostly for LDS ordinances as they are run through the TempleReady program.');
+	$title=i18n::translate('STAT');
+	$text=i18n::translate('Status');
 	break;
 
 case 'STAT:DATE':	
@@ -1299,32 +1299,32 @@ case 'SUBN':
 
 case 'SURN':
 	// I18N: This is the GEDCOM label for "Surname"
-	$title=i18n::translate('Surname');
-	$text=i18n::translate('In this field you should enter the surname for the person.  As an example, in the name "John Robert Finlay", the surname that should be entered here is "Finlay"<br /><br />Individuals with multiple surnames, common in Spain and Portugal, should separate the surnames with a comma.  This indicates that the person is to be listed under each of the names.  For example, the surname "Cortes,Vega" will be listed under both <b>C</b> and <b>V</b>, whereas the surname "Cortes Vega" will only be listed under <b>C</b>.');
+	$title=i18n::translate('SURN');
+	$text=i18n::translate('Surname');
 	break;
 
 case 'TEMP':
 	// I18N: This is the GEDCOM label for "Temple"
-	$title=i18n::translate('LDS Temple');
-	$text=i18n::translate('For LDS ordinances, this field records the Temple where it was performed.');
+	$title=i18n::translate('TEMP');
+	$text=i18n::translate('Temple');
 	break;
 
 case 'TEXT':
 	// I18N: This is the GEDCOM label for "Text"
-	$title=i18n::translate('Citation Text');
-	$text=i18n::translate('In this field you would enter the citation text for this source.  Examples of data may be a transcription of the text from the source, or a description of what was in the citation.');
+	$title=i18n::translate('TEXT');
+	$text=i18n::translate('Text');
 	break;
 
 case 'TIME':
 	// I18N: This is the GEDCOM label for "Time"
-	$title=i18n::translate('Time');
-	$text=i18n::translate('Enter the time for this event in 24-hour format with leading zeroes. Midnight is 00:00. Examples: 04:50 13:00 20:30.');
+	$title=i18n::translate('TIME');
+	$text=i18n::translate('Time');
 	break;
 
 case 'TITL':
 	// I18N: This is the GEDCOM label for "Title"
-	$title=i18n::translate('Title');
-	$text=i18n::translate('Enter a title for the item you are editing.  If this is a title for a multimedia item, enter a descriptive title that will identify that item to the user.');
+	$title=i18n::translate('TITL');
+	$text=i18n::translate('Title');
 	break;
 
 case 'TITL:FONE':	
@@ -1353,14 +1353,14 @@ case 'TRLR':
 
 case 'TYPE':
 	// I18N: This is the GEDCOM label for "Type"
-	$title=i18n::translate('Type');
-	$text=i18n::translate('The Type field is used to enter additional information about the item.  In most cases, the field is completely free-form, and you can enter anything you want.');
+	$title=i18n::translate('TYPE');
+	$text=i18n::translate('Type');
 	break;
 
 case 'URL':
 	// I18N: This is the GEDCOM label for "Web URL"
-	$title=i18n::translate('URL address');
-	$text=i18n::translate('Enter the URL address including the http://.<br /><br />An example URL looks like this: <b>http://www.phpgedview.net/</b> Leave this field blank if you do not want to include a URL.');
+	$title=i18n::translate('URL');
+	$text=i18n::translate('Web URL');
 	break;
 
 case 'VERS':	
@@ -2803,8 +2803,8 @@ case 'timeline.php':
 
 case 'treenav.php':
 	$title=i18n::translate('Interactive Tree');
-	$text='';
-	break;
+	$text=i18n::translate('Use the Interactive Tree to view the entire family tree of a person in both directions.  This view is similar to the Hourglass view in that it shows both ancestors and descendants of a given root person.  This chart gives you a more compact view by showing boxes for couples or families instead of just individuals.<br /><ul><li><b>Scrolling</b><br />Whenever your mouse cursor changes to a Move icon, you can click and drag the tree to view other portions of the tree.  As you drag the tree future generations will automatically expand until there are no more generations left to view in that direction.<br /></li><li><b>Zoom</b><br />You can use the icons on the left of the tree to zoom in and out.  Zooming out will allow you to see more of the tree on the screen at a time.  As you zoom out the text can become difficult to read; when your mouse hovers over a box you will get an enlarged view of what is inside it.<br /></li><li><b>Expanding Details</b><br />Clicking on any box will expand the box and display a more detailed view.  While in expanded mode, clicking on a person\'s name will open their Individual Information page.  Clicking <img src="./images/small/gedcom.gif" width="15px" height="15px" alt="" /> will redraw the tree with that person as the new root.  Clicking <img src="./images/buttons/family.gif" alt="" /> will take you to that family\'s detail page.<br /></li><li><b>Toggle Spouses</b><br />The <img src="./images/small/sfamily.gif" width="15px" height="15px" alt="" /> icon directly under the Zoom buttons will toggle the display of all spouses on or off on the descendancy side.  When the display is set to show spouses, all of a person\'s spouses will appear in the box with them.  All of the person\'s children will be shown as well.  When the option to show spouses is off, only the person\'s last spouse and children with that spouse will be shown.<br /></li><li><b>Large Tree</b><br />The Interactive Tree is available from many different pages including the Tree tab on the Individual Information page and the Charts block on the Welcome page.  When viewing the tree from one of these other pages, you will also have a Tree icon under the Zoom icons.  If you click <img src="./images/small/gedcom.gif" width="15px" height="15px" alt="" /> you will be taken to the Interactive Tree page.</li></ul>');
+    break;
 
 case 'uploadgedcom.php':
 	$title=i18n::translate('Upload GEDCOM');
@@ -4746,7 +4746,7 @@ case 'help':
 	
 case 'help_admin.php':
 	$title=i18n::translate('Administration');
-	$text=('On this page you will find links to the configuration pages, administration pages, documentation, and log files.<br /><br /><b>Current Server Time:</b>, just below the page title, shows the time of the server on which your site is hosted. This means that if the server is located in New York while you\'re in France, the time shown will be six hours less than your local time, unless, of course, the server is running on Greenwich Mean Time (GMT).  The time shown is the server time when you opened or refreshed this page.<br /><br /><b>WARNING</b><br />When you see a red warning message under the system time, it means that your <i>config.php</i> is still writeable.  After configuring your site, you should, for <b>security</b>, set the permissions of this file back to read-only.  You have to do this <u>manually</u>, since PhpGedView cannot do this for you.');
+	$text=i18n::translate('On this page you will find links to the configuration pages, administration pages, documentation, and log files.<br /><br /><b>Current Server Time:</b>, just below the page title, shows the time of the server on which your site is hosted. This means that if the server is located in New York while you\'re in France, the time shown will be six hours less than your local time, unless, of course, the server is running on Greenwich Mean Time (GMT).  The time shown is the server time when you opened or refreshed this page.<br /><br /><b>WARNING</b><br />When you see a red warning message under the system time, it means that your <i>config.php</i> is still writeable.  After configuring your site, you should, for <b>security</b>, set the permissions of this file back to read-only.  You have to do this <u>manually</u>, since PhpGedView cannot do this for you.');
 	break;
 
 case 'help_content':
@@ -4756,7 +4756,7 @@ case 'help_content':
 	
 case 'help_changelanguage.php':
 	$title=i18n::translate('Configure supported languages');
-	$text=('This page is used to control what language choices are available to your users.  For example, you can set things up so that only German and French are available.  This might be useful if, for example, you are not able to communicate with your users in Hungarian.<br /><br />You also use this page to alter certain aspects of PhpGedView that depend on the selected language.  For example, here is where you tell PhpGedView how to format date and time fields.<br /><br />The languages that are active and greyed out cannot be disabled because they are in use. Look at the bottom table to see where the language is used. When a language is no longer used by the GEDCOM or user you will be able to disable it.<br /><br />All of your changes will be recorded in a new file called <b>lang_settings.php</b> created in the <b>index</b> directory.  All of your further changes will be made to this new file and PhpGedView will use only <u>this</u> file.  You can revert to the original default language settings by deleting this file.<br /><br />If you must report problems with your language settings, please tell the PhpGedView support team whether this new file is present or not.');
+	$text=i18n::translate('This page is used to control what language choices are available to your users.  For example, you can set things up so that only German and French are available.  This might be useful if, for example, you are not able to communicate with your users in Hungarian.<br /><br />You also use this page to alter certain aspects of PhpGedView that depend on the selected language.  For example, here is where you tell PhpGedView how to format date and time fields.<br /><br />The languages that are active and greyed out cannot be disabled because they are in use. Look at the bottom table to see where the language is used. When a language is no longer used by the GEDCOM or user you will be able to disable it.<br /><br />All of your changes will be recorded in a new file called <b>lang_settings.php</b> created in the <b>index</b> directory.  All of your further changes will be made to this new file and PhpGedView will use only <u>this</u> file.  You can revert to the original default language settings by deleting this file.<br /><br />If you must report problems with your language settings, please tell the PhpGedView support team whether this new file is present or not.');
 	break;
 
 case 'help_contents_head':
@@ -4771,7 +4771,7 @@ case 'help_contents_help':
 
 case 'help_dir_editor.php':
 	$title=i18n::translate('Cleanup Index directory');
-	$text=('This tool can help site administrators clean up files in the Index directory.<br /><br />Over time, files such as log files, old GEDCOM files, and old backup files can build up in the Index directory.  Since many of these files are created by the program, they may be owned by the web server user.  If they are owned by the web server user, you might not be able to delete them. This tool lets you delete these files even when they are owned by the web server user account.<br /><br />To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src="./images/RESN_confidential.gif" alt="\" > are required for proper operation and cannot be removed.<br />Files marked with <img src="./images/RESN_locked.gif" alt="\" > have important settings or pending change data and should only be deleted if you are sure you know what you are doing.');
+	$text=i18n::translate('This tool can help site administrators clean up files in the Index directory.<br /><br />Over time, files such as log files, old GEDCOM files, and old backup files can build up in the Index directory.  Since many of these files are created by the program, they may be owned by the web server user.  If they are owned by the web server user, you might not be able to delete them. This tool lets you delete these files even when they are owned by the web server user account.<br /><br />To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src="./images/RESN_confidential.gif" alt="\" > are required for proper operation and cannot be removed.<br />Files marked with <img src="./images/RESN_locked.gif" alt="\" > have important settings or pending change data and should only be deleted if you are sure you know what you are doing.');
 	break;
 
 case 'help_editconfig.php':
