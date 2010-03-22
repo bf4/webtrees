@@ -996,10 +996,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('GEDCOM Basics')."\" onclic
 			<?php echo i18n::translate('Display Hebrew Thousands'), help_link('DISPLAY_JEWISH_THOUSANDS'); ?>
 		</td>
 		<td class="optionbox">
-			<select name="NEW_DISPLAY_JEWISH_THOUSANDS" onfocus="getHelp('DISPLAY_JEWISH_THOUSANDS');">
-				<option value="yes" <?php if ($DISPLAY_JEWISH_THOUSANDS) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$DISPLAY_JEWISH_THOUSANDS) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+			<?php echo edit_field_yes_no('NEW_DISPLAY_JEWISH_THOUSANDS', $DISPLAY_JEWISH_THOUSANDS, 'onfocus="getHelp(\'DISPLAY_JEWISH_THOUSANDS\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1007,10 +1004,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('GEDCOM Basics')."\" onclic
 			<?php echo i18n::translate('Display Hebrew Gershayim'), help_link('DISPLAY_JEWISH_GERESHAYIM'); ?>
 		</td>
 		<td class="optionbox">
-			<select name="NEW_DISPLAY_JEWISH_GERESHAYIM" onfocus="getHelp('DISPLAY_JEWISH_GERESHAYIM');">
-				<option value="yes" <?php if ($DISPLAY_JEWISH_GERESHAYIM) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$DISPLAY_JEWISH_GERESHAYIM) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+			<?php echo edit_field_yes_no('NEW_DISPLAY_JEWISH_GERESHAYIM', $DISPLAY_JEWISH_GERESHAYIM, 'onfocus="getHelp(\'DISPLAY_JEWISH_GERESHAYIM\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1018,10 +1012,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('GEDCOM Basics')."\" onclic
 			<?php echo i18n::translate('Jewish Ashkenaz pronunciation'), help_link('JEWISH_ASHKENAZ_PRONUNCIATION'); ?>
 		</td>
 		<td class="optionbox">
-			<select name="NEW_JEWISH_ASHKENAZ_PRONUNCIATION" onfocus="getHelp('JEWISH_ASHKENAZ_PRONUNCIATION');">
-				<option value="yes" <?php if ($JEWISH_ASHKENAZ_PRONUNCIATION) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$JEWISH_ASHKENAZ_PRONUNCIATION) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+			<?php echo edit_field_yes_no('NEW_JEWISH_ASHKENAZ_PRONUNCIATION', $JEWISH_ASHKENAZ_PRONUNCIATION, 'onfocus="getHelp(\'JEWISH_ASHKENAZ_PRONUNCIATION\');"'); ?>
 		</td>
 	</tr>
 	</table>
@@ -1032,10 +1023,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('GEDCOM Basics')."\" onclic
 			<?php echo i18n::translate('Use RIN number instead of GEDCOM ID'), help_link('USE_RIN'); ?>
 		</td>
 		<td class="optionbox">
-			<select name="NEW_USE_RIN" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('USE_RIN');">
-				<option value="yes" <?php if ($USE_RIN) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$USE_RIN) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+			<?php echo edit_field_yes_no('NEW_USE_RIN', $USE_RIN, 'tabindex="'.(++$i).'" onfocus="getHelp(\'USE_RIN\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1043,10 +1031,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('GEDCOM Basics')."\" onclic
 			<?php echo i18n::translate('Automatically create globally unique IDs'), help_link('GENERATE_GUID'); ?>
 		</td>
 		<td class="optionbox">
-			<select name="NEW_GENERATE_UIDS" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('GENERATE_GUID');">
-				<option value="yes" <?php if ($GENERATE_UIDS) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$GENERATE_UIDS) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+			<?php echo edit_field_yes_no('NEW_GENERATE_UIDS', $GENERATE_UIDS, 'tabindex="'.(++$i).'" onfocus="getHelp(\'GENERATE_UIDS\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1141,10 +1126,8 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Multimedia')."\" onclick=\
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Enable multimedia features'), help_link('MULTI_MEDIA'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_MULTI_MEDIA" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('MULTI_MEDIA');">
-				<option value="yes" <?php if ($MULTI_MEDIA) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$MULTI_MEDIA) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_MULTI_MEDIA', $MULTI_MEDIA, 'tabindex="'.(++$i).'" onfocus="getHelp(\'MULTI_MEDIA\');"'); ?>
 		</td>
 	</tr>
 </table>
@@ -1162,10 +1145,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('General')."\" onclick=\"ex
 			<?php echo i18n::translate('Keep links'), help_link('MEDIA_EXTERNAL'); ?>
 		</td>
 		<td class="optionbox">
-			<select name="NEW_MEDIA_EXTERNAL" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('MEDIA_EXTERNAL');">
-				<option value="yes" <?php if ($MEDIA_EXTERNAL) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$MEDIA_EXTERNAL) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+			<?php echo edit_field_yes_no('NEW_MEDIA_EXTERNAL', $MEDIA_EXTERNAL, 'tabindex="'.(++$i).'" onfocus="getHelp(\'MEDIA_EXTERNAL\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1194,70 +1174,56 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('General')."\" onclick=\"ex
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Automatically generated thumbnails'), help_link('AUTO_GENERATE_THUMBS'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_AUTO_GENERATE_THUMBS" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('AUTO_GENERATE_THUMBS');">
-				<option value="yes" <?php if ($AUTO_GENERATE_THUMBS) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$AUTO_GENERATE_THUMBS) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_AUTO_GENERATE_THUMBS', $AUTO_GENERATE_THUMBS, 'tabindex="'.(++$i).'" onfocus="getHelp(\'AUTO_GENERATE_THUMBS\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Use thumbnail'), help_link('USE_THUMBS_MAIN'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_USE_THUMBS_MAIN" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('USE_THUMBS_MAIN');">
-				<option value="yes" <?php if ($USE_THUMBS_MAIN) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$USE_THUMBS_MAIN) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_USE_THUMBS_MAIN', $USE_THUMBS_MAIN, 'tabindex="'.(++$i).'" onfocus="getHelp(\'USE_THUMBS_MAIN\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Use silhouettes'), help_link('USE_SILHOUETTE'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_USE_SILHOUETTE" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('USE_SILHOUETTE');">
-			<option value="yes" <?php if ($USE_SILHOUETTE) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-			<option value="no" <?php if (!$USE_SILHOUETTE) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_USE_SILHOUETTE', $USE_SILHOUETTE, 'tabindex="'.(++$i).'" onfocus="getHelp(\'USE_SILHOUETTE\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show highlight images in people boxes'), help_link('SHOW_HIGHLIGHT_IMAGES'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_HIGHLIGHT_IMAGES" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_HIGHLIGHT_IMAGES');">
-				<option value="yes" <?php if ($SHOW_HIGHLIGHT_IMAGES) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_HIGHLIGHT_IMAGES) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_HIGHLIGHT_IMAGES', $SHOW_HIGHLIGHT_IMAGES, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_HIGHLIGHT_IMAGES\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Use Media Viewer'), help_link('USE_MEDIA_VIEWER'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_USE_MEDIA_VIEWER" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('USE_MEDIA_VIEWER');">
-				<option value="yes" <?php if ($USE_MEDIA_VIEWER) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$USE_MEDIA_VIEWER) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_USE_MEDIA_VIEWER', $USE_MEDIA_VIEWER, 'tabindex="'.(++$i).'" onfocus="getHelp(\'USE_MEDIA_VIEWER\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show file name in Media Viewer'), help_link('SHOW_MEDIA_FILENAME'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_MEDIA_FILENAME" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_MEDIA_FILENAME');">
-				<option value="yes" <?php if ($SHOW_MEDIA_FILENAME) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_MEDIA_FILENAME) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_MEDIA_FILENAME', $SHOW_MEDIA_FILENAME, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_MEDIA_FILENAME\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show download link in Media Viewer'), help_link('SHOW_MEDIA_DOWNLOAD'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_MEDIA_DOWNLOAD" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_MEDIA_DOWNLOAD');">
-				<option value="yes" <?php if ($SHOW_MEDIA_DOWNLOAD) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_MEDIA_DOWNLOAD) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_MEDIA_DOWNLOAD', $SHOW_MEDIA_DOWNLOAD, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_MEDIA_DOWNLOAD\');"'); ?>
 		</td>
 	</tr>
 </table>
@@ -1274,10 +1240,8 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Media Firewall')."\" oncli
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Use Media Firewall'), help_link('USE_MEDIA_FIREWALL'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_USE_MEDIA_FIREWALL" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('USE_MEDIA_FIREWALL');">
-				<option value="yes" <?php if ($USE_MEDIA_FIREWALL) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$USE_MEDIA_FIREWALL) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_USE_MEDIA_FIREWALL', $USE_MEDIA_FIREWALL, 'tabindex="'.(++$i).'" onfocus="getHelp(\'USE_MEDIA_FIREWALL\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1291,10 +1255,8 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Media Firewall')."\" oncli
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Protect Thumbnails of Protected Images'), help_link('MEDIA_FIREWALL_THUMBS'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_MEDIA_FIREWALL_THUMBS" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('MEDIA_FIREWALL_THUMBS');">
-				<option value="yes" <?php if ($MEDIA_FIREWALL_THUMBS) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$MEDIA_FIREWALL_THUMBS) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_MEDIA_FIREWALL_THUMBS', $MEDIA_FIREWALL_THUMBS, 'tabindex="'.(++$i).'" onfocus="getHelp(\'MEDIA_FIREWALL_THUMBS\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1312,10 +1274,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Media Firewall')."\" oncli
 			<?php echo i18n::translate('Add watermarks to thumbnails?'), help_link('WATERMARK_THUMB'); ?>
 		</td>
 		<td class="optionbox">
-			<select size="1" name="NEW_WATERMARK_THUMB">
-				<option value="yes" <?php if ($WATERMARK_THUMB) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$WATERMARK_THUMB) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+			<?php echo edit_field_yes_no('NEW_WATERMARK_THUMB', $WATERMARK_THUMB, 'tabindex="'.(++$i).'" onfocus="getHelp(\'WATERMARK_THUMB\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1323,10 +1282,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Media Firewall')."\" oncli
 			<?php echo i18n::translate('Store watermarked full size images on server?'), help_link('SAVE_WATERMARK_IMAGE'); ?>
 		</td>
 		<td class="optionbox">
-			<select size="1" name="NEW_SAVE_WATERMARK_IMAGE">
-				<option value="yes" <?php if ($SAVE_WATERMARK_IMAGE) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SAVE_WATERMARK_IMAGE) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+			<?php echo edit_field_yes_no('NEW_SAVE_WATERMARK_IMAGE', $SAVE_WATERMARK_IMAGE, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SAVE_WATERMARK_IMAGE\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1334,10 +1290,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Media Firewall')."\" oncli
 			<?php echo i18n::translate('Store watermarked thumbnails on server?'), help_link('SAVE_WATERMARK_THUMB'); ?>
 		</td>
 		<td class="optionbox">
-			<select size="1" name="NEW_SAVE_WATERMARK_THUMB">
-				<option value="yes" <?php if ($SAVE_WATERMARK_THUMB) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SAVE_WATERMARK_THUMB) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+			<?php echo edit_field_yes_no('NEW_SAVE_WATERMARK_THUMB', $SAVE_WATERMARK_THUMB, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SAVE_WATERMARK_THUMB\');"'); ?>
 		</td>
 	</tr>
 </table>
@@ -1363,30 +1316,24 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Access and Privacy')."\" o
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Enable Privacy'), help_link('HIDE_LIVE_PEOPLE'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_HIDE_LIVE_PEOPLE" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('HIDE_LIVE_PEOPLE');">
-				<option value="yes" <?php if ($HIDE_LIVE_PEOPLE) print " selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$HIDE_LIVE_PEOPLE) print " selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_HIDE_LIVE_PEOPLE', $HIDE_LIVE_PEOPLE, 'tabindex="'.(++$i).'" onfocus="getHelp(\'HIDE_LIVE_PEOPLE\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Check child dates'), help_link('CHECK_CHILD_DATES'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_CHECK_CHILD_DATES" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('CHECK_CHILD_DATES');">
-				<option value="yes" <?php if ($CHECK_CHILD_DATES) print " selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$CHECK_CHILD_DATES) print " selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_CHECK_CHILD_DATES', $CHECK_CHILD_DATES, 'tabindex="'.(++$i).'" onfocus="getHelp(\'CHECK_CHILD_DATES\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Require visitor authentication'), help_link('REQUIRE_AUTHENTICATION'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_REQUIRE_AUTHENTICATION" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('REQUIRE_AUTHENTICATION');">
-				<option value="yes" <?php if ($REQUIRE_AUTHENTICATION) print " selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$REQUIRE_AUTHENTICATION) print " selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_REQUIRE_AUTHENTICATION', $REQUIRE_AUTHENTICATION, 'tabindex="'.(++$i).'" onfocus="getHelp(\'REQUIRE_AUTHENTICATION\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1416,10 +1363,8 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Access and Privacy')."\" o
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Standard header for custom Welcome text'), help_link('WELCOME_TEXT_AUTH_MODE_CUST_HEAD'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_WELCOME_TEXT_CUST_HEAD" onfocus="getHelp('WELCOME_TEXT_AUTH_MODE_CUST_HEAD');" tabindex="<?php echo ++$i; ?>" >
-				<option value="yes" <?php if ($WELCOME_TEXT_CUST_HEAD) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$WELCOME_TEXT_CUST_HEAD) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_WELCOME_TEXT_CUST_HEAD', $WELCOME_TEXT_CUST_HEAD, 'tabindex="'.(++$i).'" onfocus="getHelp(\'WELCOME_TEXT_CUST_HEAD\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1433,10 +1378,8 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Access and Privacy')."\" o
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show Acceptable Use agreement on «Request new user account» page'), help_link('SHOW_REGISTER_CAUTION'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_REGISTER_CAUTION" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_REGISTER_CAUTION');">
-				<option value="yes" <?php if ($SHOW_REGISTER_CAUTION) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_REGISTER_CAUTION) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_REGISTER_CAUTION', $SHOW_REGISTER_CAUTION, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_REGISTER_CAUTION\');"'); ?>
 		</td>
 	</tr>
 </table>
@@ -1467,30 +1410,24 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Names')."\" onclick=\"expa
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show married names on Individual list'), help_link('SHOW_MARRIED_NAMES'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_MARRIED_NAMES" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_MARRIED_NAMES');">
-				<option value="yes" <?php if ($SHOW_MARRIED_NAMES) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_MARRIED_NAMES) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_MARRIED_NAMES', $SHOW_MARRIED_NAMES, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_MARRIED_NAMES\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Underline names in quotes'), help_link('UNDERLINE_NAME_QUOTES'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_UNDERLINE_NAME_QUOTES" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('UNDERLINE_NAME_QUOTES');">
-				<option value="yes" <?php if ($UNDERLINE_NAME_QUOTES) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$UNDERLINE_NAME_QUOTES) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_UNDERLINE_NAME_QUOTES', $UNDERLINE_NAME_QUOTES, 'tabindex="'.(++$i).'" onfocus="getHelp(\'UNDERLINE_NAME_QUOTES\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show ID numbers next to names'), help_link('SHOW_ID_NUMBERS'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_ID_NUMBERS" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_ID_NUMBERS');">
-				<option value="yes" <?php if ($SHOW_ID_NUMBERS) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_ID_NUMBERS) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_ID_NUMBERS', $SHOW_ID_NUMBERS, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_ID_NUMBERS\');"'); ?>
 		</td>
 	</tr>
 </table>
@@ -1626,10 +1563,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Layout')."\" onclick=\"exp
 			<?php echo i18n::translate('Automatically expand list of events of close relatives'), help_link('EXPAND_RELATIVES_EVENTS'); ?>
 		</td>
 		<td class="optionbox">
-			<select name="NEW_EXPAND_RELATIVES_EVENTS" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('EXPAND_RELATIVES_EVENTS');">
-				<option value="yes" <?php if ($EXPAND_RELATIVES_EVENTS) print "selected=\"selected\" "; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$EXPAND_RELATIVES_EVENTS) print "selected=\"selected\" "; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+			<?php echo edit_field_yes_no('NEW_EXPAND_RELATIVES_EVENTS', $EXPAND_RELATIVES_EVENTS, 'tabindex="'.(++$i).'" onfocus="getHelp(\'EXPAND_RELATIVES_EVENTS\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1735,60 +1669,48 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Hide and Show')."\" onclic
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show empty boxes on Pedigree charts'), help_link('SHOW_EMPTY_BOXES'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_EMPTY_BOXES" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_EMPTY_BOXES');">
-				<option value="yes" <?php if ($SHOW_EMPTY_BOXES) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_EMPTY_BOXES) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_EMPTY_BOXES', $SHOW_EMPTY_BOXES, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_EMPTY_BOXES\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Abbreviate chart labels'), help_link('ABBREVIATE_CHART_LABELS'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_ABBREVIATE_CHART_LABELS" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('ABBREVIATE_CHART_LABELS');">
-				<option value="yes" <?php if ($ABBREVIATE_CHART_LABELS) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$ABBREVIATE_CHART_LABELS) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_ABBREVIATE_CHART_LABELS', $ABBREVIATE_CHART_LABELS, 'tabindex="'.(++$i).'" onfocus="getHelp(\'ABBREVIATE_CHART_LABELS\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show Birth and Death details on charts'), help_link('PEDIGREE_FULL_DETAILS'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_PEDIGREE_FULL_DETAILS" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('PEDIGREE_FULL_DETAILS');">
-				<option value="yes" <?php if ($PEDIGREE_FULL_DETAILS) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$PEDIGREE_FULL_DETAILS) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_PEDIGREE_FULL_DETAILS', $PEDIGREE_FULL_DETAILS, 'tabindex="'.(++$i).'" onfocus="getHelp(\'PEDIGREE_FULL_DETAILS\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show gender icon on charts'), help_link('PEDIGREE_SHOW_GENDER'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_PEDIGREE_SHOW_GENDER" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('PEDIGREE_SHOW_GENDER');">
-				<option value="yes" <?php if ($PEDIGREE_SHOW_GENDER) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$PEDIGREE_SHOW_GENDER) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_PEDIGREE_SHOW_GENDER', $PEDIGREE_SHOW_GENDER, 'tabindex="'.(++$i).'" onfocus="getHelp(\'PEDIGREE_SHOW_GENDER\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show age of parents next to child\'s birthdate'), help_link('SHOW_PARENTS_AGE'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_PARENTS_AGE" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_PARENTS_AGE');">
-				<option value="yes" <?php if ($SHOW_PARENTS_AGE) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_PARENTS_AGE) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_PARENTS_AGE', $SHOW_PARENTS_AGE, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_PARENTS_AGE\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show LDS ordinance codes in chart boxes'), help_link('SHOW_LDS_AT_GLANCE'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_LDS_AT_GLANCE" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_LDS_AT_GLANCE');">
-				<option value="yes" <?php if ($SHOW_LDS_AT_GLANCE) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_LDS_AT_GLANCE) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_LDS_AT_GLANCE', $SHOW_LDS_AT_GLANCE, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_LDS_AT_GLANCE\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1803,40 +1725,32 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Hide and Show')."\" onclic
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Allow users to see raw GEDCOM records'), help_link('SHOW_GEDCOM_RECORD'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_GEDCOM_RECORD" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_GEDCOM_RECORD');">
-				<option value="yes" <?php if ($SHOW_GEDCOM_RECORD) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_GEDCOM_RECORD) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_GEDCOM_RECORD', $SHOW_GEDCOM_RECORD, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_GEDCOM_RECORD\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Hide GEDCOM errors'), help_link('HIDE_GEDCOM_ERRORS'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_HIDE_GEDCOM_ERRORS" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('HIDE_GEDCOM_ERRORS');">
-				<option value="yes" <?php if ($HIDE_GEDCOM_ERRORS) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$HIDE_GEDCOM_ERRORS) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_HIDE_GEDCOM_ERRORS', $HIDE_GEDCOM_ERRORS, 'tabindex="'.(++$i).'" onfocus="getHelp(\'HIDE_GEDCOM_ERRORS\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Add spaces where notes were wrapped'), help_link('WORD_WRAPPED_NOTES'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_WORD_WRAPPED_NOTES" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('WORD_WRAPPED_NOTES');">
-				<option value="yes" <?php if ($WORD_WRAPPED_NOTES) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$WORD_WRAPPED_NOTES) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_WORD_WRAPPED_NOTES', $WORD_WRAPPED_NOTES, 'tabindex="'.(++$i).'" onfocus="getHelp(\'WORD_WRAPPED_NOTES\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show Fact icons'), help_link('SHOW_FACT_ICONS'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_FACT_ICONS" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_FACT_ICONS');">
-				<option value="yes" <?php if ($SHOW_FACT_ICONS) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_FACT_ICONS) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_FACT_ICONS', $SHOW_FACT_ICONS, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_FACT_ICONS\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1844,10 +1758,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Hide and Show')."\" onclic
 			<?php echo i18n::translate('Automatically expand sources'), help_link('EXPAND_SOURCES'); ?>
 		</td>
 		<td class="optionbox">
-			<select name="NEW_EXPAND_SOURCES" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('EXPAND_SOURCES');">
-				<option value="yes" <?php if ($EXPAND_SOURCES) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$EXPAND_SOURCES) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+			<?php echo edit_field_yes_no('NEW_EXPAND_SOURCES', $EXPAND_SOURCES, 'tabindex="'.(++$i).'" onfocus="getHelp(\'EXPAND_SOURCES\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1855,10 +1766,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Hide and Show')."\" onclic
 			<?php echo i18n::translate('Automatically expand notes'), help_link('EXPAND_NOTES'); ?>
 		</td>
 		<td class="optionbox">
-			<select name="NEW_EXPAND_NOTES" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('EXPAND_NOTES');">
-				<option value="yes" <?php if ($EXPAND_NOTES) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$EXPAND_NOTES) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+			<?php echo edit_field_yes_no('NEW_EXPAND_NOTES', $EXPAND_NOTES, 'tabindex="'.(++$i).'" onfocus="getHelp(\'EXPAND_NOTES\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1866,10 +1774,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Hide and Show')."\" onclic
 			<?php echo i18n::translate('Show all Notes and Source references on Notes and Sources tabs'), help_link('SHOW_LEVEL2_NOTES'); ?>
 		</td>
 		<td class="optionbox">
-			<select name="NEW_SHOW_LEVEL2_NOTES" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_LEVEL2_NOTES');">
-				<option value="yes" <?php if ($SHOW_LEVEL2_NOTES) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_LEVEL2_NOTES) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+			<?php echo edit_field_yes_no('NEW_SHOW_LEVEL2_NOTES', $SHOW_LEVEL2_NOTES, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_LEVEL2_NOTES\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1877,10 +1782,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Hide and Show')."\" onclic
 			<?php echo i18n::translate('Show Date Differences'), help_link('SHOW_AGE_DIFF'); ?>
 		</td>
 		<td class="optionbox">
-			<select name="NEW_SHOW_AGE_DIFF" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('EXPAND_NOTES');">
-				<option value="yes" <?php if ($SHOW_AGE_DIFF) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_AGE_DIFF) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+			<?php echo edit_field_yes_no('NEW_SHOW_AGE_DIFF', $SHOW_AGE_DIFF, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_AGE_DIFF\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -1893,50 +1795,40 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Hide and Show')."\" onclic
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show hit counters'), help_link('SHOW_COUNTER'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_COUNTER" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_COUNTER');">
-				<option value="yes" <?php if ($SHOW_COUNTER) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_COUNTER) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_COUNTER', $SHOW_COUNTER, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_COUNTER\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show spider tagline'), help_link('SHOW_SPIDER_TAGLINE'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_SPIDER_TAGLINE" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_SPIDER_TAGLINE');">
-				<option value="yes" <?php if ($SHOW_SPIDER_TAGLINE) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_SPIDER_TAGLINE) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_SPIDER_TAGLINE', $SHOW_SPIDER_TAGLINE, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_SPIDER_TAGLINE\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show execution statistics'), help_link('SHOW_STATS'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_STATS" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_STATS');">
-				<option value="yes" <?php if ($SHOW_STATS) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_STATS) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_STATS', $SHOW_STATS, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_STATS\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show GEDCOM record last change date on lists'), help_link('SHOW_LAST_CHANGE'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_LAST_CHANGE" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_LAST_CHANGE');">
-			<option value="yes" <?php if ($SHOW_LAST_CHANGE) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-			<option value="no" <?php if (!$SHOW_LAST_CHANGE) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_LAST_CHANGE', $SHOW_LAST_CHANGE, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_LAST_CHANGE\');"'); ?>
 		</td>
-		</tr>
+	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show estimated dates for birth and death'), help_link('SHOW_EST_LIST_DATES'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_EST_LIST_DATES" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_EST_LIST_DATES');">
-			<option value="yes" <?php if ($SHOW_EST_LIST_DATES) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-			<option value="no" <?php if (!$SHOW_EST_LIST_DATES) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_EST_LIST_DATES', $SHOW_EST_LIST_DATES, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_EST_LIST_DATES\');"'); ?>
 		</td>
 	</tr>
 </table>
@@ -1963,30 +1855,24 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Edit Options')."\" onclick
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Enable online editing'), help_link('ALLOW_EDIT_GEDCOM'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_ALLOW_EDIT_GEDCOM" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('ALLOW_EDIT_GEDCOM');">
-				<option value="yes" <?php if ($ALLOW_EDIT_GEDCOM) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$ALLOW_EDIT_GEDCOM) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_ALLOW_EDIT_GEDCOM', $ALLOW_EDIT_GEDCOM, 'tabindex="'.(++$i).'" onfocus="getHelp(\'ALLOW_EDIT_GEDCOM\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Synchronize edits into GEDCOM file'), help_link('SYNC_GEDCOM_FILE'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SYNC_GEDCOM_FILE" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SYNC_GEDCOM_FILE');">
-				<option value="yes" <?php if ($SYNC_GEDCOM_FILE) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SYNC_GEDCOM_FILE) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SYNC_GEDCOM_FILE', $SYNC_GEDCOM_FILE, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SYNC_GEDCOM_FILE\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Enable Autocomplete'), help_link('ENABLE_AUTOCOMPLETE'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_ENABLE_AUTOCOMPLETE" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('ENABLE_AUTOCOMPLETE');">
-				<option value="yes" <?php if ($ENABLE_AUTOCOMPLETE) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$ENABLE_AUTOCOMPLETE) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_ENABLE_AUTOCOMPLETE', $ENABLE_AUTOCOMPLETE, 'tabindex="'.(++$i).'" onfocus="getHelp(\'ENABLE_AUTOCOMPLETE\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -2065,20 +1951,16 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Edit Options')."\" onclick
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Autoclose edit window'), help_link('EDIT_AUTOCLOSE'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_EDIT_AUTOCLOSE" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('EDIT_AUTOCLOSE');">
-				<option value="yes" <?php if ($EDIT_AUTOCLOSE) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$EDIT_AUTOCLOSE) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_EDIT_AUTOCLOSE', $EDIT_AUTOCLOSE, 'tabindex="'.(++$i).'" onfocus="getHelp(\'EDIT_AUTOCLOSE\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Split places in Edit mode'), help_link('SPLIT_PLACES'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SPLIT_PLACES" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SPLIT_PLACES');">
-				<option value="yes" <?php if ($SPLIT_PLACES) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SPLIT_PLACES) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SPLIT_PLACES', $SPLIT_PLACES, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SPLIT_PLACES\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -2131,24 +2013,18 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Edit Options')."\" onclick
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Use GeoNames database'), help_link('USE_GEONAMES'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_USE_GEONAMES" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('USE_GEONAMES');">
-				<option value="yes" <?php if ($USE_GEONAMES) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$USE_GEONAMES) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_USE_GEONAMES', $USE_GEONAMES, 'tabindex="'.(++$i).'" onfocus="getHelp(\'USE_GEONAMES\');"'); ?>
 		</td>
 	</tr>
-
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Use full source citations'), help_link('FULL_SOURCES'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_FULL_SOURCES" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('FULL_SOURCES');">
-				<option value="yes" <?php if ($FULL_SOURCES) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$FULL_SOURCES) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_FULL_SOURCES', $FULL_SOURCES, 'tabindex="'.(++$i).'" onfocus="getHelp(\'FULL_SOURCES\');"'); ?>
 		</td>
 	</tr>
-
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Source type'), help_link('PREFER_LEVEL2_SOURCES'); ?>
@@ -2160,15 +2036,12 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Edit Options')."\" onclick
 			</select>
 		</td>
 	</tr>
-
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Do not update the CHAN (Last Change) record'), help_link('no_update_CHAN'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_NO_UPDATE_CHAN" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('no_update_CHAN');">
-				<option value="yes" <?php if ($NO_UPDATE_CHAN) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$NO_UPDATE_CHAN) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_NO_UPDATE_CHAN', $NO_UPDATE_CHAN, 'tabindex="'.(++$i).'" onfocus="getHelp(\'NO_UPDATE_CHAN\');"'); ?>
 		</td>
 	</tr>
 
@@ -2195,10 +2068,8 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('User Options')."\" onclick
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Show contextual <b>?</b> Help links'), help_link('SHOW_CONTEXT_HELP'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SHOW_CONTEXT_HELP" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SHOW_CONTEXT_HELP');">
-				<option value="yes" <?php if ($SHOW_CONTEXT_HELP) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$SHOW_CONTEXT_HELP) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_SHOW_CONTEXT_HELP', $SHOW_CONTEXT_HELP, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SHOW_CONTEXT_HELP\');"'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -2231,10 +2102,8 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('User Options')."\" onclick
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Display theme dropdown selector for theme changes'), help_link('ALLOW_THEME_DROPDOWN'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_ALLOW_THEME_DROPDOWN" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('ALLOW_THEME_DROPDOWN');">
-				<option value="yes" <?php if ($ALLOW_THEME_DROPDOWN) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$ALLOW_THEME_DROPDOWN) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_ALLOW_THEME_DROPDOWN', $ALLOW_THEME_DROPDOWN, 'tabindex="'.(++$i).'" onfocus="getHelp(\'ALLOW_THEME_DROPDOWN\');"'); ?>
 		</td>
 	</tr>
 </table>
@@ -2442,10 +2311,8 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Web Site and META Tag Sett
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Enable RSS'), help_link('ENABLE_RSS'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_ENABLE_RSS" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('ENABLE_RSS');">
-				<option value="yes" <?php if ($ENABLE_RSS) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
-				<option value="no" <?php if (!$ENABLE_RSS) print "selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_yes_no('NEW_ENABLE_RSS', $ENABLE_RSS, 'tabindex="'.(++$i).'" onfocus="getHelp(\'ENABLE_RSS\');"'); ?>
 		</td>
 	</tr>
 	<tr>
