@@ -8454,62 +8454,62 @@ msgstr "step-sibling"
 #. I18N: nephew-in-law
 #: ../includes/functions/functions.php:2622
 msgid "brother's daughter's husband"
-msgstr ""
+msgstr "nephew-in-law"
 
 #. I18N: niece-in-law
 #: ../includes/functions/functions.php:2623
 msgid "brother's son's wife"
-msgstr ""
+msgstr "niece-in-law"
 
 #. I18N: nephew-in-law
 #: ../includes/functions/functions.php:2624
 msgid "sisters's daughter's husband"
-msgstr ""
+msgstr "nephew-in-law"
 
 #. I18N: niece-in-law
 #: ../includes/functions/functions.php:2625
 msgid "sisters's son's wife"
-msgstr ""
+msgstr "niece-in-law"
 
 #. I18N: nephew-in-law
 #: ../includes/functions/functions.php:2626
 msgid "sibling's daughter's husband"
-msgstr ""
+msgstr "sibling's daughter's husband"
 
 #. I18N: niece-in-law
 #: ../includes/functions/functions.php:2627
 msgid "sibling's son's wife"
-msgstr ""
+msgstr "niece-in-law"
 
 #. I18N: aunt
 #: ../includes/functions/functions.php:2629
 msgid "mother's brother's wife"
-msgstr ""
+msgstr "aunt"
 
 #. I18N: uncle
 #: ../includes/functions/functions.php:2630
 msgid "mother's sister's husband"
-msgstr ""
+msgstr "uncle"
 
 #. I18N: aunt
 #: ../includes/functions/functions.php:2631
 msgid "father's brother's wife"
-msgstr ""
+msgstr "aunt"
 
 #. I18N: uncle
 #: ../includes/functions/functions.php:2632
 msgid "father's sister's husband"
-msgstr ""
+msgstr "uncle"
 
 #. I18N: aunt
 #: ../includes/functions/functions.php:2633
 msgid "parent's brother's wife"
-msgstr ""
+msgstr "aunt"
 
 #. I18N: uncle
 #: ../includes/functions/functions.php:2634
 msgid "parent's sister's husband"
-msgstr ""
+msgstr "uncle"
 
 #: ../includes/functions/functions.php:2647
 #: ../includes/functions/functions.php:2654
