@@ -95,7 +95,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 	$feed = new UniversalFeedCreator();
 	$feed->generator = PGV_PHPGEDVIEW_URL;
 	$feed->title = get_gedcom_setting(PGV_GED_ID, 'title');
-	$feed->language = $lang_short_cut[$LANGUAGE]; //$lang_langcode[$LANGUAGE];
+	$feed->language = WT_LOCALE;
 	$feed->descriptionHtmlSyndicated = true;
 	//$feed->descriptionTruncSize = 500; // does not make sense to truncate HTML since it will result in unpredictable output
 	$feed->link = $SERVER_URL;

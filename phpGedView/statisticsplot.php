@@ -680,7 +680,7 @@ function calc_axis($xas_grenzen) {
 }
 
 function calc_legend($grenzen_zas) {
-	global $legend, $zmax, $zgrenzen, $lang_short_cut, $LANGUAGE;
+	global $legend, $zmax, $zgrenzen, $LANGUAGE;
 
 	// calculate the legend values
 	$hulpar = array();
@@ -688,7 +688,7 @@ function calc_legend($grenzen_zas) {
 	$hulpar = explode(",", $grenzen_zas);
 	$i=1;
 	// Allow special processing for different languages
-	$func="date_localisation_{$lang_short_cut[$LANGUAGE]}";
+	$func="date_localisation_".WT_LOCALE;
 	if (!function_exists($func))
 		$func="DefaultDateLocalisation";
 	// Localise the date

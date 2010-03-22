@@ -52,7 +52,7 @@ function get_plac_label() {
 
 function setup_place_subfields($element_id) {
 	global $PGV_PLACES_SETUP;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $lang_short_cut, $LANGUAGE;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $LANGUAGE;
 
 	if (!empty($PGV_PLACES_SETUP)) return;
 	$PGV_PLACES_SETUP = true;
@@ -89,7 +89,7 @@ function setup_place_subfields($element_id) {
 			document.getElementById("mapdata").innerHTML += http_request.responseText;
 		} else {
 		// 2. localized map
-			mapfile = 'places/'+ctry+'/'+ctry+'.<?php print $lang_short_cut[$LANGUAGE]?>.htm';
+			mapfile = 'places/'+ctry+'/'+ctry+'.<?php echo WT_LOCALE; ?>.htm';
 			http_request.open('GET', mapfile, false); http_request.send(null);
 			if (http_request.status == 200) {
 				document.getElementById("mapdata").innerHTML += http_request.responseText;
@@ -282,7 +282,7 @@ function setup_place_subfields($element_id) {
  * @param string $element_id	id of PLAC input element in the form
  */
 function print_place_subfields($element_id) {
-	global $iso3166, $PGV_IMAGE_DIR, $PGV_IMAGES, $lang_short_cut, $LANGUAGE;
+	global $iso3166, $PGV_IMAGE_DIR, $PGV_IMAGES, $LANGUAGE;
 
 	//if ($element_id=="DEAT_PLAC") return; // known bug - waiting for a patch
 	$plac_label = get_plac_label();
@@ -328,7 +328,7 @@ function print_place_subfields($element_id) {
 		print " onblur=\"updatewholeplace('".$element_id."'); splitplace('".$element_id."');\" ";
 		print " onchange=\"updatewholeplace('".$element_id."'); splitplace('".$element_id."');\" ";
 		print " onmouseout=\"updatewholeplace('".$element_id."'); splitplace('".$element_id."');\" ";
-		if ($icountry<$i and $i<=$icity) print " acdropdown=\"true\" autocomplete_list=\"url:".encode_url("places/getdata.php?localized={$lang_short_cut[$LANGUAGE]}&field={$subtagname}&s=")."\" autocomplete=\"off\" autocomplete_matchbegin=\"false\"";
+		if ($icountry<$i and $i<=$icity) print " acdropdown=\"true\" autocomplete_list=\"url:".encode_url("places/getdata.php?localized=".WT_LOCALE."&field={$subtagname}&s=")."\" autocomplete=\"off\" autocomplete_matchbegin=\"false\"";
 		print " />\n";
 		// country selector
 		if ($i==$icountry) {

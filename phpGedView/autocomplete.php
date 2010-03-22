@@ -501,7 +501,7 @@ function autocomplete_NAME($FILTER) {
 * @return Array of string City, County, State/Province, Country
 */
 function autocomplete_PLAC($FILTER, $OPTION) {
-	global $USE_GEONAMES, $lang_short_cut, $LANGUAGE;
+	global $USE_GEONAMES, $LANGUAGE;
 
 	$data=get_autocomplete_PLAC($FILTER);
 
@@ -509,7 +509,7 @@ function autocomplete_PLAC($FILTER, $OPTION) {
 	if (empty($data) && $USE_GEONAMES) {
 		$url = "http://ws5.geonames.org/searchJSON".
 					"?name_startsWith=".urlencode($FILTER).
-					"&lang=".$lang_short_cut[$LANGUAGE].
+					"&lang=".WT_LOCALE.
 					"&fcode=CMTY&fcode=ADM4&fcode=PPL&fcode=PPLA&fcode=PPLC".
 					"&style=full";
 		// try to use curl when file_get_contents not allowed

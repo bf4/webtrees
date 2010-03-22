@@ -1256,7 +1256,7 @@ class stats {
 	}
 
 	function statsBirth($simple=true, $sex=false, $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TBLPREFIX, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
@@ -1301,7 +1301,7 @@ class stats {
 			// Beware divide by zero
 			if ($tot==0) return '';
 			$centuries = "";
-			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$func="century_localisation_".WT_LOCALE;
 			foreach ($rows as $values) {
 				if (function_exists($func)) {
 					$century = $func($values['century']);
@@ -1321,7 +1321,7 @@ class stats {
 	}
 
 	function statsDeath($simple=true, $sex=false, $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TBLPREFIX, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
@@ -1366,7 +1366,7 @@ class stats {
 			// Beware divide by zero
 			if ($tot==0) return '';
 			$centuries = "";
-			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$func="century_localisation_".WT_LOCALE;
 			foreach ($rows as $values) {
 				if (function_exists($func)) {
 					$century = $func($values['century']);
@@ -1506,7 +1506,7 @@ class stats {
 	}
 
 	function _topTenOldest($type='list', $sex='BOTH', $params=null) {
-		global $TBLPREFIX, $TEXT_DIRECTION, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $TEXT_DIRECTION, $LANGUAGE;
 
 		if ($sex == 'F') {
 			$sex_search = " AND i_sex='F'";
@@ -1542,7 +1542,7 @@ class stats {
 		, $total);
 		if (!isset($rows[0])) {return '';}
 		$top10 = array();
-		$func = "age_localisation_{$lang_short_cut[$LANGUAGE]}";
+		$func = "age_localisation_".WT_LOCALE;
 		if (!function_exists($func)) {
 			$func="DefaultAgeLocalisation";
 		}
@@ -1582,7 +1582,7 @@ class stats {
 	}
 
 	function _topTenOldestAlive($type='list', $sex='BOTH', $params=null) {
-		global $TBLPREFIX, $TEXT_DIRECTION, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $TEXT_DIRECTION, $LANGUAGE;
 
 		if (!PGV_USER_CAN_ACCESS) return i18n::translate('This information is private and cannot be shown.');
 		if ($sex == 'F') {
@@ -1615,7 +1615,7 @@ class stats {
 		, $total);
 		if (!isset($rows)) {return 0;}
 		$top10 = array();
-		$func = "age_localisation_{$lang_short_cut[$LANGUAGE]}";
+		$func = "age_localisation_".WT_LOCALE;
 		if (!function_exists($func)) {
 			$func="DefaultAgeLocalisation";
 		}
@@ -1652,7 +1652,7 @@ class stats {
 	}
 
 	function _averageLifespanQuery($sex='BOTH', $show_years=false) {
-		global $TBLPREFIX, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $LANGUAGE;
 		if ($sex == 'F') {
 			$sex_search = " AND i_sex='F'";
 		} elseif ($sex == 'M') {
@@ -1683,7 +1683,7 @@ class stats {
 		$row = $rows[0];
 		$age = $row['age'];
 		if ($show_years) {
-			$func = "age_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$func = "age_localisation_".WT_LOCALE;
 			if (!function_exists($func)) {
 				$func="DefaultAgeLocalisation";
 			}
@@ -1702,7 +1702,7 @@ class stats {
 	}
 
 	function statsAge($simple=true, $related='BIRT', $sex='BOTH', $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $LANGUAGE;
 
 		if ($simple) {
 			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '230x250';}
@@ -1730,7 +1730,7 @@ class stats {
 					.' death.d_julianday1>birth.d_julianday2'
 				.' GROUP BY century, sex ORDER BY century, sex');
 			if (empty($rows)) return '';
-			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$func="century_localisation_".WT_LOCALE;
 			$chxl = "0:|";
 			$male = true;
 			$temp = "";
@@ -1985,7 +1985,7 @@ class stats {
 	* Query the database for marriage tags.
 	*/
 	function _marriageQuery($type='full', $age_dir='ASC', $sex='F', $show_years=false) {
-		global $TBLPREFIX, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $LANGUAGE;
 		if ($sex == 'F') {$sex_field = 'f_wife';}else{$sex_field = 'f_husb';}
 		if ($age_dir != 'ASC') {$age_dir = 'DESC';}
 		$rows=self::_runSQL(''
@@ -2064,7 +2064,7 @@ class stats {
 			case 'age':
 				$age = $row['age'];
 				if ($show_years) {
-					$func = "age_localisation_{$lang_short_cut[$LANGUAGE]}";
+					$func = "age_localisation_".WT_LOCALE;
 					if (!function_exists($func)) {
 						$func="DefaultAgeLocalisation";
 					}
@@ -2086,7 +2086,7 @@ class stats {
 	}
 
 	function _ageOfMarriageQuery($type='list', $age_dir='ASC', $params=null) {
-		global $TBLPREFIX, $TEXT_DIRECTION, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $TEXT_DIRECTION, $LANGUAGE;
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		if ($age_dir != 'ASC') {$age_dir = 'DESC';}
 		$hrows=self::_runSQL(''
@@ -2174,7 +2174,7 @@ class stats {
 		else {asort($rows);}
 		$top10 = array();
 		$i = 0;
-		$func = "age_localisation_{$lang_short_cut[$LANGUAGE]}";
+		$func = "age_localisation_".WT_LOCALE;
 		if (!function_exists($func)) {
 			$func="DefaultAgeLocalisation";
 		}
@@ -2223,7 +2223,7 @@ class stats {
 	}
 
 	function _ageBetweenSpousesQuery($type='list', $age_dir='DESC', $params=null) {
-		global $TBLPREFIX, $TEXT_DIRECTION, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $TEXT_DIRECTION, $LANGUAGE;
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		if ($age_dir=='DESC') {
 			$query1 = ' MIN(wifebirth.d_julianday2-husbbirth.d_julianday1) AS age';
@@ -2258,7 +2258,7 @@ class stats {
 		,$total);
 		if (!isset($rows[0])) {return '';}
 		$top10 = array();
-		$func = "age_localisation_{$lang_short_cut[$LANGUAGE]}";
+		$func = "age_localisation_".WT_LOCALE;
 		if (!function_exists($func)) {
 			$func="DefaultAgeLocalisation";
 		}
@@ -2298,7 +2298,7 @@ class stats {
 	}
 
 	function _parentsQuery($type='full', $age_dir='ASC', $sex='F', $show_years=false) {
-		global $TBLPREFIX, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $LANGUAGE;
 		if ($sex == 'F') {$sex_field = 'WIFE';}else{$sex_field = 'HUSB';}
 		if ($age_dir != 'ASC') {$age_dir = 'DESC';}
 		$rows=self::_runSQL(''
@@ -2345,7 +2345,7 @@ class stats {
 			case 'age':
 				$age = $row['age'];
 				if ($show_years) {
-					$func = "age_localisation_{$lang_short_cut[$LANGUAGE]}";
+					$func = "age_localisation_".WT_LOCALE;
 					if (!function_exists($func)) {
 						$func="DefaultAgeLocalisation";
 					}
@@ -2367,7 +2367,7 @@ class stats {
 	}
 
 	function statsMarr($simple=true, $first=false, $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TBLPREFIX, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
@@ -2430,7 +2430,7 @@ class stats {
 			// Beware divide by zero
 			if ($tot==0) return '';
 			$centuries = "";
-			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$func="century_localisation_".WT_LOCALE;
 			$counts=array();
 			foreach ($rows as $values) {
 				if (function_exists($func)) {
@@ -2450,7 +2450,7 @@ class stats {
 	}
 
 	function statsDiv($simple=true, $first=false, $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TBLPREFIX, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
@@ -2513,7 +2513,7 @@ class stats {
 			// Beware divide by zero
 			if ($tot==0) return '';
 			$centuries = "";
-			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$func="century_localisation_".WT_LOCALE;
 			$counts=array();
 			foreach ($rows as $values) {
 				if (function_exists($func)) {
@@ -2559,7 +2559,7 @@ class stats {
 	function lastDivorcePlace() {return $this->_mortalityQuery('place', 'DESC', 'DIV');}
 
 	function statsMarrAge($simple=true, $sex='M', $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $LANGUAGE;
 
 		if ($simple) {
 			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '200x250';}
@@ -2595,7 +2595,7 @@ class stats {
 			foreach ($rows as $values) {
 				if ($max<$values['age']) $max = $values['age'];
 			}
-			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$func="century_localisation_".WT_LOCALE;
 			$chxl = "0:|";
 			$chmm = "";
 			$chmf = "";
@@ -2891,7 +2891,7 @@ class stats {
 	}
 
 	function _ageBetweenSiblingsQuery($type='list', $params=null) {
-		global $TBLPREFIX, $TEXT_DIRECTION, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $TEXT_DIRECTION, $LANGUAGE;
 		if ($params === null) {$params = array();}
 		if (isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		if (isset($params[1])) {$one = $params[1];}else{$one = false;} // each family only once if true
@@ -2926,7 +2926,7 @@ class stats {
 		,$total);
 		if (!isset($rows[0])) {return '';}
 		$top10 = array();
-		$func = "age_localisation_{$lang_short_cut[$LANGUAGE]}";
+		$func = "age_localisation_".WT_LOCALE;
 		if (!function_exists($func)) {
 			$func="DefaultAgeLocalisation";
 		}
@@ -3070,7 +3070,7 @@ class stats {
 	}
 
 	function statsChildren($simple=true, $sex='BOTH', $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $LANGUAGE;
 
 		if ($simple) {
 			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '220x200';}
@@ -3097,7 +3097,7 @@ class stats {
 			$chm = "";
 			$chxl = "0:|";
 			$i = 0;
-			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$func="century_localisation_".WT_LOCALE;
 			$counts=array();
 			foreach ($rows as $values) {
 				if ($sizes[0]<980) $sizes[0] += 38;
@@ -3215,7 +3215,7 @@ class stats {
 	}
 
 	function chartNoChildrenFamilies($year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $LANGUAGE;
 
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '220x200';}
 		$sizes = explode('x', $size);
@@ -3252,7 +3252,7 @@ class stats {
 		$chm = "";
 		$chxl = "0:|";
 		$i = 0;
-		$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+		$func="century_localisation_".WT_LOCALE;
 		foreach ($rows as $values) {
 			if ($sizes[0]<980) $sizes[0] += 38;
 			if (function_exists($func)) {

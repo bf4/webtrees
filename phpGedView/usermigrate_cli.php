@@ -94,14 +94,6 @@ else {
 	}
 }
 
-// load admin lang keys
-$file = "./languages/admin.".$lang_short_cut[$LANGUAGE].".php";
-if (file_exists($file)) include($file);
-
-// load the edit lang keys
-$file = "./languages/editor.".$lang_short_cut[$LANGUAGE].".php";
-if (file_exists($file)) include($file);
-
 if (!empty($controller->errorMsg)) print "\r\n\r\n*** ERROR: ".$controller->errorMsg." ***\r\n\r\n";
 
 // Backup part of usermigrate

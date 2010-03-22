@@ -49,10 +49,8 @@ require_once PGV_ROOT.'includes/classes/class_date.php';
 * @see http://homepages.rootsweb.com/~pmcbride/gedcom/55gcch2.htm#AGE_AT_EVENT
 */
 function get_age_at_event($agestring, $show_years) {
-	global $lang_short_cut, $LANGUAGE;
-
 	// Allow special processing for different languages
-	$func="age_localisation_{$lang_short_cut[$LANGUAGE]}";
+	$func="age_localisation_".WT_LOCALE;
 	if (!function_exists($func)) {
 		$func="DefaultAgeLocalisation";
 	}
