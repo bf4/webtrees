@@ -1042,12 +1042,6 @@ cur.filters.alpha.opacity=strength*100
 }
 //Highlight image script - END
 
-//Enable and disable languages
-function enabledisablelanguage(language) {
-//	window.open('editlang_edit_settings.php?action=save&ln='+language+'&source=enabledisable');
-	location.href='editlang_edit_settings.php?action=toggleActive&ln='+language;
-}
-
 function toggleStatus(sel) {
 	var cbox = document.getElementById(sel);
 	cbox.disabled=!(cbox.disabled);

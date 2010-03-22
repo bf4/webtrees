@@ -262,20 +262,6 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 				href="manageservers.php"><?php echo i18n::translate('Manage Sites');?></a><?php echo help_link('help_managesites'); ?></td>
 		</tr>
 		<tr>
-			<td class="optionbox width50"><a
-				href="changelanguage.php?action=editold"><?php echo i18n::translate('Configure supported languages');?><?php echo help_link('help_changelanguage.php'); ?></a>
-				<?php
-				if (!file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
-					echo "<br /><span class=\"error\">";
-					echo i18n::translate('You have not configured the languages your site will support.<br />PhpGedView will use its default actions.');
-					echo "</span>";
-				}
-				?></td>
-			<td class="optionbox width50"><a
-				href="changelanguage.php?action=addnew"><?php echo i18n::translate('Add files and settings for a new language');?></a><?php echo help_link('add_new_language'); ?>
-			</td>
-		</tr>
-		<tr>
 			<td class="optionbox width50">&nbsp;</td>
 			<td class="optionbox width50"><?php echo $d_logfile_str; ?></td>
 		</tr>

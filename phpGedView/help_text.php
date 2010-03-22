@@ -4749,11 +4749,6 @@ case 'help_content':
 	$text=i18n::translate('<dl><dd>When you click this menu item, you will get a Help page that displays an index of the major Help topics.  The amount of Help information available will be increased as time permits.</dd></dl>');
 	break;
 	
-case 'help_changelanguage.php':
-	$title=i18n::translate('Configure supported languages');
-	$text=i18n::translate('This page is used to control what language choices are available to your users.  For example, you can set things up so that only German and French are available.  This might be useful if, for example, you are not able to communicate with your users in Hungarian.<br /><br />You also use this page to alter certain aspects of PhpGedView that depend on the selected language.  For example, here is where you tell PhpGedView how to format date and time fields.<br /><br />The languages that are active and greyed out cannot be disabled because they are in use. Look at the bottom table to see where the language is used. When a language is no longer used by the GEDCOM or user you will be able to disable it.<br /><br />All of your changes will be recorded in a new file called <b>lang_settings.php</b> created in the <b>index</b> directory.  All of your further changes will be made to this new file and PhpGedView will use only <u>this</u> file.  You can revert to the original default language settings by deleting this file.<br /><br />If you must report problems with your language settings, please tell the PhpGedView support team whether this new file is present or not.');
-	break;
-
 case 'help_contents_head':
 	$title=i18n::translate('Help Contents');
 	$text=i18n::translate('Help Contents');
