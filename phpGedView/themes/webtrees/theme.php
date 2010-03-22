@@ -47,8 +47,8 @@ $print_headerfile = PGV_THEME_DIR."print_header.php";	//-- Print Preview Header 
 
 $PGV_USE_HELPIMG = true;		// set to true to use image for help questionmark, set to false to use i18n::translate('?')
 $PGV_IMAGE_DIR = PGV_THEME_DIR."images";		//-- directory to look for images
-$PGV_MENU_LOCATION = "top";
 $FAVICON=$PGV_IMAGE_DIR."/favicon.ico";
+$PGV_MENU_LOCATION = "top";
 
 //-- variables for image names
 //- PGV main icons

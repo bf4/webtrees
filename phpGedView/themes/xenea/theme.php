@@ -42,7 +42,8 @@ $headerfile = PGV_THEME_DIR."header.php";	//-- Header information for the site
 $footerfile = PGV_THEME_DIR."footer.php";	//-- Footer information for the site
 $print_footerfile = PGV_THEME_DIR."print_footer.php";	//-- Print Preview Footer information for the site
 $print_headerfile = PGV_THEME_DIR."print_header.php";	//-- Print Preview Header information for the site
-$PGV_IMAGE_DIR = "themes/xenea/images";		//-- directory to look for images
+$PGV_IMAGE_DIR = PGV_THEME_DIR."images";		//-- directory to look for images
+$FAVICON=$PGV_IMAGE_DIR."/favicon.ico";
 
 $PGV_USE_HELPIMG = true;		// set to true to use image for help questionmark, set to false to use i18n::translate('?')
 

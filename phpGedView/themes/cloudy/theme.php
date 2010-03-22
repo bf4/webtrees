@@ -43,7 +43,7 @@ $headerfile = PGV_THEME_DIR."header.php";                 //-- Header informatio
 $footerfile = PGV_THEME_DIR."footer.php";                 //-- Footer information for the site
 $print_footerfile = PGV_THEME_DIR."print_footer.php";     //-- Print Preview Footer information for the site
 $print_headerfile = PGV_THEME_DIR."print_header.php";     //-- Print Preview Header information for the site
-$PGV_IMAGE_DIR = "themes/cloudy/images";                //-- directory to look for images
+$PGV_IMAGE_DIR = PGV_THEME_DIR."images";                //-- directory to look for images
 $FAVICON=$PGV_IMAGE_DIR."/favicon.ico";
 $PGV_USE_HELPIMG = true;                                // set to true to use image for help questionmark, set to false to use i18n::translate('?')
 
@@ -158,7 +158,7 @@ $PGV_IMAGES["darrow2"]["other"] = "darrow2.gif";
 $PGV_IMAGES["ddarrow"]["other"] = "ddarrow.gif";
 $PGV_IMAGES["dline"]["other"] = "dline.gif";
 $PGV_IMAGES["dline2"]["other"] = "dline2.gif";
-$PGV_IMAGES["gedview"]["other"] = "gedview.gif";
+$PGV_IMAGES["gedview"]["other"] = "gedview.png";
 $PGV_IMAGES["hline"]["other"] = "hline.gif";
 $PGV_IMAGES["larrow"]["other"] = "larrow.gif";
 $PGV_IMAGES["larrow2"]["other"] = "larrow2.gif";

@@ -31,7 +31,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 echo '</div><div id="footer" class="block">', contact_links();
+
 if ($SHOW_STATS || PGV_DEBUG) {
 	echo execution_stats();
 }
 echo '</div>';
+echo '<div id="footer" ><a href="', PGV_PHPGEDVIEW_URL, '" target="_blank" alt="', PGV_PHPGEDVIEW, PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "" , '" title="', PGV_PHPGEDVIEW , PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "", '"><span style="font-size:150%; color:#888888;">', PGV_PHPGEDVIEW, '</span></a></div>';

@@ -95,7 +95,7 @@ flush(); // Allow the browser to start fetching external stylesheets, javascript
 echo '<div id="header" class="block">'; // Every page has a header
 if ($view!='simple') {
 	echo
-		'<div style="float:', PGV_CSS_ALIGN, '; font-size:250%;">webtrees</div>';
+		'<div style="float:', PGV_CSS_ALIGN, '; font-size:250%;"><a style="color:#888888;" href="', $HOME_SITE_URL, '?>">', $HOME_SITE_TEXT, '</div>';
 	// Print the user links
 	if ($SEARCH_SPIDER) {
 		// Search engines get a reduced menu
@@ -117,12 +117,6 @@ if ($view!='simple') {
 			if (PGV_USER_CAN_ACCEPT && exists_pending_change()) {
 				echo ' | <li><a href="javascript:;" onclick="window.open(\'edit_changes.php\',\'_blank\',\'width=600,height=500,resizable=1,scrollbars=1\'); return false;" style="color:red;">', i18n::translate('Pending Changes'), '</a></li>';
 			}
-			echo ' | ', MenuBar::getFavouritesMenu()->getMenuAsList();
-			echo ' | ', MenuBar::getLanguageMenu()->getMenuAsList();
-			global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES;
-			if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {
-				echo ' | ', MenuBar::getThemeMenu()->getMenuAsList();
-			}
 		} else {
 			global $LOGIN_URL;
 			if (PGV_SCRIPT_NAME==basename($LOGIN_URL)) {
@@ -132,8 +126,14 @@ if ($view!='simple') {
 				echo '<li><a href="', $LOGIN_URL, '?url=', PGV_SCRIPT_PATH, PGV_SCRIPT_NAME, decode_url(normalize_query_string($QUERY_STRING.'&amp;ged='.PGV_GEDCOM)), '" class="link">', i18n::translate('Login'), '</a></li>';
 			}
 		}
+			echo '<span class="link"> | ', MenuBar::getFavouritesMenu()->getMenuAsList();
+			echo ' | ', MenuBar::getLanguageMenu()->getMenuAsList();
+			global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES;
+			if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {
+				echo ' | ', MenuBar::getThemeMenu()->getMenuAsList();
+			}
 		echo
-			' | <form style="display:inline;" action="search.php" method="get">',
+			'</span> | <form style="display:inline;" action="search.php" method="get">',
 			'<input type="hidden" name="action" value="general" />',
 			'<input type="hidden" name="topsearch" value="yes" />',
 			'<input type="text" name="query" size="20" value="', i18n::translate('Search'), '" onfocus="if (this.value==\'', i18n::translate('Search'), '\') this.value=\'\'; focusHandler();" onblur="if (this.value==\'\') this.value=\'', i18n::translate('Search'), '\';" />',

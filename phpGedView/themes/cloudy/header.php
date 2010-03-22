@@ -114,7 +114,7 @@ else { ?>
 						</td>
 						<td align="<?php echo $TEXT_DIRECTION=="ltr"?"left":"right"; ?>" valign="middle" >
 							<div class="title" style="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right"; ?>">
-								<?php print_gedcom_title_link(TRUE); ?>
+								<?php print_gedcom_title_link(TRUE);?>
 							</div>
 						</td>
 						<?php if (empty($SEARCH_SPIDER)) { ?>

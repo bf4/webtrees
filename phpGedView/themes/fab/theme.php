@@ -38,12 +38,13 @@ unset ($level2_tags['CEME']);
 
 $theme_name="F.A.B."; /* need double quotes, as file is scanned/parsed by script */
 
-$stylesheet=$THEME_DIR.'style.css';
-$headerfile=$THEME_DIR.'header.php';
-$footerfile=$THEME_DIR.'footer.php';
+$stylesheet=PGV_THEME_DIR.'style.css';
+$headerfile=PGV_THEME_DIR.'header.php';
+$footerfile=PGV_THEME_DIR.'footer.php';
 
 $PGV_USE_HELPIMG=false;
-$PGV_IMAGE_DIR = "images";		//-- directory to look for images
+$PGV_IMAGE_DIR = PGV_THEME_DIR."images";        //-- directory to look for images
+$FAVICON=$PGV_IMAGE_DIR."/favicon.ico";
 $PGV_MENU_LOCATION="top";
 
 //-- variables for image names
@@ -146,7 +147,7 @@ $PGV_IMAGES["darrow2"]["other"] = "darrow2.gif";
 $PGV_IMAGES["ddarrow"]["other"] = "ddarrow.gif";
 $PGV_IMAGES["dline"]["other"] = "dline.gif";
 $PGV_IMAGES["dline2"]["other"] = "dline2.gif";
-$PGV_IMAGES["gedview"]["other"] = "gedview.gif";
+$PGV_IMAGES["gedview"]["other"] = "gedview.png";
 $PGV_IMAGES["hline"]["other"] = "hline.gif";
 $PGV_IMAGES["larrow"]["other"] = "larrow.gif";
 $PGV_IMAGES["larrow2"]["other"] = "larrow2.gif";

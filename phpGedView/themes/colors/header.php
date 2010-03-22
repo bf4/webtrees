@@ -105,7 +105,7 @@ else if ($view!='simple'){?>
 	<tr>
 		<td align="<?php echo $TEXT_DIRECTION=="ltr"?"left":"right" ?>">
 		<div class="title">
-			<?php print_gedcom_title_link(TRUE); ?>
+			<?php print_gedcom_title_link(TRUE);?>
 		</div>
 		</td>
 

@@ -64,7 +64,7 @@ a {
 	text-decoration:none;
 }
 a:link, a:visited {
-	color:DarkSlateGray !important;
+	color:DarkSlateGray;
 }
 a:hover, a:active {
 	color:White !important;

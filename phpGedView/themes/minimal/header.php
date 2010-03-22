@@ -105,11 +105,11 @@ else {?>
 			<table width="100%">
 			<tr>
 			<td valign="middle">
+				<a href="<?php echo $HOME_SITE_URL; ?>"><?php echo $HOME_SITE_TEXT; ?></a>
+				<br />
 				<div class="title" style="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right"; ?>">
 					<?php print_gedcom_title_link(TRUE); ?>
 				</div>
-				<br />
-				<a href="<?php echo $HOME_SITE_URL; ?>"><?php echo $HOME_SITE_TEXT; ?></a>
 			</td>
 			<td align="center" valign="middle">
 				<?php print_user_links(); ?>
