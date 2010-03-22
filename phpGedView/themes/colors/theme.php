@@ -59,19 +59,18 @@ if (isset($_SESSION['newColor']))  {
 }
 
 $theme_name       = "Colors";
-$stylesheet       = $THEME_DIR . "css/" . $subColor . ".css";
-$print_stylesheet = $THEME_DIR . "css/" . $subColor . ".css";
-$PGV_THEME_DIR = "themes/colors/";
+$stylesheet       = PGV_THEME_DIR  . "css/" . $subColor . ".css";
+$print_stylesheet = PGV_THEME_DIR  . "css/" . $subColor . ".css";
 
-$headerfile       = $PGV_THEME_DIR . "header.php";	    //-- Header information for the site
-$rtl_stylesheet   = $PGV_THEME_DIR . "style_rtl.css";    //-- CSS level 2 stylesheet to use
-$toplinks         = $PGV_THEME_DIR . "toplinks.php";     //-- File to display the icons and links to different sections    
-$footerfile       = $PGV_THEME_DIR . "footer.php";       //-- Footer information for the site     
-$print_footerfile = $PGV_THEME_DIR . "print_footer.php"; //-- Print Preview Footer information for the site
-$print_headerfile = $PGV_THEME_DIR . "print_header.php"; //-- Print Preview Header information for the site
-$PGV_IMAGE_DIR    = $PGV_THEME_DIR . "images";           //-- directory to look for images
-$FAVICON          = $PGV_THEME_DIR . "favicon.ico";
-$PGV_USE_HELPIMG = true;                                   // set to true to use image for help questionmark, set to false to use $pgv_lang["qm"]
+$headerfile       = PGV_THEME_DIR . "header.php";	    //-- Header information for the site
+$rtl_stylesheet   = PGV_THEME_DIR . "style_rtl.css";    //-- CSS level 2 stylesheet to use
+$toplinks         = PGV_THEME_DIR . "toplinks.php";     //-- File to display the icons and links to different sections    
+$footerfile       = PGV_THEME_DIR . "footer.php";       //-- Footer information for the site     
+$print_footerfile = PGV_THEME_DIR . "print_footer.php"; //-- Print Preview Footer information for the site
+$print_headerfile = PGV_THEME_DIR . "print_header.php"; //-- Print Preview Header information for the site
+$PGV_IMAGE_DIR    = PGV_THEME_DIR . "images";           //-- directory to look for images
+$FAVICON          = $PGV_IMAGE_DIR . "/favicon.ico";
+$PGV_USE_HELPIMG = true;                                // set to true to use image for help questionmark, set to false to use $pgv_lang["qm"]
 
 
 //-- variables for image names
