@@ -40,10 +40,6 @@ define('PGV_CLASS_I18N_PHP', '');
 class i18n {
 	static private $locale='';
 	static private $dir='';
-	static private $long_date_format;
-	static private $short_date_format;
-	static private $time_format_hm;
-	static private $time_format_hms;
 	static private $list_separator;
 	static private $list_separator_last;
 
@@ -97,7 +93,6 @@ class i18n {
 		$DATE_FORMAT=self::noop('%j %F %Y');
 		global $TIME_FORMAT; // I18N: This a the format string for the time-of-day.  See http://php.net/date for codes
 		$TIME_FORMAT=self::noop('%g:%i:%s%a');
-		$TIME_FORMAT=str_replace('%', '', $TIME_FORMAT); // Temporary - for compatibility
 		global $ALPHABET_upper; // Alphabetic sorting sequence (upper-case letters), used by webtrees to sort strings
 		$ALPHABET_upper=self::noop('ALPHABET_upper=ABCDEFGHIJKLMNOPQRSTUVWXYZ');
 		list(, $ALPHABET_upper)=explode('=', $ALPHABET_upper);

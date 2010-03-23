@@ -123,10 +123,30 @@ function parse_time($timestr)
 function format_timestamp($time) {
 	global $DATE_FORMAT, $TIME_FORMAT;
 
-	$TIME_FORMAT=str_replace('%', '', $TIME_FORMAT);
+	// PHP time formatting is english only.
+/* TODO: cannot use this yet - the "a" in "a.m." gets refomatted by date()
+ * Need to handle all of the time codes ourselves.
+	if (strpos('%a', $TIME_FORMAT)!==false || strpos('%A', $TIME_FORMAT)!==false) {
+		$fmt=date('His', $time);
+		if ($fmt=='000000') {
+			$TIME_FORMAT=str_replace('%A', i18n::translate('MIDNIGHT'), $TIME_FORMAT);
+			$TIME_FORMAT=str_replace('%a', i18n::translate('midnight'), $TIME_FORMAT);
+		} elseif ($fmt=='120000') {
+			$TIME_FORMAT=str_replace('%A', i18n::translate('NOON'), $TIME_FORMAT);
+			$TIME_FORMAT=str_replace('%a', i18n::translate('noon'), $TIME_FORMAT);
+		} elseif ($fmt>'120000') {
+			$TIME_FORMAT=str_replace('%A', i18n::translate('P.M.'), $TIME_FORMAT);
+			$TIME_FORMAT=str_replace('%a', i18n::translate('p.m.'), $TIME_FORMAT);
+		} else {
+			$TIME_FORMAT=str_replace('%A', i18n::translate('A.M.'), $TIME_FORMAT);
+			$TIME_FORMAT=str_replace('%a', i18n::translate('a.m.'), $TIME_FORMAT);
+		}
+	}
+*/
+
 	return
 		PrintReady(timestamp_to_gedcom_date($time)->Display(false, $DATE_FORMAT).
-		'<span class="date"> - '.date($TIME_FORMAT, $time).'</span>');
+		'<span class="date"> - '.date(str_replace('%', '', $TIME_FORMAT), $time).'</span>');
 }
 
 ////////////////////////////////////////////////////////////////////////////////

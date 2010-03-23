@@ -422,7 +422,7 @@ function AddToChangeLog($LogString, $ged="") {
 //-- stores a new message in the database
 function addMessage($message) {
 	global $TBLPREFIX, $CONTACT_METHOD, $CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $SERVER_URL, $PGV_SIMPLE_MAIL, $WEBMASTER_EMAIL;
-	global $TEXT_DIRECTION, $TEXT_DIRECTION_array, $DATE_FORMAT, $DATE_FORMAT_array, $TIME_FORMAT, $TIME_FORMAT_array, $WEEK_START, $WEEK_START_array;
+	global $TEXT_DIRECTION;
 	global $PHPGEDVIEW_EMAIL;
 
 	//-- do not allow users to send a message to themselves
