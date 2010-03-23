@@ -1626,17 +1626,23 @@ dt {
 /* Accordion ----------------------------------*/
 
 .ui-accordion .ui-accordion-header { background: #03961e; opacity: 0.67;}
-.ui-accordion .ui-accordion-header a { color: #fff ;}
+.ui-accordion .ui-accordion-header a { color: #ffffff ;}
 
 /* Tabs ----------------------------------*/
 .ui-widget-header { border: 1px solid #fff; background: #03961e url(images/ui-bg_highlight-soft_100_e7eef3_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
 
 /* Interaction states ----------------------------------*/
-.ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #cccccc; background: #efefee url(images/ui-bg_glass_80_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #444444; outline: none; }
+.ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #cccccc; background: #f1f0f4 url(images/ui-bg_glass_80_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #444444; outline: none; }
 .ui-state-active {border: 1px solid #999999; }
 
 /* Override jquery-ui_theme.css                */
 /* Navigator and Flyout menu Styles -----------*/
+
+.static_tab_content_ltr {
+	right: 0px; 
+	margin-top:0px; 
+	margin-right:22px;	margin-top:0px; 
+}
 
 .flyout2 {
         margin-left:-40px; /* move popup left */
@@ -1662,4 +1668,10 @@ color:  #000;
 }
 .nav_content .facts_label a{
 color: #fff;
+}
+
+.static_tab_content_ltr {
+	right: 0px; 
+	margin-top:0px; 
+	margin-right:22px;
 }

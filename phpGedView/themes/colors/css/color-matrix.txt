@@ -11,7 +11,7 @@ D-Text  #696969  #494949  #494949   #494949 #000000  #000000  #494949  #494949  
 L-Text  #ffffff  #ffffff  #ffffff   #ffffff #ffffff  #ffffff  #ffffff  #ffffff  #707070  #ffffff  #ffffff  #ffffff  #ffffff  #ffffff  
 
 Links   #333333  #333333  #333333   #333333 #333333  #333333  #333333  #333333  #333333  #333333  #333333  #333333  #333333  #333333
-l-Hover #007384  #888888  #971702   #5ab5ee #6598cb  #4d91ff  #03961e  #a30f42  #a9adbc  #9fa8d5  #7db323  #f41063  #f21107  #34775a
+L-Hover #007384  #888888  #971702   #5ab5ee #6598cb  #4d91ff  #03961e  #a30f42  #a9adbc  #9fa8d5  #7db323  #f41063  #f21107  #34775a
 Alert   #fc6d1d  #2a2b2d  #971702   #2385c2 #6598cb  #4d91ff  #03961e  #fc6d1d  #a9adbc  #0a2352  #fc6d1d  #fc6d1d  #fc6d1d  #fc6d1d
 
 * Header: page header and some labels            
@@ -20,4 +20,5 @@ Alert   #fc6d1d  #2a2b2d  #971702   #2385c2 #6598cb  #4d91ff  #03961e  #fc6d1d  
 * D-Text: text color on light background
 * L-Text: text color on dark background
 * Links: a link text color
+* L-Hover:  text hover color
 * Alert: warning, errors, and alerts
