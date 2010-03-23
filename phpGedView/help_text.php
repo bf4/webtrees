@@ -45,2432 +45,2029 @@ switch ($help) {
 	//////////////////////////////////////////////////////////////////////////////
 
 case 'ABBR':
-	// I18N: This is the GEDCOM label for "Abbreviation"
 	$title=i18n::translate('Abbreviation');
 	$text=i18n::translate('Use this field for storing an abbreviated version of a title.  This field is used in conjunction with the title field on sources.  By default PGV will first use the title and then the abbreviated title.<br /><br />According to the GEDCOM 5.5 specification, "this entry is to provide a short title used for sorting, filing, and retrieving source records (pg 62)."<br /><br />In PhpGedView the abbreviated title is optional, but in other genealogical programs it is required.');
 	break;
 
 case 'ADDR':
-	// I18N: This is the GEDCOM label for "Address"
 	$title=i18n::translate('Address');
 	$text=i18n::translate('Enter the address into the field just as you would write it on an envelope.<br /><br />Leave this field blank if you do not want to include an address.');
 	break;
 
 case 'ADR1':	
-	// I18N: This is the GEDCOM label for "Address 1"
-	$title=i18n::translate('ADR1');
+	$title=i18n::translate('Address line 1');
 	$text='';
 	break;
 
 case 'ADR2':	
-	// I18N: This is the GEDCOM label for "Address 2"
-	$title=i18n::translate('ADR2');
+	$title=i18n::translate('Address line 2');
 	$text='';
 	break;
 
 case 'ADOP':
-	// I18N: This is the GEDCOM label for "Adoption"
-	$title=i18n::translate('ADOP');
+	$title=i18n::translate('Adoption');
 	$text='';
 	break;
 
 case 'AFN':	
-	// I18N: This is the GEDCOM label for "Ancestral File Number (AFN)"
-	$title=i18n::translate('AFN');
+	$title=i18n::translate('Ancestral File Number');
 	$text='';
 	break;
 
 case 'AGE':	
-	// I18N: This is the GEDCOM label for "Age"
-	$title=i18n::translate('AGE');
+	$title=i18n::translate('Age');
 	$text='';
 	break;
 
 case 'AGNC':
-	// I18N: This is the GEDCOM label for "Agency"
 	$title=i18n::translate('Agency');
 	$text=i18n::translate('The organization, institution, corporation, person, or other entity that has authority.<br /><br />For example, an employer of a person, or a church that administered rites or events, or an organization responsible for creating and/or archiving records.');
 	break;
 
 case 'ALIA':	
-	// I18N: This is the GEDCOM label for "Alias"
-	$title=i18n::translate('ALIA');
+	$title=i18n::translate('Alias');
 	$text='';
 	break;
 
 case 'ANCE':	
-	// I18N: This is the GEDCOM label for "Ancestors"
-	$title=i18n::translate('ANCE');
+	$title=i18n::translate('Generations of Ancestors');
 	$text='';
 	break;
 
 case 'ANCI':	
-	// I18N: This is the GEDCOM label for "Ancestors Interest"
-	$title=i18n::translate('ANCI');
+	$title=i18n::translate('Ancestors Interest');
 	$text='';
 	break;
 
 case 'ANUL':	
-	// I18N: This is the GEDCOM label for "Annulment"
-	$title=i18n::translate('ANUL');
+	$title=i18n::translate('Annulment');
 	$text='';
 	break;
 
 case 'ASSO':
-	// I18N: This is the GEDCOM label for "Associate"
 	$title=i18n::translate('Associate');
 	$text=i18n::translate('Enter associate GEDCOM ID.');
 	break;
 
 case 'AUTH':	
-	// I18N: This is the GEDCOM label for "Author"
-	$title=i18n::translate('AUTH');
+	$title=i18n::translate('Author');
 	$text='';
 	break;
 
 case 'BAPL':	
-	// I18N: This is the GEDCOM label for "LDS Baptism"
-	$title=i18n::translate('BAPL');
+	$title=i18n::translate('LDS Baptism');
 	$text='';
 	break;
 
 case 'BAPM':	
-	// I18N: This is the GEDCOM label for "Baptism"
-	$title=i18n::translate('BAPM');
+	$title=i18n::translate('Baptism');
 	// I18N: This is a very short abbreviation for the label "Baptism", to be used on genealogy charts
 	$abbrev=i18n::translate('ABBREV_BAPM');
 	$text='';
 	break;
 
 case 'BAPM:DATE':	
-	// I18N: This is the GEDCOM label for "Baptism Date"
-	$title=i18n::translate('BAPM:DATE');
+	$title=i18n::translate('Date of Baptism');
 	$text='';
 	break;
 
 case 'BAPM:PLAC':	
-	// I18N: This is the GEDCOM label for "Baptism Place"
-	$title=i18n::translate('BAPM:PLAC');
+	$title=i18n::translate('Place of Baptism');
 	$text='';
 	break;
 
 case 'BAPM:SOUR':	
-	// I18N: This is the GEDCOM label for "Baptism Source"
-	$title=i18n::translate('BAPM:SOUR');
+	$title=i18n::translate('Source for Baptism');
 	$text='';
 	break;
 
 case 'BARM':	
-	// I18N: This is the GEDCOM label for "Bar Mitzvah"
-	$title=i18n::translate('BARM');
+	$title=i18n::translate('Bar Mitzvah');
 	$text='';
 	break;
 
 case 'BARM:DATE':	
-	// I18N: This is the GEDCOM label for "Bar Mitzvah Date"
-	$title=i18n::translate('BARM:DATE');
+	$title=i18n::translate('Date of Bar Mitzvah');
 	$text='';
 	break;
 
 case 'BARM:PLAC':	
-	// I18N: This is the GEDCOM label for "Bar Mitzvah Place"
-	$title=i18n::translate('BARM:PLAC');
+	$title=i18n::translate('Place of Bar Mitzvah');
 	$text='';
 	break;
 
 case 'BARM:SOUR':	
-	// I18N: This is the GEDCOM label for "Bar Mitzvah Source"
-	$title=i18n::translate('BARM:SOUR');
+	$title=i18n::translate('Source for Bar Mitzvah');
 	$text='';
 	break;
 
 case 'BASM':	
-	// I18N: This is the GEDCOM label for "Bas Mitzvah"
-	$title=i18n::translate('BASM');
+	$title=i18n::translate('Bas Mitzvah');
 	$text='';
 	break;
 
 case 'BASM:DATE':	
-	// I18N: This is the GEDCOM label for "Bas Mitzvah Date"
-	$title=i18n::translate('BASM:DATE');
+	$title=i18n::translate('Date of Bas Mitzvah');
 	$text='';
 	break;
 
 case 'BASM:PLAC':	
-	// I18N: This is the GEDCOM label for "Bas Mitzvah Place"
-	$title=i18n::translate('BASM:PLAC');
+	$title=i18n::translate('Place of Bas Mitzvah');
 	$text='';
 	break;
 
 case 'BASM:SOUR':	
-	// I18N: This is the GEDCOM label for "Bas Mitzvah Source"
-	$title=i18n::translate('BASM:SOUR');
+	$title=i18n::translate('Source for Bas Mitzvah');
 	$text='';
 	break;
 
 case 'BIRT':	
-	// I18N: This is the GEDCOM label for "Birth"
-	$title=i18n::translate('BIRT');
+	$title=i18n::translate('Birth');
 	// I18N: This is a very short abbreviation for the label "Birth", to be used on genealogy charts
 	$abbr=i18n::translate('ABBREV_BIRT');
 	$text='';
 	break;
 
 case 'BIRT:DATE':	
-	// I18N: This is the GEDCOM label for "Birth Date"
-	$title=i18n::translate('BIRT:DATE');
+	$title=i18n::translate('Date of birth');
 	$text='';
 	break;
 
 case 'BIRT:PLAC':	
-	// I18N: This is the GEDCOM label for "Birth Place"
-	$title=i18n::translate('BIRT:PLAC');
+	$title=i18n::translate('Place of birth');
 	$text='';
 	break;
 
 case 'BIRT:SOUR':	
-	// I18N: This is the GEDCOM label for "Birth Source"
-	$title=i18n::translate('BIRT:SOUR');
+	$title=i18n::translate('Source for birth');
 	$text='';
 	break;
 
 case 'BLES':	
-	// I18N: This is the GEDCOM label for "Blessing"
-	$title=i18n::translate('BLES');
+	$title=i18n::translate('Blessing');
 	$text='';
 	break;
 
 case 'BLOB':	
-	// I18N: This is the GEDCOM label for "Binary Data Object"
-	$title=i18n::translate('BLOB');
+	$title=i18n::translate('Binary Data Object');
 	$text='';
 	break;
 
 case 'BURI':	
-	// I18N: This is the GEDCOM label for "Burial"
-	$title=i18n::translate('BURI');
+	$title=i18n::translate('Burial');
 	// I18N: This is a very short abbreviation for the label "Burial", to be used on genealogy charts
 	$abbr=i18n::translate('ABBREV_BURI');
 	$text='';
 	break;
 
 case 'BURI:DATE':	
-	// I18N: This is the GEDCOM label for "Burial Date"
-	$title=i18n::translate('BURI:DATE');
+	$title=i18n::translate('Date of Burial');
 	$text='';
 	break;
 
 case 'BURI:PLAC':	
-	// I18N: This is the GEDCOM label for "Burial Place"
-	$title=i18n::translate('BURI:PLAC');
+	$title=i18n::translate('Place of Burial');
 	$text='';
 	break;
 
 case 'BURI:SOUR':	
-	// I18N: This is the GEDCOM label for "Burial Source"
-	$title=i18n::translate('BURI:SOUR');
+	$title=i18n::translate('Source for Burial');
 	$text='';
 	break;
 
 case 'CALN':	
-	// I18N: This is the GEDCOM label for "Call Number"
-	$title=i18n::translate('CALN');
-	$text='';
+	$title=i18n::translate('Call Number');
+	$text='The number used by a repository to identify the specific items in its collections.';
 	break;
 
 case 'CAST':	
-	// I18N: This is the GEDCOM label for "Caste / Social Status"
-	$title=i18n::translate('CAST');
-	$text='';
+	$title=i18n::translate('Caste');
+	$text='The name of an individual\'s rank or status in society which is sometimes based on racial or religious differences, or differences in wealth, inherited rank, profession, occupation, etc.';
 	break;
 
 case 'CAUS':	
-	// I18N: This is the GEDCOM label for "Cause of an event"
-	$title=i18n::translate('CAUS');
-	$text='';
+	$title=i18n::translate('Cause');
+	$text='A description of the cause of the associated event or fact, such as the cause of death.';
 	break;
 
 case 'CEME':
-	// I18N: This is the GEDCOM label for "Cemetery"
 	$title=i18n::translate('Cemetery');
 	$text=i18n::translate('Enter the name of the cemetery or other resting place where individual is buried.');
 	break;
 
 case 'CENS':	
-	// I18N: This is the GEDCOM label for "Census"
-	$title=i18n::translate('CENS');
+	$title=i18n::translate('Census');
 	$text='';
 	break;
 
 case 'CHAN':	
-	// I18N: This is the GEDCOM label for "Last Change"
-	$title=i18n::translate('CHAN');
+	$title=i18n::translate('Last Change');
 	$text='';
 	break;
 
 case 'CHAR':	
-	// I18N: This is the GEDCOM label for "Character Set"
-	$title=i18n::translate('CHAR');
+	$title=i18n::translate('Character Set');
 	$text='';
 	break;
 
 case 'CHIL':	
-	// I18N: This is the GEDCOM label for "Child"
-	$title=i18n::translate('CHIL');
+	$title=i18n::translate('Child');
 	$text='';
 	break;
 
 case 'CHR':	
-	// I18N: This is the GEDCOM label for "Christening"
-	$title=i18n::translate('CHR');
+	$title=i18n::translate('Christening');
 	// I18N: This is a very short abbreviation for the label "Christening", to be used on genealogy charts
 	$abbr=i18n::translate('ABBREV_CHR');
 	$text='';
 	break;
 
 case 'CHR:DATE':	
-	// I18N: This is the GEDCOM label for "Christening Date"
-	$title=i18n::translate('CHR:DATE');
+	$title=i18n::translate('Date of Christening');
 	$text='';
 	break;
 
 case 'CHR:PLAC':	
-	// I18N: This is the GEDCOM label for "Christening Place"
-	$title=i18n::translate('CHR:PLAC');
+	$title=i18n::translate('Place of Christening');
 	$text='';
 	break;
 
 case 'CHR:SOUR':	
-	// I18N: This is the GEDCOM label for "Christening Source"
-	$title=i18n::translate('CHR:SOUR');
+	$title=i18n::translate('Source for Christening');
 	$text='';
 	break;
 
 case 'CHRA':	
-	// I18N: This is the GEDCOM label for "Adult Christening"
-	$title=i18n::translate('CHRA');
+	$title=i18n::translate('Adult Christening');
 	$text='';
 	break;
 
 case 'CITN':	
-	// I18N: This is the GEDCOM label for "Citizenship"
-	$title=i18n::translate('CITN');
+	$title=i18n::translate('Citizenship');
 	$text='';
 	break;
 
 case 'CITY':	
-	// I18N: This is the GEDCOM label for "City"
-	$title=i18n::translate('CITY');
+	$title=i18n::translate('City');
 	$text='';
 	break;
 
 case 'COMM':	
-	// I18N: This is the GEDCOM label for "Comment"
-	$title=i18n::translate('COMM');
+	$title=i18n::translate('Comment');
 	$text='';
 	break;
 
 case 'CONC':	
-	// I18N: This is the GEDCOM label for "Concatenation"
-	$title=i18n::translate('CONC');
+	$title=i18n::translate('Concatenation');
 	$text='';
 	break;
 
 case 'CONT':	
-	// I18N: This is the GEDCOM label for "Continued"
-	$title=i18n::translate('CONT');
+	$title=i18n::translate('Continued');
 	$text='';
 	break;
 
 case 'CONF':	
-	// I18N: This is the GEDCOM label for "Confirmation"
-	$title=i18n::translate('CONF');
+	$title=i18n::translate('Confirmation');
 	$text='';
 	break;
 
 case 'CONF:DATE':	
-	// I18N: This is the GEDCOM label for "Confirmation Date"
-	$title=i18n::translate('CONF:DATE');
+	$title=i18n::translate('Date of Confirmation');
 	$text='';
 	break;
 
 case 'CONF:PLAC':	
-	// I18N: This is the GEDCOM label for "Confirmation Place"
-	$title=i18n::translate('CONF:PLAC');
+	$title=i18n::translate('Place of Confirmation');
 	$text='';
 	break;
 
 case 'CONF:SOUR':	
-	// I18N: This is the GEDCOM label for "Confirmation Source"
-	$title=i18n::translate('CONF:SOUR');
+	$title=i18n::translate('Source for Confirmation');
 	$text='';
 	break;
 
 case 'CONL':	
-	// I18N: This is the GEDCOM label for "LDS Confirmation"
-	$title=i18n::translate('CONL');
+	$title=i18n::translate('LDS Confirmation');
 	$text='';
 	break;
 
 case 'COPR':	
-	// I18N: This is the GEDCOM label for "Copyright"
-	$title=i18n::translate('COPR');
+	$title=i18n::translate('Copyright');
 	$text='';
 	break;
 
 case 'CORP':	
-	// I18N: This is the GEDCOM label for "Corporation / Company"
-	$title=i18n::translate('CORP');
-	$text='';
+	$title=i18n::translate('Corporation');
+	$text='A name of an institution, agency, corporation, or company.';
 	break;
 
 case 'CREM':	
-	// I18N: This is the GEDCOM label for "Cremation"
-	$title=i18n::translate('CREM');
-	$text='';
+	$title=i18n::translate('Cremation');
+	$text='Disposal of the remains of a person\'s body by fire.';
 	break;
 
 case 'CTRY':	
-	// I18N: This is the GEDCOM label for "Country"
-	$title=i18n::translate('CTRY');
+	$title=i18n::translate('Country');
 	$text='';
 	break;
 
 case 'DATA':	
-	// I18N: This is the GEDCOM label for "Data"
-	$title=i18n::translate('DATA');
+	$title=i18n::translate('Data');
 	$text='';
 	break;
 
 case 'DATA:DATE':	
-	// I18N: This is the GEDCOM label for "Date of entry in original source"
-	$title=i18n::translate('DATA:DATE');
+	$title=i18n::translate('Date of entry in original source');
 	$text='';
 	break;
 
 case 'DATE':	
-	// I18N: This is the GEDCOM label for "Date"
-	$title=i18n::translate('DATE');
+	$title=i18n::translate('Date');
 	$text='';
 	break;
 
 case 'DEAT':	
-	// I18N: This is the GEDCOM label for "Death"
-	$title=i18n::translate('DEAT');
+	$title=i18n::translate('Death');
 	// I18N: This is a very short abbreviation for the label "Death", to be used on genealogy charts
 	$abbr=i18n::translate('ABBREV_DEAT');
 	$text='';
 	break;
 
 case 'DEAT:DATE':	
-	// I18N: This is the GEDCOM label for "Death Date"
-	$title=i18n::translate('DEAT:DATE');
+	$title=i18n::translate('Date of Death');
 	$text='';
 	break;
 
 case 'DEAT:PLAC':	
-	// I18N: This is the GEDCOM label for "Death Place"
-	$title=i18n::translate('DEAT:PLAC');
+	$title=i18n::translate('Place of Death');
 	$text='';
 	break;
 
 case 'DEAT:SOUR':	
-	// I18N: This is the GEDCOM label for "Death Source"
-	$title=i18n::translate('DEAT:SOUR');
+	$title=i18n::translate('Source for Death');
 	$text='';
 	break;
 
 case 'DESC':	
-	// I18N: This is the GEDCOM label for "Descendants"
-	$title=i18n::translate('DESC');
-	$text='';
+	$title=i18n::translate('Descendants');
+	$text='Pertaining to offspring of an individual.';
 	break;
 
 case 'DESI':	
-	// I18N: This is the GEDCOM label for "Descendants Interest"
-	$title=i18n::translate('DESI');
+	$title=i18n::translate('Descendants Interest');
 	$text='';
 	break;
 
 case 'DEST':	
-	// I18N: This is the GEDCOM label for "Destination"
-	$title=i18n::translate('DEST');
+	$title=i18n::translate('Destination');
 	$text='';
 	break;
 
 case 'DIV':	
-	// I18N: This is the GEDCOM label for "Divorce"
-	$title=i18n::translate('DIV');
+	$title=i18n::translate('Divorce');
 	$text='';
 	break;
 
 case 'DIVF':	
-	// I18N: This is the GEDCOM label for "Divorce filed"
-	$title=i18n::translate('DIVF');
+	$title=i18n::translate('Divorce filed');
 	$text='';
 	break;
 
 case 'DSCR':	
-	// I18N: This is the GEDCOM label for "Description"
-	$title=i18n::translate('DSCR');
+	$title=i18n::translate('Description');
 	$text='';
 	break;
 
 case 'EDUC':	
-	// I18N: This is the GEDCOM label for "Education"
-	$title=i18n::translate('EDUC');
+	$title=i18n::translate('Education');
 	$text='';
 	break;
 
 case 'EMAI':
-	// I18N: This is the GEDCOM label for "Email Address"
-	$title=i18n::translate('EMAI');
+	$title=i18n::translate('Email Address');
 	$text='';
 	break;
 
 case 'EMAIL':
-	// I18N: This is the GEDCOM label for "Email Address"
 	$title=i18n::translate('Email Address');
 	$text=i18n::translate('Enter the email address.<br /><br />An example email address looks like this: <b>name@hotmail.com</b>  Leave this field blank if you do not want to include an email address.');
 	break;
 
 case 'EMAL':	
-	// I18N: This is the GEDCOM label for "Email Address"
-	$title=i18n::translate('EMAL');
+	$title=i18n::translate('Email Address');
 	$text='';
 	break;
 
 case 'EMIG':	
-	// I18N: This is the GEDCOM label for "Emigration"
-	$title=i18n::translate('EMIG');
+	$title=i18n::translate('Emigration');
 	$text='';
 	break;
 
 case 'ENDL':	
-	// I18N: This is the GEDCOM label for "LDS Endowment"
-	$title=i18n::translate('ENDL');
+	$title=i18n::translate('LDS Endowment');
 	$text='';
 	break;
 
 case 'ENGA':	
-	// I18N: This is the GEDCOM label for "Engagement"
-	$title=i18n::translate('ENGA');
+	$title=i18n::translate('Engagement');
 	$text='';
 	break;
 
 case 'ENGA:DATE':	
-	// I18N: This is the GEDCOM label for "Engagement Date"
-	$title=i18n::translate('ENGA:DATE');
+	$title=i18n::translate('Date of Engagement');
 	$text='';
 	break;
 
 case 'ENGA:PLAC':	
-	// I18N: This is the GEDCOM label for "Engagement Place"
-	$title=i18n::translate('ENGA:PLAC');
+	$title=i18n::translate('Place of Engagement');
 	$text='';
 	break;
 
 case 'ENGA:SOUR':	
-	// I18N: This is the GEDCOM label for "Engagement Source"
-	$title=i18n::translate('ENGA:SOUR');
+	$title=i18n::translate('Source for Engagement');
 	$text='';
 	break;
 
 case 'EVEN':	
-	// I18N: This is the GEDCOM label for "Event"
-	$title=i18n::translate('EVEN');
+	$title=i18n::translate('Event');
 	$text='';
 	break;
 
 case 'FACT':	
-	// I18N: This is the GEDCOM label for "Fact"
-	$title=i18n::translate('FACT');
+	$title=i18n::translate('Fact');
 	$text='';
 	break;
 
 case 'FAM':	
-	// I18N: This is the GEDCOM label for "Family"
-	$title=i18n::translate('FAM');
+	$title=i18n::translate('Family');
 	$text='';
 	break;
 
 case 'FAMC':	
-	// I18N: This is the GEDCOM label for "Family as a Child"
-	$title=i18n::translate('FAMC');
+	$title=i18n::translate('Family as a Child');
 	$text='';
 	break;
 
 case 'FAMC:HUSB:BIRT:PLAC':	
-	// I18N: This is the GEDCOM label for "Father's Birthplace"
-	$title=i18n::translate('FAMC:HUSB:BIRT:PLAC');
+	$title=i18n::translate('Father\'s Birthplace');
 	$text='';
 	break;
 
 case 'FAMC:HUSB:FAMC:HUSB:GIVN':	
-	// I18N: This is the GEDCOM label for "Paternal Grandfather's Given Name"
-	$title=i18n::translate('FAMC:HUSB:FAMC:HUSB:GIVN');
+	$title=i18n::translate('Paternal Grandfather\'s Given Name');
 	$text='';
 	break;
 
 case 'FAMC:HUSB:FAMC:WIFE:GIVN':	
-	// I18N: This is the GEDCOM label for "Paternal Grandmother's Given Name"
-	$title=i18n::translate('FAMC:HUSB:FAMC:WIFE:GIVN');
+	$title=i18n::translate('Paternal Grandmother\'s Given Name');
 	$text='';
 	break;
 
 case 'FAMC:HUSB:GIVN':	
-	// I18N: This is the GEDCOM label for "Father's Given Name"
-	$title=i18n::translate('FAMC:HUSB:GIVN');
+	$title=i18n::translate('Father\'s Given Name');
 	$text='';
 	break;
 
 case 'FAMC:HUSB:OCCU':	
-	// I18N: This is the GEDCOM label for "Father's Occupation"
-	$title=i18n::translate('FAMC:HUSB:OCCU');
+	$title=i18n::translate('Father\'s Occupation');
 	$text='';
 	break;
 
 case 'FAMC:HUSB:OCCU':	
-	// I18N: This is the GEDCOM label for "Father's Surname"
-	$title=i18n::translate('FAMC:HUSB:OCCU');
+	$title=i18n::translate('Father\'s Surname');
 	$text='';
 	break;
 
 case 'FAMC:MARR:PLAC':	
-	// I18N: This is the GEDCOM label for "Parents' Marriage Place"
-	$title=i18n::translate('FAMC:MARR:PLAC');
+	$title=i18n::translate('Parents\' Marriage Place');
 	$text='';
 	break;
 
 case 'FAMC:MARR:PLAC':	
-	// I18N: This is the GEDCOM label for "Mother's Birthplace"
-	$title=i18n::translate('FAMC:MARR:PLAC');
+	$title=i18n::translate('Mother\'s Birthplace');
 	$text='';
 	break;
 
 case 'FAMC:WIFE:FAMC:HUSB:GIVN':	
-	// I18N: This is the GEDCOM label for "Maternal Grandfather's Given Name"
-	$title=i18n::translate('FAMC:WIFE:FAMC:HUSB:GIVN');
+	$title=i18n::translate('Maternal Grandfather\'s Given Name');
 	$text='';
 	break;
 
 case 'FAMC:WIFE:FAMC:WIFE:GIVN':	
-	// I18N: This is the GEDCOM label for "Maternal Grandmother's Given Name"
-	$title=i18n::translate('FAMC:WIFE:FAMC:WIFE:GIVN');
+	$title=i18n::translate('Maternal Grandmother\'s Given Name');
 	$text='';
 	break;
 
 case 'FAMC:WIFE:GIVN':	
-	// I18N: This is the GEDCOM label for "Mother's Given Name"
-	$title=i18n::translate('FAMC:WIFE:GIVN');
+	$title=i18n::translate('Mother\'s Given Name');
 	$text='';
 	break;
 
 case 'FAMC:WIFE:SURN':	
-	// I18N: This is the GEDCOM label for "Mother's Surname"
-	$title=i18n::translate('FAMC:WIFE:SURN');
+	$title=i18n::translate('Mother\'s Surname');
 	$text='';
 	break;
 
 case 'FAMF':	
-	// I18N: This is the GEDCOM label for "Family File"
-	$title=i18n::translate('FAMF');
+	$title=i18n::translate('Family File');
 	$text='';
 	break;
 
 case 'FAMS':	
-	// I18N: This is the GEDCOM label for "Family as a Spouse"
-	$title=i18n::translate('FAMS');
+	$title=i18n::translate('Family as a Spouse');
 	$text='';
 	break;
 
 case 'FAMS:CENS:DATE':	
-	// I18N: This is the GEDCOM label for "Spouse Census Date"
-	$title=i18n::translate('FAMS:CENS:DATE');
+	$title=i18n::translate('Spouse Census Date');
 	$text='';
 	break;
 
 case 'FAMS:CENS:PLAC':	
-	// I18N: This is the GEDCOM label for "Spouse Census Place"
-	$title=i18n::translate('FAMS:CENS:PLAC');
+	$title=i18n::translate('Spouse Census Place');
 	$text='';
 	break;
 
 case 'FAMS:CHIL:BIRT:PLAC':	
-	// I18N: This is the GEDCOM label for "Child's Birth Place"
-	$title=i18n::translate('FAMS:CHIL:BIRT:PLAC');
+	$title=i18n::translate('Child\'s Birth Place');
 	$text='';
 	break;
 
 case 'FAMS:DIV:DATE':	
-	// I18N: This is the GEDCOM label for "Spouse Divorce Date"
-	$title=i18n::translate('FAMS:DIV:DATE');
+	$title=i18n::translate('Spouse Divorce Date');
 	$text='';
 	break;
 
 case 'FAMS:DIV:PLAC':	
-	// I18N: This is the GEDCOM label for "Spouse Divorce Place"
-	$title=i18n::translate('FAMS:DIV:PLAC');
+	$title=i18n::translate('Spouse Divorce Place');
 	$text='';
 	break;
 
 case 'FAMS:MARR:DAT':	
-	// I18N: This is the GEDCOM label for "Marriage Date"
-	$title=i18n::translate('FAMS:MARR:DATE');
+	$title=i18n::translate('Marriage Date');
 	$text='';
 	break;
 
 case 'FAMS:MARR:PLAC':	
-	// I18N: This is the GEDCOM label for "Marriage Place"
-	$title=i18n::translate('FAMS:MARR:PLAC');
+	$title=i18n::translate('Marriage Place');
 	$text='';
 	break;
 
 case 'FAMS:NOTE':	
-	// I18N: This is the GEDCOM label for "Spouse Note"
-	$title=i18n::translate('FAMS:NOTE');
+	$title=i18n::translate('Spouse Note');
 	$text='';
 	break;
 
 case 'FAMS:SLGS:DATE':	
-	// I18N: This is the GEDCOM label for "LDS Spouse Sealing Date"
-	$title=i18n::translate('FAMS:SLGS:DATE');
+	$title=i18n::translate('LDS Spouse Sealing Date');
 	$text='';
 	break;
 
 case 'FAMS:SLGS:PLAC':	
-	// I18N: This is the GEDCOM label for "LDS Spouse Sealing Place"
-	$title=i18n::translate('FAMS:SLGS:PLAC');
+	$title=i18n::translate('LDS Spouse Sealing Place');
 	$text='';
 	break;
 
 case 'FAMS:SLGS:TEMP':	
-	// I18N: This is the GEDCOM label for "LDS Spouse Sealing Temple"
-	$title=i18n::translate('FAMS:SLGS:TEMP');
+	$title=i18n::translate('LDS Spouse Sealing Temple');
 	$text='';
 	break;
 
 case 'FAMS:SPOUSE:BIRT:PLAC':	
-	// I18N: This is the GEDCOM label for "Spouse's Birth Place"
-	$title=i18n::translate('FAMS:SPOUSE:BIRT:PLAC');
+	$title=i18n::translate('Spouse\'s Birth Place');
 	$text='';
 	break;
 
 case 'FAMS:SPOUSE:DEAT:PLAC':	
-	// I18N: This is the GEDCOM label for "Spouse's Death Place"
-	$title=i18n::translate('FAMS:SPOUSE:DEAT:PLAC');
+	$title=i18n::translate('Spouse\'s Death Place');
 	$text='';
 	break;
 
 case 'FAX':
-	// I18N: This is the GEDCOM label for "FAX"
-	$title=i18n::translate('FAX');
+	$title=i18n::translate('Fax');
 	$text=i18n::translate('Enter the FAX number including the country and area code.<br /><br />Leave this field blank if you do not want to include a FAX number.  For example, a number in Germany might be +49 25859 56 76 89 and a number in USA or Canada might be +1 888 555-1212.');
 	break;
 
 case 'FCOM':	
-	// I18N: This is the GEDCOM label for "First Communion"
-	$title=i18n::translate('FCOM');
+	$title=i18n::translate('First Communion');
 	$text='';
 	break;
 
 case 'FCOM:DATE':	
-	// I18N: This is the GEDCOM label for "First Communion Date"
-	$title=i18n::translate('FCOM:DATE');
+	$title=i18n::translate('Date of First Communion');
 	$text='';
 	break;
 
 case 'FCOM:PLAC':	
-	// I18N: This is the GEDCOM label for "First Communion Place"
-	$title=i18n::translate('FCOM:PLAC');
+	$title=i18n::translate('Place of First Communion');
 	$text='';
 	break;
 
 case 'FCOM:SOUR':	
-	// I18N: This is the GEDCOM label for "First Communion Source"
-	$title=i18n::translate('FCOM:SOUR');
+	$title=i18n::translate('Source for First Communion');
 	$text='';
 	break;
 
 case 'FILE':
-	// I18N: This is the GEDCOM label for "External File"
 	$title=i18n::translate('Filename');
 	$text=i18n::translate('This is the most important field in the multimedia object record.  It indicates which file to use. At the very minimum, you need to enter the file\'s name.  Depending on your settings, more information about the file\'s location may be helpful.<br /><br />You can use the <b>Find Media</b> link to help you locate media items that have already been uploaded to the site.<br /><br />See <a href="readme.txt" target="_blank"><b>Readme.txt</b></a> for more information.');
 	break;
 
 case 'FONE':	
-	// I18N: This is the GEDCOM label for "Phonetic"
-	$title=i18n::translate('FONE');
+	$title=i18n::translate('Phonetic');
 	$text='';
 	break;
 
 case 'FORM':
-	// I18N: This is the GEDCOM label for "Format"
 	$title=i18n::translate('Format');
 	$text=i18n::translate('This is an optional field that can be used to enter the file format of the multimedia object.  Some genealogy programs may look at this field to determine how to handle the item.  However, since media do not transfer across computer systems very well, this field is not very important.');
 	break;
 
 case 'GEDC':	
-	// I18N: This is the GEDCOM label for "Gedcom"
-	$title=i18n::translate('GEDC');
+	$title=i18n::translate('Gedcom');
 	$text='';
 	break;
 
 case 'GIVN':
-	// I18N: This is the GEDCOM label for "Given Names"
-	$title=i18n::translate('GIVN');
+	$title=i18n::translate('Given Names');
 	$text=i18n::translate('In this field you should enter the given names for the person.  As an example, in the name "John Robert Finlay", the given names that should be entered here are "John Robert"');
 	break;
 
 case 'GRAD':	
-	// I18N: This is the GEDCOM label for "Graduation"
-	$title=i18n::translate('GRAD');
+	$title=i18n::translate('Graduation');
 	$text='';
 	break;
 
 case 'HEAD':	
-	// I18N: This is the GEDCOM label for "Header"
-	$title=i18n::translate('HEAD');
+	$title=i18n::translate('Header');
 	$text='';
 	break;
 
 case 'HUSB':	
-	// I18N: This is the GEDCOM label for "Husband"
-	$title=i18n::translate('HUSB');
+	$title=i18n::translate('Husband');
 	$text='';
 	break;
 
 case 'IDNO':	
-	// I18N: This is the GEDCOM label for "Identification Number"
-	$title=i18n::translate('IDNO');
+	$title=i18n::translate('Identification Number');
 	$text='';
 	break;
 
 case 'IMMI':	
-	// I18N: This is the GEDCOM label for "Immigration"
-	$title=i18n::translate('IMMI');
+	$title=i18n::translate('Immigration');
 	$text='';
 	break;
 
 case 'INDI':	
-	// I18N: This is the GEDCOM label for "Individual"
-	$title=i18n::translate('INDI');
+	$title=i18n::translate('Individual');
 	$text='';
 	break;
 
 case 'INFL':	
-	// I18N: This is the GEDCOM label for "Infant"
-	$title=i18n::translate('INFL');
+	$title=i18n::translate('Infant');
 	$text='';
 	break;
 
 case 'LANG':	
-	// I18N: This is the GEDCOM label for "Language"
-	$title=i18n::translate('LANG');
+	$title=i18n::translate('Language');
 	$text='';
 	break;
 
 case 'LATI':	
-	// I18N: This is the GEDCOM label for "Latitude"
-	$title=i18n::translate('LATI');
+	$title=i18n::translate('Latitude');
 	$text='';
 	break;
 
 case 'LEGA':	
-	// I18N: This is the GEDCOM label for "Legatee"
-	$title=i18n::translate('LEGA');
+	$title=i18n::translate('Legatee');
 	$text='';
 	break;
 
 case 'LONG':	
-	// I18N: This is the GEDCOM label for "Longitude"
-	$title=i18n::translate('LONG');
+	$title=i18n::translate('Longitude');
 	$text='';
 	break;
 
 case 'MAP':	
-	// I18N: This is the GEDCOM label for "Map"
-	$title=i18n::translate('MAP');
+	$title=i18n::translate('Map');
 	$text='';
 	break;
 
 case 'MARB':	
-	// I18N: This is the GEDCOM label for "Marriage Banns"
-	$title=i18n::translate('MARB');
+	$title=i18n::translate('Marriage Banns');
 	$text='';
 	break;
 
 case 'MARB:DATE':	
-	// I18N: This is the GEDCOM label for "Marriage Banns Date"
-	$title=i18n::translate('MARB:DATE');
+	$title=i18n::translate('Date of Marriage Banns');
 	$text='';
 	break;
 
 case 'MARB:PLAC':	
-	// I18N: This is the GEDCOM label for "Marriage Banns Place"
-	$title=i18n::translate('MARB:PLAC');
+	$title=i18n::translate('Place of Marriage Banns');
 	$text='';
 	break;
 
 case 'MARB:SOUR':	
-	// I18N: This is the GEDCOM label for "Marriage Banns Source"
-	$title=i18n::translate('MARB:SOUR');
+	$title=i18n::translate('Source for Marriage Banns');
 	$text='';
 	break;
 
 case 'MARC':	
-	// I18N: This is the GEDCOM label for "Marriage Contract"
-	$title=i18n::translate('MARC');
+	$title=i18n::translate('Marriage Contract');
 	$text='';
 	break;
 
 case 'MARL':	
-	// I18N: This is the GEDCOM label for "Marriage Licence"
-	$title=i18n::translate('MARL');
+	$title=i18n::translate('Marriage Licence');
 	$text='';
 	break;
 
 case 'MARR':	
-	// I18N: This is the GEDCOM label for "Marriage"
-	$title=i18n::translate('MARR');
+	$title=i18n::translate('Marriage');
 	// I18N: This is a very short abbreviation for the label "Marriage", to be used on genealogy charts
 	$abbr=i18n::translate('ABBREV_MARR');
 	$text='';
 	break;
 
 case 'MARR:':	
-	// I18N: This is the GEDCOM label for "Marriage Date"
-	$title=i18n::translate('MARR:DATE');
+	$title=i18n::translate('Date of Marriage Date');
 	$text='';
 	break;
 
 case 'MARR:PLAC':	
-	// I18N: This is the GEDCOM label for "Marriage Place"
-	$title=i18n::translate('MARR:PLAC');
+	$title=i18n::translate('Place of Marriage');
 	$text='';
 	break;
 
 case 'MARR:SOUR':	
-	// I18N: This is the GEDCOM label for "Marriage Source"
-	$title=i18n::translate('MARR:SOUR');
+	$title=i18n::translate('Source for Marriage');
 	$text='';
 	break;
 
 case 'MARR_CIVIL':	
-	// I18N: This is the GEDCOM label for "Civil Marriage"
-	$title=i18n::translate('MARR_CIVIL');
+	$title=i18n::translate('Civil Marriage');
 	$text='';
 	break;
 
 case 'MARR_PARTNERS':	
-	// I18N: This is the GEDCOM label for "Registered Partnership"
-	$title=i18n::translate('MARR_PARTNERS');
+	$title=i18n::translate('Registered Partnership');
 	$text='';
 	break;
 
 case 'MARR_RELIGIOUS':	
-	// I18N: This is the GEDCOM label for "Religious Marriage"
-	$title=i18n::translate('MARR_RELIGIOUS');
+	$title=i18n::translate('Religious Marriage');
 	$text='';
 	break;
 
 case 'MARR_UNKNOWN':	
-	// I18N: This is the GEDCOM label for "Marriage Type unknown"
-	$title=i18n::translate('MARR_UNKNOWN');
+	$title=i18n::translate('Marriage Type unknown');
 	$text='';
 	break;
 
 case 'MARS':	
-	// I18N: This is the GEDCOM label for "Marriage Settlement"
-	$title=i18n::translate('MARS');
+	$title=i18n::translate('Marriage Settlement');
 	$text='';
 	break;
 
 case 'MEDI':	
-	// I18N: This is the GEDCOM label for "Media Type"
-	$title=i18n::translate('MEDI');
+	$title=i18n::translate('Media Type');
 	$text='';
 	break;
 
 case 'NAME':
-	// I18N: This is the GEDCOM label for "Name"
 	$title=i18n::translate('Name');
 	$text=i18n::translate('This is the most important field in a person\'s Name record.<br /><br />This field should be filled automatically as the other fields are filled in, but it is provided so that you can edit the information according to your personal preference.<br /><br />The name in this field should be entered according to the GEDCOM 5.5.1 standards with the surname surrounded by forward slashes "/".  As an example, the name "John Robert Finlay Jr." should be entered like this: "John Robert /Finlay/ Jr.".');
 	break;
 
 case 'NAME:FONE':	
-	// I18N: This is the GEDCOM label for "Phonetic Name"
-	$title=i18n::translate('NAME:FONE');
+	$title=i18n::translate('Phonetic Name');
 	$text='';
 	break;
 
 case 'NAME:_HEB':	
-	// I18N: This is the GEDCOM label for "Name in Hebrew"
-	$title=i18n::translate('NAME:_HEB');
+	$title=i18n::translate('Name in Hebrew');
 	$text='';
 	break;
 
 case 'NATI':	
-	// I18N: This is the GEDCOM label for "Nationality"
-	$title=i18n::translate('NATI');
+	$title=i18n::translate('Nationality');
 	$text='';
 	break;
 
 case 'NATU':	
-	// I18N: This is the GEDCOM label for "Naturalization"
-	$title=i18n::translate('NATU');
+	$title=i18n::translate('Naturalization');
 	$text='';
 	break;
 
 case 'NCHI':
-	// I18N: This is the GEDCOM label for "Number of Children"
-	$title=i18n::translate('NCHI');
+	$title=i18n::translate('Number of Children');
 	$text=i18n::translate('Enter the number of children for this individual or family. This is an optional field.');
 	break;
 
 case 'NICK':
-	// I18N: This is the GEDCOM label for "Nickname"
-	$title=i18n::translate('NICK');
+	$title=i18n::translate('Nickname');
 	$text=i18n::translate('In this field you should enter any nicknames for the person.<br />This is an optional field.<br /><br />Ways to add a nickname:<ul><li>Select <b>modify name</b> then enter nickname and save</li><li>Select <b>add new name</b> then enter nickname AND name and save</li><li>Select <b>edit GEDCOM record</b> to add multiple [2&nbsp;NICK] records subordinate to the main [1&nbsp;NAME] record.</li></ul>');
 	break;
 
 case 'NMR':	
-	// I18N: This is the GEDCOM label for "Number of Marriages"
-	$title=i18n::translate('NMR');
+	$title=i18n::translate('Number of Marriages');
 	$text='';
 	break;
 
 case 'NOTE':
-	// I18N: This is the GEDCOM label for "Note"
 	$title=i18n::translate('Note');
 	$text=i18n::translate('Notes are free-form text and will appear in the Fact Details section of the page.');
 	break;
 
 case 'NPFX':
-	// I18N: This is the GEDCOM label for "Prefix"
 	$title=i18n::translate('Name Prefix');
 	$text=i18n::translate('This optional field allows you to enter a name prefix such as "Dr." or "Adm."');
 	break;
 
 case 'NSFX':
-	// I18N: This is the GEDCOM label for "Suffix"
 	$title=i18n::translate('Name Suffix');
 	$text=i18n::translate('In this optional field you should enter the name suffix for the person.  Examples of name suffixes are "Sr.", "Jr.", and "III".');
 	break;
 
 case 'OBJE':	
-	// I18N: This is the GEDCOM label for "Multimedia Object"
-	$title=i18n::translate('OBJE');
+	$title=i18n::translate('Multimedia Object');
 	$text='';
 	break;
 
 case 'OCCU':	
-	// I18N: This is the GEDCOM label for "Occupation"
-	$title=i18n::translate('OCCU');
+	$title=i18n::translate('Occupation');
 	$text='';
 	break;
 
 case 'ORDI':	
-	// I18N: This is the GEDCOM label for "Ordinance"
-	$title=i18n::translate('ORDI');
+	$title=i18n::translate('Ordinance');
 	$text='';
 	break;
 
 case 'ORDN':	
-	// I18N: This is the GEDCOM label for "Ordination"
-	$title=i18n::translate('ORDN');
+	$title=i18n::translate('Ordination');
 	$text='';
 	break;
 
 case 'PAGE':
-	// I18N: This is the GEDCOM label for "Citation Details"
 	$title=i18n::translate('Citation Details');
 	$text=i18n::translate('In the Citation Details field you would enter the page number or other information that might help someone find the information in the source.');
 	break;
 
 case 'PEDI':
-	// I18N: This is the GEDCOM label for "Pedigree"
 	$title=i18n::translate('Pedigree');
 	$text=i18n::translate('This field describes the relationship of the child to its family.  The possibilities are:<ul><li><b>unknown</b>&nbsp;&nbsp;&nbsp;The child\'s relationship to its family cannot be determined.  When this option is selected, the Pedigree field will not be copied into the database.<br /><br /></li><li><b>Birth</b>&nbsp;&nbsp;&nbsp;This option indicates that the child is related to its family by birth.<br /><br /></li><li><b>Adopted</b>&nbsp;&nbsp;&nbsp;This option indicates that the child was adopted by its family.  This does <i>not</i> indicate that there is no blood relationship between the child and its family; it shows that the child was adopted by the family in question sometime after the child\'s birth.<br /><br /></li><li><b>Foster</b>&nbsp;&nbsp;&nbsp;This option indicates that the child is a foster child of the family.  Usually, there is no blood relationship between the child and its family.<br /><br /></li><li><b>Sealing</b>&nbsp;&nbsp;&nbsp;The child was sealed to its family in an LDS <i>sealing</i> ceremony.  A child sealing is performed when the parents were sealed to each other after the birth of the child.  Children born after the parents\' sealing are automatically sealed to the family.<br /><br /></li></ul>');
 	break;
 
 case 'PHON':
-	// I18N: This is the GEDCOM label for "Phone"
 	$title=i18n::translate('Phone');
 	$text=i18n::translate('Enter the phone number including the country and area code.<br /><br />Leave this field blank if you do not want to include a phone number.  For example, a number in Germany might be +49 25859 56 76 89 and a number in USA or Canada might be +1 888 555-1212.');
 	break;
 
 case 'PLAC':
-	// I18N: This is the GEDCOM label for "Place"
 	$title=i18n::translate('Place');
 	$text=i18n::translate('Places should be entered according to the standards for genealogy.  In genealogy, places are recorded with the most specific information about the place first and then working up to the least specific place last, using commas to separate the different place levels.  The level at which you record the place information should represent the levels of government or church where vital records for that place are kept.<br /><br />For example, a place like Salt Lake City would be entered as "Salt Lake City, Salt Lake, Utah, USA".<br /><br />Let\'s examine each part of this place.  The first part, "Salt Lake City," is the city or township where the event occurred.  In some countries, there may be municipalities or districts inside a city which are important to note.  In that case, they should come before the city.  The next part, "Salt Lake," is the county.  "Utah" is the state, and "USA" is the country.  It is important to note each place because genealogical records are kept by the governments of each level.<br /><br />If a level of the place is unknown, you should leave a space between the commas.  Suppose, in the example above, you didn\'t know the county for Salt Lake City.  You should then record it like this: "Salt Lake City, , Utah, USA".  Suppose you only know that a person was born in Utah.  You would enter the information like this: ", , Utah, USA".  <br /><br />You can use the <b>Find Place</b> link to help you find places that already exist in the database.');
 	break;
 
 case 'PLAC:FONE':	
-	// I18N: This is the GEDCOM label for "Phonetic Place"
-	$title=i18n::translate('PLAC:FONE');
+	$title=i18n::translate('Phonetic Place');
 	$text='';
 	break;
 
 case 'PLAC:ROMN':	
-	// I18N: This is the GEDCOM label for "Romanized Place"
-	$title=i18n::translate('PLAC:ROMN');
+	$title=i18n::translate('Romanized Place');
 	$text='';
 	break;
 
 case 'PLAC:_HEB':	
-	// I18N: This is the GEDCOM label for "Place in Hebrew"
-	$title=i18n::translate('PLAC:_HEB');
+	$title=i18n::translate('Place in Hebrew');
 	$text='';
 	break;
 
 case 'POST':	
-	// I18N: This is the GEDCOM label for "Postal Code"
-	$title=i18n::translate('POST');
+	$title=i18n::translate('Postal Code');
 	$text='';
 	break;
 
 case 'PROB':	
-	// I18N: This is the GEDCOM label for "Probate"
-	$title=i18n::translate('PROB');
+	$title=i18n::translate('Probate');
 	$text='';
 	break;
 
 case 'PROP':	
-	// I18N: This is the GEDCOM label for "Property"
-	$title=i18n::translate('PROP');
+	$title=i18n::translate('Property');
 	$text='';
 	break;
 
 case 'PUBL':	
-	// I18N: This is the GEDCOM label for "Publication"
-	$title=i18n::translate('PUBL');
+	$title=i18n::translate('Publication');
 	$text='';
 	break;
 
 case 'QUAY':
-	// I18N: This is the GEDCOM label for "Quality of Data"
 	$title=i18n::translate('Quality of Data');
 	$text=i18n::translate('You would use this field to record the quality or reliability of the data found in this source.  Many genealogy applications use a number in the field. <b>3</b> might mean that the data is a primary source, <b>2</b> might mean that it was a secondary source, <b>1</b> might mean the information is questionable, and <b>0</b> might mean that the source is unreliable.');
 	break;
 
 case 'REFN':	
-	// I18N: This is the GEDCOM label for "Reference Number"
-	$title=i18n::translate('REFN');
+	$title=i18n::translate('Reference Number');
 	$text='';
 	break;
 
 case 'RELA':
-	// I18N: This is the GEDCOM label for "Relationship"
 	$title=i18n::translate('Relationship');
 	$text=i18n::translate('Select a relationship name from the list. Selecting <b>Godfather</b> means: <i>This associate is the Godfather of the current individual</i>.');
 	break;
 
 case 'RELI':	
-	// I18N: This is the GEDCOM label for "Religion"
-	$title=i18n::translate('RELI');
+	$title=i18n::translate('Religion');
 	$text='';
 	break;
 
 case 'REPO':	
-	// I18N: This is the GEDCOM label for "Repository"
-	$title=i18n::translate('REPO');
+	$title=i18n::translate('Repository');
 	$text='';
 	break;
 
 case 'RESI':	
-	// I18N: This is the GEDCOM label for "Residence"
-	$title=i18n::translate('RESI');
+	$title=i18n::translate('Residence');
 	$text='';
 	break;
 
 case 'RESN':
-	// I18N: This is the GEDCOM label for "Restriction"
 	$title=i18n::translate('Restriction');
 	$text=i18n::translate('Apart from general privacy settings, PhpGedView has the ability to set restrictions on viewing and editing fact information for individuals and families. The restrictions can be set by anyone who is allowed to edit the information, unless privacy or formerly set restrictions prohibit this.<br /><br />The following values can be used:<br /><ul><li><b>None</b><br />Site administrators, GEDCOM administrators, and users who have rights to edit can change the information. Fact information can be viewed according to privacy settings as applied by the administrator.</li><li><b>Do not change</b><br />This setting has no influence on the visibility of the fact data. It restricts editing rights to site administrators and GEDCOM administrators. If the information applies to the user himself, he can also view and, assuming he has editing rights, edit it.</li><li><b>Privacy</b><br />Site administrators and GEDCOM administrators can view and edit the information. If the information applies to the user himself, he can also view and, assuming he has editing rights, edit it. It will be hidden from all other users regardless of their login status.</li><li><b>Confidential</b><br />Only site administrators and GEDCOM administrators can view and edit the information. It will be hidden from all other users regardless of their login status.</li></ul><br /><table><tr><th></th><th colspan="2">Admin</th><th colspan="2">Owner</th><th colspan="2">Others</th></tr><tr><th></th><th>R</th><th>W</th><th>R</th><th>W</th><th>R</th><th>W</th></tr><tr><td><img src="images/RESN_none.gif" alt="" /> None</td><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th></tr><tr><td><img src="images/RESN_locked.gif" alt="" /> Do not change</td><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th></tr><tr><td><img src="images/RESN_privacy.gif" alt="" /> Privacy</td><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th></tr><tr><td><img src="images/RESN_confidential.gif" alt="" /> Confidential</td><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th></tr></table><ul><li>R : can read</li><li>W : can edit</li><li><img src="images/checked_qm.gif" alt="" /> : depends on global privacy settings</li></ul>');
 	break;
 
 case 'RETI':	
-	// I18N: This is the GEDCOM label for "Retirement"
-	$title=i18n::translate('RETI');
+	$title=i18n::translate('Retirement');
 	$text='';
 	break;
 
 case 'RFN':	
-	// I18N: This is the GEDCOM label for "Record File Number"
-	$title=i18n::translate('RFN');
+	$title=i18n::translate('Record File Number');
 	$text='';
 	break;
 
 case 'RIN':	
-	// I18N: This is the GEDCOM label for "Record ID Number"
-	$title=i18n::translate('RIN');
+	$title=i18n::translate('Record ID Numbe');
 	$text='';
 	break;
 
 case 'ROLE':	
-	// I18N: This is the GEDCOM label for "Role"
-	$title=i18n::translate('ROLE');
+	$title=i18n::translate('Role');
 	$text='';
 	break;
 
 case 'ROMN':
-	// I18N: This is the GEDCOM label for "Romanized"
 	$title=i18n::translate('Romanized');
 	$text=i18n::translate('In many cultures it is customary to have a traditional name spelled in the traditional characters and also a romanized version of the name as it would be spelled or pronounced in languages based on the Latin alphabet, such as English.<br /><br />If you prefer to use a non-Latin alphabet such as Hebrew, Greek, Russian, Chinese, or Arabic to enter the name in the standard name fields, then you can use this field to enter the same name using the Latin alphabet.  Both versions of the name will appear in lists and charts.<br /><br />Although this field is labelled "Romanized", it is not restricted to containing only characters based on the Latin alphabet.  This might be of use with Japanese names, where three different alphabets may occur.');
 	break;
 
 case 'SERV':	
-	// I18N: This is the GEDCOM label for "Remote Server"
-	$title=i18n::translate('SERV');
+	$title=i18n::translate('Remote Server');
 	$text='';
 	break;
 
 case 'SEX':
-	// I18N: This is the GEDCOM label for "Gender"
 	$title=i18n::translate('Gender');
 	$text=i18n::translate('Choose the appropriate gender from the drop-down list.  The <b>unknown</b> option indicates that the gender is unknown.');
 	break;
 
 case 'SHARED_NOTE':
-	// I18N: This is the GEDCOM label for "Shared Note"
 	$title=i18n::translate('Shared Note');
 	$text=i18n::translate('Shared Notes are free-form text and will appear in the Fact Details section of the page.<br /><br />Each shared note can be linked to more than one person, family, source, or event.');
 	break;
 
 case 'SLGC':	
-	// I18N: This is the GEDCOM label for "LDS Child Sealing"
-	$title=i18n::translate('SLGC');
+	$title=i18n::translate('LDS Child Sealing');
 	$text='';
 	break;
 
 case 'SLGS':	
-	// I18N: This is the GEDCOM label for "LDS Spouse Sealing"
-	$title=i18n::translate('SLGS');
+	$title=i18n::translate('LDS Spouse Sealing');
 	$text='';
 	break;
 
 case 'SOUR':
-	// I18N: This is the GEDCOM label for "Source"
 	$title=i18n::translate('Source');
 	$text=i18n::translate('This field allows you to change the source record that this fact\'s source citation links to.  This field takes a Source ID.  Beside the field will be listed the title of the current source ID.  Use the <b>Find ID</b> link to look up the source\'s ID number.  To remove the entire citation, make this field blank.');
 	break;
 
 case 'SPFX':
-	// I18N: This is the GEDCOM label for "Surname Prefix"
 	$title=i18n::translate('Surname Prefix');
 	$text=i18n::translate('Enter or select from the list words that precede the main part of the Surname.  Examples of such words are <b>von</b> Braun, <b>van der</b> Kloot, <b>de</b> Graaf, etc.');
 	break;
 
 case 'SSN':	
-	// I18N: This is the GEDCOM label for "Social Security Number"
-	$title=i18n::translate('SSN');
+	$title=i18n::translate('Social Security Number');
 	$text='';
 	break;
 
 case 'STAE':	
-	// I18N: This is the GEDCOM label for "State"
-	$title=i18n::translate('STAE');
+	$title=i18n::translate('State');
 	$text='';
 	break;
 
 case 'STAT':
-	// I18N: This is the GEDCOM label for "Status"
 	$title=i18n::translate('Status');
 	$text=i18n::translate('This is an optional status field and is used mostly for LDS ordinances as they are run through the TempleReady program.');
 	break;
 
 case 'STAT:DATE':	
-	// I18N: This is the GEDCOM label for "Status Change Date"
-	$title=i18n::translate('STAT:DATE');
+	$title=i18n::translate('Status Change Date');
 	$text='';
 	break;
 
 case 'SUBM':	
-	// I18N: This is the GEDCOM label for "Submitter"
-	$title=i18n::translate('SUBM');
+	$title=i18n::translate('Submitter');
 	$text='';
 	break;
 
 case 'SUBN':	
-	// I18N: This is the GEDCOM label for "Submission"
-	$title=i18n::translate('SUBN');
+	$title=i18n::translate('Submission');
 	$text='';
 	break;
 
 case 'SURN':
-	// I18N: This is the GEDCOM label for "Surname"
 	$title=i18n::translate('Surname');
 	$text=i18n::translate('In this field you should enter the surname for the person.  As an example, in the name "John Robert Finlay", the surname that should be entered here is "Finlay"<br /><br />Individuals with multiple surnames, common in Spain and Portugal, should separate the surnames with a comma.  This indicates that the person is to be listed under each of the names.  For example, the surname "Cortes,Vega" will be listed under both <b>C</b> and <b>V</b>, whereas the surname "Cortes Vega" will only be listed under <b>C</b>.');
 	break;
 
 case 'TEMP':
-	// I18N: This is the GEDCOM label for "Temple"
 	$title=i18n::translate('Temple');
 	$text=i18n::translate('For LDS ordinances, this field records the Temple where it was performed.');
 	break;
 
 case 'TEXT':
-	// I18N: This is the GEDCOM label for "Text"
 	$title=i18n::translate('Text');
 	$text=i18n::translate('In this field you would enter the citation text for this source.  Examples of data may be a transcription of the text from the source, or a description of what was in the citation.');
 	break;
 
 case 'TIME':
-	// I18N: This is the GEDCOM label for "Time"
 	$title=i18n::translate('Time');
 	$text=i18n::translate('Enter the time for this event in 24-hour format with leading zeroes. Midnight is 00:00. Examples: 04:50 13:00 20:30.');
 	break;
 
 case 'TITL':
-	// I18N: This is the GEDCOM label for "Title"
 	$title=i18n::translate('Title');
 	$text=i18n::translate('Enter a title for the item you are editing.  If this is a title for a multimedia item, enter a descriptive title that will identify that item to the user.');
 	break;
 
 case 'TITL:FONE':	
-	// I18N: This is the GEDCOM label for "Phonetic Title"
-	$title=i18n::translate('TITL:FONE');
+	$title=i18n::translate('Phonetic Title');
 	$text='';
 	break;
 
 case 'TITL:ROMN':	
-	// I18N: This is the GEDCOM label for "Romanized Title"
-	$title=i18n::translate('TITL:ROMN');
+	$title=i18n::translate('Romanized Title');
 	$text='';
 	break;
 
 case 'TITL:_HEB':	
-	// I18N: This is the GEDCOM label for "Title in Hebrew"
-	$title=i18n::translate('TITL:_HEB');
+	$title=i18n::translate('Title in Hebrew');
 	$text='';
 	break;
 
 case 'TRLR':	
-	// I18N: This is the GEDCOM label for "Trailer"
-	$title=i18n::translate('TRLR');
+	$title=i18n::translate('Trailer');
 	$text='';
 	break;
 
 case 'TYPE':
-	// I18N: This is the GEDCOM label for "Type"
 	$title=i18n::translate('Type');
 	$text=i18n::translate('The Type field is used to enter additional information about the item.  In most cases, the field is completely free-form, and you can enter anything you want.');
 	break;
 
 case 'URL':
-	// I18N: This is the GEDCOM label for "Web URL"
 	$title=i18n::translate('Web URL');
 	$text=i18n::translate('Enter the URL address including the http://.<br /><br />An example URL looks like this: <b>http://www.phpgedview.net/</b> Leave this field blank if you do not want to include a URL.');
 	break;
 
 case 'VERS':	
-	// I18N: This is the GEDCOM label for "Version"
-	$title=i18n::translate('VERS');
+	$title=i18n::translate('Version');
 	$text='';
 	break;
 
 case 'WIFE':	
-	// I18N: This is the GEDCOM label for "Wife"
-	$title=i18n::translate('WIFE');
+	$title=i18n::translate('Wife');
 	$text='';
 	break;
 
 case 'WILL':	
-	// I18N: This is the GEDCOM label for "Will"
-	$title=i18n::translate('WILL');
+	$title=i18n::translate('Will');
 	$text='';
 	break;
 
 case 'WWW':	
-	// I18N: This is the GEDCOM label for "Web Home Page"
-	$title=i18n::translate('WWW');
+	$title=i18n::translate('Web Home Page');
 	$text='';
 	break;
 
 case '_ADOP_CHIL':	
-	// I18N: This is the GEDCOM label for "Adoption of a child"
-	$title=i18n::translate('_ADOP_CHIL');
+	$title=i18n::translate('Adoption of a child');
 	$text='';
 	break;
 
 case '_ADOP_COUS':	
-	// I18N: This is the GEDCOM label for "Adoption of a first cousin"
-	$title=i18n::translate('_ADOP_COUS');
+	$title=i18n::translate('Adoption of a first cousin');
 	$text='';
 	break;
 
 case '_ADOP_FSIB':	
-	// I18N: This is the GEDCOM label for "Adoption of father's sibling"
-	$title=i18n::translate('_ADOP_FSIB');
+	$title=i18n::translate('Adoption of father\'s sibling');
 	$text='';
 	break;
 
 case '_ADOP_GCHI':	
-	// I18N: This is the GEDCOM label for "Adoption of a grandchild"
-	$title=i18n::translate('_ADOP_GCHI');
+	$title=i18n::translate('Adoption of a grandchild');
 	$text='';
 	break;
 
 case '_ADOP_GGCH':	
-	// I18N: This is the GEDCOM label for "Adoption of a great-grandchild"
-	$title=i18n::translate('_ADOP_GGCH');
+	$title=i18n::translate('Adoption of a great-grandchild');
 	$text='';
 	break;
 
 case '_ADOP_HSIB':	
-	// I18N: This is the GEDCOM label for "Adoption of half-sibling"
-	$title=i18n::translate('_ADOP_HSIB');
+	$title=i18n::translate('Adoption of half-sibling');
 	$text='';
 	break;
 
 case '_ADOP_MSIB':	
-	// I18N: This is the GEDCOM label for "Adoption of mother's sibling"
-	$title=i18n::translate('_ADOP_MSIB');
+	$title=i18n::translate('Adoption of mother\'s sibling');
 	$text='';
 	break;
 
 case '_ADOP_NEPH':	
-	// I18N: This is the GEDCOM label for "Adoption of a nephew or niece"
-	$title=i18n::translate('_ADOP_NEPH');
+	$title=i18n::translate('Adoption of a nephew or niece');
 	$text='';
 	break;
 
 case '_ADOP_SIBL':	
-	// I18N: This is the GEDCOM label for "Adoption of sibling"
-	$title=i18n::translate('_ADOP_SIBL');
+	$title=i18n::translate('Adoption of sibling');
 	$text='';
 	break;
 
 case '_ADPF':	
-	// I18N: This is the GEDCOM label for "Adopted by Father"
-	$title=i18n::translate('_ADPF');
+	$title=i18n::translate('Adopted by Father');
 	$text='';
 	break;
 
 case '_ADPM':	
-	// I18N: This is the GEDCOM label for "Adopted by Mother"
-	$title=i18n::translate('_ADPM');
+	$title=i18n::translate('Adopted by Mother');
 	$text='';
 	break;
 
 case '_AKA':	
-	// I18N: This is the GEDCOM label for "Also known as"
-	$title=i18n::translate('_AKA');
+	$title=i18n::translate('Also known as');
 	$text='';
 	break;
 
 case '_AKAN':	
-	// I18N: This is the GEDCOM label for "Also known as"
-	$title=i18n::translate('_AKAN');
+	$title=i18n::translate('Also known as');
 	$text='';
 	break;
 
 case '_BAPM_CHIL':	
-	// I18N: This is the GEDCOM label for "Baptism of a child"
-	$title=i18n::translate('_BAPM_CHIL');
+	$title=i18n::translate('Baptism of a child');
 	$text='';
 	break;
 
 case '_BAPM_COUS':	
-	// I18N: This is the GEDCOM label for "Baptism of a first cousin"
-	$title=i18n::translate('_BAPM_COUS');
+	$title=i18n::translate('Baptism of a first cousin');
 	$text='';
 	break;
 
 case '_BAPM_FSIB':	
-	// I18N: This is the GEDCOM label for "Baptism of father's sibling"
-	$title=i18n::translate('_BAPM_FSIB');
+	$title=i18n::translate('Baptism of father\'s sibling');
 	$text='';
 	break;
 
 case '_BAPM_GCHI':	
-	// I18N: This is the GEDCOM label for "Baptism of a grandchild"
-	$title=i18n::translate('_BAPM_GCHI');
+	$title=i18n::translate('Baptism of a grandchild');
 	$text='';
 	break;
 
 case '_BAPM_GGCH':	
-	// I18N: This is the GEDCOM label for "Baptism of a great-grandchild"
-	$title=i18n::translate('_BAPM_GGCH');
+	$title=i18n::translate('Baptism of a great-grandchild');
 	$text='';
 	break;
 
 case '_BAPM_HSIB':	
-	// I18N: This is the GEDCOM label for "Baptism of half-sibling"
-	$title=i18n::translate('_BAPM_HSIB');
+	$title=i18n::translate('Baptism of half-sibling');
 	$text='';
 	break;
 
 case '_BAPM_MSIB':	
-	// I18N: This is the GEDCOM label for "Baptism of mother's sibling"
-	$title=i18n::translate('_BAPM_MSIB');
+	$title=i18n::translate('Baptism of mother\'s sibling');
 	$text='';
 	break;
 
 case '_BAPM_NEPH':	
-	// I18N: This is the GEDCOM label for "Baptism of a nephew or niece"
-	$title=i18n::translate('_BAPM_NEPH');
+	$title=i18n::translate('Baptism of a nephew or niece');
 	$text='';
 	break;
 
 case '_BAPM_SIBL':	
-	// I18N: This is the GEDCOM label for "Baptism of sibling"
-	$title=i18n::translate('_BAPM_SIBL');
+	$title=i18n::translate('Baptism of sibling');
 	$text='';
 	break;
 
 case '_BIBL':	
-	// I18N: This is the GEDCOM label for "Bibliography"
-	$title=i18n::translate('_BIBL');
+	$title=i18n::translate('Bibliography');
 	$text='';
 	break;
 
 case '_BIRT_CHIL':	
-	// I18N: This is the GEDCOM label for "Birth of a child"
-	$title=i18n::translate('_BIRT_CHIL');
+	$title=i18n::translate('Birth of a child');
 	$text='';
 	break;
 
 case '_BIRT_COUS':	
-	// I18N: This is the GEDCOM label for "Birth of a first cousin"
-	$title=i18n::translate('_BIRT_COUS');
+	$title=i18n::translate('Birth of a first cousin');
 	$text='';
 	break;
 
 case '_BIRT_FSIB':	
-	// I18N: This is the GEDCOM label for "Birth of father's sibling"
-	$title=i18n::translate('_BIRT_FSIB');
+	$title=i18n::translate('Birth of father\'s sibling');
 	$text='';
 	break;
 
 case '_BIRT_GCHI':	
-	// I18N: This is the GEDCOM label for "Birth of a grandchild"
-	$title=i18n::translate('_BIRT_GCHI');
+	$title=i18n::translate('Birth of a grandchild');
 	$text='';
 	break;
 
 case '_BIRT_GGCH':	
-	// I18N: This is the GEDCOM label for "Birth of a great-grandchild"
-	$title=i18n::translate('_BIRT_GGCH');
+	$title=i18n::translate('Birth of a great-grandchild');
 	$text='';
 	break;
 
 case '_BIRT_HSIB':	
-	// I18N: This is the GEDCOM label for "Birth of half-sibling"
-	$title=i18n::translate('_BIRT_HSIB');
+	$title=i18n::translate('Birth of half-sibling');
 	$text='';
 	break;
 
 case '_BIRT_MSIB':	
-	// I18N: This is the GEDCOM label for "Birth of mother's sibling"
-	$title=i18n::translate('_BIRT_MSIB');
+	$title=i18n::translate('Birth of mother\'s sibling');
 	$text='';
 	break;
 
 case '_BIRT_NEPH':	
-	// I18N: This is the GEDCOM label for "Birth of a nephew or niece"
-	$title=i18n::translate('_BIRT_NEPH');
+	$title=i18n::translate('Birth of a nephew or niece');
 	$text='';
 	break;
 
 case '_BIRT_SIBL':	
-	// I18N: This is the GEDCOM label for "Birth of sibling"
-	$title=i18n::translate('_BIRT_SIBL');
+	$title=i18n::translate('Birth of sibling');
 	$text='';
 	break;
 
 case '_BRTM':	
-	// I18N: This is the GEDCOM label for "Brit Mila"
-	$title=i18n::translate('_BRTM');
+	$title=i18n::translate('Brit Mila');
 	$text='';
 	break;
 
 case '_BRTM:DATE':	
-	// I18N: This is the GEDCOM label for "Brit Mila Date"
-	$title=i18n::translate('_BRTM:DATE');
+	$title=i18n::translate('Brit Mila Date');
 	$text='';
 	break;
 
 case '_BRTM:PLAC':	
-	// I18N: This is the GEDCOM label for "Brit Mila Place"
-	$title=i18n::translate('_BRTM:PLAC');
+	$title=i18n::translate('Brit Mila Place');
 	$text='';
 	break;
 
 case '_BRTM:SOUR':	
-	// I18N: This is the GEDCOM label for "Brit Mila Source"
-	$title=i18n::translate('_BRTM:SOUR');
+	$title=i18n::translate('Brit Mila Source');
 	$text='';
 	break;
 
 case '_BURI_CHIL':	
-	// I18N: This is the GEDCOM label for "Burial of a child"
-	$title=i18n::translate('_BURI_CHIL');
+	$title=i18n::translate('Burial of a child');
 	$text='';
 	break;
 
 case '_BURI_COUS':	
-	// I18N: This is the GEDCOM label for "Burial of a first cousin"
-	$title=i18n::translate('_BURI_COUS');
+	$title=i18n::translate('Burial of a first cousin');
 	$text='';
 	break;
 
 case '_BURI_FATH':	
-	// I18N: This is the GEDCOM label for "Burial of father"
-	$title=i18n::translate('_BURI_FATH');
+	$title=i18n::translate('Burial of father');
 	$text='';
 	break;
 
 case '_BURI_FSIB':	
-	// I18N: This is the GEDCOM label for "Burial of father's sibling"
-	$title=i18n::translate('_BURI_FSIB');
+	$title=i18n::translate('Burial of father\'s sibling');
 	$text='';
 	break;
 
 case '_BURI_GCHI':	
-	// I18N: This is the GEDCOM label for "Burial of a grandchild"
-	$title=i18n::translate('_BURI_GCHI');
+	$title=i18n::translate('Burial of a grandchild');
 	$text='';
 	break;
 
 case '_BURI_GGCH':	
-	// I18N: This is the GEDCOM label for "Burial of a great-grandchild"
-	$title=i18n::translate('_BURI_GGCH');
+	$title=i18n::translate('Burial of a great-grandchild');
 	$text='';
 	break;
 
 case '_BURI_GGPA':	
-	// I18N: This is the GEDCOM label for "Burial of a great-grand-parent"
-	$title=i18n::translate('_BURI_GGPA');
+	$title=i18n::translate('Burial of a great-grand-parent');
 	$text='';
 	break;
 
 case '_BURI_GPAR':	
-	// I18N: This is the GEDCOM label for "Burial of a grand-parent"
-	$title=i18n::translate('_BURI_GPAR');
+	$title=i18n::translate('Burial of a grand-paren');
 	$text='';
 	break;
 
 case '_BURI_HSIB':	
-	// I18N: This is the GEDCOM label for "Burial of half-sibling"
-	$title=i18n::translate('_BURI_HSIB');
+	$title=i18n::translate('Burial of half-sibling');
 	$text='';
 	break;
 
 case '_BURI_MOTH':	
-	// I18N: This is the GEDCOM label for "Burial of mother"
-	$title=i18n::translate('_BURI_MOTH');
+	$title=i18n::translate('Burial of mother');
 	$text='';
 	break;
 
 case '_BURI_MSIB':	
-	// I18N: This is the GEDCOM label for "Burial of mother's sibling"
-	$title=i18n::translate('_BURI_MSIB');
+	$title=i18n::translate('Burial of mother\'s sibling');
 	$text='';
 	break;
 
 case '_BURI_NEPH':	
-	// I18N: This is the GEDCOM label for "Burial of a nephew or niece"
-	$title=i18n::translate('_BURI_NEPH');
+	$title=i18n::translate('Burial of a nephew or niece');
 	$text='';
 	break;
 
 case '_BURI_SIBL':	
-	// I18N: This is the GEDCOM label for "Burial of sibling"
-	$title=i18n::translate('_BURI_SIBL');
+	$title=i18n::translate('Burial of sibling');
 	$text='';
 	break;
 
 case '_BURI_SPOU':	
-	// I18N: This is the GEDCOM label for "Burial of spouse"
-	$title=i18n::translate('_BURI_SPOU');
+	$title=i18n::translate('Burial of spouse');
 	$text='';
 	break;
 
 case '_CHR_CHIL':	
-	// I18N: This is the GEDCOM label for "Christening of a child"
-	$title=i18n::translate('_CHR_CHIL');
+	$title=i18n::translate('Christening of a child');
 	$text='';
 	break;
 
 case '_CHR_COUS':	
-	// I18N: This is the GEDCOM label for "Christening of a first cousin"
-	$title=i18n::translate('_CHR_COUS');
+	$title=i18n::translate('Christening of a first cousin');
 	$text='';
 	break;
 
 case '_CHR_FSIB':	
-	// I18N: This is the GEDCOM label for "Christening of father's sibling"
-	$title=i18n::translate('_CHR_FSIB');
+	$title=i18n::translate('Christening of father\'s sibling');
 	$text='';
 	break;
 
 case '_CHR_GCHI':	
-	// I18N: This is the GEDCOM label for "Christening of a grandchild"
-	$title=i18n::translate('_CHR_GCHI');
+	$title=i18n::translate('Christening of a grandchild');
 	$text='';
 	break;
 
 case '_CHR_GGCH':	
-	// I18N: This is the GEDCOM label for "Christening of a great-grandchild"
-	$title=i18n::translate('_CHR_GGCH');
+	$title=i18n::translate('Christening of a great-grandchild');
 	$text='';
 	break;
 
 case '_CHR_HSIB':	
-	// I18N: This is the GEDCOM label for "Christening of half-sibling"
-	$title=i18n::translate('_CHR_HSIB');
+	$title=i18n::translate('Christening of half-sibling');
 	$text='';
 	break;
 
 case '_CHR_MSIB':	
-	// I18N: This is the GEDCOM label for "Christening of mother's sibling"
-	$title=i18n::translate('_CHR_MSIB');
+	$title=i18n::translate('Christening of mother\'s sibling');
 	$text='';
 	break;
 
 case '_CHR_NEPH':	
-	// I18N: This is the GEDCOM label for "Christening of a nephew or niece"
-	$title=i18n::translate('_CHR_NEPH');
+	$title=i18n::translate('Christening of a nephew or niece');
 	$text='';
 	break;
 
 case '_CHR_SIBL':	
-	// I18N: This is the GEDCOM label for "Christening of sibling"
-	$title=i18n::translate('_CHR_SIBL');
+	$title=i18n::translate('Christening of sibling');
 	$text='';
 	break;
 
 case '_COML':	
-	// I18N: This is the GEDCOM label for "Common Law Marriage"
-	$title=i18n::translate('_COML');
+	$title=i18n::translate('Common Law Marriage');
 	$text='';
 	break;
 
 case '_CREM_CHIL':	
-	// I18N: This is the GEDCOM label for "Cremation of a child"
-	$title=i18n::translate('_CREM_CHIL');
+	$title=i18n::translate('Cremation of a child');
 	$text='';
 	break;
 
 case '_CREM_COUS':	
-	// I18N: This is the GEDCOM label for "Cremation of a first cousin"
-	$title=i18n::translate('_CREM_COUS');
+	$title=i18n::translate('Cremation of a first cousin');
 	$text='';
 	break;
 
 case '_CREM_FATH':	
-	// I18N: This is the GEDCOM label for "Cremation of father"
-	$title=i18n::translate('_CREM_FATH');
+	$title=i18n::translate('Cremation of father');
 	$text='';
 	break;
 
 case '_CREM_FSIB':	
-	// I18N: This is the GEDCOM label for "Cremation of father's sibling"
-	$title=i18n::translate('_CREM_FSIB');
+	$title=i18n::translate('Cremation of father\'s sibling');
 	$text='';
 	break;
 
 case '_CREM_GCHI':	
-	// I18N: This is the GEDCOM label for "Cremation of a grandchild"
-	$title=i18n::translate('_CREM_GCHI');
+	$title=i18n::translate('Cremation of a grandchild');
 	$text='';
 	break;
 
 case '_CREM_GGCH':	
-	// I18N: This is the GEDCOM label for "Cremation of a great-grandchild"
-	$title=i18n::translate('_CREM_GGCH');
+	$title=i18n::translate('Cremation of a great-grandchild');
 	$text='';
 	break;
 
 case '_CREM_GGPA':	
-	// I18N: This is the GEDCOM label for "Cremation of a great-grand-parent"
-	$title=i18n::translate('_CREM_GGPA');
+	$title=i18n::translate('Cremation of a great-grand-parent');
 	$text='';
 	break;
 
 case '_CREM_GPAR':	
-	// I18N: This is the GEDCOM label for "Cremation of a grand-parent"
-	$title=i18n::translate('_CREM_GPAR');
+	$title=i18n::translate('Cremation of a grand-parent');
 	$text='';
 	break;
 
 case '_CREM_HSIB':	
-	// I18N: This is the GEDCOM label for "Cremation of half-sibling"
-	$title=i18n::translate('_CREM_HSIB');
+	$title=i18n::translate('Cremation of half-sibling');
 	$text='';
 	break;
 
 case '_CREM_MOTH':	
-	// I18N: This is the GEDCOM label for "Cremation of mother"
-	$title=i18n::translate('_CREM_MOTH');
+	$title=i18n::translate('Cremation of mother');
 	$text='';
 	break;
 
 case '_CREM_MSIB':	
-	// I18N: This is the GEDCOM label for "Cremation of mother's sibling"
-	$title=i18n::translate('_CREM_MSIB');
+	$title=i18n::translate('Cremation of mother\'s sibling');
 	$text='';
 	break;
 
 case '_CREM_NEPH':	
-	// I18N: This is the GEDCOM label for "Cremation of a nephew or niece"
-	$title=i18n::translate('_CREM_NEPH');
+	$title=i18n::translate('Cremation of a nephew or niece');
 	$text='';
 	break;
 
 case '_CREM_SIBL':	
-	// I18N: This is the GEDCOM label for "Cremation of sibling"
-	$title=i18n::translate('_CREM_SIBL');
+	$title=i18n::translate('Cremation of sibling');
 	$text='';
 	break;
 
 case '_CREM_SPOU':	
-	// I18N: This is the GEDCOM label for "Cremation of spouse"
-	$title=i18n::translate('_CREM_SPOU');
+	$title=i18n::translate('Cremation of spouse');
 	$text='';
 	break;
 
 case '_DBID':	
-	// I18N: This is the GEDCOM label for "Linked database ID"
-	$title=i18n::translate('_DBID');
+	$title=i18n::translate('Linked database ID');
 	$text='';
 	break;
 
 case '_DEAT_CHIL':	
-	// I18N: This is the GEDCOM label for "Death of a child"
-	$title=i18n::translate('_DEAT_CHIL');
+	$title=i18n::translate('Death of a child');
 	$text='';
 	break;
 
 case '_DEAT_COUS':	
-	// I18N: This is the GEDCOM label for "Death of a first cousin"
-	$title=i18n::translate('_DEAT_COUS');
+	$title=i18n::translate('Death of a first cousin');
 	$text='';
 	break;
 
 case '_DEAT_FATH':	
-	// I18N: This is the GEDCOM label for "Death of father"
-	$title=i18n::translate('_DEAT_FATH');
+	$title=i18n::translate('Death of father');
 	$text='';
 	break;
 
 case '_DEAT_FSIB':	
-	// I18N: This is the GEDCOM label for "Death of father's sibling"
-	$title=i18n::translate('_DEAT_FSIB');
+	$title=i18n::translate('Death of father\'s sibling');
 	$text='';
 	break;
 
 case '_DEAT_GCHI':	
-	// I18N: This is the GEDCOM label for "Death of a grandchild"
-	$title=i18n::translate('_DEAT_GCHI');
+	$title=i18n::translate('Death of a grandchild');
 	$text='';
 	break;
 
 case '_DEAT_GGCH':	
-	// I18N: This is the GEDCOM label for "Death of a great-grandchild"
-	$title=i18n::translate('_DEAT_GGCH');
+	$title=i18n::translate('Death of a great-grandchild');
 	$text='';
 	break;
 
 case '_DEAT_GGPA':	
-	// I18N: This is the GEDCOM label for "Death of a great-grand-parent"
-	$title=i18n::translate('_DEAT_GGPA');
+	$title=i18n::translate('Death of a great-grand-parent');
 	$text='';
 	break;
 
 case '_DEAT_GPAR':	
-	// I18N: This is the GEDCOM label for "Death of a grand-parent"
-	$title=i18n::translate('_DEAT_GPAR');
+	$title=i18n::translate('Death of a grand-parent');
 	$text='';
 	break;
 
 case '_DEAT_HSIB':	
-	// I18N: This is the GEDCOM label for "Death of half-sibling"
-	$title=i18n::translate('_DEAT_HSIB');
+	$title=i18n::translate('Death of half-sibling');
 	$text='';
 	break;
 
 case '_DEAT_MOTHhelp':	
-	// I18N: This is the GEDCOM label for "Death of mother"
-	$title=i18n::translate('_DEAT_MOTH');
+	$title=i18n::translate('Death of mother');
 	$text='';
 	break;
 
 case '_DEAT_MSIB':	
-	// I18N: This is the GEDCOM label for "Death of mother's sibling"
-	$title=i18n::translate('_DEAT_MSIB');
+	$title=i18n::translate('Death of mother\'s sibling');
 	$text='';
 	break;
 
 case '_DEAT_NEPH':	
-	// I18N: This is the GEDCOM label for "Death of a nephew or niece"
-	$title=i18n::translate('_DEAT_NEPH');
+	$title=i18n::translate('Death of a nephew or niece');
 	$text='';
 	break;
 
 case '_':	
-	// I18N: This is the GEDCOM label for "Death of sibling"
-	$title=i18n::translate('_DEAT_SIBL');
+	$title=i18n::translate('Death of sibling');
 	$text='';
 	break;
 
 case '_DEAT_SPOU':	
-	// I18N: This is the GEDCOM label for "Death of spouse"
-	$title=i18n::translate('_DEAT_SPOU');
+	$title=i18n::translate('Death of spouse');
 	$text='';
 	break;
 
 case '_DEG':	
-	// I18N: This is the GEDCOM label for "Degree"
-	$title=i18n::translate('_DEG');
+	$title=i18n::translate('Degree');
 	$text='';
 	break;
 
 case '_DETS':	
-	// I18N: This is the GEDCOM label for "Death of One Spouse"
-	$title=i18n::translate('_DETS');
+	$title=i18n::translate('Death of One Spouse');
 	$text='';
 	break;
 
 case '_EMAIL':	
-	// I18N: This is the GEDCOM label for "Email Address"
-	$title=i18n::translate('_EMAIL');
+	$title=i18n::translate('Email Address');
 	$text='';
 	break;
 
 case '_EYEC':	
-	// I18N: This is the GEDCOM label for "Eye Color"
-	$title=i18n::translate('_EYEC');
+	$title=i18n::translate('Eye Color');
 	$text='';
 	break;
 
 case '_FA1':	
-	// I18N: This is the GEDCOM label for "Fact 1"
-	$title=i18n::translate('_FA1');
+	$title=i18n::translate('Fact 1');
 	$text='';
 	break;
 
 case '_FA2':	
-	// I18N: This is the GEDCOM label for "Fact 2"
-	$title=i18n::translate('_FA2');
+	$title=i18n::translate('Fact 2');
 	$text='';
 	break;
 
 case '_FA3':	
-	// I18N: This is the GEDCOM label for "Fact 3"
-	$title=i18n::translate('_FA3');
+	$title=i18n::translate('Fact 3');
 	$text='';
 	break;
 
 case '_FA4':	
-	// I18N: This is the GEDCOM label for "Fact 4"
-	$title=i18n::translate('_FA4');
+	$title=i18n::translate('Fact 4');
 	$text='';
 	break;
 
 case '_FA5':	
-	// I18N: This is the GEDCOM label for "Fact 5"
-	$title=i18n::translate('_FA5');
+	$title=i18n::translate('Fact 5');
 	$text='';
 	break;
 
 case '_FA6':	
-	// I18N: This is the GEDCOM label for "Fact 6"
-	$title=i18n::translate('_FA6');
+	$title=i18n::translate('Fact 6');
 	$text='';
 	break;
 
 case '_FA7':	
-	// I18N: This is the GEDCOM label for "Fact 7"
-	$title=i18n::translate('_FA7');
+	$title=i18n::translate('Fact 7');
 	$text='';
 	break;
 
 case '_FA8':	
-	// I18N: This is the GEDCOM label for "Fact 8"
-	$title=i18n::translate('_FA8');
+	$title=i18n::translate('Fact 8');
 	$text='';
 	break;
 
 case '_FA9':	
-	// I18N: This is the GEDCOM label for "Fact 9"
-	$title=i18n::translate('_FA9');
+	$title=i18n::translate('Fact 9');
 	$text='';
 	break;
 
 case '_FA10':	
-	// I18N: This is the GEDCOM label for "Fact 10"
-	$title=i18n::translate('_FA10');
+	$title=i18n::translate('Fact 10');
 	$text='';
 	break;
 
 case '_FA11':	
-	// I18N: This is the GEDCOM label for "Fact 11"
-	$title=i18n::translate('_FA11');
+	$title=i18n::translate('Fact 11');
 	$text='';
 	break;
 
 case '_FA12':	
-	// I18N: This is the GEDCOM label for "Fact 12"
-	$title=i18n::translate('_FA12');
+	$title=i18n::translate('Fact 12');
 	$text='';
 	break;
 
 case '_FA13':	
-	// I18N: This is the GEDCOM label for "Fact 13"
-	$title=i18n::translate('_FA13');
+	$title=i18n::translate('Fact 13');
 	$text='';
 	break;
 
 case '_FAMC_EMIG':	
-	// I18N: This is the GEDCOM label for "Emigration of parents"
-	$title=i18n::translate('_FAMC_EMIG');
+	$title=i18n::translate('Emigration of parents');
 	$text='';
 	break;
 
 case '_FAMC_RESI':	
-	// I18N: This is the GEDCOM label for "Residence of parents"
-	$title=i18n::translate('_FAMC_RESI');
+	$title=i18n::translate('Residence of parents');
 	$text='';
 	break;
 
 case '_FNRL':	
-	// I18N: This is the GEDCOM label for "Funeral"
-	$title=i18n::translate('_FNRL');
+	$title=i18n::translate('Funeral');
 	$text='';
 	break;
 
 case '_FREL':	
-	// I18N: This is the GEDCOM label for "Relationship to Father"
-	$title=i18n::translate('_FREL');
+	$title=i18n::translate('Relationship to Father');
 	$text='';
 	break;
 
 case '_GEDF':	
-	// I18N: This is the GEDCOM label for "GEDCOM File"
-	$title=i18n::translate('_GEDF');
+	$title=i18n::translate('GEDCOM File');
 	$text='';
 	break;
 
 case '_HAIR':	
-	// I18N: This is the GEDCOM label for "Hair Color"
-	$title=i18n::translate('_HAIR');
+	$title=i18n::translate('Hair Color');
 	$text='';
 	break;
 
 case '_HEB':
-	// I18N: This is the GEDCOM label for "Hebrew"
-	$title=i18n::translate('_HEB');
+	$title=i18n::translate('Hebrew');
 	$text=i18n::translate('In many cultures it is customary to have a traditional name spelled in the traditional characters and also a romanized version of the name as it would be spelled or pronounced in languages based on the Latin alphabet, such as English.<br /><br />If you prefer to use the Latin alphabet to enter the name in the standard name fields, then you can use this field to enter the same name in the non-Latin alphabet such as Greek, Hebrew, Russian, Arabic, or Chinese.  Both versions of the name will appear in lists and charts.<br /><br />Although this field is labelled "Hebrew", it is not restricted to containing only Hebrew characters.');
 	break;
 
 case '_HEIG':	
-	// I18N: This is the GEDCOM label for "Height"
-	$title=i18n::translate('_HEIG');
+	$title=i18n::translate('Height');
 	$text='';
 	break;
 
 case '_HNM':	
-	// I18N: This is the GEDCOM label for "Hebrew Name"
-	$title=i18n::translate('_HNM');
+	$title=i18n::translate('Hebrew Name');
 	$text='';
 	break;
 
 case '_HOL':	
-	// I18N: This is the GEDCOM label for "Holocaust"
-	$title=i18n::translate('_HOL');
+	$title=i18n::translate('Holocaust');
 	$text='';
 	break;
 
 case '_INTE':	
-	// I18N: This is the GEDCOM label for "Interred"
-	$title=i18n::translate('_INTE');
+	$title=i18n::translate('Interred');
 	$text='';
 	break;
 
 case '_MARB_CHIL':	
-	// I18N: This is the GEDCOM label for "Marriage Bann of a child"
-	$title=i18n::translate('_MARB_CHIL');
+	$title=i18n::translate('Marriage Bann of a child');
 	$text='';
 	break;
 
 case '_MARB_COUS':	
-	// I18N: This is the GEDCOM label for "Marriage Bann of a first cousin"
-	$title=i18n::translate('_MARB_COUS');
+	$title=i18n::translate('Marriage Bann of a first cousin');
 	$text='';
 	break;
 
 case '_MARB_FAMC':	
-	// I18N: This is the GEDCOM label for "Marriage Bann of parents"
-	$title=i18n::translate('_MARB_FAMC');
+	$title=i18n::translate('Marriage Bann of parents');
 	$text='';
 	break;
 
 case '_MARB_FATH':	
-	// I18N: This is the GEDCOM label for "Marriage Bann of father"
-	$title=i18n::translate('_MARB_FATH');
+	$title=i18n::translate('Marriage Bann of father');
 	$text='';
 	break;
 
 case '_MARB_FSIB':	
-	// I18N: This is the GEDCOM label for "Marriage Bann of father's sibling"
-	$title=i18n::translate('_MARB_FSIB');
+	$title=i18n::translate('Marriage Bann of father\'s sibling');
 	$text='';
 	break;
 
 case '_MARB_GCHI':	
-	// I18N: This is the GEDCOM label for "Marriage Bann of a grandchild"
-	$title=i18n::translate('_MARB_GCHI');
+	$title=i18n::translate('Marriage Bann of a grandchild');
 	$text='';
 	break;
 
 case '_MARB_GGCH':	
-	// I18N: This is the GEDCOM label for "Marriage Bann of a great-grandchild"
-	$title=i18n::translate('_MARB_GGCH');
+	$title=i18n::translate('Marriage Bann of a great-grandchild');
 	$text='';
 	break;
 
 case '_MARB_HSIB':	
-	// I18N: This is the GEDCOM label for "Marriage Bann of half-sibling"
-	$title=i18n::translate('_MARB_HSIB');
+	$title=i18n::translate('Marriage Bann of half-sibling');
 	$text='';
 	break;
 
 case '_MARB_MOTH':	
-	// I18N: This is the GEDCOM label for "Marriage Bann of mother"
-	$title=i18n::translate('_MARB_MOTH');
+	$title=i18n::translate('Marriage Bann of mother');
 	$text='';
 	break;
 
 case '_MARB_MSIB':	
-	// I18N: This is the GEDCOM label for "Marriage Bann of mother's sibling"
-	$title=i18n::translate('_MARB_MSIB');
+	$title=i18n::translate('Marriage Bann of mother\'s sibling');
 	$text='';
 	break;
 
 case '_MARB_NEPH':	
-	// I18N: This is the GEDCOM label for "Marriage Bann of a nephew or niece"
-	$title=i18n::translate('_MARB_NEPH');
+	$title=i18n::translate('Marriage Bann of a nephew or niece');
 	$text='';
 	break;
 
 case '_MARB_SIBL':	
-	// I18N: This is the GEDCOM label for "Marriage Bann of sibling"
-	$title=i18n::translate('_MARB_SIBL');
+	$title=i18n::translate('Marriage Bann of sibling');
 	$text='';
 	break;
 
 case '_MARI':	
-	// I18N: This is the GEDCOM label for "Marriage Intention"
-	$title=i18n::translate('_MARI');
+	$title=i18n::translate('Marriage Intention');
 	$text='';
 	break;
 
 case '_MARNM':
-	// I18N: This is the GEDCOM label for "Married Name"
-	$title=i18n::translate('_MARNM');
+	$title=i18n::translate('Married Name');
 	$text=i18n::translate('Enter the married name for this person, using the same formatting rules that apply to the Name field.  This field is optional.<br /><br />For example, if Mary Jane Brown married John White, you might enter (without the quotation marks, of course)<ul><li>American usage:&nbsp;&nbsp;"Mary Jane Brown /White/"</li><li>European usage:&nbsp;&nbsp;"Mary Jane /White/"</li><li>Alternate European usage:&nbsp;&nbsp;"Mary Jane /White-Brown/" or "Mary Jane /Brown-White/"</li></ul>You should do this only if Mary Brown began calling herself by the new name after marrying John White.  In some places, Quebec (Canada) for example, it\'s illegal for names to be changed in this way.<br /><br />Men sometimes change their name after marriage, most often using the hyphenated form but occasionally taking the wife\'s surname.');
 	break;
 
 case '_PRIM':
-	// I18N: This is the GEDCOM label for "Highlighted Image"
-	$title=i18n::translate('_PRIM');
+	$title=i18n::translate('Highlighted Image');
 	$text=i18n::translate('Use this field to signal that this media item is the highlighted or primary item for the person it is attached to.  The highlighted image is the one that will be used on charts and on the Individual page.');
 	break;
 
 case '_MARNM_SURN':	
-	// I18N: This is the GEDCOM label for "Married Surname"
-	$title=i18n::translate('_MARNM_SURN');
+	$title=i18n::translate('Married Surname');
 	$text='';
 	break;
 
 case '_MARR_CHIL':	
-	// I18N: This is the GEDCOM label for "Marriage of a child"
-	$title=i18n::translate('_MARR_CHIL');
+	$title=i18n::translate('Marriage of a child');
 	$text='';
 	break;
 
 case '_MARR_COUS':	
-	// I18N: This is the GEDCOM label for "Marriage of a first cousin"
-	$title=i18n::translate('_MARR_COUS');
+	$title=i18n::translate('Marriage of a first cousin');
 	$text='';
 	break;
 
 case '_MARR_FAMC':	
-	// I18N: This is the GEDCOM label for "Marriage of parents"
-	$title=i18n::translate('_MARR_FAMC');
+	$title=i18n::translate('Marriage of parents');
 	$text='';
 	break;
 
 case '_MARR_FATH':	
-	// I18N: This is the GEDCOM label for "Marriage of father"
-	$title=i18n::translate('_MARR_FATH');
+	$title=i18n::translate('Marriage of father');
 	$text='';
 	break;
 
 case '_MARR_FSIB':	
-	// I18N: This is the GEDCOM label for "Marriage of father's sibling"
-	$title=i18n::translate('_MARR_FSIB');
+	$title=i18n::translate('Marriage of father\'s sibling');
 	$text='';
 	break;
 
 case '_MARR_GCHI':	
-	// I18N: This is the GEDCOM label for "Marriage of a grandchild"
-	$title=i18n::translate('_MARR_GCHI');
+	$title=i18n::translate('Marriage of a grandchild');
 	$text='';
 	break;
 
 case '_MARR_GGCH':	
-	// I18N: This is the GEDCOM label for "Marriage of a great-grandchild"
-	$title=i18n::translate('_MARR_GGCH');
+	$title=i18n::translate('Marriage of a great-grandchild');
 	$text='';
 	break;
 
 case '_MARR_HSIB':	
-	// I18N: This is the GEDCOM label for "Marriage of half-sibling"
-	$title=i18n::translate('_MARR_HSIB');
+	$title=i18n::translate('Marriage of half-sibling');
 	$text='';
 	break;
 
 case '_MARR_MOTH':	
-	// I18N: This is the GEDCOM label for "Marriage of mother"
-	$title=i18n::translate('_MARR_MOTH');
+	$title=i18n::translate('Marriage of mother');
 	$text='';
 	break;
 
 case '_MARR_MSIB':	
-	// I18N: This is the GEDCOM label for "Marriage of mother's sibling"
-	$title=i18n::translate('_MARR_MSIB');
+	$title=i18n::translate('Marriage of mother\'s sibling');
 	$text='';
 	break;
 
 case '_MARR_NEPH':	
-	// I18N: This is the GEDCOM label for "Marriage of a nephew or niece"
-	$title=i18n::translate('_MARR_NEPH');
+	$title=i18n::translate('Marriage of a nephew or niece');
 	$text='';
 	break;
 
 case '_MARR_SIBL':	
-	// I18N: This is the GEDCOM label for "Marriage of sibling"
-	$title=i18n::translate('_MARR_SIBL');
+	$title=i18n::translate('Marriage of sibling');
 	$text='';
 	break;
 
 case '_MBON':	
-	// I18N: This is the GEDCOM label for "Marriage Bond"
-	$title=i18n::translate('_MBON');
+	$title=i18n::translate('Marriage Bond');
 	$text='';
 	break;
 
 case '_MDCL':	
-	// I18N: This is the GEDCOM label for "Medical"
-	$title=i18n::translate('_MDCL');
+	$title=i18n::translate('Medical');
 	$text='';
 	break;
 
 case '_MEDC':	
-	// I18N: This is the GEDCOM label for "Medical Condition"
-	$title=i18n::translate('_MEDC');
+	$title=i18n::translate('Medical Condition');
 	$text='';
 	break;
 
 case '_MEND':	
-	// I18N: This is the GEDCOM label for "Marriage Ending Status"
-	$title=i18n::translate('_MEND');
+	$title=i18n::translate('Marriage Ending Status');
 	$text='';
 	break;
 
 case '_MILI':	
-	// I18N: This is the GEDCOM label for "Military"
-	$title=i18n::translate('_MILI');
+	$title=i18n::translate('Military');
 	$text='';
 	break;
 
 case '_MILT':	
-	// I18N: This is the GEDCOM label for "Military Service"
-	$title=i18n::translate('_MILT');
+	$title=i18n::translate('Military Service');
 	$text='';
 	break;
 
 case '_MREL':	
-	// I18N: This is the GEDCOM label for "Relationship to Mother"
-	$title=i18n::translate('_MREL');
+	$title=i18n::translate('Relationship to Mother');
 	$text='';
 	break;
 
 case '_MSTAT':	
-	// I18N: This is the GEDCOM label for "Marriage Beginning Status"
-	$title=i18n::translate('_MSTAT');
+	$title=i18n::translate('Marriage Beginning Status');
 	$text='';
 	break;
 
 case '_NAME':	
-	// I18N: This is the GEDCOM label for "Mailing Name"
-	$title=i18n::translate('_NAME');
+	$title=i18n::translate('Mailing Name');
 	$text='';
 	break;
 
 case '_NAMS':	
-	// I18N: This is the GEDCOM label for "Namesake"
-	$title=i18n::translate('_NAMS');
+	$title=i18n::translate('Namesake');
 	$text='';
 	break;
 
 case '_NLIV':	
-	// I18N: This is the GEDCOM label for "Not living"
-	$title=i18n::translate('_NLIV');
+	$title=i18n::translate('Not living');
 	$text='';
 	break;
 
 case '_NMAR':	
-	// I18N: This is the GEDCOM label for "Never married"
-	$title=i18n::translate('_NMAR');
+	$title=i18n::translate('Never married');
 	$text='';
 	break;
 
 case '_NMR':	
-	// I18N: This is the GEDCOM label for "Not married"
-	$title=i18n::translate('_NMR');
+	$title=i18n::translate('Not married');
 	$text='';
 	break;
 
 case '_PGVU':	
-	// I18N: This is the GEDCOM label for "by"
-	$title=i18n::translate('_PGVU');
+	$title=i18n::translate('by');
 	$text='';
 	break;
 
 case '_PRMN':	
-	// I18N: This is the GEDCOM label for "Permanent Number"
-	$title=i18n::translate('_PRMN');
+	$title=i18n::translate('Permanent Number');
 	$text='';
 	break;
 
 case '_SCBK':	
-	// I18N: This is the GEDCOM label for "Scrapbook"
-	$title=i18n::translate('_SCBK');
+	$title=i18n::translate('Scrapbook');
 	$text='';
 	break;
 
 case '_SEPR':	
-	// I18N: This is the GEDCOM label for "Separated"
-	$title=i18n::translate('_SEPR');
+	$title=i18n::translate('Separated');
 	$text='';
 	break;
 
 case '_SSHOW':	
-	// I18N: This is the GEDCOM label for "Slide Show"
-	$title=i18n::translate('_SSHOW');
+	$title=i18n::translate('Slide Show');
 	$text='';
 	break;
 
 case '_STAT':	
-	// I18N: This is the GEDCOM label for "Marriage Status"
-	$title=i18n::translate('_STAT');
+	$title=i18n::translate('Marriage Status');
 	$text='';
 	break;
 
 case '_SUBQ':	
-	// I18N: This is the GEDCOM label for "Short Version"
-	$title=i18n::translate('_SUBQ');
+	$title=i18n::translate('Short Version');
 	$text='';
 	break;
 
 case '_THUM':
-	// I18N: This is the GEDCOM label for "Always use main image?"
-	$title=i18n::translate('_THUM');
+	$title=i18n::translate('Always use main image?');
 	$text=i18n::translate('This option lets you override the usual selection for a thumbnail image.<br /><br />The GEDCOM has a configuration option that specifies whether PhpGedView should send the large or the small image to the browser whenever the current page requires a thumbnail.  The &laquo;Always use main image?&raquo; option, when set to <b>Yes</b>, temporarily overrides the setting of the GEDCOM configuration option, so that PhpGedView will always send the large image.  You cannot force PhpGedView to send the small image when the GEDCOM configuration specifies that large images should always be used.<br /><br />PhpGedView does not re-size the image being sent; the browser does this according to the page specifications it has also received.  This can have undesirable consequences when the image being sent is not truly a thumbnail where PhpGedView is expecting to send a small image.  This is not an error:  There are occasions where it may be desirable to display a large image in places where one would normally expect to see a thumbnail-sized picture.<br /><br />You should avoid setting the &laquo;Always use main image?&raquo; option to <b>Yes</b>.  This choice will cause excessive amounts of image-related data to be sent to the browser, only to have the browser discard the excess.  Page loads, particularly of charts with many images, can be seriously slowed.');
 	break;
 
 case '_TODO':	
-	// I18N: This is the GEDCOM label for "To Do Item"
-	$title=i18n::translate('_TODO');
+	$title=i18n::translate('To Do Item');
 	$text='';
 	break;
 
 case '_TYPE':	
-	// I18N: This is the GEDCOM label for "Media Type"
-	$title=i18n::translate('_TYPE');
+	$title=i18n::translate('Media Type');
 	$text='';
 	break;
 
 case '_UID':	
-	// I18N: This is the GEDCOM label for "Globally unique Identifier"
-	$title=i18n::translate('_UID');
+	$title=i18n::translate('Globally Unique Identifier');
 	$text='';
 	break;
 
 case '_URL':	
-	// I18N: This is the GEDCOM label for "Web URL"
-	$title=i18n::translate('_URL');
+	$title=i18n::translate('Web URL');
 	$text='';
 	break;
 
 case '_WEIG':	
-	// I18N: This is the GEDCOM label for "Weight"
-	$title=i18n::translate('_WEIG');
+	$title=i18n::translate('Weight');
 	$text='';
 	break;
 
 case '_YART':	
-	// I18N: This is the GEDCOM label for "Yahrzeit"
-	$title=i18n::translate('_YART');
+	$title=i18n::translate('Yahrzeit');
 	$text='';
 	break;
 
 case '__BRTM_CHIL':	
-	// I18N: This is the GEDCOM label for "Brit Mila of a child"
-	$title=i18n::translate('__BRTM_CHIL');
+	$title=i18n::translate('Brit Mila of a child');
 	$text='';
 	break;
 
 case '__BRTM_COUS':	
-	// I18N: This is the GEDCOM label for "Brit Mila of a first cousin"
-	$title=i18n::translate('__BRTM_COUS');
+	$title=i18n::translate('Brit Mila of a first cousin');
 	$text='';
 	break;
 
 case '__BRTM_FSIB':	
-	// I18N: This is the GEDCOM label for "Brit Mila of father's sibling"
-	$title=i18n::translate('__BRTM_FSIB');
+	$title=i18n::translate('Brit Mila of father\'s sibling');
 	$text='';
 	break;
 
 case '__BRTM_GCHI':	
-	// I18N: This is the GEDCOM label for "Brit Mila of a grandchild"
-	$title=i18n::translate('__BRTM_GCHI');
+	$title=i18n::translate('Brit Mila of a grandchild');
 	$text='';
 	break;
 
 case '__BRTM_GGCH':	
-	// I18N: This is the GEDCOM label for "Brit Mila of a great-grandchild"
-	$title=i18n::translate('__BRTM_GGCH');
+	$title=i18n::translate('Brit Mila of a great-grandchild');
 	$text='';
 	break;
 
 case '__BRTM_HSIB':	
-	// I18N: This is the GEDCOM label for "Brit Mila of half-sibling"
-	$title=i18n::translate('__BRTM_HSIB');
+	$title=i18n::translate('Brit Mila of half-sibling');
 	$text='';
 	break;
 
 case '__BRTM_MSIB':	
-	// I18N: This is the GEDCOM label for "Brit Mila of mother's sibling"
-	$title=i18n::translate('__BRTM_MSIB');
+	$title=i18n::translate('Brit Mila of mother\'s sibling');
 	$text='';
 	break;
 
 case '__BRTM_NEPH':	
-	// I18N: This is the GEDCOM label for "Brit Mila of a nephew"
-	$title=i18n::translate('__BRTM_NEPH');
+	$title=i18n::translate('Brit Mila of a nephew');
 	$text='';
 	break;
 
 case '__BRTM_SIBL':	
-	// I18N: This is the GEDCOM label for "Brit Mila of sibling"
-	$title=i18n::translate('__BRTM_SIBL');
+	$title=i18n::translate('Brit Mila of sibling');
 	$text='';
 	break;
 
