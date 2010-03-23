@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: i18n@webtrees.net\n"
-"POT-Creation-Date: 2010-03-22 20:49+0000\n"
+"POT-Creation-Date: 2010-03-23 17:05+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -122,8 +122,8 @@ msgstr ""
 msgid "Oldest living people"
 msgstr ""
 
-#: ../statistics.php:160 ../editconfig_gedcom.php:1395
-#: ../editconfig_gedcom.php:1396 ../includes/classes/class_stats.php:3542
+#: ../statistics.php:160 ../editconfig_gedcom.php:1385
+#: ../editconfig_gedcom.php:1386 ../includes/classes/class_stats.php:3542
 msgid "Names"
 msgstr "Navn"
 
@@ -290,7 +290,7 @@ msgstr ""
 msgid "Media objects"
 msgstr "Mediaobjekter"
 
-#: ../statistics.php:335 ../statistics.php:372 ../editconfig_gedcom.php:1543
+#: ../statistics.php:335 ../statistics.php:372 ../editconfig_gedcom.php:1533
 #: ../placelist.php:413 ../search.php:209
 #: ../includes/functions/functions_rss.php:178
 #: ../includes/functions/functions_print_lists.php:838
@@ -308,7 +308,7 @@ msgstr "Mediaobjekter"
 msgid "Sources"
 msgstr "Kilder"
 
-#: ../statistics.php:336 ../editconfig_gedcom.php:1542
+#: ../statistics.php:336 ../editconfig_gedcom.php:1532
 #: ../includes/controllers/search_ctrl.php:820
 #: ../modules/lightbox/functions/lb_call_js.php:53
 #: ../modules/lightbox/functions/lb_call_js.php:65
@@ -338,7 +338,7 @@ msgstr ""
 msgid "Last event"
 msgstr ""
 
-#: ../statistics.php:364 ../editconfig_gedcom.php:1544
+#: ../statistics.php:364 ../editconfig_gedcom.php:1534
 #: ../includes/functions/functions_print_lists.php:852
 #: ../includes/functions/functions_print_lists.php:991
 #: ../includes/functions/functions_print_lists.php:1120
@@ -687,8 +687,8 @@ msgstr "ID til startperson&nbsp;"
 msgid "Box width"
 msgstr "Boksbredde"
 
-#: ../ancestry.php:85 ../descendancy.php:71 ../editconfig_gedcom.php:1468
-#: ../editconfig_gedcom.php:1469
+#: ../ancestry.php:85 ../descendancy.php:71 ../editconfig_gedcom.php:1458
+#: ../editconfig_gedcom.php:1459
 msgid "Layout"
 msgstr ""
 
@@ -880,11 +880,11 @@ msgstr "Valg:"
 msgid "Orientation"
 msgstr "Retning"
 
-#: ../pedigree.php:119 ../editconfig_gedcom.php:1497
+#: ../pedigree.php:119 ../editconfig_gedcom.php:1487
 msgid "Portrait"
 msgstr "Stående tre"
 
-#: ../pedigree.php:122 ../editconfig_gedcom.php:1496
+#: ../pedigree.php:122 ../editconfig_gedcom.php:1486
 msgid "Landscape"
 msgstr "Liggende tre"
 
@@ -1073,6 +1073,76 @@ msgstr "Det er gjort endringer i denne slektsbasen."
 msgid "Accept / Reject Changes"
 msgstr "Godta / Avvis endring(ene)"
 
+#. I18N: This is the name of theme color-scheme
+#: ../themes/colors/theme.php:57
+msgid "Aqua Marine"
+msgstr ""
+
+#. I18N: This is the name of theme color-scheme
+#: ../themes/colors/theme.php:58
+msgid "Ash"
+msgstr ""
+
+#. I18N: This is the name of theme color-scheme
+#: ../themes/colors/theme.php:59
+msgid "Belgian Chocolate"
+msgstr ""
+
+#. I18N: This is the name of theme color-scheme
+#: ../themes/colors/theme.php:60
+msgid "Blue Lagoon"
+msgstr ""
+
+#. I18N: This is the name of theme color-scheme
+#: ../themes/colors/theme.php:61
+msgid "Blue Marine"
+msgstr ""
+
+#. I18N: This is the name of theme color-scheme
+#: ../themes/colors/theme.php:62
+msgid "Cold Day"
+msgstr ""
+
+#. I18N: This is the name of theme color-scheme
+#: ../themes/colors/theme.php:63
+msgid "Green Beam"
+msgstr ""
+
+#. I18N: This is the name of theme color-scheme
+#: ../themes/colors/theme.php:64
+msgid "Mediterranio"
+msgstr ""
+
+#. I18N: This is the name of theme color-scheme
+#: ../themes/colors/theme.php:65
+msgid "Mercury"
+msgstr ""
+
+#. I18N: This is the name of theme color-scheme
+#: ../themes/colors/theme.php:66
+msgid "Nocturnal"
+msgstr ""
+
+#. I18N: This is the name of theme color-scheme
+#: ../themes/colors/theme.php:67
+msgid "Olivia"
+msgstr ""
+
+#. I18N: This is the name of theme color-scheme
+#: ../themes/colors/theme.php:68
+msgid "Pink Plstic"
+msgstr ""
+
+#. I18N: This is the name of theme color-scheme
+#: ../themes/colors/theme.php:69
+msgid "Shiny Tomato"
+msgstr ""
+
+#. I18N: This is the name of theme color-scheme
+#: ../themes/colors/theme.php:70
+msgid "Teal Top"
+msgstr ""
+
 #: ../hourglass.php:42 ../hourglass.php:47 ../hourglass.php:51
 #: ../fanchart.php:309 ../includes/functions/functions_print.php:147
 #: ../includes/functions/functions_print.php:148
@@ -1108,11 +1178,11 @@ msgstr "Legge til nye innstillinger for personvern?"
 
 #: ../downloadgedcom.php:153 ../downloadgedcom.php:156 ../indilist.php:128
 #: ../indilist.php:147 ../install.php:872 ../install.php:931
-#: ../editconfig_gedcom.php:1981 ../editconfig_gedcom.php:2024
+#: ../editconfig_gedcom.php:1971 ../editconfig_gedcom.php:2014
 #: ../editgedcoms.php:260 ../editgedcoms.php:311 ../useradmin.php:51
 #: ../useradmin.php:623 ../useradmin.php:786 ../uploadgedcom.php:840
 #: ../clippings.php:205 ../includes/family_nav.php:727
-#: ../includes/functions/functions_edit.php:1509
+#: ../includes/functions/functions_edit.php:1521
 #: ../includes/classes/class_stats.php:823
 #: ../modules/lightbox/lb_editconfig.php:176
 #: ../modules/lightbox/lb_editconfig.php:181
@@ -1197,7 +1267,7 @@ msgid "NOTE: Large databases can take a long time to process before downloading.
 msgstr "NB! Store slektsfiler (GEDCOM) kan ta lang tid å forberede før en nedlastning (download).  Dersom PHP melder at tiden har gått ut før nedlastningen er ferdig, så kan det være at du ikke har mottatt hele filen.  For å sjekke om den nedlastede slektsfilen er korrekt, kan se om filen inneholder linjen <b>0 TRLR</b> på slutten.  Som en tommelfinger-regel vil tiden det tar å laste ned slektsfilen, være like lang som det tok å importere den (avhengig av hastigheten på internett-tilkoblingen din)."
 
 #: ../indilist.php:96 ../indilist.php:170 ../indilist.php:172
-#: ../indilist.php:259 ../indilist.php:261 ../editconfig_gedcom.php:1547
+#: ../indilist.php:259 ../indilist.php:261 ../editconfig_gedcom.php:1537
 #: ../includes/classes/class_stats.php:3541
 #: ../includes/classes/class_stats_ui.php:247
 #: ../modules/lightbox/functions/lb_indi_doors_0.php:63
@@ -1285,7 +1355,7 @@ msgstr "Fant ikke filen."
 msgid "Selected Report"
 msgstr "Valgt rapport"
 
-#: ../reportengine.php:315 ../includes/functions/functions_edit.php:1026
+#: ../reportengine.php:315 ../includes/functions/functions_edit.php:1038
 msgid "Select a date"
 msgstr "Velg en dato"
 
@@ -1405,8 +1475,8 @@ msgstr "Fjern"
 #: ../manageservers.php:256 ../manageservers.php:258 ../manageservers.php:303
 #: ../manageservers.php:305 ../manageservers.php:479 ../index_edit.php:472
 #: ../index_edit.php:492 ../clippings.php:140 ../clippings.php:261
-#: ../includes/functions/functions_print.php:2134
-#: ../includes/functions/functions_print.php:2184
+#: ../includes/functions/functions_print.php:2114
+#: ../includes/functions/functions_print.php:2164
 #: ../includes/classes/class_stats_ui.php:191
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:183
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:185
@@ -1561,8 +1631,8 @@ msgid "This record has been marked for deletion upon admin approval."
 msgstr "Denne oppføringen er merket for sletting og venter på godkjenning av admin."
 
 #: ../individual.php:272 ../timeline.php:404 ../autocomplete.php:199
-#: ../includes/functions/functions_print.php:1868
-#: ../includes/functions/functions_print.php:1903
+#: ../includes/functions/functions_print.php:1848
+#: ../includes/functions/functions_print.php:1883
 #: ../includes/classes/class_stats.php:1781
 #: ../includes/classes/class_stats.php:2660
 #: ../includes/classes/class_stats.php:2661
@@ -1787,11 +1857,11 @@ msgstr "Bruk databasen til å skaffe UTF-8 kollasjoner"
 #: ../useradmin.php:652 ../branches.php:169 ../uploadgedcom.php:501
 #: ../uploadgedcom.php:515 ../uploadgedcom.php:632 ../uploadgedcom.php:667
 #: ../uploadgedcom.php:728 ../includes/functions/functions_edit.php:71
-#: ../includes/functions/functions_edit.php:1431
-#: ../includes/functions/functions_edit.php:1530
+#: ../includes/functions/functions_edit.php:1443
+#: ../includes/functions/functions_edit.php:1542
 #: ../includes/functions/functions_print_lists.php:306
 #: ../includes/functions/functions_print_lists.php:685
-#: ../includes/functions/functions_print.php:1917
+#: ../includes/functions/functions_print.php:1897
 #: ../includes/functions/functions_print_facts.php:1626
 #: ../includes/functions/functions_print_facts.php:1636
 #: ../includes/classes/class_stats.php:3748
@@ -1822,7 +1892,7 @@ msgstr "Ja"
 #: ../useradmin.php:653 ../uploadgedcom.php:505 ../uploadgedcom.php:516
 #: ../uploadgedcom.php:632 ../uploadgedcom.php:668 ../uploadgedcom.php:729
 #: ../includes/functions/functions_edit.php:71
-#: ../includes/functions/functions_edit.php:1533
+#: ../includes/functions/functions_edit.php:1545
 #: ../includes/functions/functions_print_lists.php:687
 #: ../includes/functions/functions_print_facts.php:313
 #: ../includes/functions/functions_print_facts.php:1626
@@ -1905,28 +1975,27 @@ msgstr "Bruk enkel epost-hode i eksterne epost-meldinger"
 msgid "Archive log files"
 msgstr "Arkiver logfiler"
 
-#: ../install.php:837 ../editconfig_gedcom.php:1071
-#: ../editconfig_gedcom.php:1084
+#: ../install.php:837 ../includes/functions/functions_edit.php:78
 msgid "Disable logging"
 msgstr "Ingen logging"
 
-#: ../install.php:838 ../editconfig_gedcom.php:1072
-#: ../editconfig_gedcom.php:1085 ../editgedcoms.php:261 ../editgedcoms.php:312
+#: ../install.php:838 ../editgedcoms.php:261 ../editgedcoms.php:312
+#: ../includes/functions/functions_edit.php:79
 msgid "Daily"
 msgstr "Daglig"
 
-#: ../install.php:839 ../editconfig_gedcom.php:1073
-#: ../editconfig_gedcom.php:1086 ../editgedcoms.php:262 ../editgedcoms.php:313
+#: ../install.php:839 ../editgedcoms.php:262 ../editgedcoms.php:313
+#: ../includes/functions/functions_edit.php:80
 msgid "Weekly"
 msgstr "Ukentlig"
 
-#: ../install.php:840 ../editconfig_gedcom.php:1074
-#: ../editconfig_gedcom.php:1087 ../editgedcoms.php:263 ../editgedcoms.php:314
+#: ../install.php:840 ../editgedcoms.php:263 ../editgedcoms.php:314
+#: ../includes/functions/functions_edit.php:81
 msgid "Monthly"
 msgstr "Månedlig"
 
-#: ../install.php:841 ../editconfig_gedcom.php:1075
-#: ../editconfig_gedcom.php:1088 ../editgedcoms.php:264 ../editgedcoms.php:315
+#: ../install.php:841 ../editgedcoms.php:264 ../editgedcoms.php:315
+#: ../includes/functions/functions_edit.php:82
 msgid "Yearly"
 msgstr "Årlig"
 
@@ -2108,7 +2177,7 @@ msgid "Enter Individual ID"
 msgstr "Angi PersonID"
 
 #: ../inverselink.php:161 ../includes/family_nav.php:554
-#: ../includes/functions/functions_edit.php:1678
+#: ../includes/functions/functions_edit.php:1690
 #: ../modules/family_nav/family_nav.php:580
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1074
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1081
@@ -2130,7 +2199,7 @@ msgstr ""
 
 #. I18N: This is the GEDCOM label for "Shared Note"
 #: ../inverselink.php:205 ../note.php:96 ../note.php:97
-#: ../includes/functions/functions_edit.php:1365
+#: ../includes/functions/functions_edit.php:1377
 #: ../includes/functions/functions_print.php:1185
 #: ../modules/GEDFact_assistant/_CENS/census_4_text.php:60
 #: ../edit_interface.php:860 ../edit_interface.php:1126 ../help_text.php:1237
@@ -2144,7 +2213,7 @@ msgstr ""
 msgid "Set link"
 msgstr "Lag kobling"
 
-#: ../gedrecord.php:43 ../editconfig_gedcom.php:2026
+#: ../gedrecord.php:43 ../editconfig_gedcom.php:2016
 #: ../includes/functions/functions_print_lists.php:1534
 #: ../includes/functions/functions_print_lists.php:1684 ../edit_merge.php:153
 #: ../blocks/todo.php:86
@@ -2181,11 +2250,11 @@ msgstr "Endre hovedsiden til denne slektsbasen"
 msgid "Compact Chart"
 msgstr "Kompakt"
 
-#: ../compact.php:98 ../editconfig_gedcom.php:1418 ../help_text.php:3520
+#: ../compact.php:98 ../editconfig_gedcom.php:1408 ../help_text.php:3520
 msgid "Show ID numbers next to names"
 msgstr "Vis ID-nummer ved siden av navn?"
 
-#: ../compact.php:109 ../editconfig_gedcom.php:1190 ../help_text.php:3515
+#: ../compact.php:109 ../editconfig_gedcom.php:1180 ../help_text.php:3515
 msgid "Show highlight images in people boxes"
 msgstr "Vis hovedbilde ved siden av personnavn i diagrammet?"
 
@@ -2347,21 +2416,21 @@ msgstr "Søketekst"
 msgid "Clear Search"
 msgstr "Blank søk"
 
-#: ../editconfig_gedcom.php:863 ../editconfig_gedcom.php:1101
-#: ../editconfig_gedcom.php:1292 ../editconfig_gedcom.php:1379
-#: ../editconfig_gedcom.php:1457 ../editconfig_gedcom.php:1829
-#: ../editconfig_gedcom.php:2042 ../editconfig_gedcom.php:2103
-#: ../editconfig_gedcom.php:2199 ../editconfig_gedcom.php:2327
+#: ../editconfig_gedcom.php:863 ../editconfig_gedcom.php:1091
+#: ../editconfig_gedcom.php:1282 ../editconfig_gedcom.php:1369
+#: ../editconfig_gedcom.php:1447 ../editconfig_gedcom.php:1819
+#: ../editconfig_gedcom.php:2032 ../editconfig_gedcom.php:2093
+#: ../editconfig_gedcom.php:2189 ../editconfig_gedcom.php:2317
 #: ../modules/lightbox/lb_editconfig.php:228
 #: ../modules/googlemap/editconfig.php:443 ../edit_privacy.php:790
 msgid "Save configuration"
 msgstr "Lagre konfigurasjon"
 
-#: ../editconfig_gedcom.php:865 ../editconfig_gedcom.php:1103
-#: ../editconfig_gedcom.php:1294 ../editconfig_gedcom.php:1381
-#: ../editconfig_gedcom.php:1459 ../editconfig_gedcom.php:1831
-#: ../editconfig_gedcom.php:2044 ../editconfig_gedcom.php:2105
-#: ../editconfig_gedcom.php:2201 ../editconfig_gedcom.php:2329
+#: ../editconfig_gedcom.php:865 ../editconfig_gedcom.php:1093
+#: ../editconfig_gedcom.php:1284 ../editconfig_gedcom.php:1371
+#: ../editconfig_gedcom.php:1449 ../editconfig_gedcom.php:1821
+#: ../editconfig_gedcom.php:2034 ../editconfig_gedcom.php:2095
+#: ../editconfig_gedcom.php:2191 ../editconfig_gedcom.php:2319
 #: ../imageview.php:182 ../includes/media_reorder.php:61
 #: ../includes/media_reorder.php:214
 #: ../includes/functions/functions_print_lists.php:106
@@ -2495,539 +2564,539 @@ msgstr "Prefiks til Media-ID"
 msgid "Archive SearchLog files"
 msgstr "Arkivere søke-logg-filer"
 
-#: ../editconfig_gedcom.php:1081 ../help_text.php:2885
+#: ../editconfig_gedcom.php:1076 ../help_text.php:2885
 msgid "Archive ChangeLog files"
 msgstr "Arkiver endringsloggfiler"
 
-#: ../editconfig_gedcom.php:1094 ../help_text.php:3690
+#: ../editconfig_gedcom.php:1084 ../help_text.php:3690
 msgid "PHP time limit"
 msgstr "PHP tidsbegrensning"
 
-#: ../editconfig_gedcom.php:1110 ../editconfig_gedcom.php:1111
+#: ../editconfig_gedcom.php:1100 ../editconfig_gedcom.php:1101
 msgid "Multimedia"
 msgstr ""
 
-#: ../editconfig_gedcom.php:1118 ../help_text.php:3260
+#: ../editconfig_gedcom.php:1108 ../help_text.php:3260
 msgid "Enable multimedia features"
 msgstr "Aktivere multimedia-valg"
 
-#: ../editconfig_gedcom.php:1128 ../editconfig_gedcom.php:1129
+#: ../editconfig_gedcom.php:1118 ../editconfig_gedcom.php:1119
 msgid "General"
 msgstr "Generelt"
 
-#: ../editconfig_gedcom.php:1136 ../help_text.php:3185
+#: ../editconfig_gedcom.php:1126 ../help_text.php:3185
 msgid "Keep links"
 msgstr "Behold URL-linker"
 
-#: ../editconfig_gedcom.php:1144 ../help_text.php:3180
+#: ../editconfig_gedcom.php:1134 ../help_text.php:3180
 msgid "MultiMedia directory"
 msgstr "Mappe for Multimedia"
 
-#: ../editconfig_gedcom.php:1148
+#: ../editconfig_gedcom.php:1138
 msgid "Media path should not contain a drive letter; media may not be displayed."
 msgstr "Stien til Medier bør ikke inneholde en stasjons-bokstav, fordi da vil kanskje ikke Medier bli vist."
 
-#: ../editconfig_gedcom.php:1154 ../help_text.php:3175
+#: ../editconfig_gedcom.php:1144 ../help_text.php:3175
 msgid "Multi-Media directory levels to keep"
 msgstr "Antall mappenivåer for multimedia"
 
-#: ../editconfig_gedcom.php:1160 ../help_text.php:3685
+#: ../editconfig_gedcom.php:1150 ../help_text.php:3685
 msgid "Width of generated thumbnails"
 msgstr "Bredde for laging av miniatyrbilder"
 
-#: ../editconfig_gedcom.php:1166 ../help_text.php:2870
+#: ../editconfig_gedcom.php:1156 ../help_text.php:2870
 msgid "Automatically generated thumbnails"
 msgstr "Lage automatisk miniatyrbilder"
 
-#: ../editconfig_gedcom.php:1174 ../help_text.php:3735
+#: ../editconfig_gedcom.php:1164 ../help_text.php:3735
 msgid "Use thumbnail"
 msgstr "Bruk miniatyrbilde som hovedbilde på faktasiden til personer"
 
-#: ../editconfig_gedcom.php:1182 ../help_text.php:3730
+#: ../editconfig_gedcom.php:1172 ../help_text.php:3730
 msgid "Use silhouettes"
 msgstr ""
 
-#: ../editconfig_gedcom.php:1198 ../help_text.php:3710
+#: ../editconfig_gedcom.php:1188 ../help_text.php:3710
 msgid "Use Media Viewer"
 msgstr "Bruk Mediaviser"
 
-#: ../editconfig_gedcom.php:1206 ../help_text.php:3560
+#: ../editconfig_gedcom.php:1196 ../help_text.php:3560
 msgid "Show file name in Media Viewer"
 msgstr "Vis filnavn i Mediaviser"
 
-#: ../editconfig_gedcom.php:1214 ../help_text.php:3555
+#: ../editconfig_gedcom.php:1204 ../help_text.php:3555
 msgid "Show download link in Media Viewer"
 msgstr "Vis lenke for nedlasting i mediaviseren"
 
-#: ../editconfig_gedcom.php:1225 ../editconfig_gedcom.php:1226
+#: ../editconfig_gedcom.php:1215 ../editconfig_gedcom.php:1216
 msgid "Media Firewall"
 msgstr "Mediabrannmur"
 
-#: ../editconfig_gedcom.php:1232 ../help_text.php:3705
+#: ../editconfig_gedcom.php:1222 ../help_text.php:3705
 msgid "Use Media Firewall"
 msgstr "Bruk Mediabrannmur"
 
-#: ../editconfig_gedcom.php:1240 ../help_text.php:3190
+#: ../editconfig_gedcom.php:1230 ../help_text.php:3190
 msgid "Media Firewall Root Directory"
 msgstr "Rotkatalog for Mediabrannmur"
 
-#: ../editconfig_gedcom.php:1243
+#: ../editconfig_gedcom.php:1233
 #, php-format
 msgid "When this field is empty, the <b>%s</b> directory will be used."
 msgstr ""
 
-#: ../editconfig_gedcom.php:1247 ../help_text.php:3195
+#: ../editconfig_gedcom.php:1237 ../help_text.php:3195
 msgid "Protect Thumbnails of Protected Images"
 msgstr "Beskytt miniatyrbilder av beskyttede bilder"
 
-#: ../editconfig_gedcom.php:1255 ../help_text.php:3570
+#: ../editconfig_gedcom.php:1245 ../help_text.php:3570
 msgid "Who can view non-watermarked images?"
 msgstr "Hvem kan se ikke-vannmerkede bilder?"
 
-#: ../editconfig_gedcom.php:1265 ../help_text.php:3740
+#: ../editconfig_gedcom.php:1255 ../help_text.php:3740
 msgid "Add watermarks to thumbnails?"
 msgstr "Legge til vannmerke på miniatyrbilder?"
 
-#: ../editconfig_gedcom.php:1273 ../help_text.php:3450
+#: ../editconfig_gedcom.php:1263 ../help_text.php:3450
 msgid "Store watermarked full size images on server?"
 msgstr "Lagre vannmerkede bilder i full størrelse på tjener?"
 
-#: ../editconfig_gedcom.php:1281 ../help_text.php:3455
+#: ../editconfig_gedcom.php:1271 ../help_text.php:3455
 msgid "Store watermarked thumbnails on server?"
 msgstr "Lagre vanmerkede miniatyrbilder på tjeneren?"
 
-#: ../editconfig_gedcom.php:1301 ../editconfig_gedcom.php:1302
+#: ../editconfig_gedcom.php:1291 ../editconfig_gedcom.php:1292
 msgid "Access and Privacy"
 msgstr "Tilgang og personvern"
 
-#: ../editconfig_gedcom.php:1308 ../help_text.php:3085
+#: ../editconfig_gedcom.php:1298 ../help_text.php:3085
 msgid "Enable Privacy"
 msgstr "Aktivere <b>personvern</b>"
 
-#: ../editconfig_gedcom.php:1316 ../help_text.php:2900
+#: ../editconfig_gedcom.php:1306 ../help_text.php:2900
 msgid "Check child dates"
 msgstr "Sjekk datoer til barn"
 
-#: ../editconfig_gedcom.php:1324 ../help_text.php:3440
+#: ../editconfig_gedcom.php:1314 ../help_text.php:3440
 msgid "Require visitor authentication"
 msgstr "Krev at besøkende<br /><b>MÅ</b> logge inn"
 
-#: ../editconfig_gedcom.php:1332 ../help_text.php:3265
+#: ../editconfig_gedcom.php:1322 ../help_text.php:3265
 msgid "Page to show after Login"
 msgstr ""
 
-#: ../editconfig_gedcom.php:1335 ../blocks/user_welcome.php:50
+#: ../editconfig_gedcom.php:1325 ../blocks/user_welcome.php:50
 msgid "Welcome"
 msgstr "Velkommen"
 
-#: ../editconfig_gedcom.php:1336 ../includes/classes/class_menubar.php:119
+#: ../editconfig_gedcom.php:1326 ../includes/classes/class_menubar.php:119
 msgid "MyGedView"
 msgstr "Min side"
 
-#: ../editconfig_gedcom.php:1342 ../help_text.php:3760
+#: ../editconfig_gedcom.php:1332 ../help_text.php:3760
 msgid "Welcome text on Login page"
 msgstr "Velkomsttekst<br />på siden for å logge inn hvis <br />\"Krev at besøkende <br /><b>MÅ</b> logge inn\" = Ja"
 
-#: ../editconfig_gedcom.php:1345
+#: ../editconfig_gedcom.php:1335
 msgid "No predefined text"
 msgstr "Ingen forhåndsdefinert tekst"
 
-#: ../editconfig_gedcom.php:1346
+#: ../editconfig_gedcom.php:1336
 msgid "Predefined text that states all users can request a user account"
 msgstr "Forhåndsdefinert tekst som sier at ALLE besøkende kan søke om en brukerkonto"
 
-#: ../editconfig_gedcom.php:1347
+#: ../editconfig_gedcom.php:1337
 msgid "Predefined text that states admin will decide on each request for a user account"
 msgstr "Forhåndsdefinert tekst som sier at ADMIN vil vurdere en eventuell søknad om brukerkonto"
 
-#: ../editconfig_gedcom.php:1348
+#: ../editconfig_gedcom.php:1338
 msgid "Predefined text that states only family members can request a user account"
 msgstr "Forhåndsdefinert tekst som sier at BARE familiemedlemmer kan søke om en brukerkonto"
 
-#: ../editconfig_gedcom.php:1349
+#: ../editconfig_gedcom.php:1339
 msgid "Choose user defined welcome text typed below"
 msgstr "Egenkomponert velkomsttekst skrevet i feltet under"
 
-#: ../editconfig_gedcom.php:1355 ../help_text.php:3750
+#: ../editconfig_gedcom.php:1345 ../help_text.php:3750
 msgid "Standard header for custom Welcome text"
 msgstr "Standard start for egenkomponert tekst"
 
-#: ../editconfig_gedcom.php:1363 ../help_text.php:3755
+#: ../editconfig_gedcom.php:1353 ../help_text.php:3755
 msgid "Custom Welcome text"
 msgstr "Egenkomponert velkomsttekst dersom <br />\"Krev at besøkende <br /><b>MÅ</b> logge inn\" = Ja"
 
-#: ../editconfig_gedcom.php:1370 ../help_text.php:3590
+#: ../editconfig_gedcom.php:1360 ../help_text.php:3590
 msgid "Show Acceptable Use agreement on «Request new user account» page"
 msgstr "Vis 'Avtale om akseptabel bruk' på «Be om ny brukerkonto» siden"
 
-#: ../editconfig_gedcom.php:1388 ../editconfig_gedcom.php:1389
+#: ../editconfig_gedcom.php:1378 ../editconfig_gedcom.php:1379
 msgid "Display and Layout"
 msgstr "Visning og layout"
 
-#: ../editconfig_gedcom.php:1402 ../help_text.php:3550
+#: ../editconfig_gedcom.php:1392 ../help_text.php:3550
 msgid "Show married names on Individual list"
 msgstr "Vis Navn som gift på personlister"
 
-#: ../editconfig_gedcom.php:1410 ../help_text.php:3695
+#: ../editconfig_gedcom.php:1400 ../help_text.php:3695
 msgid "Underline names in quotes"
 msgstr "Understrek navn omgitt av anførselstegn"
 
-#: ../editconfig_gedcom.php:1429 ../editconfig_gedcom.php:1430
+#: ../editconfig_gedcom.php:1419 ../editconfig_gedcom.php:1420
 msgid "Common Surnames"
 msgstr "Mest brukte etternavn"
 
-#: ../editconfig_gedcom.php:1436 ../help_text.php:2925
+#: ../editconfig_gedcom.php:1426 ../help_text.php:2925
 msgid "Min. no. of occurrences to be a \"Common Surname\""
 msgstr ""
 
-#: ../editconfig_gedcom.php:1443 ../help_text.php:2915
+#: ../editconfig_gedcom.php:1433 ../help_text.php:2915
 msgid "Names to add to Common Surnames (comma separated)"
 msgstr "Legg til følgende etternavn i listen <i>Mest brukte etternavn</i> (komma-separert)"
 
-#: ../editconfig_gedcom.php:1450 ../help_text.php:2920
+#: ../editconfig_gedcom.php:1440 ../help_text.php:2920
 msgid "Names to remove from Common Surnames (comma separated)"
 msgstr "Fjern følgende etternavn i listen <i>Mest brukte etternavn</i> (komma-separert)"
 
-#: ../editconfig_gedcom.php:1475 ../help_text.php:2980
+#: ../editconfig_gedcom.php:1465 ../help_text.php:2980
 msgid "Pedigree generations"
 msgstr "Antall generasjoner i diagram / trær"
 
-#: ../editconfig_gedcom.php:1481 ../help_text.php:3160
+#: ../editconfig_gedcom.php:1471 ../help_text.php:3160
 msgid "Maximum Pedigree generations"
 msgstr "Maks generasjoner for aner/forfedre"
 
-#: ../editconfig_gedcom.php:1487 ../help_text.php:3155
+#: ../editconfig_gedcom.php:1477 ../help_text.php:3155
 msgid "Maximum Descendancy generations"
 msgstr "Maks generasjoner for etterkommere"
 
-#: ../editconfig_gedcom.php:1493 ../help_text.php:3295
+#: ../editconfig_gedcom.php:1483 ../help_text.php:3295
 msgid "Default Pedigree chart layout"
 msgstr "Standard layout for diagram"
 
-#: ../editconfig_gedcom.php:1503 ../help_text.php:3580
+#: ../editconfig_gedcom.php:1493 ../help_text.php:3580
 msgid "Place levels to show in person boxes"
 msgstr "Stedsnavnsnivåer som vises i personboksene:"
 
-#: ../editconfig_gedcom.php:1509 ../help_text.php:3540
+#: ../editconfig_gedcom.php:1499 ../help_text.php:3540
 msgid "Place levels to show on lists"
 msgstr "Stedsnivåer for å vise i lister"
 
-#: ../editconfig_gedcom.php:1515 ../help_text.php:3770
+#: ../editconfig_gedcom.php:1505 ../help_text.php:3770
 msgid "Zoom boxes on charts"
 msgstr "Endre størrelse på diagrambokser"
 
-#: ../editconfig_gedcom.php:1518 ../editconfig_gedcom.php:1530
+#: ../editconfig_gedcom.php:1508 ../editconfig_gedcom.php:1520
 msgid "Disabled"
 msgstr "Ikke valgt"
 
-#: ../editconfig_gedcom.php:1519 ../editconfig_gedcom.php:1531
+#: ../editconfig_gedcom.php:1509 ../editconfig_gedcom.php:1521
 msgid "On Mouse Over"
 msgstr "Ved å føre musen over"
 
-#: ../editconfig_gedcom.php:1520
+#: ../editconfig_gedcom.php:1510
 msgid "On Mouse Down"
 msgstr "Ved å holde museknappen inne"
 
-#: ../editconfig_gedcom.php:1521 ../editconfig_gedcom.php:1532
+#: ../editconfig_gedcom.php:1511 ../editconfig_gedcom.php:1522
 msgid "On Mouse Click"
 msgstr "Ved å klikke med musen"
 
-#: ../editconfig_gedcom.php:1527 ../help_text.php:3130
+#: ../editconfig_gedcom.php:1517 ../help_text.php:3130
 msgid "PopUp links on charts"
 msgstr "Ikon for \"undermeny\" i diagrambokser"
 
-#: ../editconfig_gedcom.php:1538 ../help_text.php:3065
+#: ../editconfig_gedcom.php:1528 ../help_text.php:3065
 msgid "Default tab to show on Individual page"
 msgstr "Standard ark/kort som skal vises på faktasiden til personer"
 
-#: ../editconfig_gedcom.php:1541
+#: ../editconfig_gedcom.php:1531
 #: ../modules/lightbox/functions/lb_indi_doors_0.php:39
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:39
 msgid "Personal Facts and Details"
 msgstr "Fakta og detaljer om personen"
 
-#: ../editconfig_gedcom.php:1545
+#: ../editconfig_gedcom.php:1535
 #: ../modules/lightbox/functions/lb_indi_doors_0.php:56
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:59
 msgid "Close Relatives"
 msgstr "Nære slektninger"
 
-#: ../editconfig_gedcom.php:1546
+#: ../editconfig_gedcom.php:1536
 #: ../modules/lightbox/functions/lb_indi_doors_0.php:57
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:60
 #: ../modules/tree/pgv_module.php:49 ../blocks/charts.php:125
 msgid "Tree"
 msgstr "Interaktivt tre"
 
-#: ../editconfig_gedcom.php:1548
+#: ../editconfig_gedcom.php:1538
 msgid "Last Visited Tab For Individual"
 msgstr "Sist besøkte fane for person"
 
-#: ../editconfig_gedcom.php:1554 ../help_text.php:3025
+#: ../editconfig_gedcom.php:1544 ../help_text.php:3025
 msgid "Automatically expand list of events of close relatives"
 msgstr "Vis automatisk listen av hendelser for nære slektninger"
 
-#: ../editconfig_gedcom.php:1562 ../help_text.php:3595
+#: ../editconfig_gedcom.php:1552 ../help_text.php:3595
 msgid "Show events of close relatives on Individual page"
 msgstr "Vis fødseldag og dødsdag for slektninger på faktasiden til personer"
 
-#: ../editconfig_gedcom.php:1611 ../help_text.php:3385
+#: ../editconfig_gedcom.php:1601 ../help_text.php:3385
 msgid "Postal Code position"
 msgstr "Plassering av postnummer"
 
-#: ../editconfig_gedcom.php:1614 ../blocks/top10_pageviews.php:150
+#: ../editconfig_gedcom.php:1604 ../blocks/top10_pageviews.php:150
 msgid "after"
 msgstr "etter"
 
-#: ../editconfig_gedcom.php:1615 ../statisticsplot.php:647
+#: ../editconfig_gedcom.php:1605 ../statisticsplot.php:647
 #: ../blocks/top10_pageviews.php:147
 msgid "before"
 msgstr "før"
 
-#: ../editconfig_gedcom.php:1621 ../help_text.php:3650
+#: ../editconfig_gedcom.php:1611 ../help_text.php:3650
 msgid "Maximum number of surnames"
 msgstr "Maks antall etternavn"
 
-#: ../editconfig_gedcom.php:1627
+#: ../editconfig_gedcom.php:1617
 msgid "Maximum number of family names of surnames"
 msgstr ""
 
-#: ../editconfig_gedcom.php:1633 ../help_text.php:3660
+#: ../editconfig_gedcom.php:1623 ../help_text.php:3660
 msgid "Surname list style"
 msgstr "Type etternavnliste"
 
-#: ../editconfig_gedcom.php:1636 ../blocks/upcoming_events.php:185
+#: ../editconfig_gedcom.php:1626 ../blocks/upcoming_events.php:185
 #: ../blocks/top10_givnnames.php:148 ../blocks/todays_events.php:160
 #: ../blocks/yahrzeit.php:273
 msgid "Table"
 msgstr "Tabell"
 
-#: ../editconfig_gedcom.php:1637
+#: ../editconfig_gedcom.php:1627
 msgid "Tagcloud"
 msgstr ""
 
-#: ../editconfig_gedcom.php:1647 ../editconfig_gedcom.php:1648
+#: ../editconfig_gedcom.php:1637 ../editconfig_gedcom.php:1638
 msgid "Hide and Show"
 msgstr "Skjul & Vis"
 
-#: ../editconfig_gedcom.php:1654 ../help_text.php:2940
+#: ../editconfig_gedcom.php:1644 ../help_text.php:2940
 msgid "Upcoming Events block day limit"
 msgstr "Antall dager for rammen Kommende hendelser"
 
-#: ../editconfig_gedcom.php:1661 ../help_text.php:3495
+#: ../editconfig_gedcom.php:1651 ../help_text.php:3495
 msgid "Show empty boxes on Pedigree charts"
 msgstr "Vis tomme bokser i diagram"
 
-#: ../editconfig_gedcom.php:1669 ../help_text.php:2835
+#: ../editconfig_gedcom.php:1659 ../help_text.php:2835
 msgid "Abbreviate chart labels"
 msgstr "Forkorte ledeord i diagram"
 
-#: ../editconfig_gedcom.php:1677 ../help_text.php:3270
+#: ../editconfig_gedcom.php:1667 ../help_text.php:3270
 msgid "Show Birth and Death details on charts"
 msgstr "Vise detaljer om fødsel og død i diagram / trær"
 
-#: ../editconfig_gedcom.php:1685 ../help_text.php:3305
+#: ../editconfig_gedcom.php:1675 ../help_text.php:3305
 msgid "Show gender icon on charts"
 msgstr "Vis ikoner for kjønn i diagrammer"
 
-#: ../editconfig_gedcom.php:1693 ../help_text.php:3575
+#: ../editconfig_gedcom.php:1683 ../help_text.php:3575
 msgid "Show age of parents next to child's birthdate"
 msgstr "Vis alder til foreldre ved siden av fødselsdatoen til barna"
 
-#: ../editconfig_gedcom.php:1701 ../help_text.php:3530
+#: ../editconfig_gedcom.php:1691 ../help_text.php:3530
 msgid "Show LDS ordinance codes in chart boxes"
 msgstr "Vis LDS ordineringskoder i diagram-bokser"
 
-#: ../editconfig_gedcom.php:1709 ../help_text.php:2895
+#: ../editconfig_gedcom.php:1699 ../help_text.php:2895
 msgid "Other facts to show in charts"
 msgstr "Vise andre fakta i diagram"
 
-#: ../editconfig_gedcom.php:1717 ../help_text.php:3510
+#: ../editconfig_gedcom.php:1707 ../help_text.php:3510
 msgid "Allow users to see raw GEDCOM records"
 msgstr "Tillat brukere å se GEDCOM poster"
 
-#: ../editconfig_gedcom.php:1725 ../help_text.php:3080
+#: ../editconfig_gedcom.php:1715 ../help_text.php:3080
 msgid "Hide GEDCOM errors"
 msgstr "Skjul GEDCOM feilmeldinger"
 
-#: ../editconfig_gedcom.php:1733 ../help_text.php:3765
+#: ../editconfig_gedcom.php:1723 ../help_text.php:3765
 msgid "Add spaces where notes were wrapped"
 msgstr "Legg til mellomrom<br />der linjer er delt"
 
-#: ../editconfig_gedcom.php:1741 ../help_text.php:3505
+#: ../editconfig_gedcom.php:1731 ../help_text.php:3505
 msgid "Show Fact icons"
 msgstr "Vis faktaikoner"
 
-#: ../editconfig_gedcom.php:1749 ../help_text.php:3030
+#: ../editconfig_gedcom.php:1739 ../help_text.php:3030
 msgid "Automatically expand sources"
 msgstr "Vis utvidede kilder automatisk"
 
-#: ../editconfig_gedcom.php:1757 ../help_text.php:3020
+#: ../editconfig_gedcom.php:1747 ../help_text.php:3020
 msgid "Automatically expand notes"
 msgstr "Vis utvidede merknader automatisk"
 
-#: ../editconfig_gedcom.php:1765 ../help_text.php:3535
+#: ../editconfig_gedcom.php:1755 ../help_text.php:3535
 msgid "Show all Notes and Source references on Notes and Sources tabs"
 msgstr "Vis alle merknader og kildereferanser på fanene for Merknader og Kilder"
 
-#: ../editconfig_gedcom.php:1773 ../modules/relatives/relatives.php:325
+#: ../editconfig_gedcom.php:1763 ../modules/relatives/relatives.php:325
 #: ../help_text.php:3475 ../help_text.php:3943
 msgid "Show Date Differences"
 msgstr "Vis aldersforskjeller"
 
-#: ../editconfig_gedcom.php:1781 ../help_text.php:3055
+#: ../editconfig_gedcom.php:1771 ../help_text.php:3055
 msgid "Favorites icon"
 msgstr "Mappe til favoritt-ikon"
 
-#: ../editconfig_gedcom.php:1787 ../help_text.php:3485
+#: ../editconfig_gedcom.php:1777 ../help_text.php:3485
 msgid "Show hit counters"
 msgstr "Vis Antall treff"
 
-#: ../editconfig_gedcom.php:1795 ../help_text.php:3610
+#: ../editconfig_gedcom.php:1785 ../help_text.php:3610
 msgid "Show spider tagline"
 msgstr "Vis spider-tagline"
 
-#: ../editconfig_gedcom.php:1803 ../help_text.php:3615
+#: ../editconfig_gedcom.php:1793 ../help_text.php:3615
 msgid "Show execution statistics"
 msgstr "Vis utførings-statistikk"
 
-#: ../editconfig_gedcom.php:1811 ../help_text.php:3525
+#: ../editconfig_gedcom.php:1801 ../help_text.php:3525
 msgid "Show GEDCOM record last change date on lists"
 msgstr "Vis GEDCOM-postens sist endret dato i listene"
 
-#: ../editconfig_gedcom.php:1819 ../help_text.php:3500
+#: ../editconfig_gedcom.php:1809 ../help_text.php:3500
 msgid "Show estimated dates for birth and death"
 msgstr "Vis beregnet dato for fødsler og dødsfall"
 
-#: ../editconfig_gedcom.php:1840 ../editconfig_gedcom.php:1841
+#: ../editconfig_gedcom.php:1830 ../editconfig_gedcom.php:1831
 msgid "Edit Options"
 msgstr "Redigeringsvalg"
 
-#: ../editconfig_gedcom.php:1847 ../help_text.php:2855
+#: ../editconfig_gedcom.php:1837 ../help_text.php:2855
 msgid "Enable online editing"
 msgstr "Aktivere online-redigering"
 
-#: ../editconfig_gedcom.php:1855 ../help_text.php:3670
+#: ../editconfig_gedcom.php:1845 ../help_text.php:3670
 msgid "Synchronize edits into GEDCOM file"
 msgstr "Synkroniser endringer til GEDCOM-filen"
 
-#: ../editconfig_gedcom.php:1863 ../help_text.php:3000
+#: ../editconfig_gedcom.php:1853 ../help_text.php:3000
 msgid "Enable Autocomplete"
 msgstr ""
 
-#: ../editconfig_gedcom.php:1871 ../help_text.php:3105
+#: ../editconfig_gedcom.php:1861 ../help_text.php:3105
 msgid "Individual Add Facts"
 msgstr "Fakta å legge til for personer"
 
-#: ../editconfig_gedcom.php:1877 ../help_text.php:3115
+#: ../editconfig_gedcom.php:1867 ../help_text.php:3115
 msgid "Unique Individual Facts"
 msgstr "Unike fakta for personer"
 
-#: ../editconfig_gedcom.php:1883 ../help_text.php:3110
+#: ../editconfig_gedcom.php:1873 ../help_text.php:3110
 msgid "Quick Individual Facts"
 msgstr "Hurtiglinker for personfakta"
 
-#: ../editconfig_gedcom.php:1889 ../help_text.php:3035
+#: ../editconfig_gedcom.php:1879 ../help_text.php:3035
 msgid "Family Add Facts"
 msgstr "Fakta å legge til for familier"
 
-#: ../editconfig_gedcom.php:1895 ../help_text.php:3045
+#: ../editconfig_gedcom.php:1885 ../help_text.php:3045
 msgid "Unique Family Facts"
 msgstr "Unike fakta for familier"
 
-#: ../editconfig_gedcom.php:1901 ../help_text.php:3040
+#: ../editconfig_gedcom.php:1891 ../help_text.php:3040
 msgid "Quick Family Facts"
 msgstr "Hurtiglinker for familiefakta"
 
-#: ../editconfig_gedcom.php:1907 ../help_text.php:3625
+#: ../editconfig_gedcom.php:1897 ../help_text.php:3625
 msgid "Source Add Facts"
 msgstr "Fakta å legge til for kilder"
 
-#: ../editconfig_gedcom.php:1913 ../help_text.php:3635
+#: ../editconfig_gedcom.php:1903 ../help_text.php:3635
 msgid "Unique Source Facts"
 msgstr "Unike fakta for kilder"
 
-#: ../editconfig_gedcom.php:1919 ../help_text.php:3630
+#: ../editconfig_gedcom.php:1909 ../help_text.php:3630
 msgid "Quick Source Facts"
 msgstr "Hurtiglinker for kildefakta"
 
-#: ../editconfig_gedcom.php:1925 ../help_text.php:3415
+#: ../editconfig_gedcom.php:1915 ../help_text.php:3415
 msgid "Repository Add Facts"
 msgstr "Fakta å legge til for oppbevaringssteder"
 
-#: ../editconfig_gedcom.php:1931 ../help_text.php:3425
+#: ../editconfig_gedcom.php:1921 ../help_text.php:3425
 msgid "Unique Repository Facts"
 msgstr "Unike fakta for oppbevaringssteder"
 
-#: ../editconfig_gedcom.php:1937 ../help_text.php:3420
+#: ../editconfig_gedcom.php:1927 ../help_text.php:3420
 msgid "Quick Repository Facts"
 msgstr "Hurtiglinker for oppbevaringsstedfakta"
 
-#: ../editconfig_gedcom.php:1943 ../help_text.php:2995
+#: ../editconfig_gedcom.php:1933 ../help_text.php:2995
 msgid "Autoclose edit window"
 msgstr "Lukk automatisk vindu for redigering"
 
-#: ../editconfig_gedcom.php:1951 ../help_text.php:3640
+#: ../editconfig_gedcom.php:1941 ../help_text.php:3640
 msgid "Split places in Edit mode"
 msgstr "Splitt steder i Endringsvisning"
 
-#: ../editconfig_gedcom.php:1959 ../help_text.php:3405
+#: ../editconfig_gedcom.php:1949 ../help_text.php:3405
 msgid "Facts to always show on Quick Update"
 msgstr "Fakta som alltid vises ved Hurtig-oppdatering"
 
-#: ../editconfig_gedcom.php:1965 ../help_text.php:3410
+#: ../editconfig_gedcom.php:1955 ../help_text.php:3410
 msgid "Facts for families to always show on Quick Update"
 msgstr "Vis alltid faktaopplysninger for familier ved Hurtig-oppdatering"
 
-#: ../editconfig_gedcom.php:1971 ../help_text.php:3665
+#: ../editconfig_gedcom.php:1961 ../help_text.php:3665
 msgid "Surname tradition"
 msgstr "Etternavnstradisjon"
 
-#: ../editconfig_gedcom.php:1976
+#: ../editconfig_gedcom.php:1966
 msgid "Paternal"
 msgstr "Patronymikon"
 
-#: ../editconfig_gedcom.php:1977 ../includes/specialchars.php:62
+#: ../editconfig_gedcom.php:1967 ../includes/specialchars.php:62
 msgid "Spanish"
 msgstr "Spansk"
 
-#: ../editconfig_gedcom.php:1978 ../includes/specialchars.php:75
+#: ../editconfig_gedcom.php:1968 ../includes/specialchars.php:75
 msgid "Portuguese"
 msgstr "Portugisisk"
 
-#: ../editconfig_gedcom.php:1979
+#: ../editconfig_gedcom.php:1969
 msgid "Icelandic"
 msgstr "Islandsk"
 
-#: ../editconfig_gedcom.php:1980 ../includes/specialchars.php:74
+#: ../editconfig_gedcom.php:1970 ../includes/specialchars.php:74
 msgid "Polish"
 msgstr "Polsk"
 
-#: ../editconfig_gedcom.php:1993 ../help_text.php:2840
+#: ../editconfig_gedcom.php:1983 ../help_text.php:2840
 msgid "Advanced name facts"
 msgstr "Avanserte navnefakta"
 
-#: ../editconfig_gedcom.php:1999 ../help_text.php:2845
+#: ../editconfig_gedcom.php:1989 ../help_text.php:2845
 msgid "Advanced place name facts"
 msgstr "Avanserte stednavnfakta"
 
-#: ../editconfig_gedcom.php:2005 ../help_text.php:3700
+#: ../editconfig_gedcom.php:1995 ../help_text.php:3700
 msgid "Use GeoNames database"
 msgstr "Bruk GeoNames-database"
 
-#: ../editconfig_gedcom.php:2013 ../help_text.php:3060
+#: ../editconfig_gedcom.php:2003 ../help_text.php:3060
 msgid "Use full source citations"
 msgstr "Bruk fullstendige kildesiteringer"
 
-#: ../editconfig_gedcom.php:2021 ../help_text.php:3390
+#: ../editconfig_gedcom.php:2011 ../help_text.php:3390
 msgid "Source type"
 msgstr "Foretrekk kilder til fakta"
 
-#: ../editconfig_gedcom.php:2025
+#: ../editconfig_gedcom.php:2015
 msgid "Facts"
 msgstr "fakta"
 
-#: ../editconfig_gedcom.php:2032 ../includes/functions/functions_edit.php:804
+#: ../editconfig_gedcom.php:2022 ../includes/functions/functions_edit.php:816
 #: ../includes/functions/functions_mediadb.php:1478 ../edit_interface.php:380
 #: ../edit_interface.php:419 ../edit_interface.php:470
 #: ../edit_interface.php:540 ../edit_interface.php:579
@@ -3038,154 +3107,154 @@ msgstr "fakta"
 msgid "Do not update the CHAN (Last Change) record"
 msgstr "Ikke oppdater CHAN (Last Change) posten"
 
-#: ../editconfig_gedcom.php:2053 ../editconfig_gedcom.php:2054
+#: ../editconfig_gedcom.php:2043 ../editconfig_gedcom.php:2044
 msgid "User Options"
 msgstr "Bruker-valg"
 
-#: ../editconfig_gedcom.php:2060 ../help_text.php:3480
+#: ../editconfig_gedcom.php:2050 ../help_text.php:3480
 msgid "Show contextual <b>?</b> Help links"
 msgstr "Vis hjelp (?) til tekst<br />- som standard"
 
-#: ../editconfig_gedcom.php:2068 ../help_text.php:3680
+#: ../editconfig_gedcom.php:2058 ../help_text.php:3680
 msgid "Theme directory"
 msgstr "Tema og mappe"
 
-#: ../editconfig_gedcom.php:2079
+#: ../editconfig_gedcom.php:2069
 msgid "Other, please type in"
 msgstr "Annet, vennligst tast inn"
 
-#: ../editconfig_gedcom.php:2085
+#: ../editconfig_gedcom.php:2075
 msgid "does not exist"
 msgstr "eksisterer ikke"
 
-#: ../editconfig_gedcom.php:2094 ../help_text.php:2860
+#: ../editconfig_gedcom.php:2084 ../help_text.php:2860
 msgid "Display theme dropdown selector for theme changes"
 msgstr "Vis valgfelt for å bytte Stil"
 
-#: ../editconfig_gedcom.php:2112 ../editconfig_gedcom.php:2113
+#: ../editconfig_gedcom.php:2102 ../editconfig_gedcom.php:2103
 msgid "Contact Information"
 msgstr "Kontakt-informasjon"
 
-#: ../editconfig_gedcom.php:2124 ../help_text.php:3380
+#: ../editconfig_gedcom.php:2114 ../help_text.php:3380
 msgid "PhpGedView reply address"
 msgstr "PhpGedView svaradresse"
 
-#: ../editconfig_gedcom.php:2130 ../includes/functions/functions_print.php:908
+#: ../editconfig_gedcom.php:2120 ../includes/functions/functions_print.php:908
 #: ../help_text.php:2930
 msgid "Genealogy contact"
 msgstr "Kontaktperson for slektsspørsmål"
 
-#: ../editconfig_gedcom.php:2148 ../help_text.php:2935
+#: ../editconfig_gedcom.php:2138 ../help_text.php:2935
 msgid "Contact method"
 msgstr "Kontaktmåte (slekt)"
 
-#: ../editconfig_gedcom.php:2152 ../editconfig_gedcom.php:2186
-#: ../includes/functions/functions_edit.php:80
+#: ../editconfig_gedcom.php:2142 ../editconfig_gedcom.php:2176
+#: ../includes/functions/functions_edit.php:92
 msgid "PhpGedView internal messaging"
 msgstr "PhpGedView interne beskjeder"
 
-#: ../editconfig_gedcom.php:2153 ../editconfig_gedcom.php:2187
-#: ../includes/functions/functions_edit.php:81 ../help_text.php:5138
+#: ../editconfig_gedcom.php:2143 ../editconfig_gedcom.php:2177
+#: ../includes/functions/functions_edit.php:93 ../help_text.php:5138
 #: ../help_text.php:5208
 msgid "Internal messaging with emails"
 msgstr "PhpGedView interne beskjeder med e-post-kopi"
 
-#: ../editconfig_gedcom.php:2155 ../editconfig_gedcom.php:2189
-#: ../includes/functions/functions_edit.php:82
+#: ../editconfig_gedcom.php:2145 ../editconfig_gedcom.php:2179
+#: ../includes/functions/functions_edit.php:94
 msgid "PhpGedView sends emails with no storage"
 msgstr "PhpGedView ekstern e-post"
 
-#: ../editconfig_gedcom.php:2157 ../editconfig_gedcom.php:2191
-#: ../includes/functions/functions_edit.php:83 ../help_text.php:5143
+#: ../editconfig_gedcom.php:2147 ../editconfig_gedcom.php:2181
+#: ../includes/functions/functions_edit.php:95 ../help_text.php:5143
 msgid "Mailto link"
 msgstr "Besøkende sitt eget e-post-program"
 
-#: ../editconfig_gedcom.php:2158 ../editconfig_gedcom.php:2192
+#: ../editconfig_gedcom.php:2148 ../editconfig_gedcom.php:2182
 #: ../help_text.php:5148
 msgid "No contact method"
 msgstr "Ingen kontaktlink"
 
-#: ../editconfig_gedcom.php:2164 ../help_text.php:3745
+#: ../editconfig_gedcom.php:2154 ../help_text.php:3745
 msgid "Support contact"
 msgstr "Kontaktperson for teknisk hjelp"
 
-#: ../editconfig_gedcom.php:2182 ../help_text.php:3655
+#: ../editconfig_gedcom.php:2172 ../help_text.php:3655
 msgid "Support method"
 msgstr "Kontaktmåte (tekn.)"
 
-#: ../editconfig_gedcom.php:2208 ../editconfig_gedcom.php:2209
+#: ../editconfig_gedcom.php:2198 ../editconfig_gedcom.php:2199
 msgid "Web Site and META Tag Settings"
 msgstr "META Tag/merker"
 
-#: ../editconfig_gedcom.php:2215 ../help_text.php:3095
+#: ../editconfig_gedcom.php:2205 ../help_text.php:3095
 msgid "Main WebSite URL"
 msgstr "URL til hjemmesiden din"
 
-#: ../editconfig_gedcom.php:2221 ../help_text.php:3090
+#: ../editconfig_gedcom.php:2211 ../help_text.php:3090
 msgid "Main WebSite text"
 msgstr "Tittelen på hjemmesiden din"
 
-#: ../editconfig_gedcom.php:2227 ../help_text.php:3210
+#: ../editconfig_gedcom.php:2217 ../help_text.php:3210
 msgid "Author META tag"
 msgstr "META tag: Forfatter"
 
-#: ../editconfig_gedcom.php:2230
+#: ../editconfig_gedcom.php:2220
 msgid "Leave this field empty to use the full name of the Genealogy contact."
 msgstr "La feltet være tomt for å bruke det fulle navnet til slektsbasens kontaktperson."
 
-#: ../editconfig_gedcom.php:2234 ../help_text.php:3240
+#: ../editconfig_gedcom.php:2224 ../help_text.php:3240
 msgid "Publisher META tag"
 msgstr "META tag: Utgiver"
 
-#: ../editconfig_gedcom.php:2237 ../editconfig_gedcom.php:2244
+#: ../editconfig_gedcom.php:2227 ../editconfig_gedcom.php:2234
 msgid "Leave this field empty to use the full name of the  Genealogy contact."
 msgstr "La feltet være tomt for å bruke det fulle navnet til slektsbasens kontaktperson."
 
-#: ../editconfig_gedcom.php:2241 ../help_text.php:3215
+#: ../editconfig_gedcom.php:2231 ../help_text.php:3215
 msgid "Copyright META tag"
 msgstr "META tag: Opphavsrett"
 
-#: ../editconfig_gedcom.php:2248 ../help_text.php:3220
+#: ../editconfig_gedcom.php:2238 ../help_text.php:3220
 msgid "Description META tag"
 msgstr "META tag: Beskrivelse"
 
-#: ../editconfig_gedcom.php:2251 ../editconfig_gedcom.php:2258
+#: ../editconfig_gedcom.php:2241 ../editconfig_gedcom.php:2248
 msgid "Leave this field empty to use the title of the currently active database."
 msgstr "La feltet være tomt for å bruke titlen til den aktive slektsbasen."
 
-#: ../editconfig_gedcom.php:2255 ../help_text.php:3230
+#: ../editconfig_gedcom.php:2245 ../help_text.php:3230
 msgid "Page-topic META tag"
 msgstr "META tag: Sjanger (topic)"
 
-#: ../editconfig_gedcom.php:2262 ../help_text.php:3205
+#: ../editconfig_gedcom.php:2252 ../help_text.php:3205
 msgid "Audience META tag"
 msgstr "META tag: Målgruppe"
 
-#: ../editconfig_gedcom.php:2269 ../help_text.php:3235
+#: ../editconfig_gedcom.php:2259 ../help_text.php:3235
 msgid "Page-type META tag"
 msgstr "META tag: Type side"
 
-#: ../editconfig_gedcom.php:2276 ../help_text.php:3250
+#: ../editconfig_gedcom.php:2266 ../help_text.php:3250
 msgid "Robots META tag"
 msgstr "META tag: Roboter"
 
-#: ../editconfig_gedcom.php:2283 ../help_text.php:3245
+#: ../editconfig_gedcom.php:2273 ../help_text.php:3245
 msgid "How often should crawlers revisit META tag"
 msgstr "META tag: Hvor ofte bør/skal søkeroboter sjekke nettstedet"
 
-#: ../editconfig_gedcom.php:2290 ../help_text.php:3225
+#: ../editconfig_gedcom.php:2280 ../help_text.php:3225
 msgid "Keywords META tag"
 msgstr "META tag: Nøkkelord"
 
-#: ../editconfig_gedcom.php:2297 ../help_text.php:3255
+#: ../editconfig_gedcom.php:2287 ../help_text.php:3255
 msgid "Add to TITLE header tag"
 msgstr "META tag: Tillegg i Tittel"
 
-#: ../editconfig_gedcom.php:2303 ../help_text.php:3015
+#: ../editconfig_gedcom.php:2293 ../help_text.php:3015
 msgid "Enable RSS"
 msgstr "Aktiver RSS"
 
-#: ../editconfig_gedcom.php:2311 ../help_text.php:3445
+#: ../editconfig_gedcom.php:2301 ../help_text.php:3445
 msgid "RSS Format"
 msgstr "Format for RSS"
 
@@ -3351,7 +3420,7 @@ msgstr "År"
 msgid "Timeline Chart"
 msgstr "Tidslinje"
 
-#: ../timeline.php:281 ../includes/functions/functions_edit.php:1539
+#: ../timeline.php:281 ../includes/functions/functions_edit.php:1551
 #: ../includes/functions/functions.php:771
 #: ../includes/classes/class_stats.php:3541
 #: ../includes/controllers/individual_ctrl.php:108
@@ -3361,7 +3430,7 @@ msgstr "Tidslinje"
 msgid "Male"
 msgstr "Mann"
 
-#: ../timeline.php:283 ../includes/functions/functions_edit.php:1541
+#: ../timeline.php:283 ../includes/functions/functions_edit.php:1553
 #: ../includes/functions/functions.php:773
 #: ../includes/classes/class_stats.php:3541
 #: ../includes/controllers/individual_ctrl.php:109
@@ -3374,7 +3443,7 @@ msgstr "Kvinne"
 #: ../timeline.php:285 ../placelist.php:143 ../placelist.php:287
 #: ../placelist.php:329 ../placelist.php:370 ../placelist.php:447
 #: ../includes/family_nav.php:730 ../includes/family_nav.php:733
-#: ../includes/functions/functions_edit.php:1543
+#: ../includes/functions/functions_edit.php:1555
 #: ../includes/functions/functions.php:775
 #: ../includes/classes/class_serviceclient.php:90
 #: ../includes/classes/class_stats.php:867
@@ -3579,14 +3648,14 @@ msgstr ""
 
 #: ../module_admin.php:398 ../editnews.php:111
 #: ../includes/media_reorder.php:60 ../includes/media_reorder.php:213
-#: ../includes/functions/functions_edit.php:500
-#: ../includes/functions/functions_edit.php:822
-#: ../includes/functions/functions_edit.php:1791
-#: ../includes/functions/functions_edit.php:1828
-#: ../includes/functions/functions_edit.php:1847
-#: ../includes/functions/functions_edit.php:1860
-#: ../includes/functions/functions_edit.php:1873
-#: ../includes/functions/functions_edit.php:1889
+#: ../includes/functions/functions_edit.php:512
+#: ../includes/functions/functions_edit.php:834
+#: ../includes/functions/functions_edit.php:1803
+#: ../includes/functions/functions_edit.php:1840
+#: ../includes/functions/functions_edit.php:1859
+#: ../includes/functions/functions_edit.php:1872
+#: ../includes/functions/functions_edit.php:1885
+#: ../includes/functions/functions_edit.php:1901
 #: ../includes/functions/functions_mediadb.php:1145
 #: ../includes/functions/functions_mediadb.php:1505
 #: ../modules/lightbox/album.php:102
@@ -3696,7 +3765,7 @@ msgid "User approved by Admin"
 msgstr "Godkjent bruker<br />[av Admin]"
 
 #: ../useradmin.php:397 ../useradmin.php:809 ../find.php:399
-#: ../edituser.php:219 ../includes/classes/class_menubar.php:1096
+#: ../edituser.php:219 ../includes/classes/class_menubar.php:1073
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:409
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:405
 #: ../help_text.php:4743 ../login_register.php:293
@@ -3963,12 +4032,12 @@ msgstr "Denne mediafilen er skadet og kan ikke vannmerkes"
 #: ../includes/functions/functions_print_lists.php:218
 #: ../includes/functions/functions_print.php:121
 #: ../includes/functions/functions_print.php:122
-#: ../includes/functions/functions_print.php:1637
-#: ../includes/functions/functions_print.php:1649
-#: ../includes/functions/functions_print.php:1656
+#: ../includes/functions/functions_print.php:1617
+#: ../includes/functions/functions_print.php:1629
+#: ../includes/functions/functions_print.php:1636
+#: ../includes/functions/functions_print.php:1680
+#: ../includes/functions/functions_print.php:1693
 #: ../includes/functions/functions_print.php:1700
-#: ../includes/functions/functions_print.php:1713
-#: ../includes/functions/functions_print.php:1720
 #: ../includes/classes/class_menubar.php:247
 #: ../includes/classes/class_menubar.php:424
 #: ../includes/classes/class_menubar.php:437 ../help_text.php:2751
@@ -4043,7 +4112,7 @@ msgid "Find next path"
 msgstr "Finn neste slektslinje"
 
 #: ../find.php:97 ../find.php:202
-#: ../includes/functions/functions_print.php:2236
+#: ../includes/functions/functions_print.php:2216
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:99
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:210
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:95
@@ -4061,7 +4130,7 @@ msgid "Find Family List"
 msgstr "Finn Familieliste"
 
 #: ../find.php:103 ../find.php:208
-#: ../includes/functions/functions_print.php:2349
+#: ../includes/functions/functions_print.php:2329
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:105
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:216
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:101
@@ -4071,7 +4140,7 @@ msgid "Find Media"
 msgstr "Finn media"
 
 #: ../find.php:107 ../find.php:211
-#: ../includes/functions/functions_print.php:2251
+#: ../includes/functions/functions_print.php:2231
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:109
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:219
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:105
@@ -4090,7 +4159,7 @@ msgid "Repositories"
 msgstr "Oppbevaringssteder"
 
 #: ../find.php:115 ../find.php:217
-#: ../includes/functions/functions_print.php:2320
+#: ../includes/functions/functions_print.php:2300
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:117
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:225
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:113
@@ -4107,7 +4176,7 @@ msgid "Find Source"
 msgstr "Finn kilde"
 
 #: ../find.php:123 ../find.php:223
-#: ../includes/functions/functions_print.php:2278
+#: ../includes/functions/functions_print.php:2258
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:125
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:231
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:121
@@ -4315,7 +4384,7 @@ msgid "Add Media"
 msgstr "Legg til bilder/andre medier"
 
 #: ../note.php:130 ../includes/functions/functions_charts.php:555
-#: ../includes/functions/functions_edit.php:1043
+#: ../includes/functions/functions_edit.php:1055
 #: ../includes/functions/functions_mediadb.php:1140
 #: ../modules/media/media.php:71 ../addmedia.php:61 ../repo.php:102
 #: ../source.php:102 ../help_text.php:3849 ../media.php:833
@@ -4527,7 +4596,7 @@ msgid "Change Individual ID to:"
 msgstr "Endre personID til:"
 
 #: ../uploadgedcom.php:739 ../uploadgedcom.php:744
-#: ../includes/functions/functions_edit.php:1510
+#: ../includes/functions/functions_edit.php:1522
 #: ../includes/functions/functions_print_facts.php:242
 #: ../includes/functions/functions_print_facts.php:374
 #: ../includes/functions/functions_print_facts.php:939
@@ -4686,13 +4755,13 @@ msgstr ""
 msgid "Configuration"
 msgstr "Program-innstillinger"
 
-#: ../admin.php:250 ../includes/controllers/usermigrate_ctrl.php:125
+#: ../admin.php:250 ../includes/controllers/usermigrate_ctrl.php:126
 #: ../usermigrate.php:128 ../usermigrate.php:133 ../usermigrate.php:140
 #: ../help_text.php:5743
 msgid "User Information Migration tool"
 msgstr "Verktøy for konvertering til annen database"
 
-#: ../admin.php:256 ../includes/controllers/usermigrate_ctrl.php:123
+#: ../admin.php:256 ../includes/controllers/usermigrate_ctrl.php:124
 #: ../usermigrate.php:50 ../usermigrate.php:75 ../help_text.php:2826
 #: ../help_text.php:5728
 msgid "Backup"
@@ -4913,9 +4982,9 @@ msgstr "Bruker kan ikke godkjennes."
 msgid "PhpGedView User Login"
 msgstr "PhpGedView innlogging for brukere"
 
-#: ../login.php:156 ../help_text.php:5264
-msgid "In order to access My Page, you must be a registered user on the system.  On My Page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of PhpGedView pages.<br /><br />Enter your User name and Password in the appropriate fields to login to MyGedView."
-msgstr "<center><b>Siden <i>Min GedView</i> er bare tilgjengelig for <i>registerte brukere</i>.</b><br /><br />I <b><i>Min GedView</i></b> kan du lage dine egne snarveier til favoritt-personer,<br />notere i notatblokken din, sende meldinger, se loggen til andre brukere<br />eller skreddersy ditt eget oppsett av PhpGedView.<br /><br />Dersom du har brukernavn og passord, så logg deg inn i feltene under.</center />"
+#: ../login.php:156
+msgid "In order to access My Page, you must be a registered user on the system.  On My Page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of webtrees pages.<br /><br />Enter your User name and Password in the appropriate fields to login to MyGedView."
+msgstr ""
 
 #: ../login.php:161
 msgid "<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to every visitor who has a user account.<br /><br />If you have a user account, you can login on this page.  If you don't have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your application, the site administrator will activate your account.  You will receive an email when your application has been approved."
@@ -5226,7 +5295,7 @@ msgstr "Tilknytning til nåværende person"
 msgid "Same as current"
 msgstr "Samme som nåværende"
 
-#: ../addsearchlink.php:87 ../includes/functions/functions_print.php:1921
+#: ../addsearchlink.php:87 ../includes/functions/functions_print.php:1901
 #: ../includes/controllers/individual_ctrl.php:850
 #: ../includes/controllers/individual_ctrl.php:859 ../edit_interface.php:562
 #: ../edit_interface.php:2294 ../edit_interface.php:2303
@@ -5234,7 +5303,7 @@ msgstr "Samme som nåværende"
 msgid "Husband"
 msgstr "Ektemann"
 
-#: ../addsearchlink.php:88 ../includes/functions/functions_print.php:1921
+#: ../addsearchlink.php:88 ../includes/functions/functions_print.php:1901
 #: ../includes/controllers/individual_ctrl.php:849
 #: ../includes/controllers/individual_ctrl.php:858 ../edit_interface.php:560
 #: ../edit_interface.php:2292 ../edit_interface.php:2301
@@ -5802,17 +5871,17 @@ msgid "This message was sent while viewing the following URL: "
 msgstr "Denne beskjed ble sendt da du var på følgende url: "
 
 #: ../includes/authentication.php:459
-msgid "You sent the following message to a PhpGedView administrator:"
-msgstr "Du sendte følgende beskjed til administratoren av PhpGedView:"
+msgid "You sent the following message to a webtrees administrator:"
+msgstr ""
 
 #: ../includes/authentication.php:467
-msgid "You sent the following message to a PhpGedView user:"
-msgstr "Du sendte følgende beskjed til en bruker av PhpGedView:"
+msgid "You sent the following message to a webtrees user:"
+msgstr ""
 
 #: ../includes/authentication.php:473 ../includes/authentication.php:480
 #: ../includes/authentication.php:519 ../includes/authentication.php:525
-msgid "The following message has been sent to your PhpGedView user account from "
-msgstr "Følgende beskjed ble sendt til kontoen din i PhpGedView fra "
+msgid "The following message has been sent to your webtrees user account from "
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
@@ -5988,7 +6057,7 @@ msgstr "uker"
 
 #: ../includes/extras/functions.pl.php:176
 #: ../includes/extras/functions.sl.php:142
-#: ../includes/functions/functions_edit.php:1656
+#: ../includes/functions/functions_edit.php:1668
 msgid "Individual"
 msgstr "Person"
 
@@ -6114,7 +6183,7 @@ msgid "Add Note"
 msgstr "Legg til note"
 
 #: ../includes/functions/functions_charts.php:537
-#: ../includes/functions/functions_edit.php:1843 ../modules/notes/notes.php:88
+#: ../includes/functions/functions_edit.php:1855 ../modules/notes/notes.php:88
 #: ../help_text.php:3876 ../help_text.php:4403
 msgid "Add a new Note"
 msgstr "Legg til en ny note"
@@ -6125,7 +6194,7 @@ msgid "Add Shared Note"
 msgstr ""
 
 #: ../includes/functions/functions_charts.php:546
-#: ../includes/functions/functions_edit.php:1856 ../modules/notes/notes.php:95
+#: ../includes/functions/functions_edit.php:1868 ../modules/notes/notes.php:95
 #: ../help_text.php:3897 ../help_text.php:4408
 msgid "Add a new Shared Note"
 msgstr ""
@@ -6136,7 +6205,7 @@ msgid "Add Source Citation"
 msgstr "Legg til kildehenvisning"
 
 #: ../includes/functions/functions_charts.php:565
-#: ../includes/functions/functions_edit.php:1787
+#: ../includes/functions/functions_edit.php:1799
 #: ../modules/sources_tab/sources_tab.php:85 ../help_text.php:3918
 #: ../help_text.php:4413
 msgid "Add a new Source Citation"
@@ -6235,32 +6304,32 @@ msgstr "Sist endret"
 msgid "Random Picture"
 msgstr "Tilfeldig utvalgt bilde / medie"
 
-#: ../includes/functions/functions_edit.php:84
+#: ../includes/functions/functions_edit.php:96
 msgid "No contact"
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:159
+#: ../includes/functions/functions_edit.php:171
 #, php-format
 msgid "The record with id %s was changed by another user since you last accessed it."
 msgstr "Posten med id %s ble endret av en annen bruker siden du åpnet den."
 
-#: ../includes/functions/functions_edit.php:160
+#: ../includes/functions/functions_edit.php:172
 #, php-format
 msgid "This record was last changed by <i>%s</i> at %s"
 msgstr "Denne posten ble sist endret av <i>%s</i> den %s"
 
-#: ../includes/functions/functions_edit.php:161
-#: ../includes/functions/functions_edit.php:2393
-#: ../includes/functions/functions_edit.php:2402
+#: ../includes/functions/functions_edit.php:173
+#: ../includes/functions/functions_edit.php:2405
+#: ../includes/functions/functions_edit.php:2414
 msgid "Please reload the previous page to make sure you are working with the most recent record."
 msgstr "Vennligst last den forrige siden på nytt for å sikre at du arbeider med nyeste versjon av posten."
 
-#: ../includes/functions/functions_edit.php:503
-#: ../includes/functions/functions_edit.php:824
+#: ../includes/functions/functions_edit.php:515
+#: ../includes/functions/functions_edit.php:836
 msgid "Save and go to new record"
 msgstr "Lagre og gå til den nye posten"
 
-#: ../includes/functions/functions_edit.php:798
+#: ../includes/functions/functions_edit.php:810
 #: ../includes/functions/functions_mediadb.php:1472
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:204
 #: ../edit_interface.php:374 ../edit_interface.php:413
@@ -6272,44 +6341,44 @@ msgstr "Lagre og gå til den nye posten"
 msgid "Admin Option"
 msgstr "Admin-valg"
 
-#: ../includes/functions/functions_edit.php:1056 ../edit_interface.php:1169
+#: ../includes/functions/functions_edit.php:1068 ../edit_interface.php:1169
 #: ../edit_interface.php:1219
 msgid "Create Repository"
 msgstr "Opprett nytt oppbevaringssted"
 
-#: ../includes/functions/functions_edit.php:1070 ../edit_interface.php:851
+#: ../includes/functions/functions_edit.php:1082 ../edit_interface.php:851
 msgid "Create a new Shared Note"
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:1083
-#: ../includes/functions/functions_edit.php:1712 ../edit_interface.php:985
+#: ../includes/functions/functions_edit.php:1095
+#: ../includes/functions/functions_edit.php:1724 ../edit_interface.php:985
 msgid "Create a new Shared Note using Assistant"
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:1097
+#: ../includes/functions/functions_edit.php:1109
 #: ../includes/controllers/note_ctrl.php:200 ../edit_interface.php:1107
 msgid "Edit Shared Note"
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:1111 ../edit_interface.php:701
+#: ../includes/functions/functions_edit.php:1123 ../edit_interface.php:701
 #: ../edit_interface.php:778
 msgid "Create a new source"
 msgstr "Opprett en ny kilde"
 
-#: ../includes/functions/functions_edit.php:1371
+#: ../includes/functions/functions_edit.php:1383
 #: ../includes/functions/functions_print_facts.php:1139
 msgid "SHARED_NOTE"
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:1449
+#: ../includes/functions/functions_edit.php:1461
 msgid "No Temple - Living Ordinance"
 msgstr "Ingen Tempel-Living tilordning"
 
-#: ../includes/functions/functions_edit.php:1504
+#: ../includes/functions/functions_edit.php:1516
 msgid "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature for this setting to take effect."
 msgstr "Merk: Du må slå på 'Bruk GEDCOM (RESN) Personvern' funksjonaliteten for at denne settingen skal ha effekt."
 
-#: ../includes/functions/functions_edit.php:1511
+#: ../includes/functions/functions_edit.php:1523
 #: ../includes/functions/functions_print_facts.php:238
 #: ../includes/functions/functions_print_facts.php:370
 #: ../includes/functions/functions_print_facts.php:935
@@ -6317,7 +6386,7 @@ msgstr "Merk: Du må slå på 'Bruk GEDCOM (RESN) Personvern' funksjonaliteten f
 msgid "Privacy"
 msgstr "Personvern"
 
-#: ../includes/functions/functions_edit.php:1512
+#: ../includes/functions/functions_edit.php:1524
 #: ../includes/functions/functions_print_facts.php:240
 #: ../includes/functions/functions_print_facts.php:372
 #: ../includes/functions/functions_print_facts.php:937
@@ -6325,75 +6394,75 @@ msgstr "Personvern"
 msgid "Confidential"
 msgstr "Fortrolig"
 
-#: ../includes/functions/functions_edit.php:1548
+#: ../includes/functions/functions_edit.php:1560
 #: ../includes/functions/functions_mediadb.php:1079
 #: ../includes/functions/functions_mediadb.php:1280 ../edit_privacy.php:619
 msgid "Choose: "
 msgstr "Velg: "
 
-#: ../includes/functions/functions_edit.php:1562
-#: ../includes/functions/functions_edit.php:1563
+#: ../includes/functions/functions_edit.php:1574
+#: ../includes/functions/functions_edit.php:1575
 #: ../includes/controllers/individual_ctrl.php:528
 #: ../includes/controllers/individual_ctrl.php:629 ../help_text.php:4488
 msgid "Edit Name"
 msgstr "Rediger navn"
 
 #. I18N: This is the GEDCOM label for "Latitude"
-#: ../includes/functions/functions_edit.php:1591
-#: ../includes/functions/functions_print.php:2000
+#: ../includes/functions/functions_edit.php:1603
+#: ../includes/functions/functions_print.php:1980
 #: ../modules/googlemap/places.php:588
 #: ../modules/googlemap/places_edit.php:785 ../help_text.php:875
 msgid "LATI"
 msgstr "Breddegrad"
 
 #. I18N: This is the GEDCOM label for "Longitude"
-#: ../includes/functions/functions_edit.php:1591
-#: ../includes/functions/functions_print.php:2006
+#: ../includes/functions/functions_edit.php:1603
+#: ../includes/functions/functions_print.php:1986
 #: ../modules/googlemap/places.php:589
 #: ../modules/googlemap/places_edit.php:795 ../help_text.php:887
 msgid "LONG"
 msgstr "Lengdegrad"
 
-#: ../includes/functions/functions_edit.php:1713
+#: ../includes/functions/functions_edit.php:1725
 msgid "Shared Note using Assistant"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Date of entry in original source"
-#: ../includes/functions/functions_edit.php:1805
-#: ../includes/functions/functions_edit.php:2369
+#: ../includes/functions/functions_edit.php:1817
+#: ../includes/functions/functions_edit.php:2381
 #: ../includes/functions/functions_mediadb.php:1418
 #: ../includes/functions/functions_mediadb.php:1466
 #: ../includes/functions/functions_print_facts.php:1017 ../help_text.php:447
 msgid "DATA:DATE"
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:1818
-#: ../includes/functions/functions_edit.php:1823 ../help_text.php:4393
+#: ../includes/functions/functions_edit.php:1830
+#: ../includes/functions/functions_edit.php:1835 ../help_text.php:4393
 msgid "Add a new Associate"
 msgstr "Legg til en ny tilknyttet person"
 
-#: ../includes/functions/functions_edit.php:1869
+#: ../includes/functions/functions_edit.php:1881
 msgid "Add a new Multimedia object"
 msgstr "Legg til et nytt bilde / media"
 
-#: ../includes/functions/functions_edit.php:1885
+#: ../includes/functions/functions_edit.php:1897
 msgid "RESN"
 msgstr "Restriksjon"
 
-#: ../includes/functions/functions_edit.php:2294 ../blocks/charts.php:171
+#: ../includes/functions/functions_edit.php:2306 ../blocks/charts.php:171
 #: ../blocks/user_favorites.php:137 ../blocks/gedcom_favorites.php:135
 msgid "No such ID exists in this GEDCOM file."
 msgstr "Ukjent ID i denne slektsbasen."
 
-#: ../includes/functions/functions_edit.php:2392
-#: ../includes/functions/functions_edit.php:2401
+#: ../includes/functions/functions_edit.php:2404
+#: ../includes/functions/functions_edit.php:2413
 msgid "An error occurred while creating the Edit form.  Another user may have changed this record since you previously viewed it."
 msgstr "En feil oppsto under dannelsen av endringsskjemaet.  En annen bruker kan ha endret denne posten siden forrige gang du så på den."
 
 #. I18N: This is the GEDCOM label for "Status Change Date"
-#: ../includes/functions/functions_edit.php:2522
-#: ../includes/functions/functions_edit.php:2595
-#: ../includes/functions/functions_print.php:2037 ../help_text.php:1285
+#: ../includes/functions/functions_edit.php:2534
+#: ../includes/functions/functions_edit.php:2607
+#: ../includes/functions/functions_print.php:2017 ../help_text.php:1285
 msgid "STAT:DATE"
 msgstr "Statusendringsdato"
 
@@ -6457,7 +6526,7 @@ msgid "File is not created."
 msgstr "Filen ble ikke lagd."
 
 #: ../includes/functions/functions_export.php:595
-#: ../includes/controllers/usermigrate_ctrl.php:377 ../usermigrate.php:200
+#: ../includes/controllers/usermigrate_ctrl.php:378 ../usermigrate.php:200
 #: ../usermigrate_cli.php:157
 msgid "No Favorites seem to be present in the system."
 msgstr "Kunne ikke finne noen \"Favoritter\" lagret i systemet."
@@ -6597,7 +6666,7 @@ msgstr "Årsdag"
 #: ../includes/functions/functions_print_lists.php:122
 #: ../includes/functions/functions_print_lists.php:501
 #: ../includes/functions/functions_print_lists.php:505
-#: ../includes/functions/functions_print.php:1921 ../help_text.php:85
+#: ../includes/functions/functions_print.php:1901 ../help_text.php:85
 msgid "AGE"
 msgstr "Alder"
 
@@ -7041,19 +7110,19 @@ msgstr "Teknisk hjelp"
 
 #: ../includes/functions/functions_print.php:959
 #: ../includes/functions/functions_print.php:1039
-#: ../includes/classes/class_menubar.php:1133
+#: ../includes/classes/class_menubar.php:1110
 msgid "Favorites"
 msgstr "Favoritter"
 
 #: ../includes/functions/functions_print.php:962
 #: ../includes/functions/functions_print.php:1042
-#: ../includes/classes/class_menubar.php:1145 ../blocks/user_favorites.php:62
+#: ../includes/classes/class_menubar.php:1122 ../blocks/user_favorites.php:62
 msgid "My Favorites"
 msgstr "Mine favoritter"
 
 #: ../includes/functions/functions_print.php:967
 #: ../includes/functions/functions_print.php:1045
-#: ../includes/classes/class_menubar.php:1169
+#: ../includes/classes/class_menubar.php:1146
 #: ../includes/controllers/family_ctrl.php:518
 #: ../includes/controllers/source_ctrl.php:340
 #: ../includes/controllers/repository_ctrl.php:332
@@ -7065,7 +7134,7 @@ msgstr "Legg til i Mine favoritter"
 
 #: ../includes/functions/functions_print.php:1003
 #: ../includes/functions/functions_print.php:1091
-#: ../includes/classes/class_menubar.php:1205
+#: ../includes/classes/class_menubar.php:1182
 #: ../blocks/gedcom_favorites.php:59
 msgid "This GEDCOM's Favorites"
 msgstr "Favoritter i denne slektsbasen"
@@ -7096,183 +7165,183 @@ msgid "?"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Relationship"
-#: ../includes/functions/functions_print.php:1671 ../help_text.php:1165
+#: ../includes/functions/functions_print.php:1651 ../help_text.php:1165
 msgid "Relationship"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Death of mother"
-#: ../includes/functions/functions_print.php:1768 ../help_text.php:1897
+#: ../includes/functions/functions_print.php:1748 ../help_text.php:1897
 msgid "_DEAT_MOTH"
 msgstr "Morens dødsfall"
 
-#: ../includes/functions/functions_print.php:1770
+#: ../includes/functions/functions_print.php:1750
 msgid "Mother's age"
 msgstr "Morens alder"
 
 #. I18N: This is the GEDCOM label for "Death of father"
-#: ../includes/functions/functions_print.php:1777 ../help_text.php:1855
+#: ../includes/functions/functions_print.php:1757 ../help_text.php:1855
 msgid "_DEAT_FATH"
 msgstr "Farens dødsfall"
 
-#: ../includes/functions/functions_print.php:1779
+#: ../includes/functions/functions_print.php:1759
 msgid "Father's age"
 msgstr "Farens alder"
 
-#: ../includes/functions/functions_print.php:1783
+#: ../includes/functions/functions_print.php:1763
 msgid "Parent's age"
 msgstr "Foreldrenes alder"
 
-#: ../includes/functions/functions_print.php:1878
+#: ../includes/functions/functions_print.php:1858
 msgid "on the date of death"
 msgstr "på dødsdagen"
 
-#: ../includes/functions/functions_print.php:1880
+#: ../includes/functions/functions_print.php:1860
 msgid "after death"
 msgstr "etter dødsdagen"
 
-#: ../includes/functions/functions_print.php:2028
+#: ../includes/functions/functions_print.php:2008
 msgid "LDS Temple"
 msgstr "Mormoner-tempel"
 
-#: ../includes/functions/functions_print.php:2030
+#: ../includes/functions/functions_print.php:2010
 msgid "LDS Temple Code:"
 msgstr "Mormoner-tempel-kode:"
 
 #. I18N: This is the GEDCOM label for "Status"
-#: ../includes/functions/functions_print.php:2034 ../help_text.php:1279
+#: ../includes/functions/functions_print.php:2014 ../help_text.php:1279
 msgid "Status"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2115
+#: ../includes/functions/functions_print.php:2095
 msgid "Add from clipboard"
 msgstr "Legg til fra klippebordet: "
 
-#: ../includes/functions/functions_print.php:2175
+#: ../includes/functions/functions_print.php:2155
 msgid "Add new fact"
 msgstr "Legg til nye fakta"
 
-#: ../includes/functions/functions_print.php:2182 ../calendar.php:265
+#: ../includes/functions/functions_print.php:2162 ../calendar.php:265
 msgid "Custom Event"
 msgstr "Egendef. hendelse"
 
-#: ../includes/functions/functions_print.php:2201
+#: ../includes/functions/functions_print.php:2181
 #: ../includes/classes/class_date.php:152
 msgctxt "NOMINATIVE"
 msgid "January"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2202
+#: ../includes/functions/functions_print.php:2182
 #: ../includes/classes/class_date.php:153
 msgctxt "NOMINATIVE"
 msgid "February"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2203
+#: ../includes/functions/functions_print.php:2183
 #: ../includes/classes/class_date.php:154
 msgctxt "NOMINATIVE"
 msgid "March"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2204
+#: ../includes/functions/functions_print.php:2184
 #: ../includes/classes/class_date.php:155
 msgctxt "NOMINATIVE"
 msgid "April"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2205
+#: ../includes/functions/functions_print.php:2185
 #: ../includes/classes/class_date.php:156
 msgctxt "NOMINATIVE"
 msgid "May"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2206
+#: ../includes/functions/functions_print.php:2186
 #: ../includes/classes/class_date.php:157
 msgctxt "NOMINATIVE"
 msgid "June"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2207
+#: ../includes/functions/functions_print.php:2187
 #: ../includes/classes/class_date.php:158
 msgctxt "NOMINATIVE"
 msgid "July"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2208
+#: ../includes/functions/functions_print.php:2188
 #: ../includes/classes/class_date.php:159
 msgctxt "NOMINATIVE"
 msgid "August"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2209
+#: ../includes/functions/functions_print.php:2189
 #: ../includes/classes/class_date.php:160
 msgctxt "NOMINATIVE"
 msgid "September"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2210
+#: ../includes/functions/functions_print.php:2190
 #: ../includes/classes/class_date.php:161
 msgctxt "NOMINATIVE"
 msgid "October"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2211
+#: ../includes/functions/functions_print.php:2191
 #: ../includes/classes/class_date.php:162
 msgctxt "NOMINATIVE"
 msgid "November"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2212
+#: ../includes/functions/functions_print.php:2192
 #: ../includes/classes/class_date.php:163
 msgctxt "NOMINATIVE"
 msgid "December"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2214
+#: ../includes/functions/functions_print.php:2194
 #: ../includes/classes/class_date.php:280
 msgid "Sun"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2215
+#: ../includes/functions/functions_print.php:2195
 #: ../includes/classes/class_date.php:274
 msgid "Mon"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2216
+#: ../includes/functions/functions_print.php:2196
 #: ../includes/classes/class_date.php:275
 msgid "Tue"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2217
+#: ../includes/functions/functions_print.php:2197
 #: ../includes/classes/class_date.php:276
 msgid "Wed"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2218
+#: ../includes/functions/functions_print.php:2198
 #: ../includes/classes/class_date.php:277
 msgid "Thu"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2219
+#: ../includes/functions/functions_print.php:2199
 #: ../includes/classes/class_date.php:278
 msgid "Fri"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2220
+#: ../includes/functions/functions_print.php:2200
 #: ../includes/classes/class_date.php:279
 msgid "Sat"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2265 ../edit_merge.php:305
+#: ../includes/functions/functions_print.php:2245 ../edit_merge.php:305
 #: ../edit_merge.php:322
 msgid "Find Family ID"
 msgstr "Finn familie"
 
-#: ../includes/functions/functions_print.php:2305 ../edit_merge.php:306
+#: ../includes/functions/functions_print.php:2285 ../edit_merge.php:306
 #: ../edit_merge.php:323
 msgid "Find Source ID"
 msgstr "Finn kilde"
 
-#: ../includes/functions/functions_print.php:2335
+#: ../includes/functions/functions_print.php:2315
 msgid "Find Repository"
 msgstr "Finn oppbevaringssted"
 
@@ -7305,8 +7374,8 @@ msgid "PHP blocked file by extension"
 msgstr "PHP blokkerte filen med utvidelsen"
 
 #: ../includes/functions/functions.php:351
-msgid "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again."
-msgstr "Feil!!! Kan ikke skrive til konfigurasjonsfilen til PhpGedView. Sjekk fil- og katalog-rettigheter og prøv igjen."
+msgid "Error!!! Cannot write to the webtrees configuration file.  Please check file and directory permissions and try again."
+msgstr ""
 
 #: ../includes/functions/functions.php:1929
 msgid "The script timed out before a relationship could be found."
@@ -8667,12 +8736,12 @@ msgid "child's %s"
 msgstr ""
 
 #. I18N: This is a space separated list of initial letters for lists of names, etc.  Multi-letter characters are OK, e.g. "A B C CS D DZ DZS E F G GY H ..."  You may use upper/lowers case, such as "D Dz Dzs".
-#: ../includes/functions/functions_db.php:259
-#: ../includes/functions/functions_db.php:330
+#: ../includes/functions/functions_db.php:258
+#: ../includes/functions/functions_db.php:327
 msgid "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z Å Ø Æ"
 
-#: ../includes/functions/functions_db.php:2060 ../edit_interface.php:326
+#: ../includes/functions/functions_db.php:2057 ../edit_interface.php:326
 #: ../edit_interface.php:343 ../edit_interface.php:1938
 #: ../edit_interface.php:1954 ../edit_interface.php:2011 ../edit_merge.php:182
 msgid "GEDCOM record successfully deleted."
@@ -8990,7 +9059,7 @@ msgstr "Vis Hjelp <b><i>?</i></b> til tekst"
 msgid "Change Theme"
 msgstr "Bytt stil"
 
-#: ../includes/classes/class_menubar.php:1076
+#: ../includes/classes/class_menubar.php:1055
 msgid "Color Palette"
 msgstr ""
 
@@ -10507,12 +10576,12 @@ msgstr "Vis arkiv"
 #. I18N: This is the format string for full dates.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:97
 msgid "%j %F %Y"
-msgstr ""
+msgstr "%j. %F %Y"
 
 #. I18N: This a the format string for the time-of-day.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:99
 msgid "%g:%i:%s%a"
-msgstr ""
+msgstr "%H:%i:%s"
 
 #: ../includes/classes/class_i18n.php:102
 msgid "ALPHABET_upper=ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -10720,7 +10789,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. I18N: This is the name of the MySQL collation that applies to your language.  A list is available at http://dev.mysql.com/doc/refman/5.0/en/charset-unicode-sets.html
-#: ../includes/session.php:422
+#: ../includes/session.php:418
 msgid "utf8_unicode_ci"
 msgstr "utf8_danish_ci"
 
@@ -20416,6 +20485,10 @@ msgstr ""
 msgid "Login Block"
 msgstr ""
 
+#: ../help_text.php:5264
+msgid "In order to access My Page, you must be a registered user on the system.  On My Page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of PhpGedView pages.<br /><br />Enter your User name and Password in the appropriate fields to login to MyGedView."
+msgstr "<center><b>Siden <i>Min GedView</i> er bare tilgjengelig for <i>registerte brukere</i>.</b><br /><br />I <b><i>Min GedView</i></b> kan du lage dine egne snarveier til favoritt-personer,<br />notere i notatblokken din, sende meldinger, se loggen til andre brukere<br />eller skreddersy ditt eget oppsett av PhpGedView.<br /><br />Dersom du har brukernavn og passord, så logg deg inn i feltene under.</center />"
+
 #: ../help_text.php:5268
 msgid "My Messages Block"
 msgstr ""
@@ -22053,6 +22126,18 @@ msgstr "Familier med etternavnet %s"
 #: ../famlist.php:270
 msgid "Choose a letter to show families where a spouse has a given name which starts with that letter."
 msgstr ""
+
+#~ msgid "You sent the following message to a PhpGedView administrator:"
+#~ msgstr "Du sendte følgende beskjed til administratoren av PhpGedView:"
+
+#~ msgid "You sent the following message to a PhpGedView user:"
+#~ msgstr "Du sendte følgende beskjed til en bruker av PhpGedView:"
+
+#~ msgid "The following message has been sent to your PhpGedView user account from "
+#~ msgstr "Følgende beskjed ble sendt til kontoen din i PhpGedView fra "
+
+#~ msgid "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again."
+#~ msgstr "Feil!!! Kan ikke skrive til konfigurasjonsfilen til PhpGedView. Sjekk fil- og katalog-rettigheter og prøv igjen."
 
 #~ msgid "Jewish Ashkenaz pronunciation"
 #~ msgstr "Jødisk Ashkenazi uttale"

@@ -3449,10 +3449,6 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $LANGUAGE, $lang_short_cut;
 	global $faqlist;
 	global $pgv_language, $pgv_lang_self;
-	global $TEXT_DIRECTION, $TEXT_DIRECTION_array;
-	global $DATE_FORMAT, $DATE_FORMAT_array, $CONFIGURED;
-	global $TIME_FORMAT, $TIME_FORMAT_array;
-	global $WEEK_START, $WEEK_START_array;
 	global $NAME_REVERSE, $NAME_REVERSE_array;
 	global $MULTI_LETTER_ALPHABET, $digraph, $trigraph, $quadgraph, $digraphAll, $trigraphAll, $quadgraphAll;
 	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $UCDiacritOrder, $LCDiacritWhole, $LCDiacritStrip, $LCDiacritOrder;
@@ -3469,10 +3465,6 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		$LANGUAGE = $desiredLanguage;
 		$file = $pgv_language[$LANGUAGE];
 
-		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
-		$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
-		$TIME_FORMAT	= $TIME_FORMAT_array[$LANGUAGE];
-		$WEEK_START		= $WEEK_START_array[$LANGUAGE];
 		$NAME_REVERSE	= $NAME_REVERSE_array[$LANGUAGE];
 
 		// Load functions that are specific to the active language
