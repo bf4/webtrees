@@ -9998,12 +9998,12 @@ msgstr ""
 #: ../includes/classes/class_date.php:1244
 msgctxt "NOMINATIVE"
 msgid "Rabi' al-awwal"
-msgstr "Rabi\' al-awwal"
+msgstr "Rabi' al-awwal"
 
 #: ../includes/classes/class_date.php:1245
 msgctxt "NOMINATIVE"
 msgid "Rabi' al-thani"
-msgstr "Rabi\' al-thani"
+msgstr "Rabi' al-thani"
 
 #: ../includes/classes/class_date.php:1246
 msgctxt "NOMINATIVE"
@@ -10023,7 +10023,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1249
 msgctxt "NOMINATIVE"
 msgid "Sha'aban"
-msgstr "Sha\'aban"
+msgstr "Sha'aban"
 
 #: ../includes/classes/class_date.php:1250
 msgctxt "NOMINATIVE"
@@ -10038,7 +10038,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1252
 msgctxt "NOMINATIVE"
 msgid "Dhu al-Qi'dah"
-msgstr "Dhu al-Qi\'dah"
+msgstr "Dhu al-Qi'dah"
 
 #: ../includes/classes/class_date.php:1253
 msgctxt "NOMINATIVE"
@@ -10058,12 +10058,12 @@ msgstr ""
 #: ../includes/classes/class_date.php:1261
 msgctxt "GENITIVE"
 msgid "Rabi' al-awwal"
-msgstr "Rabi\' al-awwal"
+msgstr "Rabi' al-awwal"
 
 #: ../includes/classes/class_date.php:1262
 msgctxt "GENITIVE"
 msgid "Rabi' al-thani"
-msgstr "Rabi\' al-thani"
+msgstr "Rabi' al-thani"
 
 #: ../includes/classes/class_date.php:1263
 msgctxt "GENITIVE"
@@ -10083,7 +10083,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1266
 msgctxt "GENITIVE"
 msgid "Sha'aban"
-msgstr "Sha\'aban"
+msgstr "Sha'aban"
 
 #: ../includes/classes/class_date.php:1267
 msgctxt "GENITIVE"
@@ -10098,7 +10098,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1269
 msgctxt "GENITIVE"
 msgid "Dhu al-Qi'dah"
-msgstr "Dhu al-Qi\'dah"
+msgstr "Dhu al-Qi'dah"
 
 #: ../includes/classes/class_date.php:1270
 msgctxt "GENITIVE"
@@ -10118,12 +10118,12 @@ msgstr ""
 #: ../includes/classes/class_date.php:1278
 msgctxt "LOCATIVE"
 msgid "Rabi' al-awwal"
-msgstr "Rabi\' al-awwal"
+msgstr "Rabi' al-awwal"
 
 #: ../includes/classes/class_date.php:1279
 msgctxt "LOCATIVE"
 msgid "Rabi' al-thani"
-msgstr "Rabi\' al-thani"
+msgstr "Rabi' al-thani"
 
 #: ../includes/classes/class_date.php:1280
 msgctxt "LOCATIVE"
@@ -10143,7 +10143,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1283
 msgctxt "LOCATIVE"
 msgid "Sha'aban"
-msgstr "Sha\'aban"
+msgstr "Sha'aban"
 
 #: ../includes/classes/class_date.php:1284
 msgctxt "LOCATIVE"
@@ -10158,7 +10158,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1286
 msgctxt "LOCATIVE"
 msgid "Dhu al-Qi'dah"
-msgstr "Dhu al-Qi\'dah"
+msgstr "Dhu al-Qi'dah"
 
 #: ../includes/classes/class_date.php:1287
 msgctxt "LOCATIVE"
@@ -10178,12 +10178,12 @@ msgstr ""
 #: ../includes/classes/class_date.php:1295
 msgctxt "INSTRUMENTAL"
 msgid "Rabi' al-awwal"
-msgstr "Rabi\' al-awwal"
+msgstr "Rabi' al-awwal"
 
 #: ../includes/classes/class_date.php:1296
 msgctxt "INSTRUMENTAL"
 msgid "Rabi' al-thani"
-msgstr "Rabi\' al-thani"
+msgstr "Rabi' al-thani"
 
 #: ../includes/classes/class_date.php:1297
 msgctxt "INSTRUMENTAL"
@@ -10203,7 +10203,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1300
 msgctxt "INSTRUMENTAL"
 msgid "Sha'aban"
-msgstr "Sha\'aban"
+msgstr "Sha'aban"
 
 #: ../includes/classes/class_date.php:1301
 msgctxt "INSTRUMENTAL"
@@ -10218,7 +10218,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1303
 msgctxt "INSTRUMENTAL"
 msgid "Dhu al-Qi'dah"
-msgstr "Dhu al-Qi\'dah"
+msgstr "Dhu al-Qi'dah"
 
 #: ../includes/classes/class_date.php:1304
 msgctxt "INSTRUMENTAL"
