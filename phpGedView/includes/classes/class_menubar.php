@@ -1038,51 +1038,28 @@ class MenuBar
 	* get the menu with links change to each color themes subcolor type
 	* @return Menu the menu item
 	*/
-	static function getColorMenu() {
-		global $SEARCH_SPIDER, $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR;
-		
-		$current=get_user_setting(PGV_USER_ID, 'theme');
-		$all_themes=get_theme_names();
-		if (!array_key_exists($current, $all_themes)) {
-			$current=$THEME_DIR;		
-		}
-		$filePath = $THEME_DIR . "css/";
-		$string="";
-		$fileCount=0;
-		$dir = opendir($filePath); # Open the path
-		while ($file = readdir($dir)) { 
-  			if (!substr_compare($file, '.css', -4)) { # Look at only files with a .css extension
-    		$len = strlen($file);
-    		$file = substr($file,0,$len-4);  # Remove .css 
-    		$colorList[] = $file;
-    		sort ($colorList); # Sort array
-    		$fileCount++;
-  			}
-		}
-		if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES && !$SEARCH_SPIDER) {
-			isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
-			$frompage = PGV_SCRIPT_NAME.decode_url($tqstring);
-			if (isset($_REQUEST['mod'])) {
-				if (!strstr($frompage, "?")) {
-					if (!strstr($frompage, "%3F")) ;
-					else $frompage .= "?";
-				}
-				if (!strstr($frompage, "&mod") || !strstr($frompage, "?mod")) $frompage .= "&mod=".$_REQUEST['mod'];
+	static function getColorMenu($COLOR_THEME_LIST) {
+		isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
+		$frompage = PGV_SCRIPT_NAME.decode_url($tqstring);
+		if (isset($_REQUEST['mod'])) {
+			if (!strstr($frompage, "?")) {
+				if (!strstr($frompage, "%3F")) ;
+				else $frompage .= "?";
 			}
-			if (substr($frompage,-1) == "?") $frompage = substr($frompage,0,-1);
-			if (substr($frompage,-1) == "&") $frompage = substr($frompage,0,-1);
-			// encode frompage address in other case we lost the all variables on theme change
-			$frompage = base64_encode($frompage);
-			$menu=new Menu(i18n::translate('Color Palette'));
-			$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu', "icon_small_theme");
-			foreach ($colorList as $colorChoice) {
-				$submenu=new Menu($colorChoice, encode_url("colorchange.php?frompage={$frompage}&mycolor={$colorChoice}"));
-				$menu->addSubMenu($submenu);
-			}
-			return $menu;
-		} else {
-			return new Menu('', '');
+			if (!strstr($frompage, "&mod") || !strstr($frompage, "?mod")) $frompage .= "&mod=".$_REQUEST['mod'];
 		}
+		if (substr($frompage,-1) == "?") $frompage = substr($frompage,0,-1);
+		if (substr($frompage,-1) == "&") $frompage = substr($frompage,0,-1);
+		// encode frompage address in other case we lost the all variables on theme change
+		$frompage = base64_encode($frompage);
+		$menu=new Menu(i18n::translate('Color Palette'));
+		$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu', "icon_small_theme");
+		foreach ($COLOR_THEME_LIST as $colorChoice=>$colorName) {
+			//$submenu=new Menu($colorName, encode_url("colorchange.php?frompage={$frompage}&mycolor={$colorChoice}"));
+			$submenu=new Menu($colorName, encode_url(PGV_SCRIPT_NAME.'?'.$_SERVER['QUERY_STRING']."&themecolor={$colorChoice}"));
+			$menu->addSubMenu($submenu);
+		}
+		return $menu;
 	}
 	/**
 	* get the menu with links to change language

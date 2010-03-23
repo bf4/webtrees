@@ -34,14 +34,14 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 //-- print color theme sub type change dropdown box
 function color_theme_dropdown($style=0) {
-	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES;
+	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $COLOR_THEME_LIST;
 
 	if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {
 		switch ($style) {
 		case 0:
-			return '<div class="color_form">'.MenuBar::getColorMenu()->getMenuAsDropdown().'</div>';
+			return '<div class="color_form">'.MenuBar::getColorMenu($COLOR_THEME_LIST)->getMenuAsDropdown().'</div>';
 		case 1:
-			return '<div class="color_form">'.MenuBar::getColorMenu()->getMenu().'</div>';
+			return '<div class="color_form">'.MenuBar::getColorMenu($COLOR_THEME_LIST)->getMenu().'</div>';
 		}
 	}
 	return '&nbsp;';
@@ -51,28 +51,48 @@ function color_theme_dropdown($style=0) {
  *  Define the default palette to be used.  Set $subColor
  *  to one of the collowing values to determine the default:
  *  
- *    aquamarine,
- *    ash,
- *    belgianchocolate,
- *    bluelagoon,
- *    bluemarine,
- *    coldday,
- *    greenbeam,
- *    mediterranio,
- *    mercury,
- *    nocturnal,
- *    olivia,
- *    pinkplastic,
- *    shinytomato,
- *    tealtop
  */
 
-$subColor = "ash"; // this is the default palette
+$COLOR_THEME_LIST=array(
+	'aquamarine'      => /* I18N: This is the name of theme color-scheme */ i18n::translate('Aqua Marine'),
+	'ash'             => /* I18N: This is the name of theme color-scheme */ i18n::translate('Ash'),
+	'belgianchocolate'=> /* I18N: This is the name of theme color-scheme */ i18n::translate('Belgian Chocolate'),
+	'bluelagoon'      => /* I18N: This is the name of theme color-scheme */ i18n::translate('Blue Lagoon'),
+	'bluemarine'      => /* I18N: This is the name of theme color-scheme */ i18n::translate('Blue Marine'),
+	'coldday'         => /* I18N: This is the name of theme color-scheme */ i18n::translate('Cold Day'),
+	'greenbeam'       => /* I18N: This is the name of theme color-scheme */ i18n::translate('Green Beam'),
+	'mediterranio'    => /* I18N: This is the name of theme color-scheme */ i18n::translate('Mediterranio'),
+	'mercury'         => /* I18N: This is the name of theme color-scheme */ i18n::translate('Mercury'),
+	'nocturnal'       => /* I18N: This is the name of theme color-scheme */ i18n::translate('Nocturnal'),
+	'olivia'          => /* I18N: This is the name of theme color-scheme */ i18n::translate('Olivia'),
+	'pinkplastic'     => /* I18N: This is the name of theme color-scheme */ i18n::translate('Pink Plstic'),
+	'shinytomato'     => /* I18N: This is the name of theme color-scheme */ i18n::translate('Shiny Tomato'),
+	'tealtop'         => /* I18N: This is the name of theme color-scheme */ i18n::translate('Teal Top'),
+);
 
-if (isset($_SESSION['newColor']))  {
-	$subColor = $_SESSION['newColor'];
-
+if (isset($_GET['themecolor']) && array_key_exists($_GET['themecolor'], $COLOR_THEME_LIST)) {
+	// Request to change color
+	$subColor=$_GET['themecolor'];
+	if (PGV_USER_ID) {
+		set_user_setting(PGV_USER_ID, 'themecolor', $subColor);
+	}
+	unset($_GET['themecolor']);
+} elseif (isset($_SESSION['themecolor']))  {
+	// Previously selected color
+	$subColor=$_SESSION['themecolor'];
+} else {
+	if (PGV_USER_ID) {
+		$subColor=get_user_setting(PGV_USER_ID, 'themecolor');
+		if (!array_key_exists($subColor, $COLOR_THEME_LIST)) {
+			$subColor='ash';
+		}
+	} else {
+		// Default color
+		$subColor='ash';
+	}
 }
+
+$_SESSION['newColor']=$subColor;
 
 $theme_name       = "Colors";
 $stylesheet       = PGV_THEME_DIR  . "css/" . $subColor . ".css";
