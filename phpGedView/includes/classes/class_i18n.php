@@ -204,8 +204,7 @@ class i18n {
 		return call_user_func_array('sprintf', $args);
 	}
 
-	// Determine whether a message has a translation in the current language.
-	// if (i18n::is_translated('_CUSTOM_FACT'))
+	// These two functions are deprecated.
 	static public function is_translated($string) {
 		return i18n::translate($string)!=$string;
 	}
