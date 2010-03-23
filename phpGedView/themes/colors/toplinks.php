@@ -116,7 +116,7 @@ $menubar = new MenuBar();
 <?php if(empty($SEARCH_SPIDER)) { ?>
 		<td class="toplinks_right">
 		<div align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right" ?>" >
-		<?php print_color_dropdown(); ?>
+		<?php echo color_theme_dropdown(); ?>
 		</div>
 		</td>
 <?php } ?>

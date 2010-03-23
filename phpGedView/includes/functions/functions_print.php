@@ -1390,26 +1390,6 @@ function write_align_with_textdir_check($t_dir, $return=false)
 	if ($return) return $out;
 	echo $out;
 }
-//-- print color theme sub type change dropdown box
-function print_color_dropdown($style=0) {
-	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES;
-
-	if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {
-		echo '<div class="color_form">';
-		$color_menu=MenuBar::getColorMenu();
-		switch ($style) {
-		case 0:
-			echo $color_menu->getMenuAsDropdown();
-			break;
-		case 1:
-			echo $color_menu->getMenu();
-			break;
-		}
-		echo '</div>';
-	} else {
-		echo '&nbsp;';
-	}
-}
 //-- print theme change dropdown box
 function print_theme_dropdown($style=0) {
 	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES;

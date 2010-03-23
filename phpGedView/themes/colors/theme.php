@@ -31,6 +31,22 @@ if (!defined('PGV_PHPGEDVIEW')) {
         header('HTTP/1.0 403 Forbidden');
         exit;
 }
+
+//-- print color theme sub type change dropdown box
+function color_theme_dropdown($style=0) {
+	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES;
+
+	if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {
+		switch ($style) {
+		case 0:
+			return '<div class="color_form">'.MenuBar::getColorMenu()->getMenuAsDropdown().'</div>';
+		case 1:
+			return '<div class="color_form">'.MenuBar::getColorMenu()->getMenu().'</div>';
+		}
+	}
+	return '&nbsp;';
+}
+
 /**
  *  Define the default palette to be used.  Set $subColor
  *  to one of the collowing values to determine the default:
