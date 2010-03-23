@@ -2196,7 +2196,7 @@ msgstr "Источник:"
 
 #: ../inverselink.php:190
 msgid "Repository"
-msgstr ""
+msgstr "Архив"
 
 #. I18N: This is the GEDCOM label for "Shared Note"
 #: ../inverselink.php:205 ../note.php:96 ../note.php:97
@@ -2205,7 +2205,7 @@ msgstr ""
 #: ../modules/GEDFact_assistant/_CENS/census_4_text.php:60
 #: ../edit_interface.php:860 ../edit_interface.php:1126 ../help_text.php:1237
 msgid "Shared Note"
-msgstr ""
+msgstr "Wspólna notatka"
 
 #: ../inverselink.php:220 ../includes/controllers/media_ctrl.php:235
 #: ../modules/lightbox/functions/lb_link.php:57
@@ -3620,7 +3620,7 @@ msgstr ""
 #: ../module_admin.php:203 ../module_admin.php:251 ../module_admin.php:302
 #: ../module_admin.php:353
 msgid "Description"
-msgstr ""
+msgstr "Приметы"
 
 #: ../module_admin.php:204
 msgid "Version / PGV"
@@ -5637,7 +5637,7 @@ msgstr ""
 
 #: ../includes/config_data.php:99
 msgid "Birth"
-msgstr ""
+msgstr "Рождение"
 
 #: ../includes/config_data.php:100
 msgid "Adopted"
@@ -7168,7 +7168,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Relationship"
 #: ../includes/functions/functions_print.php:1651 ../help_text.php:1165
 msgid "Relationship"
-msgstr ""
+msgstr "Înrudire"
 
 #. I18N: This is the GEDCOM label for "Death of mother"
 #: ../includes/functions/functions_print.php:1748 ../help_text.php:1897
@@ -7229,73 +7229,73 @@ msgstr "Нестандартное событие"
 #: ../includes/classes/class_date.php:152
 msgctxt "NOMINATIVE"
 msgid "January"
-msgstr ""
+msgstr "январь"
 
 #: ../includes/functions/functions_print.php:2182
 #: ../includes/classes/class_date.php:153
 msgctxt "NOMINATIVE"
 msgid "February"
-msgstr ""
+msgstr "февраль"
 
 #: ../includes/functions/functions_print.php:2183
 #: ../includes/classes/class_date.php:154
 msgctxt "NOMINATIVE"
 msgid "March"
-msgstr ""
+msgstr "март"
 
 #: ../includes/functions/functions_print.php:2184
 #: ../includes/classes/class_date.php:155
 msgctxt "NOMINATIVE"
 msgid "April"
-msgstr ""
+msgstr "апрель"
 
 #: ../includes/functions/functions_print.php:2185
 #: ../includes/classes/class_date.php:156
 msgctxt "NOMINATIVE"
 msgid "May"
-msgstr ""
+msgstr "май"
 
 #: ../includes/functions/functions_print.php:2186
 #: ../includes/classes/class_date.php:157
 msgctxt "NOMINATIVE"
 msgid "June"
-msgstr ""
+msgstr "июнь"
 
 #: ../includes/functions/functions_print.php:2187
 #: ../includes/classes/class_date.php:158
 msgctxt "NOMINATIVE"
 msgid "July"
-msgstr ""
+msgstr "июль"
 
 #: ../includes/functions/functions_print.php:2188
 #: ../includes/classes/class_date.php:159
 msgctxt "NOMINATIVE"
 msgid "August"
-msgstr ""
+msgstr "август"
 
 #: ../includes/functions/functions_print.php:2189
 #: ../includes/classes/class_date.php:160
 msgctxt "NOMINATIVE"
 msgid "September"
-msgstr ""
+msgstr "сентябрь"
 
 #: ../includes/functions/functions_print.php:2190
 #: ../includes/classes/class_date.php:161
 msgctxt "NOMINATIVE"
 msgid "October"
-msgstr ""
+msgstr "октябрь"
 
 #: ../includes/functions/functions_print.php:2191
 #: ../includes/classes/class_date.php:162
 msgctxt "NOMINATIVE"
 msgid "November"
-msgstr ""
+msgstr "ноябрь"
 
 #: ../includes/functions/functions_print.php:2192
 #: ../includes/classes/class_date.php:163
 msgctxt "NOMINATIVE"
 msgid "December"
-msgstr ""
+msgstr "декабрь"
 
 #: ../includes/functions/functions_print.php:2194
 #: ../includes/classes/class_date.php:280
@@ -9070,182 +9070,182 @@ msgstr ""
 #: ../includes/classes/class_date.php:169
 msgctxt "GENITIVE"
 msgid "January"
-msgstr ""
+msgstr "январь"
 
 #: ../includes/classes/class_date.php:170
 msgctxt "GENITIVE"
 msgid "February"
-msgstr ""
+msgstr "февраль"
 
 #: ../includes/classes/class_date.php:171
 msgctxt "GENITIVE"
 msgid "March"
-msgstr ""
+msgstr "март"
 
 #: ../includes/classes/class_date.php:172
 msgctxt "GENITIVE"
 msgid "April"
-msgstr ""
+msgstr "апрель"
 
 #: ../includes/classes/class_date.php:173
 msgctxt "GENITIVE"
 msgid "May"
-msgstr ""
+msgstr "май"
 
 #: ../includes/classes/class_date.php:174
 msgctxt "GENITIVE"
 msgid "June"
-msgstr ""
+msgstr "июнь"
 
 #: ../includes/classes/class_date.php:175
 msgctxt "GENITIVE"
 msgid "July"
-msgstr ""
+msgstr "июль"
 
 #: ../includes/classes/class_date.php:176
 msgctxt "GENITIVE"
 msgid "August"
-msgstr ""
+msgstr "август"
 
 #: ../includes/classes/class_date.php:177
 msgctxt "GENITIVE"
 msgid "September"
-msgstr ""
+msgstr "сентябрь"
 
 #: ../includes/classes/class_date.php:178
 msgctxt "GENITIVE"
 msgid "October"
-msgstr ""
+msgstr "октябрь"
 
 #: ../includes/classes/class_date.php:179
 msgctxt "GENITIVE"
 msgid "November"
-msgstr ""
+msgstr "ноябрь"
 
 #: ../includes/classes/class_date.php:180
 msgctxt "GENITIVE"
 msgid "December"
-msgstr ""
+msgstr "декабрь"
 
 #: ../includes/classes/class_date.php:186
 msgctxt "LOCATIVE"
 msgid "January"
-msgstr ""
+msgstr "январь"
 
 #: ../includes/classes/class_date.php:187
 msgctxt "LOCATIVE"
 msgid "February"
-msgstr ""
+msgstr "февраль"
 
 #: ../includes/classes/class_date.php:188
 msgctxt "LOCATIVE"
 msgid "March"
-msgstr ""
+msgstr "март"
 
 #: ../includes/classes/class_date.php:189
 msgctxt "LOCATIVE"
 msgid "April"
-msgstr ""
+msgstr "апрель"
 
 #: ../includes/classes/class_date.php:190
 msgctxt "LOCATIVE"
 msgid "May"
-msgstr ""
+msgstr "май"
 
 #: ../includes/classes/class_date.php:191
 msgctxt "LOCATIVE"
 msgid "June"
-msgstr ""
+msgstr "июнь"
 
 #: ../includes/classes/class_date.php:192
 msgctxt "LOCATIVE"
 msgid "July"
-msgstr ""
+msgstr "июль"
 
 #: ../includes/classes/class_date.php:193
 msgctxt "LOCATIVE"
 msgid "August"
-msgstr ""
+msgstr "август"
 
 #: ../includes/classes/class_date.php:194
 msgctxt "LOCATIVE"
 msgid "September"
-msgstr ""
+msgstr "сентябрь"
 
 #: ../includes/classes/class_date.php:195
 msgctxt "LOCATIVE"
 msgid "October"
-msgstr ""
+msgstr "октябрь"
 
 #: ../includes/classes/class_date.php:196
 msgctxt "LOCATIVE"
 msgid "November"
-msgstr ""
+msgstr "ноябрь"
 
 #: ../includes/classes/class_date.php:197
 msgctxt "LOCATIVE"
 msgid "December"
-msgstr ""
+msgstr "декабрь"
 
 #: ../includes/classes/class_date.php:203
 msgctxt "INSTRUMENTAL"
 msgid "January"
-msgstr ""
+msgstr "январь"
 
 #: ../includes/classes/class_date.php:204
 msgctxt "INSTRUMENTAL"
 msgid "February"
-msgstr ""
+msgstr "февраль"
 
 #: ../includes/classes/class_date.php:205
 msgctxt "INSTRUMENTAL"
 msgid "March"
-msgstr ""
+msgstr "март"
 
 #: ../includes/classes/class_date.php:206
 msgctxt "INSTRUMENTAL"
 msgid "April"
-msgstr ""
+msgstr "апрель"
 
 #: ../includes/classes/class_date.php:207
 msgctxt "INSTRUMENTAL"
 msgid "May"
-msgstr ""
+msgstr "май"
 
 #: ../includes/classes/class_date.php:208
 msgctxt "INSTRUMENTAL"
 msgid "June"
-msgstr ""
+msgstr "июнь"
 
 #: ../includes/classes/class_date.php:209
 msgctxt "INSTRUMENTAL"
 msgid "July"
-msgstr ""
+msgstr "июль"
 
 #: ../includes/classes/class_date.php:210
 msgctxt "INSTRUMENTAL"
 msgid "August"
-msgstr ""
+msgstr "август"
 
 #: ../includes/classes/class_date.php:211
 msgctxt "INSTRUMENTAL"
 msgid "September"
-msgstr ""
+msgstr "сентябрь"
 
 #: ../includes/classes/class_date.php:212
 msgctxt "INSTRUMENTAL"
 msgid "October"
-msgstr ""
+msgstr "октябрь"
 
 #: ../includes/classes/class_date.php:213
 msgctxt "INSTRUMENTAL"
 msgid "November"
-msgstr ""
+msgstr "ноябрь"
 
 #: ../includes/classes/class_date.php:214
 msgctxt "INSTRUMENTAL"
 msgid "December"
-msgstr ""
+msgstr "декабрь"
 
 #: ../includes/classes/class_date.php:220 ../statisticsplot.php:731
 msgid "Jan"
@@ -10582,12 +10582,12 @@ msgstr ""
 #. I18N: This is the format string for full dates.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:97
 msgid "%j %F %Y"
-msgstr "%j %F %Y"
+msgstr ""
 
 #. I18N: This a the format string for the time-of-day.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:99
 msgid "%g:%i:%s%a"
-msgstr "%g:%i:%s%a"
+msgstr ""
 
 #: ../includes/classes/class_i18n.php:102
 msgid "ALPHABET_upper=ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -10600,12 +10600,12 @@ msgstr "ALPHABET_lower=абвгдеёжзийклмнопрстуфхцчшщъ�
 #. I18N: This is the first day of the week on calendars. 0=Sunday, 1=Monday...
 #: ../includes/classes/class_i18n.php:108
 msgid "WEEK_START=0"
-msgstr "WEEK_START=0"
+msgstr ""
 
 #. I18N: semicolon separated list of digraphs
 #: ../includes/classes/class_i18n.php:111
 msgid "MULTI_LETTER_ALPHABET="
-msgstr "MULTI_LETTER_ALPHABET="
+msgstr ""
 
 #. I18N: 1=>ignore diacrics when sorting, 0=>letters with diacritics are distinct
 #: ../includes/classes/class_i18n.php:114
@@ -13658,7 +13658,7 @@ msgstr "Добавить ребёнка"
 #. I18N: This is the GEDCOM label for "Pedigree"
 #: ../edit_interface.php:528 ../help_text.php:1093
 msgid "Pedigree"
-msgstr ""
+msgstr "Восходящее древо"
 
 #: ../edit_interface.php:692 ../edit_interface.php:842
 #: ../edit_interface.php:973 ../edit_interface.php:1012
@@ -15457,7 +15457,7 @@ msgstr ""
 #. I18N: This is the country/chapman code for "USA"
 #: ../language/_countries.php:528
 msgid "USA"
-msgstr ""
+msgstr "SUA"
 
 #. I18N: This is the country/chapman code for "Uzbekistan"
 #: ../language/_countries.php:530
@@ -15702,7 +15702,7 @@ msgstr "Слить (объединить) из ID:"
 #. I18N: This is the GEDCOM label for "Abbreviation"
 #: ../help_text.php:49
 msgid "Abbreviation"
-msgstr ""
+msgstr "Сокращение"
 
 #: ../help_text.php:50
 msgid "Use this field for storing an abbreviated version of a title.  This field is used in conjunction with the title field on sources.  By default PGV will first use the title and then the abbreviated title.<br /><br />According to the GEDCOM 5.5 specification, \"this entry is to provide a short title used for sorting, filing, and retrieving source records (pg 62).\"<br /><br />In PhpGedView the abbreviated title is optional, but in other genealogical programs it is required."
@@ -15711,7 +15711,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Address"
 #: ../help_text.php:55
 msgid "Address"
-msgstr ""
+msgstr "Адрес"
 
 #: ../help_text.php:56
 msgid "Enter the address into the field just as you would write it on an envelope.<br /><br />Leave this field blank if you do not want to include an address."
@@ -15735,7 +15735,7 @@ msgstr "Номер прародителя (положение в генеало�
 #. I18N: This is the GEDCOM label for "Agency"
 #: ../help_text.php:91
 msgid "Agency"
-msgstr ""
+msgstr "Учреждение"
 
 #: ../help_text.php:92
 msgid "The organization, institution, corporation, person, or other entity that has authority.<br /><br />For example, an employer of a person, or a church that administered rites or events, or an organization responsible for creating and/or archiving records."
@@ -15764,7 +15764,7 @@ msgstr "Признание брака недействительным"
 #. I18N: This is the GEDCOM label for "Associate"
 #: ../help_text.php:121
 msgid "Associate"
-msgstr ""
+msgstr "Знакомые"
 
 #: ../help_text.php:122
 msgid "Enter associate GEDCOM ID."
@@ -15898,7 +15898,7 @@ msgstr "Причина смерти"
 #. I18N: This is the GEDCOM label for "Cemetery"
 #: ../help_text.php:295
 msgid "Cemetery"
-msgstr ""
+msgstr "Cimitir"
 
 #: ../help_text.php:296
 msgid "Enter the name of the cemetery or other resting place where individual is buried."
@@ -16271,7 +16271,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Format"
 #: ../help_text.php:809
 msgid "Format"
-msgstr ""
+msgstr "Формат"
 
 #: ../help_text.php:810
 msgid "This is an optional field that can be used to enter the file format of the multimedia object.  Some genealogy programs may look at this field to determine how to handle the item.  However, since media do not transfer across computer systems very well, this field is not very important."
@@ -16488,7 +16488,7 @@ msgstr "Посвящение в сан"
 #. I18N: This is the GEDCOM label for "Citation Details"
 #: ../help_text.php:1087
 msgid "Citation Details"
-msgstr ""
+msgstr "Местонахождение цитаты"
 
 #: ../help_text.php:1088
 msgid "In the Citation Details field you would enter the page number or other information that might help someone find the information in the source."
@@ -16501,7 +16501,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Phone"
 #: ../help_text.php:1099
 msgid "Phone"
-msgstr ""
+msgstr "Телефон"
 
 #: ../help_text.php:1100
 msgid "Enter the phone number including the country and area code.<br /><br />Leave this field blank if you do not want to include a phone number.  For example, a number in Germany might be +49 25859 56 76 89 and a number in USA or Canada might be +1 888 555-1212."
@@ -16544,7 +16544,7 @@ msgstr "Собственность"
 #. I18N: This is the GEDCOM label for "Quality of Data"
 #: ../help_text.php:1153
 msgid "Quality of Data"
-msgstr ""
+msgstr "Качество данных"
 
 #: ../help_text.php:1154
 msgid "You would use this field to record the quality or reliability of the data found in this source.  Many genealogy applications use a number in the field. <b>3</b> might mean that the data is a primary source, <b>2</b> might mean that it was a secondary source, <b>1</b> might mean the information is questionable, and <b>0</b> might mean that the source is unreliable."
@@ -16572,7 +16572,7 @@ msgstr "Место проживания"
 #. I18N: This is the GEDCOM label for "Restriction"
 #: ../help_text.php:1189
 msgid "Restriction"
-msgstr ""
+msgstr "Ограниченный доступ"
 
 #: ../help_text.php:1190
 msgid "Apart from general privacy settings, PhpGedView has the ability to set restrictions on viewing and editing fact information for individuals and families. The restrictions can be set by anyone who is allowed to edit the information, unless privacy or formerly set restrictions prohibit this.<br /><br />The following values can be used:<br /><ul><li><b>None</b><br />Site administrators, GEDCOM administrators, and users who have rights to edit can change the information. Fact information can be viewed according to privacy settings as applied by the administrator.</li><li><b>Do not change</b><br />This setting has no influence on the visibility of the fact data. It restricts editing rights to site administrators and GEDCOM administrators. If the information applies to the user himself, he can also view and, assuming he has editing rights, edit it.</li><li><b>Privacy</b><br />Site administrators and GEDCOM administrators can view and edit the information. If the information applies to the user himself, he can also view and, assuming he has editing rights, edit it. It will be hidden from all other users regardless of their login status.</li><li><b>Confidential</b><br />Only site administrators and GEDCOM administrators can view and edit the information. It will be hidden from all other users regardless of their login status.</li></ul><br /><table><tr><th></th><th colspan=\"2\">Admin</th><th colspan=\"2\">Owner</th><th colspan=\"2\">Others</th></tr><tr><th></th><th>R</th><th>W</th><th>R</th><th>W</th><th>R</th><th>W</th></tr><tr><td><img src=\"images/RESN_none.gif\" alt=\"\" /> None</td><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th></tr><tr><td><img src=\"images/RESN_locked.gif\" alt=\"\" /> Do not change</td><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th></tr><tr><td><img src=\"images/RESN_privacy.gif\" alt=\"\" /> Privacy</td><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th></tr><tr><td><img src=\"images/RESN_confidential.gif\" alt=\"\" /> Confidential</td><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th></tr></table><ul><li>R : can read</li><li>W : can edit</li><li><img src=\"images/checked_qm.gif\" alt=\"\" /> : depends on global privacy settings</li></ul>"
@@ -16596,7 +16596,7 @@ msgstr "Идентификационный номер"
 #. I18N: This is the GEDCOM label for "Romanized"
 #: ../help_text.php:1219
 msgid "Romanized"
-msgstr ""
+msgstr "Romanizat"
 
 #: ../help_text.php:1220
 msgid "In many cultures it is customary to have a traditional name spelled in the traditional characters and also a romanized version of the name as it would be spelled or pronounced in languages based on the Latin alphabet, such as English.<br /><br />If you prefer to use a non-Latin alphabet such as Hebrew, Greek, Russian, Chinese, or Arabic to enter the name in the standard name fields, then you can use this field to enter the same name using the Latin alphabet.  Both versions of the name will appear in lists and charts.<br /><br />Although this field is labelled \"Romanized\", it is not restricted to containing only characters based on the Latin alphabet.  This might be of use with Japanese names, where three different alphabets may occur."
@@ -16632,7 +16632,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Surname Prefix"
 #: ../help_text.php:1261
 msgid "Surname Prefix"
-msgstr ""
+msgstr "Префикс к фамилии"
 
 #: ../help_text.php:1262
 msgid "Enter or select from the list words that precede the main part of the Surname.  Examples of such words are <b>von</b> Braun, <b>van der</b> Kloot, <b>de</b> Graaf, etc."
@@ -16665,7 +16665,7 @@ msgstr "Подача"
 #. I18N: This is the GEDCOM label for "Surname"
 #: ../help_text.php:1303 ../help_text.php:4718
 msgid "Surname"
-msgstr ""
+msgstr "Фамилия"
 
 #: ../help_text.php:1304 ../help_text.php:4519
 msgid "In this field you should enter the surname for the person.  As an example, in the name \"John Robert Finlay\", the surname that should be entered here is \"Finlay\"<br /><br />Individuals with multiple surnames, common in Spain and Portugal, should separate the surnames with a comma.  This indicates that the person is to be listed under each of the names.  For example, the surname \"Cortes,Vega\" will be listed under both <b>C</b> and <b>V</b>, whereas the surname \"Cortes Vega\" will only be listed under <b>C</b>."
@@ -16674,7 +16674,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Temple"
 #: ../help_text.php:1309
 msgid "Temple"
-msgstr ""
+msgstr "Храм мормонов"
 
 #: ../help_text.php:1310
 msgid "For LDS ordinances, this field records the Temple where it was performed."
@@ -16687,7 +16687,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Time"
 #: ../help_text.php:1321
 msgid "Time"
-msgstr ""
+msgstr "Время"
 
 #: ../help_text.php:1322
 msgid "Enter the time for this event in 24-hour format with leading zeroes. Midnight is 00:00. Examples: 04:50 13:00 20:30."
@@ -16696,7 +16696,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Title"
 #: ../help_text.php:1327
 msgid "Title"
-msgstr ""
+msgstr "Заглавие"
 
 #: ../help_text.php:1328
 msgid "Enter a title for the item you are editing.  If this is a title for a multimedia item, enter a descriptive title that will identify that item to the user."
@@ -16729,7 +16729,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Web URL"
 #: ../help_text.php:1363
 msgid "Web URL"
-msgstr ""
+msgstr "Adresă site"
 
 #: ../help_text.php:1364
 msgid "Enter the URL address including the http://.<br /><br />An example URL looks like this: <b>http://www.phpgedview.net/</b> Leave this field blank if you do not want to include a URL."
@@ -19002,7 +19002,7 @@ msgstr ""
 
 #: ../help_text.php:4103
 msgid "Show events of:"
-msgstr ""
+msgstr "Показать события:"
 
 #: ../help_text.php:4104
 msgid "The following options are available:<br /><ol><li><b>All People</b><br />With this option, all individuals and families are displayed.</li><li><b>Recent Years (&lt;100 yrs)</b><br />With this option you will see all events for the chosen day or month, but no events older than 100 years will be shown.</li><li><b>Living People</b><br />Unless the administrator has configured PhpGedView so that living people are visible to anyone, this option will only be available to you after you have logged in.<br /><br />With this option, only the events of living persons will be displayed.</li></ol>When you click on an option, the events of your choice will be displayed.<br /><br />The settings of day, month, and year, as well as <b>Day</b> or <b>Month</b> mode, remain as they were."

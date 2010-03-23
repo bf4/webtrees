@@ -1513,7 +1513,7 @@ msgstr "Zobacz połączenia"
 #: ../edit_privacy.php:467 ../edit_privacy.php:514 ../edit_privacy.php:559
 #: ../edit_privacy.php:702 ../edit_privacy.php:749
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #: ../manageservers.php:363 ../manageservers.php:438 ../editnews.php:90
 #: ../includes/classes/class_stats_ui.php:186 ../addremotelink.php:212
@@ -2575,7 +2575,7 @@ msgstr "Limit czasu PHP:"
 
 #: ../editconfig_gedcom.php:1100 ../editconfig_gedcom.php:1101
 msgid "Multimedia"
-msgstr "Multimedia"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1108 ../help_text.php:3260
 msgid "Enable multimedia features"
@@ -3302,7 +3302,7 @@ msgstr "%s nie może zostać pobrany."
 #: ../uploadgedcom.php:292 ../uploadgedcom.php:298 ../uploadgedcom.php:1112
 #: ../usermigrate.php:146
 msgid "Import"
-msgstr "Import"
+msgstr ""
 
 #: ../editgedcoms.php:186
 msgid "This GEDCOM has not yet been imported."
@@ -3632,7 +3632,7 @@ msgstr "Zakładka?"
 
 #: ../module_admin.php:206
 msgid "Menu?"
-msgstr "Menu?"
+msgstr ""
 
 #: ../module_admin.php:207
 msgid "Sidebar?"
@@ -4370,7 +4370,7 @@ msgstr "Podstawowy"
 
 #: ../branches.php:84 ../search.php:365
 msgid "Daitch-Mokotoff"
-msgstr "Daitch-Mokotoff"
+msgstr ""
 
 #: ../branches.php:108
 msgid "Direct line ancestors-ancestors"
@@ -5886,31 +5886,31 @@ msgstr ""
 
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
-msgstr "(לא-ידוע)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:79 ../includes/sort_tables_utf8.php:89
 msgid "(غير معروف)"
-msgstr "(غير معروف)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:80 ../includes/sort_tables_utf8.php:90
 msgid "(άγνωστος/η)"
-msgstr "(άγνωστος/η)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:81 ../includes/sort_tables_utf8.php:91
 msgid "(неопределено)"
-msgstr "(неопределено)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:82 ../includes/sort_tables_utf8.php:92
 msgid "(未知)"
-msgstr "(未知)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:83
 msgid "(vô danh)"
-msgstr "(vô danh)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:93
 msgid "(không biết tuổi)"
-msgstr "(không biết tuổi)"
+msgstr ""
 
 #: ../includes/extras/functions.el.php:43
 #: ../includes/extras/functions.pl.php:45
@@ -7163,7 +7163,7 @@ msgstr "Więcej informacji udziela"
 
 #: ../includes/functions/functions_print.php:1330
 msgid "?"
-msgstr "?"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Relationship"
 #: ../includes/functions/functions_print.php:1651 ../help_text.php:1165
@@ -7211,7 +7211,7 @@ msgstr "Kod Świątyni Mormońskiej:"
 #. I18N: This is the GEDCOM label for "Status"
 #: ../includes/functions/functions_print.php:2014 ../help_text.php:1279
 msgid "Status"
-msgstr "Status"
+msgstr ""
 
 #: ../includes/functions/functions_print.php:2095
 msgid "Add from clipboard"
@@ -8758,7 +8758,7 @@ msgstr "Wpis w pliku GEDCOM został usunięty."
 #: ../includes/classes/class_person.php:544
 #, php-format
 msgid "#%d"
-msgstr "#%d"
+msgstr ""
 
 #: ../includes/functions/functions_print_facts.php:169
 #: ../includes/functions/functions_print_facts.php:220
@@ -8950,7 +8950,7 @@ msgstr "Nieznane"
 #: ../includes/classes/class_note.php:51
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:201
 msgid "…"
-msgstr "…"
+msgstr ""
 
 #: ../includes/classes/class_menubar.php:134 ../blocks/user_welcome.php:58
 msgid "My Pedigree"
@@ -9627,15 +9627,15 @@ msgstr "Szwat"
 
 #: ../includes/classes/class_date.php:855
 msgid "Adar"
-msgstr "Adar"
+msgstr ""
 
 #: ../includes/classes/class_date.php:855
 msgid "Adar I"
-msgstr "Adar I"
+msgstr ""
 
 #: ../includes/classes/class_date.php:856
 msgid "Adar II"
-msgstr "Adar II"
+msgstr ""
 
 #: ../includes/classes/class_date.php:857
 msgid "Nissan"
@@ -9651,7 +9651,7 @@ msgstr "Siwan"
 
 #: ../includes/classes/class_date.php:860
 msgid "Tamuz"
-msgstr "Tamuz"
+msgstr ""
 
 #: ../includes/classes/class_date.php:861
 msgid "Av"
@@ -9659,95 +9659,95 @@ msgstr "Aw"
 
 #: ../includes/classes/class_date.php:862
 msgid "Elul"
-msgstr "Elul"
+msgstr ""
 
 #: ../includes/classes/class_date.php:942
 msgid "שני"
-msgstr "שני"
+msgstr ""
 
 #: ../includes/classes/class_date.php:943
 msgid "שלישי"
-msgstr "שלישי"
+msgstr ""
 
 #: ../includes/classes/class_date.php:944
 msgid "רביעי"
-msgstr "רביעי"
+msgstr ""
 
 #: ../includes/classes/class_date.php:945
 msgid "חמישי"
-msgstr "חמישי"
+msgstr ""
 
 #: ../includes/classes/class_date.php:946
 msgid "ששי"
-msgstr "ששי"
+msgstr ""
 
 #: ../includes/classes/class_date.php:947
 msgid "שבת"
-msgstr "שבת"
+msgstr ""
 
 #: ../includes/classes/class_date.php:948
 msgid "ראשון"
-msgstr "ראשון"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1082
 msgctxt "NOMINATIVE"
 msgid "Vendémiaire"
-msgstr "Vendémiaire"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1083
 msgctxt "NOMINATIVE"
 msgid "Brumaire"
-msgstr "Brumaire"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1084
 msgctxt "NOMINATIVE"
 msgid "Frimaire"
-msgstr "Frimaire"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1085
 msgctxt "NOMINATIVE"
 msgid "Nivôse"
-msgstr "Nivôse"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1086
 msgctxt "NOMINATIVE"
 msgid "Pluviôse"
-msgstr "Pluviôse"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1087
 msgctxt "NOMINATIVE"
 msgid "Ventôse"
-msgstr "Ventôse"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1088
 msgctxt "NOMINATIVE"
 msgid "Germinal"
-msgstr "Germinal"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1089
 msgctxt "NOMINATIVE"
 msgid "Floréal"
-msgstr "Floréal"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1090
 msgctxt "NOMINATIVE"
 msgid "Prairial"
-msgstr "Prairial"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1091
 msgctxt "NOMINATIVE"
 msgid "Messidor"
-msgstr "Messidor"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1092
 msgctxt "NOMINATIVE"
 msgid "Thermidor"
-msgstr "Thermidor"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1093
 msgctxt "NOMINATIVE"
 msgid "Fructidor"
-msgstr "Fructidor"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1094
 msgctxt "NOMINATIVE"
@@ -9757,62 +9757,62 @@ msgstr "Dni Sankiulotów"
 #: ../includes/classes/class_date.php:1099
 msgctxt "GENITIVE"
 msgid "Vendémiaire"
-msgstr "Vendémiaire"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1100
 msgctxt "GENITIVE"
 msgid "Brumaire"
-msgstr "Brumaire"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1101
 msgctxt "GENITIVE"
 msgid "Frimaire"
-msgstr "Frimaire"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1102
 msgctxt "GENITIVE"
 msgid "Nivôse"
-msgstr "Nivôse"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1103
 msgctxt "GENITIVE"
 msgid "Pluviôse"
-msgstr "Pluviôse"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1104
 msgctxt "GENITIVE"
 msgid "Ventôse"
-msgstr "Ventôse"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1105
 msgctxt "GENITIVE"
 msgid "Germinal"
-msgstr "Germinal"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1106
 msgctxt "GENITIVE"
 msgid "Floréal"
-msgstr "Floréal"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1107
 msgctxt "GENITIVE"
 msgid "Prairial"
-msgstr "Prairial"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1108
 msgctxt "GENITIVE"
 msgid "Messidor"
-msgstr "Messidor"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1109
 msgctxt "GENITIVE"
 msgid "Thermidor"
-msgstr "Thermidor"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1110
 msgctxt "GENITIVE"
 msgid "Fructidor"
-msgstr "Fructidor"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1111
 msgctxt "GENITIVE"
@@ -9822,62 +9822,62 @@ msgstr "Dni Sankiulotów"
 #: ../includes/classes/class_date.php:1116
 msgctxt "LOCATIVE"
 msgid "Vendémiaire"
-msgstr "Vendémiaire"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1117
 msgctxt "LOCATIVE"
 msgid "Brumaire"
-msgstr "Brumaire"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1118
 msgctxt "LOCATIVE"
 msgid "Frimaire"
-msgstr "Frimaire"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1119
 msgctxt "LOCATIVE"
 msgid "Nivôse"
-msgstr "Nivôse"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1120
 msgctxt "LOCATIVE"
 msgid "Pluviôse"
-msgstr "Pluviôse"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1121
 msgctxt "LOCATIVE"
 msgid "Ventôse"
-msgstr "Ventôse"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1122
 msgctxt "LOCATIVE"
 msgid "Germinal"
-msgstr "Germinal"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1123
 msgctxt "LOCATIVE"
 msgid "Floréal"
-msgstr "Floréal"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1124
 msgctxt "LOCATIVE"
 msgid "Prairial"
-msgstr "Prairial"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1125
 msgctxt "LOCATIVE"
 msgid "Messidor"
-msgstr "Messidor"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1126
 msgctxt "LOCATIVE"
 msgid "Thermidor"
-msgstr "Thermidor"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1127
 msgctxt "LOCATIVE"
 msgid "Fructidor"
-msgstr "Fructidor"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1128
 msgctxt "LOCATIVE"
@@ -9887,62 +9887,62 @@ msgstr "Dni Sankiulotów"
 #: ../includes/classes/class_date.php:1133
 msgctxt "INSTRUMENTAL"
 msgid "Vendémiaire"
-msgstr "Vendémiaire"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1134
 msgctxt "INSTRUMENTAL"
 msgid "Brumaire"
-msgstr "Brumaire"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1135
 msgctxt "INSTRUMENTAL"
 msgid "Frimaire"
-msgstr "Frimaire"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1136
 msgctxt "INSTRUMENTAL"
 msgid "Nivôse"
-msgstr "Nivôse"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1137
 msgctxt "INSTRUMENTAL"
 msgid "Pluviôse"
-msgstr "Pluviôse"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1138
 msgctxt "INSTRUMENTAL"
 msgid "Ventôse"
-msgstr "Ventôse"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1139
 msgctxt "INSTRUMENTAL"
 msgid "Germinal"
-msgstr "Germinal"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1140
 msgctxt "INSTRUMENTAL"
 msgid "Floréal"
-msgstr "Floréal"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1141
 msgctxt "INSTRUMENTAL"
 msgid "Prairial"
-msgstr "Prairial"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1142
 msgctxt "INSTRUMENTAL"
 msgid "Messidor"
-msgstr "Messidor"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1143
 msgctxt "INSTRUMENTAL"
 msgid "Thermidor"
-msgstr "Thermidor"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1144
 msgctxt "INSTRUMENTAL"
 msgid "Fructidor"
-msgstr "Fructidor"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1145
 msgctxt "INSTRUMENTAL"
@@ -9951,43 +9951,43 @@ msgstr "Dni Sankiulotów"
 
 #: ../includes/classes/class_date.php:1174
 msgid "Primidi"
-msgstr "Primidi"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1175
 msgid "Duodi"
-msgstr "Duodi"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1176
 msgid "Tridi"
-msgstr "Tridi"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1177
 msgid "Quartidi"
-msgstr "Quartidi"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1178
 msgid "Quintidi"
-msgstr "Quintidi"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1179
 msgid "Sextidi"
-msgstr "Sextidi"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1180
 msgid "Septidi"
-msgstr "Septidi"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1181
 msgid "Octidi"
-msgstr "Octidi"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1182
 msgid "Nonidi"
-msgstr "Nonidi"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1183
 msgid "Decidi"
-msgstr "Decidi"
+msgstr ""
 
 #: ../includes/classes/class_date.php:1242
 msgctxt "NOMINATIVE"
@@ -10582,7 +10582,7 @@ msgstr "Pokaż archiwum"
 #. I18N: This is the format string for full dates.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:97
 msgid "%j %F %Y"
-msgstr "%j %F %Y"
+msgstr ""
 
 #. I18N: This a the format string for the time-of-day.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:99
@@ -10600,12 +10600,12 @@ msgstr "ALPHABET_lower=aąbcćdeęfghijklłmnńoópqrsśtuvwxyzźż"
 #. I18N: This is the first day of the week on calendars. 0=Sunday, 1=Monday...
 #: ../includes/classes/class_i18n.php:108
 msgid "WEEK_START=0"
-msgstr "WEEK_START=0"
+msgstr ""
 
 #. I18N: semicolon separated list of digraphs
 #: ../includes/classes/class_i18n.php:111
 msgid "MULTI_LETTER_ALPHABET="
-msgstr "MULTI_LETTER_ALPHABET="
+msgstr ""
 
 #. I18N: 1=>ignore diacrics when sorting, 0=>letters with diacritics are distinct
 #: ../includes/classes/class_i18n.php:114
@@ -11039,7 +11039,7 @@ msgstr "Brat przyrodni"
 #: ../includes/controllers/individual_ctrl.php:853
 #: ../includes/controllers/individual_ctrl.php:854
 msgid "Partner"
-msgstr "Partner"
+msgstr ""
 
 #: ../includes/controllers/individual_ctrl.php:840
 msgid "Ex-Spouse"
@@ -11124,7 +11124,7 @@ msgstr "Wykres statystyk"
 #: ../statisticsplot.php:928 ../statisticsplot.php:932
 #: ../statisticsplot.php:991
 msgid "..."
-msgstr "..."
+msgstr ""
 
 #: ../statisticsplot.php:951
 msgid "Month of birth of first child in a relation"
@@ -11159,7 +11159,7 @@ msgstr "Zarządzaj konfiguracją Lightbox-Album"
 
 #: ../modules/lightbox/pgv_module.php:18
 msgid "Lightbox"
-msgstr "Lightbox"
+msgstr ""
 
 #: ../modules/lightbox/lb_editconfig.php:53
 #: ../modules/googlemap/places.php:162 ../modules/googlemap/places_edit.php:47
@@ -11340,7 +11340,7 @@ msgstr "Zamknij"
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:48
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:53
 msgid "Album"
-msgstr "Album"
+msgstr ""
 
 #: ../modules/lightbox/functions/lb_indi_doors_0.php:58
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:61
@@ -12491,7 +12491,7 @@ msgstr "Lista wszystkich miejsc z danego pliku GEDCOM. Domyślnie NIE BĘDĄ ZA�
 
 #: ../modules/googlemap/pgv_module.php:18
 msgid "Googlemap"
-msgstr "Googlemap"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:644
 msgid "Use this value"
@@ -12534,19 +12534,19 @@ msgstr "Maksimum"
 
 #: ../modules/googlemap/places_edit.php:789
 msgid "N"
-msgstr "N"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:790
 msgid "S"
-msgstr "S"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:799
 msgid "E"
-msgstr "E"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:800
 msgid "W"
-msgstr "W"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:810
 #: ../modules/googlemap/places_edit.php:818
@@ -12663,7 +12663,7 @@ msgstr "Współczynnik powiększenia mapy"
 
 #: ../modules/googlemap/editconfig.php:325
 msgid "Min."
-msgstr "Min."
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:330
 msgid "Max."
@@ -13658,7 +13658,7 @@ msgstr "Dodaj dziecko"
 #. I18N: This is the GEDCOM label for "Pedigree"
 #: ../edit_interface.php:528 ../help_text.php:1093
 msgid "Pedigree"
-msgstr ""
+msgstr "Pochodzenie"
 
 #: ../edit_interface.php:692 ../edit_interface.php:842
 #: ../edit_interface.php:973 ../edit_interface.php:1012
@@ -15702,7 +15702,7 @@ msgstr "ID z którego scalić dane:"
 #. I18N: This is the GEDCOM label for "Abbreviation"
 #: ../help_text.php:49
 msgid "Abbreviation"
-msgstr ""
+msgstr "Skrót"
 
 #: ../help_text.php:50
 msgid "Use this field for storing an abbreviated version of a title.  This field is used in conjunction with the title field on sources.  By default PGV will first use the title and then the abbreviated title.<br /><br />According to the GEDCOM 5.5 specification, \"this entry is to provide a short title used for sorting, filing, and retrieving source records (pg 62).\"<br /><br />In PhpGedView the abbreviated title is optional, but in other genealogical programs it is required."
@@ -15711,7 +15711,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Address"
 #: ../help_text.php:55
 msgid "Address"
-msgstr ""
+msgstr "Adres"
 
 #: ../help_text.php:56
 msgid "Enter the address into the field just as you would write it on an envelope.<br /><br />Leave this field blank if you do not want to include an address."
@@ -15735,7 +15735,7 @@ msgstr "Numer pliku genealogicznego (AFN)"
 #. I18N: This is the GEDCOM label for "Agency"
 #: ../help_text.php:91
 msgid "Agency"
-msgstr ""
+msgstr "Instytucja"
 
 #: ../help_text.php:92
 msgid "The organization, institution, corporation, person, or other entity that has authority.<br /><br />For example, an employer of a person, or a church that administered rites or events, or an organization responsible for creating and/or archiving records."
@@ -15764,7 +15764,7 @@ msgstr "Unieważnienie"
 #. I18N: This is the GEDCOM label for "Associate"
 #: ../help_text.php:121
 msgid "Associate"
-msgstr ""
+msgstr "Powiązanie"
 
 #: ../help_text.php:122
 msgid "Enter associate GEDCOM ID."
@@ -15898,7 +15898,7 @@ msgstr "Przyczyna śmierci"
 #. I18N: This is the GEDCOM label for "Cemetery"
 #: ../help_text.php:295
 msgid "Cemetery"
-msgstr ""
+msgstr "Cmentarz"
 
 #: ../help_text.php:296
 msgid "Enter the name of the cemetery or other resting place where individual is buried."
@@ -16488,7 +16488,7 @@ msgstr "Święcenia"
 #. I18N: This is the GEDCOM label for "Citation Details"
 #: ../help_text.php:1087
 msgid "Citation Details"
-msgstr ""
+msgstr "Szczegóły źródła"
 
 #: ../help_text.php:1088
 msgid "In the Citation Details field you would enter the page number or other information that might help someone find the information in the source."
@@ -16501,7 +16501,7 @@ msgstr "To pole opisuje związek między dzieckiem a jego rodziną. Możliwe typ
 #. I18N: This is the GEDCOM label for "Phone"
 #: ../help_text.php:1099
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #: ../help_text.php:1100
 msgid "Enter the phone number including the country and area code.<br /><br />Leave this field blank if you do not want to include a phone number.  For example, a number in Germany might be +49 25859 56 76 89 and a number in USA or Canada might be +1 888 555-1212."
@@ -16544,7 +16544,7 @@ msgstr "Własność"
 #. I18N: This is the GEDCOM label for "Quality of Data"
 #: ../help_text.php:1153
 msgid "Quality of Data"
-msgstr ""
+msgstr "Cecha danych"
 
 #: ../help_text.php:1154
 msgid "You would use this field to record the quality or reliability of the data found in this source.  Many genealogy applications use a number in the field. <b>3</b> might mean that the data is a primary source, <b>2</b> might mean that it was a secondary source, <b>1</b> might mean the information is questionable, and <b>0</b> might mean that the source is unreliable."
@@ -16572,7 +16572,7 @@ msgstr "Miejsce zamieszkania"
 #. I18N: This is the GEDCOM label for "Restriction"
 #: ../help_text.php:1189
 msgid "Restriction"
-msgstr ""
+msgstr "Ograniczenie"
 
 #: ../help_text.php:1190
 msgid "Apart from general privacy settings, PhpGedView has the ability to set restrictions on viewing and editing fact information for individuals and families. The restrictions can be set by anyone who is allowed to edit the information, unless privacy or formerly set restrictions prohibit this.<br /><br />The following values can be used:<br /><ul><li><b>None</b><br />Site administrators, GEDCOM administrators, and users who have rights to edit can change the information. Fact information can be viewed according to privacy settings as applied by the administrator.</li><li><b>Do not change</b><br />This setting has no influence on the visibility of the fact data. It restricts editing rights to site administrators and GEDCOM administrators. If the information applies to the user himself, he can also view and, assuming he has editing rights, edit it.</li><li><b>Privacy</b><br />Site administrators and GEDCOM administrators can view and edit the information. If the information applies to the user himself, he can also view and, assuming he has editing rights, edit it. It will be hidden from all other users regardless of their login status.</li><li><b>Confidential</b><br />Only site administrators and GEDCOM administrators can view and edit the information. It will be hidden from all other users regardless of their login status.</li></ul><br /><table><tr><th></th><th colspan=\"2\">Admin</th><th colspan=\"2\">Owner</th><th colspan=\"2\">Others</th></tr><tr><th></th><th>R</th><th>W</th><th>R</th><th>W</th><th>R</th><th>W</th></tr><tr><td><img src=\"images/RESN_none.gif\" alt=\"\" /> None</td><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th></tr><tr><td><img src=\"images/RESN_locked.gif\" alt=\"\" /> Do not change</td><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th></tr><tr><td><img src=\"images/RESN_privacy.gif\" alt=\"\" /> Privacy</td><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th></tr><tr><td><img src=\"images/RESN_confidential.gif\" alt=\"\" /> Confidential</td><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th></tr></table><ul><li>R : can read</li><li>W : can edit</li><li><img src=\"images/checked_qm.gif\" alt=\"\" /> : depends on global privacy settings</li></ul>"
@@ -16596,7 +16596,7 @@ msgstr "Identyfikator wpisu"
 #. I18N: This is the GEDCOM label for "Romanized"
 #: ../help_text.php:1219
 msgid "Romanized"
-msgstr ""
+msgstr "Zlatynizowane"
 
 #: ../help_text.php:1220
 msgid "In many cultures it is customary to have a traditional name spelled in the traditional characters and also a romanized version of the name as it would be spelled or pronounced in languages based on the Latin alphabet, such as English.<br /><br />If you prefer to use a non-Latin alphabet such as Hebrew, Greek, Russian, Chinese, or Arabic to enter the name in the standard name fields, then you can use this field to enter the same name using the Latin alphabet.  Both versions of the name will appear in lists and charts.<br /><br />Although this field is labelled \"Romanized\", it is not restricted to containing only characters based on the Latin alphabet.  This might be of use with Japanese names, where three different alphabets may occur."
@@ -16632,7 +16632,7 @@ msgstr "To pole pozwala zmienić wpis źródła, z którym powiązany jest to zd
 #. I18N: This is the GEDCOM label for "Surname Prefix"
 #: ../help_text.php:1261
 msgid "Surname Prefix"
-msgstr ""
+msgstr "Przedrostek nazwiska"
 
 #: ../help_text.php:1262
 msgid "Enter or select from the list words that precede the main part of the Surname.  Examples of such words are <b>von</b> Braun, <b>van der</b> Kloot, <b>de</b> Graaf, etc."
@@ -16665,7 +16665,7 @@ msgstr "Wpis"
 #. I18N: This is the GEDCOM label for "Surname"
 #: ../help_text.php:1303 ../help_text.php:4718
 msgid "Surname"
-msgstr ""
+msgstr "Nazwisko"
 
 #: ../help_text.php:1304 ../help_text.php:4519
 msgid "In this field you should enter the surname for the person.  As an example, in the name \"John Robert Finlay\", the surname that should be entered here is \"Finlay\"<br /><br />Individuals with multiple surnames, common in Spain and Portugal, should separate the surnames with a comma.  This indicates that the person is to be listed under each of the names.  For example, the surname \"Cortes,Vega\" will be listed under both <b>C</b> and <b>V</b>, whereas the surname \"Cortes Vega\" will only be listed under <b>C</b>."
@@ -16674,7 +16674,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Temple"
 #: ../help_text.php:1309
 msgid "Temple"
-msgstr ""
+msgstr "Świątynia"
 
 #: ../help_text.php:1310
 msgid "For LDS ordinances, this field records the Temple where it was performed."
@@ -16687,7 +16687,7 @@ msgstr "W tym polu możesz zacytować tekst tego źródła. Może to być na prz
 #. I18N: This is the GEDCOM label for "Time"
 #: ../help_text.php:1321
 msgid "Time"
-msgstr ""
+msgstr "Czas"
 
 #: ../help_text.php:1322
 msgid "Enter the time for this event in 24-hour format with leading zeroes. Midnight is 00:00. Examples: 04:50 13:00 20:30."
@@ -16696,7 +16696,7 @@ msgstr "Wprowadź godzinę wydarzenia w formacie 24-godzinnym, poprzedzając war
 #. I18N: This is the GEDCOM label for "Title"
 #: ../help_text.php:1327
 msgid "Title"
-msgstr ""
+msgstr "Tytuł"
 
 #: ../help_text.php:1328
 msgid "Enter a title for the item you are editing.  If this is a title for a multimedia item, enter a descriptive title that will identify that item to the user."
@@ -16729,7 +16729,7 @@ msgstr "Pole Typ służy do wprowadzania dodatkowych informacji o elemencie. Zwy
 #. I18N: This is the GEDCOM label for "Web URL"
 #: ../help_text.php:1363
 msgid "Web URL"
-msgstr ""
+msgstr "Adres URL"
 
 #: ../help_text.php:1364
 msgid "Enter the URL address including the http://.<br /><br />An example URL looks like this: <b>http://www.phpgedview.net/</b> Leave this field blank if you do not want to include a URL."
@@ -17700,7 +17700,7 @@ msgstr ""
 
 #: ../help_text.php:2617
 msgid "This chart is very similar to the Hourglass chart.  It will show the ancestors and descendants of the selected root person on the same chart.  It will also show the descendants of the root person in the same Hourglass format.<br /><br />The root person is centered in the middle of the page with his descendants listed to the left and his ancestors listed to the right.  In this view, each generation is lined up across the page starting with the earliest generation and ending with the latest.<br /><br />Each descendant of the root person will become the root person of an additional hourglass chart, printed on the same page.  This process repeats until the specified number of descendant generations have been printed."
-msgstr ""
+msgstr "Ten diagram jest bardzo podobny do diagramu klepsydrowego. Pokazuje przodków i potomków wybranej osoby na jednym diagramie. Umożliwia także pokazanie potomków osoby głównej w takim samym formacie klepsydry.<br /><br />Główna osoba znajduje się na środku strony, jej potomkowie - po lewej, a przodkowie - po prawej stronie. Na tym widoku każde pokolenie jest wyrównanie wzdłuż strony, od najmłodszego do najstarszego.<br /><br />Każdy potomek głównej osoby staje się główną osobą dodatkowego diagramu klepsydrowego, pokazanego na tej samej stronie. Ten proces powtarza się, dopóki nie zostanie wyświetlona zadana liczba pokoleń potomków."
 
 #: ../help_text.php:2621
 msgid "Familiy List Page"
@@ -17736,7 +17736,7 @@ msgstr "Informacja na temat:"
 
 #: ../help_text.php:2661
 msgid "The Hourglass chart will show the ancestors and descendants of the selected root person on the same chart.  This chart is a mix between the Descendancy chart and the Pedigree chart.<br /><br />The root person is centered in the middle of the page with his descendants listed to the left and his ancestors listed to the right.  In this view, each generation is lined up across the page starting with the earliest generation and ending with the latest.<br /><br />If there is a downwards arrow on the screen under the root person, clicking on it will display a list of the root person's close family members that you can use the navigate down the chart.  Selecting a name from this list will reload the chart with the selected person as the new root person."
-msgstr ""
+msgstr "Diagram klepsydrowy pokazuje przodków i potomków wybranej osoby na tym samym diagramie. Jest to połączenie diagramu przodków i diagramu potomków.<br /><br />Główna osoba znajduje się na środku strony, jej potomkowie - po lewej, a przodkowie - po prawej stronie. Na tym widoku każde pokolenie jest wyrównane wzdłuż strony, od najmłodszego do najstarszego.<br /><br />Jeśli pod główną osobą znajduje się strzałka w dół, kliknięcie na niej spowoduje wyświetlenie listy jej bliskich członków rodziny, dzięki której możesz przesunąć się w dół diagramu. Wybranie nazwiska z listy spowoduje ponowne wczytanie diagramu, z wybraną osobą w środku."
 
 #: ../help_text.php:2671 ../help_text.php:4878
 msgid "Welcome Page"
@@ -18946,7 +18946,7 @@ msgstr "_GEDCOM: Pobierz"
 
 #: ../help_text.php:4068
 msgid "Alphabetical Index"
-msgstr ""
+msgstr "Spis alfabetyczny"
 
 #: ../help_text.php:4069
 msgid "Clicking a letter in the Alphabetical index will display a list of the names that start with the letter you clicked.<br /><br />The second to last item in the Alphabetical index can be <b>(unknown)</b>.  This entry will be present when there are people in the database whose surname has not been recorded or does not contain any recognizable letters.  Unknown surnames are often recorded as <b>?</b>, and these will be recognized as <b>(unknown)</b>.  This will also happen if the person is unknown.<br /><br /><b>Note:</b><br />Surnames entered as, for example, <b>Nn</b>, <b>NN</b>, <b>Unknown</b>, or even <b>N.N.</b> will <u>not</u> be found in the <b>(unknown)</b> list. Instead, you will find these persons by clicking <b>N</b> or <b>U</b> because these are the initial letters of those names.  PhpGedView cannot possibly account for all possible ways of entering unknown surnames;  there is no recognized convention for this.<br /><br />At the end of the Alphabetical index you see <b>ALL</b>. When you click on this item, you will see a list of all surnames in the database.<br /><br /><b>Missing letters?</b><br />If your Alphabetical index appears to be incomplete, with missing letters, your database doesn't contain any surnames that start with that missing letter."
@@ -19002,7 +19002,7 @@ msgstr "Po zalogowaniu lub jeśli administrator nie włączył opcji prywatnośc
 
 #: ../help_text.php:4103
 msgid "Show events of:"
-msgstr ""
+msgstr "Pokaż wydarzenia:"
 
 #: ../help_text.php:4104
 msgid "The following options are available:<br /><ol><li><b>All People</b><br />With this option, all individuals and families are displayed.</li><li><b>Recent Years (&lt;100 yrs)</b><br />With this option you will see all events for the chosen day or month, but no events older than 100 years will be shown.</li><li><b>Living People</b><br />Unless the administrator has configured PhpGedView so that living people are visible to anyone, this option will only be available to you after you have logged in.<br /><br />With this option, only the events of living persons will be displayed.</li></ol>When you click on an option, the events of your choice will be displayed.<br /><br />The settings of day, month, and year, as well as <b>Day</b> or <b>Month</b> mode, remain as they were."
@@ -19135,7 +19135,7 @@ msgstr "PhpGedView wykrył, że twój plik GEDCOM używa miejsc przy znacznikach
 
 #: ../help_text.php:4194
 msgid "In order to improve performance, several of the blocks on the PhpGedView Welcome page are saved as cache files in the index directory.  The cache files for most blocks are refreshed once each day, but there may be times when you want to refresh them manually.<br /><br />This button allows you to refresh the cache files when necessary."
-msgstr ""
+msgstr "Aby poprawić wydajność systemu, kilka bloków strony głównej jest przechowywanych w plikach pamięci podręcznej (cache) w katalogu indeksowym. Pliki cache dla większości bloków są odświeżane raz dziennie, ale czasem może zajść potrzeba ich ręcznego odświeżenia.<br /><br />Ten przycisk umożliwia odświeżenie plików cache w razie potrzeby."
 
 #: ../help_text.php:4199
 msgid "Click this button to save your changes.<br /><br />You will be returned to the Welcome or My Page, but your changes may not be shown.  You may need to use the Page Reload function of your browser to view your changes properly."
@@ -19271,7 +19271,7 @@ msgstr ""
 
 #: ../help_text.php:4298
 msgid "Definitions"
-msgstr ""
+msgstr "Definicje"
 
 #: ../help_text.php:4299
 msgid "Here are some explanations of terms used in this Help text:<ul><li><a href=\"#def_gedcom\"><b>GEDCOM</b></a><br /></li><li><a href=\"#def_gedcom_date\"><b>Dates</b></a></li><li><a href=\"#def_pdf_format\"><b>PDF file format</b></a></li><li><a href=\"#def_pgv\"><b>PhpGedView</b></a></li><li><a href=\"#def_portal\"><b>Portal</b></a></li><li><a href=\"#def_theme\"><b>Theme</b></a></li></ul>"
@@ -19877,7 +19877,7 @@ msgstr ""
 
 #: ../help_text.php:4793
 msgid "Configure PhpGedView"
-msgstr ""
+msgstr "Konfiguruj PhpGedView"
 
 #: ../help_text.php:4794
 msgid "On this page you configure the global settings for PhpGedView.  You have to do this after you have installed PhpGedView and are running it for the first time.<br /><br />You should review the <a href=\\\"readme.txt\\\" target=\\\"_blank\\\">readme.txt</a> file before continuing to configure PhpGedView.<br /><br />As these settings are <b>global</b>, they are for the whole program and for all genealogical databases you use with PhpGedView.<br /><br />Each genealogical database also has additional configuration options that you set after clicking the <b>Click here to administer GEDCOMs</b> link on this page.<br /><br />You can also access the GEDCOM Administration function from the main Admin page, whose link is found under the MyGedView icon or in the header of most pages.  On the Admin page, the relevant link is called <b>Manage GEDCOMs and edit Privacy.</b>"
@@ -21662,7 +21662,7 @@ msgstr "Typ diagramu"
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
-msgstr "HTML"
+msgstr ""
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."

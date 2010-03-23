@@ -5636,7 +5636,7 @@ msgstr ""
 
 #: ../includes/config_data.php:99
 msgid "Birth"
-msgstr ""
+msgstr "الوِدة"
 
 #: ../includes/config_data.php:100
 msgid "Adopted"
@@ -7228,73 +7228,73 @@ msgstr ""
 #: ../includes/classes/class_date.php:152
 msgctxt "NOMINATIVE"
 msgid "January"
-msgstr ""
+msgstr "ياناير"
 
 #: ../includes/functions/functions_print.php:2182
 #: ../includes/classes/class_date.php:153
 msgctxt "NOMINATIVE"
 msgid "February"
-msgstr ""
+msgstr "فبراير"
 
 #: ../includes/functions/functions_print.php:2183
 #: ../includes/classes/class_date.php:154
 msgctxt "NOMINATIVE"
 msgid "March"
-msgstr ""
+msgstr "مارس"
 
 #: ../includes/functions/functions_print.php:2184
 #: ../includes/classes/class_date.php:155
 msgctxt "NOMINATIVE"
 msgid "April"
-msgstr ""
+msgstr "ابريل"
 
 #: ../includes/functions/functions_print.php:2185
 #: ../includes/classes/class_date.php:156
 msgctxt "NOMINATIVE"
 msgid "May"
-msgstr ""
+msgstr "مايو"
 
 #: ../includes/functions/functions_print.php:2186
 #: ../includes/classes/class_date.php:157
 msgctxt "NOMINATIVE"
 msgid "June"
-msgstr ""
+msgstr "يونيو"
 
 #: ../includes/functions/functions_print.php:2187
 #: ../includes/classes/class_date.php:158
 msgctxt "NOMINATIVE"
 msgid "July"
-msgstr ""
+msgstr "يوليو"
 
 #: ../includes/functions/functions_print.php:2188
 #: ../includes/classes/class_date.php:159
 msgctxt "NOMINATIVE"
 msgid "August"
-msgstr ""
+msgstr "اغسطس"
 
 #: ../includes/functions/functions_print.php:2189
 #: ../includes/classes/class_date.php:160
 msgctxt "NOMINATIVE"
 msgid "September"
-msgstr ""
+msgstr "سبتمبر"
 
 #: ../includes/functions/functions_print.php:2190
 #: ../includes/classes/class_date.php:161
 msgctxt "NOMINATIVE"
 msgid "October"
-msgstr ""
+msgstr "اكتوبر"
 
 #: ../includes/functions/functions_print.php:2191
 #: ../includes/classes/class_date.php:162
 msgctxt "NOMINATIVE"
 msgid "November"
-msgstr ""
+msgstr "نوفمبر"
 
 #: ../includes/functions/functions_print.php:2192
 #: ../includes/classes/class_date.php:163
 msgctxt "NOMINATIVE"
 msgid "December"
-msgstr ""
+msgstr "ديسمبر"
 
 #: ../includes/functions/functions_print.php:2194
 #: ../includes/classes/class_date.php:280
@@ -9066,182 +9066,182 @@ msgstr ""
 #: ../includes/classes/class_date.php:169
 msgctxt "GENITIVE"
 msgid "January"
-msgstr ""
+msgstr "ياناير"
 
 #: ../includes/classes/class_date.php:170
 msgctxt "GENITIVE"
 msgid "February"
-msgstr ""
+msgstr "فبراير"
 
 #: ../includes/classes/class_date.php:171
 msgctxt "GENITIVE"
 msgid "March"
-msgstr ""
+msgstr "مارس"
 
 #: ../includes/classes/class_date.php:172
 msgctxt "GENITIVE"
 msgid "April"
-msgstr ""
+msgstr "ابريل"
 
 #: ../includes/classes/class_date.php:173
 msgctxt "GENITIVE"
 msgid "May"
-msgstr ""
+msgstr "مايو"
 
 #: ../includes/classes/class_date.php:174
 msgctxt "GENITIVE"
 msgid "June"
-msgstr ""
+msgstr "يونيو"
 
 #: ../includes/classes/class_date.php:175
 msgctxt "GENITIVE"
 msgid "July"
-msgstr ""
+msgstr "يوليو"
 
 #: ../includes/classes/class_date.php:176
 msgctxt "GENITIVE"
 msgid "August"
-msgstr ""
+msgstr "اغسطس"
 
 #: ../includes/classes/class_date.php:177
 msgctxt "GENITIVE"
 msgid "September"
-msgstr ""
+msgstr "سبتمبر"
 
 #: ../includes/classes/class_date.php:178
 msgctxt "GENITIVE"
 msgid "October"
-msgstr ""
+msgstr "اكتوبر"
 
 #: ../includes/classes/class_date.php:179
 msgctxt "GENITIVE"
 msgid "November"
-msgstr ""
+msgstr "نوفمبر"
 
 #: ../includes/classes/class_date.php:180
 msgctxt "GENITIVE"
 msgid "December"
-msgstr ""
+msgstr "ديسمبر"
 
 #: ../includes/classes/class_date.php:186
 msgctxt "LOCATIVE"
 msgid "January"
-msgstr ""
+msgstr "ياناير"
 
 #: ../includes/classes/class_date.php:187
 msgctxt "LOCATIVE"
 msgid "February"
-msgstr ""
+msgstr "فبراير"
 
 #: ../includes/classes/class_date.php:188
 msgctxt "LOCATIVE"
 msgid "March"
-msgstr ""
+msgstr "مارس"
 
 #: ../includes/classes/class_date.php:189
 msgctxt "LOCATIVE"
 msgid "April"
-msgstr ""
+msgstr "ابريل"
 
 #: ../includes/classes/class_date.php:190
 msgctxt "LOCATIVE"
 msgid "May"
-msgstr ""
+msgstr "مايو"
 
 #: ../includes/classes/class_date.php:191
 msgctxt "LOCATIVE"
 msgid "June"
-msgstr ""
+msgstr "يونيو"
 
 #: ../includes/classes/class_date.php:192
 msgctxt "LOCATIVE"
 msgid "July"
-msgstr ""
+msgstr "يوليو"
 
 #: ../includes/classes/class_date.php:193
 msgctxt "LOCATIVE"
 msgid "August"
-msgstr ""
+msgstr "اغسطس"
 
 #: ../includes/classes/class_date.php:194
 msgctxt "LOCATIVE"
 msgid "September"
-msgstr ""
+msgstr "سبتمبر"
 
 #: ../includes/classes/class_date.php:195
 msgctxt "LOCATIVE"
 msgid "October"
-msgstr ""
+msgstr "اكتوبر"
 
 #: ../includes/classes/class_date.php:196
 msgctxt "LOCATIVE"
 msgid "November"
-msgstr ""
+msgstr "نوفمبر"
 
 #: ../includes/classes/class_date.php:197
 msgctxt "LOCATIVE"
 msgid "December"
-msgstr ""
+msgstr "ديسمبر"
 
 #: ../includes/classes/class_date.php:203
 msgctxt "INSTRUMENTAL"
 msgid "January"
-msgstr ""
+msgstr "ياناير"
 
 #: ../includes/classes/class_date.php:204
 msgctxt "INSTRUMENTAL"
 msgid "February"
-msgstr ""
+msgstr "فبراير"
 
 #: ../includes/classes/class_date.php:205
 msgctxt "INSTRUMENTAL"
 msgid "March"
-msgstr ""
+msgstr "مارس"
 
 #: ../includes/classes/class_date.php:206
 msgctxt "INSTRUMENTAL"
 msgid "April"
-msgstr ""
+msgstr "ابريل"
 
 #: ../includes/classes/class_date.php:207
 msgctxt "INSTRUMENTAL"
 msgid "May"
-msgstr ""
+msgstr "مايو"
 
 #: ../includes/classes/class_date.php:208
 msgctxt "INSTRUMENTAL"
 msgid "June"
-msgstr ""
+msgstr "يونيو"
 
 #: ../includes/classes/class_date.php:209
 msgctxt "INSTRUMENTAL"
 msgid "July"
-msgstr ""
+msgstr "يوليو"
 
 #: ../includes/classes/class_date.php:210
 msgctxt "INSTRUMENTAL"
 msgid "August"
-msgstr ""
+msgstr "اغسطس"
 
 #: ../includes/classes/class_date.php:211
 msgctxt "INSTRUMENTAL"
 msgid "September"
-msgstr ""
+msgstr "سبتمبر"
 
 #: ../includes/classes/class_date.php:212
 msgctxt "INSTRUMENTAL"
 msgid "October"
-msgstr ""
+msgstr "اكتوبر"
 
 #: ../includes/classes/class_date.php:213
 msgctxt "INSTRUMENTAL"
 msgid "November"
-msgstr ""
+msgstr "نوفمبر"
 
 #: ../includes/classes/class_date.php:214
 msgctxt "INSTRUMENTAL"
 msgid "December"
-msgstr ""
+msgstr "ديسمبر"
 
 #: ../includes/classes/class_date.php:220 ../statisticsplot.php:731
 msgid "Jan"
@@ -9988,242 +9988,242 @@ msgstr ""
 #: ../includes/classes/class_date.php:1242
 msgctxt "NOMINATIVE"
 msgid "Muharram"
-msgstr ""
+msgstr "محرّم"
 
 #: ../includes/classes/class_date.php:1243
 msgctxt "NOMINATIVE"
 msgid "Safar"
-msgstr ""
+msgstr "صفر"
 
 #: ../includes/classes/class_date.php:1244
 msgctxt "NOMINATIVE"
 msgid "Rabi' al-awwal"
-msgstr ""
+msgstr "ربيع الأول"
 
 #: ../includes/classes/class_date.php:1245
 msgctxt "NOMINATIVE"
 msgid "Rabi' al-thani"
-msgstr ""
+msgstr "ربيع الثانى"
 
 #: ../includes/classes/class_date.php:1246
 msgctxt "NOMINATIVE"
 msgid "Jumada al-awwal"
-msgstr ""
+msgstr "جمادى الأول"
 
 #: ../includes/classes/class_date.php:1247
 msgctxt "NOMINATIVE"
 msgid "Jumada al-thani"
-msgstr ""
+msgstr "جمادى الثاني"
 
 #: ../includes/classes/class_date.php:1248
 msgctxt "NOMINATIVE"
 msgid "Rajab"
-msgstr ""
+msgstr "رجب"
 
 #: ../includes/classes/class_date.php:1249
 msgctxt "NOMINATIVE"
 msgid "Sha'aban"
-msgstr ""
+msgstr "شعبان"
 
 #: ../includes/classes/class_date.php:1250
 msgctxt "NOMINATIVE"
 msgid "Ramadan"
-msgstr ""
+msgstr "رمضان"
 
 #: ../includes/classes/class_date.php:1251
 msgctxt "NOMINATIVE"
 msgid "Shawwal"
-msgstr ""
+msgstr "شوّال"
 
 #: ../includes/classes/class_date.php:1252
 msgctxt "NOMINATIVE"
 msgid "Dhu al-Qi'dah"
-msgstr ""
+msgstr "ذو القعدة"
 
 #: ../includes/classes/class_date.php:1253
 msgctxt "NOMINATIVE"
 msgid "Dhu al-Hijjah"
-msgstr ""
+msgstr "ذو الحجة"
 
 #: ../includes/classes/class_date.php:1259
 msgctxt "GENITIVE"
 msgid "Muharram"
-msgstr ""
+msgstr "محرّم"
 
 #: ../includes/classes/class_date.php:1260
 msgctxt "GENITIVE"
 msgid "Safar"
-msgstr ""
+msgstr "صفر"
 
 #: ../includes/classes/class_date.php:1261
 msgctxt "GENITIVE"
 msgid "Rabi' al-awwal"
-msgstr ""
+msgstr "ربيع الأول"
 
 #: ../includes/classes/class_date.php:1262
 msgctxt "GENITIVE"
 msgid "Rabi' al-thani"
-msgstr ""
+msgstr "ربيع الثانى"
 
 #: ../includes/classes/class_date.php:1263
 msgctxt "GENITIVE"
 msgid "Jumada al-awwal"
-msgstr ""
+msgstr "جمادى الأول"
 
 #: ../includes/classes/class_date.php:1264
 msgctxt "GENITIVE"
 msgid "Jumada al-thani"
-msgstr ""
+msgstr "جمادى الثاني"
 
 #: ../includes/classes/class_date.php:1265
 msgctxt "GENITIVE"
 msgid "Rajab"
-msgstr ""
+msgstr "رجب"
 
 #: ../includes/classes/class_date.php:1266
 msgctxt "GENITIVE"
 msgid "Sha'aban"
-msgstr ""
+msgstr "شعبان"
 
 #: ../includes/classes/class_date.php:1267
 msgctxt "GENITIVE"
 msgid "Ramadan"
-msgstr ""
+msgstr "رمضان"
 
 #: ../includes/classes/class_date.php:1268
 msgctxt "GENITIVE"
 msgid "Shawwal"
-msgstr ""
+msgstr "شوّال"
 
 #: ../includes/classes/class_date.php:1269
 msgctxt "GENITIVE"
 msgid "Dhu al-Qi'dah"
-msgstr ""
+msgstr "ذو القعدة"
 
 #: ../includes/classes/class_date.php:1270
 msgctxt "GENITIVE"
 msgid "Dhu al-Hijjah"
-msgstr ""
+msgstr "ذو الحجة"
 
 #: ../includes/classes/class_date.php:1276
 msgctxt "LOCATIVE"
 msgid "Muharram"
-msgstr ""
+msgstr "محرّم"
 
 #: ../includes/classes/class_date.php:1277
 msgctxt "LOCATIVE"
 msgid "Safar"
-msgstr ""
+msgstr "صفر"
 
 #: ../includes/classes/class_date.php:1278
 msgctxt "LOCATIVE"
 msgid "Rabi' al-awwal"
-msgstr ""
+msgstr "ربيع الأول"
 
 #: ../includes/classes/class_date.php:1279
 msgctxt "LOCATIVE"
 msgid "Rabi' al-thani"
-msgstr ""
+msgstr "ربيع الثانى"
 
 #: ../includes/classes/class_date.php:1280
 msgctxt "LOCATIVE"
 msgid "Jumada al-awwal"
-msgstr ""
+msgstr "جمادى الأول"
 
 #: ../includes/classes/class_date.php:1281
 msgctxt "LOCATIVE"
 msgid "Jumada al-thani"
-msgstr ""
+msgstr "جمادى الثاني"
 
 #: ../includes/classes/class_date.php:1282
 msgctxt "LOCATIVE"
 msgid "Rajab"
-msgstr ""
+msgstr "رجب"
 
 #: ../includes/classes/class_date.php:1283
 msgctxt "LOCATIVE"
 msgid "Sha'aban"
-msgstr ""
+msgstr "شعبان"
 
 #: ../includes/classes/class_date.php:1284
 msgctxt "LOCATIVE"
 msgid "Ramadan"
-msgstr ""
+msgstr "رمضان"
 
 #: ../includes/classes/class_date.php:1285
 msgctxt "LOCATIVE"
 msgid "Shawwal"
-msgstr ""
+msgstr "شوّال"
 
 #: ../includes/classes/class_date.php:1286
 msgctxt "LOCATIVE"
 msgid "Dhu al-Qi'dah"
-msgstr ""
+msgstr "ذو القعدة"
 
 #: ../includes/classes/class_date.php:1287
 msgctxt "LOCATIVE"
 msgid "Dhu al-Hijjah"
-msgstr ""
+msgstr "ذو الحجة"
 
 #: ../includes/classes/class_date.php:1293
 msgctxt "INSTRUMENTAL"
 msgid "Muharram"
-msgstr ""
+msgstr "محرّم"
 
 #: ../includes/classes/class_date.php:1294
 msgctxt "INSTRUMENTAL"
 msgid "Safar"
-msgstr ""
+msgstr "صفر"
 
 #: ../includes/classes/class_date.php:1295
 msgctxt "INSTRUMENTAL"
 msgid "Rabi' al-awwal"
-msgstr ""
+msgstr "ربيع الأول"
 
 #: ../includes/classes/class_date.php:1296
 msgctxt "INSTRUMENTAL"
 msgid "Rabi' al-thani"
-msgstr ""
+msgstr "ربيع الثانى"
 
 #: ../includes/classes/class_date.php:1297
 msgctxt "INSTRUMENTAL"
 msgid "Jumada al-awwal"
-msgstr ""
+msgstr "جمادى الأول"
 
 #: ../includes/classes/class_date.php:1298
 msgctxt "INSTRUMENTAL"
 msgid "Jumada al-thani"
-msgstr ""
+msgstr "جمادى الثاني"
 
 #: ../includes/classes/class_date.php:1299
 msgctxt "INSTRUMENTAL"
 msgid "Rajab"
-msgstr ""
+msgstr "رجب"
 
 #: ../includes/classes/class_date.php:1300
 msgctxt "INSTRUMENTAL"
 msgid "Sha'aban"
-msgstr ""
+msgstr "شعبان"
 
 #: ../includes/classes/class_date.php:1301
 msgctxt "INSTRUMENTAL"
 msgid "Ramadan"
-msgstr ""
+msgstr "رمضان"
 
 #: ../includes/classes/class_date.php:1302
 msgctxt "INSTRUMENTAL"
 msgid "Shawwal"
-msgstr ""
+msgstr "شوّال"
 
 #: ../includes/classes/class_date.php:1303
 msgctxt "INSTRUMENTAL"
 msgid "Dhu al-Qi'dah"
-msgstr ""
+msgstr "ذو القعدة"
 
 #: ../includes/classes/class_date.php:1304
 msgctxt "INSTRUMENTAL"
 msgid "Dhu al-Hijjah"
-msgstr ""
+msgstr "ذو الحجة"
 
 #. I18N: Gedcom ABT dates
 #: ../includes/classes/class_date.php:1641
@@ -10576,7 +10576,7 @@ msgstr ""
 #. I18N: This is the format string for full dates.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:97
 msgid "%j %F %Y"
-msgstr "%j %F %Y"
+msgstr ""
 
 #. I18N: This a the format string for the time-of-day.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:99
@@ -10594,12 +10594,12 @@ msgstr "ALPHABET_lower=ابتثجحخدذرزسشصضطظعغفقكلمنهوي�
 #. I18N: This is the first day of the week on calendars. 0=Sunday, 1=Monday...
 #: ../includes/classes/class_i18n.php:108
 msgid "WEEK_START=0"
-msgstr "WEEK_START=0"
+msgstr ""
 
 #. I18N: semicolon separated list of digraphs
 #: ../includes/classes/class_i18n.php:111
 msgid "MULTI_LETTER_ALPHABET="
-msgstr "MULTI_LETTER_ALPHABET="
+msgstr ""
 
 #. I18N: 1=>ignore diacrics when sorting, 0=>letters with diacritics are distinct
 #: ../includes/classes/class_i18n.php:114
@@ -16649,7 +16649,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Surname"
 #: ../help_text.php:1303 ../help_text.php:4718
 msgid "Surname"
-msgstr ""
+msgstr "إسم العائلة"
 
 #: ../help_text.php:1304 ../help_text.php:4519
 msgid "In this field you should enter the surname for the person.  As an example, in the name \"John Robert Finlay\", the surname that should be entered here is \"Finlay\"<br /><br />Individuals with multiple surnames, common in Spain and Portugal, should separate the surnames with a comma.  This indicates that the person is to be listed under each of the names.  For example, the surname \"Cortes,Vega\" will be listed under both <b>C</b> and <b>V</b>, whereas the surname \"Cortes Vega\" will only be listed under <b>C</b>."

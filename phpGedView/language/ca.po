@@ -3619,7 +3619,7 @@ msgstr "Nom del mòdul"
 #: ../module_admin.php:203 ../module_admin.php:251 ../module_admin.php:302
 #: ../module_admin.php:353
 msgid "Description"
-msgstr ""
+msgstr "Descripció"
 
 #: ../module_admin.php:204
 msgid "Version / PGV"
@@ -5636,7 +5636,7 @@ msgstr ""
 
 #: ../includes/config_data.php:99
 msgid "Birth"
-msgstr ""
+msgstr "Naixement"
 
 #: ../includes/config_data.php:100
 msgid "Adopted"
@@ -5660,23 +5660,23 @@ msgstr "Assistent"
 
 #: ../includes/config_data.php:110
 msgid "Best Man"
-msgstr ""
+msgstr "Padrí de boda"
 
 #: ../includes/config_data.php:111
 msgid "Bridesmaid"
-msgstr ""
+msgstr "Dama d'honor"
 
 #: ../includes/config_data.php:112
 msgid "Buyer"
-msgstr ""
+msgstr "Comprador"
 
 #: ../includes/config_data.php:113
 msgid "Circumciser"
-msgstr ""
+msgstr "Circumcisor"
 
 #: ../includes/config_data.php:114
 msgid "Civil Registrar"
-msgstr ""
+msgstr "Registrador civil"
 
 #: ../includes/config_data.php:115 ../includes/extras/functions.pl.php:379
 msgid "Employee"
@@ -5684,19 +5684,19 @@ msgstr "Empleat"
 
 #: ../includes/config_data.php:116
 msgid "Employer"
-msgstr ""
+msgstr "Empresari"
 
 #: ../includes/config_data.php:117
 msgid "Foster Child"
-msgstr ""
+msgstr "Fill adoptiu"
 
 #: ../includes/config_data.php:118
 msgid "Foster Father"
-msgstr ""
+msgstr "Pare adoptiu"
 
 #: ../includes/config_data.php:119
 msgid "Foster Mother"
-msgstr ""
+msgstr "Mare adoptiva"
 
 #: ../includes/config_data.php:120 ../includes/extras/functions.pl.php:383
 msgid "Friend"
@@ -5704,27 +5704,27 @@ msgstr "Amic/ga"
 
 #: ../includes/config_data.php:121
 msgid "Godfather"
-msgstr ""
+msgstr "Padrí"
 
 #: ../includes/config_data.php:122
 msgid "Godmother"
-msgstr ""
+msgstr "Padrina"
 
 #: ../includes/config_data.php:123
 msgid "Godparent"
-msgstr ""
+msgstr "Padrí/na"
 
 #: ../includes/config_data.php:124
 msgid "Godson"
-msgstr ""
+msgstr "Fillol"
 
 #: ../includes/config_data.php:125
 msgid "Goddaughter"
-msgstr ""
+msgstr "Fillola"
 
 #: ../includes/config_data.php:126
 msgid "Godchild"
-msgstr ""
+msgstr "Fillol/a"
 
 #: ../includes/config_data.php:127 ../includes/extras/functions.pl.php:367
 msgid "Guardian"
@@ -5740,7 +5740,7 @@ msgstr "Hoste"
 
 #: ../includes/config_data.php:130
 msgid "Nanny"
-msgstr ""
+msgstr "Mainadera"
 
 #: ../includes/config_data.php:131 ../includes/extras/functions.pl.php:371
 msgid "Nurse"
@@ -5752,15 +5752,15 @@ msgstr "Propietari"
 
 #: ../includes/config_data.php:133
 msgid "Priest"
-msgstr ""
+msgstr "Sacerdot"
 
 #: ../includes/config_data.php:134
 msgid "Rabbi"
-msgstr ""
+msgstr "Rabí"
 
 #: ../includes/config_data.php:135
 msgid "Registry Officer"
-msgstr ""
+msgstr "Oficial del Registre"
 
 #: ../includes/config_data.php:136 ../includes/extras/functions.pl.php:391
 msgid "Seller"
@@ -5776,15 +5776,15 @@ msgstr "Esclau"
 
 #: ../includes/config_data.php:139
 msgid "Twin"
-msgstr ""
+msgstr "Bessó/na"
 
 #: ../includes/config_data.php:140
 msgid "Twin brother"
-msgstr ""
+msgstr "Germà bessó"
 
 #: ../includes/config_data.php:141
 msgid "Twin sister"
-msgstr ""
+msgstr "Germana bessona"
 
 #: ../includes/config_data.php:142 ../includes/extras/functions.pl.php:399
 msgid "Ward"
@@ -5792,7 +5792,7 @@ msgstr "Tutor"
 
 #: ../includes/config_data.php:143
 msgid "Witness"
-msgstr ""
+msgstr "Testimoni"
 
 #: ../includes/specialchars.php:57
 msgid "Czech"
@@ -7167,7 +7167,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Relationship"
 #: ../includes/functions/functions_print.php:1651 ../help_text.php:1165
 msgid "Relationship"
-msgstr ""
+msgstr "Parentiu"
 
 #. I18N: This is the GEDCOM label for "Death of mother"
 #: ../includes/functions/functions_print.php:1748 ../help_text.php:1897
@@ -7228,73 +7228,73 @@ msgstr "Personalitzat"
 #: ../includes/classes/class_date.php:152
 msgctxt "NOMINATIVE"
 msgid "January"
-msgstr ""
+msgstr "Gener"
 
 #: ../includes/functions/functions_print.php:2182
 #: ../includes/classes/class_date.php:153
 msgctxt "NOMINATIVE"
 msgid "February"
-msgstr ""
+msgstr "Febrer"
 
 #: ../includes/functions/functions_print.php:2183
 #: ../includes/classes/class_date.php:154
 msgctxt "NOMINATIVE"
 msgid "March"
-msgstr ""
+msgstr "Març"
 
 #: ../includes/functions/functions_print.php:2184
 #: ../includes/classes/class_date.php:155
 msgctxt "NOMINATIVE"
 msgid "April"
-msgstr ""
+msgstr "Abril"
 
 #: ../includes/functions/functions_print.php:2185
 #: ../includes/classes/class_date.php:156
 msgctxt "NOMINATIVE"
 msgid "May"
-msgstr ""
+msgstr "Maig"
 
 #: ../includes/functions/functions_print.php:2186
 #: ../includes/classes/class_date.php:157
 msgctxt "NOMINATIVE"
 msgid "June"
-msgstr ""
+msgstr "Juny"
 
 #: ../includes/functions/functions_print.php:2187
 #: ../includes/classes/class_date.php:158
 msgctxt "NOMINATIVE"
 msgid "July"
-msgstr ""
+msgstr "Juliol"
 
 #: ../includes/functions/functions_print.php:2188
 #: ../includes/classes/class_date.php:159
 msgctxt "NOMINATIVE"
 msgid "August"
-msgstr ""
+msgstr "Agost"
 
 #: ../includes/functions/functions_print.php:2189
 #: ../includes/classes/class_date.php:160
 msgctxt "NOMINATIVE"
 msgid "September"
-msgstr ""
+msgstr "Setembre"
 
 #: ../includes/functions/functions_print.php:2190
 #: ../includes/classes/class_date.php:161
 msgctxt "NOMINATIVE"
 msgid "October"
-msgstr ""
+msgstr "Octubre"
 
 #: ../includes/functions/functions_print.php:2191
 #: ../includes/classes/class_date.php:162
 msgctxt "NOMINATIVE"
 msgid "November"
-msgstr ""
+msgstr "Novembre"
 
 #: ../includes/functions/functions_print.php:2192
 #: ../includes/classes/class_date.php:163
 msgctxt "NOMINATIVE"
 msgid "December"
-msgstr ""
+msgstr "Desembre"
 
 #: ../includes/functions/functions_print.php:2194
 #: ../includes/classes/class_date.php:280
@@ -9066,182 +9066,182 @@ msgstr ""
 #: ../includes/classes/class_date.php:169
 msgctxt "GENITIVE"
 msgid "January"
-msgstr ""
+msgstr "Gener"
 
 #: ../includes/classes/class_date.php:170
 msgctxt "GENITIVE"
 msgid "February"
-msgstr ""
+msgstr "Febrer"
 
 #: ../includes/classes/class_date.php:171
 msgctxt "GENITIVE"
 msgid "March"
-msgstr ""
+msgstr "Març"
 
 #: ../includes/classes/class_date.php:172
 msgctxt "GENITIVE"
 msgid "April"
-msgstr ""
+msgstr "Abril"
 
 #: ../includes/classes/class_date.php:173
 msgctxt "GENITIVE"
 msgid "May"
-msgstr ""
+msgstr "Maig"
 
 #: ../includes/classes/class_date.php:174
 msgctxt "GENITIVE"
 msgid "June"
-msgstr ""
+msgstr "Juny"
 
 #: ../includes/classes/class_date.php:175
 msgctxt "GENITIVE"
 msgid "July"
-msgstr ""
+msgstr "Juliol"
 
 #: ../includes/classes/class_date.php:176
 msgctxt "GENITIVE"
 msgid "August"
-msgstr ""
+msgstr "Agost"
 
 #: ../includes/classes/class_date.php:177
 msgctxt "GENITIVE"
 msgid "September"
-msgstr ""
+msgstr "Setembre"
 
 #: ../includes/classes/class_date.php:178
 msgctxt "GENITIVE"
 msgid "October"
-msgstr ""
+msgstr "Octubre"
 
 #: ../includes/classes/class_date.php:179
 msgctxt "GENITIVE"
 msgid "November"
-msgstr ""
+msgstr "Novembre"
 
 #: ../includes/classes/class_date.php:180
 msgctxt "GENITIVE"
 msgid "December"
-msgstr ""
+msgstr "Desembre"
 
 #: ../includes/classes/class_date.php:186
 msgctxt "LOCATIVE"
 msgid "January"
-msgstr ""
+msgstr "Gener"
 
 #: ../includes/classes/class_date.php:187
 msgctxt "LOCATIVE"
 msgid "February"
-msgstr ""
+msgstr "Febrer"
 
 #: ../includes/classes/class_date.php:188
 msgctxt "LOCATIVE"
 msgid "March"
-msgstr ""
+msgstr "Març"
 
 #: ../includes/classes/class_date.php:189
 msgctxt "LOCATIVE"
 msgid "April"
-msgstr ""
+msgstr "Abril"
 
 #: ../includes/classes/class_date.php:190
 msgctxt "LOCATIVE"
 msgid "May"
-msgstr ""
+msgstr "Maig"
 
 #: ../includes/classes/class_date.php:191
 msgctxt "LOCATIVE"
 msgid "June"
-msgstr ""
+msgstr "Juny"
 
 #: ../includes/classes/class_date.php:192
 msgctxt "LOCATIVE"
 msgid "July"
-msgstr ""
+msgstr "Juliol"
 
 #: ../includes/classes/class_date.php:193
 msgctxt "LOCATIVE"
 msgid "August"
-msgstr ""
+msgstr "Agost"
 
 #: ../includes/classes/class_date.php:194
 msgctxt "LOCATIVE"
 msgid "September"
-msgstr ""
+msgstr "Setembre"
 
 #: ../includes/classes/class_date.php:195
 msgctxt "LOCATIVE"
 msgid "October"
-msgstr ""
+msgstr "Octubre"
 
 #: ../includes/classes/class_date.php:196
 msgctxt "LOCATIVE"
 msgid "November"
-msgstr ""
+msgstr "Novembre"
 
 #: ../includes/classes/class_date.php:197
 msgctxt "LOCATIVE"
 msgid "December"
-msgstr ""
+msgstr "Desembre"
 
 #: ../includes/classes/class_date.php:203
 msgctxt "INSTRUMENTAL"
 msgid "January"
-msgstr ""
+msgstr "Gener"
 
 #: ../includes/classes/class_date.php:204
 msgctxt "INSTRUMENTAL"
 msgid "February"
-msgstr ""
+msgstr "Febrer"
 
 #: ../includes/classes/class_date.php:205
 msgctxt "INSTRUMENTAL"
 msgid "March"
-msgstr ""
+msgstr "Març"
 
 #: ../includes/classes/class_date.php:206
 msgctxt "INSTRUMENTAL"
 msgid "April"
-msgstr ""
+msgstr "Abril"
 
 #: ../includes/classes/class_date.php:207
 msgctxt "INSTRUMENTAL"
 msgid "May"
-msgstr ""
+msgstr "Maig"
 
 #: ../includes/classes/class_date.php:208
 msgctxt "INSTRUMENTAL"
 msgid "June"
-msgstr ""
+msgstr "Juny"
 
 #: ../includes/classes/class_date.php:209
 msgctxt "INSTRUMENTAL"
 msgid "July"
-msgstr ""
+msgstr "Juliol"
 
 #: ../includes/classes/class_date.php:210
 msgctxt "INSTRUMENTAL"
 msgid "August"
-msgstr ""
+msgstr "Agost"
 
 #: ../includes/classes/class_date.php:211
 msgctxt "INSTRUMENTAL"
 msgid "September"
-msgstr ""
+msgstr "Setembre"
 
 #: ../includes/classes/class_date.php:212
 msgctxt "INSTRUMENTAL"
 msgid "October"
-msgstr ""
+msgstr "Octubre"
 
 #: ../includes/classes/class_date.php:213
 msgctxt "INSTRUMENTAL"
 msgid "November"
-msgstr ""
+msgstr "Novembre"
 
 #: ../includes/classes/class_date.php:214
 msgctxt "INSTRUMENTAL"
 msgid "December"
-msgstr ""
+msgstr "Desembre"
 
 #: ../includes/classes/class_date.php:220 ../statisticsplot.php:731
 msgid "Jan"
@@ -9324,17 +9324,17 @@ msgstr ""
 #: ../includes/classes/class_date.php:777
 msgctxt "NOMINATIVE"
 msgid "Tishrei"
-msgstr ""
+msgstr "Tixrí"
 
 #: ../includes/classes/class_date.php:778
 msgctxt "NOMINATIVE"
 msgid "Heshvan"
-msgstr ""
+msgstr "Heixvan"
 
 #: ../includes/classes/class_date.php:779
 msgctxt "NOMINATIVE"
 msgid "Kislev"
-msgstr ""
+msgstr "Quisleu"
 
 #: ../includes/classes/class_date.php:780
 msgctxt "NOMINATIVE"
@@ -9344,7 +9344,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:781
 msgctxt "NOMINATIVE"
 msgid "Shevat"
-msgstr ""
+msgstr "Xevat"
 
 #: ../includes/classes/class_date.php:782
 msgctxt "NOMINATIVE"
@@ -9364,12 +9364,12 @@ msgstr ""
 #: ../includes/classes/class_date.php:784
 msgctxt "NOMINATIVE"
 msgid "Nissan"
-msgstr ""
+msgstr "Nisan"
 
 #: ../includes/classes/class_date.php:785
 msgctxt "NOMINATIVE"
 msgid "Iyar"
-msgstr ""
+msgstr "Iar"
 
 #: ../includes/classes/class_date.php:786
 msgctxt "NOMINATIVE"
@@ -9379,7 +9379,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:787
 msgctxt "NOMINATIVE"
 msgid "Tamuz"
-msgstr ""
+msgstr "Tammuz"
 
 #: ../includes/classes/class_date.php:788
 msgctxt "NOMINATIVE"
@@ -9394,17 +9394,17 @@ msgstr ""
 #: ../includes/classes/class_date.php:795
 msgctxt "GENITIVE"
 msgid "Tishrei"
-msgstr ""
+msgstr "Tixrí"
 
 #: ../includes/classes/class_date.php:796
 msgctxt "GENITIVE"
 msgid "Heshvan"
-msgstr ""
+msgstr "Heixvan"
 
 #: ../includes/classes/class_date.php:797
 msgctxt "GENITIVE"
 msgid "Kislev"
-msgstr ""
+msgstr "Quisleu"
 
 #: ../includes/classes/class_date.php:798
 msgctxt "GENITIVE"
@@ -9414,7 +9414,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:799
 msgctxt "GENITIVE"
 msgid "Shevat"
-msgstr ""
+msgstr "Xevat"
 
 #: ../includes/classes/class_date.php:800
 msgctxt "GENITIVE"
@@ -9434,12 +9434,12 @@ msgstr ""
 #: ../includes/classes/class_date.php:802
 msgctxt "GENITIVE"
 msgid "Nissan"
-msgstr ""
+msgstr "Nisan"
 
 #: ../includes/classes/class_date.php:803
 msgctxt "GENITIVE"
 msgid "Iyar"
-msgstr ""
+msgstr "Iar"
 
 #: ../includes/classes/class_date.php:804
 msgctxt "GENITIVE"
@@ -9449,7 +9449,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:805
 msgctxt "GENITIVE"
 msgid "Tamuz"
-msgstr ""
+msgstr "Tammuz"
 
 #: ../includes/classes/class_date.php:806
 msgctxt "GENITIVE"
@@ -9464,17 +9464,17 @@ msgstr ""
 #: ../includes/classes/class_date.php:813
 msgctxt "LOCATIVE"
 msgid "Tishrei"
-msgstr ""
+msgstr "Tixrí"
 
 #: ../includes/classes/class_date.php:814
 msgctxt "LOCATIVE"
 msgid "Heshvan"
-msgstr ""
+msgstr "Heixvan"
 
 #: ../includes/classes/class_date.php:815
 msgctxt "LOCATIVE"
 msgid "Kislev"
-msgstr ""
+msgstr "Quisleu"
 
 #: ../includes/classes/class_date.php:816
 msgctxt "LOCATIVE"
@@ -9484,7 +9484,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:817
 msgctxt "LOCATIVE"
 msgid "Shevat"
-msgstr ""
+msgstr "Xevat"
 
 #: ../includes/classes/class_date.php:818
 msgctxt "LOCATIVE"
@@ -9504,12 +9504,12 @@ msgstr ""
 #: ../includes/classes/class_date.php:820
 msgctxt "LOCATIVE"
 msgid "Nissan"
-msgstr ""
+msgstr "Nisan"
 
 #: ../includes/classes/class_date.php:821
 msgctxt "LOCATIVE"
 msgid "Iyar"
-msgstr ""
+msgstr "Iar"
 
 #: ../includes/classes/class_date.php:822
 msgctxt "LOCATIVE"
@@ -9519,7 +9519,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:823
 msgctxt "LOCATIVE"
 msgid "Tamuz"
-msgstr ""
+msgstr "Tammuz"
 
 #: ../includes/classes/class_date.php:824
 msgctxt "LOCATIVE"
@@ -9534,17 +9534,17 @@ msgstr ""
 #: ../includes/classes/class_date.php:831
 msgctxt "INSTRUMENTAL"
 msgid "Tishrei"
-msgstr ""
+msgstr "Tixrí"
 
 #: ../includes/classes/class_date.php:832
 msgctxt "INSTRUMENTAL"
 msgid "Heshvan"
-msgstr ""
+msgstr "Heixvan"
 
 #: ../includes/classes/class_date.php:833
 msgctxt "INSTRUMENTAL"
 msgid "Kislev"
-msgstr ""
+msgstr "Quisleu"
 
 #: ../includes/classes/class_date.php:834
 msgctxt "INSTRUMENTAL"
@@ -9554,7 +9554,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:835
 msgctxt "INSTRUMENTAL"
 msgid "Shevat"
-msgstr ""
+msgstr "Xevat"
 
 #: ../includes/classes/class_date.php:836
 msgctxt "INSTRUMENTAL"
@@ -9574,12 +9574,12 @@ msgstr ""
 #: ../includes/classes/class_date.php:838
 msgctxt "INSTRUMENTAL"
 msgid "Nissan"
-msgstr ""
+msgstr "Nisan"
 
 #: ../includes/classes/class_date.php:839
 msgctxt "INSTRUMENTAL"
 msgid "Iyar"
-msgstr ""
+msgstr "Iar"
 
 #: ../includes/classes/class_date.php:840
 msgctxt "INSTRUMENTAL"
@@ -9589,7 +9589,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:841
 msgctxt "INSTRUMENTAL"
 msgid "Tamuz"
-msgstr ""
+msgstr "Tammuz"
 
 #: ../includes/classes/class_date.php:842
 msgctxt "INSTRUMENTAL"
@@ -9688,32 +9688,32 @@ msgstr ""
 #: ../includes/classes/class_date.php:1082
 msgctxt "NOMINATIVE"
 msgid "Vendémiaire"
-msgstr ""
+msgstr "Vendemiari"
 
 #: ../includes/classes/class_date.php:1083
 msgctxt "NOMINATIVE"
 msgid "Brumaire"
-msgstr ""
+msgstr "Bromari"
 
 #: ../includes/classes/class_date.php:1084
 msgctxt "NOMINATIVE"
 msgid "Frimaire"
-msgstr ""
+msgstr "Rufolari"
 
 #: ../includes/classes/class_date.php:1085
 msgctxt "NOMINATIVE"
 msgid "Nivôse"
-msgstr ""
+msgstr "Nivós"
 
 #: ../includes/classes/class_date.php:1086
 msgctxt "NOMINATIVE"
 msgid "Pluviôse"
-msgstr ""
+msgstr "Pluviós"
 
 #: ../includes/classes/class_date.php:1087
 msgctxt "NOMINATIVE"
 msgid "Ventôse"
-msgstr ""
+msgstr "Ventós"
 
 #: ../includes/classes/class_date.php:1088
 msgctxt "NOMINATIVE"
@@ -9723,12 +9723,12 @@ msgstr ""
 #: ../includes/classes/class_date.php:1089
 msgctxt "NOMINATIVE"
 msgid "Floréal"
-msgstr ""
+msgstr "Floral"
 
 #: ../includes/classes/class_date.php:1090
 msgctxt "NOMINATIVE"
 msgid "Prairial"
-msgstr ""
+msgstr "Pradal"
 
 #: ../includes/classes/class_date.php:1091
 msgctxt "NOMINATIVE"
@@ -9738,7 +9738,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1092
 msgctxt "NOMINATIVE"
 msgid "Thermidor"
-msgstr ""
+msgstr "Termidor"
 
 #: ../includes/classes/class_date.php:1093
 msgctxt "NOMINATIVE"
@@ -9748,37 +9748,37 @@ msgstr ""
 #: ../includes/classes/class_date.php:1094
 msgctxt "NOMINATIVE"
 msgid "jours complémentaires"
-msgstr ""
+msgstr "dies complementaris"
 
 #: ../includes/classes/class_date.php:1099
 msgctxt "GENITIVE"
 msgid "Vendémiaire"
-msgstr ""
+msgstr "Vendemiari"
 
 #: ../includes/classes/class_date.php:1100
 msgctxt "GENITIVE"
 msgid "Brumaire"
-msgstr ""
+msgstr "Bromari"
 
 #: ../includes/classes/class_date.php:1101
 msgctxt "GENITIVE"
 msgid "Frimaire"
-msgstr ""
+msgstr "Rufolari"
 
 #: ../includes/classes/class_date.php:1102
 msgctxt "GENITIVE"
 msgid "Nivôse"
-msgstr ""
+msgstr "Nivós"
 
 #: ../includes/classes/class_date.php:1103
 msgctxt "GENITIVE"
 msgid "Pluviôse"
-msgstr ""
+msgstr "Pluviós"
 
 #: ../includes/classes/class_date.php:1104
 msgctxt "GENITIVE"
 msgid "Ventôse"
-msgstr ""
+msgstr "Ventós"
 
 #: ../includes/classes/class_date.php:1105
 msgctxt "GENITIVE"
@@ -9788,12 +9788,12 @@ msgstr ""
 #: ../includes/classes/class_date.php:1106
 msgctxt "GENITIVE"
 msgid "Floréal"
-msgstr ""
+msgstr "Floral"
 
 #: ../includes/classes/class_date.php:1107
 msgctxt "GENITIVE"
 msgid "Prairial"
-msgstr ""
+msgstr "Pradal"
 
 #: ../includes/classes/class_date.php:1108
 msgctxt "GENITIVE"
@@ -9803,7 +9803,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1109
 msgctxt "GENITIVE"
 msgid "Thermidor"
-msgstr ""
+msgstr "Termidor"
 
 #: ../includes/classes/class_date.php:1110
 msgctxt "GENITIVE"
@@ -9813,37 +9813,37 @@ msgstr ""
 #: ../includes/classes/class_date.php:1111
 msgctxt "GENITIVE"
 msgid "jours complémentaires"
-msgstr ""
+msgstr "dies complementaris"
 
 #: ../includes/classes/class_date.php:1116
 msgctxt "LOCATIVE"
 msgid "Vendémiaire"
-msgstr ""
+msgstr "Vendemiari"
 
 #: ../includes/classes/class_date.php:1117
 msgctxt "LOCATIVE"
 msgid "Brumaire"
-msgstr ""
+msgstr "Bromari"
 
 #: ../includes/classes/class_date.php:1118
 msgctxt "LOCATIVE"
 msgid "Frimaire"
-msgstr ""
+msgstr "Rufolari"
 
 #: ../includes/classes/class_date.php:1119
 msgctxt "LOCATIVE"
 msgid "Nivôse"
-msgstr ""
+msgstr "Nivós"
 
 #: ../includes/classes/class_date.php:1120
 msgctxt "LOCATIVE"
 msgid "Pluviôse"
-msgstr ""
+msgstr "Pluviós"
 
 #: ../includes/classes/class_date.php:1121
 msgctxt "LOCATIVE"
 msgid "Ventôse"
-msgstr ""
+msgstr "Ventós"
 
 #: ../includes/classes/class_date.php:1122
 msgctxt "LOCATIVE"
@@ -9853,12 +9853,12 @@ msgstr ""
 #: ../includes/classes/class_date.php:1123
 msgctxt "LOCATIVE"
 msgid "Floréal"
-msgstr ""
+msgstr "Floral"
 
 #: ../includes/classes/class_date.php:1124
 msgctxt "LOCATIVE"
 msgid "Prairial"
-msgstr ""
+msgstr "Pradal"
 
 #: ../includes/classes/class_date.php:1125
 msgctxt "LOCATIVE"
@@ -9868,7 +9868,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1126
 msgctxt "LOCATIVE"
 msgid "Thermidor"
-msgstr ""
+msgstr "Termidor"
 
 #: ../includes/classes/class_date.php:1127
 msgctxt "LOCATIVE"
@@ -9878,37 +9878,37 @@ msgstr ""
 #: ../includes/classes/class_date.php:1128
 msgctxt "LOCATIVE"
 msgid "jours complémentaires"
-msgstr ""
+msgstr "dies complementaris"
 
 #: ../includes/classes/class_date.php:1133
 msgctxt "INSTRUMENTAL"
 msgid "Vendémiaire"
-msgstr ""
+msgstr "Vendemiari"
 
 #: ../includes/classes/class_date.php:1134
 msgctxt "INSTRUMENTAL"
 msgid "Brumaire"
-msgstr ""
+msgstr "Bromari"
 
 #: ../includes/classes/class_date.php:1135
 msgctxt "INSTRUMENTAL"
 msgid "Frimaire"
-msgstr ""
+msgstr "Rufolari"
 
 #: ../includes/classes/class_date.php:1136
 msgctxt "INSTRUMENTAL"
 msgid "Nivôse"
-msgstr ""
+msgstr "Nivós"
 
 #: ../includes/classes/class_date.php:1137
 msgctxt "INSTRUMENTAL"
 msgid "Pluviôse"
-msgstr ""
+msgstr "Pluviós"
 
 #: ../includes/classes/class_date.php:1138
 msgctxt "INSTRUMENTAL"
 msgid "Ventôse"
-msgstr ""
+msgstr "Ventós"
 
 #: ../includes/classes/class_date.php:1139
 msgctxt "INSTRUMENTAL"
@@ -9918,12 +9918,12 @@ msgstr ""
 #: ../includes/classes/class_date.php:1140
 msgctxt "INSTRUMENTAL"
 msgid "Floréal"
-msgstr ""
+msgstr "Floral"
 
 #: ../includes/classes/class_date.php:1141
 msgctxt "INSTRUMENTAL"
 msgid "Prairial"
-msgstr ""
+msgstr "Pradal"
 
 #: ../includes/classes/class_date.php:1142
 msgctxt "INSTRUMENTAL"
@@ -9933,7 +9933,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1143
 msgctxt "INSTRUMENTAL"
 msgid "Thermidor"
-msgstr ""
+msgstr "Termidor"
 
 #: ../includes/classes/class_date.php:1144
 msgctxt "INSTRUMENTAL"
@@ -9943,7 +9943,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1145
 msgctxt "INSTRUMENTAL"
 msgid "jours complémentaires"
-msgstr ""
+msgstr "dies complementaris"
 
 #: ../includes/classes/class_date.php:1174
 msgid "Primidi"
@@ -10028,7 +10028,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1250
 msgctxt "NOMINATIVE"
 msgid "Ramadan"
-msgstr ""
+msgstr "Ramadà"
 
 #: ../includes/classes/class_date.php:1251
 msgctxt "NOMINATIVE"
@@ -10088,7 +10088,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1267
 msgctxt "GENITIVE"
 msgid "Ramadan"
-msgstr ""
+msgstr "Ramadà"
 
 #: ../includes/classes/class_date.php:1268
 msgctxt "GENITIVE"
@@ -10148,7 +10148,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1284
 msgctxt "LOCATIVE"
 msgid "Ramadan"
-msgstr ""
+msgstr "Ramadà"
 
 #: ../includes/classes/class_date.php:1285
 msgctxt "LOCATIVE"
@@ -10208,7 +10208,7 @@ msgstr ""
 #: ../includes/classes/class_date.php:1301
 msgctxt "INSTRUMENTAL"
 msgid "Ramadan"
-msgstr ""
+msgstr "Ramadà"
 
 #: ../includes/classes/class_date.php:1302
 msgctxt "INSTRUMENTAL"
@@ -10576,12 +10576,12 @@ msgstr "Veure l'arxiu"
 #. I18N: This is the format string for full dates.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:97
 msgid "%j %F %Y"
-msgstr "%j %F %Y"
+msgstr ""
 
 #. I18N: This a the format string for the time-of-day.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:99
 msgid "%g:%i:%s%a"
-msgstr "%g:%i:%s%a"
+msgstr ""
 
 #: ../includes/classes/class_i18n.php:102
 msgid "ALPHABET_upper=ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -10604,7 +10604,7 @@ msgstr "MULTI_LETTER_ALPHABET=l·l"
 #. I18N: 1=>ignore diacrics when sorting, 0=>letters with diacritics are distinct
 #: ../includes/classes/class_i18n.php:114
 msgid "DICTIONARY_SORT=1"
-msgstr "DICTIONARY_SORT=1"
+msgstr ""
 
 #. I18N: This is the puncutation symbol used to separate the first items in a list.  e.g. the <comma><space> in "red, green, yellow and blue"
 #: ../includes/classes/class_i18n.php:126
@@ -13642,7 +13642,7 @@ msgstr "Afegeix mainada"
 #. I18N: This is the GEDCOM label for "Pedigree"
 #: ../edit_interface.php:528 ../help_text.php:1093
 msgid "Pedigree"
-msgstr ""
+msgstr "Avantpassats"
 
 #: ../edit_interface.php:692 ../edit_interface.php:842
 #: ../edit_interface.php:973 ../edit_interface.php:1012
@@ -15686,7 +15686,7 @@ msgstr "Barreja des de l'ID:"
 #. I18N: This is the GEDCOM label for "Abbreviation"
 #: ../help_text.php:49
 msgid "Abbreviation"
-msgstr ""
+msgstr "Abreujament"
 
 #: ../help_text.php:50
 msgid "Use this field for storing an abbreviated version of a title.  This field is used in conjunction with the title field on sources.  By default PGV will first use the title and then the abbreviated title.<br /><br />According to the GEDCOM 5.5 specification, \"this entry is to provide a short title used for sorting, filing, and retrieving source records (pg 62).\"<br /><br />In PhpGedView the abbreviated title is optional, but in other genealogical programs it is required."
@@ -15695,7 +15695,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Address"
 #: ../help_text.php:55
 msgid "Address"
-msgstr ""
+msgstr "Direcció"
 
 #: ../help_text.php:56
 msgid "Enter the address into the field just as you would write it on an envelope.<br /><br />Leave this field blank if you do not want to include an address."
@@ -15719,7 +15719,7 @@ msgstr "Número de fitxer 'Ancestral' (AFN)"
 #. I18N: This is the GEDCOM label for "Agency"
 #: ../help_text.php:91
 msgid "Agency"
-msgstr ""
+msgstr "Agència"
 
 #: ../help_text.php:92
 msgid "The organization, institution, corporation, person, or other entity that has authority.<br /><br />For example, an employer of a person, or a church that administered rites or events, or an organization responsible for creating and/or archiving records."
@@ -15748,7 +15748,7 @@ msgstr "Anul·lació"
 #. I18N: This is the GEDCOM label for "Associate"
 #: ../help_text.php:121
 msgid "Associate"
-msgstr ""
+msgstr "Associats"
 
 #: ../help_text.php:122
 msgid "Enter associate GEDCOM ID."
@@ -15882,7 +15882,7 @@ msgstr "Causa de la mort"
 #. I18N: This is the GEDCOM label for "Cemetery"
 #: ../help_text.php:295
 msgid "Cemetery"
-msgstr ""
+msgstr "Cementiri"
 
 #: ../help_text.php:296
 msgid "Enter the name of the cemetery or other resting place where individual is buried."
@@ -16472,7 +16472,7 @@ msgstr "Ordenació"
 #. I18N: This is the GEDCOM label for "Citation Details"
 #: ../help_text.php:1087
 msgid "Citation Details"
-msgstr ""
+msgstr "Detalls de la citació"
 
 #: ../help_text.php:1088
 msgid "In the Citation Details field you would enter the page number or other information that might help someone find the information in the source."
@@ -16485,7 +16485,7 @@ msgstr "Aquest camp descriu el vincle d'aquest fill amb llur família. Les possi
 #. I18N: This is the GEDCOM label for "Phone"
 #: ../help_text.php:1099
 msgid "Phone"
-msgstr ""
+msgstr "Telèfon"
 
 #: ../help_text.php:1100
 msgid "Enter the phone number including the country and area code.<br /><br />Leave this field blank if you do not want to include a phone number.  For example, a number in Germany might be +49 25859 56 76 89 and a number in USA or Canada might be +1 888 555-1212."
@@ -16528,7 +16528,7 @@ msgstr "Propietat"
 #. I18N: This is the GEDCOM label for "Quality of Data"
 #: ../help_text.php:1153
 msgid "Quality of Data"
-msgstr ""
+msgstr "Qualitat de les dades"
 
 #: ../help_text.php:1154
 msgid "You would use this field to record the quality or reliability of the data found in this source.  Many genealogy applications use a number in the field. <b>3</b> might mean that the data is a primary source, <b>2</b> might mean that it was a secondary source, <b>1</b> might mean the information is questionable, and <b>0</b> might mean that the source is unreliable."
@@ -16556,7 +16556,7 @@ msgstr "Residència"
 #. I18N: This is the GEDCOM label for "Restriction"
 #: ../help_text.php:1189
 msgid "Restriction"
-msgstr ""
+msgstr "Restricció"
 
 #: ../help_text.php:1190
 msgid "Apart from general privacy settings, PhpGedView has the ability to set restrictions on viewing and editing fact information for individuals and families. The restrictions can be set by anyone who is allowed to edit the information, unless privacy or formerly set restrictions prohibit this.<br /><br />The following values can be used:<br /><ul><li><b>None</b><br />Site administrators, GEDCOM administrators, and users who have rights to edit can change the information. Fact information can be viewed according to privacy settings as applied by the administrator.</li><li><b>Do not change</b><br />This setting has no influence on the visibility of the fact data. It restricts editing rights to site administrators and GEDCOM administrators. If the information applies to the user himself, he can also view and, assuming he has editing rights, edit it.</li><li><b>Privacy</b><br />Site administrators and GEDCOM administrators can view and edit the information. If the information applies to the user himself, he can also view and, assuming he has editing rights, edit it. It will be hidden from all other users regardless of their login status.</li><li><b>Confidential</b><br />Only site administrators and GEDCOM administrators can view and edit the information. It will be hidden from all other users regardless of their login status.</li></ul><br /><table><tr><th></th><th colspan=\"2\">Admin</th><th colspan=\"2\">Owner</th><th colspan=\"2\">Others</th></tr><tr><th></th><th>R</th><th>W</th><th>R</th><th>W</th><th>R</th><th>W</th></tr><tr><td><img src=\"images/RESN_none.gif\" alt=\"\" /> None</td><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th></tr><tr><td><img src=\"images/RESN_locked.gif\" alt=\"\" /> Do not change</td><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th></tr><tr><td><img src=\"images/RESN_privacy.gif\" alt=\"\" /> Privacy</td><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/checked_qm.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th></tr><tr><td><img src=\"images/RESN_confidential.gif\" alt=\"\" /> Confidential</td><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/checked.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th><th><img src=\"images/forbidden.gif\" alt=\"\" /></th></tr></table><ul><li>R : can read</li><li>W : can edit</li><li><img src=\"images/checked_qm.gif\" alt=\"\" /> : depends on global privacy settings</li></ul>"
@@ -16580,7 +16580,7 @@ msgstr "Número ID"
 #. I18N: This is the GEDCOM label for "Romanized"
 #: ../help_text.php:1219
 msgid "Romanized"
-msgstr ""
+msgstr "Romanitzat"
 
 #: ../help_text.php:1220
 msgid "In many cultures it is customary to have a traditional name spelled in the traditional characters and also a romanized version of the name as it would be spelled or pronounced in languages based on the Latin alphabet, such as English.<br /><br />If you prefer to use a non-Latin alphabet such as Hebrew, Greek, Russian, Chinese, or Arabic to enter the name in the standard name fields, then you can use this field to enter the same name using the Latin alphabet.  Both versions of the name will appear in lists and charts.<br /><br />Although this field is labelled \"Romanized\", it is not restricted to containing only characters based on the Latin alphabet.  This might be of use with Japanese names, where three different alphabets may occur."
@@ -16616,7 +16616,7 @@ msgstr "Aquest camp us permet canviar el registre de la font vinculat a aquesta 
 #. I18N: This is the GEDCOM label for "Surname Prefix"
 #: ../help_text.php:1261
 msgid "Surname Prefix"
-msgstr ""
+msgstr "Prefix del Cognom"
 
 #: ../help_text.php:1262
 msgid "Enter or select from the list words that precede the main part of the Surname.  Examples of such words are <b>von</b> Braun, <b>van der</b> Kloot, <b>de</b> Graaf, etc."
@@ -16649,7 +16649,7 @@ msgstr "Presentació"
 #. I18N: This is the GEDCOM label for "Surname"
 #: ../help_text.php:1303 ../help_text.php:4718
 msgid "Surname"
-msgstr ""
+msgstr "Cognom"
 
 #: ../help_text.php:1304 ../help_text.php:4519
 msgid "In this field you should enter the surname for the person.  As an example, in the name \"John Robert Finlay\", the surname that should be entered here is \"Finlay\"<br /><br />Individuals with multiple surnames, common in Spain and Portugal, should separate the surnames with a comma.  This indicates that the person is to be listed under each of the names.  For example, the surname \"Cortes,Vega\" will be listed under both <b>C</b> and <b>V</b>, whereas the surname \"Cortes Vega\" will only be listed under <b>C</b>."
@@ -16671,7 +16671,7 @@ msgstr "En aquest camp podeu entrar-hi el text de referència per aquesta font. 
 #. I18N: This is the GEDCOM label for "Time"
 #: ../help_text.php:1321
 msgid "Time"
-msgstr ""
+msgstr "Hora"
 
 #: ../help_text.php:1322
 msgid "Enter the time for this event in 24-hour format with leading zeroes. Midnight is 00:00. Examples: 04:50 13:00 20:30."
@@ -16680,7 +16680,7 @@ msgstr "Entreu l'hora d'aquest esdeveniment en format 24 hores amb zeros a l'esq
 #. I18N: This is the GEDCOM label for "Title"
 #: ../help_text.php:1327
 msgid "Title"
-msgstr ""
+msgstr "Títol"
 
 #: ../help_text.php:1328
 msgid "Enter a title for the item you are editing.  If this is a title for a multimedia item, enter a descriptive title that will identify that item to the user."
@@ -17684,7 +17684,7 @@ msgstr ""
 
 #: ../help_text.php:2617
 msgid "This chart is very similar to the Hourglass chart.  It will show the ancestors and descendants of the selected root person on the same chart.  It will also show the descendants of the root person in the same Hourglass format.<br /><br />The root person is centered in the middle of the page with his descendants listed to the left and his ancestors listed to the right.  In this view, each generation is lined up across the page starting with the earliest generation and ending with the latest.<br /><br />Each descendant of the root person will become the root person of an additional hourglass chart, printed on the same page.  This process repeats until the specified number of descendant generations have been printed."
-msgstr ""
+msgstr "És semblant al rellotge de sorra. Presenta avantpassats i descendents de la persona arrel escollida en un mateix diagrama. També mostra els descendents amb el mateix format que el rellotge de sorra.<br /><br />La persona arrel ocupa el centre de la pàgina amb els descendents a l'esquerra i els avantpassats a la dreta. Les generacions s'alineen començant per la més antiga i acabant per la darrera.<br /><br />Cada descendent pot esdevenir persona arrel d'un rellotge de sorra addicional, dins la mateixa pàgina. Aquest procés es repeteix fins que s'assoleix el nombre especificat de generacions."
 
 #: ../help_text.php:2621
 msgid "Familiy List Page"
@@ -17720,7 +17720,7 @@ msgstr "Informació sobre:"
 
 #: ../help_text.php:2661
 msgid "The Hourglass chart will show the ancestors and descendants of the selected root person on the same chart.  This chart is a mix between the Descendancy chart and the Pedigree chart.<br /><br />The root person is centered in the middle of the page with his descendants listed to the left and his ancestors listed to the right.  In this view, each generation is lined up across the page starting with the earliest generation and ending with the latest.<br /><br />If there is a downwards arrow on the screen under the root person, clicking on it will display a list of the root person's close family members that you can use the navigate down the chart.  Selecting a name from this list will reload the chart with the selected person as the new root person."
-msgstr ""
+msgstr "El rellotge de sorra mostra avantpassats i descendents de la persona arrel escollida en un mateix diagrama i és una barreja entre el de descendents i l'arbre genealògic.<br /><br />La persona arrel ocupa el centre de la pàgina amb els descendents a l'esquerra i els avantpassats a la dreta. Les generacions s'alineen començant per la més antiga i acabant per la darrera.<br /><br />Si hi ha una fletxa cap avall sota la persona arrel, polsant-la surt una llista de familiars directes que podeu fer servir per navegar diagrama avall. Seleccionant un nom de la llista, es recarrega el diagrama amb aquesta persona com a arrel."
 
 #: ../help_text.php:2671 ../help_text.php:4878
 msgid "Welcome Page"
@@ -18930,7 +18930,7 @@ msgstr "_GEDCOM: Descarrega"
 
 #: ../help_text.php:4068
 msgid "Alphabetical Index"
-msgstr ""
+msgstr "Índex alfabètic"
 
 #: ../help_text.php:4069
 msgid "Clicking a letter in the Alphabetical index will display a list of the names that start with the letter you clicked.<br /><br />The second to last item in the Alphabetical index can be <b>(unknown)</b>.  This entry will be present when there are people in the database whose surname has not been recorded or does not contain any recognizable letters.  Unknown surnames are often recorded as <b>?</b>, and these will be recognized as <b>(unknown)</b>.  This will also happen if the person is unknown.<br /><br /><b>Note:</b><br />Surnames entered as, for example, <b>Nn</b>, <b>NN</b>, <b>Unknown</b>, or even <b>N.N.</b> will <u>not</u> be found in the <b>(unknown)</b> list. Instead, you will find these persons by clicking <b>N</b> or <b>U</b> because these are the initial letters of those names.  PhpGedView cannot possibly account for all possible ways of entering unknown surnames;  there is no recognized convention for this.<br /><br />At the end of the Alphabetical index you see <b>ALL</b>. When you click on this item, you will see a list of all surnames in the database.<br /><br /><b>Missing letters?</b><br />If your Alphabetical index appears to be incomplete, with missing letters, your database doesn't contain any surnames that start with that missing letter."
@@ -18986,7 +18986,7 @@ msgstr "Un cop hagueu accedit o quan l'administrador no ha activat la l'opció d
 
 #: ../help_text.php:4103
 msgid "Show events of:"
-msgstr ""
+msgstr "Esdeveniments a mostrar:"
 
 #: ../help_text.php:4104
 msgid "The following options are available:<br /><ol><li><b>All People</b><br />With this option, all individuals and families are displayed.</li><li><b>Recent Years (&lt;100 yrs)</b><br />With this option you will see all events for the chosen day or month, but no events older than 100 years will be shown.</li><li><b>Living People</b><br />Unless the administrator has configured PhpGedView so that living people are visible to anyone, this option will only be available to you after you have logged in.<br /><br />With this option, only the events of living persons will be displayed.</li></ol>When you click on an option, the events of your choice will be displayed.<br /><br />The settings of day, month, and year, as well as <b>Day</b> or <b>Month</b> mode, remain as they were."
@@ -19119,7 +19119,7 @@ msgstr "El PhpGedView ha detectat que el fitxer GEDCOM té posats llocs en etiqu
 
 #: ../help_text.php:4194
 msgid "In order to improve performance, several of the blocks on the PhpGedView Welcome page are saved as cache files in the index directory.  The cache files for most blocks are refreshed once each day, but there may be times when you want to refresh them manually.<br /><br />This button allows you to refresh the cache files when necessary."
-msgstr ""
+msgstr "A fi de donar agilitat, alguns blocs de  la pàgina d'inici PhpGedView es guarden com a fitxers cau al directori índex. Els fitxers cau de molts blocs es refresquen diàriament, però pot haver-hi ocasions que vulgueu refrescar-los manualment.<br /><br />Aquest botó us permet fer-ho quan calgui."
 
 #: ../help_text.php:4199
 msgid "Click this button to save your changes.<br /><br />You will be returned to the Welcome or My Page, but your changes may not be shown.  You may need to use the Page Reload function of your browser to view your changes properly."
@@ -19255,7 +19255,7 @@ msgstr ""
 
 #: ../help_text.php:4298
 msgid "Definitions"
-msgstr ""
+msgstr "Definicions"
 
 #: ../help_text.php:4299
 msgid "Here are some explanations of terms used in this Help text:<ul><li><a href=\"#def_gedcom\"><b>GEDCOM</b></a><br /></li><li><a href=\"#def_gedcom_date\"><b>Dates</b></a></li><li><a href=\"#def_pdf_format\"><b>PDF file format</b></a></li><li><a href=\"#def_pgv\"><b>PhpGedView</b></a></li><li><a href=\"#def_portal\"><b>Portal</b></a></li><li><a href=\"#def_theme\"><b>Theme</b></a></li></ul>"
@@ -19861,7 +19861,7 @@ msgstr ""
 
 #: ../help_text.php:4793
 msgid "Configure PhpGedView"
-msgstr ""
+msgstr "Configura el PhpGedView"
 
 #: ../help_text.php:4794
 msgid "On this page you configure the global settings for PhpGedView.  You have to do this after you have installed PhpGedView and are running it for the first time.<br /><br />You should review the <a href=\\\"readme.txt\\\" target=\\\"_blank\\\">readme.txt</a> file before continuing to configure PhpGedView.<br /><br />As these settings are <b>global</b>, they are for the whole program and for all genealogical databases you use with PhpGedView.<br /><br />Each genealogical database also has additional configuration options that you set after clicking the <b>Click here to administer GEDCOMs</b> link on this page.<br /><br />You can also access the GEDCOM Administration function from the main Admin page, whose link is found under the MyGedView icon or in the header of most pages.  On the Admin page, the relevant link is called <b>Manage GEDCOMs and edit Privacy.</b>"

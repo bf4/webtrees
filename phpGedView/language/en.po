@@ -10576,12 +10576,12 @@ msgstr ""
 #. I18N: This is the format string for full dates.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:97
 msgid "%j %F %Y"
-msgstr "%j %F %Y"
+msgstr ""
 
 #. I18N: This a the format string for the time-of-day.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:99
 msgid "%g:%i:%s%a"
-msgstr "%g:%i:%s%a"
+msgstr ""
 
 #: ../includes/classes/class_i18n.php:102
 msgid "ALPHABET_upper=ABCDEFGHIJKLMNOPQRSTUVWXYZ"
