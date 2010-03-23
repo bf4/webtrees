@@ -52,6 +52,7 @@ class i18n {
 			if (isset($_GET['lang']) && array_key_exists($_GET['lang'], $installed_languages)) {
 				// Requested in the URL
 				$locale=$_GET['lang'];
+				unset($_GET['lang']);
 			} elseif (isset($_SESSION['locale']) && array_key_exists($_SESSION['locale'], $installed_languages)) {
 				// Rembered from a previous visit
 				$locale=$_SESSION['locale'];
