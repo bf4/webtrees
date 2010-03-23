@@ -1,6 +1,6 @@
 <?php
 /**
-* Various functions used to generate the PhpGedView RSS feed.
+* Various functions used to generate the webtrees RSS feed.
 *
 * webtrees: Web based Family History software
  * Copyright (C) 2010 webtrees development team.

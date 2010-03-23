@@ -192,7 +192,7 @@ class PGVReportBase {
 	public $generatedby = "";
 	
 	/**
-	* PhpGedView URL
+	* webtrees URL
 	* @var string const
 	*/
 	const pgv_url = PGV_PHPGEDVIEW_URL;

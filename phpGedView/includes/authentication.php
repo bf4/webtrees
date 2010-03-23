@@ -6,7 +6,7 @@
  * It also handles the internal mail messages, favorites, news/journal, and storage of MyGedView
  * customizations.  Assumes that a database connection has already been established.
  *
- * You can extend PhpGedView to work with other systems by implementing the functions in this file.
+ * You can extend webtrees to work with other systems by implementing the functions in this file.
  * Other possible options are to use LDAP for authentication.
  *
  * webtrees: Web based Family History software
@@ -456,7 +456,7 @@ function addMessage($message) {
 	$from ="";
 	if (!$user_id_from) {
 		$from = $message["from"];
-		$email2 = i18n::translate('You sent the following message to a PhpGedView administrator:')."\r\n\r\n".$email2;
+		$email2 = i18n::translate('You sent the following message to a webtrees administrator:')."\r\n\r\n".$email2;
 		$fromFullName = $message["from"];
 	} else {
 		$fromFullName = getUserFullName($user_id_from);
@@ -464,20 +464,20 @@ function addMessage($message) {
 			$from = hex4email($fromFullName,$CHARACTER_SET). " <".get_user_setting($user_id_from, 'email').">";
 		else
 			$from = get_user_setting($user_id_from, 'email');
-		$email2 = i18n::translate('You sent the following message to a PhpGedView user:')."\r\n\r\n".$email2;
+		$email2 = i18n::translate('You sent the following message to a webtrees user:')."\r\n\r\n".$email2;
 
 	}
 	if ($message["method"]!="messaging") {
 		$subject1 = "[".i18n::translate('PhpGedView Message').($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
 		if (!$user_id_from) {
-			$email1 = i18n::translate('The following message has been sent to your PhpGedView user account from ');
+			$email1 = i18n::translate('The following message has been sent to your webtrees user account from ');
 			if (!empty($message["from_name"])) {
 				$email1 .= $message["from_name"]."\r\n\r\n".$message["body"];
 			} else {
 				$email1 .= $from."\r\n\r\n".$message["body"];
 			}
 		} else {
-			$email1 = i18n::translate('The following message has been sent to your PhpGedView user account from ');
+			$email1 = i18n::translate('The following message has been sent to your webtrees user account from ');
 			$email1 .= $fromFullName."\r\n\r\n".$message["body"];
 		}
 		if (!isset($message["no_from"])) {
@@ -499,7 +499,7 @@ function addMessage($message) {
 	i18n::init(get_user_setting($user_id_to, 'language'));
 	if (isset($message["from_name"]))
 		$message["body"] = i18n::translate('Your Name:')." ".$message["from_name"]."\r\n".i18n::translate('Email Address:')." ".$message["from_email"]."\r\n\r\n".$message["body"];
-	//-- [ phpgedview-Feature Requests-1588353 ] Supress admin IP address in Outgoing PGV Email
+	//-- [ webtrees-Feature Requests-1588353 ] Supress admin IP address in Outgoing PGV Email
 	if (!userIsAdmin($user_id_from)) {
 		if (!empty($message["url"]))
 			$message["body"] .= "\r\n\r\n--------------------------------------\r\n\r\n".i18n::translate('This message was sent while viewing the following URL: ')."\r\n".$SERVER_URL.$message["url"]."\r\n";
@@ -516,13 +516,13 @@ function addMessage($message) {
 	if ($message["method"]!="messaging") {
 		$subject1 = "[".i18n::translate('PhpGedView Message').($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
 		if (!$user_id_from) {
-			$email1 = i18n::translate('The following message has been sent to your PhpGedView user account from ');
+			$email1 = i18n::translate('The following message has been sent to your webtrees user account from ');
 			if (!empty($message["from_name"]))
 				$email1 .= $message["from_name"]."\r\n\r\n".$message["body"];
 			else
 				$email1 .= $from."\r\n\r\n".$message["body"];
 		} else {
-			$email1 = i18n::translate('The following message has been sent to your PhpGedView user account from ');
+			$email1 = i18n::translate('The following message has been sent to your webtrees user account from ');
 			$email1 .= $fromFullName."\r\n\r\n".$message["body"];
 		}
 		if (!$user_id_to) {

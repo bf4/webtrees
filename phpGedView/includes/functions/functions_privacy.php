@@ -2,7 +2,7 @@
 /**
 * Privacy Functions
 *
-* See http://www.phpgedview.net/privacy.php for more information on privacy in PhpGedView
+* See http://www.phpgedview.net/privacy.php for more information on privacy in webtrees
 *
 * webtrees: Web based Family History software
  * Copyright (C) 2010 webtrees development team.

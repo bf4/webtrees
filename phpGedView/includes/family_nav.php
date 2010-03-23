@@ -1,6 +1,6 @@
 <?php
 /**
-* Family Navigator for phpGedView
+* Family Navigator for webtrees
 *
 * Display immediate family members table for fast navigation
 * ( Currently used with Facts and Details tab, and Album Tab pages )
@@ -39,7 +39,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_FAMILY_NAV_PHP', '');
 
 // -----------------------------------------------------------------------------
-// Function Family Nav for PHPGedView - called by individual_ctrl.php
+// Function Family Nav for webtrees - called by individual_ctrl.php
 // -----------------------------------------------------------------------------
 // function family_nav() {
 // ------------------------------------------------------------------------------

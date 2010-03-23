@@ -30,6 +30,7 @@
  * @package webtrees
  * @subpackage Admin
  * @version $Id$
+
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
@@ -247,7 +248,7 @@ class UserMigrateControllerRoot extends BaseController {
 				closedir($dir_var);
 			}
 
-			// PhpGedView logfiles
+			// webtrees logfiles
 			$dir_var = opendir ($INDEX_DIRECTORY);
 			while ($file = readdir ($dir_var)) {
 				if (strpos($file, ".log") > 0 && strstr($file, "pgv-") !== false) $this->flist[] = $INDEX_DIRECTORY.$file;

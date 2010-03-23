@@ -348,7 +348,7 @@ function update_site_config($newconfig, $return = false) {
 
 		$fp = @fopen("config.php", "wb");
 		if (!$fp) {
-			$error['msg'] = i18n::translate('Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again.');
+			$error['msg'] = i18n::translate('Error!!! Cannot write to the webtrees configuration file.  Please check file and directory permissions and try again.');
 			$errors[] = $error;
 		} else {
 			fwrite($fp, $configtext);

@@ -2,7 +2,7 @@
 /**
 * Functions to query the database.
 *
-* This file implements the datastore functions necessary for PhpGedView
+* This file implements the datastore functions necessary for webtrees
 * to use an SQL database as its datastore.
 *
 * webtrees: Web based Family History software

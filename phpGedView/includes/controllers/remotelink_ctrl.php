@@ -118,7 +118,7 @@ class RemoteLinkController extends BaseController {
 		}
 	}
 
-	// Add a remote phpGedView server
+	// Add a remote webtrees server
 	//
 	// @param string $title
 	// @param string $url

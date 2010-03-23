@@ -19,18 +19,18 @@
 
 /**
  * This table lists various languages and an appropriate flag for that language.
- * The key field is the abbreviation, internal to PhpGedView, for the language.
+ * The key field is the abbreviation, internal to webtrees, for the language.
  *
- * The abbreviations are used when a new language is to be implemented in PhpGedView.
+ * The abbreviations are used when a new language is to be implemented in webtrees.
  * For example, the abbreviation for "Croatian" is "hr".  This means that the various
- * files within PhpGedView that are specific to Croatian would have .hr. as the last
+ * files within webtrees that are specific to Croatian would have .hr. as the last
  * part of the file name, and the Croatian flag would be croatia.gif.
  *
- * Note that PhpGedView allows the flag names to be other than as shown above.  For
+ * Note that webtrees allows the flag names to be other than as shown above.  For
  * example, the flag for English (abbreviation "en") could be "australia.gif".
  *
  * This table is used to produce the list of languages that can still be added to
- * PhpGedView.
+ * webtrees.
  *
  */
 
