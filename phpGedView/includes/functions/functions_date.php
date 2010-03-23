@@ -123,6 +123,7 @@ function parse_time($timestr)
 function format_timestamp($time) {
 	global $DATE_FORMAT, $TIME_FORMAT;
 
+	$TIME_FORMAT=str_replace('%', '', $TIME_FORMAT);
 	return
 		PrintReady(timestamp_to_gedcom_date($time)->Display(false, $DATE_FORMAT).
 		'<span class="date"> - '.date($TIME_FORMAT, $time).'</span>');
