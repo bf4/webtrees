@@ -2513,6 +2513,7 @@ case 'branches.php':
 case 'calendar.php':
 	// menu
 	$title=i18n::translate('Calendar');
+	// $text=i18n::translate('<ul><li><a href=\"#calendar_general\"><b>General information</b></a></li><li><a href=\"#calendar_day\"><b>Day:</b></a></li><li><a href=\"#calendar_month\"><b>Month:</b></a></li><li><a href=\"#calendar_year\"><b>Year:</b></a></li><li><a href=\"#calendar_show\"><b>Show / Show events of:</b></a></li><li><a href=\"#calendar_sex\"><b>Gender</b></a></li><li><a href=\"#calendar_event\"><b>Event</b></a></li><li><a href=\"#calendar_button\"><b>View Day / View Month / View Year buttons</b></a></li><li><a href=\"#calendar_tip\"><b>Tip</b></a></li></ul><br /><a name=\"calendar_general\"></a>The Anniversary Calendar shows the persons and families who are linked to an event at a certain day or month or during a certain period of time. It has an advanced filtering system to select the right date, period, and events for you.<dl><dt><b>View <a href=\"#calendar_day\">Day</a></b></dt><dd>This shows the events on a certain day, independent of the selected year. Output will be either a single list with the names of individuals or families, or a two-column list with individuals on one side and families on the other.</dd><dt><b>View <a href=\"#calendar_month\">Month</a></b></dt><dd>In this calendar the names of individuals and families are shown inside the Day boxes. The calendar is shown as it was in the year you entered into the Year box. All events that happened in the past up to that year are shown.<br /><br />In combination with the option <a href=\"#calendar_show\"><b>Recent Years (&lt; 100 yrs)</b></a>, it will give a realistic view of what a calendar of your ancestors looked like.</dd><dt><b>View <a href=\"#calendar_year\">Year</a></b></dt><dd>This shows the events in a certain year or during a number of years. Output will be a list with the names of individuals or families, or a two-column list with individuals on one side and families on the other.</dd></dl>The currently shown day and month are highlighted in the calendar menu.<br /><br />All names and dates are clickable.  When you click on a name you will be taken to the relevant Details page. Clicking on a date will jump to \"Today\" or \"Year\" mode, which will display all events for the day and month in the clicked date.<br /><br /><a href=\"#top\">#GLOBALS[UpArrow]#</a><a name=\"calendar_day\"> </a>~DAY SELECTOR~<br /><br />The top row of the Selector table is the <b>Day</b> selector.  Its meaning is obvious: You select a <u>day</u>.<br /><br />The result of clicking on a certain day depends of whether you are in <b>Day</b> or in <b>Month</b> mode.<br /><dl><dt><b>Day mode</b></dt><dd>In this mode, you click a day, the screen will refresh, and the list for that day will be displayed.</dd><dt><b>Month mode</b></dt><dd>You have the calendar of a certain month on the screen.  You click a day and the screen will refresh, but you will still see the month that you had on the screen before.  The reason for this is that you can still decide to select another month, year, or event before you either click the <b>View Day</b> or <b>View Month</b> button.<br /><br />At the end of the Day row you will see a <b>Quick Link</b> with today\'s date.  Clicking that <b>Quick Link</b> will display the list for today in <b>Day</b> mode, no matter whether you are in <b>Month</b> or in <b>Day</b> mode.</dd></dl><br /><a href=\"#top\">#GLOBALS[UpArrow]#</a><a name=\"calendar_month\"> </a>~MONTH SELECTOR~<br /><br />The middle row of the Selector table is the <b>Month</b> selector.  Its meaning is obvious: You select a <u>month</u>.<br /><br />The result of clicking on a certain month depends of whether you are in <b>Day</b> or in <b>Month</b> mode.<br /><dl><dt><b>Day mode</b></dt><dd>In this mode, you click a month, the screen will refresh, and the list for that month will be displayed.  All other selections like day, year, and events will be unchanged.</dd><dt><b>Month mode</b></dt><dd>When you have the calendar on the screen and click a month in the <b>Month</b> row, the calendar for that new month will be displayed.<br /><br />At the end of the Month row you will see a <b>Quick Link</b> with today\'s month and year.  Clicking that <b>Quick Link</b> will display the list for that month in <b>Month</b> mode, no matter whether you are in <b>Month</b> or in <b>Day</b> mode.</dd></dl><br /><a href=\"#top\">#GLOBALS[UpArrow]#</a><a name=\"calendar_year\"> </a>~YEAR INPUT BOX~<br /><br />This input box lets you change that year of the calendar.  Type a year into the box and press <b>Enter</b> to change the calendar to that year.<br /><br /><b>Advanced features</b> for <b>View Year</b><dl><dt><b>More than one year</b></dt><dd>You can search for dates in a range of years.<br /><br />Year ranges are <u>inclusive</u>.  This means that the date range extends from 1 January of the first year of the range to 31 December of the last year mentioned.  Here are a few examples of year ranges:<br /><br /><b>1992-5</b> for all events from 1992 to 1995.<br /><b>1972-89</b> for all events from 1972 to 1989.<br /><b>1610-759</b> for all events from 1610 to 1759.<br /><b>1880-1905</b> for all events from 1880 to 1905.<br /><b>880-1105</b> for all events from 880 to 1105.<br /><br />To see all the events in a given decade or century, you can use <b>?</b> in place of the final digits. For example, <b>197?</b> for all events from 1970 to 1979 or <b>16??</b> for all events from 1600 to 1699.<br /><br/>Selecting a range of years will change the calendar to the year view.</dd></dl><br /><a href=\"#top\">#GLOBALS[UpArrow]#</a><a name=\"calendar_show\"> </a>~SHOW EVENTS OF...~<br />The following options are available:<br /><ol><li><b>All People</b><br />With this option, all individuals and families are displayed.</li><li><b>Recent Years (&lt;100 yrs)</b><br />With this option you will see all events for the chosen day or month, but no events older than 100 years will be shown.</li><li><b>Living People</b><br />Unless the administrator has configured PhpGedView so that living people are visible to anyone, this option will only be available to you after you have logged in.<br /><br />With this option, only the events of living persons will be displayed.</li></ol>When you click on an option, the events of your choice will be displayed.<br /><br />The settings of day, month, and year, as well as <b>Day</b> or <b>Month</b> mode, remain as they were.<br /><br /><br /><a href=\"#top\">#GLOBALS[UpArrow]#</a><a name=\"calendar_sex\"> </a>~GENDER SELECTOR~<br />When you are logged in or when the admin has not enabled the Privacy option, you can select one of these options:<ol><li><b>All</b> icon<br />This is the default option. The events of all individuals and families are displayed.</li><li><b>Male</b> icon<br />Only events of male individuals are displayed. Only male members of families will be displayed with Family events.</li><li><b>Female</b> icon<br />Only events of female individuals are displayed. Only female members of families will be displayed with Family events.</li></ol>When you click on an option, the events of your choice will be displayed.<br /><br />The settings of day, month, and year, as well as <b>Day</b> or <b>Month</b> mode, remain as they were.<br /><br /><br /><a href=\"#top\">#GLOBALS[UpArrow]#</a><a name=\"calendar_event\"> </a>~EVENT SELECTOR~<br />Here you choose whether you want all events for individuals and families displayed or just a selected event.  You cannot select more than one event category.<br /><br />When you click on an option, the events of your choice will be displayed.<br /><br />The settings of day, month, and year, as well as <b>Day</b> or <b>Month</b> mode, remain as they were.<br /><br /><br /><a href=\"#top\">#GLOBALS[UpArrow]#</a><a name=\"calendar_button\"> </a>~VIEW DAY / VIEW MONTH / VIEW YEAR BUTTONS~<br /><ul><li>The <b>View Day</b> button will display the events of the chosen date in a list. All years are scanned, so only the day and month can be set here. Changing the year will have no effect.  You can reduce the list by choosing the option <b>Recent years</b> or <b>Living people</b>.<br /><br />Ages in the list will be calculated from the current year.</li><li>The <b>View Month</b> button will display a calendar diagram of the chosen month and year. Here too you can reduce the lists by choosing the option <b>Recent years</b> or <b>Living people</b>.<br /><br />You will get a realistic impression of what a calendar on the wall of your ancestors looked like by choosing a year in the past in combination with <b>Recent years</b>. All ages on the calendar are shown relative to the year in the Year box.</li><li>The <b>View Year</b> button will show you a list of events of the chosen year.  Here too you can reduce the list by choosing the option <b>Recent years</b> or <b>Living people</b>.<br /><br />You can show events for a range of years.  Just type the beginning and ending years of the range, with a dash <b>-</b> between them.  Examples:<br /><b>1992-4</b> for all events from 1992 to 1994<br /><b>1976-1984</b> for all events from 1976 to 1984<br /><br />To see all the events in a given decade or century, you can use <b>?</b> in place of the final digits. For example, <b>197?</b> for all events from 1970 to 1979 or <b>16??</b> for all events from 1600 to 1699.</li></ul>When you want to <b>change the year</b> you <b>have</b> to press one of these three buttons.  All other settings remain as they were.<br /><br /><br /><a href=\"#top\">#GLOBALS[UpArrow]#</a><a name=\"calendar_tip\"> </a>~TIP~<br />Adjust the Date selector to any date in the past.<br /><br />When you click on one of the View buttons you will see a list or calendar for that date.  All the ages, anniversaries, etc. have been recalculated and now count from the date you set in the Date selector.  You are now seeing the calendar or list that your ancestor would have seen on that date, years ago.');
 	$text=i18n::translate('<a name="top"></a>
 		<ul><li><a href="#calendar_general"><b>General Information</b></a></li><li><a href="#calendar_day"><b>Day:</b></a></li><li><a href="#calendar_month"><b>Month:</b></a></li><li><a href="#calendar_year"><b>Year:</b></a></li><li><a href="#calendar_show"><b>Show / Show events of:</b></a></li><li><a href="#calendar_sex"><b>Gender</b></a></li><li><a href="#calendar_event"><b>Event</b></a></li><li><a href="#calendar_button"><b>View Day / View Month / View Year Buttons</b></a></li><li><a href="#calendar_tip"><b>Tip</b></a></li></ul>
 			<br /><br /><a href="#top"><img src="./images/uarrow3.gif" class="icon" border="0" alt="^" /><a name="calendar_general"></a><span class="helpstart">General Information</span><br /><br />The Calendar shows the persons and families who are linked to an event at a certain day or month or during a certain period of time. It has an advanced filtering system to select the right date, period, and events for you.<dl><dt><b>View <a href="#calendar_day">Day</a></b></dt><dd>This shows the events on a certain day, independent of the selected year. Output will be either a single list with the names of individuals or families, or a two-column list with individuals on one side and families on the other.</dd><dt><b>View <a href="#calendar_month">Month</a></b></dt><dd>In this calendar the names of individuals and families are shown inside the Day boxes. The calendar is shown as it was in the year you entered into the Year box. All events that happened in the past up to that year are shown.<br /><br />In combination with the option <a href="#calendar_show"><b>Recent Years (&lt; 100 yrs)</b></a>, it will give a realistic view of what a calendar of your ancestors looked like.</dd><dt><b>View <a href="#calendar_year">Year</a></b></dt><dd>This shows the events in a certain year or during a number of years. Output will be a list with the names of individuals or families, or a two-column list with individuals on one side and families on the other.</dd></dl>The currently shown day and month are highlighted in the calendar menu.<br /><br />All names and dates are clickable.  When you click on a name you will be taken to the relevant Details page. Clicking on a date will jump to "Today" or "Year" mode, which will display all events for the day and month in the clicked date.
@@ -2523,7 +2524,8 @@ case 'calendar.php':
 			<br /><br /><br /><a href="#top"><img src="./images/uarrow3.gif" class="icon" border="0" alt="^" /></a><a name="calendar_sex"> </a><span class="helpstart">Gender Selector</span><br /><br />When you are logged in or when the admin has not enabled the Privacy option, you can select one of these options:<ol><li><b>All</b> icon<br />This is the default option. The events of all individuals and families are displayed.</li><li><b>Male</b> icon<br />Only events of male individuals are displayed. Only male members of families will be displayed with Family events.</li><li><b>Female</b> icon<br />Only events of female individuals are displayed. Only female members of families will be displayed with Family events.</li></ol>When you click on an option, the events of your choice will be displayed.<br /><br />The settings of day, month, and year, as well as <b>Day</b> or <b>Month</b> mode, remain as they were.
 			<br /><br /><br /><a href="#top"><img src="./images/uarrow3.gif" class="icon" border="0" alt="^" /></a><a name="calendar_event"> </a><span class="helpstart">Event Selector</span><br /><br />Here you choose whether you want all events for individuals and families displayed or just a selected event.  You cannot select more than one event category.<br /><br />When you click on an option, the events of your choice will be displayed.<br /><br />The settings of day, month, and year, as well as <b>Day</b> or <b>Month</b> mode, remain as they were.
 			<br /><br /><br /><a href="#top"><img src="./images/uarrow3.gif" class="icon" border="0" alt="^" /></a><a name="calendar_button"> </a><span class="helpstart">View Day / View Month / View Year Buttons</span><br /><ul><li>The <b>View Day</b> button will display the events of the chosen date in a list. All years are scanned, so only the day and month can be set here. Changing the year will have no effect.  You can reduce the list by choosing the option <b>Recent years</b> or <b>Living people</b>.<br /><br />Ages in the list will be calculated from the current year.</li><li>The <b>View Month</b> button will display a calendar diagram of the chosen month and year. Here too you can reduce the lists by choosing the option <b>Recent years</b> or <b>Living people</b>.<br /><br />You will get a realistic impression of what a calendar on the wall of your ancestors looked like by choosing a year in the past in combination with <b>Recent years</b>. All ages on the calendar are shown relative to the year in the Year box.</li><li>The <b>View Year</b> button will show you a list of events of the chosen year.  Here too you can reduce the list by choosing the option <b>Recent years</b> or <b>Living people</b>.<br /><br />You can show events for a range of years.  Just type the beginning and ending years of the range, with a dash <b>-</b> between them.  Examples:<br /><b>1992-4</b> for all events from 1992 to 1994<br /><b>1976-1984</b> for all events from 1976 to 1984<br /><br />To see all the events in a given decade or century, you can use <b>?</b> in place of the final digits. For example, <b>197?</b> for all events from 1970 to 1979 or <b>16??</b> for all events from 1600 to 1699.</li></ul>When you want to <b>change the year</b> you <b>have</b> to press one of these three buttons.  All other settings remain as they were.
-			<br /><br /><br /><a href="#top"><img src="./images/uarrow3.gif" class="icon" border="0" alt="^" /></a><a name="calendar_tip"> </a><span class="helpstart">Tip</span><br /><br />Adjust the Date selector to any date in the past.<br /><br />When you click on one of the View buttons you will see a list or calendar for that date.  All the ages, anniversaries, etc. have been recalculated and now count from the date you set in the Date selector.  You are now seeing the calendar or list that your ancestor would have seen on that date, years ago.');	
+			<br /><br /><br /><a href="#top"><img src="./images/uarrow3.gif" class="icon" border="0" alt="^" /></a><a name="calendar_tip"> </a><span class="helpstart">Tip</span><br /><br />Adjust the Date selector to any date in the past.<br /><br />When you click on one of the View buttons you will see a list or calendar for that date.  All the ages, anniversaries, etc. have been recalculated and now count from the date you set in the Date selector.  You are now seeing the calendar or list that your ancestor would have seen on that date, years ago.			
+		</ul>');
 	break;
 
 case 'changelanguage.php':
@@ -2640,19 +2642,19 @@ case 'find.php':
 
 case 'gedcheck.php':
 	// no help text
-	$title=i18n::translate('Gedcom checker');
+	$title=i18n::translate('GEDCOM Checker');
 	$text='';
 	break;
 
 case 'gedrecord.php':
 	// no help link
-	$title=i18n::translate('Record:');
+	$title=i18n::translate('GEDCOM Record');
 	$text='';
 	break;
 
 case 'help_text.php':
 	// no help link
-	$title=i18n::translate('Information about:');
+	$title=i18n::translate('Information');
 	$text='';
 	break;
 
@@ -2673,61 +2675,67 @@ case 'index.php':
 	break;
 
 case 'indilist.php':
-	$title=i18n::translate('Individuals :');
-	$text='';
+	$title=i18n::translate('Individuals List Page');
+	$text=i18n::translate('On this page you can display a list of individuals.  The names will be displayed with surnames first and sorted into alphabetical order.<br /><br />The output of the Name list depends on:<ol><li>The letter you clicked in the Alphabetical index.</li><li>Whether you clicked "Skip" or "Show" Surname List.</li></ol>More help is available by clicking the <b>?</b> next to items on the page.');
 	break;
 
 case 'individual.php':
 	$title=i18n::translate('Individual Information');
-	$text='';
+	$text=i18n::translate('All details of a person are displayed on this page.<br /><br />If there is a picture available, you will see it at the top left side.  You will see the names of the person next to the picture.<br /><br />Names can have notes and sources attached to them. If any of the names have notes or sources, you will see them listed under the names they relate to.<br /><br />A person might have an AKA (maybe he\'s known under another name). If that is the case, it will be displayed.<br /><br />If you have Edit rights to this person, you will also see <b>Edit</b> and <b>Delete</b> links next to the items that you can edit.<br /><br />On this page you see tab sheets for <b>Personal Facts and Details</b>, <b>Notes</b>, <b>Sources</b>, <b>Media</b>, and <b>Close Relatives</b>.  These tab sheets show you all the information about this individual that is stored in the database.<br /><ul><li>The <b>Personal Facts and Details</b> tab will show you the facts and details about this person and any fact from their marriages. Clicking on any date on this tab will take you to the Anniversary Calendar for that date, so that you can see other events that happened on the same day. Clicking on a place will take you to the Place Hierarchy where you can view other people who had events in the same place. For marriage and other family related facts, the name of the person\'s spouse is available so that you can view the spouse and a link to the family record is also provided.</li><li>The <b>Notes</b> tab will show you any general notes relating to this person.</li><li>The <b>Sources</b> tab will show you all of the <u>general</u> sources for this person. These sources are <u>not</u> linked to individual facts, not even the person\'s name; they are associated with the individual himself.  Clicking on the title of a source will take you to a more detailed Source Information page that will display other people who are also linked to the same source.</li><li>The <b>Media</b> tab will list all of the pictures and other media items that are attached to this individual. Clicking on a thumbnail of the picture will open up a larger view of the image. Clicking on the picture caption will show you the picture on the MultiMedia page.</li><li>The <b>Close Relatives</b> tab lists this person\'s parents and siblings as well as all of the spouses and children that this person has had. These persons will be listed in boxes similar to the charts that you may have already seen.</li></ul>On the right of the screen you will find a box with links.  Many of the links in the box are the same as the links in the menus. For example, clicking on the <b>Pedigree Chart</b> link on the side links will take you to the Pedigree chart for this person. This is different from the menu links, because clicking on the <b>Pedigree Chart</b> link in the menu will take you back to the default Pedigree chart for this database.<br /><br />One of the links that might appear in this list if it has been enabled by the admin, is the <b>View GEDCOM Record</b> link. This link will show you the raw GEDCOM record of this individual.<br /><br />If the Clippings Cart has been enabled by the site admin, you will also have a link that will allow you to add this person to your Clippings Cart.<br /><br />The <b>Relationship to me</b> link will only appear if you are logged in and have been assigned an ID in the GEDCOM. This link will take you to the Pedigree chart and show you how you are related to this person.<br /><br />More help is available by clicking the <b>?</b> next to items on the page.');
 	break;
 
 case 'install.php':
-	$title=i18n::translate('Installation Wizard:');
+	// no help link
+	$title=i18n::translate('Installation Wizard');
 	$text='';
 	break;
 
 case 'inverselink.php':
 	$title=i18n::translate('Link Media');
-	$text='';
+	$text=i18n::translate('Each media item should be associated with one or more person, family, or source records in your database.<br /><br />To establish such a link, you can enter or search for the ID of the person, family, or source at the same time as you create the media item.  You can also establish the link later through editing options on the Manage MultiMedia page, or by adding media items through the Add Media link available on the Individual, Family, or Source Details pages.');
 	break;
 
 case 'lifespan.php':
 	$title=i18n::translate('Lifespan Chart');
-	$text='';
+	$text=i18n::translate('On this chart you can display one or more persons along a horizontal timeline.  This chart allows you to see how the lives of different people overlapped.<br /><br />You can add people to the chart individually or by family groups by their IDs.  The previous list will be remembered as you add more people to the chart.  You can clear the chart at any time with the <b>Clear Chart</b> button.<br /><br />You can also add people to the chart by searching for them by date range or locality.');
 	break;
 
 case 'login.php':
-	$title=i18n::translate('PhpGedView User Login');
-	$text='';
+	$title=i18n::translate('The Login Page');
+	$text=i18n::translate('On this chart you can display one or more persons along a horizontal timeline.  This chart allows you to see how the lives of different people overlapped.<br /><br />You can add people to the chart individually or by family groups by their IDs.  The previous list will be remembered as you add more people to the chart.  You can clear the chart at any time with the <b>Clear Chart</b> button.<br /><br />You can also add people to the chart by searching for them by date range or locality.');
 	break;
 
 case 'manageservers.php':
+	// no help text
 	$title=i18n::translate('Manage Sites');
 	$text='';
 	break;
 
 case 'media.php':
+	// no help text
 	$title=i18n::translate('Manage MultiMedia');
 	$text='';
 	break;
 
 case 'medialist.php':
 	$title=i18n::translate('MultiMedia Objects');
-	$text='';
+	$text=i18n::translate('This page lists all of the Multimedia Objects (MMO) that can be found in this database.<br /><br />For each of the media items you see the title or filename of the item, names of the individuals or families connected to the item, and notes about the item.<br /><br />Clicking the title or filename of the item has the same effect as clicking its thumbnail.  The item will be opened in the image viewer built into PhpGedView or in the viewer specified in your browser\'s configuration.<br /><br />When you click on the "View" link next to the person or family, you will be taken to the relevant Details page.');
 	break;
 	
 case 'message.php':
+	// no help text
 	$title=i18n::translate('PhpGedView Message');
 	$text='';
 	break;
 
 case 'module_admin.php':
+	// no help text
 	$title=i18n::translate('Module Administration');
 	$text='';
 	break;
 
 case 'notelist.php':
+	// no help text
 	$title=i18n::translate('Shared Notes');
 	$text='';
 	break;
@@ -2739,67 +2747,71 @@ case 'pedigree.php':
 
 case 'placelist.php':
 	$title=i18n::translate('Place Hierarchy');
-	$text='';
+	$text=i18n::translate('(or Persons Per Place)<br /><br />This page will show you a hierarchy of the places in the GEDCOM and which individuals or families are connected to a location.<br /><br />If there is any connection between an individual or family and an event at a certain location, PhpGedView will find it.<br /><br />The results are displayed in a two-column list, one column for individuals and one for families.');
 	break;
 
 case 'printlog.php':
-	$title=i18n::translate('Print logfile');
+	// no help text
+	$title=i18n::translate('Print Logfile');
 	$text='';
 	break;
 
 case 'relationship.php':
 	$title=i18n::translate('Relationship Chart');
-	$text='';
+	$text=i18n::translate('On this page you can display the relationship between any two people.  These people do not have to be directly related by blood line;  any relation will be found.');
 	break;
 
 case 'repolist.php':
 	$title=i18n::translate('Repositories');
-	$text='';
+	$text=i18n::translate('A list of repositories is displayed on this page.<br /><br />The names of the repositories are sorted into alphabetical order.<br /><br /><b>REPOSITORIES</b><br />Without repositories we cannot build our database. There is a source for all information stored in the database, and that source is kept in a repository. Repositories can be the personal archive of a person, an institution, a public database, a government or church records office, an Internet resource, etc. To get access to a source we will want to know where and in what place it is. All necessary information to find a source should be stored in the Repository record.<br /><br />A repository can be linked to many sources.');
 	break;
 
 case 'reportengine.php':
-	$title=i18n::translate('Choose a report to run');
-	$text='';
+	$title=i18n::translate('Reports');
+	$text=i18n::translate('The items in the reports menu will generate PDF files for printing.<br /><br />The first step is to choose a report to run.  After you have selected a report to run, you will be asked to provide some information specific to that report, such as which individual or family to start with and whether or not to show photos.  When you are ready to run the report, click the <b>Download report</b> button to download the report to your computer.<br /><br /><br />~Reporting Engine~<br />The PhpGedView Reporting Engine uses XML template files to automatically generate PDF reports.<br /><br />The reports available in the <b>Select report</b> list are generated from the report XML files found in the "reports" directory.  You can create your own reports by making a copy of any of the templates provided and modifying the template XML.  To add your custom report, just put it in the \"reports\" directory and PhpGedView will automatically detect it and make it available in the <b>Select report</b> drop-down list.<br /><br /><br />~PDF FILE FORMAT~<br />The PhpGedView Reporting Engine produces downloadable reports in Adobe&reg; PDF format.  The GEDCOM 5.5.1 Standard specification, mentioned elsewhere in this Help file, is also downloadable as a PDF file.  PDF is an acronym for <b>P</b>ortable <b>D</b>ocument <b>F</b>ormat.<br /><br />PDF files are not viewable or printable by the standard software on your PC.  If you already have Acrobat Reader installed (it\'s often packaged with other softwares), you do not need to replace or upgrade it to deal with report files produced by PhpGedView.<br /><br />Acrobat Reader, the viewing and printing program for these files, is available free of charge from Adobe Systems Inc.  The free Adobe&reg; Acrobat Reader can be downloaded from the <a href=\"http://www.adobe.com/products/acrobat/readstep2.html\" target=\"_blank\"><b>Adobe Systems Inc.</b></a> web site.  You may find copies of "Acrobat Reader" available for download from other Internet sites, but we strongly advise you to trust <u>only</u> the Adobe Systems Inc. site.<br /><br />Acrobat Reader is available for many different systems, including Microsoft&reg; Windows and Apple&reg; Macintosh, in many languages other than English.  If you have a Windows 95 system, be sure to download Acrobat Reader version 5.0.5.  Versions more recent than this will not install correctly on Windows 95 systems.<br /><br /><a href=\"http://www.adobe.com/products/acrobat/readstep2.html\" target=\"_blank\"><b>Download Adobe Reader here</b></a><br /><br /><br />~Ahnentafel Report~<br />This is a report of the selected person and his ancestors, printed in booklet format.  It starts with the first person and then continues with his or her parents, grand-parents, etc.<br /><br />Note that the ahnentafel report is only available in English at this time.<br /><br /><br />~Birth Date and Place Report~<br />With this report you can list all of the people who were born at a certain time or place.<br /><br /><br />~Relatives Report~<br />This report will list all of the relatives of the selected individual.  You can choose which of the person\'s relatives to show on the report.<ul><li><b>Parents and siblings</b> will show the selected person, his parents, and his brothers and sisters.</li><li><b>Spouse and children</b> will list the person with his or her spouses and their children.</li><li><b>Direct line ancestors</b> will list the person, his parents, grand-parents, great-grand-parents, and continue up the tree listing all of the people who are parents in the person\'s lineage.</li><li><b>Direct line ancestors and their families</b> will list all of the people from the Direct line ancestors list but also include aunts and uncles and great-aunts and great-uncles, so it will include the siblings of all of the ancestors in this person\'s family tree.  It will not list the children of the siblings (cousins).</li><li><b>Descendants</b> will list all of this person\'s descendants (children, grand-children, great-grand children, etc).</li><li><b>ALL</b> this option is a combination of the Descendants and the Direct line ancestors and their families in a single report.</li></ul>');
 	break;
 
 case 'rss.php':
+	// no help text
 	$title=i18n::translate('RSS feed');
 	$text='';
 	break;
 
 case 'search.php':
 	$title=i18n::translate('Search');
-	$text='';
+	$text=i18n::translate('Although this page looks very simple, there is a very powerful and complicated search engine behind the two forms.  Most genealogy web sites just let you search for a name.  PhpGedView lets you search for almost anything.<br /><br />The Search box on the left of the screen is the same as the Search box in each page header.<br /><br />If you are looking for people in connection to a certain year, just type the year. The program will find all connections for you.<br /><br />Looking for a name, or place?  Just type in the name or place, completely or just a part of it, and PhpGedView does the rest.<br /><br /><b>Soundex search method</b><br />With the search boxes on the right, you can search for names of persons and places, even if you don\'t know precisely how to write the name.<br /><br />When there are several genealogical databases on one site and the administrator has enabled switching between them, your search will return the results for all of them.<br /><br />You will find more help about these two boxes by clicking the <b>?</b> above the boxes.');
 	break;
 
 case 'search_advanced.php':
+	// no help text
 	$title=i18n::translate('Advanced Search');
 	$text='';
 	break;
 
 case 'search_engine.php':
-	$title=i18n::translate('Search Engine Spider Detected:');
-	$text='';
+	$title=i18n::translate('Search Engine Spider');
+	$text=i18n::translate('PhpGedView automatically provides search engines with smaller data files with fewer links.  The data is limited to the individual and immediate family, without adding information about grand parents or grand children.  Many reports and server-intensive pages like the calendar are off limits to the spiders.<br /><br />Attempts by the spiders to go to those pages result in showing this page.  If you are seeing this text, the software believes you are a search engine spider.  Below is the list of pages that are allowed to be spidered and will provide the abbreviated data.<br /><br />Real users who follow search engine links into this site will see the full pages and data, and not this page.');
+
 	break;
 
 case 'sourcelist.php':
-	$title=i18n::translate('Sources');
-	$text='';
+	$title=i18n::translate('Sources List Page');
+	$text=i18n::translate('A list of sources is displayed on this page.<br /><br />Unlike the Individual Information and Family pages, there is no alphabetical index.<br /><br />A source can be an individual, a public database, an institution, an Internet resource, etc.  Because of the completely random nature of genealogical sources, it is impossible to find a sort order that is meaningful in all cases. However, PhpGedView <u>does</u> sort the Source names into alphabetical order.<br /><br /><b>SOURCES</b><br />Without sources we cannot build our database. There is a source for every item of information in the database. The source can be a relative, an institution, a public database, government or private records, an Internet resource, etc.<br /><br />A source can be linked to many persons. One person can also be linked to many sources. You can have different sources for every event, whether it is birth date, profession, marriage, children, etc.');
 	break;
 
 case 'statistics.php':
-	$title=i18n::translate('Statistics');
-	$text='';
+	$title=i18n::translate('Statistics Page');
+	$text=i18n::translate('This page lets you determine the criteria for producing a graphical display of various statistics from your database.');
 	break;
 
 case 'statisticsplot.php':
 	$title=i18n::translate('Statistics Plot');
-	$text='';
+	$text=i18n::translate('This page lets you determine the criteria for producing a graphical display of various statistics from your database.');
 	break;
 
 case 'timeline.php':
-	$title=i18n::translate('PhpGedView Timeline');
-	$text='';
+	$title=i18n::translate('Timeline Chart');
+	$text=i18n::translate('On this chart you can display one or more persons along a timeline.  You can, for example, visualize the status of two or more persons at a certain moment.<br /><br />If you click the <b>Time Line</b> link on an other page you will already see one person on the Time Line.  If you clicked the <b>Time Line</b> menu item in a page header, you have to supply the starting person\'s ID.');
 	break;
 
 case 'treenav.php':
@@ -2809,22 +2821,22 @@ case 'treenav.php':
 
 case 'uploadgedcom.php':
 	$title=i18n::translate('Upload GEDCOM');
-	$text='';
+	$text=i18n::translate('Unlike the <b>Add GEDCOM</b> function, the GEDCOM file you wish to add to your database does not have to be on your server.<br /><br />In Step 1 you select a GEDCOM file from your local computer. Type the complete path and file name in the text box or use the <b>Browse</b> button on the page.<br /><br />You can also use this function to upload a ZIP file containing the GEDCOM file. PhpGedView will recognize the ZIP file and extract the file and the filename automatically.<br /><br />If a GEDCOM file with the same name already exists in PhpGedView, it will, after your confirmation, be overwritten. However, all GEDCOM settings made previously will be preserved.<br /><br />You will find more help on other pages of the procedure.');
 	break;
 
 case 'uploadmedia.php':
-	$title=i18n::translate('Upload Media files');
-	$text='';
+	$title=i18n::translate('Upload Media Files');
+	$text=i18n::translate('Uploading media files is quite straightforward.  Here is a little additional information.<br /><br /><b>Thumbnails</b><br />Thumbnails should have a size somewhere around 100px width.  The thumbnail <u>must</u> be named identically to the full-size version.  If your system can generate thumbnails automatically, you will see a notice to that effect on the Upload Media page.<br /><br /><b>Uploading</b><br />Files will be uploaded automatically to the directory <b>#GLOBALS[MEDIA_DIRECTORY]#</b> for the full-sized version and to <b>#GLOBALS[MEDIA_DIRECTORY]#thumbs/</b> for the thumbnails.<br /><br />See <a href=\"readme.txt\" target=\"_blank\"><b>Readme.txt</b></a> for more information.');
 	break;
 
 case 'useradmin.php':
-	$title=i18n::translate('User administration');
-	$text='';
+	$title=i18n::translate('User Administration');
+	$text=i18n::translate('On this page you can administer the current users and add new users.<br /><br /><b>User List</b><br />In this table the current users, their status, and their rights are displayed.  You can <b>delete</b> or <b>edit</b> users.<br /><br /><b>Add a new user</b><br />This form is almost the same as the one users see on the  <b>My Account</b> page.<br /><br />For several subjects we did not make special Help text for the administrator. In those cases you will see the following message:');
 	break;
 
 case 'usermigrate.php':
 	$title=i18n::translate('Backup');
-	$text='';
+	$text=i18n::translate('This tool will either export user data from SQL to Index mode, or import user data from Index files into SQL tables.<br /><br />User data, favorites, block definitions, messages, and news will be available again after migration.<br /><br /><b>CAUTION</b><br />You cannot use this tool to migrate user data between different versions of PhpGedView. Be sure that the data originates from, or is imported into the same PhpGedView version.<br /><br /><b>IMPORT</b><br />If you choose to import the user data files from Index mode, all user data present in the database tables will be <u>overwritten</u>. This tool does <u>not</u> merge the information. Once you have run the Import, there is no way to retrieve the old information using PhpGedView.<br /><br /><b>EXPORT</b><br />If you export the user information from your SQL database to Index Mode files, this tool will create <i>authenticate.php</i> and several <i>.dat</i> files in your index directory. If identically named files are already present, you will be prompted if they must be overwritten. After switching to Index mode, all information will be available directly.<br /><br /><b>Note:</b> After switching to Index mode, you will need to import your GEDCOM files again.');
 	break;
 
 	//////////////////////////////////////////////////////////////////////////////
@@ -3791,7 +3803,7 @@ case 'add_custom_facts':
 	break;
 
 case 'add_facts_general':
-	$title=i18n::translate('General information about Adding');
+	$title=i18n::translate('General Information about Adding');
 	$text=i18n::translate('When you have added a fact, note, source, or multimedia file to a record in the database, the addition still has to be approved by a user who has Accept rights.<br /><br />Until the changes have been Accepted, they are identified as "pending" by a differently colored border.  All users with Edit rights can see these changes as well as the original information.  Users who do not have Edit rights will only see the original information. When the addition has been Accepted, the borders will disappear and the new data will display normally, replacing the old.  At that time, users without Edit rights will see the new data too.');
 	break;
 
@@ -3861,7 +3873,7 @@ case 'add_new_gedcom':
 	break;
 
 case 'add_new_language':
-	$title=i18n::translate('Add files and settings for a new Language');
+	$title=i18n::translate('Add Files and Settings for a new Language');
 	$text=i18n::translate('This routine lets you add a new, previously unavailable and completely unsupported language to PhpGedView.<br /><br />You can set up the standard settings of the new language.  These include language detection code, language direction, start of the week for this language, time settings, alphabet, etc.<br /><br />You will get more help on the settings of languages supported by PhpGedView after selecting the language and clicking the <b>Add new language</b> button.<br /><br />More help is available on the Configuration page for the language.');
 	break;
 
@@ -3878,7 +3890,7 @@ case 'add_note':
 	break;
 
 case 'add_opf_child':
-	$title=i18n::translate('Add a new Child to create one-parent family');
+	$title=i18n::translate('Add a new Child to create one-parent Family');
 	$text=i18n::translate('By clicking this link, you can add a <u>new</u> child to this person, creating a one-parent family.<br /><br />Just click the link, and you will get a pop up window to add the new person.  Fill out as many boxes as you can and click the <b>Save</b> button.<br /><br />That\'s all.');
 	break;
 
@@ -3888,7 +3900,7 @@ case 'add_person':
 	break;
 
 case 'add_repository_clip':
-	$title=i18n::translate('Add Repository to clippings cart');
+	$title=i18n::translate('Add Repository to Clippings Cart');
 	$text=i18n::translate('When you click this link you can add the repository, as it is stored in the GEDCOM, to your Clippings Cart.');
 	break;
 
@@ -3930,13 +3942,13 @@ case 'add_wife':
 	break;
 
 case 'admin':
-	$title=i18n::translate('Admin');
+	$title=i18n::translate('Administration');
 	$text=i18n::translate('On this page you will find links to the configuration pages, administration pages, documentation, and log files.<br /><br /><b>Current Server Time:</b>, just below the page title, shows the time of the server on which your site is hosted. This means that if the server is located in New York while you\'re in France, the time shown will be six hours less than your local time, unless, of course, the server is running on Greenwich Mean Time (GMT).  The time shown is the server time when you opened or refreshed this page.<br /><br /><b>WARNING</b><br />When you see a red warning message under the system time, it means that your <i>config.php</i> is still writeable.  After configuring your site, you should, for <b>security</b>, set the permissions of this file back to read-only.  You have to do this <u>manually</u>, since PhpGedView cannot do this for you.');
 	break;
 
 case 'admin_help_contents_head':
-	$title=i18n::translate('admin_help_contents_head');
-	$text=i18n::translate('<b>HELP CONTENTS<br /><br />ADMINISTRATOR HELP ITEMS</b> added to the beginning of the list.');
+	$title=i18n::translate('Help Contents');
+	$text=i18n::translate('<b>Administrator Help Items</b> added to the beginning of the list.');
 	break;
 
 case 'age_differences':
@@ -4471,7 +4483,7 @@ case 'edit_faq_item':
 
 case 'edit_gedcoms':
 	$title=i18n::translate('GEDCOM administration');
-	$text=i18n::translate('The GEDCOM Administration page is the control center for administering all of your genealogical databases.<br /><br /><b>Current GEDCOMs</b><br />At the head of the <b>Current GEDCOMs</b> table, you see an action bar with four links.<ul><li>Add GEDCOM</li><li>Upload GEDCOM</li><li>Create a new GEDCOM</li><li>Return to the Admin menu</li></ul>In the <b>Current GEDCOMs</b> table each genealogical database is listed separately, and you have the following options for each of them:<ul><li>Import</li><li>Delete</li><li>Download</li><li>Edit configuration</li><li>Edit privacy</li><li>SearchLog files</li></ul>Edit privacy appears here because every GEDCOM has its own privacy file.<br /><br />Each line in this table should be self-explanatory.  PhpGedView can be configured to log all database searches.  The SearchLog files can be inspected through links found on this page.<br /><br />Contextual help is available on every screen; make sure that the <b>Show Contextual Help</b> option in the Help menu is on, and click on a <b>?</b> next to the subject.');
+	$text=i18n::translate('The GEDCOM Administration page is the control center for administering all of your genealogical databases.<br /><br /><b>Current GEDCOMs</b><br />At the head of the <b>Current GEDCOMs</b> table, you see an action bar with four links.<ul><li>Add GEDCOM</li><li>Upload GEDCOM</li><li>Create a new GEDCOM</li><li>Return to the Admin menu</li></ul>In the <b>Current GEDCOMs</b> table each genealogical database is listed separately, and you have the following options for each of them:<ul><li>Import</li><li>Delete</li><li>Download</li><li>Edit configuration</li><li>Edit privacy</li><li>SearchLog files</li></ul>Edit privacy appears here because every GEDCOM has its own privacy file.<br /><br />Each line in this table should be self-explanatory.  PhpGedView can be configured to log all database searches.  The SearchLog files can be inspected through links found on this page.');
 	break;
 
 case 'edit_given_name':
@@ -4731,7 +4743,7 @@ case 'header_favorites':
 
 case 'header_general':
 	$title=i18n::translate('General Information');
-	$text=i18n::translate('General Information');
+	$text='';
 	break;
 
 case 'header':
@@ -4773,15 +4785,23 @@ case 'help_content':
 	$title=i18n::translate('Help Topics');
 	$text=i18n::translate('<dl><dd>When you click this menu item, you will get a Help page that displays an index of the major Help topics.  The amount of Help information available will be increased as time permits.</dd></dl>');
 	break;
-	
+
 case 'help_contents_head':
 	$title=i18n::translate('Help Contents');
-	$text=i18n::translate('Help Contents');
+	$text='';
 	break;
-	
+
 case 'help_contents_help':
 	$title=i18n::translate('Help Contents');
-	$text=i18n::translate('Administrator Help Items are at the beginning of the list.');
+	$text='';
+		if (PGV_USER_IS_ADMIN) {
+			$text.=i18n::translate('<span class="helpstart">Administrator Help Items</span>
+			<ul><li><a href="?help=admin.php">_Administration</a></li><li><a href="?help=um_bu">_Backup</a></li><li><a href="?help=help_editconfig.php">_Configure</a></li><li><a href="?help=help_faq.php">_FAQ List: Edit</a></li><li><a href="?help=add_gedcom">_GEDCOM: Add</li><li><a href="?help=add_upload_gedcom">_GEDCOM: Add vs Upload</a></li><li><a href="?help=edit_gedcoms">_GEDCOM: Administration page</a></li><li><a href="?help=change_indi2id">_GEDCOM: Change Individual ID to ...</a></li><li><a href="?help=gedcom_configfile">_GEDCOM: Configuration file</a></li><li><a href="?help=edit_config_gedcom">_GEDCOM: Configure</a></li><li><a href="?help=convert_ansi2utf">_GEDCOM: Convert ANSI to UTF-8</a></li><li><a href="?help=add_new_gedcom">_GEDCOM: Create new</a></li><li><a href="?help=default_gedcom">_GEDCOM: Default</a></li><li><a href="?help=delete_gedcom">_GEDCOM: Delete</a></li><li>_GEDCOM: Download</li><li><a href="?help=import_gedcom">_GEDCOM: Import</a></li><li><a href="?help=edit_privacy">_GEDCOM: Privacy settings</a></li><li><a href="?help=upload_gedcom">_GEDCOM: Upload</a></li><li><a href="?help=validate_gedcom">_GEDCOM: Validate</a></li><li><a href="?help=readmefile">_Readme File</a></li><li><a href="?help=help_useradmin.php">_User Administration</a></li><li><a href="?help=um_tool">_User Information Migrate (Index -->> SQL)</a></li>
+			</ul>');
+		}
+	$text.=i18n::translate('<span class="helpstart">Help Items</span>
+		<ul><li>Add Media</li><li>Ancestry Chart</li><li>Calendar</li><li>Circle Diagram</li><li>Clippings Cart</li><li>Definitions</li><li>Descendancy Chart</li><li>Families</li><li>Family Book Chart</li><li>Family Information</li><li>FAQ List</li><li>GEDCOM Information</li><li>Header</li><li>Help</li><li>Home Page</li><li>Hourglass Chart</li><li>Individual Information</li><li>Individuals</li><li>Interactive Tree</li><li>Keyboard Shortcuts</li><li>Login</li><li>Lost Password Request</li><li>Menu</li><li>MultiMedia</li><li>My Account</li><li>My Page</li><li>Password</li><li>Pedigree Tree</li><li>Place Hierarchy</li><li>Printer-friendly Version</li><li>Relationship Chart</li><li>Reports</li><li>Request New User Account</li><li>Screen Resolution</li><li>Search</li><li>Search and Replace</li><li>Search Help Text</li><li>Soundex Search</li><li>Source</li><li>Sources</li><li>Timeline Chart</li><li>Username</li>
+	');
 	break;
 
 case 'help_dir_editor.php':
@@ -4830,7 +4850,7 @@ case 'help_sourcelist.php':
 	break;
 	
 case 'help_useradmin.php':
-	$title=i18n::translate('User administration');
+	$title=i18n::translate('User Administration');
 	$text=i18n::translate('On this page you can administer the current users and add new users.<br /><br /><b>User List</b><br />In this table the current users, their status, and their rights are displayed.  You can <b>delete</b> or <b>edit</b> users.<br /><br /><b>Add a new user</b><br />This form is almost the same as the one users see on the  <b>My Account</b> page.<br /><br />For several subjects we did not make special Help text for the administrator. In those cases you will see the following message:<br /><br />--- This help text is the same text that site visitors will read. --- <br />--- To save space, we did not make a special admin text for this item. ---<br /><br />Contextual help is available on every screen; make sure that the <b>Show Contextual Help</b> option in the Help menu is on, and click on a <b>?</b> next to the subject.');
 	break;
 
@@ -5445,7 +5465,7 @@ case 'random_media_start_slide':
 	break;
 
 case 'readmefile':
-	$title=i18n::translate('Readme');
+	$title=i18n::translate('Readme File');
 	$text=i18n::translate('See <a href="readme.txt" target="_blank"><b>Readme.txt</b></a> for more information.');
 	break;
 
@@ -5460,7 +5480,7 @@ case 'register_comments':
 	break;
 
 case 'register_gedcomid':
-	$title=i18n::translate('GEDCOM INDI record ID');
+	$title=i18n::translate('GEDCOM INDI Record ID');
 	$text=i18n::translate('Every person in the database has a unique ID number on this site.  If you know the ID number for your own record, please enter it here.  If you don\'t know your ID number or could not find it because of privacy settings, please provide enough information in the Comments field to help the site administrator identify who you are on this site so that he can set the ID for you.');
 	break;
 
@@ -5470,7 +5490,7 @@ case 'relationship_id':
 	break;
 
 case 'remember_me':
-	$title=i18n::translate('Remember me from this computer?');
+	$title=i18n::translate('Remember me on this Computer?');
 	$text=i18n::translate('Checking this box when you login will allow PhpGedView to remember you the next time you visit so that you don\'t have to login again.  This feature will set a cookie on your computer which your browser will send back to the site the next time you visit.<br /><br />When you return to the site you will be able to access private information and user pages, but in order to edit or administer, you will be required to enter your username and password again.<br /><br /><b>You should not check this box if you are logging in from a public computer or from a computer that you share with others; anyone can return to PhpGedView as if they were you.</b>');
 	break;
 
@@ -5505,7 +5525,7 @@ case 'repos_listbox':
 	break;
 
 case 'restore_faq_edits':
-	$title=i18n::translate('Restore FAQ edit functionality');
+	$title=i18n::translate('Restore FAQ Edit Functionality');
 	$text=i18n::translate('This option restores the FAQ page to what an admin user normally sees, so that individual FAQ items may be edited.');
 	break;
 
@@ -5535,12 +5555,12 @@ case 'search_enter_terms':
 	break;
 
 case 'search_exclude_tags':
-	$title=i18n::translate('search_exclude_tags');
+	$title=i18n::translate('Exclude Filter');
 	$text=i18n::translate('The <b>Exclude some non-genealogical data</b> choice will cause the Search function to ignore the following GEDCOM tags:<div style="padding-left:30px;"><b>_PGVU</b> - Last change by<br /><b>CHAN</b> - Last change date<br /><b>FILE</b> - External File<br /><b>FORM</b> - Format<br /><b>TYPE</b> - Type<br /><b>SUBM</b> - Submitter<br /><b>REFN</b> - Reference Number</div><br />In addition to these optionally excluded tags, the Search function always excludes these tags:<div style="padding-left:30px;"><b>_UID</b> - Globally unique Identifier<br /><b>RESN</b> - Restriction</div>');
 	break;
 
 case 'search_include_ASSO':
-	$title=i18n::translate('search_include_ASSO');
+	$title=i18n::translate('Associates');
 	$text=i18n::translate('This option causes PhpGedView to show all individuals who are recorded as having an association relationship to the person or family that was found as a direct result of the search.  The inverse, where all persons or families are shown when a person found as a direct result of the search has an association relationship to these other persons or families, is not possible.<br /><br />Example:  Suppose person <b>A</b> is godparent to person <b>B</b>.  This relationship is recorded in the GEDCOM record of person <b>B</b> by means of an ASSO tag.  No corresponding tag exists in the GEDCOM record of person <b>A</b>.<br /><br />When this option is set to <b>Yes</b> and the Search results list includes <b>B</b>, <b>A</b> will be included automatically because of the ASSO tag in the GEDCOM record of <b>B</b>.  However, if the Search results list includes <b>A</b>, <b>B</b> will not be included automatically since there is no matching ASSO tag in the GEDCOM record of person <b>A</b>.');
 	break;
 
@@ -5695,7 +5715,7 @@ case 'time_limit':
 	break;
 
 case 'timeline_control':
-	$title=i18n::translate('timeline_control');
+	$title=i18n::translate('Timeline_control');
 	$text=i18n::translate('Click the drop down menu to change the speed at which the timeline scrolls.<br/><br/>~Begin Year~<br/>Enter the starting year of the range.<br/><br/>~End Year~<br/>Enter the ending year of the range.<br/><br/>~Search~<br/>Click the Search button to begin searching for events that occurred within the range identified by the Begin Year and End Year fields.');
 	break;
 
@@ -5705,7 +5725,7 @@ case 'todo':
 	break;
 
 case 'todo_show_future':
-	$title=i18n::translate('Show future tasks');
+	$title=i18n::translate('Show Future Tasks');
 	$text=i18n::translate('Show &quot;To Do&quot; tasks that have a date in the future.  Otherwise only items with a date in the past are shown.');
 	break;
 
@@ -5715,12 +5735,12 @@ case 'todo_show_other':
 	break;
 
 case 'todo_show_unassigned':
-	$title=i18n::translate('Show unassigned tasks');
+	$title=i18n::translate('Show Unassigned Tasks');
 	$text=i18n::translate('Show &quot;To Do&quot; tasks that are not assigned to any user');
 	break;
 
 case 'translation_forum':
-	$title=i18n::translate('PhpGedView Translations forum on SourceForge');
+	$title=i18n::translate('PhpGedView Translations Forum on SourceForge');
 	$text=i18n::translate('This <a href="http://sourceforge.net/forum/forum.php?forum_id=294245" target="_blank"><b>link</b></a> opens a new browser window.  You will be redirected to the Translations forum of PhpGedView, where you can discuss translation topics.');
 	break;
 
@@ -5740,7 +5760,7 @@ case 'um_sql_index':
 	break;
 
 case 'um_tool':
-	$title=i18n::translate('User Information Migration tool');
+	$title=i18n::translate('User Information Migration Tool');
 	$text=i18n::translate('This tool will either export user data from SQL to Index mode, or import user data from Index files into SQL tables.<br /><br />User data, favorites, block definitions, messages, and news will be available again after migration.<br /><br /><b>CAUTION</b><br />You cannot use this tool to migrate user data between different versions of PhpGedView. Be sure that the data originates from, or is imported into the same PhpGedView version.<br /><br /><b>IMPORT</b><br />If you choose to import the user data files from Index mode, all user data present in the database tables will be <u>overwritten</u>. This tool does <u>not</u> merge the information. Once you have run the Import, there is no way to retrieve the old information using PhpGedView.<br /><br /><b>EXPORT</b><br />If you export the user information from your SQL database to Index Mode files, this tool will create <i>authenticate.php</i> and several <i>.dat</i> files in your index directory. If identically named files are already present, you will be prompted if they must be overwritten. After switching to Index mode, all information will be available directly.<br /><br /><b>Note:</b> After switching to Index mode, you will need to import your GEDCOM files again.');
 	break;
 
@@ -5785,7 +5805,7 @@ case 'upload_thumbnail_file':
 	break;
 
 case 'user_privacy':
-	$title=i18n::translate('User Privacy settings');
+	$title=i18n::translate('User Privacy Settings');
 	$text=i18n::translate('These settings give administrators the ability to override default privacy settings for individuals in the GEDCOM based on Username.  Suppose you don\'t want the Username <b>John</b> to be able to see any details of ID I100 in the GEDCOM, you could configure it like this:<br />Username: John<br />ID: I100<br />Show?: "Hide"<br /><br />and details for the specified individual would be hidden for the Username "John" only.<br /><br />To show the details of I101 (which usually would be hidden because I101 is still alive) to Username "John" set:<br /><br />Username: John<br />ID: I101<br />Show?: "Show"');
 	break;
 
@@ -5895,7 +5915,7 @@ case 'welcome_new':
 	break;
 
 case 'yahrzeit':
-	$title=i18n::translate('YAHRZEITEN BLOCK');
+	$title=i18n::translate('Yahrzeiten Block');
 	$text=i18n::translate('This block shows you Yahrzeiten that are coming up in the near future.<br /><br />Yahrzeiten (singular: Yahrzeit) are anniversaries of a person\'s death.  These anniversaries are observed in the Jewish tradition; they are no longer in common use in other traditions.  «Yahrzeit» can also be spelled «Jahrzeit» or «Yartzeit».<br /><br />The Administrator determines how far ahead the block will look.  You can further refine the block\'s display of upcoming Yahrzeiten through configuration options.');
 	break;
 
