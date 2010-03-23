@@ -14,7 +14,7 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: translate;noop;plural:1,2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Poedit-Country: 419\n"
+"X-Poedit-Country: AR\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: ../statistics.php:57 ../find.php:432
