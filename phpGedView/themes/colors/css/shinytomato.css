@@ -1,6 +1,6 @@
 /**
  ** Style for the Shinny Tomato Theme    
- ** @version $Id: ash.css 7548 2010-03-20 11:51:29Z rob $
+ ** @version $Id: ash.css 7584 2010-03-21 15:09:59Z rob $
  */
 
 .something {
@@ -1621,84 +1621,45 @@ dt {
 	display: block;
 	width: 100%;
 }
-/* jquery css THEME adjustments */
 
-/* Tabs --------------------------------*/
-.ui-widget-content 							{ color:black; border-color:#999999;  }
-.ui-widget-content a 						{ color:#333333; }
-.ui-widget-content a:hover 					{ color: red; }
-
-.ui-tabs .ui-tabs-nav 						{ border-color:#888888; background: #f21107; opacity: 0.67;}
-.ui-tabs .ui-tabs-nav li 					{ border-color:#888888; background: #efefee;}
-.ui-tabs .ui-tabs-nav li a 					{ color:#555555; padding: .2em .3em .2em .3em;  }
-.ui-tabs .ui-tabs-nav li:hover				{ color:red; background: #f0eaf0;}
-.ui-tabs .ui-tabs-nav li a:hover			{ color:#2f416f; text-decoration:underline;}
-
-.ui-tabs-nav li.ui-tabs-selected  	 		{ color:2f416f; border-color: #888888; background:#ffffff;}
-.ui-tabs-nav li.ui-tabs-selected a	 		{ font-weight:600; color:2f416f;}
-.ui-tabs-nav li.ui-tabs-selected a:hover	{ font-weight:600; color:2f416f; background:#ffffff; }
-.ui-tabs-nav li.ui-tabs-selected:hover		{ background:#efefee; }
-.ui-tabs .ui-tabs-panel	 					{ background:#fff; }
-
-.static_tab_content, .static_tab_content_rtl  { 
-	border-color: #999999; 
-	background: #f0eaf0;
-}
-.static_tab_ltr {
-	margin-right: 0px;
-}
-.static_tab_content_ltr {
-	right: 0px; 
-	margin-top:0px; 
-	margin-right:22px;
-}
-
-#sidebar_open {  /* + background */
-	border-color: #f21107; 
-	background: #f21107;
-}
-/* Items moved from jquery-ui.custom.css */
+/* Override js/jquery-ui.custom.css            */
 /* Accordion ----------------------------------*/
-.ui-accordion .ui-accordion-header 		{ cursor: pointer; position: relative; margin-top: 1px; zoom: 1; background: #9DA5B4; }
-.ui-accordion .ui-accordion-header a 	{ display: block; font-size: 1em; padding: .5em .5em .5em 2.2em; color: #ffffff ;}
-/* Component containers ----------------------------------*/
-.ui-widget-header { border: 1px solid #b2c7d7; background: #ffffff url(images/ui-bg_highlight-soft_100_e7eef3_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
+
+.ui-accordion .ui-accordion-header { background: #f21107; opacity: 0.67;}
+.ui-accordion .ui-accordion-header a { color: #fff ;}
+
+/* Tabs ----------------------------------*/
+.ui-widget-header { border: 1px solid #fff; background: #f21107 url(images/ui-bg_highlight-soft_100_e7eef3_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
+
 /* Interaction states ----------------------------------*/
 .ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #cccccc; background: #efefee url(images/ui-bg_glass_80_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #444444; outline: none; }
 .ui-state-active {border: 1px solid #999999; }
 
-/* Navigator and Flyout menu Styles --------*/
-.nam a:hover{
-color: red;
-}
-.flyout {
-	color:#000000; 
-	text-align: left;
-	margin-top: -20px;
-	right: 210px;
-	padding: 3px;
-}
+/* Override jquery-ui_theme.css                */
+/* Navigator and Flyout menu Styles -----------*/
+
 .flyout2 {
-	left: 70px;
-	margin-left:-40px;
+        margin-left:-40px; /* move popup left */
 }
-.flyout2 a:hover{
- color:#2f416f; 
- text-decoration:underline !important;
+.flyout2 a:hover{ /* color change and force underline */
+         color:#2f416f;
+         text-decoration:underline !important;
 }
 #flyout3, #flyout3 a, #phusb, #pwife, #shusb, #swife, #spouse {
     font-size: 11px;
     color: #000;
 }
-/* End of Flyout Menu styles*/
-.nav_content .facts_label a{
-color: #ffffff;
-}
+
+/* Colors specific changes                     */
+/* Override inline code in --------------------*/
+#sidebar {  
+background: #fff !important;
+
+/* Navigator and Flyout menu Styles -----------*/
 
 .nav_content #spouse {
 color:  #000;
 }
-
-#flyout3 a {
-color: #000;
+.nav_content .facts_label a{
+color: #fff;
 }
