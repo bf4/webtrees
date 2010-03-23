@@ -72,6 +72,18 @@ function edit_field_yes_no($name, $selected='', $extra='') {
 	);
 }
 
+// Print an edit control for logging frequency
+function edit_field_log_frequency($name, $selected='', $extra='') {
+	$LOG_FREQUENCY=array(
+		'none'   =>i18n::translate('Disable logging'),
+		'daily'  =>i18n::translate('Daily'),
+		'weekly' =>i18n::translate('Weekly'),
+		'monthly'=>i18n::translate('Monthly'),
+		'yearly' =>i18n::translate('Yearly'),
+	);
+	return select_edit_control($name, $LOG_FREQUENCY, null, $selected, $extra);
+}
+
 // Print an edit control for a contact method field
 function edit_field_contact($name, $selected='', $extra='') {
 	global $PGV_STORE_MESSAGES;

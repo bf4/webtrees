@@ -1067,26 +1067,16 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('GEDCOM Basics')."\" onclic
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Archive SearchLog files'), help_link('SEARCHLOG_CREATE'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_SEARCHLOG_CREATE" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SEARCHLOG_CREATE');">
-				<option value="none" <?php if ($SEARCHLOG_CREATE=="none") print "selected=\"selected\""; ?>><?php print i18n::translate('Disable logging'); ?></option>
-				<option value="daily" <?php if ($SEARCHLOG_CREATE=="daily") print "selected=\"selected\""; ?>><?php print i18n::translate('Daily'); ?></option>
-				<option value="weekly" <?php if ($SEARCHLOG_CREATE=="weekly") print "selected=\"selected\""; ?>><?php print i18n::translate('Weekly'); ?></option>
-				<option value="monthly" <?php if ($SEARCHLOG_CREATE=="monthly") print "selected=\"selected\""; ?>><?php print i18n::translate('Monthly'); ?></option>
-				<option value="yearly" <?php if ($SEARCHLOG_CREATE=="yearly") print "selected=\"selected\""; ?>><?php print i18n::translate('Yearly'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_log_frequency('NEW_SEARCHLOG_CREATE', $SEARCHLOG_CREATE, 'tabindex="'.(++$i).'" onfocus="getHelp(\'SEARCHLOG_CREATE\');"'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Archive ChangeLog files'), help_link('CHANGELOG_CREATE'); ?>
 		</td>
-		<td class="optionbox"><select name="NEW_CHANGELOG_CREATE" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('CHANGELOG_CREATE');">
-				<option value="none" <?php if ($CHANGELOG_CREATE=="none") print "selected=\"selected\""; ?>><?php print i18n::translate('Disable logging'); ?></option>
-				<option value="daily" <?php if ($CHANGELOG_CREATE=="daily") print "selected=\"selected\""; ?>><?php print i18n::translate('Daily'); ?></option>
-				<option value="weekly" <?php if ($CHANGELOG_CREATE=="weekly") print "selected=\"selected\""; ?>><?php print i18n::translate('Weekly'); ?></option>
-				<option value="monthly" <?php if ($CHANGELOG_CREATE=="monthly") print "selected=\"selected\""; ?>><?php print i18n::translate('Monthly'); ?></option>
-				<option value="yearly" <?php if ($CHANGELOG_CREATE=="yearly") print "selected=\"selected\""; ?>><?php print i18n::translate('Yearly'); ?></option>
-			</select>
+		<td class="optionbox">
+			<?php echo edit_field_log_frequency('NEW_CHANGELOG_CREATE', $CHANGELOG_CREATE, 'tabindex="'.(++$i).'" onfocus="getHelp(\'CHANGELOG_CREATE\');"'); ?>
 		</td>
 	</tr>
 	<tr>

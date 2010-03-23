@@ -91,7 +91,7 @@ $MEDIA_TYPES=array(
 $ADOP_CODES=array(
 	'BOTH'=>i18n::translate('Adopted by both parents'),
 	'HUSB'=>i18n::translate('Adopted by father'),
-	'WIFE'=>i18n::translate('Adopted by mother')
+	'WIFE'=>i18n::translate('Adopted by mother'),
 );
 
 // GEDCOM PEDI codes
@@ -99,7 +99,7 @@ $PEDI_CODES=array(
 	'birth'  =>i18n::translate('Birth'),
 	'adopted'=>i18n::translate('Adopted'),
 	'foster' =>i18n::translate('Foster'),
-	'sealing'=>i18n::translate('Sealing')
+	'sealing'=>i18n::translate('Sealing'),
 );
 
 // GEDCOM RELA codes
@@ -140,7 +140,7 @@ $RELA_CODES=array(
 	'twin_brother'    =>i18n::translate('Twin brother'),
 	'twin_sister'     =>i18n::translate('Twin sister'),
 	'ward'            =>i18n::translate('Ward'),
-	'witness'         =>i18n::translate('Witness')
+	'witness'         =>i18n::translate('Witness'),
 );
 
 // TEMP tags - LDS temple codes
@@ -730,6 +730,6 @@ $iso3166=array(
 	'THA'=>'TH', 'TJK'=>'TJ', 'TKL'=>'TK', 'TKM'=>'TM', 'TLS'=>'TL', 'TON'=>'TO', 'TTO'=>'TT', 'TUN'=>'TN',
 	'TUR'=>'TR', 'TUV'=>'TV', 'TWN'=>'TW', 'TZA'=>'TZ', 'UGA'=>'UG', 'UKR'=>'UA', 'UMI'=>'UM', 'URY'=>'UY',
 	'USA'=>'US', 'UZB'=>'UZ', 'VAT'=>'VA', 'VCT'=>'VC', 'VEN'=>'VE', 'VGB'=>'VG', 'VIR'=>'VI', 'VNM'=>'VN',
-	'VUT'=>'VU', 'WLF'=>'WF', 'WLS'=>'GB', 'WSM'=>'WS', 'YEM'=>'YE', 'ZAF'=>'ZA', 'ZMB'=>'ZM', 'ZWE'=>'ZW'
+	'VUT'=>'VU', 'WLF'=>'WF', 'WLS'=>'GB', 'WSM'=>'WS', 'YEM'=>'YE', 'ZAF'=>'ZA', 'ZMB'=>'ZM', 'ZWE'=>'ZW',
 );
 
