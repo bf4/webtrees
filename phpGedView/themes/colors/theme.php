@@ -92,7 +92,7 @@ if (isset($_GET['themecolor']) && array_key_exists($_GET['themecolor'], $COLOR_T
 	}
 }
 
-$_SESSION['newColor']=$subColor;
+$_SESSION['themecolor']=$subColor;
 
 $theme_name       = "Colors";
 $stylesheet       = PGV_THEME_DIR  . "css/" . $subColor . ".css";
