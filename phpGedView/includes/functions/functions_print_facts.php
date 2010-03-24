@@ -82,6 +82,7 @@ function print_fact(&$eventObj, $noedit=false) {
 	global $CONTACT_EMAIL, $view;
 	global $n_chil, $n_gchi, $n_ggch;
 	global $SEARCH_SPIDER;
+	global $FACTS;
 
 	$estimates = array("abt", "aft", "bef", "est", "cir");
 	$fact = $eventObj->getTag();
@@ -117,7 +118,7 @@ function print_fact(&$eventObj, $noedit=false) {
 	$resn_tag = preg_match("/2 RESN (.+)/", $factrec, $match);
 	if ($resn_tag == "1") $resn_value = $match[1];
 	// Assume that all recognised tags are translated.
-	if ($fact!=i18n::translate($fact)) {
+	if (array_key_exists($fact, $FACTS)) {
 		// -- handle generic facts
 		if ($fact!="EVEN" && $fact!="FACT" && $fact!="OBJE") {
 			if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA" || $fact == "_INTE") {
@@ -153,7 +154,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			echo "\n\t\t\t<td class=\"descriptionbox $styleadd center width20\">";
 			if ($SHOW_FACT_ICONS)
 				echo $eventObj->Icon(), ' ';
-			echo i18n::translate($factref);
+			echo $FACTS[$factref];
 			if ($fact=="_BIRT_CHIL" and isset($n_chil)) echo "<br />", i18n::translate('#%d', $n_chil++);
 			if ($fact=="_BIRT_GCHI" and isset($n_gchi)) echo "<br />", i18n::translate('#%d', $n_gchi++);
 			if ($fact=="_BIRT_GGCH" and isset($n_ggch)) echo "<br />", i18n::translate('#%d', $n_ggch++);
