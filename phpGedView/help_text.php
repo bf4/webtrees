@@ -5426,7 +5426,7 @@ case 'upload_media_folder':
 
 case 'upload_media':
 	$title=i18n::translate('Upload Media files');
-	$text=i18n::translate('Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to %s. For example, %s /myfamily. If the thumbnail directory does not exist, it is created automatically.'$MEDIA_DIRECTORY, $MEDIA_DIRECTORY);
+	$text=i18n::translate('Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>%s</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to <b>%s</b>. For example, <b>%smyfamily</b>. If the thumbnail directory does not exist, it is created automatically.', $MEDIA_DIRECTORY, $MEDIA_DIRECTORY, $MEDIA_DIRECTORY);
 	break;
 
 case 'upload_path':
