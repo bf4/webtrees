@@ -593,7 +593,7 @@ if (isset($_SESSION['theme_dir'])) {
 }
 
 if (empty($THEME_DIR) || !file_exists("{$THEME_DIR}theme.php")) {
-	$THEME_DIR = 'themes/standard/';
+	$THEME_DIR = 'themes/webtrees/';
 }
 
 define('PGV_THEME_DIR', $THEME_DIR);
