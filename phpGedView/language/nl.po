@@ -7512,7 +7512,6 @@ msgstr "U zond het volgende bericht naar de webtrees beheerder:"
 msgid "You sent the following message to a webtrees user:"
 msgstr "U zond het volgende bericht naar een webtrees-gebruiker:"
 
-
 #: ../includes/authentication.php:473 ../includes/authentication.php:480
 #: ../includes/authentication.php:519 ../includes/authentication.php:525
 msgid "The following message has been sent to your webtrees user account from "
@@ -8989,8 +8988,6 @@ msgstr ""
 #: ../includes/functions/functions.php:351
 msgid "Error!!! Cannot write to the webtrees configuration file.  Please check file and directory permissions and try again."
 msgstr "Fout! Kan niet schrijven naar het webtrees-configuratiebestand. Controleer de toegangsrechten voor het bestand en de map en probeer opnieuw."
-
-
 
 #: ../includes/functions/functions.php:1929
 msgid "The script timed out before a relationship could be found."

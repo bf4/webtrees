@@ -7517,7 +7517,6 @@ msgstr "Du sendte følgende besked til en anden bruger af hjemmesiden:"
 msgid "The following message has been sent to your webtrees user account from "
 msgstr "Følgende besked blev sendt til din brugerkonto fra "
 
-
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
 msgstr ""

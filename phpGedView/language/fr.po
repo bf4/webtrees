@@ -7508,11 +7508,9 @@ msgstr "Ce message a été envoyé depuis l'URL "
 msgid "You sent the following message to a webtrees administrator:"
 msgstr "Vous avez envoyé le message suivant à l'administrateur webtrees "
 
-
 #: ../includes/authentication.php:467
 msgid "You sent the following message to a webtrees user:"
 msgstr "Vous avez envoyé le message suivant à l'utilisateur webtrees "
-
 
 #: ../includes/authentication.php:473 ../includes/authentication.php:480
 #: ../includes/authentication.php:519 ../includes/authentication.php:525

@@ -7508,7 +7508,6 @@ msgstr "See sõnum saadet järgmiselt veebiaadressilt: "
 msgid "You sent the following message to a webtrees administrator:"
 msgstr "Saatsid järgmise sõnumi webtrees administraatorile:"
 
-
 #: ../includes/authentication.php:467
 msgid "You sent the following message to a webtrees user:"
 msgstr "Saatsid järgmise sõnumi webtrees kasutajale:"

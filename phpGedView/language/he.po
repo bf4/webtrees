@@ -7512,7 +7512,6 @@ msgstr "שלחת את ההודעה הבאה למנהלן webtrees:"
 msgid "You sent the following message to a webtrees user:"
 msgstr "שלחת את ההודעה הבאה למשתמש webtrees:"
 
-
 #: ../includes/authentication.php:473 ../includes/authentication.php:480
 #: ../includes/authentication.php:519 ../includes/authentication.php:525
 msgid "The following message has been sent to your webtrees user account from "

@@ -7507,7 +7507,7 @@ msgstr ""
 
 #: ../includes/authentication.php:459
 msgid "You sent the following message to a webtrees administrator:"
-msgstr ""
+msgstr "webtrees administratoriui Jūs pasiuntėte tokią žinutę:"
 
 #: ../includes/authentication.php:467
 msgid "You sent the following message to a webtrees user:"
@@ -22662,9 +22662,6 @@ msgstr ""
 
 #~ msgid "PhpGedView Translations forum on SourceForge"
 #~ msgstr "PhpGedView vertimo forumas SourceForge puslapyje"
-
-msgid "You sent the following message to a webtrees administrator:"
-#~ msgstr "PgpGedView administratoriui Jūs pasiuntėte tokią žinutę:"
 
 #~ msgid "LANGUAGE_LONG_DATE_FORMAT"
 #~ msgstr "%Y %F %j"

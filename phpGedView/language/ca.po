@@ -7506,8 +7506,7 @@ msgstr "Missatge redactat des d'aquesta pàgina: "
 
 #: ../includes/authentication.php:459
 msgid "You sent the following message to a webtrees administrator:"
-msgstr ""
-msgid "Missatge enviat a l'Administrador webtrees:"
+msgstr "Missatge enviat a l'Administrador webtrees:"
 
 #: ../includes/authentication.php:467
 msgid "You sent the following message to a webtrees user:"
@@ -8988,7 +8987,7 @@ msgstr "PHP bloquejat per extensió d'arxiu"
 
 #: ../includes/functions/functions.php:351
 msgid "Error!!! Cannot write to the webtrees configuration file.  Please check file and directory permissions and try again."
-#~ msgstr "Error!!! No pot escriure's al fitxer de configuració del webtrees. Reviseu les propietats dels fitxer i del directori i torneu-hi."
+msgstr "Error!!! No pot escriure's al fitxer de configuració del webtrees. Reviseu les propietats dels fitxer i del directori i torneu-hi."
 
 #: ../includes/functions/functions.php:1929
 msgid "The script timed out before a relationship could be found."
