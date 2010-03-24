@@ -7507,16 +7507,16 @@ msgstr "Сообщение послано со следующего URL:"
 
 #: ../includes/authentication.php:459
 msgid "You sent the following message to a webtrees administrator:"
-msgstr ""
+msgstr "Вы послали следующее сообщение администратору webtrees:"
 
 #: ../includes/authentication.php:467
 msgid "You sent the following message to a webtrees user:"
-msgstr ""
+msgstr "Вы послали следующее сообщение пользователю webtrees:"
 
 #: ../includes/authentication.php:473 ../includes/authentication.php:480
 #: ../includes/authentication.php:519 ../includes/authentication.php:525
 msgid "The following message has been sent to your webtrees user account from "
-msgstr ""
+msgstr "Следующее сообщение послано Вашему пользователю webtrees:"
 
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
@@ -22785,15 +22785,6 @@ msgstr ""
 
 #~ msgid "PhpGedView Translations forum on SourceForge"
 #~ msgstr "На форум переводчиков на сайте PhpGedView SourceForge"
-
-#~ msgid "You sent the following message to a PhpGedView administrator:"
-#~ msgstr "Вы послали следующее сообщение администратору PhpGedView:"
-
-#~ msgid "You sent the following message to a PhpGedView user:"
-#~ msgstr "Вы послали следующее сообщение пользователю PhpGedView:"
-
-#~ msgid "The following message has been sent to your PhpGedView user account from "
-#~ msgstr "Следующее сообщение послано Вашему пользователю PhpGedView:"
 
 #~ msgid "Jewish Ashkenaz pronunciation"
 #~ msgstr "Еврейский Аскеназский словарь:"

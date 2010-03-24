@@ -7506,16 +7506,16 @@ msgstr "Az üzenetet az alábbi linkre kattintva küldheti el"
 
 #: ../includes/authentication.php:459
 msgid "You sent the following message to a webtrees administrator:"
-msgstr ""
+msgstr "A következő üzenetet küldte el a webtrees-adminisztrátorának:"
 
 #: ../includes/authentication.php:467
 msgid "You sent the following message to a webtrees user:"
-msgstr ""
+msgstr "A következő üzenetet küldte el egy webtrees-felhasználónak:"
 
 #: ../includes/authentication.php:473 ../includes/authentication.php:480
 #: ../includes/authentication.php:519 ../includes/authentication.php:525
 msgid "The following message has been sent to your webtrees user account from "
-msgstr ""
+msgstr "Ön a következő üzenetet kapta a következő címről:"
 
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
@@ -8987,7 +8987,7 @@ msgstr ""
 
 #: ../includes/functions/functions.php:351
 msgid "Error!!! Cannot write to the webtrees configuration file.  Please check file and directory permissions and try again."
-msgstr ""
+msgstr "Hiba!!! Nem írható a webtrees beállítási fájlja. Kérem ellenőrizze a fájlok és könyvtárak jogosultságait, majd próbálja újra."
 
 #: ../includes/functions/functions.php:1929
 msgid "The script timed out before a relationship could be found."
@@ -23790,18 +23790,6 @@ msgstr ""
 
 #~ msgid "PhpGedView Translations forum on SourceForge"
 #~ msgstr "Ugrás a PhpGedView fordítói fórumához (a SourceForge.net-en)"
-
-#~ msgid "You sent the following message to a PhpGedView administrator:"
-#~ msgstr "A következő üzenetet küldte el a PhpGedView-adminisztrátorának:"
-
-#~ msgid "You sent the following message to a PhpGedView user:"
-#~ msgstr "A következő üzenetet küldte el egy PhpGedView-felhasználónak:"
-
-#~ msgid "The following message has been sent to your PhpGedView user account from "
-#~ msgstr "Ön a következő üzenetet kapta a következő címről:"
-
-#~ msgid "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again."
-#~ msgstr "Hiba!!! Nem írható a PhpGedView beállítási fájlja. Kérem ellenőrizze a fájlok és könyvtárak jogosultságait, majd próbálja újra."
 
 #~ msgid "Jewish Ashkenaz pronunciation"
 #~ msgstr "Zsidó Ashkenazi kiejtés"

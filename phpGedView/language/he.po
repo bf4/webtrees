@@ -7506,16 +7506,17 @@ msgstr "ההודעה הזו נשלחה מ-URL הבא:"
 
 #: ../includes/authentication.php:459
 msgid "You sent the following message to a webtrees administrator:"
-msgstr ""
+msgstr "שלחת את ההודעה הבאה למנהלן webtrees:"
 
 #: ../includes/authentication.php:467
 msgid "You sent the following message to a webtrees user:"
-msgstr ""
+msgstr "שלחת את ההודעה הבאה למשתמש webtrees:"
+
 
 #: ../includes/authentication.php:473 ../includes/authentication.php:480
 #: ../includes/authentication.php:519 ../includes/authentication.php:525
 msgid "The following message has been sent to your webtrees user account from "
-msgstr ""
+msgstr "ההודעה הבאה נשלחה למשתמש ה-webtrees שלך מ-"
 
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
@@ -8987,7 +8988,7 @@ msgstr "PHP חסם קובץ לפי סיומת"
 
 #: ../includes/functions/functions.php:351
 msgid "Error!!! Cannot write to the webtrees configuration file.  Please check file and directory permissions and try again."
-msgstr ""
+msgstr "שגיאה בכתיבת קובץ התצורה של webtrees. בדוק את ההרשאות של הקובץ והתיקייה ונסה שנית."
 
 #: ../includes/functions/functions.php:1929
 msgid "The script timed out before a relationship could be found."
@@ -23940,18 +23941,6 @@ msgstr "בחר אות כדי להציג משפחות שהשם הפרטי של א
 
 #~ msgid "PhpGedView Translations forum on SourceForge"
 #~ msgstr "פורום התרגומים של PhpGedView על SourceForge"
-
-#~ msgid "You sent the following message to a PhpGedView administrator:"
-#~ msgstr "שלחת את ההודעה הבאה למנהלן PhpGedView:"
-
-#~ msgid "You sent the following message to a PhpGedView user:"
-#~ msgstr "שלחת את ההודעה הבאה למשתמש PhpGedView:"
-
-#~ msgid "The following message has been sent to your PhpGedView user account from "
-#~ msgstr "ההודעה הבאה נשלחה למשתמש ה-PhpGedView שלך מ-"
-
-#~ msgid "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again."
-#~ msgstr "שגיאה בכתיבת קובץ התצורה של PhpGedView. בדוק את ההרשאות של הקובץ והתיקייה ונסה שנית."
 
 #~ msgid "Jewish Ashkenaz pronunciation"
 #~ msgstr "הגייה אשכנזית"

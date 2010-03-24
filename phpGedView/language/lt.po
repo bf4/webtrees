@@ -22663,7 +22663,7 @@ msgstr ""
 #~ msgid "PhpGedView Translations forum on SourceForge"
 #~ msgstr "PhpGedView vertimo forumas SourceForge puslapyje"
 
-#~ msgid "You sent the following message to a PhpGedView administrator:"
+msgid "You sent the following message to a webtrees administrator:"
 #~ msgstr "PgpGedView administratoriui Jūs pasiuntėte tokią žinutę:"
 
 #~ msgid "LANGUAGE_LONG_DATE_FORMAT"

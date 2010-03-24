@@ -7505,16 +7505,16 @@ msgstr "Bu mesaj yandaki URL okunurken yollandı:"
 
 #: ../includes/authentication.php:459
 msgid "You sent the following message to a webtrees administrator:"
-msgstr ""
+msgstr "Aşağıdaki mesajı bir webtrees yöneticisine (administrator) gönderdiniz:"
 
 #: ../includes/authentication.php:467
 msgid "You sent the following message to a webtrees user:"
-msgstr ""
+msgstr "Aşağıdaki mesajı bir webtrees üye hesabına gönderdiniz:"
 
 #: ../includes/authentication.php:473 ../includes/authentication.php:480
 #: ../includes/authentication.php:519 ../includes/authentication.php:525
 msgid "The following message has been sent to your webtrees user account from "
-msgstr ""
+msgstr "Aşağıdaki mesajı sizin webtrees üye hesabınıza gönderen: "
 
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
@@ -8986,7 +8986,7 @@ msgstr "PHP uzantılar tarafından dosya engellendi"
 
 #: ../includes/functions/functions.php:351
 msgid "Error!!! Cannot write to the webtrees configuration file.  Please check file and directory permissions and try again."
-msgstr ""
+msgstr "Hata!!! webtrees soy görüntüleme konfigürasyon dosyasına yazamıyorum. Lütfen dosya ve klasörün izinlerini kontrol edin."
 
 #: ../includes/functions/functions.php:1929
 msgid "The script timed out before a relationship could be found."
@@ -23832,18 +23832,6 @@ msgstr "Bir aile göstermek için bir eşin ilk adının ilk harfini seçin."
 
 #~ msgid "PhpGedView Translations forum on SourceForge"
 #~ msgstr "SourceForge sitesindeki PhpGedView tercüme forumuna bağlantı"
-
-#~ msgid "You sent the following message to a PhpGedView administrator:"
-#~ msgstr "Aşağıdaki mesajı bir PhpGedView yöneticisine (administrator) gönderdiniz:"
-
-#~ msgid "You sent the following message to a PhpGedView user:"
-#~ msgstr "Aşağıdaki mesajı bir PhpGedView üye hesabına gönderdiniz:"
-
-#~ msgid "The following message has been sent to your PhpGedView user account from "
-#~ msgstr "Aşağıdaki mesajı sizin PhpGedView üye hesabınıza gönderen: "
-
-#~ msgid "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again."
-#~ msgstr "Hata!!! Php soy görüntüleme konfigürasyon dosyasına yazamıyorum. Lütfen dosya ve klasörün izinlerini kontrol edin."
 
 #~ msgid "Jewish Ashkenaz pronunciation"
 #~ msgstr "Musevilere ait ashkenaz telaffuz"

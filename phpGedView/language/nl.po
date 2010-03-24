@@ -7506,16 +7506,17 @@ msgstr "Het bericht is verzonden vanaf de volgende URL:"
 
 #: ../includes/authentication.php:459
 msgid "You sent the following message to a webtrees administrator:"
-msgstr ""
+msgstr "U zond het volgende bericht naar de webtrees beheerder:"
 
 #: ../includes/authentication.php:467
 msgid "You sent the following message to a webtrees user:"
-msgstr ""
+msgstr "U zond het volgende bericht naar een webtrees-gebruiker:"
+
 
 #: ../includes/authentication.php:473 ../includes/authentication.php:480
 #: ../includes/authentication.php:519 ../includes/authentication.php:525
 msgid "The following message has been sent to your webtrees user account from "
-msgstr ""
+msgstr "Het volgende bericht is verzonden naar uw webtrees-gebruiker:"
 
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
@@ -8987,7 +8988,9 @@ msgstr ""
 
 #: ../includes/functions/functions.php:351
 msgid "Error!!! Cannot write to the webtrees configuration file.  Please check file and directory permissions and try again."
-msgstr ""
+msgstr "Fout! Kan niet schrijven naar het webtrees-configuratiebestand. Controleer de toegangsrechten voor het bestand en de map en probeer opnieuw."
+
+
 
 #: ../includes/functions/functions.php:1929
 msgid "The script timed out before a relationship could be found."
@@ -23397,18 +23400,6 @@ msgstr ""
 
 #~ msgid "PhpGedView Translations forum on SourceForge"
 #~ msgstr "Koppeling naar het vertalerforum op de PhpGedView site van SourceForge"
-
-#~ msgid "You sent the following message to a PhpGedView administrator:"
-#~ msgstr "U zond het volgende bericht naar de PhpGedView beheerder:"
-
-#~ msgid "You sent the following message to a PhpGedView user:"
-#~ msgstr "U zond het volgende bericht naar een PhpGedView-gebruiker:"
-
-#~ msgid "The following message has been sent to your PhpGedView user account from "
-#~ msgstr "Het volgende bericht is verzonden naar uw PhpGedView-gebruiker:"
-
-#~ msgid "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again."
-#~ msgstr "Fout! Kan niet schrijven naar het PhpGedView-configuratiebestand. Controleer de toegangsrechten voor het bestand en de map en probeer opnieuw."
 
 #~ msgid "Jewish Ashkenaz pronunciation"
 #~ msgstr "Joods Ashkenazi woordgebruik"

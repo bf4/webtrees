@@ -7506,16 +7506,16 @@ msgstr "Esta mensagem foi enviada quando navegava pelo seguinte endereço: "
 
 #: ../includes/authentication.php:459
 msgid "You sent the following message to a webtrees administrator:"
-msgstr ""
+msgstr "Mensagem enviada para o Administrador:"
 
 #: ../includes/authentication.php:467
 msgid "You sent the following message to a webtrees user:"
-msgstr ""
+msgstr "Mensagem enviada para:"
 
 #: ../includes/authentication.php:473 ../includes/authentication.php:480
 #: ../includes/authentication.php:519 ../includes/authentication.php:525
 msgid "The following message has been sent to your webtrees user account from "
-msgstr ""
+msgstr "Esta mensagem foi enviada por "
 
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
@@ -23418,15 +23418,6 @@ msgstr ""
 
 #~ msgid "Remember me from this computer?"
 #~ msgstr "Associe este computador a mim"
-
-#~ msgid "You sent the following message to a PhpGedView administrator:"
-#~ msgstr "Mensagem enviada para o Administrador:"
-
-#~ msgid "You sent the following message to a PhpGedView user:"
-#~ msgstr "Mensagem enviada para:"
-
-#~ msgid "The following message has been sent to your PhpGedView user account from "
-#~ msgstr "Esta mensagem foi enviada por "
 
 #~ msgid "You have not configured the languages your site will support.<br />PhpGedView will use its default actions."
 #~ msgstr "Não houve configuração de idiomas para este site.<br />PhpGedView usará o padrão."

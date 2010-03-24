@@ -7506,16 +7506,16 @@ msgstr "Este mensaje se envió mientras se visitaba la URL: "
 
 #: ../includes/authentication.php:459
 msgid "You sent the following message to a webtrees administrator:"
-msgstr ""
+msgstr "Vd. envió el siguiente mensaje a un administrador:"
 
 #: ../includes/authentication.php:467
 msgid "You sent the following message to a webtrees user:"
-msgstr ""
+msgstr "Vd. envió el siguiente mensaje a un usuario:"
 
 #: ../includes/authentication.php:473 ../includes/authentication.php:480
 #: ../includes/authentication.php:519 ../includes/authentication.php:525
 msgid "The following message has been sent to your webtrees user account from "
-msgstr ""
+msgstr "El siguiente mensaje a su cuenta de usuario webtrees lo ha enviado "
 
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
@@ -8987,7 +8987,7 @@ msgstr "PHP bloqueó el archivo por su extensión"
 
 #: ../includes/functions/functions.php:351
 msgid "Error!!! Cannot write to the webtrees configuration file.  Please check file and directory permissions and try again."
-msgstr ""
+msgstr "¡¡¡Error!!! No se pudo escribir el archivo de configuración de webtrees.  Por favor, compruebe los permisos de archivo y directorio y pruebe nuevamente."
 
 #: ../includes/functions/functions.php:1929
 msgid "The script timed out before a relationship could be found."
@@ -23940,18 +23940,6 @@ msgstr "Elija una letra para mostrar las familias en las que el nombre del cóny
 
 #~ msgid "PhpGedView Translations forum on SourceForge"
 #~ msgstr "Vínculo a foro PhpGedView de traducciones en SourceForge"
-
-#~ msgid "You sent the following message to a PhpGedView administrator:"
-#~ msgstr "Vd. envió el siguiente mensaje a un administrador:"
-
-#~ msgid "You sent the following message to a PhpGedView user:"
-#~ msgstr "Vd. envió el siguiente mensaje a un usuario:"
-
-#~ msgid "The following message has been sent to your PhpGedView user account from "
-#~ msgstr "El siguiente mensaje a su cuenta de usuario PhpGedView lo ha enviado "
-
-#~ msgid "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again."
-#~ msgstr "¡¡¡Error!!! No se pudo escribir el archivo de configuración de PhpGedView.  Por favor, compruebe los permisos de archivo y directorio y pruebe nuevamente."
 
 #~ msgid "Jewish Ashkenaz pronunciation"
 #~ msgstr "Pronunciación Ashkenaz Judía"

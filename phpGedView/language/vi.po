@@ -7505,16 +7505,16 @@ msgstr "Thư này đã gửi trong khi xem cái URL sau đây:"
 
 #: ../includes/authentication.php:459
 msgid "You sent the following message to a webtrees administrator:"
-msgstr ""
+msgstr "Bạn đã gửi thư sau đây cho một quản lý của webtrees:"
 
 #: ../includes/authentication.php:467
 msgid "You sent the following message to a webtrees user:"
-msgstr ""
+msgstr "Bạn đã gửi thư sau đây cho một thành viên webtrees:"
 
 #: ../includes/authentication.php:473 ../includes/authentication.php:480
 #: ../includes/authentication.php:519 ../includes/authentication.php:525
 msgid "The following message has been sent to your webtrees user account from "
-msgstr ""
+msgstr "Thư này đã tới tài khoản thành viên webtrees của bạn từ "
 
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
@@ -22908,15 +22908,6 @@ msgstr ""
 
 #~ msgid "Remember me from this computer?"
 #~ msgstr "Nhớ tôi ở trên máy điện toán này"
-
-#~ msgid "You sent the following message to a PhpGedView administrator:"
-#~ msgstr "Bạn đã gửi thư sau đây cho một quản lý của PhpGedView:"
-
-#~ msgid "You sent the following message to a PhpGedView user:"
-#~ msgstr "Bạn đã gửi thư sau đây cho một thành viên PhpGedView:"
-
-#~ msgid "The following message has been sent to your PhpGedView user account from "
-#~ msgstr "Thư này đã tới tài khoản thành viên PhpGedView của bạn từ "
 
 #~ msgid "LANGUAGE_LONG_DATE_FORMAT"
 #~ msgstr "%j %F %Y"

@@ -7506,16 +7506,16 @@ msgstr "Tämä viesti lähetettiin seuraavasta urlistä: "
 
 #: ../includes/authentication.php:459
 msgid "You sent the following message to a webtrees administrator:"
-msgstr ""
+msgstr "Olet lähettänyt seuraavan viestin webtrees hallinnoitsijalle: "
 
 #: ../includes/authentication.php:467
 msgid "You sent the following message to a webtrees user:"
-msgstr ""
+msgstr "Olet lähettänyt seuraavan viestin webtrees käyttäjätilille: "
 
 #: ../includes/authentication.php:473 ../includes/authentication.php:480
 #: ../includes/authentication.php:519 ../includes/authentication.php:525
 msgid "The following message has been sent to your webtrees user account from "
-msgstr ""
+msgstr "Seuraava viesti on lähetetty webtrees käyttäjätilillesi: "
 
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
@@ -8987,7 +8987,7 @@ msgstr "PHP estetty tiedostopäätteen perusteella"
 
 #: ../includes/functions/functions.php:351
 msgid "Error!!! Cannot write to the webtrees configuration file.  Please check file and directory permissions and try again."
-msgstr ""
+msgstr "Virhe!!! webtrees Ei pysty kirjoittamaan asetustiedostoon. Tarkista tiedoston sekä kansion oikeudet ja kokeile uudestaan. "
 
 #: ../includes/functions/functions.php:1929
 msgid "The script timed out before a relationship could be found."
@@ -23859,18 +23859,6 @@ msgstr "Valitse kirjain nähdäksesi perheet, joiden aviopuolison nimi alkaa kys
 
 #~ msgid "PhpGedView Translations forum on SourceForge"
 #~ msgstr "PhpGedView Käännös -keskusteluryhmä SourceForge:ssa"
-
-#~ msgid "You sent the following message to a PhpGedView administrator:"
-#~ msgstr "Olet lähettänyt seuraavan viestin PhpGedView hallinnoitsijalle: "
-
-#~ msgid "You sent the following message to a PhpGedView user:"
-#~ msgstr "Olet lähettänyt seuraavan viestin PhpGedView käyttäjätilille: "
-
-#~ msgid "The following message has been sent to your PhpGedView user account from "
-#~ msgstr "Seuraava viesti on lähetetty PhpGedView käyttäjätilillesi: "
-
-#~ msgid "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again."
-#~ msgstr "Virhe!!! PhpGedView Ei pysty kirjoittamaan asetustiedostoon. Tarkista tiedoston sekä kansion oikeudet ja kokeile uudestaan. "
 
 #~ msgid "Add files and settings for a new language"
 #~ msgstr "Lisää tiedostot ja asetukset uudelle kielelle"

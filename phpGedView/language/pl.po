@@ -7507,16 +7507,16 @@ msgstr "Ta wiadomość została wysłana podczas przeglądania następującego a
 
 #: ../includes/authentication.php:459
 msgid "You sent the following message to a webtrees administrator:"
-msgstr ""
+msgstr "Została wysłana następująca wiadomość do administratora:"
 
 #: ../includes/authentication.php:467
 msgid "You sent the following message to a webtrees user:"
-msgstr ""
+msgstr "Została wysłana następująca wiadomość do użytkownika:"
 
 #: ../includes/authentication.php:473 ../includes/authentication.php:480
 #: ../includes/authentication.php:519 ../includes/authentication.php:525
 msgid "The following message has been sent to your webtrees user account from "
-msgstr ""
+msgstr "Poniższa wiadomość została nadesłana na twoje konto od "
 
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
@@ -8988,7 +8988,7 @@ msgstr "PHP zablokowało plik przez rozszerzenie"
 
 #: ../includes/functions/functions.php:351
 msgid "Error!!! Cannot write to the webtrees configuration file.  Please check file and directory permissions and try again."
-msgstr ""
+msgstr "Błąd! Nie można zapisywać do pliku konfiguracyjnego webtrees. Sprawdź uprawnienia pliku i katalogu i spróbuj ponownie."
 
 #: ../includes/functions/functions.php:1929
 msgid "The script timed out before a relationship could be found."
@@ -23958,18 +23958,6 @@ msgstr "Wybierz pierwszą literę imienia członków rodziny"
 
 #~ msgid "PhpGedView Translations forum on SourceForge"
 #~ msgstr "Forum tłumaczeniowe PhpGedView na SourceForge"
-
-#~ msgid "You sent the following message to a PhpGedView administrator:"
-#~ msgstr "Została wysłana następująca wiadomość do administratora:"
-
-#~ msgid "You sent the following message to a PhpGedView user:"
-#~ msgstr "Została wysłana następująca wiadomość do użytkownika:"
-
-#~ msgid "The following message has been sent to your PhpGedView user account from "
-#~ msgstr "Poniższa wiadomość została nadesłana na twoje konto od "
-
-#~ msgid "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again."
-#~ msgstr "Błąd! Nie można zapisywać do pliku konfiguracyjnego PhpGedView. Sprawdź uprawnienia pliku i katalogu i spróbuj ponownie."
 
 #~ msgid "Jewish Ashkenaz pronunciation"
 #~ msgstr "Żydowska wymowa Ashkenaz"

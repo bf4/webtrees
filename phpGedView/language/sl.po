@@ -7508,16 +7508,16 @@ msgstr "To sporočilo je bilo poslano med gledanjem naslednjega URL: "
 
 #: ../includes/authentication.php:459
 msgid "You sent the following message to a webtrees administrator:"
-msgstr ""
+msgstr "Naslednje sporočilo ste poslali webtrees upraviltelju:"
 
 #: ../includes/authentication.php:467
 msgid "You sent the following message to a webtrees user:"
-msgstr ""
+msgstr "Naslednje sporočilo ste poslali webtrees uporabniku:"
 
 #: ../includes/authentication.php:473 ../includes/authentication.php:480
 #: ../includes/authentication.php:519 ../includes/authentication.php:525
 msgid "The following message has been sent to your webtrees user account from "
-msgstr ""
+msgstr "Naslednje sporočilo je bilo poslano na vaš webtrees uporabniški račun od upravitelja "
 
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
@@ -8989,7 +8989,7 @@ msgstr "PHP je zvrnil datoteko po končnici"
 
 #: ../includes/functions/functions.php:351
 msgid "Error!!! Cannot write to the webtrees configuration file.  Please check file and directory permissions and try again."
-msgstr ""
+msgstr "Napaka!!! Ne morem zapisati webtrees datoteko nastavitev.  Preverite datoteko in dovoljenje za pisanje v imenik ter poskusite ponovno."
 
 #: ../includes/functions/functions.php:1929
 msgid "The script timed out before a relationship could be found."
@@ -23490,18 +23490,6 @@ msgstr "Izberi črko za prikaz družin, katerih zakonec ima ime, ki se začne s 
 
 #~ msgid "PhpGedView Translations forum on SourceForge"
 #~ msgstr "Forum prevajalcev PhpGedView na SourceForge"
-
-#~ msgid "You sent the following message to a PhpGedView administrator:"
-#~ msgstr "Naslednje sporočilo ste poslali PhpGedViewupraviltelju:"
-
-#~ msgid "You sent the following message to a PhpGedView user:"
-#~ msgstr "Naslednje sporočilo ste poslali PhpGedView uporabniku:"
-
-#~ msgid "The following message has been sent to your PhpGedView user account from "
-#~ msgstr "Naslednje sporočilo je bilo poslano na vaš PhpGedView uporabniški račun od upravitelja "
-
-#~ msgid "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again."
-#~ msgstr "Napaka!!! Ne morem zapisati PhpGedView datoteko nastavitev.  Preverite datoteko in dovoljenje za pisanje v imenik ter poskusite ponovno."
 
 #~ msgid "Jewish Ashkenaz pronunciation"
 #~ msgstr "Židovska Ashkenaz izgovorjava"
