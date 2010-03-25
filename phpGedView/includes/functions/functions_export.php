@@ -55,8 +55,8 @@ function reformat_record_export($rec) {
 		// Split long lines
 		// The total length of a GEDCOM line, including level number, cross-reference number,
 		// tag, value, delimiters, and terminator, must not exceed 255 (wide) characters.
-		// Use quick strlen() check before using slower UTF8_strlen() check
-		if (strlen($line)>PGV_GEDCOM_LINE_LENGTH && UTF8_strlen($line)>PGV_GEDCOM_LINE_LENGTH) {
+		// Use quick strlen() check before using slower utf8_strlen() check
+		if (strlen($line)>PGV_GEDCOM_LINE_LENGTH && utf8_strlen($line)>PGV_GEDCOM_LINE_LENGTH) {
 			list($level, $tag)=explode(' ', $line, 3);
 			if ($tag!='CONT' && $tag!='CONC') {
 				$level++;
@@ -66,29 +66,29 @@ function reformat_record_export($rec) {
 				$pos=PGV_GEDCOM_LINE_LENGTH;
 				if ($WORD_WRAPPED_NOTES) {
 					// Split on a space, and remove it (for compatibility with some desktop apps)
-					while ($pos && UTF8_substr($line, $pos-1, 1)!=' ') {
+					while ($pos && utf8_substr($line, $pos-1, 1)!=' ') {
 						--$pos;
 					}
 					if ($pos==strpos($line, ' ', 3)+1) {
 						// No spaces in the data! Can't split it :-(
 						break;
 					} else {
-						$newrec.=UTF8_substr($line, 0, $pos-1).PGV_EOL;
-						$line=$level.' CONC '.UTF8_substr($line, $pos);
+						$newrec.=utf8_substr($line, 0, $pos-1).PGV_EOL;
+						$line=$level.' CONC '.utf8_substr($line, $pos);
 					}
 				} else {
 					// Split on a non-space (standard gedcom behaviour)
-					while ($pos && UTF8_substr($line, $pos-1, 1)==' ') {
+					while ($pos && utf8_substr($line, $pos-1, 1)==' ') {
 						--$pos;
 					}
 					if ($pos==strpos($line, ' ', 3)) {
 						// No non-spaces in the data! Can't split it :-(
 						break;
 					}
-					$newrec.=UTF8_substr($line, 0, $pos).PGV_EOL;
-					$line=$level.' CONC '.UTF8_substr($line, $pos);
+					$newrec.=utf8_substr($line, 0, $pos).PGV_EOL;
+					$line=$level.' CONC '.utf8_substr($line, $pos);
 				}
-			} while (UTF8_strlen($line)>PGV_GEDCOM_LINE_LENGTH);
+			} while (utf8_strlen($line)>PGV_GEDCOM_LINE_LENGTH);
 		}
 		$newrec.=$line.PGV_EOL;
 	}

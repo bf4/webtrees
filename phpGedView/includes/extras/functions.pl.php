@@ -403,12 +403,12 @@ function rela_localisation_pl(&$rela, &$pid2) {
 			}
 		}
 	}
-	return UTF8_ucfirst($rela);
+	return $rela;
 }
 
 function getRelationshipText_pl($relationshipDescription, $node, $pid1, $pid2) {
 	if ($relationshipDescription != false) {
-		return UTF8_strtolower($relationshipDescription);
+		return utf8_strtolower($relationshipDescription);
 	}
 	return false;
 }

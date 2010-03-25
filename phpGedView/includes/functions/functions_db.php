@@ -181,13 +181,13 @@ function get_prev_xref($pid, $ged_id=PGV_GED_ID) {
 // Generate a list of alternate initial letters for the indilist and famlist
 ////////////////////////////////////////////////////////////////////////////////
 function db_collation_alternatives($letter) {
-	global $UCDiacritWhole, $UCDiacritStrip, $DB_UTF8_COLLATION, $MULTI_LETTER_ALPHABET, $MULTI_LETTER_EQUIV, $LANGUAGE;
+	global $DB_UTF8_COLLATION, $MULTI_LETTER_ALPHABET, $MULTI_LETTER_EQUIV, $LANGUAGE;
 
 	// Multi-letter collation.
 	// e.g. on czech pages, we don't include "CH" under "C"
 	$include=array($letter);
 	$exclude=array();
-	foreach (preg_split('/[ ,;]/', UTF8_strtoupper($MULTI_LETTER_ALPHABET[$LANGUAGE])) as $digraph) {
+	foreach (preg_split('/[ ,;]/', utf8_strtoupper($MULTI_LETTER_ALPHABET)) as $digraph) {
 		if ($letter && $digraph!=$letter && strpos($digraph, $letter)===0) {
 			$exclude[]=$digraph;
 		}
@@ -197,7 +197,7 @@ function db_collation_alternatives($letter) {
 	// e.g. on danish pages, we include "AA" under "Aring", not under "A"
 	foreach (preg_split('/[ ,;]/', $MULTI_LETTER_EQUIV[$LANGUAGE], -1, PREG_SPLIT_NO_EMPTY) as $digraph) {
 		list($from, $to)=explode('=', $digraph);
-		$from=UTF8_strtoupper($from);
+		$from=utf8_strtoupper($from);
 		if ($from==$letter && strpos($from, $letter)===0) {
 			$include[]=$to;
 		}
@@ -206,15 +206,6 @@ function db_collation_alternatives($letter) {
 		}
 		if ($to==$letter) {
 			$include[]=$from;
-		}
-	}
-
-	// Non UTF8 aware databases need to be told that "e-ecute" is the same as "e"....
-	if (!$DB_UTF8_COLLATION) {
-		foreach (str_split($UCDiacritStrip) as $n=>$char) {
-			if ($char==$letter) {
-				$include[]=UTF8_substr($UCDiacritWhole, $n, 1);
-			}
 		}
 	}
 
@@ -230,7 +221,7 @@ function db_collation_digraphs() {
 	// Multi-letter collation.
 	// e.g. on czech pages, we don't include "CH" under "C"
 	$digraphs=array();
-	foreach (preg_split('/[ ,;]/', UTF8_strtoupper($MULTI_LETTER_ALPHABET[$LANGUAGE]), -1, PREG_SPLIT_NO_EMPTY) as $digraph) {
+	foreach (preg_split('/[ ,;]/', utf8_strtoupper($MULTI_LETTER_ALPHABET), -1, PREG_SPLIT_NO_EMPTY) as $digraph) {
 		$digraphs[$digraph]=$digraph;
 	}
 
@@ -238,7 +229,7 @@ function db_collation_digraphs() {
 	// e.g. danish pages, we include "AE" under "AE-ligature"
 	foreach (preg_split('/[ ,;]/', $MULTI_LETTER_EQUIV[$LANGUAGE], -1, PREG_SPLIT_NO_EMPTY) as $digraph) {
 		list($from, $to)=explode('=', $digraph);
-		$digraphs[$to]=UTF8_strtoupper($from);
+		$digraphs[$to]=utf8_strtoupper($from);
 	}
 
 	return $digraphs;
@@ -366,14 +357,14 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 		if ($DB_UTF8_COLLATION) {
 			$letter=$alpha;
 		} else {
-			$letter=UTF8_strtoupper(UTF8_substr($alpha,0,1));
+			$letter=utf8_strtoupper(utf8_substr($alpha,0,1));
 		}
 		$list[$letter]=$letter;
 	}
 
 	// If we didn't sort in the DB, sort ourselves
 	if (!$DB_UTF8_COLLATION) {
-		uasort($list, 'stringsort');
+		uasort($list, 'utf8_strcasecmp');
 	}
 	// sorting puts "," and "@" first, so force them to the end
 	if (in_array(',', $list)) {
@@ -442,7 +433,7 @@ function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
 		$list[$row->n_surn][$row->n_surname][$row->n_id]=true;
 	}
 	if (!$DB_UTF8_COLLATION) {
-		uksort($list, 'stringsort');
+		uksort($list, 'utf8_strcasecmp');
 	}
 	return $list;
 }
@@ -498,7 +489,7 @@ function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
 		$list[$row->n_surn][$row->n_surname][$row->l_to]=true;
 	}
 	if (!$DB_UTF8_COLLATION) {
-		uksort($list, 'stringsort');
+		uksort($list, 'utf8_strcasecmp');
 	}
 	return $list;
 }
@@ -1255,11 +1246,11 @@ function search_indis($query, $geds, $match, $skip) {
 	$queryregex=array();
 
 	foreach ($query as $q) {
-		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
+		$queryregex[]=preg_quote(utf8_strtoupper($q), '/');
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
 			$querysql[]="i_gedcom LIKE ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]="(i_gedcom LIKE ".PGV_DB::quote("%{$q}%")." OR i_gedcom LIKE ".PGV_DB::quote("%".UTF8_strtoupper($q)."%")." OR i_gedcom LIKE ".PGV_DB::quote("%".UTF8_strtolower($q)."%").")";
+			$querysql[]="(i_gedcom LIKE ".PGV_DB::quote("%{$q}%")." OR i_gedcom LIKE ".PGV_DB::quote("%".utf8_strtoupper($q)."%")." OR i_gedcom LIKE ".PGV_DB::quote("%".utf8_strtolower($q)."%").")";
 		}
 	}
 
@@ -1287,7 +1278,7 @@ function search_indis($query, $geds, $match, $skip) {
 		}
 		$indi=Person::getInstance($row);
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
-		$gedrec=UTF8_strtoupper($indi->getGedcomRecord());
+		$gedrec=utf8_strtoupper($indi->getGedcomRecord());
 		foreach ($queryregex as $q) {
 			if (!preg_match('/\n\d\ '.PGV_REGEX_TAG.' .*'.$q.'/i', $gedrec)) {
 				continue 2;
@@ -1324,7 +1315,7 @@ function search_indis_names($query, $geds, $match) {
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
 			$querysql[]="n_full LIKE ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]="(n_full LIKE ".PGV_DB::quote("%{$q}%")." OR n_full LIKE ".PGV_DB::quote("%".UTF8_strtoupper($q)."%")." OR n_full LIKE ".PGV_DB::quote("%".UTF8_strtolower($q)."%").")";
+			$querysql[]="(n_full LIKE ".PGV_DB::quote("%{$q}%")." OR n_full LIKE ".PGV_DB::quote("%".utf8_strtoupper($q)."%")." OR n_full LIKE ".PGV_DB::quote("%".utf8_strtolower($q)."%").")";
 		}
 	}
 	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_num FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON i_id=n_id AND i_file=n_file WHERE (".implode(" {$match} ", $querysql).') AND i_file IN ('.implode(',', $geds).')';
@@ -1550,12 +1541,12 @@ function search_fams($query, $geds, $match, $skip) {
 	$queryregex=array();
 
 	foreach ($query as $q) {
-		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
+		$queryregex[]=preg_quote(utf8_strtoupper($q), '/');
 
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
 			$querysql[]="f_gedcom LIKE ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]="(f_gedcom LIKE ".PGV_DB::quote("%{$q}%")." OR f_gedcom LIKE ".PGV_DB::quote("%".UTF8_strtoupper($q)."%")." OR f_gedcom LIKE ".PGV_DB::quote("%".UTF8_strtolower($q)."%").")";
+			$querysql[]="(f_gedcom LIKE ".PGV_DB::quote("%{$q}%")." OR f_gedcom LIKE ".PGV_DB::quote("%".utf8_strtoupper($q)."%")." OR f_gedcom LIKE ".PGV_DB::quote("%".utf8_strtolower($q)."%").")";
 		}
 	}
 
@@ -1583,7 +1574,7 @@ function search_fams($query, $geds, $match, $skip) {
 		}
 		$family=Family::getInstance($row);
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
-		$gedrec=UTF8_strtoupper($family->getGedcomRecord());
+		$gedrec=utf8_strtoupper($family->getGedcomRecord());
 		foreach ($queryregex as $q) {
 			if (!preg_match('/\n\d\ '.PGV_REGEX_TAG.' .*'.$q.'/i', $gedrec)) {
 				continue 2;
@@ -1621,7 +1612,7 @@ function search_fams_names($query, $geds, $match) {
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
 			$querysql[]="(husb.n_full LIKE ".PGV_DB::quote("%{$q}%")." OR wife.n_full LIKE ".PGV_DB::quote("%{$q}%").")";
 		} else {
-			$querysql[]="(husb.n_full LIKE ".PGV_DB::quote("%{$q}%")." OR wife.n_full LIKE '%{$q}%' OR husb.n_full LIKE ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR husb.n_full LIKE ".PGV_DB::quote(UTF8_strtolower("%{$q}%"))." OR wife.n_full LIKE ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR wife.n_full LIKE ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
+			$querysql[]="(husb.n_full LIKE ".PGV_DB::quote("%{$q}%")." OR wife.n_full LIKE '%{$q}%' OR husb.n_full LIKE ".PGV_DB::quote(utf8_strtoupper("%{$q}%"))." OR husb.n_full LIKE ".PGV_DB::quote(utf8_strtolower("%{$q}%"))." OR wife.n_full LIKE ".PGV_DB::quote(utf8_strtoupper("%{$q}%"))." OR wife.n_full LIKE ".PGV_DB::quote(utf8_strtolower("%{$q}%")).")";
 		}
 	}
 
@@ -1672,11 +1663,11 @@ function search_sources($query, $geds, $match, $skip) {
 	$queryregex=array();
 
 	foreach ($query as $q) {
-		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
+		$queryregex[]=preg_quote(utf8_strtoupper($q), '/');
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
 			$querysql[]="s_gedcom LIKE ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]="(s_gedcom LIKE ".PGV_DB::quote("%{$q}%")." OR s_gedcom LIKE ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR s_gedcom LIKE ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
+			$querysql[]="(s_gedcom LIKE ".PGV_DB::quote("%{$q}%")." OR s_gedcom LIKE ".PGV_DB::quote(utf8_strtoupper("%{$q}%"))." OR s_gedcom LIKE ".PGV_DB::quote(utf8_strtolower("%{$q}%")).")";
 		}
 	}
 
@@ -1704,7 +1695,7 @@ function search_sources($query, $geds, $match, $skip) {
 		}
 		$source=Source::getInstance($row);
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
-		$gedrec=UTF8_strtoupper($source->getGedcomRecord());
+		$gedrec=utf8_strtoupper($source->getGedcomRecord());
 		foreach ($queryregex as $q) {
 			if (!preg_match('/\n\d\ '.PGV_REGEX_TAG.' .*'.$q.'/i', $gedrec)) {
 				continue 2;
@@ -1742,11 +1733,11 @@ function search_notes($query, $geds, $match, $skip) {
 	$queryregex=array();
 	
 	foreach ($query as $q) {
-		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
+		$queryregex[]=preg_quote(utf8_strtoupper($q), '/');
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
 			$querysql[]="o_gedcom LIKE ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]="(o_gedcom LIKE ".PGV_DB::quote("%{$q}%")." OR o_gedcom LIKE ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR o_gedcom LIKE ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
+			$querysql[]="(o_gedcom LIKE ".PGV_DB::quote("%{$q}%")." OR o_gedcom LIKE ".PGV_DB::quote(utf8_strtoupper("%{$q}%"))." OR o_gedcom LIKE ".PGV_DB::quote(utf8_strtolower("%{$q}%")).")";
 		}
 	}
 
@@ -1774,7 +1765,7 @@ function search_notes($query, $geds, $match, $skip) {
 		}
 		$note=Note::getInstance($row);
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
-		$gedrec=UTF8_strtoupper($note->getGedcomRecord());
+		$gedrec=utf8_strtoupper($note->getGedcomRecord());
 		foreach ($queryregex as $q) {
 			if (!preg_match('/(\n\d|^0 @'.PGV_REGEX_XREF.'@) '.PGV_REGEX_TAG.' .*'.$q.'/i', $gedrec)) {
 				continue 2;
@@ -1887,7 +1878,7 @@ function find_place_list($place) {
 		$found = array();
 		foreach ($placelist as $indexval => $pplace) {
 			if (stripos($pplace, $place)!==false) {
-				$upperplace = UTF8_strtoupper($pplace);
+				$upperplace = utf8_strtoupper($pplace);
 				if (!isset($found[$upperplace])) {
 					$found[$upperplace] = $pplace;
 				}

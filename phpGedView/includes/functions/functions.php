@@ -40,7 +40,7 @@ define('PGV_FUNCTIONS_PHP', '');
 
 require_once PGV_ROOT.'includes/classes/class_mutex.php';
 require_once PGV_ROOT.'includes/classes/class_media.php';
-require_once PGV_ROOT.'includes/functions/functions_UTF8.php';
+require_once PGV_ROOT.'includes/functions/functions_utf-8.php';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Extract, sanitise and validate FORM (POST), URL (GET) and COOKIE variables.
@@ -726,10 +726,10 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 			$g = new GedcomDate($value);
 			$value = $g->Display();
 			if (!empty($truncate)) {
-				if (UTF8_strlen($value)>$truncate) {
+				if (utf8_strlen($value)>$truncate) {
 					$value = preg_replace("/\(.+\)/", "", $value);
-					//if (UTF8_strlen($value)>$truncate) {
-					//	$value = preg_replace_callback("/([a-zśź]+)/ui", create_function('$matches', 'return UTF8_substr($matches[1], 0, 3);'), $value);
+					//if (utf8_strlen($value)>$truncate) {
+					//	$value = preg_replace_callback("/([a-zśź]+)/ui", create_function('$matches', 'return utf8_substr($matches[1], 0, 3);'), $value);
 					//}
 				}
 			}
@@ -768,11 +768,11 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 			} else
 				if ($convert && $t=="SEX") {
 					if ($value=="M") {
-						$value = UTF8_substr(i18n::translate('Male'), 0, 1);
+						$value = utf8_substr(i18n::translate('Male'), 0, 1);
 					} elseif ($value=="F") {
-						$value = UTF8_substr(i18n::translate('Female'), 0, 1);
+						$value = utf8_substr(i18n::translate('Female'), 0, 1);
 					} else {
-						$value = UTF8_substr(i18n::translate('unknown'), 0, 1);
+						$value = utf8_substr(i18n::translate('unknown'), 0, 1);
 					}
 				} else {
 					if (!empty($truncate)) {
@@ -1269,280 +1269,24 @@ function extract_filename($fullpath) {
  * Function to sort GEDCOM fact tags based on their tanslations
  */
 function factsort($a, $b) {
-	return stringsort(i18n::translate($a), i18n::translate($b));
+	return utf8_strcasecmp(i18n::translate($a), i18n::translate($b));
 }
 /**
  * Function to sort place names array
  */
 function placesort($a, $b) {
-	$a = $a['place'];
-	$b = $b['place'];
-	return stringsort($a, $b);
+	return utf8_strcasecmp($a['place'], $b['place']);
 }
-/**
- * String sorting function
- * @param string $a
- * @param string $b
- * @return int negative numbers sort $a first, positive sort $b first
- */
-function stringsort($aName, $bName) {
-	return compareStrings($aName, $bName, true);		// Case-insensitive sort
-}
-function stringsort2($aName, $bName) {
-	return compareStrings($aName, $bName, false);		// Case-sensitive sort
-}
-function compareStrings($aName, $bName, $ignoreCase=true) {
-	global $LANGUAGE, $CHARACTER_SET;
-	global $alphabet, $alphabet_lower, $alphabet_upper;
-	global $digraph, $trigraph, $quadgraph;
-	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $UCDiacritOrder, $LCDiacritWhole, $LCDiacritStrip, $LCDiacritOrder;
-
-	if (is_array($aName)) {
-		debug_print_backtrace();
-	}
-	getAlphabet();
-
-	if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian") {
-		$danishFrom = array("AA", "Aa", "AE", "Ae", "OE", "Oe", "aa", "ae", "oe");
-		$danishTo 	= array("Å", "Å", "Æ", "Æ", "Ø", "Ø", "å", "æ", "ø");
-	}
-
-	if ($LANGUAGE == "german") {
-		$germanFrom = array("AA", "Aa", "Æ", "AE", "Ae", "Ø", "OE", "Oe", "SS", "Ss", "UE", "Ue", "aa", "æ", "ae", "ø", "oe", "ss", "ue");
-		$germanTo 	= array("Å", "Å", "Ä", "Ä", "Ä", "Ö", "Ö", "Ö", "ß", "ß", "Ü", "Ü", "å", "ä", "ä", "ö", "ö", "ß", "ü");
-	}
-
-	//-- split strings into strings and numbers
-	$aParts = preg_split("/(\d+)/", $aName, -1, PREG_SPLIT_DELIM_CAPTURE);
-	$bParts = preg_split("/(\d+)/", $bName, -1, PREG_SPLIT_DELIM_CAPTURE);
-
-	//-- loop through the arrays of strings and numbers
-	$ac = count($aParts);
-	$bc = count($bParts);
-	for ($j=0; ($j<$ac && $j<$bc); $j++) {
-		$aName = $aParts[$j];
-		$bName = $bParts[$j];
-
-		//-- sort numbers differently
-		if (is_numeric($aName) && is_numeric($bName)) {
-			if ($aName!=$bName) {
-				return $aName-$bName;
-			}
-		} else {
-			//-- Take care of Danish and Norwegian character transformations
-			if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian") {
-				$aName = str_replace($danishFrom, $danishTo, $aName);
-				$bName = str_replace($danishFrom, $danishTo, $bName);
-			}
-			// -- Take care of German character transformations
-			if ($LANGUAGE == "german") {
-				$aName = str_replace($germanFrom, $germanTo, $aName);
-				$bName = str_replace($germanFrom, $germanTo, $bName);
-			}
-
-			//-- get the name lengths
-			$alen = strlen($aName);
-			$blen = strlen($bName);
-
-			//-- loop through the characters in the string and if we find one that is different between the strings
-			//-- return the difference
-			$aIndex = 0;
-			$bIndex = 0;
-			$aDiacriticValue = "";
-			$bDiacriticValue = "";
-			while (true) {
-				$aMultiLetter = false;
-				$bMultiLetter = false;
-				// Look for quadgraphs (4 letters that should be treated as 1)
-				if (isset($quadgraph[$LANGUAGE])) {
-					$aLetter = strtoupper(substr($aName, $aIndex, 4));
-					if (isset($quadgraph[$LANGUAGE][$aLetter])) {
-						$aMultiLetter = $quadgraph[$LANGUAGE][$aLetter];
-						$aCharLen = 4;
-					}
-					$bLetter = strtoupper(substr($bName, $bIndex, 4));
-					if (isset($quadgraph[$LANGUAGE][$bLetter])) {
-						$bMultiLetter = $quadgraph[$LANGUAGE][$bLetter];
-						$bCharLen = 4;
-					}
-				}
-				// Look for trigraphs (3 letters that should be treated as 1)
-				if (isset($trigraph[$LANGUAGE])) {
-					if (!$aMultiLetter) {
-						$aLetter = strtoupper(substr($aName, $aIndex, 3));
-						if (isset($trigraph[$LANGUAGE][$aLetter])) {
-							$aMultiLetter = $trigraph[$LANGUAGE][$aLetter];
-							$aCharLen = 3;
-						}
-					}
-					if (!$bMultiLetter) {
-						$bLetter = strtoupper(substr($bName, $bIndex, 3));
-						if (isset($trigraph[$LANGUAGE][$bLetter])) {
-							$bMultiLetter = $trigraph[$LANGUAGE][$bLetter];
-							$bCharLen = 3;
-						}
-					}
-				}
-				// Look for digraphs (2 letters that should be treated as 1)
-				if (isset($digraphs[$LANGUAGE])) {
-					if (!$aMultiLetter) {
-					$aLetter = strtoupper(substr($aName, $aIndex, 2));
-						if (isset($digraph[$LANGUAGE][$aLetter])) {
-							$aMultiLetter = $digraph[$LANGUAGE][$aLetter];
-							$aCharLen = 2;
-						}
-					}
-					if (!$bMultiLetter) {
-					$bLetter = strtoupper(substr($bName, $bIndex, 2));
-						if (isset($digraph[$LANGUAGE][$bLetter])) {
-							$bMultiLetter = $digraph[$LANGUAGE][$bLetter];
-							$bCharLen = 2;
-						}
-					}
-				}
-
-				// Look for UTF-8 encoded characters
-				if (!$aMultiLetter) {
-					$aCharLen = 1;
-					$aLetter = substr($aName, $aIndex, 1);
-					$aOrd = ord($aLetter);
-					if (($aOrd & 0xE0) == 0xC0) $aCharLen = 2;		// 2-byte sequence
-					if (($aOrd & 0xF0) == 0xE0) $aCharLen = 3;		// 3-byte sequence
-					if (($aOrd & 0xF8) == 0xF0) $aCharLen = 4;		// 4-byte sequence
-				}
-
-				if (!$bMultiLetter) {
-					$bCharLen = 1;
-					$bLetter = substr($bName, $bIndex, 1);
-					$bOrd = ord($bLetter);
-					if (($bOrd & 0xE0) == 0xC0) $bCharLen = 2;		// 2-byte sequence
-					if (($bOrd & 0xF0) == 0xE0) $bCharLen = 3;		// 3-byte sequence
-					if (($bOrd & 0xF8) == 0xF0) $bCharLen = 4;		// 4-byte sequence
-				}
-
-				$aLetter = substr($aName, $aIndex, $aCharLen);
-				$bLetter = substr($bName, $bIndex, $bCharLen);
-
-				if ($DICTIONARY_SORT[$LANGUAGE]) {
-					//-- strip diacritics before checking equality
-					if ($aCharLen==2) {
-						$aPos = strpos($UCDiacritWhole, $aLetter);
-						if ($aPos!==false) {
-							$aPos = $aPos >> 1;
-							$aLetter = substr($UCDiacritStrip, $aPos, 1);
-							$aDiacriticValue .= substr($UCDiacritOrder, $aPos, 1);
-						} else {
-							$aPos = strpos($LCDiacritWhole, $aLetter);
-							if ($aPos!==false) {
-								$aPos = $aPos >> 1;
-								$aLetter = substr($LCDiacritStrip, $aPos, 1);
-								$aDiacriticValue .= substr($LCDiacritOrder, $aPos, 1);
-							} else
-								$aDiacriticValue .= " ";
-						}
-					} else
-						$aDiacriticValue .= " ";
-
-					if ($bCharLen==2) {
-						$bPos = strpos($UCDiacritWhole, $bLetter);
-						if ($bPos!==false) {
-							$bPos = $bPos >> 1;
-							$bLetter = substr($UCDiacritStrip, $bPos, 1);
-							$bDiacriticValue .= substr($UCDiacritOrder, $bPos, 1);
-						} else {
-							$bPos = strpos($LCDiacritWhole, $bLetter);
-							if ($bPos!==false) {
-								$bPos = $bPos >> 1;
-								$bLetter = substr($LCDiacritStrip, $bPos, 1);
-								$bDiacriticValue .= substr($LCDiacritOrder, $bPos, 1);
-							} else
-								$bDiacriticValue .= " ";
-						}
-					} else
-						$bDiacriticValue .= " ";
-				}
-
-				if ($ignoreCase) {
-					$aLetter = UTF8_strtoupper($aLetter);
-					$bLetter = UTF8_strtoupper($bLetter);
-				}
-
-				if ($aLetter!=$bLetter && $bLetter!="" && $aLetter!="") {
-					//-- get the position of the letter in the alphabet string
-					if ($aMultiLetter) {
-						$sortAfter = substr($aLetter, 0, 1);
-						if ($aLetter=="CH") $sortAfter = "H";		// This one doesn't follow the rule
-						if ($aLetter=="Ch") $sortAfter = "H";
-						if ($aLetter=="ch") $sortAfter = "h";
-						$aPos = strpos($alphabet_upper, $sortAfter);
-						if ($aPos===false) $aPos = strpos($alphabet_lower, $sortAfter);
-					} else {
-						$aPos = @strpos($alphabet_upper, $aLetter);
-						if ($aPos===false) $aPos = @strpos($alphabet_lower, $aLetter);
-					}
-					if ($bMultiLetter) {
-						$sortAfter = substr($bLetter, 0, 1);
-						if ($bLetter=="CH") $sortAfter = "H";		// This one doesn't follow the rule
-						if ($bLetter=="Ch") $sortAfter = "H";
-						if ($bLetter=="ch") $sortAfter = "h";
-						$bPos = strpos($alphabet_upper, $sortAfter);
-						if ($bPos===false) $bPos = strpos($alphabet_lower, $sortAfter);
-					} else {
-						$bPos = @strpos($alphabet_upper, $bLetter);
-						if ($bPos===false) $bPos = @strpos($alphabet_lower, $bLetter);
-					}
-
-					// Insert digraphs and trigraphs into main sequence
-					if ($aMultiLetter || $bMultiLetter) {
-						$aPos = ((int) $aPos << 3) + (int) $aMultiLetter;
-						$bPos = ((int) $bPos << 3) + (int) $bMultiLetter;
-					}
-
-					if ($aPos!=$bPos) {
-						if ($aLetter=="@") return 1;		// Force "@" to the end
-						if ($bLetter=="@") return -1;		// Force "@" to the end
-						if (($bPos!==false)&&($aPos===false)) return -1;
-						if (($bPos===false)&&($aPos!==false)) return 1;
-						if (($bPos===false)&&($aPos===false)) {
-							// Determine the binary value of both letters
-							$aValue = UTF8_ord($aLetter);
-							$bValue = UTF8_ord($bLetter);
-							return $aValue - $bValue;
-						}
-						return ($aPos-$bPos);
-					}
-				}
-				$aIndex += $aCharLen;			// advance to the 1st byte of the next sequence
-				$bIndex += $bCharLen;			// advance to the 1st byte of the next sequence
-				if ($aIndex >= $alen) break;
-				if ($bIndex >= $blen) break;
-			}
-		}
-
-		//-- if we made it through the loop then check if one name is longer than the
-		//-- other, the shorter one should be first
-		if ($alen!=$blen) return ($alen-$blen);
-
-		//-- They're identical: let diacritics (if any) decide
-		if ($aDiacriticValue < $bDiacriticValue) return -1;
-		if ($aDiacriticValue > $bDiacriticValue) return 1;
-	}
-	if (count($aParts)!=count($bParts)) return (count($aParts)-count($bParts));
-
-	//-- the strings are exactly the same so return 0
-	return 0;
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // Sort a list events for the today/upcoming blocks
 ////////////////////////////////////////////////////////////////////////////////
 function event_sort($a, $b) {
 	if ($a['jd']==$b['jd']) {
 		if ($a['anniv']==$b['anniv']) {
-			return compareStrings($a['fact'], $b['fact']);
+			return utf8_strcasecmp($a['fact'], $b['fact']);
 		}
 		else {
-			return compareStrings($a['anniv'], $b['anniv']);
+			return utf8_strcasecmp($a['anniv'], $b['anniv']);
 		}
 	} else {
 		return $a['jd']-$b['jd'];
@@ -1612,7 +1356,7 @@ function mediasort($a, $b) {
 			}
 		}
 	}
-	return compareStrings($aKey, $bKey, true);		// Case-insensitive compare
+	return utf8_strcasecmp($aKey, $bKey, true);		// Case-insensitive compare
 }
 /**
  * sort an array according to the file name
@@ -1633,7 +1377,7 @@ function filesort($a, $b) {
 	} else if (!empty($b["file"])) {
 		$bKey = basename($b["file"]);
 	}
-	return compareStrings($aKey, $bKey, true);		// Case-insensitive compare
+	return utf8_strcasecmp($aKey, $bKey, true);		// Case-insensitive compare
 }
 
 // Helper function to sort facts.
@@ -1776,10 +1520,7 @@ function sort_facts(&$arr) {
 }
 
 function gedcomsort($a, $b) {
-	$aname = UTF8_strtoupper($a["title"]);
-	$bname = UTF8_strtoupper($b["title"]);
-
-	return stringsort($aname, $bname);
+	return utf8_strcasecmp($a["title"], $b["title"]);
 }
 
 // ************************************************* START OF MISCELLANIOUS FUNCTIONS ********************************* //
@@ -2888,7 +2629,7 @@ function get_theme_names() {
 		}
 	}
 	$d->close();
-	uksort($themes, "stringsort");
+	uksort($themes, "utf8_strcasecmp");
 	return $themes;
 }
 
@@ -3431,138 +3172,6 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
 		}
 	}
 	return $bRetSts;
-}
-
-/**
- *	Load language variables
- *	Set language-dependent global variables
- *
- *	This function loads the variables for the language, as specified by the first
- *	input parameter. It also loads any existing language-specific functions such
- *	special date handling for Finnish and Turkish.
- *
- *	If the forceLoad parameter is true, English will be loaded first, followed by
- *	the desired language file.
- *
- */
-function loadLanguage($desiredLanguage="english", $forceLoad=false) {
-	global $LANGUAGE, $lang_short_cut;
-	global $faqlist;
-	global $pgv_language, $pgv_lang_self;
-	global $NAME_REVERSE, $NAME_REVERSE_array;
-	global $MULTI_LETTER_ALPHABET, $digraph, $trigraph, $quadgraph, $digraphAll, $trigraphAll, $quadgraphAll;
-	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $UCDiacritOrder, $LCDiacritWhole, $LCDiacritStrip, $LCDiacritOrder;
-	global $unknownNN, $unknownPN;
-	global $CALENDAR_FORMAT;
-	global $DBTYPE, $DB_UTF8_COLLATION, $COLLATION, $DBCOLLATE;
-
-	if (!isset($pgv_language[$desiredLanguage])) $desiredLanguage = "english";
-
-	// Make sure we start with a clean slate
-	$faqlist = array();
-
-	if ($desiredLanguage!=$LANGUAGE) {
-		$LANGUAGE = $desiredLanguage;
-		$file = $pgv_language[$LANGUAGE];
-
-		$NAME_REVERSE	= $NAME_REVERSE_array[$LANGUAGE];
-
-		// Load functions that are specific to the active language
-		$file = PGV_ROOT.'includes/extras/functions.'.$lang_short_cut[$LANGUAGE].'.php';
-		if (file_exists($file)) {
-			require_once $file;
-		}
-
-	}
-
-/**
- *	Build the tables of multi-character sequences that must be considered as a
- *	single character when sorting lists of names and titles.
- *		Reference http://en.wikipedia.org/wiki/Hungarian_alphabet
- *		Reference http://en.wikipedia.org/wiki/Alphabets_derived_from_the_Latin
- */
-	$digraph = array();
-	$trigraph = array();
-	$quadgraph = array();
-	if (!isset($MULTI_LETTER_ALPHABET[$LANGUAGE]))
-		$MULTI_LETTER_ALPHABET[$LANGUAGE] = "";
-	if ($MULTI_LETTER_ALPHABET[$LANGUAGE]!="") {
-		$myList = UTF8_strtoupper($MULTI_LETTER_ALPHABET[$LANGUAGE]);
-		$myList = str_replace(array(";", ","), " ", $myList);
-		$myList = preg_replace("/\s\s+/", " ", $myList);
-		$myList = trim($myList);
-		$wholeList = explode(" ", $myList);
-		$sortValue = array();
-		foreach ($wholeList as $letter) {
-			$first = substr($letter, 0, 1);
-			if ($letter=="CH")
-				$first = "H";	// This one doesn't follow the rule
-			if (!isset($sortValue[$first]))
-				$sortValue[$first] = 0;
-			$sortValue[$first] ++;
-			if (strlen($letter)==2)
-				$digraph[$letter] = $sortValue[$first];
-			if (strlen($letter)==3)
-				$trigraph[$letter] = $sortValue[$first];
-			if (strlen($letter)==4)
-				$quadgraph[$letter] = $sortValue[$first];
-		}
-		$MULTI_LETTER_ALPHABET[$LANGUAGE] = " ".$myList." ";
-	}
-
-	$digraphAll = array();
-	$trigraphAll = array();
-	$quadgraphAll = array();
-	$MULTI_LETTER_ALPHABET["all"] = "";
-	foreach ($MULTI_LETTER_ALPHABET as $lang => $letters) {
-		if ($lang!="all")
-			$MULTI_LETTER_ALPHABET["all"] .= $letters." ";
-	}
-	$MULTI_LETTER_ALPHABET["all"] = UTF8_strtoupper($MULTI_LETTER_ALPHABET["all"]);
-	$MULTI_LETTER_ALPHABET["all"] = str_replace(array(";", ","), " ", $MULTI_LETTER_ALPHABET["all"]);
-	$MULTI_LETTER_ALPHABET["all"] = preg_replace("/\s\s+/", " ", $MULTI_LETTER_ALPHABET["all"]);
-	$wholeList = explode(" ", $MULTI_LETTER_ALPHABET["all"]);
-	$sortValue = array();
-	foreach ($wholeList as $letter) {
-		$first = substr($letter, 0, 1);
-		if ($letter=="CH")
-			$first = "H";	// This one doesn't follow the rule
-		if (!isset($sortValue[$first]))
-			$sortValue[$first] = 0;
-		$sortValue[$first] ++;
-		if (strlen($letter)==2)
-			$digraphAll[$letter] = $sortValue[$first];
-		if (strlen($letter)==3)
-			$trigraphAll[$letter] = $sortValue[$first];
-		if (strlen($letter)==4)
-			$quadgraphAll[$letter] = $sortValue[$first];
-	}
-	$MULTI_LETTER_ALPHABET["all"] = " ".trim($MULTI_LETTER_ALPHABET["all"])." ";
-
-
-/**
- *	Build the tables required for the Dictionary sort
- *
- *	A Dictionary sort is one where all letters with diacritics are considered to be
- *	identical to the base letter (without the mark).  Diacritics become important
- *	only when the two strings (without marks) are identical.
- *
- *	There are two sets of tables, one for the Upper Case version of a UTF8 character
- *	and the other for the lower-case version.  The two tables are not necessarily
- *	identical.  For example, the Turkish dotless i doesn't exist in the Upper case
- *	table.
- *
- *	Within each set, there are three lists which MUST have a one-to-one relationship.
- *	The "DiacritStrip" list gives the base letter of the corresponding "DiacritWhole"
- *	character.
- *	The "DiacritOrder" list assigns a sort value to the diacritic mark of the
- *	"DiacritWhole" character.  All letters that don't appear in these lists, including
- *	the base letter from which the one bearing diacritic marks is formed, are assigned
- *	a sort value of " ".  By using a single letter from the ASCII code chart, we can
- *	have 52 different UTF8 characters all mapping to the same base character.  This will
- *	handle Vietnamese, which is by far the richest language in terms of diacritic marks.
- */
- 	require_once PGV_ROOT.'includes/sort_tables_utf8.php';
 }
 
 /**

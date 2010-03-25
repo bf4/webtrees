@@ -779,7 +779,7 @@ function update_places($gid, $ged_id, $gedrec) {
 	$pt = preg_match_all("/^[2-9] PLAC (.+)/m", $gedrec, $match, PREG_SET_ORDER);
 	for ($i = 0; $i < $pt; $i++) {
 		$place = trim($match[$i][1]);
-		$lowplace = UTF8_strtolower($place);
+		$lowplace = utf8_strtolower($place);
 		//-- if we have already visited this place for this person then we don't need to again
 		if (isset($personplace[$lowplace])) {
 			continue;

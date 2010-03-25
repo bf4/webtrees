@@ -40,29 +40,23 @@ define('PGV_CONFIG_DATA_PHP', '');
 // Unknown surname in various scripts
 // TODO: This is extremely poor I18N - there is not a 1:1 correlation between script and language
 $UNKNOWN_NN=array(
-	'NN'          =>'(unknown)',
-	'NNhebrew'    =>'(לא-ידוע)',
-	'NNarabic'    =>'(غير معروف)',
-	'NNgreek'     =>'(άγνωστος/η)',
-	'NNrussian'   =>'(неопределено)',
-	'NNchinese'   =>'(未知)',
-	'NNvietnamese'=>'(vô danh)',
-	'NNthai'      =>'(unknown)',
-	'NNother'     =>'(unknown)',
+	'hebrew'    =>'(לא-ידוע)',
+	'arabic'    =>'(غير معروف)',
+	'greek'     =>'(άγνωστος/η)',
+	'russian'   =>'(неопределено)',
+	'han'       =>'(未知)',
+	'latin'     =>'(unknown)',
 );
 
 // Unknown givne name in various scripts
 // TODO: This is extremely poor I18N - there is not a 1:1 correlation between script and language
 $UNKNOWN_PN=array(
-	'PN'          =>'(unknown)',
-	'PNhebrew'    =>'(לא-ידוע)',
-	'PNarabic'    =>'(غير معروف)',
-	'PNgreek'     =>'(άγνωστος/η)',
-	'PNrussian'   =>'(неопределено)',
-	'PNchinese'   =>'(未知)',
-	'PNvietnamese'=>'(không biết tuổi)',
-	'PNthai'      =>'(unknown)',
-	'PNother'     =>'(unknown)',
+	'hebrew'    =>'(לא-ידוע)',
+	'arabic'    =>'(غير معروف)',
+	'greek'     =>'(άγνωστος/η)',
+	'russian'   =>'(неопределено)',
+	'han'       =>'(未知)',
+	'latin'     =>'(unknown)',
 );
 
 // Type attribute of a media object

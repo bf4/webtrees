@@ -74,11 +74,11 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 	// Insert from the "Add Names" list if not already in there
 	if ($COMMON_NAMES_ADD) {
 		foreach (preg_split('/[,; ]+/', $COMMON_NAMES_ADD) as $addname) {
-			$ADDNAME=UTF8_strtoupper($addname);
+			$ADDNAME=utf8_strtoupper($addname);
 			if (isset($all_surnames[$ADDNAME])) {
 				$SURNAME=$ADDNAME;
 				foreach (array_keys($all_surnames[$ADDNAME]) as $surname) {
-					if ($SURNAME!=$surname && $SURNAME==UTF8_strtoupper($surname)) {
+					if ($SURNAME!=$surname && $SURNAME==utf8_strtoupper($surname)) {
 						$all_surnames[$ADDNAME][$SURNAME]=$all_surnames[$ADDNAME][$surname];
 						unset ($all_surnames[$ADDNAME][$surname]);
 					}
@@ -98,7 +98,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 	// Remove names found in the "Remove Names" list
 	if ($COMMON_NAMES_REMOVE) {
 		foreach (preg_split("/[,; ]+/", $COMMON_NAMES_REMOVE) as $delname) {
-			unset($all_surnames[UTF8_strtoupper($delname)]);
+			unset($all_surnames[utf8_strtoupper($delname)]);
 		}
 	}
 
@@ -121,7 +121,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 
 	switch ($SURNAME_LIST_STYLE) {
 	case 'style3':
-		uksort($all_surnames,'stringsort');	
+		uksort($all_surnames,'utf8_strcasecmp');	
 		$content=format_surname_tagcloud($all_surnames, 'indilist', true);
 		break;
 	case 'style2':

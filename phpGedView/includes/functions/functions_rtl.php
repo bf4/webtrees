@@ -237,8 +237,7 @@ function spanLTRRTL($inputText, $direction='BOTH', $class='') {
 			// Determine the directionality of the current UTF-8 character
 			$newState = $currentState;
 			while (true) {
-				$currentAlphabet = whatAlphabet($currentLetter);
-				if ($currentAlphabet == 'hebrew' || $currentAlphabet == 'arabic') {
+				if (utf8_direction($currentLetter)=='rtl') {
 					if ($currentState == '') {
 						$newState = 'RTL';
 						break;
@@ -253,8 +252,7 @@ function spanLTRRTL($inputText, $direction='BOTH', $class='') {
 						$nextLen = $nextCharArray['length'];
 						$tempText = substr($tempText, $nextLen);
 
-						$nextAlphabet = whatAlphabet($nextLetter);
-						if ($nextAlphabet == 'hebrew' || $nextAlphabet == 'arabic') {
+						if (utf8_direction($nextLetter)=='rtl') {
 							$newState = 'RTL';
 							break 2;
 						}
@@ -387,7 +385,7 @@ function spanLTRRTL($inputText, $direction='BOTH', $class='') {
 			break;
 		}
 		$textSpan = stripLRMRLM(substr($result, $lenStart+3, $spanEnd-$lenStart-3));
-		$langSpan = whatLanguage($textSpan);
+		$langSpan = utf8_script($textSpan);
 		if ($langSpan == 'hebrew' || $langSpan == 'arabic') {
 			break;
 		}
@@ -1051,81 +1049,6 @@ function finishCurrentSpan(&$result, $theEnd=false) {
 }
 
 /**
- * Determine alphabet of input character
- *
- * This function inspects the input character to determine which alphabet it belongs to.
- * The test for Vietnamese is not 100% accurate, since Vietnamese borrows from the French
- * alphabet.  This results in some Vietnamese characters being identified as "other".
- *
- * @param	string	Input character
- * @return	string	Name of the alphabet
- */
-function whatAlphabet($char) {
-	global $UTF8_ranges;
-
-	$ordinal = UTF8_ord($char);
-
-	$language = "none";
-	foreach ($UTF8_ranges as $UTF8_range) {
-		if ($ordinal < $UTF8_range[1]) break;
-		if (($ordinal >= $UTF8_range[1]) && ($ordinal <= $UTF8_range[2])) {
-			$language = $UTF8_range[0];
-			break;
-		}
-	}
-
-	return $language;
-}
-
-/**
- * Determine language of input string
- *
- * This function inspects the input string to determine its language.  Except for Vietnamese,
- * when the input string contains characters from more than one alphabet, this function will
- * return "other".  For Vietnamese, if any characters of the input string are "vietnamese" and
- * the only other characters are of language "other", the result is "vietnamese".
- *
- * @param	string	Input string
- * @return	string	Name of the language
- */
-function whatLanguage($string) {
-	$string = preg_replace(array("/@N.N.?/","/@P.N.?/"), "", $string);
-	$langsFound = array();
-	$lastLang = "other";
-	$skipTo = "";
-	for ($index=0; $index<strlen($string);) {
-		$charLen = 1;
-		$letter = substr($string, $index, 1);
-		if ((ord($letter) & 0xE0) == 0xC0) $charLen = 2;		// 2-byte sequence
-		if ((ord($letter) & 0xF0) == 0xE0) $charLen = 3;		// 3-byte sequence
-		if ((ord($letter) & 0xF8) == 0xF0) $charLen = 4;		// 4-byte sequence
-
-		$letter = substr($string, $index, $charLen);
-		$index += $charLen;
-
-		if ($letter==$skipTo) $skipTo = "";
-		else {
-			if ($letter=="&") $skipTo = ";";
-			else if ($letter=="<") $skipTo = ">";
-			if ($skipTo=="") {
-				$lang = whatAlphabet($letter);
-				if ($lang!="none") {
-					$langsFound[$lang] = true;
-					$lastLang = $lang;
-				}
-			}
-		}
-	}
-	if (isset($langsFound["vietnamese"])) {
-		if (count($langsFound)==1) return "vietnamese";
-		if (count($langsFound)==2 && isset($langsFound["other"])) return "vietnamese";
-	}
-	if (count($langsFound)!=1) return "other";
-	return $lastLang;
-}
-
-
-/**
  * convert HTML entities to to their original characters
  *
  * original found at http://www.php.net/manual/en/function.get-html-translation-table.php
@@ -1340,11 +1263,12 @@ function hasLTRText($text) {
  *         quotation marks, etc. must be reversed so that the appearance of the RTL text is preserved.
  */
 function reverseText($text) {
-	global $UTF8_numbers, $UTF8_brackets;
+	$UTF8_numbers=WT_UTF8_DIGITS;
+	$UTF8_brackets=WT_UTF8_PARENTHESES;
 
 	$text = strip_tags(html_entity_decode($text,ENT_COMPAT,'UTF-8'));
 	$text = str_replace(array('&lrm;', '&rlm;', PGV_UTF8_LRM, PGV_UTF8_RLM), '', $text);
-	$textLanguage = whatLanguage($text);
+	$textLanguage = utf8_script($text);
 	if ($textLanguage!='hebrew' && $textLanguage!='arabic') return $text;
 
 	$reversedText = '';

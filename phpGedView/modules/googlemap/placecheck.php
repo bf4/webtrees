@@ -185,7 +185,7 @@ case 'go':
 	
 	//sort the array, limit to unique values, and count them
 	$place_parts=array();
-	usort($place_list, "stringsort");
+	usort($place_list, "utf8_strcasecmp");
 	$i=count($place_list);
 	
 	//calculate maximum no. of levels to display

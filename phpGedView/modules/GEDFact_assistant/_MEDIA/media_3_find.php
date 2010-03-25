@@ -665,7 +665,7 @@ if ($action=="filter") {
 					}
 					$revplacelist[] = $placetext;
 				}
-				uasort($revplacelist, "stringsort");
+				uasort($revplacelist, "utf8_strcasecmp");
 				echo "<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
 				foreach($revplacelist as $place) {
 					echo "<li><a href=\"javascript:;\" onclick=\"pasteid('", str_replace(array("'", '"'), array("\'", '&quot;'), $place), "');\">", PrintReady($place), "</a></li>";

@@ -1341,7 +1341,7 @@ function format_surname_table($surnames, $type) {
 		//$first_spfxsurn=null;
 		//foreach ($surns as $spfxsurn=>$indis) {
 		//	if ($first_spfxsurn) {
-		//		if (UTF8_strtoupper($spfxsurn)==UTF8_strtoupper($first_spfxsurn)) {
+		//		if (utf8_strtoupper($spfxsurn)==utf8_strtoupper($first_spfxsurn)) {
 		//			$surns[$first_spfxsurn]=array_merge($surns[$first_spfxsurn], $surns[$spfxsurn]);
 		//			unset ($surns[$spfxsurn]);
 		//		}
@@ -1435,7 +1435,7 @@ function format_surname_tagcloud($surnames, $type, $totals) {
 		$first_spfxsurn=null;
 		foreach ($surns as $spfxsurn=>$indis) {
 			if ($first_spfxsurn) {
-				if (UTF8_strtoupper($spfxsurn)==UTF8_strtoupper($first_spfxsurn)) {
+				if (utf8_strtoupper($spfxsurn)==utf8_strtoupper($first_spfxsurn)) {
 					$surns[$first_spfxsurn]=array_merge($surns[$first_spfxsurn], $surns[$spfxsurn]);
 					unset ($surns[$spfxsurn]);
 				}
@@ -1483,7 +1483,7 @@ function format_surname_list($surnames, $style, $totals) {
 		$first_spfxsurn=null;
 		foreach ($surns as $spfxsurn=>$indis) {
 			if ($first_spfxsurn) {
-				if (UTF8_strtoupper($spfxsurn)==UTF8_strtoupper($first_spfxsurn)) {
+				if (utf8_strtoupper($spfxsurn)==utf8_strtoupper($first_spfxsurn)) {
 					$surns[$first_spfxsurn]=array_merge($surns[$first_spfxsurn], $surns[$spfxsurn]);
 					unset ($surns[$spfxsurn]);
 				}

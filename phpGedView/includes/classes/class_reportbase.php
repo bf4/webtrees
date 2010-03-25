@@ -2174,19 +2174,19 @@ function PGVRGetPersonNameSHandler($attrs) {
 			}
 			if (!empty($attrs["truncate"])) {
 				//short-circuit with the faster strlen
-				if (strlen($name)>$attrs["truncate"] && UTF8_strlen($name)>$attrs["truncate"]) {
+				if (strlen($name)>$attrs["truncate"] && utf8_strlen($name)>$attrs["truncate"]) {
 					$name = preg_replace("/\(.*\) ?/", "", $name); //removes () and text inbetween - what about ", [ and { etc?
 					$words = explode(" ", $name);
 					$name = $words[count($words)-1];
 					for($i=count($words)-2; $i>=0; $i--) {
-						$len = UTF8_strlen($name);
+						$len = utf8_strlen($name);
 						for($j=count($words)-3; $j>=0; $j--) {
-							$len += UTF8_strlen($words[$j]);
+							$len += utf8_strlen($words[$j]);
 						}
 						if ($len>$attrs["truncate"]) {
-							$first_letter = UTF8_substr($words[$i], 0, 1);
+							$first_letter = utf8_substr($words[$i], 0, 1);
 							//do not show " of nick-names
-							if ($first_letter != "\"") $name = UTF8_substr($words[$i], 0, 1).". ".$name;
+							if ($first_letter != "\"") $name = utf8_substr($words[$i], 0, 1).". ".$name;
 						} else {
 							$name = $words[$i]." ".$name;
 						}
@@ -2528,7 +2528,7 @@ function PGVRvarLetterSHandler($attrs) {
 		$tfact = $fact;
 		$var = str_replace(array("[", "]", "@fact", "@desc"), array("['", "']", $tfact, $desc), $var);
 		eval("if (!empty(\$$var)) \$var = \$$var;");
-		$letter = UTF8_substr($var, 0, 1);
+		$letter = utf8_substr($var, 0, 1);
 		$currentElement->addText($letter);
 	}
 }
@@ -3245,7 +3245,7 @@ function PGVRListSHandler($attrs) {
 							if ($match[1] != ""){
 								$names = explode(" ", $match[1]);
 								foreach ($names as $name){
-									$sql_where[]="{$attr}.n_full LIKE ".PGV_DB::quote(UTF8_strtoupper("%{$name}%"));
+									$sql_where[]="{$attr}.n_full LIKE ".PGV_DB::quote(utf8_strtoupper("%{$name}%"));
 								}
 							}
 							// Let the DB do the name sorting even when no name was entered
@@ -3260,7 +3260,7 @@ function PGVRListSHandler($attrs) {
 						$sql_join[]="JOIN {$TBLPREFIX}link AS {$attr}a ON ({$attr}a.l_file={$sql_col_prefix}file AND {$attr}a.l_from={$sql_col_prefix}id)";
 						$sql_join[]="JOIN {$TBLPREFIX}name AS {$attr}b ON ({$attr}b.n_file={$sql_col_prefix}file AND n_id={$sql_col_prefix}id)";
 						$sql_where[]="{$attr}a.l_type=IN ('HUSB, 'WIFE')";
-						$sql_where[]="{$attr}.n_full LIKE ".PGV_DB::quote(UTF8_strtoupper("%{$match[1]}%"));
+						$sql_where[]="{$attr}.n_full LIKE ".PGV_DB::quote(utf8_strtoupper("%{$match[1]}%"));
 						if ($sortby=="NAME") {
 							$sortby="";
 							$sql_order_by[]="{$attr}.n_sort";
@@ -3269,7 +3269,7 @@ function PGVRListSHandler($attrs) {
 	 				} elseif (preg_match('/^(?:\w+):PLAC CONTAINS (.+)$/', $value, $match)) {
 						$sql_join[]="JOIN {$TBLPREFIX}places AS {$attr}a ON ({$attr}a.p_file={$sql_col_prefix}file)";
 						$sql_join[]="JOIN {$TBLPREFIX}placelinks AS {$attr}b ON ({$attr}a.p_file={$attr}b.pl_file AND {$attr}b.pl_p_id={$attr}a.p_id AND {$attr}b.pl_gid={$sql_col_prefix}id)";
-						$sql_where[]="{$attr}a.p_place LIKE ".PGV_DB::quote(UTF8_strtoupper("%{$match[1]}%"));
+						$sql_where[]="{$attr}a.p_place LIKE ".PGV_DB::quote(utf8_strtoupper("%{$match[1]}%"));
 						// Don't unset this filter. This is just the first primary PLAC filter to reduce the returned list from the DB
 					}
 					/**
@@ -3285,7 +3285,7 @@ function PGVRListSHandler($attrs) {
 						if ($match[2] != "") $query .= "%2 {$match[2]}%";
 						// Contains what?
 						if ($match[3] != "") $query .= "%{$match[3]}%";
-						$sql_where[] = "i_gedcom LIKE ".PGV_DB::quote(UTF8_strtoupper($query));
+						$sql_where[] = "i_gedcom LIKE ".PGV_DB::quote(utf8_strtoupper($query));
 						unset($query);
 					} elseif (($listname=="family") and (preg_match('/^(\w*):*(\w*) CONTAINS (.*)$/', $value, $match))){
 	 					$query = "";
@@ -3295,7 +3295,7 @@ function PGVRListSHandler($attrs) {
 						if ($match[2] != "") $query .= "%2 {$match[2]}%";
 						// Contains what?
 						if ($match[3] != "") $query .= "%{$match[3]}%";
-						$sql_where[] = "f_gedcom LIKE ".PGV_DB::quote(UTF8_strtoupper($query));
+						$sql_where[] = "f_gedcom LIKE ".PGV_DB::quote(utf8_strtoupper($query));
 						unset($query);
 					} else {
 						// TODO: what other filters can we apply in SQL?

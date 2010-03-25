@@ -1575,7 +1575,7 @@ class Person extends GedcomRecord {
 	// 2 GIVN Carlos
 	// 2 SURN Vasquez,Sante
 	protected function _addName($type, $full, $gedrec) {
-		global $UNDERLINE_NAME_QUOTES, $NAME_REVERSE, $unknownNN, $unknownPN;
+		global $UNDERLINE_NAME_QUOTES, $NAME_REVERSE, $UNKNOWN_NN, $UNKNOWN_PN;
 
 		// Look for GIVN/SURN at level n+1
 		$sublevel=1+(int)$gedrec[0];
@@ -1726,10 +1726,10 @@ class Person extends GedcomRecord {
 				$NN=i18n::translate('(unknown)');
 			} else {
 				if ($surn!=='')
-					$PN=$unknownPN[whatLanguage($surn)];
+					$PN=$UNKNOWN_PN[utf8_script($surn)];
 				else
-					$PN=$unknownPN[whatLanguage($surns[0])];
-				$NN=$unknownNN[whatLanguage($givn)];
+					$PN=$UNKNOWN_PN[utf8_script($surns[0])];
+				$NN=$UNKNOWN_NN[utf8_script($givn)];
 			}
 			$list=str_replace(array('@N.N.','@P.N.'), array($NN, $PN), $list);
 			$full=str_replace(array('@N.N.','@P.N.'), array($NN, $PN), $full);
@@ -1739,10 +1739,10 @@ class Person extends GedcomRecord {
 
 		// Where nicknames are entered in the given name field, these will break
 		// sorting, so strip them out.
-		$GIVN=preg_replace('/["\'()]/', '', UTF8_strtoupper($givn));
+		$GIVN=preg_replace('/["\'()]/', '', utf8_strtoupper($givn));
 
 		foreach ($surns as $n=>$surn) {
-			$SURN=UTF8_strtoupper($surn);
+			$SURN=utf8_strtoupper($surn);
 			// Scottish 'Mc and Mac' prefixes sort under 'Mac'
 			if (substr($SURN, 0, 2)=='MC'  ) { $SURN='MAC'.substr($SURN, 2); }
 			if (substr($SURN, 0, 4)=='MAC ') { $SURN='MAC'.substr($SURN, 4); }

@@ -37,7 +37,7 @@ define('PGV_ICON_BRANCHES', "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["patria
 
 //-- args
 $surn = safe_GET('surn', '[^<>&%{};]*');
-$surn = UTF8_strtoupper($surn);
+$surn = utf8_strtoupper($surn);
 $soundex_std = safe_GET_bool('soundex_std');
 $soundex_dm = safe_GET_bool('soundex_dm');
 $ged = safe_GET('ged');
@@ -90,7 +90,7 @@ if ($ENABLE_AUTOCOMPLETE) {
 <?php
 //-- results
 if ($surn) {
-	$surn_lang = whatLanguage($surn);
+	$surn_script = utf8_script($surn);
 	echo "<fieldset><legend>", PGV_ICON_BRANCHES, " ", PrintReady($surn), "</legend>";
 	$indis = indis_array($surn, $soundex_std, $soundex_dm);
 	echo "<ol>";
@@ -111,7 +111,7 @@ if ($surn) {
 print_footer();
 
 function print_fams($person, $famid=null) {
-	global $UNKNOWN_NN, $PEDI_CODES, $surn, $surn_lang, $TEXT_DIRECTION;
+	global $UNKNOWN_NN, $PEDI_CODES, $surn, $surn_script, $TEXT_DIRECTION;
 	// select person name according to searched surname
 	$person_name = "";
 	foreach ($person->getAllNames() as $n=>$name) {
@@ -123,7 +123,7 @@ function print_fams($person, $famid=null) {
 			) {
 			continue;
 		}
-		if (whatLanguage($surn1)!==$surn_lang) {
+		if (utf8_script($surn1)!==$surn_script) {
 			continue;
 		}
 		$person_name = $name['full'];
@@ -133,7 +133,7 @@ function print_fams($person, $famid=null) {
 		echo "<span title=\"", PrintReady(strip_tags($person->getFullName())), "\">", $person->getSexImage(), "...</span>";
 		return;
 	}
-	$person_lang = whatLanguage($person_name);
+	$person_script = utf8_script($person_name);
 	// current indi
 	echo "<li>";
 	$class = "";
@@ -170,13 +170,13 @@ function print_fams($person, $famid=null) {
 			}
 			$spouse_name = $spouse->getListName();
 			foreach ($spouse->getAllNames() as $n=>$name) {
-				if (whatLanguage($name['list']) == $person_lang) {
+				if (utf8_script($name['list']) == $person_script) {
 					$spouse_name = $name['list'];
 					break;
 				}
 				//How can we use check_NN($names) or something else to replace the unknown unknown name from the page language to the language of the spouse's name?
 				else if ($name['fullNN']=="@P.N. @N.N.") {
-					$spouse_name = $UNKNOWN_NN["NN".$person_lang].", ".$UNKNOWN_NN["NN".$person_lang];
+					$spouse_name = $UNKNOWN_NN[$person_script].", ".$UNKNOWN_NN[$person_script];
 					break;
 				}
 			}

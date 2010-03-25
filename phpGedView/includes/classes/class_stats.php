@@ -1095,7 +1095,7 @@ class stats {
 			$chart_title=i18n::translate('Surname distribution chart').': '.$surname;
 			// Count how many people are events in each country
 			$surn_countries=array();
-			$indis = get_indilist_indis(UTF8_strtoupper($surname), '', '', false, false, PGV_GED_ID);
+			$indis = get_indilist_indis(utf8_strtoupper($surname), '', '', false, false, PGV_GED_ID);
 			foreach ($indis as $person) {
 				if (preg_match_all('/^2 PLAC (?:.*, *)*(.*)/m', $person->gedrec, $matches)) {
 					// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
@@ -1779,7 +1779,7 @@ class stats {
 			$countsa = substr($countsa,0,-1);
 			$chd = "t2:{$countsm}|{$countsf}|{$countsa}";
 			$chxl .= "1:||".i18n::translate('century')."|2:|0|10|20|30|40|50|60|70|80|90|100|3:||".i18n::translate('Age')."|";
-			if (count($rows)>4 || UTF8_strlen(i18n::translate('Average age related to death century'))<30) {
+			if (count($rows)>4 || utf8_strlen(i18n::translate('Average age related to death century'))<30) {
 				$chtt = i18n::translate('Average age related to death century');
 			} else {
 				$offset = 0;
@@ -2659,7 +2659,7 @@ class stats {
 			$chd = "t2:{$countsm}|{$countsf}|{$countsa}";
 			if ($max<=50) $chxl .= "1:||".i18n::translate('century')."|2:|0|10|20|30|40|50|3:||".i18n::translate('Age')."|";
 			else 	$chxl .= "1:||".i18n::translate('century')."|2:|0|10|20|30|40|50|60|70|80|90|100|3:||".i18n::translate('Age')."|";
-			if (count($rows)>4 || UTF8_strlen(i18n::translate('Average age in century of marriage'))<30) {
+			if (count($rows)>4 || utf8_strlen(i18n::translate('Average age in century of marriage'))<30) {
 				$chtt = i18n::translate('Average age in century of marriage');
 			} else {
 				$offset = 0;
@@ -3415,7 +3415,7 @@ class stats {
 			if ($n>=$maxtoshow) {
 				break;
 			}
-			$all_surnames = array_merge($all_surnames, get_indilist_surns(UTF8_strtoupper($surname), '', false, false, PGV_GED_ID));
+			$all_surnames = array_merge($all_surnames, get_indilist_surns(utf8_strtoupper($surname), '', false, false, PGV_GED_ID));
 		}
 		$tot = 0;
 		$per = 0;
@@ -3525,13 +3525,13 @@ class stats {
 			}
 			switch ($type) {
 			case 'table':
-				$common[] = '<tr><td class="optionbox">'.PrintReady(UTF8_substr($given,0,1).UTF8_strtolower(UTF8_substr($given,1))).'</td><td class="optionbox">'.$total.'</td></tr>';
+				$common[] = '<tr><td class="optionbox">'.PrintReady(utf8_substr($given,0,1).utf8_strtolower(utf8_substr($given,1))).'</td><td class="optionbox">'.$total.'</td></tr>';
 				break;
 			case 'list':
-				$common[] = "\t<li>{$totL}".PrintReady(UTF8_substr($given,0,1).UTF8_strtolower(UTF8_substr($given,1)))."{$totR}</li>\n";
+				$common[] = "\t<li>{$totL}".PrintReady(utf8_substr($given,0,1).utf8_strtolower(utf8_substr($given,1)))."{$totR}</li>\n";
 				break;
 			case 'nolist':
-				$common[] = $totL.PrintReady(UTF8_substr($given,0,1).UTF8_strtolower(UTF8_substr($given,1))).$totR;
+				$common[] = $totL.PrintReady(utf8_substr($given,0,1).utf8_strtolower(utf8_substr($given,1))).$totR;
 				break;
 			}
 		}
@@ -3823,11 +3823,11 @@ class stats {
 	}
 
 	static function _name_name_sort($a, $b) {
-		return compareStrings(strip_prefix($a['name']), strip_prefix($b['name']), true);  // Case-insensitive compare
+		return utf8_strcasecmp(strip_prefix($a['name']), strip_prefix($b['name']), true);  // Case-insensitive compare
 	}
 
 	static function _name_name_rsort($a, $b) {
-		return compareStrings(strip_prefix($b['name']), strip_prefix($a['name']), true);  // Case-insensitive compare
+		return utf8_strcasecmp(strip_prefix($b['name']), strip_prefix($a['name']), true);  // Case-insensitive compare
 	}
 
 	static function _name_total_sort($a, $b) {

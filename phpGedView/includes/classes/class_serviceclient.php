@@ -654,7 +654,7 @@ class ServiceClient extends GedcomRecord {
 		$count=0;
 		$Probability=0;
 		if (!empty($PersonName1)&&!empty($PersonName2)){
-			$lev = levenshtein(UTF8_strtolower($PersonName1), UTF8_strtolower($PersonName2));
+			$lev = levenshtein(utf8_strtolower($PersonName1), utf8_strtolower($PersonName2));
 			if($lev<4){
 				$Probability+=2;
 			} else

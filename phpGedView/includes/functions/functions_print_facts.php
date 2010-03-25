@@ -380,7 +380,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				echo "<br/><span class=\"label\">", i18n::translate('FAMC'), ":</span> ";
 				$family=Family::getInstance($match[1]);
 				echo "<a href=\"", encode_url($family->getLinkUrl()), "\">", $family->getFullName(), "</a>";
-				if (preg_match("/\n3 ADOP (HUSB|WIFE|BOTH)/", UTF8_strtoupper($factrec), $match)) {
+				if (preg_match("/\n3 ADOP (HUSB|WIFE|BOTH)/", utf8_strtoupper($factrec), $match)) {
 					echo '<br/><span class="indent"><span class="label">', i18n::translate('ADOP'), ':</span> ';
 					echo '<span class="field">';
 					switch ($match[1]) {

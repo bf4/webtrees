@@ -62,7 +62,7 @@ foreach ($all_dirs as $key=>$value) {
 if (count($all_geds)==0) {
 	$all_geds[]='-';
 } else {
-	uasort($all_geds, 'stringsort');
+	uasort($all_geds, 'utf8_strcasecmp');
 }
 
 ////////////////////////////////////////////////////////////////////////////////

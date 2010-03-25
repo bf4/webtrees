@@ -142,6 +142,7 @@ class i18n {
 			if (empty($_SESSION['installed_languages'])) {
 				die('There are no lanuages installed.  You must include at least one xx.mo file in /language/');
 			}
+			uasort($_SESSION['installed_languages'], 'utf8_strcasecmp');
 			return $_SESSION['installed_languages'];
 		}
 	}
@@ -237,7 +238,7 @@ class i18n {
 			return i18n::translate($abbrev);
 		} else {
 			// Just use the first letter of the full fact
-			return UTF8_substr(i18n::translate($fact), 0, 1);
+			return utf8_substr(i18n::translate($fact), 0, 1);
 		}
 	}
 

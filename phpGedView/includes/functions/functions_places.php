@@ -300,7 +300,7 @@ function print_place_subfields($element_id) {
 		$subtagid=$element_id."_".$i;
 		$subtagname=$element_id."_".$i;
 		$plac_label[$i]=trim($plac_label[$i]);
-		if (in_array(UTF8_ucfirst($plac_label[$i]), array("Country", "Pays", "Land", "Zeme", "Ülke", "País", "Ország", "Nazione", "Kraj", "Maa", i18n::translate('CTRY')))) {
+		if (in_array(utf8_strtolower($plac_label[$i]), array("country", "pays", "land", "zeme", "ülke", "país", "ország", "nazione", "kraj", "maa", utf8_strtolower(i18n::translate('CTRY'))))) {
 			$cols="8";
 			$subtagname=$element_id."_PLAC_CTRY";
 			$icountry=$i;
@@ -340,7 +340,7 @@ function print_place_subfields($element_id) {
 			foreach (array_keys($iso3166) as $alpha3) {
 				if ($alpha3!="???") {
 					$txt=$alpha3." : ".i18n::translate($alpha3);
-					if (UTF8_strlen($txt)>32) $txt = UTF8_substr($txt, 0, 32).i18n::translate('…');
+					if (utf8_strlen($txt)>32) $txt = utf8_substr($txt, 0, 32).i18n::translate('…');
 					print "<option value=\"".$alpha3."\">".$txt."</option>\n";
 				}
 			}

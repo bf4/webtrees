@@ -421,59 +421,6 @@ try {
 	PGV_DB::exec("SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'");
 }
 
-
-/* Re-build the various language-related arrays
- *  Note:
- *  This code existed in both lang_settings_std.php and in lang_settings.php.
- *  It has been removed from both files and inserted here, where it belongs.
- */
-//-- load file for language settings
-require PGV_ROOT.'includes/lang_settings_std.php';
-$languages            =array();
-$pgv_lang_use         =array();
-$pgv_lang_self        =array();
-$lang_short_cut       =array();
-$lang_langcode        =array();
-$pgv_language         =array();
-$countryfile          =array();
-$faqlistfile          =array();
-$factsarray           =array();
-$pgv_lang_name        =array();
-$ALPHABET_upper       =array();
-$ALPHABET_lower       =array();
-$MULTI_LETTER_ALPHABET=array();
-$MULTI_LETTER_EQUIV   =array();
-$DICTIONARY_SORT      =array();
-$COLLATION            =array();
-$DATE_FORMAT_array    =array();
-$TIME_FORMAT_array    =array();
-$WEEK_START_array     =array();
-$TEXT_DIRECTION_array =array();
-$NAME_REVERSE_array   =array();
-
-foreach ($language_settings as $key => $value) {
-	if (!isset($value['pgv_lang_self']) || !isset($value['pgv_language'])) continue;
-	$languages[$key]            =$value['pgv_langname'];
-	$pgv_lang_use[$key]         =$value['pgv_lang_use'];
-	$pgv_lang_self[$key]        =$value['pgv_lang_self'];
-	$lang_short_cut[$key]       =$value['lang_short_cut'];
-	$lang_langcode[$key]        =$value['langcode'];
-	$pgv_language[$key]         =$value['pgv_language'];
-	$countryfile[$key]          =$value['countryfile'];
-	$faqlistfile[$key]          =$value['faqlistfile'];
-	$ALPHABET_upper[$key]       =$value['ALPHABET_upper'];
-	$ALPHABET_lower[$key]       =$value['ALPHABET_lower'];
-	$MULTI_LETTER_ALPHABET[$key]=$value['MULTI_LETTER_ALPHABET'];
-	$MULTI_LETTER_EQUIV[$key]   =$value['MULTI_LETTER_EQUIV'];
-	$DICTIONARY_SORT[$key]      =$value['DICTIONARY_SORT'];
-	$COLLATION[$key]            =$value['COLLATION'];
-	$DATE_FORMAT_array[$key]    =$value['DATE_FORMAT'];
-	$TIME_FORMAT_array[$key]    =$value['TIME_FORMAT'];
-	$WEEK_START_array[$key]     =$value['WEEK_START'];
-	$TEXT_DIRECTION_array[$key] =$value['TEXT_DIRECTION'];
-	$NAME_REVERSE_array[$key]   =$value['NAME_REVERSE'];
-}
-
 //-- load the privacy functions
 require PGV_ROOT.'includes/functions/functions_privacy.php';
 
@@ -502,9 +449,6 @@ if (PGV_USER_ID && safe_GET_bool('logout')) {
 	header("Location: ".PGV_SERVER_NAME.PGV_SCRIPT_PATH);
 	exit;
 }
-
-// Load all the language variables and language-specific functions
-loadLanguage($LANGUAGE, true);
 
 // Check for page views exceeding the limit
 CheckPageViews();

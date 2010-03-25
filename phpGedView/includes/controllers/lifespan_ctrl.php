@@ -391,9 +391,9 @@ class LifespanControllerRoot extends BaseController {
 
 				$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 14 + $modFix;
 				if (stristr($value->getFullName(), "starredname"))
-					$minlength = (UTF8_strlen($value->getFullName())-34) * $this->zoomfactor;
+					$minlength = (utf8_strlen($value->getFullName())-34) * $this->zoomfactor;
 				else
-					$minlength = UTF8_strlen($value->getFullName()) * $this->zoomfactor;
+					$minlength = utf8_strlen($value->getFullName()) * $this->zoomfactor;
 
 				if ($startPos > 15) {
 					$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 15 + $modFix;

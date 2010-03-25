@@ -36,7 +36,7 @@ session_write_close();
 
 //-- args
 $FILTER=safe_GET('term', PGV_REGEX_UNSAFE); // we can search on '"><& etc.
-$FILTER=UTF8_strtoupper($FILTER);
+$FILTER=utf8_strtoupper($FILTER);
 $OPTION=safe_GET('option');
 $FORMAT=safe_GET('fmt');
 $FIELD =safe_GET('field');
@@ -99,7 +99,7 @@ default:
 
 //-- sort
 $data = array_unique($data);
-uasort($data, "stringsort");
+uasort($data, "utf8_strcasecmp");
 
 //-- output
 if ($FORMAT=="json") {

@@ -387,16 +387,16 @@ class Family extends GedcomRecord {
 			// Check the script used by each name, so we can match cyrillic with cyrillic, greek with greek, etc.
 			$husb_names=$husb->getAllNames();
 			foreach ($husb_names as $n=>$husb_name) {
-				$husb_names[$n]['lang']=whatLanguage($husb_name['surn']);
+				$husb_names[$n]['script']=utf8_script($husb_name['surn']);
 			}
 			$wife_names=$wife->getAllNames();
 			foreach ($wife_names as $n=>$wife_name) {
-				$wife_names[$n]['lang']=whatLanguage($wife_name['surn']);
+				$wife_names[$n]['script']=utf8_script($wife_name['surn']);
 			}
 			// Add the matched names first
 			foreach ($husb_names as $husb_name) {
 				foreach ($wife_names as $wife_name) {
-					if ($husb_name['type']!='_MARNM' && $wife_name['type']!='_MARNM' && $husb_name['lang']==$wife_name['lang']) {
+					if ($husb_name['type']!='_MARNM' && $wife_name['type']!='_MARNM' && $husb_name['script']==$wife_name['script']) {
 						$this->_getAllNames[]=array(
 							'type'=>$husb_name['type'],
 							'full'=>$husb_name['full'].' + '.$wife_name['full'],
@@ -409,7 +409,7 @@ class Family extends GedcomRecord {
 			// Add the unmatched names second (there may be no matched names)
 			foreach ($husb_names as $husb_name) {
 				foreach ($wife_names as $wife_name) {
-					if ($husb_name['type']!='_MARNM' && $wife_name['type']!='_MARNM'  && $husb_name['lang']!=$wife_name['lang']) {
+					if ($husb_name['type']!='_MARNM' && $wife_name['type']!='_MARNM'  && $husb_name['script']!=$wife_name['script']) {
 						$this->_getAllNames[]=array(
 							'type'=>$husb_name['type'],
 							'full'=>$husb_name['full'].' + '.$wife_name['full'],

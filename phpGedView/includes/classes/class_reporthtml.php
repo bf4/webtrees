@@ -451,7 +451,7 @@ class PGVReportBaseHTML extends PGVReportBase {
 
 	function getStringWidth($text) {
 		$style = $this->getStyle($this->currentStyle);
-		return UTF8_strlen($text) * ($style["size"]/2);
+		return utf8_strlen($text) * ($style["size"]/2);
 	}
 
 	/**
@@ -542,7 +542,7 @@ class PGVReportBaseHTML extends PGVReportBase {
 		$wraptext = '';
 		foreach($lines as $line) {
 			$wtext = '';
-			$wtext = UTF8_wordwrap($line, $lw, "\n", true);
+			$wtext = utf8_wordwrap($line, $lw, "\n", true);
 			$wraptext .= $wtext;
 			// Add a new line as long as it's not the last line
 			if ($lfct > 1) {

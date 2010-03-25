@@ -98,7 +98,7 @@ if ($display=="hierarchy") {
 	$numfound=count($placelist);
 	// -- sort the array
 	$placelist = array_unique($placelist);
-	uasort($placelist, "stringsort");
+	uasort($placelist, "utf8_strcasecmp");
 
 	//-- create a query string for passing to search page
 	$tempparent = array_reverse($parent);
@@ -171,12 +171,12 @@ if ($display=="hierarchy") {
 		if ($level>=1 && $level<=3) {
 			$country = $parent[0];
 			if ($country == "\xD7\x99\xD7\xA9\xD7\xA8\xD7\x90\xD7\x9C") $country = "ISR"; // Israel hebrew name
-			$country = UTF8_strtoupper($country);
+			$country = utf8_strtoupper($country);
 			if (strlen($country)!=3) {
 				// search country code using current language countries table
 				// TODO: use translations from all languages
 				foreach (array_keys($iso3166) as $alpha3) {
-					if (UTF8_strtoupper(i18n::translate($alpha3)) == $country) {
+					if (utf8_strtoupper(i18n::translate($alpha3)) == $country) {
 						$country = $alpha3;
 						break;
 					}
@@ -420,7 +420,7 @@ if ($display=="list") {
 
 	$placelist=find_place_list("");
 	$placelist = array_unique($placelist);
-	uasort($placelist, "stringsort");
+	uasort($placelist, "utf8_strcasecmp");
 	if (count($placelist)==0) {
 		echo "<b>", i18n::translate('No results found.'), "</b><br />";
 	} else {

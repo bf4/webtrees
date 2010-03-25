@@ -180,13 +180,3 @@ function fact_NMR_localisation_sl($fact, &$fid) {
 		else if (empty($husb) && !empty($wife))	$fact = "Nikoli poroèena"; // ženska
 	}
 }
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Localise the relationships. Lokalizacja pokrewieñstwa.
-////////////////////////////////////////////////////////////////////////////////
-function rela_localisation_pl(&$rela, &$pid2) {
-
-	return UTF8_ucfirst($rela);
-}
-?>

@@ -427,8 +427,8 @@ else {
 	<table dir="ltr" border="1" width="400px">
 	<tr><td class="topbottombar" colspan="7">
 	<?php
-	if ($ctype=="user") print "<b>".UTF8_strtoupper(i18n::translate('Customize My Page'))."</b>";
-	else print "<b>".UTF8_strtoupper(i18n::translate('Customize this GEDCOM Home Page'))."</b>";
+	if ($ctype=="user") print "<b>".i18n::translate('Customize My Page')."</b>";
+	else print "<b>".i18n::translate('Customize this GEDCOM Home Page')."</b>";
 	echo help_link('portal_config_intructions');
 	print "</td></tr>";
 	// NOTE: Row 1: Column legends

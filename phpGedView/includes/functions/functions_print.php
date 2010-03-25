@@ -1452,9 +1452,9 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 				if (@preg_match("/(".$query1esc.")/i", $text)) { // Use @ as user-supplied query might be invalid.
 					$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 				}
-				else if (@preg_match("/(".UTF8_strtoupper($query1esc).")/", UTF8_strtoupper($text))) {
+				else if (@preg_match("/(".utf8_strtoupper($query1esc).")/", utf8_strtoupper($text))) {
 					$nlen = strlen($query1);
-					$npos = strpos(UTF8_strtoupper($text), UTF8_strtoupper($query1));
+					$npos = strpos(utf8_strtoupper($text), utf8_strtoupper($query1));
 					$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
 					$newtext = substr_replace($newtext, "\x01", $npos, 0);
 				}
@@ -1471,9 +1471,9 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 						if (preg_match("/(".$query1esc.")/i", $text)) {
 							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 						}
-						else if (preg_match("/(".UTF8_strtoupper($query1esc).")/", UTF8_strtoupper($text))) {
+						else if (preg_match("/(".utf8_strtoupper($query1esc).")/", utf8_strtoupper($text))) {
 							$nlen = strlen($query1);
-							$npos = strpos(UTF8_strtoupper($text), UTF8_strtoupper($query1));
+							$npos = strpos(utf8_strtoupper($text), utf8_strtoupper($query1));
 							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
 							$newtext = substr_replace($newtext, "\x01", $npos, 0);
 						}
@@ -1490,9 +1490,9 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 						if (preg_match("/(".$query1esc.")/i", $text)) {
 							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 						}
-						else if (preg_match("/(".UTF8_strtoupper($query1esc).")/", UTF8_strtoupper($text))) {
+						else if (preg_match("/(".utf8_strtoupper($query1esc).")/", utf8_strtoupper($text))) {
 							$nlen = strlen($query1);
-							$npos = strpos(UTF8_strtoupper($text), UTF8_strtoupper($query1));
+							$npos = strpos(utf8_strtoupper($text), utf8_strtoupper($query1));
 							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
 							$newtext = substr_replace($newtext, "\x01", $npos, 0);
 						}
@@ -1509,9 +1509,9 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 						if (preg_match("/(".$query1esc.")/i", $text)) {
 							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 						}
-						else if (preg_match("/(".UTF8_strtoupper($query1esc).")/", UTF8_strtoupper($text))) {
+						else if (preg_match("/(".utf8_strtoupper($query1esc).")/", utf8_strtoupper($text))) {
 							$nlen = strlen($query1);
-							$npos = strpos(UTF8_strtoupper($text), UTF8_strtoupper($query1));
+							$npos = strpos(utf8_strtoupper($text), utf8_strtoupper($query1));
 							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
 							$newtext = substr_replace($newtext, "\x01", $npos, 0);
 						}
@@ -1563,8 +1563,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 				if ($tempChar==")" || $tempChar=="}" || $tempChar=="]") break;
 				$tempText .= $tempChar;
 			}
-			$thisLang = whatLanguage($tempText);
-			if (isset($TEXT_DIRECTION_array[$thisLang]) && ($TEXT_DIRECTION_array[$thisLang]=="ltr" || ($TEXT_DIRECTION=="ltr" && $TEXT_DIRECTION_array[$thisLang]=="rtl")) && $thisLang!="russian" && $thisLang!="greek") {
+			if (utf8_direction($tempText)=='rtl') {
 				$newText .= getRLM() . $thisChar . $tempText . $tempChar . getRLM();
 			} else {
 				$newText .= getLRM() . $thisChar . $tempText . $tempChar . getLRM();

@@ -63,16 +63,16 @@ function sendErrorAndExit($type, $line1, $line2 = false) {
 
 	// arbitrary maxlen to keep images from getting too wide
 	$maxlen = 100;
-	$numchars = UTF8_strlen($line1);
+	$numchars = utf8_strlen($line1);
 	if ($numchars > $maxlen) {
-		$line1 = UTF8_substr($line1, $maxlen);
+		$line1 = utf8_substr($line1, $maxlen);
 		$numchars = $maxlen;
 	}
 	$line1 = reverseText($line1);
 	if ($line2) {
-		$numchars2 = UTF8_strlen($line2);
+		$numchars2 = utf8_strlen($line2);
 		if ($numchars2 > $maxlen) {
-			$line2 = UTF8_substr($line2, $maxlen);
+			$line2 = utf8_substr($line2, $maxlen);
 			$numchars2 = $maxlen;
 		}
 		if ($numchars2 > $numchars) {
@@ -233,7 +233,7 @@ function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
 				case "left":
 				$taille=textlength($maxsize, $hypoth, $text);
 				$pos_y=($height*.85-$taille);
-				$taille_text=($taille-2)*(UTF8_strlen($text));
+				$taille_text=($taille-2)*(utf8_strlen($text));
 				$pos_x=$width*0.15;
 				$rotation=$calc_angle;
 				break;
@@ -280,7 +280,7 @@ function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
 
 function textlength($t, $mxl, $text) {
 	$taille_c = $t;
-	$len = UTF8_strlen($text);
+	$len = utf8_strlen($text);
 	while (($taille_c-2)*($len) > $mxl) {
 		$taille_c--;
 		if ($taille_c == 2) break;

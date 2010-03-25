@@ -546,23 +546,23 @@ function filterMedia($media, $filter, $acceptExt) {
 	if ($filter == "")
 		return true;
 
-	$filter=UTF8_strtoupper($filter);
+	$filter=utf8_strtoupper($filter);
 
 	//-- Accept when filter string contained in file name (but only for editing users)
-	if (PGV_USER_CAN_EDIT && strstr(UTF8_strtoupper(basename($media["FILE"])), $filter))
+	if (PGV_USER_CAN_EDIT && strstr(utf8_strtoupper(basename($media["FILE"])), $filter))
 		return true;
 
 	//-- Accept when filter string contained in Media item's title
 	$record=Media::getInstance($media['XREF']);
 	if ($record) {
 		foreach ($record->getAllNames() as $name) {
-			if (strpos(UTF8_strtoupper($name['full']), $filter)!==false) {
+			if (strpos(utf8_strtoupper($name['full']), $filter)!==false) {
 				return true;
 			}
 		}
 	}
 
-	if (strpos(UTF8_strtoupper($media["TITL"]), $filter)!==false)
+	if (strpos(utf8_strtoupper($media["TITL"]), $filter)!==false)
 		return true;
 
 	//-- Accept when filter string contained in name of any item
@@ -570,7 +570,7 @@ function filterMedia($media, $filter, $acceptExt) {
 	foreach ($links as $id=>$type) {
 		$record=GedcomRecord::getInstance($id);
 		foreach ($record->getAllNames() as $name) {
-			if (strpos(UTF8_strtoupper($name['full']), $filter)!==false) {
+			if (strpos(utf8_strtoupper($name['full']), $filter)!==false) {
 				return true;
 			}
 		}

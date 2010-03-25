@@ -497,16 +497,34 @@ class GedcomRecord {
 			$this->_getPrimaryName=0;
 			// ....except when the language/name use different character sets
 			if (count($this->getAllNames())>1) {
-				global $LANGUAGE;
-				switch ($LANGUAGE) {
-				case 'greek':
-				case 'russian':
-				case 'hebrew':
-				case 'arabic':
-				case 'vietnamese':
-				case 'chinese':
+				switch (WT_LOCALE) {
+				case 'el':
 					foreach ($this->getAllNames() as $n=>$name) {
-						if ($name['type']!='_MARNM' && whatLanguage($name['sort'])==$LANGUAGE) {
+						if ($name['type']!='_MARNM' && utf8_script($name['sort'])=='greek') {
+							$this->_getPrimaryName=$n;
+							break;
+						}
+					}
+					break;
+				case 'ru':
+					foreach ($this->getAllNames() as $n=>$name) {
+						if ($name['type']!='_MARNM' && utf8_script($name['sort'])=='russian') {
+							$this->_getPrimaryName=$n;
+							break;
+						}
+					}
+					break;
+				case 'he':
+					foreach ($this->getAllNames() as $n=>$name) {
+						if ($name['type']!='_MARNM' && utf8_script($name['sort'])=='hebrew') {
+							$this->_getPrimaryName=$n;
+							break;
+						}
+					}
+					break;
+				case 'ar':
+					foreach ($this->getAllNames() as $n=>$name) {
+						if ($name['type']!='_MARNM' && utf8_script($name['sort'])=='arabic') {
 							$this->_getPrimaryName=$n;
 							break;
 						}
@@ -514,7 +532,7 @@ class GedcomRecord {
 					break;
 				default:
 					foreach ($this->getAllNames() as $n=>$name) {
-						if ($name['type']!='_MARNM' && whatLanguage($name['sort'])=='other') {
+						if ($name['type']!='_MARNM' && utf8_script($name['sort'])=='latin') {
 							$this->_getPrimaryName=$n;
 							break;
 						}
@@ -534,9 +552,9 @@ class GedcomRecord {
 			// ....except when there are names with different character sets
 			$all_names=$this->getAllNames();
 			if (count($all_names)>1) {
-				$primary_language=whatLanguage($all_names[$this->getPrimaryName()]['sort']);
+				$primary_script=utf8_script($all_names[$this->getPrimaryName()]['sort']);
 				foreach ($all_names as $n=>$name) {
-					if ($n!=$this->getPrimaryName() && $name['type']!='_MARNM' && whatLanguage($name['sort'])!=$primary_language) {
+					if ($n!=$this->getPrimaryName() && $name['type']!='_MARNM' && utf8_script($name['sort'])!=$primary_script) {
 						$this->_getSecondaryName=$n;
 						break;
 					}
@@ -562,7 +580,7 @@ class GedcomRecord {
 	static function Compare($x, $y) {
 		if ($x->canDisplayName()) {
 			if ($y->canDisplayName()) {
-				return compareStrings($x->getSortName(), $y->getSortName());
+				return utf8_strcmp($x->getSortName(), $y->getSortName());
 			} else {
 				return -1; // only $y is private
 			}

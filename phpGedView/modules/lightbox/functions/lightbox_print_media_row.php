@@ -198,7 +198,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 		$menu = new Menu();
 		// Truncate media title to 13 chars and add ellipsis
 		$mtitle = $rawTitle;
-		if (UTF8_strlen($rawTitle)>16) $mtitle = UTF8_substr($rawTitle, 0, 13).i18n::translate('…');
+		if (utf8_strlen($rawTitle)>16) $mtitle = utf8_substr($rawTitle, 0, 13).i18n::translate('…');
 		$mtitle = PrintReady(htmlspecialchars($mtitle));
 
 		// Continue menu construction

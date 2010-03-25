@@ -50,14 +50,14 @@ function get_common_surnames($min) {
 		}
 	}
 	foreach (preg_split('/[,;] /', $COMMON_NAMES_REMOVE) as $surname) {
-		unset($topsurns[UTF8_strtoupper($surname)]);
+		unset($topsurns[utf8_strtoupper($surname)]);
 	}
 
 	//-- check if we found some, else recurse
 	if (empty($topsurns) && $min>2) {
 		return get_common_surnames($min/2);
 	} else {
-		uksort($topsurns, 'stringsort');
+		uksort($topsurns, 'utf8_strcasecmp');
 		foreach ($topsurns as $key=>$value) {
 			$topsurns[$key]=array('name'=>$key, 'match'=>$value);
 		}
@@ -88,15 +88,15 @@ function strip_prefix($lastname){
  */
 function check_NN($names) {
 	global $UNDERLINE_NAME_QUOTES;
-	global $unknownNN, $unknownPN;
+	global $UNKNOWN_NN, $UNKNOWN_PN;
 
 	$fullname = '';
 
 	if (!is_array($names)){
-		$lang = whatLanguage($names);
-		$NN = $unknownNN[$lang];
+		$script = utf8_script($names);
+		$NN = $UNKNOWN_NN[$script];
 		$names = preg_replace(array('~ /~','~/,~','~/~'), array(' ', ',', ' '), $names);
-		$names = preg_replace(array('/@N.N.?/','/@P.N.?/'), array($unknownNN[$lang],$unknownPN[$lang]), trim($names));
+		$names = preg_replace(array('/@N.N.?/','/@P.N.?/'), array($UNKNOWN_NN[$script],$UNKNOWN_PN[$script]), trim($names));
 		//-- underline names with a * at the end
 		//-- see this forum thread http://sourceforge.net/forum/forum.php?thread_id=1223099&forum_id=185165
 		if ($UNDERLINE_NAME_QUOTES) {
@@ -109,14 +109,14 @@ function check_NN($names) {
 		$fullname = i18n::translate('(unknown)'). ' + '. i18n::translate('(unknown)');
 	} else {
 		for($i=0; $i<count($names); $i++) {
-			$lang = whatLanguage($names[$i]);
+			$script = utf8_script($names[$i]);
 			$unknown = false;
 			if (stristr($names[$i], '@N.N')) {
 				$unknown = true;
-				$names[$i] = preg_replace('/@N.N.?/', $unknownNN[$lang], trim($names[$i]));
+				$names[$i] = preg_replace('/@N.N.?/', $UNKNOWN_NN[$script], trim($names[$i]));
 			}
 			if (stristr($names[$i], '@P.N')) {
-				$names[$i] = $unknownPN[$lang];
+				$names[$i] = $UNKNOWN_PN[$script];
 			}
 			if ($i==1 && $unknown && count($names)==3) {
 				$fullname .= ', ';
@@ -167,14 +167,14 @@ function DMSoundex($name) {
 	}
 
 	// Apply special transformation rules to the input string
-	$name = UTF8_strtoupper($name);
+	$name = utf8_strtoupper($name);
 	foreach($transformNameTable as $transformRule) {
 		$name = str_replace($transformRule[0], $transformRule[1], $name);
 	}
 
 	// Initialize
-	$nameLanguage = whatLanguage($name);
-	if ($nameLanguage == 'hebrew' || $nameLanguage == 'arabic') $noVowels = true;
+	$name_script = utf8_script($name);
+	if ($name_script == 'hebrew' || $name_script == 'arabic') $noVowels = true;
 	else $noVowels = false;
 	$lastPos = strlen($name) - 1;
 	$currPos = 0;
