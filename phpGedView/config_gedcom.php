@@ -50,11 +50,6 @@ $CALENDAR_FORMAT = "gregorian";			//-- Translate dates to the specified Calendar
 $DISPLAY_JEWISH_THOUSANDS = false;		//-- show Alafim in Jewish dates Similar to php 5.0 CAL_JEWISH_ADD_ALAFIM
 $DISPLAY_JEWISH_GERESHAYIM = true;		//-- show single and double quotes in Hebrew dates. Similar to php 5.0 CAL_JEWISH_ADD_GERESHAYIM
 
-$CHARACTER_SET = "UTF-8";				//-- This is the character set of your gedcom file.  UTF-8 is the default and should work for
-										//-- almost all sites.  If you export your gedcom using ibm windows encoding, then you should put
-										//-- WINDOWS here.
-										//-- NOTE: PHP does NOT support UNICODE so don't try it :-)
-
 $DEFAULT_PEDIGREE_GENERATIONS = "4";	// -- set the default number of generations to display on the pedigree charts
 $MAX_PEDIGREE_GENERATIONS = "10";		// -- set the max number of generations to display on the pedigree charts
 $MAX_DESCENDANCY_GENERATIONS = "15";	// -- set the max number of generations to display on the descendancy charts

@@ -29,7 +29,7 @@
 
 define('PGV_SCRIPT_NAME', 'autocomplete.php');
 require './config.php';
-header("Content-Type: text/plain; charset=$CHARACTER_SET");
+header('Content-Type: text/plain; charset=UTF-8');
 
 // We have finished writing to $_SESSION, so release the lock
 session_write_close();

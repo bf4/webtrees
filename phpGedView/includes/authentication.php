@@ -421,7 +421,7 @@ function AddToChangeLog($LogString, $ged="") {
 //----------------------------------- addMessage
 //-- stores a new message in the database
 function addMessage($message) {
-	global $TBLPREFIX, $CONTACT_METHOD, $CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $SERVER_URL, $PGV_SIMPLE_MAIL, $WEBMASTER_EMAIL;
+	global $TBLPREFIX, $CONTACT_METHOD, $LANGUAGE, $PGV_STORE_MESSAGES, $SERVER_URL, $PGV_SIMPLE_MAIL, $WEBMASTER_EMAIL;
 	global $TEXT_DIRECTION;
 	global $PHPGEDVIEW_EMAIL;
 
@@ -461,7 +461,7 @@ function addMessage($message) {
 	} else {
 		$fromFullName = getUserFullName($user_id_from);
 		if (!$PGV_SIMPLE_MAIL)
-			$from = hex4email($fromFullName,$CHARACTER_SET). " <".get_user_setting($user_id_from, 'email').">";
+			$from = hex4email($fromFullName, 'UTF-8'). " <".get_user_setting($user_id_from, 'email').">";
 		else
 			$from = get_user_setting($user_id_from, 'email');
 		$email2 = i18n::translate('You sent the following message to a webtrees user:')."\r\n\r\n".$email2;
@@ -531,7 +531,7 @@ function addMessage($message) {
 		} else {
 			$toFullName=getUserFullName($user_id_to);
 			if (!$PGV_SIMPLE_MAIL)
-				$to = hex4email($toFullName, $CHARACTER_SET). " <".get_user_setting($user_id_to, 'email').">";
+				$to = hex4email($toFullName, 'UTF-8'). " <".get_user_setting($user_id_to, 'email').">";
 			else
 				$to = get_user_setting($user_id_to, 'email');
 		}

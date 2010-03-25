@@ -29,7 +29,7 @@
 define('PGV_SCRIPT_NAME', 'expand_view.php');
 require './config.php';
 
-header("Content-Type: text/html; charset=$CHARACTER_SET");
+header('Content-Type: text/html; charset=UTF-8');
 $pid = safe_GET_xref('pid');
 $person = Person::getInstance($pid);
 if (!$person->canDisplayDetails()) return i18n::translate('Private');

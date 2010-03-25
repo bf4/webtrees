@@ -101,7 +101,7 @@ class IndividualControllerRoot extends BaseController {
 	* Initialization function
 	*/
 	function init() {
-		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $CHARACTER_SET;
+		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes;
 		global $USE_QUICK_UPDATE, $DEFAULT_PIN_STATE, $pid;
 		global $Fam_Navigator;
 
@@ -280,7 +280,7 @@ class IndividualControllerRoot extends BaseController {
 			$tab = 0;
 			if (isset($_REQUEST['module'])) {
 				$tabname = $_REQUEST['module'];
-				header("Content-Type: text/html; charset=$CHARACTER_SET");//AJAX calls do not have the meta tag headers and need this set
+				header("Content-Type: text/html; charset=UTF-8"); //AJAX calls do not have the meta tag headers and need this set
 				$mod = $this->modules[$tabname];
 				if ($mod) {
 					echo $mod->getTab()->getContent();

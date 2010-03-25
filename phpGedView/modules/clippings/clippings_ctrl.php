@@ -96,7 +96,7 @@ class ClippingsControllerRoot extends BaseController {
 	//----------------beginning of function definitions for ClippingsControllerRoot
 	function init() {
 		global $PRIV_HIDE, $PRIV_PUBLIC, $ENABLE_CLIPPINGS_CART, $SCRIPT_NAME, $SERVER_URL, $CONTACT_EMAIL, $HOME_SITE_TEXT, $HOME_SITE_URL, $MEDIA_DIRECTORY;
-		global $GEDCOM, $CHARACTER_SET, $cart;
+		global $GEDCOM, $cart;
 
 		if (!isset ($ENABLE_CLIPPINGS_CART))
 		$ENABLE_CLIPPINGS_CART = $PRIV_HIDE;
@@ -263,7 +263,7 @@ class ClippingsControllerRoot extends BaseController {
 				$mediacount = 0;
 				$ct = count($cart);
 				$filetext = "0 HEAD\n1 SOUR ".PGV_PHPGEDVIEW."\n2 NAME ".PGV_PHPGEDVIEW."\n2 VERS ".PGV_VERSION_TEXT."\n1 DEST DISKETTE\n1 DATE " . date("j M Y") . "\n2 TIME " . date("H:i:s") . "\n";
-				$filetext .= "1 GEDC\n2 VERS 5.5\n2 FORM LINEAGE-LINKED\n1 CHAR $CHARACTER_SET\n";
+				$filetext .= "1 GEDC\n2 VERS 5.5\n2 FORM LINEAGE-LINKED\n1 CHAR UTF-8\n";
 				$head = find_gedcom_record("HEAD", PGV_GED_ID);
 				$placeform = trim(get_sub_record(1, "1 PLAC", $head));
 				if (!empty ($placeform))

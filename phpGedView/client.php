@@ -36,7 +36,7 @@ define('PGV_SCRIPT_NAME', 'client.php');
 require './config.php';
 require PGV_ROOT.'includes/functions/functions_edit.php';
 
-header("Content-Type: text/plain; charset=$CHARACTER_SET");
+header('Content-Type: text/plain; charset=UTF-8');
 
 $READ_ONLY = ((isset($_SESSION['readonly']))&&($_SESSION['readonly']==true)) ? 1 : 0;
 
@@ -177,7 +177,7 @@ case 'get':
 	exit;
 case 'getvar':
 	$var=safe_REQUEST($_REQUEST,'var', '[A-Za-z0-9_]+');
-	$public_vars = array("READ_ONLY","CHARACTER_SET","GEDCOM","PEDIGREE_ROOT_ID");
+	$public_vars = array("READ_ONLY","GEDCOM","PEDIGREE_ROOT_ID");
 	if ($var && in_array($var, $public_vars) && isset($$var)) {
 		addDebugLog($action." var=$var SUCCESS\n".$$var);
 		print "SUCCESS\n".$$var;

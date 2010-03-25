@@ -99,7 +99,7 @@ function reformat_record_export($rec) {
 * Create a header for a (newly-created or already-imported) gedcom file.
 */
 function gedcom_header($gedfile) {
-	global $CHARACTER_SET, $TBLPREFIX;
+	global $TBLPREFIX;
 
 	$ged_id=get_id_from_gedcom($gedfile);
 
@@ -109,7 +109,7 @@ function gedcom_header($gedfile) {
 	$DEST="\n1 DEST DISKETTE";
 	$DATE="\n1 DATE ".strtoupper(date("d M Y"))."\n2 TIME ".date("H:i:s");
 	$GEDC="\n1 GEDC\n2 VERS 5.5.1\n2 FORM Lineage-Linked";
-	$CHAR="\n1 CHAR {$CHARACTER_SET}";
+	$CHAR="\n1 CHAR UTF-8";
 	$FILE="\n1 FILE {$gedfile}";
 	$LANG="";
 	$PLAC="\n1 PLAC\n2 FORM City, County, State/Province, Country";
@@ -258,8 +258,7 @@ function convert_media_path($rec, $path, $slashes) {
  *			'slashes':		what folder separators apply to media file paths?  (forward, backward)
  */
 function export_gedcom($gedcom, $gedout, $exportOptions) {
-	global $GEDCOM, $CHARACTER_SET;
-	global $TBLPREFIX;
+	global $GEDCOM, $TBLPREFIX;
 
 	// Temporarily switch to the specified GEDCOM
 	$oldGEDCOM = $GEDCOM;

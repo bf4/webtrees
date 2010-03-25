@@ -298,7 +298,6 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$AUTO_GENERATE_THUMBS\s*=\s*.*;/', "\$AUTO_GENERATE_THUMBS = ".$boolarray[$_POST["NEW_AUTO_GENERATE_THUMBS"]].";", $configtext);
 	$configtext = preg_replace('/\$CALENDAR_FORMAT\s*=\s*".*";/', "\$CALENDAR_FORMAT = \"".$_POST["NEW_CALENDAR_FORMAT"]."\";", $configtext);
 	$configtext = preg_replace('/\$CHANGELOG_CREATE\s*=\s*".*";/', "\$CHANGELOG_CREATE = \"".$_POST["NEW_CHANGELOG_CREATE"]."\";", $configtext);
-	$configtext = preg_replace('/\$CHARACTER_SET\s*=\s*".*";/', "\$CHARACTER_SET = \"".$_POST["NEW_CHARACTER_SET"]."\";", $configtext);
 	$configtext = preg_replace('/\$CHART_BOX_TAGS\s*=\s*".*";/', "\$CHART_BOX_TAGS = \"".$_POST["NEW_CHART_BOX_TAGS"]."\";", $configtext);
 	$configtext = preg_replace('/\$CHECK_CHILD_DATES\s*=\s*.*;/', "\$CHECK_CHILD_DATES = ".$boolarray[$_POST["NEW_CHECK_CHILD_DATES"]].";", $configtext);
 	$configtext = preg_replace('/\$COMMON_NAMES_ADD\s*=\s*".*";/', "\$COMMON_NAMES_ADD = \"".$_POST["NEW_COMMON_NAMES_ADD"]."\";", $configtext);
@@ -929,12 +928,6 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('GEDCOM Basics')."\" onclic
 			echo edit_field_language('GEDCOMLANG', $GEDCOMLANG, 'dir="ltr" onfocus="getHelp(\'LANGUAGE\');" tabindex="'.(++$i).'"');
 		?>
 		</td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap width20">
-			<?php echo i18n::translate('Character Set encoding'), help_link('CHARACTER_SET'); ?>
-		</td>
-		<td class="optionbox"><input type="text" name="NEW_CHARACTER_SET" dir="ltr" value="<?php print $CHARACTER_SET; ?>" onfocus="getHelp('CHARACTER_SET');" tabindex="<?php echo ++$i; ?>" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">

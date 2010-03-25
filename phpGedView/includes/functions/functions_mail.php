@@ -42,7 +42,7 @@ define('PGV_FUNCTIONS_MAIL_PHP', '');
  */
 function pgvMail($to, $from, $subject, $message) {
 	global $PGV_SMTP_ACTIVE, $PGV_SMTP_HOST, $PGV_SMTP_HELO, $PGV_SMTP_FROM_NAME, $PGV_SMTP_PORT, $PGV_SMTP_AUTH, $PGV_SMTP_AUTH_USER, $PGV_SMTP_AUTH_PASS, $PGV_SMTP_SSL;
-	global $CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $TEXT_DIRECTION;
+	global $LANGUAGE, $PGV_STORE_MESSAGES, $TEXT_DIRECTION;
 	$mailFormat = "plain";
 	//$mailFormat = "html";
 	//$mailFormat = "multipart";
@@ -67,7 +67,7 @@ function pgvMail($to, $from, $subject, $message) {
 	$extraHeaders = "From: $from\nContent-type: $mailFormatText;";
 
 	if ($mailFormat != "multipart") {
-		$extraHeaders .= "\tcharset=\"$CHARACTER_SET\";\tformat=\"flowed\"\nContent-Transfer-Encoding: 8bit";
+		$extraHeaders .= "\tcharset=\"UTF-8\";\tformat=\"flowed\"\nContent-Transfer-Encoding: 8bit";
 	}
 
 	if ($mailFormat == "html" || $mailFormat == "multipart") {
@@ -95,10 +95,10 @@ function pgvMail($to, $from, $subject, $message) {
 		$htmlMessage = "--$boundary\n";
 		$htmlMessage .= "Content-Type: multipart/alternative; \n\tboundary=--$boundary2\n\n";
 		$htmlMessage = "--$boundary2\n";
-		$htmlMessage .= "Content-Type: text/plain; \n\tcharset=\"$CHARACTER_SET\";\n\tformat=\"flowed\"\nContent-Transfer-Encoding: 8bit\n\n";
+		$htmlMessage .= "Content-Type: text/plain; \n\tcharset=\"UTF-8\";\n\tformat=\"flowed\"\nContent-Transfer-Encoding: 8bit\n\n";
 		$htmlMessage .= $message;
 		$htmlMessage .= "\n\n--$boundary2\n";
-		$htmlMessage .= "Content-Type: text/html; \n\tcharset=\"$CHARACTER_SET\";\n\tformat=\"flowed\"\nContent-Transfer-Encoding: 8bit\n\n";
+		$htmlMessage .= "Content-Type: text/html; \n\tcharset=\"UTF-8\";\n\tformat=\"flowed\"\nContent-Transfer-Encoding: 8bit\n\n";
 		$htmlMessage .= "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";
 		$htmlMessage .= "<html xmlns=\"http://www.w3.org/1999/xhtml\">";
 		$htmlMessage .= "<head>";
@@ -143,11 +143,11 @@ function pgvMail($to, $from, $subject, $message) {
 		else {
 			$mail_object->FromName = $mail_object->AddAddress($to);
 		}
-		$mail_object->Subject = hex4email( $subject, $CHARACTER_SET );
+		$mail_object->Subject = hex4email( $subject, 'UTF-8');
 		$mail_object->ContentType = $mailFormatText;
 		if ( $mailFormat != "multipart" ) {
 			$mail_object->ContentType = $mailFormatText . '; format="flowed"';
-			$mail_object->CharSet = $CHARACTER_SET;
+			$mail_object->CharSet = 'UTF-8';
 			$mail_object->Encoding = '8bit';
 		}
 		if ( $mailFormat == "html" || $mailFormat == "multipart" ) {
@@ -166,7 +166,7 @@ function pgvMail($to, $from, $subject, $message) {
 		}
 	} else {
 		// use original PGV mail sending function	
-		mail($to, hex4email($subject,$CHARACTER_SET), $message, $extraHeaders);
+		mail($to, hex4email($subject, 'UTF-8'), $message, $extraHeaders);
 	}
 }
 
