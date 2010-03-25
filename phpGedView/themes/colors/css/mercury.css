@@ -1626,7 +1626,7 @@ dt {
 /* Accordion ----------------------------------*/
 
 .ui-accordion .ui-accordion-header { background: #d4d4d4; opacity: 0.67;}
-.ui-accordion .ui-accordion-header a { color: #707070 ;}
+.ui-accordion .ui-accordion-header a { color: #000 ;}
 
 /* Tabs ----------------------------------*/
 .ui-widget-header { border: 1px solid #fff; background: #d4d4d4 url(images/ui-bg_highlight-soft_100_e7eef3_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
