@@ -787,7 +787,7 @@ if (check_media_structure()) {
 	<input type="hidden" name="level" value="<?php print $level; ?>" />
 	<input type="hidden" name="all" value="true" />
 	<input type="hidden" name="subclick" />
-	<table class="fact_table center width75 <?php print $TEXT_DIRECTION; ?>">
+	<table class="facts_table center width75 <?php print $TEXT_DIRECTION; ?>">
 	<tr><td class="topbottombar" colspan="4"><?php echo i18n::translate('Manage MultiMedia'), help_link('manage_media'); ?></td></tr>
 	<?php
 	if ($TEXT_DIRECTION=='ltr') $legendAlign = 'align="right"';
