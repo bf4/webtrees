@@ -96,7 +96,7 @@ $PEDI_CODES=array(
 	'sealing'=>i18n::translate('Sealing'),
 );
 
-// GEDCOM RELA codes
+// GEDCOM RELA codes for non-genealogical relationships.
 // These aren't part of the standard, but we list the common ones here so we can translate them.
 $RELA_CODES=array(
 	'attendant'       =>i18n::translate('Attendant'),
@@ -130,9 +130,6 @@ $RELA_CODES=array(
 	'seller'          =>i18n::translate('Seller'),
 	'servant'         =>i18n::translate('Servant'),
 	'slave'           =>i18n::translate('Slave'),
-	'twin'            =>i18n::translate('Twin'),
-	'twin_brother'    =>i18n::translate('Twin brother'),
-	'twin_sister'     =>i18n::translate('Twin sister'),
 	'ward'            =>i18n::translate('Ward'),
 	'witness'         =>i18n::translate('Witness'),
 );

@@ -53,34 +53,34 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_SPECIALCHARS_PHP', '');
 
 $specialchar_languages = array(
-	"af" => "Afrikaans",
-	"cs" => i18n::translate('Czech'), // Czech
-	"sk" => i18n::translate('Slovak'), // Slovak
-	"da" => i18n::translate('Danish'), // Danish
-	"de" => i18n::translate('German'), // German
-	"en" => i18n::translate('English'),
-	"es" => i18n::translate('Spanish'), // Spanish
-	"eu" => "Euskara", // Basque
-	"fr" => i18n::translate('French'), // French
-	"gd-ie" => "Gaeilge", // Irish
-	"el" => i18n::translate('Greek'),
-	"is" => "Íslenska", // Icelandic
-	"it" => i18n::translate('Italian'),
-	"hu" => i18n::translate('Hungarian'), // Hungarian
-	"lt" => i18n::translate('Lithuanian'), // Lithuanian
-	"nl" => i18n::translate('Dutch'), // Dutch
-	"no" => i18n::translate('Norwegian'), // Norwegian
-	"hawaiian" => "‘Olelo Hawai‘i",
-	"pl" => i18n::translate('Polish'), // Polish
-	"pt" => i18n::translate('Portuguese'),
-	"sl" => "Slovenšcina", // Slovenian
-	"fi" => i18n::translate('Finnish'), // Finnish
-	"sv" => i18n::translate('Swedish'), // Swedish
-	"tr" => i18n::translate('Turkish'), // Turkish
-	"he" => i18n::translate('Hebrew'),
-	"ar" => i18n::translate('Arabic'),
-	"ru" => i18n::translate('Russian'),
-	"vi" => i18n::translate('Vietnamese'), // Vietnamese
+	"af" => Zend_Locale::getTranslation('af', 'language', WT_LOCALE),
+	"cs" => Zend_Locale::getTranslation('cs', 'language', WT_LOCALE),
+	"sk" => Zend_Locale::getTranslation('sk', 'language', WT_LOCALE),
+	"da" => Zend_Locale::getTranslation('da', 'language', WT_LOCALE),
+	"de" => Zend_Locale::getTranslation('de', 'language', WT_LOCALE),
+	"en" => Zend_Locale::getTranslation('en', 'language', WT_LOCALE),
+	"es" => Zend_Locale::getTranslation('es', 'language', WT_LOCALE),
+	"eu" => Zend_Locale::getTranslation('eu', 'language', WT_LOCALE),
+	"fr" => Zend_Locale::getTranslation('fr', 'language', WT_LOCALE),
+	"gd" => Zend_Locale::getTranslation('gd', 'language', WT_LOCALE),
+	"el" => Zend_Locale::getTranslation('el', 'language', WT_LOCALE),
+	"is" => Zend_Locale::getTranslation('is', 'language', WT_LOCALE),
+	"it" => Zend_Locale::getTranslation('it', 'language', WT_LOCALE),
+	"hu" => Zend_Locale::getTranslation('hu', 'language', WT_LOCALE),
+	"lt" => Zend_Locale::getTranslation('lt', 'language', WT_LOCALE),
+	"nl" => Zend_Locale::getTranslation('nl', 'language', WT_LOCALE),
+	"nn" => Zend_Locale::getTranslation('nn', 'language', WT_LOCALE),
+	"haw" => Zend_Locale::getTranslation('haw', 'language', WT_LOCALE),
+	"pl" => Zend_Locale::getTranslation('pl', 'language', WT_LOCALE),
+	"pt" => Zend_Locale::getTranslation('pt', 'language', WT_LOCALE),
+	"sl" => Zend_Locale::getTranslation('sl', 'language', WT_LOCALE),
+	"fi" => Zend_Locale::getTranslation('fi', 'language', WT_LOCALE),
+	"sv" => Zend_Locale::getTranslation('sv', 'language', WT_LOCALE),
+	"tr" => Zend_Locale::getTranslation('tr', 'language', WT_LOCALE),
+	"he" => Zend_Locale::getTranslation('he', 'language', WT_LOCALE),
+	"ar" => Zend_Locale::getTranslation('ar', 'language', WT_LOCALE),
+	"ru" => Zend_Locale::getTranslation('ru', 'language', WT_LOCALE),
+	"vi" => Zend_Locale::getTranslation('vi', 'language', WT_LOCALE),
 );
 
 switch ($language_filter) {
