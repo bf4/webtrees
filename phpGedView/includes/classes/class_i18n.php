@@ -134,7 +134,12 @@ class i18n {
 			$_SESSION['installed_languages']=array();
 			$d=opendir(PGV_ROOT.'language');
 			while (($f=readdir($d))!==false) {
-				if (preg_match('/^([a-zA-Z0-9_]+)\.mo$/', $f, $match)) {
+				if (preg_match('/^([a-z][a-z][a-z]?(@[a-z]+|_[A-Z][A-Z])?)\.mo$/', $f, $match)) {
+					// TODO: gettext() and ZF use different standards for locale names :-(
+					if ($match[1]=='sr@latin' || $match[1]=='es_AR' || $match[1]=='zh_CN') {
+						// TODO:
+						continue;
+					}
 					$_SESSION['installed_languages'][$match[1]]=Zend_Locale::getTranslation($match[1], 'language', $match[1]);
 				}
 			}
