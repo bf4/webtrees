@@ -1061,6 +1061,7 @@ $FACTS=array(
 	'DATA:DATE'=>i18n::translate('Date of entry in original source'),
 	'DATE'=>i18n::translate('Date'),
 	'DEAT'=>i18n::translate('Death'),
+	'DEAT:CAUS'=>i18n::translate('Cause of death'),
 	'DEAT:DATE'=>i18n::translate('Date of Death'),
 	'DEAT:PLAC'=>i18n::translate('Place of Death'),
 	'DEAT:SOUR'=>i18n::translate('Source for Death'),
@@ -1162,6 +1163,7 @@ $FACTS=array(
 	'NSFX'=>i18n::translate('Name Suffix'),
 	'OBJE'=>i18n::translate('Multimedia Object'),
 	'OCCU'=>i18n::translate('Occupation'),
+	'OCCU:AGNC'=>i18n::translate('Employer'),
 	'ORDI'=>i18n::translate('Ordinance'),
 	'ORDN'=>i18n::translate('Ordination'),
 	'PAGE'=>i18n::translate('Citation Details'),
@@ -1183,6 +1185,7 @@ $FACTS=array(
 	'RESI'=>i18n::translate('Residence'),
 	'RESN'=>i18n::translate('Restriction'),
 	'RETI'=>i18n::translate('Retirement'),
+	'RETI:AGNC'=>i18n::translate('Employer'),
 	'RFN'=>i18n::translate('Record File Number'),
 	'RIN'=>i18n::translate('Record ID Numbe'),
 	'ROLE'=>i18n::translate('Role'),
@@ -1397,3 +1400,19 @@ $FACTS=array(
 	'__BRTM_NEPH'=>i18n::translate('Brit Mila of a nephew'),
 	'__BRTM_SIBL'=>i18n::translate('Brit Mila of sibling'),
 );
+
+// TODO: Look at persons->getSex(), to provide different translations for male/female.
+function translate_fact($fact, $person=null) {
+	global $FACTS;
+
+	if (array_key_exists($fact, $FACTS)) {
+		return $FACTS[$fact];
+	}
+	// If no specialisation exists (e.g. DEAT:CAUS), then look for the general (CAUS)
+	if (strpos($fact, ':')) {
+		list(, $fact)=explode(':', $fact, 2);
+		return translate_fact($fact);
+	}
+	// Still no translation? Highlight this as an error
+	return '<span class="error" title="'.i18n::translate('Unrecognized GEDCOM Code').'">'.$fact.'</span>';
+}

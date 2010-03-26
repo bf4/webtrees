@@ -82,7 +82,6 @@ function print_fact(&$eventObj, $noedit=false) {
 	global $CONTACT_EMAIL, $view;
 	global $n_chil, $n_gchi, $n_ggch;
 	global $SEARCH_SPIDER;
-	global $FACTS;
 
 	$estimates = array("abt", "aft", "bef", "est", "cir");
 	$fact = $eventObj->getTag();
@@ -118,348 +117,333 @@ function print_fact(&$eventObj, $noedit=false) {
 	$resn_tag = preg_match("/2 RESN (.+)/", $factrec, $match);
 	if ($resn_tag == "1") $resn_value = $match[1];
 	// Assume that all recognised tags are translated.
-	if (array_key_exists($fact, $FACTS)) {
-		// -- handle generic facts
-		if ($fact!="EVEN" && $fact!="FACT" && $fact!="OBJE") {
-			if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA" || $fact == "_INTE") {
-				// Allow special processing for different languages
-				$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
-				if (function_exists($func)) {
-					// Localise the AKA or _INTE facts
-					$func($fact, $pid);
-				}
+	// -- handle generic facts
+	if ($fact!="EVEN" && $fact!="FACT" && $fact!="OBJE") {
+		if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA" || $fact == "_INTE") {
+			// Allow special processing for different languages
+			$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
+			if (function_exists($func)) {
+				// Localise the AKA or _INTE facts
+				$func($fact, $pid);
 			}
-			if ($fact=="_NMR") {
-				// Allow special processing for different languages
-				$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
-				if (function_exists($func)) {
-					// Localise the _NMR facts
-					$fact = $func($fact, $pid);
-				}
+		}
+		if ($fact=="_NMR") {
+			// Allow special processing for different languages
+			$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
+			if (function_exists($func)) {
+				// Localise the _NMR facts
+				$fact = $func($fact, $pid);
 			}
-			$explode_fact = explode("_", $fact);
-			if (!empty($explode_fact[1]) && !empty($explode_fact[2])) {
-				// Allow special processing for different languages
-				$func="cr_facts_localisation_{$lang_short_cut[$LANGUAGE]}";
-				if (function_exists($func)) {
-					// Localise close relatives facts
-					$func($factrec, $fact, $explode_fact, $pid);
-				}
+		}
+		$explode_fact = explode("_", $fact);
+		if (!empty($explode_fact[1]) && !empty($explode_fact[2])) {
+			// Allow special processing for different languages
+			$func="cr_facts_localisation_{$lang_short_cut[$LANGUAGE]}";
+			if (function_exists($func)) {
+				// Localise close relatives facts
+				$func($factrec, $fact, $explode_fact, $pid);
 			}
-			$factref = $fact;
-			if (!$eventObj->canShow()) return false;
-			if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
-			else $rowID = "row_".$styleadd;
-			echo "\n\t\t<tr class=\"", $rowID, "\">";
-			echo "\n\t\t\t<td class=\"descriptionbox $styleadd center width20\">";
-			if ($SHOW_FACT_ICONS)
-				echo $eventObj->Icon(), ' ';
-			echo $FACTS[$factref];
-			if ($fact=="_BIRT_CHIL" and isset($n_chil)) echo "<br />", i18n::translate('#%d', $n_chil++);
-			if ($fact=="_BIRT_GCHI" and isset($n_gchi)) echo "<br />", i18n::translate('#%d', $n_gchi++);
-			if ($fact=="_BIRT_GGCH" and isset($n_ggch)) echo "<br />", i18n::translate('#%d', $n_ggch++);
-			if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
-				$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
-				$menu->addOnclick("return edit_record('$pid', $linenum);");
-				$menu->addClass("", "", "submenu");
-				$submenu = new Menu(i18n::translate('Edit'), "#", "right");
-				$submenu->addOnclick("return edit_record('$pid', $linenum);");
-				$submenu->addClass("submenuitem", "submenuitem_hover");
-				$menu->addSubMenu($submenu);
+		}
+		$factref = $fact;
+		if (!$eventObj->canShow()) return false;
+		if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
+		else $rowID = "row_".$styleadd;
+		echo "\n\t\t<tr class=\"", $rowID, "\">";
+		echo "\n\t\t\t<td class=\"descriptionbox $styleadd center width20\">";
+		if ($SHOW_FACT_ICONS)
+			echo $eventObj->Icon(), ' ';
+		echo translate_fact($factref);
+		if ($fact=="_BIRT_CHIL" and isset($n_chil)) echo "<br />", i18n::translate('#%d', $n_chil++);
+		if ($fact=="_BIRT_GCHI" and isset($n_gchi)) echo "<br />", i18n::translate('#%d', $n_gchi++);
+		if ($fact=="_BIRT_GGCH" and isset($n_ggch)) echo "<br />", i18n::translate('#%d', $n_ggch++);
+		if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
+			$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
+			$menu->addOnclick("return edit_record('$pid', $linenum);");
+			$menu->addClass("", "", "submenu");
+			$submenu = new Menu(i18n::translate('Edit'), "#", "right");
+			$submenu->addOnclick("return edit_record('$pid', $linenum);");
+			$submenu->addClass("submenuitem", "submenuitem_hover");
+			$menu->addSubMenu($submenu);
 
-				$submenu = new Menu(i18n::translate('Copy'), "#", "right");
-				$submenu->addOnclick("return copy_record('$pid', $linenum);");
-				$submenu->addClass("submenuitem", "submenuitem_hover");
-				$menu->addSubMenu($submenu);
+			$submenu = new Menu(i18n::translate('Copy'), "#", "right");
+			$submenu->addOnclick("return copy_record('$pid', $linenum);");
+			$submenu->addClass("submenuitem", "submenuitem_hover");
+			$menu->addSubMenu($submenu);
 
-				$submenu = new Menu(i18n::translate('Delete'), "#", "right");
-				$submenu->addOnclick("return delete_record('$pid', $linenum);");
-				$submenu->addClass("submenuitem", "submenuitem_hover");
-				$menu->addSubMenu($submenu);
+			$submenu = new Menu(i18n::translate('Delete'), "#", "right");
+			$submenu->addOnclick("return delete_record('$pid', $linenum);");
+			$submenu->addClass("submenuitem", "submenuitem_hover");
+			$menu->addSubMenu($submenu);
 
-				if (!$PGV_MENUS_AS_LISTS) {
-					echo " <div style=\"width:25px;\">";
-					$menu->printMenu();
-					echo "</div>";
-				} else { 
-					echo " <ul>";
-					$menu->printMenu();
-					echo "</ul>";					
-				}
-			}
-			echo "</td>";
-		} else {
-			if ($fact == "OBJE") return false;
-			if (!showFact("EVEN", $pid)) return false;
-			// -- find generic type for each fact
-			$ct = preg_match("/2 TYPE (.*)/", $factrec, $match);
-			if ($ct>0) $factref = trim($match[1]);
-			else $factref = $fact;
-			if (!showFact($factref, $pid)) return false;
-			if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
-			else $rowID = "row_".$styleadd;
-			echo "\n\t\t<tr class=\"", $rowID, "\">";
-			echo "<td class=\"descriptionbox $styleadd center width20\">";
-			if ($SHOW_FACT_ICONS)
-				echo $eventObj->Icon(), ' ';
-			echo i18n::translate($factref);
-			if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
-				$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
-				$menu->addOnclick("return edit_record('$pid', $linenum);");
-				$menu->addClass("", "", "submenu");
-
-				$submenu = new Menu(i18n::translate('Edit'), "#", "right");
-				$submenu->addOnclick("return edit_record('$pid', $linenum);");
-				$submenu->addClass("submenuitem", "submenuitem_hover");
-				$menu->addSubMenu($submenu);
-
-				$submenu = new Menu(i18n::translate('Delete'), "#", "right");
-				$submenu->addOnclick("return delete_record('$pid', $linenum);");
-				$submenu->addClass("submenuitem", "submenuitem_hover");
-				$menu->addSubMenu($submenu);
-
-				$submenu = new Menu(i18n::translate('Copy'), "#", "right");
-				$submenu->addOnclick("return copy_record('$pid', $linenum);");
-				$submenu->addClass("submenuitem", "submenuitem_hover");
-				$menu->addSubMenu($submenu);
-
+			if (!$PGV_MENUS_AS_LISTS) {
 				echo " <div style=\"width:25px;\">";
 				$menu->printMenu();
 				echo "</div>";
+			} else { 
+				echo " <ul>";
+				$menu->printMenu();
+				echo "</ul>";					
 			}
-			echo "</td>";
-		}
-		$align = "";
-		echo "<td class=\"optionbox $styleadd wrap\" $align>";
-		//echo "<td class=\"facts_value facts_value$styleadd\">";
-		if ((showFactDetails($factref, $pid)) && (FactViewRestricted($pid, $factrec))) {
-			if (isset($resn_value)) {
-				switch($resn_value) {
-				case 'privacy':
-					echo '<img src="images/RESN_privacy.gif" alt="', i18n::translate('Privacy'), ' title="', i18n::translate('Privacy'), '" />'; break;
-				case 'confidential':
-					echo '<img src="images/RESN_confidential.gif" alt="', i18n::translate('Confidential'), ' title="', i18n::translate('Confidential'), '" />'; break;
-				case 'locked':
-					echo '<img src="images/RESN_locked.gif" alt="', i18n::translate('Do not change'), ' title="', i18n::translate('Do not change'), '" />'; break;
-				}
-				echo help_link('RESN');
-			}
-		}
-		if ((showFactDetails($factref, $pid)) && (!FactViewRestricted($pid, $factrec))) {
-			// -- first print TYPE for some facts
-			if ($fact!="EVEN" && $fact!="FACT") {
-				if (preg_match("/2 TYPE (.*)/", $factrec, $match)) {
-					if ($fact=="MARR") {
-						echo i18n::translate("MARR_".strtoupper(trim($match[1])));
-					} else {
-						echo i18n::translate(trim($match[1]));
-					}
-					echo "<br />";
-				}
-			}
-			//-- print spouse name for marriage events
-			if (preg_match("/_PGVS @(.*)@/", $factrec, $match)) {
-				$spouse=Person::getInstance($match[1]);
-				if ($spouse) {
-					echo " <a href=\"", encode_url($spouse->getLinkUrl()), "\">";
-					if ($spouse->canDisplayName()) {
-						echo PrintReady($spouse->getFullName());
-					} else {
-						echo i18n::translate('Private');
-					}
-					echo "</a>";
-				}
-				if ($view!="preview" && $spouse) echo " - ";
-				if ($view!="preview" && empty($SEARCH_SPIDER)) {
-					echo "<a href=\"", encode_url("family.php?famid={$pid}"), "\">";
-					if ($TEXT_DIRECTION == "ltr") echo " ", getLRM();
-					else echo " ", getRLM();
-					echo "[", i18n::translate('View Family');
-					if ($SHOW_ID_NUMBERS) echo " ", getLRM(), "($pid)", getLRM();
-					if ($TEXT_DIRECTION == "ltr") echo getLRM(), "]</a>\n";
-					else echo getRLM(), "]</a>\n";
-					echo "<br />";
-				}
-			}
-			// -- find date for each fact
-			echo format_fact_date($eventObj, true, true);
-			//-- print other characterizing fact information
-			if ($event!="" && $fact!="ASSO") {
-				echo " ";
-				$ct = preg_match("/@(.*)@/", $event, $match);
-				if ($ct>0) {
-					$gedrec=GedcomRecord::getInstance($match[1]);
-					if (is_object($gedrec)) {
-						if ($gedrec->getType()=='INDI') {
-							echo '<a href="', encode_url($gedrec->getLinkUrl()), '">', $gedrec->getFullName(), '</a><br />';
-						} elseif ($fact=='REPO') {
-							print_repository_record($match[1]);
-						} else {
-							print_submitter_info($match[1]);
-						}
-					}
-				}
-				else if ($fact=="ALIA") {
-					//-- strip // from ALIA tag for FTM generated gedcoms
-					echo preg_replace("'/'", "", $event), "<br />";
-				}
-				/* -- see the format_fact_date function where this is handled
-				else if ($event=="Y") {
-					if (get_sub_record(2, "2 DATE", $factrec)=="") {
-						echo i18n::translate('Yes'), "<br />";
-					}
-				}*/
-				elseif ($event=="N") {
-					if (get_sub_record(2, "2 DATE", $factrec)=="") {
-						echo i18n::translate('No');
-					}
-				} elseif (strstr("URL WWW ", $fact." ")) {
-					echo "<a href=\"", $event, "\" target=\"new\">", PrintReady($event), "</a>";
-				} elseif (strstr("_EMAIL", $fact)) {
-					echo "<a href=\"mailto:", $event, "\">", $event, "</a>";
-				} elseif (strstr("AFN", $fact)) {
-					echo '<a href="http://www.familysearch.org/Eng/Search/customsearchresults.asp?LDS=0&file_number=', urlencode($event), '" target="new">', $event, '</a>';
-				} elseif (strstr('FAX PHON ', $fact.' ')) {
-					echo getLRM(), $event, ' ' , getLRM();
-				} elseif (strstr('FILE ', $fact.' ')) {
-					if ($SHOW_MEDIA_FILENAME || PGV_USER_GEDCOM_ADMIN) echo getLRM(), $event, ' ' , getLRM();
-				} elseif ($event!='Y') {
-					if (!strstr('ADDR _CREM ', substr($fact, 0, 5).' ')) {
-						if ($factref=='file_size' || $factref=='image_size') {
-							echo PrintReady($rawEvent);
-						} else {
-							echo PrintReady($event);
-						}
-					}
-				}
-				$temp = trim(get_cont(2, $factrec));
-				if (strstr("PHON ADDR ", $fact." ")===false && $temp!="") {
-					if ($WORD_WRAPPED_NOTES) echo " ";
-					echo PrintReady($temp);
-				}
-			}
-			//-- find description for some facts
-			$ct = preg_match("/2 DESC (.*)/", $factrec, $match);
-			if ($ct>0) echo PrintReady($match[1]);
-			// -- print PLACe, TEMPle and STATus
-			echo format_fact_place($eventObj, true, true, true);
-			if (preg_match("/ (PLAC)|(STAT)|(TEMP)|(SOUR) /", $factrec)>0 || ($event && $fact!="ADDR")) print "<br />\n";
-			// -- print BURIal -> CEMEtery
-			$ct = preg_match("/2 CEME (.*)/", $factrec, $match);
-			if ($ct>0) {
-				if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/CEME.gif"))
-					//echo $eventObj->Icon(), ' '; // echo incorrect fact icon !!!
-					echo "<img src=\"{$PGV_IMAGE_DIR}/facts/CEME.gif\" alt=\"".i18n::translate('CEME')."\" title=\"".i18n::translate('CEME')."\" align=\"middle\" /> ";
-				echo "<b>", i18n::translate('CEME'), ":</b> ", $match[1], "<br />\n";
-			}
-			//-- print address structure
-			if ($fact!="ADDR") {
-				print_address_structure($factrec, 2);
-			}
-			else {
-				print_address_structure($factrec, 1);
-			}
-			// -- Enhanced ASSOciates > RELAtionship
-			print_asso_rela_record($pid, $factrec, true, gedcom_record_type($pid, get_id_from_gedcom($GEDCOM)));
-			// -- find _PGVU field
-			$ct = preg_match("/2 _PGVU (.*)/", $factrec, $match);
-			if ($ct>0) echo " - ", i18n::translate('_PGVU'), ": ", $match[1];
-			// -- Find RESN tag
-			if (isset($resn_value)) {
-				switch($resn_value) {
-				case 'privacy':
-					echo '<img src="images/RESN_privacy.gif" alt="', i18n::translate('Privacy'), ' title="', i18n::translate('Privacy'), '" />'; break;
-				case 'confidential':
-					echo '<img src="images/RESN_confidential.gif" alt="', i18n::translate('Confidential'), ' title="', i18n::translate('Confidential'), '" />'; break;
-				case 'locked':
-					echo '<img src="images/RESN_locked.gif" alt="', i18n::translate('Do not change'), ' title="', i18n::translate('Do not change'), '" />'; break;
-				}
-				echo help_link('RESN');
-			}
-			if (preg_match("/\n2 FAMC @(.+)@/", $factrec, $match)) {
-				echo "<br/><span class=\"label\">", i18n::translate('FAMC'), ":</span> ";
-				$family=Family::getInstance($match[1]);
-				echo "<a href=\"", encode_url($family->getLinkUrl()), "\">", $family->getFullName(), "</a>";
-				if (preg_match("/\n3 ADOP (HUSB|WIFE|BOTH)/", utf8_strtoupper($factrec), $match)) {
-					echo '<br/><span class="indent"><span class="label">', i18n::translate('ADOP'), ':</span> ';
-					echo '<span class="field">';
-					switch ($match[1]) {
-					case 'HUSB':
-					case 'WIFE':
-						echo i18n::translate($match[1]);
-						break;
-					case 'BOTH':
-						echo i18n::translate('HUSB'), '+', i18n::translate('WIFE');
-						break;
-					}
-					echo '</span></span>';
-				}
-			}
-			// 0 SOUR/1 DATA/2 EVEN/3 DATE/3 PLAC
-			$data_rec = get_sub_record(1, "1 DATA", $factrec, 1);
-			if (!empty($data_rec)) {
-				for ($even_num=1; $even_rec=get_sub_record(2, "2 EVEN", $data_rec, $even_num); ++$even_num) {
-					$tmp1=get_gedcom_value('EVEN', 2, $even_rec, $truncate='', $convert=false);
-					$tmp2=new GedcomDate(get_gedcom_value('DATE', 3, $even_rec, $truncate='', $convert=false));
-					$tmp3=get_gedcom_value('PLAC', 3, $even_rec, $truncate='', $convert=false);
-					$fact_string = "";
-					if ($even_num>1)
-						$fact_string .= "<br />";
-					$fact_string .= "<b>";
-					foreach (preg_split('/\W+/', $tmp1) as $key=>$value) {
-						if ($key>0)
-							$fact_string .= ", ";
-						$fact_string .= i18n::translate($value);
-					}
-					$fact_string .= "</b>";
-					if ($tmp2->Display(false, '', array())!="&nbsp;") $fact_string .= " - ".$tmp2->Display(false, '', array());
-					if ($tmp3!='') $fact_string .= " - ".$tmp3;
-					echo $fact_string;
-				}
-			}
-			if ($fact!="ADDR") {
-				//-- catch all other facts that could be here
-				$special_facts = array("ADDR", "ALIA", "ASSO", "CEME", "CONT", "DATE", "DESC", "EMAIL",
-				"FAMC", "FAMS", "FAX", "NOTE", "OBJE", "PHON", "PLAC", "RESN", "RELA", "SOUR", "STAT", "TEMP",
-				"TIME", "TYPE", "WWW", "_EMAIL", "_PGVU", "URL", "AGE", "_PGVS", "_PGVFS");
-				$ct = preg_match_all("/\n2 (\w+) (.*)/", $factrec, $match, PREG_SET_ORDER);
-				if ($ct>0) echo "<br />";
-				for($i=0; $i<$ct; $i++) {
-					$factref = $match[$i][1];
-					if (!in_array($factref, $special_facts)) {
-						if ($factref=="AGNC") {
-							// Allow special processing for different languages
-							$func="fact_AGNC_localisation_{$lang_short_cut[$LANGUAGE]}";
-							if (function_exists($func)) {
-								// Localise the AGNC fact
-								$func($factref, $fact);
-							}
-						}
-						$label = i18n::translate($factref);
-						if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif"))
-							//echo $eventObj->Icon(), ' '; // print incorrect fact icon !!!
-							echo "<img src=\"{$PGV_IMAGE_DIR}/facts/", $factref, ".gif\" alt=\"{$label}\" title=\"{$label}\" align=\"middle\" /> ";
-						else echo "<span class=\"label\">", $label, ": </span>";
-						echo htmlspecialchars($match[$i][2], ENT_COMPAT, 'UTF-8');
-						echo "<br />";
-					}
-				}
-			}
-			// -- find source for each fact
-			print_fact_sources($factrec, 2);
-			// -- find notes for each fact
-			print_fact_notes($factrec, 2);
-			//-- find multimedia objects
-			print_media_links($factrec, 2, $pid);
 		}
 		echo "</td>";
-		echo "\n\t\t</tr>";
 	} else {
-		// -- catch all unknown codes here
-		$body = i18n::translate('Unrecognized GEDCOM Code')." ".$fact;
-		$userName=getUserFullName($CONTACT_EMAIL);
-		if (!$HIDE_GEDCOM_ERRORS) echo "\n\t\t<tr><td class=\"descriptionbox $styleadd\"><span class=\"error\">", i18n::translate('Unrecognized GEDCOM Code'), ": $fact</span></td><td class=\"optionbox\">$event<br />", i18n::translate('This is an error, and we would like to fix it. Please report this error to'), " <a href=\"javascript:;\" onclick=\"message('$CONTACT_EMAIL', '', '', '$body'); return false;\">", $userName, "</a>.</td></tr>";
+		if ($fact == "OBJE") return false;
+		if (!showFact("EVEN", $pid)) return false;
+		// -- find generic type for each fact
+		$ct = preg_match("/2 TYPE (.*)/", $factrec, $match);
+		if ($ct>0) $factref = trim($match[1]);
+		else $factref = $fact;
+		if (!showFact($factref, $pid)) return false;
+		if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
+		else $rowID = "row_".$styleadd;
+		echo "\n\t\t<tr class=\"", $rowID, "\">";
+		echo "<td class=\"descriptionbox $styleadd center width20\">";
+		if ($SHOW_FACT_ICONS)
+			echo $eventObj->Icon(), ' ';
+		echo i18n::translate($factref);
+		if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
+			$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
+			$menu->addOnclick("return edit_record('$pid', $linenum);");
+			$menu->addClass("", "", "submenu");
+
+			$submenu = new Menu(i18n::translate('Edit'), "#", "right");
+			$submenu->addOnclick("return edit_record('$pid', $linenum);");
+			$submenu->addClass("submenuitem", "submenuitem_hover");
+			$menu->addSubMenu($submenu);
+
+			$submenu = new Menu(i18n::translate('Delete'), "#", "right");
+			$submenu->addOnclick("return delete_record('$pid', $linenum);");
+			$submenu->addClass("submenuitem", "submenuitem_hover");
+			$menu->addSubMenu($submenu);
+
+			$submenu = new Menu(i18n::translate('Copy'), "#", "right");
+			$submenu->addOnclick("return copy_record('$pid', $linenum);");
+			$submenu->addClass("submenuitem", "submenuitem_hover");
+			$menu->addSubMenu($submenu);
+
+			echo " <div style=\"width:25px;\">";
+			$menu->printMenu();
+			echo "</div>";
+		}
+		echo "</td>";
 	}
+	$align = "";
+	echo "<td class=\"optionbox $styleadd wrap\" $align>";
+	//echo "<td class=\"facts_value facts_value$styleadd\">";
+	if ((showFactDetails($factref, $pid)) && (FactViewRestricted($pid, $factrec))) {
+		if (isset($resn_value)) {
+			switch($resn_value) {
+			case 'privacy':
+				echo '<img src="images/RESN_privacy.gif" alt="', i18n::translate('Privacy'), ' title="', i18n::translate('Privacy'), '" />'; break;
+			case 'confidential':
+				echo '<img src="images/RESN_confidential.gif" alt="', i18n::translate('Confidential'), ' title="', i18n::translate('Confidential'), '" />'; break;
+			case 'locked':
+				echo '<img src="images/RESN_locked.gif" alt="', i18n::translate('Do not change'), ' title="', i18n::translate('Do not change'), '" />'; break;
+			}
+			echo help_link('RESN');
+		}
+	}
+	if ((showFactDetails($factref, $pid)) && (!FactViewRestricted($pid, $factrec))) {
+		// -- first print TYPE for some facts
+		if ($fact!="EVEN" && $fact!="FACT") {
+			if (preg_match("/2 TYPE (.*)/", $factrec, $match)) {
+				if ($fact=="MARR") {
+					echo i18n::translate("MARR_".strtoupper(trim($match[1])));
+				} else {
+					echo i18n::translate(trim($match[1]));
+				}
+				echo "<br />";
+			}
+		}
+		//-- print spouse name for marriage events
+		if (preg_match("/_PGVS @(.*)@/", $factrec, $match)) {
+			$spouse=Person::getInstance($match[1]);
+			if ($spouse) {
+				echo " <a href=\"", encode_url($spouse->getLinkUrl()), "\">";
+				if ($spouse->canDisplayName()) {
+					echo PrintReady($spouse->getFullName());
+				} else {
+					echo i18n::translate('Private');
+				}
+				echo "</a>";
+			}
+			if ($view!="preview" && $spouse) echo " - ";
+			if ($view!="preview" && empty($SEARCH_SPIDER)) {
+				echo "<a href=\"", encode_url("family.php?famid={$pid}"), "\">";
+				if ($TEXT_DIRECTION == "ltr") echo " ", getLRM();
+				else echo " ", getRLM();
+				echo "[", i18n::translate('View Family');
+				if ($SHOW_ID_NUMBERS) echo " ", getLRM(), "($pid)", getLRM();
+				if ($TEXT_DIRECTION == "ltr") echo getLRM(), "]</a>\n";
+				else echo getRLM(), "]</a>\n";
+				echo "<br />";
+			}
+		}
+		// -- find date for each fact
+		echo format_fact_date($eventObj, true, true);
+		//-- print other characterizing fact information
+		if ($event!="" && $fact!="ASSO") {
+			echo " ";
+			$ct = preg_match("/@(.*)@/", $event, $match);
+			if ($ct>0) {
+				$gedrec=GedcomRecord::getInstance($match[1]);
+				if (is_object($gedrec)) {
+					if ($gedrec->getType()=='INDI') {
+						echo '<a href="', encode_url($gedrec->getLinkUrl()), '">', $gedrec->getFullName(), '</a><br />';
+					} elseif ($fact=='REPO') {
+						print_repository_record($match[1]);
+					} else {
+						print_submitter_info($match[1]);
+					}
+				}
+			}
+			else if ($fact=="ALIA") {
+				//-- strip // from ALIA tag for FTM generated gedcoms
+				echo preg_replace("'/'", "", $event), "<br />";
+			}
+			/* -- see the format_fact_date function where this is handled
+			else if ($event=="Y") {
+				if (get_sub_record(2, "2 DATE", $factrec)=="") {
+					echo i18n::translate('Yes'), "<br />";
+				}
+			}*/
+			elseif ($event=="N") {
+				if (get_sub_record(2, "2 DATE", $factrec)=="") {
+					echo i18n::translate('No');
+				}
+			} elseif (strstr("URL WWW ", $fact." ")) {
+				echo "<a href=\"", $event, "\" target=\"new\">", PrintReady($event), "</a>";
+			} elseif (strstr("_EMAIL", $fact)) {
+				echo "<a href=\"mailto:", $event, "\">", $event, "</a>";
+			} elseif (strstr("AFN", $fact)) {
+				echo '<a href="http://www.familysearch.org/Eng/Search/customsearchresults.asp?LDS=0&file_number=', urlencode($event), '" target="new">', $event, '</a>';
+			} elseif (strstr('FAX PHON ', $fact.' ')) {
+				echo getLRM(), $event, ' ' , getLRM();
+			} elseif (strstr('FILE ', $fact.' ')) {
+				if ($SHOW_MEDIA_FILENAME || PGV_USER_GEDCOM_ADMIN) echo getLRM(), $event, ' ' , getLRM();
+			} elseif ($event!='Y') {
+				if (!strstr('ADDR _CREM ', substr($fact, 0, 5).' ')) {
+					if ($factref=='file_size' || $factref=='image_size') {
+						echo PrintReady($rawEvent);
+					} else {
+						echo PrintReady($event);
+					}
+				}
+			}
+			$temp = trim(get_cont(2, $factrec));
+			if (strstr("PHON ADDR ", $fact." ")===false && $temp!="") {
+				if ($WORD_WRAPPED_NOTES) echo " ";
+				echo PrintReady($temp);
+			}
+		}
+		//-- find description for some facts
+		$ct = preg_match("/2 DESC (.*)/", $factrec, $match);
+		if ($ct>0) echo PrintReady($match[1]);
+		// -- print PLACe, TEMPle and STATus
+		echo format_fact_place($eventObj, true, true, true);
+		if (preg_match("/ (PLAC)|(STAT)|(TEMP)|(SOUR) /", $factrec)>0 || ($event && $fact!="ADDR")) print "<br />\n";
+		// -- print BURIal -> CEMEtery
+		$ct = preg_match("/2 CEME (.*)/", $factrec, $match);
+		if ($ct>0) {
+			if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/CEME.gif"))
+				//echo $eventObj->Icon(), ' '; // echo incorrect fact icon !!!
+				echo "<img src=\"{$PGV_IMAGE_DIR}/facts/CEME.gif\" alt=\"".i18n::translate('CEME')."\" title=\"".i18n::translate('CEME')."\" align=\"middle\" /> ";
+			echo "<b>", i18n::translate('CEME'), ":</b> ", $match[1], "<br />\n";
+		}
+		//-- print address structure
+		if ($fact!="ADDR") {
+			print_address_structure($factrec, 2);
+		}
+		else {
+			print_address_structure($factrec, 1);
+		}
+		// -- Enhanced ASSOciates > RELAtionship
+		print_asso_rela_record($pid, $factrec, true, gedcom_record_type($pid, get_id_from_gedcom($GEDCOM)));
+		// -- find _PGVU field
+		$ct = preg_match("/2 _PGVU (.*)/", $factrec, $match);
+		if ($ct>0) echo " - ", i18n::translate('_PGVU'), ": ", $match[1];
+		// -- Find RESN tag
+		if (isset($resn_value)) {
+			switch($resn_value) {
+			case 'privacy':
+				echo '<img src="images/RESN_privacy.gif" alt="', i18n::translate('Privacy'), ' title="', i18n::translate('Privacy'), '" />'; break;
+			case 'confidential':
+				echo '<img src="images/RESN_confidential.gif" alt="', i18n::translate('Confidential'), ' title="', i18n::translate('Confidential'), '" />'; break;
+			case 'locked':
+				echo '<img src="images/RESN_locked.gif" alt="', i18n::translate('Do not change'), ' title="', i18n::translate('Do not change'), '" />'; break;
+			}
+			echo help_link('RESN');
+		}
+		if (preg_match("/\n2 FAMC @(.+)@/", $factrec, $match)) {
+			echo "<br/><span class=\"label\">", i18n::translate('FAMC'), ":</span> ";
+			$family=Family::getInstance($match[1]);
+			echo "<a href=\"", encode_url($family->getLinkUrl()), "\">", $family->getFullName(), "</a>";
+			if (preg_match("/\n3 ADOP (HUSB|WIFE|BOTH)/", utf8_strtoupper($factrec), $match)) {
+				echo '<br/><span class="indent"><span class="label">', i18n::translate('ADOP'), ':</span> ';
+				echo '<span class="field">';
+				switch ($match[1]) {
+				case 'HUSB':
+				case 'WIFE':
+					echo i18n::translate($match[1]);
+					break;
+				case 'BOTH':
+					echo i18n::translate('HUSB'), '+', i18n::translate('WIFE');
+					break;
+				}
+				echo '</span></span>';
+			}
+		}
+		// 0 SOUR/1 DATA/2 EVEN/3 DATE/3 PLAC
+		$data_rec = get_sub_record(1, "1 DATA", $factrec, 1);
+		if (!empty($data_rec)) {
+			for ($even_num=1; $even_rec=get_sub_record(2, "2 EVEN", $data_rec, $even_num); ++$even_num) {
+				$tmp1=get_gedcom_value('EVEN', 2, $even_rec, $truncate='', $convert=false);
+				$tmp2=new GedcomDate(get_gedcom_value('DATE', 3, $even_rec, $truncate='', $convert=false));
+				$tmp3=get_gedcom_value('PLAC', 3, $even_rec, $truncate='', $convert=false);
+				$fact_string = "";
+				if ($even_num>1)
+					$fact_string .= "<br />";
+				$fact_string .= "<b>";
+				foreach (preg_split('/\W+/', $tmp1) as $key=>$value) {
+					if ($key>0)
+						$fact_string .= ", ";
+					$fact_string .= i18n::translate($value);
+				}
+				$fact_string .= "</b>";
+				if ($tmp2->Display(false, '', array())!="&nbsp;") $fact_string .= " - ".$tmp2->Display(false, '', array());
+				if ($tmp3!='') $fact_string .= " - ".$tmp3;
+				echo $fact_string;
+			}
+		}
+		if ($fact!="ADDR") {
+			//-- catch all other facts that could be here
+			$special_facts = array("ADDR", "ALIA", "ASSO", "CEME", "CONT", "DATE", "DESC", "EMAIL",
+			"FAMC", "FAMS", "FAX", "NOTE", "OBJE", "PHON", "PLAC", "RESN", "RELA", "SOUR", "STAT", "TEMP",
+			"TIME", "TYPE", "WWW", "_EMAIL", "_PGVU", "URL", "AGE", "_PGVS", "_PGVFS");
+			$ct = preg_match_all("/\n2 (\w+) (.*)/", $factrec, $match, PREG_SET_ORDER);
+			if ($ct>0) echo "<br />";
+			for($i=0; $i<$ct; $i++) {
+				$factref = $match[$i][1];
+				if (!in_array($factref, $special_facts)) {
+					$label = translate_fact($fact.':'.$factref);
+					if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif"))
+						//echo $eventObj->Icon(), ' '; // print incorrect fact icon !!!
+						echo "<img src=\"{$PGV_IMAGE_DIR}/facts/", $factref, ".gif\" alt=\"{$label}\" title=\"{$label}\" align=\"middle\" /> ";
+					else echo "<span class=\"label\">", $label, ": </span>";
+					echo htmlspecialchars($match[$i][2], ENT_COMPAT, 'UTF-8');
+					echo "<br />";
+				}
+			}
+		}
+		// -- find source for each fact
+		print_fact_sources($factrec, 2);
+		// -- find notes for each fact
+		print_fact_notes($factrec, 2);
+		//-- find multimedia objects
+		print_media_links($factrec, 2, $pid);
+	}
+	echo "</td>";
+	echo "\n\t\t</tr>";
 }
 //------------------- end print fact function
 
