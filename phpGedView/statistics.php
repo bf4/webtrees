@@ -127,7 +127,7 @@ if (isset($content) && $content==1) {
 					</tr>
 				</table>
 				<br />
-				<div align="<?php echo $align;?>"><b><?php echo i18n::translate('Top age at death');?></b></div>
+				<div align="<?php echo $align;?>"><b><?php echo i18n::translate('Greatest age at death');?></b></div>
 				<table class="facts_table">
 					<tr>
 						<td class="facts_label"><?php echo i18n::translate('Males');?></td>
@@ -306,7 +306,7 @@ if (isset($content) && $content==1) {
 				<table class="facts_table">
 					<tr>
 						<td class="facts_label"><?php echo i18n::translate('Age between siblings');?></td>
-						<td class="facts_label"><?php echo i18n::translate('Top age between siblings');?></td>
+						<td class="facts_label"><?php echo i18n::translate('Greatest age between siblings');?></td>
 					</tr>
 					<tr>
 						<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->topAgeBetweenSiblingsList();?></td>
