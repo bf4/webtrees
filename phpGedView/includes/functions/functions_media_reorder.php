@@ -42,7 +42,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
  */
 function media_reorder_row($rtype, $rowm, $pid) {
 
-    global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
+    global $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
     global $SHOW_ID_NUMBERS, $GEDCOM, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
     global $SEARCH_SPIDER;
     global $t, $n, $item, $items, $p, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note, $rowm;

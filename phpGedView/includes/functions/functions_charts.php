@@ -44,7 +44,7 @@ require_once PGV_ROOT.'includes/classes/class_person.php';
  * @param string $arrowDirection   direction of link arrow
  */
 function print_sosa_number($sosa, $pid = "", $arrowDirection = "up") {
-	global $view, $pbwidth, $pbheight;
+	global $pbwidth, $pbheight;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (substr($sosa,-1,1)==".") {
