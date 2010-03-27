@@ -50,8 +50,6 @@ echo '<a href="', PGV_PHPGEDVIEW_URL, '" target="_blank"><img src="', $PGV_IMAGE
 echo '</a><br />';
 echo "\n\t<br />";
 
-echo '<a href="', PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(), '">', i18n::translate('Printer-friendly Version'), '</a>';
-echo "<br />";
 
 if ($SHOW_STATS || PGV_DEBUG) {
     echo execution_stats();

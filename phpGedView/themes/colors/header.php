@@ -60,8 +60,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 				echo '<link rel="stylesheet" href="modules/lightbox/css/album_page.css" type="text/css" media="screen" />';
 			}
 		} ?>
-
-	<link rel="stylesheet" href="<?php echo $print_stylesheet; ?>" type="text/css" media="print" />
+		<link rel="stylesheet" href="<?php echo $print_stylesheet; ?>" type="text/css" media="print" />
 	<?php if ($BROWSERTYPE == "msie") { ?>
 	<style type="text/css">
 		FORM { margin-top: 0px; margin-bottom: 0px; }
