@@ -2489,9 +2489,9 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 		case 'pl': // See: Lucasz
 		case 'it': // ??? See: http://it.wikipedia.org/wiki/Cugino
 			switch ($last) {
-			case 'son': return i18n::translate_c('MALE', 'cousin of degree %d',   $up+$down+2);
-			case 'dau': return i18n::translate_c('FEMALE', 'cousin of degree %d', $up+$down+2);
-			case 'chi': return i18n::translate('cousin of degree %d',             $up+$down+2);
+			case 'son': return /* I18N: %s is "first", "second", ... */ i18n::translate_c('MALE', 'cousin of the %s degree',   i18n::ordinal_word($up+$down+2));
+			case 'dau': return /* I18N: %s is "first", "second", ... */ i18n::translate_c('FEMALE', 'cousin of the %s degree', i18n::ordinal_word($up+$down+2));
+			case 'chi': return /* I18N: %s is "first", "second", ... */ i18n::translate('cousin of the %s degree',             i18n::ordinal_word($up+$down+2));
 			}
 			break;
 		case 'en': // See: http://en.wikipedia.org/wiki/File:CousinTree.svg
