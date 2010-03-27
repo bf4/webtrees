@@ -194,7 +194,7 @@ if ($action=="compose") {
 
 	if (!PGV_USER_ID){
 		print "<tr><td valign=\"top\" width=\"15%\" align=\"right\">".i18n::translate('Your Name:')."</td>";
-		print "<td><input type=\"text\" name=\"from_name\" size=\"40\" value=\"$from_name\" /></td></tr><tr><td valign=\"top\" align=\"right\">".i18n::translate('Email Address:')."</td><td><input type=\"text\" name=\"from_email\" size=\"40\" value=\"$from_email\" /><br />".i18n::translate('Please provide your email address so that we may contact you in response to this message.  If you do not provide your email address we will not be able to respond to your inquiry.  You email address will not be used in any other way besides responding to this inquiry.')."<br /><br /></td></tr>\n";
+		print "<td><input type=\"text\" name=\"from_name\" size=\"40\" value=\"$from_name\" /></td></tr><tr><td valign=\"top\" align=\"right\">".i18n::translate('Email Address:')."</td><td><input type=\"text\" name=\"from_email\" size=\"40\" value=\"$from_email\" /><br />".i18n::translate('Please provide your email address so that we may contact you in response to this message.  If you do not provide your email address we will not be able to respond to your inquiry.  Your email address will not be used in any other way besides responding to this inquiry.')."<br /><br /></td></tr>\n";
 	}
 	print "<tr><td align=\"right\">".i18n::translate('Subject:')."</td>";
 	print "<td>";
