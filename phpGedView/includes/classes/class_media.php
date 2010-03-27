@@ -302,7 +302,7 @@ class Media extends GedcomRecord {
 	}
 
 	// Extra info to display when displaying this record in a list of
-	// selection items or favourites.
+	// selection items or favorites.
 	function format_list_details() {
 		ob_start();
 		print_media_links('1 OBJE @'.$this->getXref().'@', 1, $this->getXref());

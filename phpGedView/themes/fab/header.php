@@ -126,7 +126,7 @@ if ($view!='simple') {
 				echo '<li><a href="', $LOGIN_URL, '?url=', PGV_SCRIPT_PATH, PGV_SCRIPT_NAME, decode_url(normalize_query_string($QUERY_STRING.'&amp;ged='.PGV_GEDCOM)), '" class="link">', i18n::translate('Login'), '</a></li>';
 			}
 		}
-			echo '<span class="link"> | ', MenuBar::getFavouritesMenu()->getMenuAsList();
+			echo '<span class="link"> | ', MenuBar::getFavoritesMenu()->getMenuAsList();
 			echo ' | ', MenuBar::getLanguageMenu()->getMenuAsList();
 			global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES;
 			if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {

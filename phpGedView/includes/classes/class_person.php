@@ -1767,7 +1767,7 @@ class Person extends GedcomRecord {
 	}
 
 	// Extra info to display when displaying this record in a list of
-	// selection items or favourites.
+	// selection items or favorites.
 	function format_list_details() {
 		return
 		$this->format_first_major_fact(PGV_EVENTS_BIRT, 1).
