@@ -2481,30 +2481,47 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 		$up  =strlen($match[1])/3;
 		$down=strlen($match[2])/3;
 		$last=substr($path, -3, 3);
-		// Cousins.  http://en.wikipedia.org/wiki/File:CousinTree.svg
-		if ($up==$down) {
+		// Different languages have different rules for naming cousins.  For example,
+		// an english "second cousin once removed" is a polish "cousin of 7th degree".
+		//
+		// Need to find out which languages use which rules.
+		switch (WT_LOCALE) {
+		case 'pl': // See: Lucasz
+		case 'it': // ??? See: http://it.wikipedia.org/wiki/Cugino
 			switch ($last) {
-			case 'son': return i18n::translate('%s male cousin',   i18n::ordinal_word($up-1));
-			case 'dau': return i18n::translate('%s female cousin', i18n::ordinal_word($up-1));
-			case 'chi': return i18n::translate('%s cousin',        i18n::ordinal_word($up-1));
+			case 'son': return i18n::translate_c('MALE', 'cousin of degree %d',   $up+$down+2);
+			case 'dau': return i18n::translate_c('FEMALE', 'cousin of degree %d', $up+$down+2);
+			case 'chi': return i18n::translate('cousin of degree %d',             $up+$down+2);
 			}
-		} else {
-			$removed=abs($down-$up);
-			switch ($last) {
-			case 'son':
-				return i18n::plural(
-					'%1$s male cousin, %2$d time removed', '%1$s male cousin, %2$d times removed',
+			break;
+		case 'en': // See: http://en.wikipedia.org/wiki/File:CousinTree.svg
+		case 'en_GB':
+		default:
+			if ($up==$down) {
+				switch ($last) {
+				case 'son': return i18n::translate_c('MALE', '%s cousin',   i18n::ordinal_word($up-1));
+				case 'dau': return i18n::translate_c('FEMALE', '%s cousin', i18n::ordinal_word($up-1));
+				case 'chi': return i18n::translate('%s cousin',             i18n::ordinal_word($up-1));
+				}
+			} else {
+				$removed=abs($down-$up);
+				switch ($last) {
+				case 'son':
+					return i18n::plural(
+						'%1$s male cousin, %2$d time removed', '%1$s male cousin, %2$d times removed',
+						$removed, i18n::ordinal_word(min($up, $down)), $removed
+					);
+				case 'dau':
+					return i18n::plural(
+						'%1$s female cousin, %2$d time removed', '%1$s female cousin, %2$d times removed',
+						$removed, i18n::ordinal_word(min($up, $down)), $removed
+					);
+				case 'chi': return i18n::plural('%1$s cousin, %2$d time removed', '%1$s cousin, %2$d times removed',
 					$removed, i18n::ordinal_word(min($up, $down)), $removed
-				);
-			case 'dau':
-				return i18n::plural(
-					'%1$s female cousin, %2$d time removed', '%1$s female cousin, %2$d times removed',
-					$removed, i18n::ordinal_word(min($up, $down)), $removed
-				);
-			case 'chi': return i18n::plural('%1$s cousin, %2$d time removed', '%1$s cousin, %2$d times removed',
-				$removed, i18n::ordinal_word(min($up, $down)), $removed
-				);
+					);
+				}
 			}
+			break;
 		}
 	}
 
