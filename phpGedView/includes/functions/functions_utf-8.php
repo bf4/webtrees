@@ -185,7 +185,7 @@ function utf8_strlen($string) {
 
 function utf8_strcmp($string1, $string2) {
 	// Language-specific conversions, e.g. Turkish dotless i
-	global $ALPAHBET_lower, $ALPHABET_upper;
+	global $ALPHABET_lower, $ALPHABET_upper;
 
 	$strpos1=0;
 	$strpos2=0;
