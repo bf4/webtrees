@@ -1747,7 +1747,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		$return .= "</td>";
 		//-- Event name
 		$return .= "<td class=\"list_value_wrap\">";
-		$return .= "<a href=\"".encode_url($value['url'])."\" class=\"list_item url\">".i18n::translate($value['fact'])."</a>"; // hCalendar:url
+		$return .= "<a href=\"".encode_url($value['url'])."\" class=\"list_item url\">".translate_fact($value['fact'])."</a>"; // hCalendar:url
 		$return .= "&nbsp;</td>";
 
 		$return .= "</tr>\n";
