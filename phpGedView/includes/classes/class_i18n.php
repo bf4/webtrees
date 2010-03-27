@@ -48,41 +48,48 @@ class i18n {
 	static public function init($locale=null) {
 		$installed_languages=self::installed_languages();
 		if (is_null($locale) || !array_key_exists($locale, $installed_languages)) {
-			// Choose a locale
+			// Automatic locale selection.
 			if (isset($_GET['lang']) && array_key_exists($_GET['lang'], $installed_languages)) {
-				// Requested in the URL
-				$_SESSION['locale']=$locale;
+				// Requested in the URL?
 				$locale=$_GET['lang'];
 				unset($_GET['lang']);
 			} elseif (isset($_SESSION['locale']) && array_key_exists($_SESSION['locale'], $installed_languages)) {
-				// Rembered from a previous visit
+				// Rembered from a previous visit?
 				$locale=$_SESSION['locale'];
 			} else {
-				// If the client has absolutely no preference, choose one for them.
-				if (in_array('en', $installed_languages)) {
-					$locale='en';
-				} else {
-					$tmp=array_keys($installed_languages);
-					$locale=$tmp[0];
-				}
+				// Browser preference takes priority over gedcom default
 				if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-					// Browser preference
+					$prefs=explode(',', str_replace(' ', '', $_SERVER['HTTP_ACCEPT_LANGUAGE']));
+				} else {
 					$prefs=array();
-					foreach (explode(',', str_replace(' ', '', $_SERVER['HTTP_ACCEPT_LANGUAGE'])) as $pref) {
-						list($l, $q)=explode(';q=', $pref.';q=1.0');
-						$prefs[$l]=(float)$q;
+				}
+				if (PGV_GED_ID) {
+					// TODO: this value isn't currently stored in the DB!
+					$locale=get_gedcom_setting(PGV_GED_ID, 'language');
+					if (array_key_exists($locale, $installed_languages)) {
+						$prefs[]=$locale.';q=0.2';
 					}
-					arsort($prefs);
-					foreach (array_keys($prefs) as $pref) {
-						if (array_key_exists($pref, $installed_languages)) {
-							$locale=$pref;
-							break;
-						}
+				}
+				$prefs2=array();
+				foreach ($prefs as $pref) {
+					list($l, $q)=explode(';q=', $pref.';q=1.0');
+					$prefs2[$l]=(float)$q;
+				}
+				// Ensure there is a fallback.  en is always available
+				if (!array_key_exists('en', $prefs2)) {
+					$prefs2['en']=0.0;
+				}
+				arsort($prefs2);
+				foreach (array_keys($prefs2) as $pref) {
+					if (array_key_exists($pref, $installed_languages)) {
+						$locale=$pref;
+						break;
 					}
 				}
 			}
 		}
-		// We now have a valid locale.  Load it.
+		// We now have a valid locale.  Save it and load it.
+		$_SESSION['locale']=$locale;
 		$translate=new Zend_Translate('gettext', PGV_ROOT.'language/'.$locale.'.mo', $locale);
 		// TODO: This is where we would use $translate->addTranslation() to add module translations
 		// Make the locale and translation adapter available to the rest of the Zend Framework
