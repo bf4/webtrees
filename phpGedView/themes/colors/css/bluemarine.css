@@ -1,6 +1,6 @@
 /**
  ** Style for the Blue Marine Theme      
- ** @version $Id: ash.css 7584 2010-03-21 15:09:59Z rob $
+ ** @version $Id: ash.css 7641 2010-03-23 23:43:19Z rob $
  */
 
 .something {
@@ -40,6 +40,7 @@ padding:0px;
 background:#6598cb;
 color: #ffffff;
 }
+
 /*	Define TopLink Color				*/
 
 #toplinks {
@@ -53,7 +54,7 @@ background:#98badd;
 .list_value, 
 .list_value_wrap, 
 .tab_cell_active, 
-.news_box,
+.news_box, optionbox,
 .person0,  .center .person_box,
 .list_table,
 .submenuitem_hover, 
@@ -74,7 +75,7 @@ color:#333333;
 }
 
 a:hover { 
-color: #6598cb ;
+color: #f50;
 text-decoration: none;
 }
 
@@ -162,6 +163,7 @@ white-space: nowrap;
 
 .submenuitem a, .submenuitem_rtl a, 
 .submenuitem_hover a, .submenuitem_hover_rtl a {
+color: #000;
 display: inline-block;
 vertical-align: middle;
 text-decoration:none;
@@ -208,6 +210,7 @@ margin-left:5px;
 
 .title .gedcomtitle {
 text-decoration:none;
+color: #ffffff;
 }
 
 p.center a {
@@ -222,7 +225,7 @@ color:#f50;
 }
 
 td .optionbox .help img {
-background: #fff;
+background: inherit;
 }
 
 table.header {
@@ -298,7 +301,7 @@ width:100%;
 }
 
 #index_small_blocks .name1 {
-color:#003399;
+color:#333333;
 }
 
 #index_small_blocks .blockheader {
@@ -1124,13 +1127,6 @@ font-weight: bold;
 font-size: 12px;
 }
 
-@media all {
- a img {
-color: inherit;
-border: none;
-}
-}
-
 .starredname {
 text-decoration:underline;
 }
@@ -1177,7 +1173,6 @@ padding: 3px;
 }
 
 .optionbox {
-background:#fff;
 border:solid #999 1px;
 font-size: 12px;
 vertical-align: top;
@@ -1548,12 +1543,6 @@ color:#FFF;
 background: #fff;
 } 
 
-@media print {
-#toplinks, #header select, #header input, #footer select, #footer input {
-display:none;
-}
-}
-
 .nowrap {
 white-space: nowrap;
 }
@@ -1626,17 +1615,19 @@ dt {
 /* Accordion ----------------------------------*/
 
 .ui-accordion .ui-accordion-header { background: #6598cb; opacity: 0.67;}
-.ui-accordion .ui-accordion-header a { color: #ffffff ;}
+.ui-accordion .ui-accordion-header a { color: #fffffe ;}
 
 /* Tabs ----------------------------------*/
-.ui-widget-header { border: 1px solid #fff; background: #6598cb url(images/ui-bg_highlight-soft_100_e7eef3_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
+.ui-widget-header { border: 1px solid #fff; background: #6598cb url(/js/jquery/css/images/ui-bg_highlight-soft_100_e7eef3_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
+.ui-widget-content a:hover {color: #f50;}
 
 /* Interaction states ----------------------------------*/
-.ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #cccccc; background: #e0e7ff url(images/ui-bg_glass_80_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #444444; outline: none; }
+.ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #cccccc; background: #e0e7ff url(/js/jquery/css/images/ui-bg_glass_80_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #444444; outline: none; }
 .ui-state-active {border: 1px solid #999999; }
 
 /* Override jquery-ui_theme.css                */
-/* Navigator and Flyout menu Styles -----------*/
+/* Navigator and Flyout menu Styles ----------echo '<a href="', PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(), '">', i18n::translate('Printer-friendly Version'), '</a>';
+echo "<br />";-*/
 
 .static_tab_content_ltr {
 	right: 0px; 
