@@ -143,7 +143,7 @@ class i18n {
 			while (($f=readdir($d))!==false) {
 				if (preg_match('/^([a-z][a-z][a-z]?(@[a-z]+|_[A-Z][A-Z])?)\.mo$/', $f, $match)) {
 					// TODO: gettext() and ZF use different standards for locale names :-(
-					if ($match[1]=='sr@latin' || $match[1]=='es_AR' || $match[1]=='zh_CN') {
+					if ($match[1]=='sr@latin' || $match[1]=='zh_CN') {
 						// TODO:
 						continue;
 					}
