@@ -589,7 +589,7 @@ if ($action=="update") {
 			$news = array();
 			$news["title"] = i18n::translate('Welcome to Your Genealogy');
 			$news["username"] = $FILE;
-			$news["text"] = i18n::translate('The genealogy information on this website is powered by <a href="http://www.phpgedview.net/" target="_blank">PhpGedView</a>.  This page provides an introduction and overview to this genealogy.<br /><br />To begin working with the data, choose one of the charts from the Charts menu, go to the Individual list, or search for a name or place.<br /><br />If you have trouble using the site, you can click on the Help icon to give you information on how to use the page that you are currently viewing.<br /><br />Thank you for visiting this site.');
+			$news["text"] = i18n::translate('The genealogy information on this website is powered by <a href="http://www.webtrees.net/" target="_blank">webtrees</a>.  This page provides an introduction and overview to this genealogy.<br /><br />To begin working with the data, choose one of the charts from the Charts menu, go to the Individual list, or search for a name or place.<br /><br />If you have trouble using the site, you can click on the Help icon to give you information on how to use the page that you are currently viewing.<br /><br />Thank you for visiting this site.');
 			$news["date"] = client_time();
 			addNews($news);
 		}
