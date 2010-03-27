@@ -51,6 +51,7 @@ class i18n {
 			// Choose a locale
 			if (isset($_GET['lang']) && array_key_exists($_GET['lang'], $installed_languages)) {
 				// Requested in the URL
+				$_SESSION['locale']=$locale;
 				$locale=$_GET['lang'];
 				unset($_GET['lang']);
 			} elseif (isset($_SESSION['locale']) && array_key_exists($_SESSION['locale'], $installed_languages)) {
@@ -81,8 +82,7 @@ class i18n {
 				}
 			}
 		}
-		// We now have a valid locale.  Save it and load it.
-		$_SESSION['locale']=$locale;
+		// We now have a valid locale.  Load it.
 		$translate=new Zend_Translate('gettext', PGV_ROOT.'language/'.$locale.'.mo', $locale);
 		// TODO: This is where we would use $translate->addTranslation() to add module translations
 		// Make the locale and translation adapter available to the rest of the Zend Framework

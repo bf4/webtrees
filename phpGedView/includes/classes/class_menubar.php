@@ -1092,30 +1092,27 @@ class MenuBar
 	* get the menu with links to the user/gedcom favorites
 	* @return Menu the menu item
 	*/
-	static function getFavouritesMenu() {		// Don't break custom themes using the old name
-		return self::getFavoritesMenu();
-	}
 	static function getFavoritesMenu() {
 		global $REQUIRE_AUTHENTICATION, $GEDCOM, $QUERY_STRING, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 		global $SEARCH_SPIDER;
 		global $controller; // Pages with a controller can be added to the favorites
 
-		if (!empty($SEARCH_SPIDER)) {
+		if ($SEARCH_SPIDER) {
 			return false; // show no favorites, because they taint every page that is indexed.
 		}
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
-		if (PGV_USER_ID || !$REQUIRE_AUTHENTICATION) {
-			$menu=new Menu(i18n::translate('Favorites'), '#', 'down');
-			if (!empty($PGV_IMAGES['gedcom']['large'])) {
-				$menu->addIcon($PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedcom']['large']);
-			}
-			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_gedcom");
-//			$menu->print_menu = NULL;
+		$menu=new Menu(i18n::translate('Favorites'), '#', 'down');
+		if (!empty($PGV_IMAGES['gedcom']['large'])) {
+			$menu->addIcon($PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedcom']['large']);
+		}
+		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_gedcom");
 
+		$gedfavs=getUserFavorites(PGV_GEDCOM);
+
+		if (PGV_USER_ID) {
 			$userfavs=getUserFavorites(PGV_USER_NAME);
-			$gedfavs=getUserFavorites($GEDCOM);
 
 			// User favorites
 			if ($userfavs || PGV_USER_ID) {
@@ -1177,36 +1174,35 @@ class MenuBar
 					$menu->addSeparator();
 				}
 			}
-			// Gedcom favorites
-			if ($gedfavs) {
-				$submenu=new Menu('<strong>'.i18n::translate('This GEDCOM\'s Favorites').'</strong>');
-				$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
-				$menu->addSubMenu($submenu);
-				foreach ($gedfavs as $fav) {
-					$OLD_GEDCOM=$GEDCOM;
-					$GEDCOM=$fav['file'];
-					switch($fav['type']) {
-					case 'URL':
-						$submenu=new Menu(PrintReady($fav['title']), $fav['url']);
-						$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
-						$menu->addSubMenu($submenu);
-						break;
-					case 'INDI':
-					case 'FAM':
-					case 'SOUR':
-					case 'OBJE':
-						if (displayDetailsById($fav['gid'], $fav['type'])) {
-							$obj=GedcomRecord::getInstance($fav['gid']);
-							if ($obj) {
-								$submenu=new Menu(PrintReady($obj->getFullName()), encode_url($obj->getLinkUrl()));
-								$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
-								$menu->addSubMenu($submenu);
-							}
+		}
+		// Gedcom favorites
+		if ($gedfavs) {
+			$submenu=new Menu('<strong>'.i18n::translate('This GEDCOM\'s Favorites').'</strong>');
+			$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
+			$menu->addSubMenu($submenu);
+			foreach ($gedfavs as $fav) {
+				$GEDCOM=$fav['file'];
+				switch($fav['type']) {
+				case 'URL':
+					$submenu=new Menu(PrintReady($fav['title']), $fav['url']);
+					$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
+					$menu->addSubMenu($submenu);
+					break;
+				case 'INDI':
+				case 'FAM':
+				case 'SOUR':
+				case 'OBJE':
+					if (displayDetailsById($fav['gid'], $fav['type'])) {
+						$obj=GedcomRecord::getInstance($fav['gid']);
+						if ($obj) {
+							$submenu=new Menu(PrintReady($obj->getFullName()), encode_url($obj->getLinkUrl()));
+							$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
+							$menu->addSubMenu($submenu);
 						}
-						break;
 					}
-					$GEDCOM=$OLD_GEDCOM;
+					break;
 				}
+				$GEDCOM=PGV_GEDCOM;
 			}
 		}
 		return $menu;
