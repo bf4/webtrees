@@ -1,7 +1,10 @@
 /**
- ** Style for the Teal Top Theme         
- ** @version $Id: ash.css 7641 2010-03-23 23:43:19Z rob $
- */
+* Copyright (c) 2010 Rob Peters
+*
+* Based on standard theme, which is Copyright (C) 2002 to 2010  PGV Development Team.        
+*
+* $Id: style.css 7601 2010-03-22 04:27:47Z nigel $
+*/
 
 .something {
 /*empty style to make sure that the BODY style is not ignored */
@@ -573,7 +576,7 @@ text-align:center;
 table.center {
 margin-left: auto;
 margin-right: auto;
-border:1px solid #999;
+/* border:1px solid #999; */
 }
 
 th {
@@ -815,7 +818,7 @@ letter-spacing: .2px;
 
 .date {
 color: #333;
-font-weight: bold;
+/* font-weight: bold; */
 }
 
 .label, .field {
