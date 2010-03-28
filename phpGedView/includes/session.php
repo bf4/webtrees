@@ -282,7 +282,7 @@ set_error_handler('pgv_error_handler');
 
 // Connect to the database
 require WT_ROOT.'includes/functions/functions_db.php';
-require WT_ROOT.'includes/classes/class_pgv_db.php';
+require WT_ROOT.'includes/classes/class_wt_db.php';
 try {
 	// remove escape codes before using PW
 	$DBPASS=str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS);

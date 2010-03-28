@@ -27,7 +27,7 @@
 * @version $Id$
 */
 // require './config.php';
-// require './includes/classes/class_pgv_db.php';
+// require './includes/classes/class_wt_db.php';
 
 //get values of input fields
 	$noteid 	= addslashes($_GET['noteid']);		 //-- Note Id
