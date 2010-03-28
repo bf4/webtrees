@@ -83,8 +83,8 @@ function review_changes_block($block = true, $config="", $side, $index) {
 					$message = array();
 					$message["to"]=$user_name;
 					$message["from"] = $PHPGEDVIEW_EMAIL;
-					$message["subject"] = i18n::translate('PhpGedView - Review changes');
-					$message["body"] = i18n::translate('Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that PhpGedView site and login to review the changes.');
+					$message["subject"] = i18n::translate('webtrees - Review changes');
+					$message["body"] = i18n::translate('Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that webtrees site and login to review the changes.');
 					$message["method"] = get_user_setting($user_id, 'contactmethod');
 					$message["url"] = PGV_SERVER_NAME.PGV_SCRIPT_PATH;
 					$message["no_from"] = true;

@@ -104,7 +104,7 @@ if ($CONFIGURED && !PGV_DB::isConnected()) {
 	<tr>
 		<td class="center">
 			<?php if (file_exists(PGV_THEME_DIR."/header.jpg")) { ?>
-			<img src="<?php print PGV_THEME_DIR;?>header.jpg" width="281" height="50" alt="PhpGedView" />
+			<img src="<?php print PGV_THEME_DIR;?>header.jpg" width="281" height="50" alt="webtrees" />
 			<?php } else { ?>
 			<h2>PhpGedView</h2>
 			<?php } ?>
@@ -373,7 +373,7 @@ $errormsg = "";
 	<tr>
 		<td colspan="2" class="center">
 			<?php if (file_exists(PGV_THEME_DIR."/header.jpg")) { ?>
-			<img src="<?php print PGV_THEME_DIR;?>header.jpg" width="281" height="50" alt="PhpGedView" />
+			<img src="<?php print PGV_THEME_DIR;?>header.jpg" width="281" height="50" alt="webtrees" />
 			<?php } else { ?>
 			<h1>PhpGedView</h1>
 			<?php } ?>
@@ -493,7 +493,7 @@ function checkEnvironment() {
 		echo '<tr><td valign="top">';
 		echo i18n::translate('Checking required PHP version:'), '<br />';
 		echo '<span class="error">', i18n::translate('Failed'), '</span><br />';
-		echo i18n::translate('PhpGedView requires PHP version %s or higher.', PGV_REQUIRED_PHP_VERSION), '<br />';
+		echo i18n::translate('webtrees requires PHP version %s or higher.', PGV_REQUIRED_PHP_VERSION), '<br />';
 		echo i18n::translate('You are using PHP version %s', PHP_VERSION), '</td></tr>';
 	}
 
@@ -608,7 +608,7 @@ function checkEnvironment() {
 			print i18n::translate('All warning checks passed.');
 		}
 		else {
-			print i18n::translate('If any of the warnings do not pass you may still be able to run PhpGedView on this server, but some functionality may be disabled or you may experience poor performance.');
+			print i18n::translate('If any of the warnings do not pass you may still be able to run webtrees on this server, but some functionality may be disabled or you may experience poor performance.');
 		}
 		print "</td></tr>";
 	print "</table>";
@@ -757,10 +757,10 @@ function printConfigForm(){
 				<td class="optionbox"><input type="text" size="50" name="NEW_INDEX_DIRECTORY" value="<?php print $INDEX_DIRECTORY?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('INDEX_DIRECTORY_help');" /></td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php echo i18n::translate('PhpGedView URL'), help_link('SERVER_URL'); ?></td>
+				<td class="descriptionbox wrap width30"><?php echo i18n::translate('webtrees URL'), help_link('SERVER_URL'); ?></td>
 				<td class="optionbox wrap"><input type="text" name="NEW_SERVER_URL" value="<?php print $SERVER_URL?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SERVER_URL_help');" size="50" />
 				<br /><?php
-					echo i18n::translate('This should be the URL to your PhpGedView folder.  You should only change this setting if you are sure you know what you are doing.  PhpGedView has determined this value to be <b>%s</b>', PGV_SERVER_NAME.PGV_SCRIPT_PATH);
+					echo i18n::translate('This should be the URL to your webtrees folder.  You should only change this setting if you are sure you know what you are doing.  webtrees has determined this value to be <b>%s</b>', PGV_SERVER_NAME.PGV_SCRIPT_PATH);
 					?>
 				</td>
 			</tr>

@@ -251,7 +251,7 @@ if ($action=="generate") {
 		}
 		echo "\">SitemapIndex.xml</a></td></tr>\n";
 	}
-	echo "<tr><td class=\"topbottombar\">", i18n::translate('Place all the files in the root of your PhpGedView installation.'), "</td></tr>\n";
+	echo "<tr><td class=\"topbottombar\">", i18n::translate('Place all the files in the root of your webtrees installation.'), "</td></tr>\n";
 	echo "</table>\n";
 	echo "<br />\n";
 }

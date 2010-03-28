@@ -42,7 +42,7 @@
 * 'whatever 1' is the text that is to appear for this sub-menu entry. If you code this as
 * shown, the text will appear exactly as entered no matter what the page language is.
 *
-* 'whatever 2' is the URL required to launch the desired module, web site, or PhpGedView
+* 'whatever 2' is the URL required to launch the desired module, web site, or webtrees
 * script. You need to provide all of the input parameters or variables that the script
 * needs. For example, to get to the Yahoo web site, you'd replace '"whatever 2"' with
 * '"http://www.yahoo.com"'. Note that the URL you enter here is enclosed in quotation marks.

@@ -3030,7 +3030,7 @@ case 'addmedia.php':
 case 'addremotelink.php':
 	// not called from pop up function. see link_remote
 	$title=i18n::translate('Add remote link');
-	$text=i18n::translate('Use this form to link people to other people either from another site or another genealogical database accessible to your copy of PhpGedView.<br /><br />To add such a link, you must first select the relationship type, then choose a site already known to PhpGedView or define a new site, and then enter that site\'s ID of the person you want to link to.  <b>webtrees</b> will then automatically download information from the remote site as necessary.  The downloaded information does <u>not</u> become part of your genealogical database; it remains on the original site but is incorporated into the various pages where this remotely linked person is displayed.<br /><br />Refer to the Help link next to each element on the page for more information about that element.  You can also check the online English tutorial for more information: <a href=\"#PGV_PHPGEDVIEW_WIKI#/en/index.php?title=How_To:Remote_Link_Individuals_Across_Websites_And_Databases\" target=\"_blank\">#PGV_PHPGEDVIEW_WIKI#</a>.');
+	$text=i18n::translate('Use this form to link people to other people either from another site or another genealogical database accessible to your copy of webtrees.<br /><br />To add such a link, you must first select the relationship type, then choose a site already known to PhpGedView or define a new site, and then enter that site\'s ID of the person you want to link to.  <b>webtrees</b> will then automatically download information from the remote site as necessary.  The downloaded information does <u>not</u> become part of your genealogical database; it remains on the original site but is incorporated into the various pages where this remotely linked person is displayed.<br /><br />Refer to the Help link next to each element on the page for more information about that element.  You can also check the online English tutorial for more information: <a href=\"#PGV_PHPGEDVIEW_WIKI#/en/index.php?title=How_To:Remote_Link_Individuals_Across_Websites_And_Databases\" target=\"_blank\">#PGV_PHPGEDVIEW_WIKI#</a>.');
 	break;
 
 case 'addsearchlink.php':
@@ -5296,8 +5296,8 @@ case 'todo_show_unassigned':
 	break;
 
 case 'translation_forum':
-	$title=i18n::translate('<b>PhpGedView</b> Translations forum on SourceForge');
-	$text=i18n::translate('This <a href="http://sourceforge.net/forum/forum.php?forum_id=294245" target="_blank"><b>link</b></a> opens a new browser window.  You will be redirected to the Translations forum of <b>webtrees</b>, where you can discuss translation topics.');
+	$title=i18n::translate('<b>webtrees</b> Translations forum on Launchpad');
+	$text=i18n::translate('This <a href="https://translations.launchpad.net/webtrees" target="_blank"><b>link</b></a> opens a new browser window.  You will be redirected to the Translations forum of <b>webtrees</b>, where you can discuss translation topics.');
 	break;
 
 case 'um_bu':

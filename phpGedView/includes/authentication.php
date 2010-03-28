@@ -92,7 +92,7 @@ function basicHTTPAuthenticateUser() {
 	if (empty($user_id)){ //not logged in.
 		if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])
 				|| (! authenticateUser($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'], true))) {
-			header('WWW-Authenticate: Basic realm="' . i18n::translate('PhpGedView Authentication System') . '"');
+			header('WWW-Authenticate: Basic realm="' . i18n::translate('webtrees Authentication System') . '"');
 			header('HTTP/1.0 401 Unauthorized');
 			echo i18n::translate('You must enter a valid login ID and password to access this resource') ;
 			exit;
@@ -452,7 +452,7 @@ function addMessage($message) {
 	$email2 .= "\r\n=--------------------------------------=\r\nIP ADDRESS: ".$_SERVER['REMOTE_ADDR']."\r\n";
 	$email2 .= "DNS LOOKUP: ".gethostbyaddr($_SERVER['REMOTE_ADDR'])."\r\n";
 	$email2 .= "LANGUAGE: $LANGUAGE\r\n";
-	$subject2 = "[".i18n::translate('PhpGedView Message').($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
+	$subject2 = "[".i18n::translate('webtrees Message').($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
 	$from ="";
 	if (!$user_id_from) {
 		$from = $message["from"];
@@ -468,7 +468,7 @@ function addMessage($message) {
 
 	}
 	if ($message["method"]!="messaging") {
-		$subject1 = "[".i18n::translate('PhpGedView Message').($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
+		$subject1 = "[".i18n::translate('webtrees Message').($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
 		if (!$user_id_from) {
 			$email1 = i18n::translate('The following message has been sent to your webtrees user account from ');
 			if (!empty($message["from_name"])) {
@@ -514,7 +514,7 @@ function addMessage($message) {
 			->execute(array(get_next_id("messages", "m_id"), $message["from"], $message["to"], $message["subject"], $message["body"], $message["created"]));
 	}
 	if ($message["method"]!="messaging") {
-		$subject1 = "[".i18n::translate('PhpGedView Message').($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
+		$subject1 = "[".i18n::translate('webtrees Message').($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
 		if (!$user_id_from) {
 			$email1 = i18n::translate('The following message has been sent to your webtrees user account from ');
 			if (!empty($message["from_name"]))

@@ -401,7 +401,7 @@ switch ($action) {
 
 					$mail_body = "";
 					$mail_body .= i18n::translate('Hello %s ...', $fullName) . "\r\n\r\n";
-					$mail_body .= i18n::translate('A request was received at %s to create a PhpGedView account with your email address %s.', PGV_SERVER_NAME.PGV_SCRIPT_PATH, $user_email) . "  ";
+					$mail_body .= i18n::translate('A request was received at %s to create a webtrees account with your email address %s.', PGV_SERVER_NAME.PGV_SCRIPT_PATH, $user_email) . "  ";
 					$mail_body .= i18n::translate('Information about the request is shown under the link below.') . "\r\n\r\n";
 					$mail_body .= i18n::translate('Please click on the following link and fill in the requested data to confirm your request and email address.') . "\r\n\r\n";
 					if ($TEXT_DIRECTION=="rtl") {
@@ -424,7 +424,7 @@ switch ($action) {
 
 					$mail_body = "";
 					$mail_body .= i18n::translate('Hello Administrator ...') . "\r\n\r\n";
-					$mail_body .= i18n::translate('A prospective user registered himself with PhpGedView at %s.', PGV_SERVER_NAME.PGV_SCRIPT_PATH) . "\r\n\r\n";
+					$mail_body .= i18n::translate('A prospective user registered himself with webtrees at %s.', PGV_SERVER_NAME.PGV_SCRIPT_PATH) . "\r\n\r\n";
 					$mail_body .= i18n::translate('User name') . " " . $user_name . "\r\n";
 					if ($NAME_REVERSE) {
 						$mail_body .= i18n::translate('Last Name') . " " . $user_lastname . "\r\n\r\n";

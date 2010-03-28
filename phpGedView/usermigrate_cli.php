@@ -37,12 +37,12 @@ $controller->init();
 
 function print_usage() {
 	?>
-	PhpGedView Command Line Backup Utility
+	webtrees Command Line Backup Utility
 	Usage:
 	usermigrate_cli.php command [options]
 	Command should be one of the following:
 	--backup [options]
-		Create a backup of PhpGedView settings, GEDCOMs, users and media files.  The following options are available:
+		Create a backup of webtrees settings, GEDCOMs, users and media files.  The following options are available:
 		-t=n	Attempt to set the PHP time limit to "n" where "n" should be a number
 		-Xc		Exclude config.php file
 		-Xu		Exclude user information

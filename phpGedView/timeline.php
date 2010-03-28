@@ -38,7 +38,7 @@ require_once PGV_ROOT.'includes/controllers/timeline_ctrl.php';
 $controller = new TimelineController();
 $controller->init();
 
-print_header(i18n::translate('PhpGedView Timeline'));
+print_header(i18n::translate('Timeline'));
 
 if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 ?>

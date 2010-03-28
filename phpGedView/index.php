@@ -370,7 +370,7 @@ print "<table width=\"100%\"><tr><td>";		// This is needed so that page footers 
 if ($ctype=="user") {
 	print "<div align=\"center\" style=\"width: 99%;\">";
 	print "<h1>".i18n::translate('My Page')."</h1>";
-	print i18n::translate('My Page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users.');
+	print i18n::translate('My Page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other webtrees users.');
 	print "<br /><br /></div>";
 }
 if (count($ublocks["main"])!=0) {

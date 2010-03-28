@@ -30,7 +30,7 @@
 define('PGV_SCRIPT_NAME', 'message.php');
 require './config.php';
 
-print_simple_header(i18n::translate('PhpGedView Message'));
+print_simple_header(i18n::translate('webtrees Message'));
 
 $subject   =isset($_REQUEST['subject'   ]) ? $_REQUEST['subject'   ] : '';
 $url       =isset($_REQUEST['url'       ]) ? $_REQUEST['url'       ] : '';

@@ -149,7 +149,7 @@ if (!isset($DBPORT)) {
 if (version_compare(PHP_VERSION, '6.0.0', '<')) {
 	// PHP too old?
 	if (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0) {
-		die ('<html><body><p style="color: red;">PhpGedView requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.PHP_VERSION.'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
+		die ('<html><body><p style="color: red;">webtrees requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.PHP_VERSION.'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
 	}
 
 	// register_globals was deprecated in PHP5.3.0 and removed in PHP6.0.0

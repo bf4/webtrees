@@ -2104,7 +2104,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Contact Information')."\" 
 		}
 		?>
 		<td class="descriptionbox wrap width20">
-			<?php echo i18n::translate('PhpGedView reply address'), help_link('PHPGEDVIEW_EMAIL'); ?>
+			<?php echo i18n::translate('webtrees reply address'), help_link('PHPGEDVIEW_EMAIL'); ?>
 		</td>
 		<td class="optionbox"><input type="text" name="NEW_PHPGEDVIEW_EMAIL" value="<?php print $PHPGEDVIEW_EMAIL; ?>" size="80" dir="ltr" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('PHPGEDVIEW_EMAIL');" /></td>
 	</tr>
@@ -2132,10 +2132,10 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Contact Information')."\" 
 		</td>
 		<td class="optionbox"><select name="NEW_CONTACT_METHOD" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('CONTACT_METHOD');">
 		<?php if ($PGV_STORE_MESSAGES) { ?>
-				<option value="messaging" <?php if ($CONTACT_METHOD=='messaging') print "selected=\"selected\""; ?>><?php print i18n::translate('PhpGedView internal messaging'); ?></option>
+				<option value="messaging" <?php if ($CONTACT_METHOD=='messaging') print "selected=\"selected\""; ?>><?php print i18n::translate('webtrees internal messaging'); ?></option>
 				<option value="messaging2" <?php if ($CONTACT_METHOD=='messaging2') print "selected=\"selected\""; ?>><?php print i18n::translate('Internal messaging with emails'); ?></option>
 		<?php } else { ?>
-				<option value="messaging3" <?php if ($CONTACT_METHOD=='messaging3') print "selected=\"selected\""; ?>><?php print i18n::translate('PhpGedView sends emails with no storage'); ?></option>
+				<option value="messaging3" <?php if ($CONTACT_METHOD=='messaging3') print "selected=\"selected\""; ?>><?php print i18n::translate('webtrees sends emails with no storage'); ?></option>
 		<?php } ?>
 				<option value="mailto" <?php if ($CONTACT_METHOD=='mailto') print "selected=\"selected\""; ?>><?php print i18n::translate('Mailto link'); ?></option>
 				<option value="none" <?php if ($CONTACT_METHOD=='none') print "selected=\"selected\""; ?>><?php print i18n::translate('No contact method'); ?></option>
@@ -2166,10 +2166,10 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Contact Information')."\" 
 		</td>
 		<td class="optionbox"><select name="NEW_SUPPORT_METHOD" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SUPPORT_METHOD');">
 		<?php if ($PGV_STORE_MESSAGES) { ?>
-				<option value="messaging" <?php if ($SUPPORT_METHOD=='messaging') print "selected=\"selected\""; ?>><?php print i18n::translate('PhpGedView internal messaging'); ?></option>
+				<option value="messaging" <?php if ($SUPPORT_METHOD=='messaging') print "selected=\"selected\""; ?>><?php print i18n::translate('webtrees internal messaging'); ?></option>
 				<option value="messaging2" <?php if ($SUPPORT_METHOD=='messaging2') print "selected=\"selected\""; ?>><?php print i18n::translate('Internal messaging with emails'); ?></option>
 		<?php } else { ?>
-				<option value="messaging3" <?php if ($SUPPORT_METHOD=='messaging3') print "selected=\"selected\""; ?>><?php print i18n::translate('PhpGedView sends emails with no storage'); ?></option>
+				<option value="messaging3" <?php if ($SUPPORT_METHOD=='messaging3') print "selected=\"selected\""; ?>><?php print i18n::translate('webtrees sends emails with no storage'); ?></option>
 		<?php } ?>
 				<option value="mailto" <?php if ($SUPPORT_METHOD=='mailto') print "selected=\"selected\""; ?>><?php print i18n::translate('Mailto link'); ?></option>
 				<option value="none" <?php if ($SUPPORT_METHOD=='none') print "selected=\"selected\""; ?>><?php print i18n::translate('No contact method'); ?></option>

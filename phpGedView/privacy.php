@@ -16,8 +16,6 @@
  * privacy module simply implement the functions in this file and configure phpGedview to use your
  * new file.
  *
- * See http://www.phpgedview.net/modules.html for more information on modules in PhpGedView
- *
  * webtrees: Web based Family History software
  * Copyright (C) 2010 webtrees development team.
  *

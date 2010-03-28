@@ -109,10 +109,10 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 	$feed->category="genealogy";
 
 	$image = new FeedImage();
-	$image->title = i18n::translate('Feed created by PhpGedView');
+	$image->title = i18n::translate('Feed created by webtrees');
 	$image->url = $SERVER_URL."images/gedview.gif";
 	$image->link = PGV_PHPGEDVIEW_URL;
-	$image->description = i18n::translate('Feed created by PhpGedView');
+	$image->description = i18n::translate('Feed created by webtrees');
 	$image->descriptionHtmlSyndicated = true;
 	//$feed->descriptionTruncSize = 500; // does not make sense to truncate HTML since it will result in unpredictable output
 	$feed->image = $image;
@@ -316,7 +316,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 		$item = new FeedItem();
 		$item->title = i18n::translate('Feed not available');
 		$item->link = $SERVER_URL. "index.php";
-		$item->description = i18n::translate('There is no RSS feed available for this PhpGedView site');
+		$item->description = i18n::translate('There is no RSS feed available for this webtrees site');
 		$item->date = time();
 		$item->source = $SERVER_URL;
 		$item->author = $author;

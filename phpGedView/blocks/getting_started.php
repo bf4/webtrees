@@ -58,7 +58,7 @@ $PGV_BLOCKS["getting_started_block"]["config"]		= array("cache"=>5);
 function getting_started_block($block = true, $config="", $side, $index) {
 	$id = "getting_started";
 	$title = i18n::translate('Get Started');
-	$content = i18n::translate('Choose one of these options to get started using PhpGedView');
+	$content = i18n::translate('Choose one of these options to get started using webtrees');
 	$content .= '<ul>';
 	$content .= '<li style="padding: 5px;"><a class="imenu" href="editconfig_gedcom.php?source=upload_form">'.i18n::translate('Upload a GEDCOM file').'</a></li>';
 	$content .= '<li style="padding: 5px;"><a class="imenu" href="editconfig_gedcom.php?source=add_form">'.i18n::translate('Add a GEDCOM from a file location').'</a></li>';

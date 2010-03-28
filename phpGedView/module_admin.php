@@ -179,7 +179,7 @@ print_header(i18n::translate('Module Administration'));
 <div class="width75">
 
 <p><?php echo "<h2>".i18n::translate('Module Administration')."</h2>"; ?></p>
-<p><?php echo i18n::translate('Below is the list of all the modules installed in this instance of PhpGedView.  Modules are installed by placing them in the <i>modules</i> directory.  Here you can set the access level per GEDCOM for each module.  If a module includes tabs for the individual page or menus for the menu bar, you can also set the access level and order of each of them.')?></p>
+<p><?php echo i18n::translate('Below is the list of all the modules installed in this instance of webtrees.  Modules are installed by placing them in the <i>modules</i> directory.  Here you can set the access level per GEDCOM for each module.  If a module includes tabs for the individual page or menus for the menu bar, you can also set the access level and order of each of them.')?></p>
 <p><input TYPE="button" VALUE="<?php echo i18n::translate('Return to Administration page');?>" onclick="javascript:window.location='admin.php'" /></p>
 
 <form method="post" action="module_admin.php"> 

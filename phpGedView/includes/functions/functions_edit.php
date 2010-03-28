@@ -89,9 +89,9 @@ function edit_field_contact($name, $selected='', $extra='') {
 	global $PGV_STORE_MESSAGES;
 	// Different ways to contact the users
 	$CONTACT_METHODS=array(
-		'messaging' =>i18n::translate('PhpGedView internal messaging'),
+		'messaging' =>i18n::translate('webtrees internal messaging'),
 		'messaging2'=>i18n::translate('Internal messaging with emails'),
-		'messaging3'=>i18n::translate('PhpGedView sends emails with no storage'),
+		'messaging3'=>i18n::translate('webtrees sends emails with no storage'),
 		'mailto'    =>i18n::translate('Mailto link'),
 		'none'      =>i18n::translate('No contact'),
 	);

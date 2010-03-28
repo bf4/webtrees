@@ -49,7 +49,7 @@ if (!file_exists("modules/googlemap/defaultconfig.php")) {
 $tabno=safe_get('tab');
 
 // The following is temporary, until the handling of the Lightbox Help system
-// is adjusted to match the usual PhpGedView practice
+// is adjusted to match the usual webtrees practice
 $lbHelpFile = "modules/lightbox/languages/help.".$lang_short_cut[$LANGUAGE].".php";
 if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_text.en.php";
 

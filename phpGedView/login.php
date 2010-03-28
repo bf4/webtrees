@@ -144,9 +144,9 @@ if ($action=='login') {
 }
 
 if ($type=="full") {
-	print_header(i18n::translate('PhpGedView User Login'));
+	print_header(i18n::translate('webtrees user login'));
 } else {
-	print_simple_header(i18n::translate('PhpGedView User Login'));
+	print_simple_header(i18n::translate('webtrees user login'));
 }
 echo "<div class=\"center\">\n";
 
