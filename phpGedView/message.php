@@ -27,7 +27,7 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'message.php');
+define('WT_SCRIPT_NAME', 'message.php');
 require './config.php';
 
 print_simple_header(i18n::translate('webtrees Message'));
@@ -49,7 +49,7 @@ if (empty($to)) {
 	print_simple_footer();
 	exit;
 }
-if ($to=="all" && !PGV_USER_IS_ADMIN) {
+if ($to=="all" && !WT_USER_IS_ADMIN) {
 	print "<span class=\"error\">".i18n::translate('No recipient user was provided.  Cannot continue.')."</span><br />";
 	print_simple_footer();
 	exit;
@@ -178,11 +178,11 @@ if ($action=="compose") {
 		}
 	</script>
 	<?php
-	if (!PGV_USER_ID) {
+	if (!WT_USER_ID) {
 		print "<br /><br />".i18n::translate('<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probably do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data.');
 	}
 	print "<br /><form name=\"messageform\" method=\"post\" action=\"message.php\" onsubmit=\"t = new Date(); document.messageform.time.value=t.toUTCString(); ";
-	if (!PGV_USER_ID) print "return validateEmail(document.messageform.from_email);";
+	if (!WT_USER_ID) print "return validateEmail(document.messageform.from_email);";
 	else print "return checkForm(this);";
 	print "\">\n";
 	print "<table>\n";
@@ -192,14 +192,14 @@ if ($action=="compose") {
 		echo i18n::translate('This user prefers to receive messages in %s', Zend_Locale::getTranslation(get_user_setting($to_user_id, 'language'), 'language', WT_LOCALE))."</td></tr>\n";
 	}
 
-	if (!PGV_USER_ID){
+	if (!WT_USER_ID){
 		print "<tr><td valign=\"top\" width=\"15%\" align=\"right\">".i18n::translate('Your Name:')."</td>";
 		print "<td><input type=\"text\" name=\"from_name\" size=\"40\" value=\"$from_name\" /></td></tr><tr><td valign=\"top\" align=\"right\">".i18n::translate('Email Address:')."</td><td><input type=\"text\" name=\"from_email\" size=\"40\" value=\"$from_email\" /><br />".i18n::translate('Please provide your email address so that we may contact you in response to this message.  If you do not provide your email address we will not be able to respond to your inquiry.  Your email address will not be used in any other way besides responding to this inquiry.')."<br /><br /></td></tr>\n";
 	}
 	print "<tr><td align=\"right\">".i18n::translate('Subject:')."</td>";
 	print "<td>";
-	if (PGV_USER_ID){
-		print "<input type=\"hidden\" name=\"from\" value=\"".PGV_USER_NAME."\" />\n";
+	if (WT_USER_ID){
+		print "<input type=\"hidden\" name=\"from\" value=\"".WT_USER_NAME."\" />\n";
 	}
 	print "<input type=\"hidden\" name=\"action\" value=\"send\" />\n";
 	print "<input type=\"hidden\" name=\"to\" value=\"$to\" />\n";

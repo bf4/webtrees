@@ -30,9 +30,9 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'editconfig_gedcom.php');
+define('WT_SCRIPT_NAME', 'editconfig_gedcom.php');
 require './config.php';
-require PGV_ROOT.'includes/functions/functions_edit.php';
+require WT_ROOT.'includes/functions/functions_edit.php';
 
 // editconfig.php and uploadgedcom.php make extensive use of
 // import_request_variables and are heavily inter-dependent.
@@ -42,7 +42,7 @@ if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 if (empty($action)) $action = "";
 if (isset($_REQUEST['source'])) $source = $_REQUEST['source'];
 if (empty($source)) $source="";		// Set when loaded from uploadgedcom.php
-if (!PGV_USER_GEDCOM_ADMIN) {
+if (!WT_USER_GEDCOM_ADMIN) {
 	header("Location: editgedcoms.php");
 	exit;
 }
@@ -58,7 +58,7 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 function GetGEDFromZIP($zipfile, $extract=true) {
 	GLOBAL $INDEX_DIRECTORY;
 
-	require_once PGV_ROOT.'library/pclzip.lib.php';
+	require_once WT_ROOT.'library/pclzip.lib.php';
 	$zip = new PclZip($zipfile);
 	// if it's not a valid zip, just return the filename
 	if (($list = $zip->listContent()) == 0) {
@@ -263,7 +263,7 @@ if ($action=="update") {
 	set_gedcom_setting($ged_id, 'privacy', $gedcom_privacy);
 	set_gedcom_setting($ged_id, 'title',   $gedcom_title);
 	set_gedcom_setting($ged_id, 'path',    $path.$GEDFILENAME);
-	set_gedcom_setting($ged_id, 'pgv_ver', PGV_VERSION);
+	set_gedcom_setting($ged_id, 'pgv_ver', WT_VERSION);
 
 	// Check that add/remove common surnames are separated by [,;] blank
 	$_POST["NEW_COMMON_NAMES_REMOVE"] = preg_replace("/[,;]\b/", ", ", $_POST["NEW_COMMON_NAMES_REMOVE"]);
@@ -413,7 +413,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$WATERMARK_THUMB\s*=\s*.*;/', "\$WATERMARK_THUMB = ".$boolarray[$_POST["NEW_WATERMARK_THUMB"]].";", $configtext);
 	$configtext = preg_replace('/\$SAVE_WATERMARK_THUMB\s*=\s*.*;/', "\$SAVE_WATERMARK_THUMB = ".$boolarray[$_POST["NEW_SAVE_WATERMARK_THUMB"]].";", $configtext);
 	$configtext = preg_replace('/\$SAVE_WATERMARK_IMAGE\s*=\s*.*;/', "\$SAVE_WATERMARK_IMAGE = ".$boolarray[$_POST["NEW_SAVE_WATERMARK_IMAGE"]].";", $configtext);
-	$configtext = preg_replace('/\$PHPGEDVIEW_EMAIL\s*=\s*".*";/', "\$PHPGEDVIEW_EMAIL = \"".trim($_POST["NEW_PHPGEDVIEW_EMAIL"])."\";", $configtext);
+	$configtext = preg_replace('/\$WEBTREES_EMAIL\s*=\s*".*";/', "\$WEBTREES_EMAIL = \"".trim($_POST["NEW_WEBTREES_EMAIL"])."\";", $configtext);
 	$configtext = preg_replace('/\$WEBMASTER_EMAIL\s*=\s*".*";/', "\$WEBMASTER_EMAIL = \"".$_POST["NEW_WEBMASTER_EMAIL"]."\";", $configtext);
 	$configtext = preg_replace('/\$WELCOME_TEXT_AUTH_MODE\s*=\s*".*";/', "\$WELCOME_TEXT_AUTH_MODE = \"".$_POST["NEW_WELCOME_TEXT_AUTH_MODE"]."\";", $configtext);
 	$configtext = preg_replace('/\$WELCOME_TEXT_AUTH_MODE_4\s*=\s*".*";/', "\$WELCOME_TEXT_AUTH_MODE_4 = \"".$_POST["NEW_WELCOME_TEXT_AUTH_MODE_4"]."\";", $configtext);// new
@@ -437,7 +437,7 @@ if ($action=="update") {
 		// if PGV is unable to create the directory, tell the user to create it
 		if (($NEW_USE_MEDIA_FIREWALL=='yes') || $USE_MEDIA_FIREWALL) {
 			if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY)) {
-				@mkdir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY, PGV_PERM_EXE);
+				@mkdir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY, WT_PERM_EXE);
 				if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY)) {
 					$errors = true;
 					$error_msg .= "<span class=\"error\">".i18n::translate('The protected media directory could not be created in the Media Firewall root directory.  Please create this directory and make it world-writable.')." ".$NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."</span><br />\n";
@@ -449,7 +449,7 @@ if ($action=="update") {
 		// create the thumbs dir to make sure we have write perms
 		if (($NEW_USE_MEDIA_FIREWALL=='yes') || $USE_MEDIA_FIREWALL) {
 			if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs")) {
-				@mkdir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs", PGV_PERM_EXE);
+				@mkdir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs", WT_PERM_EXE);
 				if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs")) {
 					$errors = true;
 					$error_msg .= "<span class=\"error\">".i18n::translate('The protected media directory in the Media Firewall root directory is not world writable. ')." ".$NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."</span><br />\n";
@@ -518,9 +518,9 @@ if ($action=="update") {
 			$httext .= "\n\tRewriteEngine On";
 			$httext .= "\n\tRewriteCond %{REQUEST_FILENAME} !-f";
 			$httext .= "\n\tRewriteCond %{REQUEST_FILENAME} !-d";
-			$httext .= "\n\tRewriteRule .* ".PGV_SCRIPT_PATH."mediafirewall.php"." [L]";
+			$httext .= "\n\tRewriteRule .* ".WT_SCRIPT_PATH."mediafirewall.php"." [L]";
 			$httext .= "\n</IfModule>";
-			$httext .= "\nErrorDocument\t404\t".PGV_SCRIPT_PATH."mediafirewall.php";
+			$httext .= "\nErrorDocument\t404\t".WT_SCRIPT_PATH."mediafirewall.php";
 			$httext .= "\n########## END PGV MEDIA FIREWALL SECTION ##########";
 
 			$whichFile = $MEDIA_DIRECTORY.".htaccess";
@@ -577,7 +577,7 @@ if ($action=="update") {
 	}
 
 	//-- delete the cache files for the welcome page blocks
-	require_once PGV_ROOT.'includes/index_cache.php';
+	require_once WT_ROOT.'includes/index_cache.php';
 	clearCache();
 
 	$logline = AddToLog("Gedcom configuration ".$INDEX_DIRECTORY.$FILE."_conf.php"." updated");
@@ -618,7 +618,7 @@ else if ($action=="replace") {
 //-- output starts here
 print_header(i18n::translate('GEDCOM Configuration'));
 
-if ($ENABLE_AUTOCOMPLETE && $source=='') require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE && $source=='') require WT_ROOT.'js/autocomplete.js.htm';
 
 if (!isset($GENERATE_UIDS)) $GENERATE_UIDS = false;
 $temp2 = $THEME_DIR;
@@ -651,8 +651,8 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 	<tr>
 		<td colspan="2" class="facts_label"><?php
 		echo "<h2>", i18n::translate('GEDCOM Configuration'), " - ";
-		if (PGV_GED_ID) {
-			echo PrintReady(get_gedcom_setting(PGV_GED_ID, 'title'));
+		if (WT_GED_ID) {
+			echo PrintReady(get_gedcom_setting(WT_GED_ID, 'title'));
 		} elseif ($source == "add_form") {
 			echo i18n::translate('Add GEDCOM');
 		} elseif ($source == "upload_form") {
@@ -867,7 +867,7 @@ function display_results(amount_found){
 
 <table class="facts_table"><tr><td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 <?php
-print "<a href=\"javascript: ".i18n::translate('GEDCOM Basics')."\" onclick=\"expand_layer('file-options');return false\"><img id=\"file-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+print "<a href=\"javascript: ".i18n::translate('GEDCOM Basics')."\" onclick=\"expand_layer('file-options');return false\"><img id=\"file-options_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 print "&nbsp;<a href=\"javascript: ".i18n::translate('GEDCOM Basics')."\" onclick=\"expand_layer('file-options');return false\">".i18n::translate('GEDCOM Basics')."</a>";
 ?></td></tr></table>
 <div id="file-options" style="display: block">
@@ -943,7 +943,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('GEDCOM Basics')."\" onclic
 				if ($PEDIGREE_ROOT_ID) {
 					$person=Person::getInstance($PEDIGREE_ROOT_ID);
 					if ($person) {
-						echo ' <span class="list_item">', $person->getFullName(), ' ', $person->format_first_major_fact(PGV_EVENTS_BIRT, 1), '</span>';
+						echo ' <span class="list_item">', $person->getFullName(), ' ', $person->format_first_major_fact(WT_EVENTS_BIRT, 1), '</span>';
 					} else {
 						echo ' <span class="error">', i18n::translate('Unable to find record with ID'), '</span>';
 					}
@@ -1090,7 +1090,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('GEDCOM Basics')."\" onclic
 
 <table class="facts_table"><tr><td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 <?php
-print "<a href=\"javascript: ".i18n::translate('Multimedia')."\" onclick=\"expand_layer('config-media');return false\"><img id=\"config-media_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+print "<a href=\"javascript: ".i18n::translate('Multimedia')."\" onclick=\"expand_layer('config-media');return false\"><img id=\"config-media_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 print "&nbsp;<a href=\"javascript: ".i18n::translate('Multimedia')."\" onclick=\"expand_layer('config-media');return false\">".i18n::translate('Multimedia')."</a>";
 ?></td></tr></table>
 <div id="config-media" style="display: none">
@@ -1108,7 +1108,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Multimedia')."\" onclick=\
 
 <table class="facts_table"><tr><td class="subbar">
 <?php
-print "<a href=\"javascript: ".i18n::translate('General')."\" onclick=\"expand_layer('config-media1');return false\"><img id=\"config-media1_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+print "<a href=\"javascript: ".i18n::translate('General')."\" onclick=\"expand_layer('config-media1');return false\"><img id=\"config-media1_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 print "&nbsp;<a href=\"javascript: ".i18n::translate('General')."\" onclick=\"expand_layer('config-media1');return false\">".i18n::translate('General')."</a>";
 ?></td></tr></table>
 <div id="config-media1" style="display: none">
@@ -1205,7 +1205,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('General')."\" onclick=\"ex
 
 <table class="facts_table"><tr><td class="subbar">
 <?php
-print "<a href=\"javascript: ".i18n::translate('Media Firewall')."\" onclick=\"expand_layer('config-media2');return false\"><img id=\"config-media2_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+print "<a href=\"javascript: ".i18n::translate('Media Firewall')."\" onclick=\"expand_layer('config-media2');return false\"><img id=\"config-media2_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 print "&nbsp;<a href=\"javascript: ".i18n::translate('Media Firewall')."\" onclick=\"expand_layer('config-media2');return false\">".i18n::translate('Media Firewall')."</a>";
 ?></td></tr></table>
 <div id="config-media2" style="display: none">
@@ -1281,7 +1281,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Media Firewall')."\" oncli
 
 <table class="facts_table"><tr><td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 <?php
-print "<a href=\"javascript: ".i18n::translate('Access and Privacy')."\" onclick=\"expand_layer('access-options');return false\"><img id=\"access-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+print "<a href=\"javascript: ".i18n::translate('Access and Privacy')."\" onclick=\"expand_layer('access-options');return false\"><img id=\"access-options_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 print "&nbsp;<a href=\"javascript: ".i18n::translate('Access and Privacy')."\" onclick=\"expand_layer('access-options');return false\">".i18n::translate('Access and Privacy')."</a>";
 ?></td></tr></table>
 <div id="access-options" style="display: none">
@@ -1368,14 +1368,14 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Access and Privacy')."\" o
 
 <table class="facts_table"><tr><td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 <?php
-print "<a href=\"javascript: ".i18n::translate('Display and Layout')."\" onclick=\"expand_layer('layout-options');return false\"><img id=\"layout-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+print "<a href=\"javascript: ".i18n::translate('Display and Layout')."\" onclick=\"expand_layer('layout-options');return false\"><img id=\"layout-options_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 print "&nbsp;<a href=\"javascript: ".i18n::translate('Display and Layout')."\" onclick=\"expand_layer('layout-options');return false\">".i18n::translate('Display and Layout')."</a>";
 ?></td></tr></table>
 <div id="layout-options" style="display: none">
 
 <table class="facts_table"><tr><td class="subbar">
 <?php
-print "<a href=\"javascript: ".i18n::translate('Names')."\" onclick=\"expand_layer('layout-options2');return false\"><img id=\"layout-options2_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+print "<a href=\"javascript: ".i18n::translate('Names')."\" onclick=\"expand_layer('layout-options2');return false\"><img id=\"layout-options2_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 print "&nbsp;<a href=\"javascript: ".i18n::translate('Names')."\" onclick=\"expand_layer('layout-options2');return false\">".i18n::translate('Names')."</a>";
 ?></td></tr></table>
 <div id="layout-options2" style="display: none">
@@ -1409,7 +1409,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Names')."\" onclick=\"expa
 
 <table class="facts_table"><tr><td class="subbar">
 <?php
-print "<a href=\"javascript: ".i18n::translate('Common Surnames')."\" onclick=\"expand_layer('layout-options3');return false\"><img id=\"layout-options3_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+print "<a href=\"javascript: ".i18n::translate('Common Surnames')."\" onclick=\"expand_layer('layout-options3');return false\"><img id=\"layout-options3_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 print "&nbsp;<a href=\"javascript: ".i18n::translate('Common Surnames')."\" onclick=\"expand_layer('layout-options3');return false\">".i18n::translate('Common Surnames')."</a>";
 ?></td></tr></table>
 <div id="layout-options3" style="display: none">
@@ -1448,7 +1448,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Common Surnames')."\" oncl
 ?>
 <table class="facts_table"><tr><td class="subbar <?php print $TEXT_DIRECTION; ?>">
 <?php
-print "<a href=\"javascript: ".i18n::translate('Layout')."\" onclick=\"expand_layer('layout-options4');return false\"><img id=\"layout-options4_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+print "<a href=\"javascript: ".i18n::translate('Layout')."\" onclick=\"expand_layer('layout-options4');return false\"><img id=\"layout-options4_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 print "&nbsp;<a href=\"javascript: ".i18n::translate('Layout')."\" onclick=\"expand_layer('layout-options4');return false\">".i18n::translate('Layout')."</a>";
 ?></td></tr></table>
 <div id="layout-options4" style="display: none">
@@ -1627,7 +1627,7 @@ foreach ($rel_events as $row) {
 
 <table class="facts_table"><tr><td class="subbar <?php print $TEXT_DIRECTION; ?>">
 <?php
-print "<a href=\"javascript: ".i18n::translate('Hide and Show')."\" onclick=\"expand_layer('layout-options5');return false\"><img id=\"layout-options5_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+print "<a href=\"javascript: ".i18n::translate('Hide and Show')."\" onclick=\"expand_layer('layout-options5');return false\"><img id=\"layout-options5_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 print "&nbsp;<a href=\"javascript: ".i18n::translate('Hide and Show')."\" onclick=\"expand_layer('layout-options5');return false\">".i18n::translate('Hide and Show')."</a>";
 ?></td></tr></table>
 <div id="layout-options5" style="display: none">
@@ -1820,7 +1820,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Hide and Show')."\" onclic
 ?>
 <table class="facts_table"><tr><td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 <?php
-print "<a href=\"javascript: ".i18n::translate('Edit Options')."\" onclick=\"expand_layer('edit-options');return false\"><img id=\"edit-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+print "<a href=\"javascript: ".i18n::translate('Edit Options')."\" onclick=\"expand_layer('edit-options');return false\"><img id=\"edit-options_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 print "&nbsp;<a href=\"javascript: ".i18n::translate('Edit Options')."\" onclick=\"expand_layer('edit-options');return false\">".i18n::translate('Edit Options')."</a>";
 ?></td></tr></table>
 <div id="edit-options" style="display: none">
@@ -2033,7 +2033,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Edit Options')."\" onclick
 ?>
 <table class="facts_table"><tr><td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 <?php
-print "<a href=\"javascript: ".i18n::translate('User Options')."\" onclick=\"expand_layer('user-options');return false\"><img id=\"user-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+print "<a href=\"javascript: ".i18n::translate('User Options')."\" onclick=\"expand_layer('user-options');return false\"><img id=\"user-options_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 print "&nbsp;<a href=\"javascript: ".i18n::translate('User Options')."\" onclick=\"expand_layer('user-options');return false\">".i18n::translate('User Options')."</a>";
 ?></td></tr></table>
 <div id="user-options" style="display: none">
@@ -2092,21 +2092,21 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('User Options')."\" onclick
 
 <table class="facts_table"><tr><td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 <?php
-print "<a href=\"javascript: ".i18n::translate('Contact Information')."\" onclick=\"expand_layer('contact-options');return false\"><img id=\"contact-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+print "<a href=\"javascript: ".i18n::translate('Contact Information')."\" onclick=\"expand_layer('contact-options');return false\"><img id=\"contact-options_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 print "&nbsp;<a href=\"javascript: ".i18n::translate('Contact Information')."\" onclick=\"expand_layer('contact-options');return false\">".i18n::translate('Contact Information')."</a>";
 ?></td></tr></table>
 <div id="contact-options" style="display: none">
 <table class="facts_table">
 	<tr>
 		<?php
-		if (empty($PHPGEDVIEW_EMAIL)) {
-			$PHPGEDVIEW_EMAIL = "phpgedview-noreply@".preg_replace("/^www\./i", "", $_SERVER["SERVER_NAME"]);
+		if (empty($WEBTREES_EMAIL)) {
+			$WEBTREES_EMAIL = "phpgedview-noreply@".preg_replace("/^www\./i", "", $_SERVER["SERVER_NAME"]);
 		}
 		?>
 		<td class="descriptionbox wrap width20">
-			<?php echo i18n::translate('webtrees reply address'), help_link('PHPGEDVIEW_EMAIL'); ?>
+			<?php echo i18n::translate('webtrees reply address'), help_link('WEBTREES_EMAIL'); ?>
 		</td>
-		<td class="optionbox"><input type="text" name="NEW_PHPGEDVIEW_EMAIL" value="<?php print $PHPGEDVIEW_EMAIL; ?>" size="80" dir="ltr" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('PHPGEDVIEW_EMAIL');" /></td>
+		<td class="optionbox"><input type="text" name="NEW_WEBTREES_EMAIL" value="<?php print $WEBTREES_EMAIL; ?>" size="80" dir="ltr" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('WEBTREES_EMAIL');" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
@@ -2114,7 +2114,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Contact Information')."\" 
 		</td>
 		<td class="optionbox"><select name="NEW_CONTACT_EMAIL" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('CONTACT_EMAIL');">
 		<?php
-			if ($CONTACT_EMAIL=="you@yourdomain.com") $CONTACT_EMAIL = PGV_USER_NAME;
+			if ($CONTACT_EMAIL=="you@yourdomain.com") $CONTACT_EMAIL = WT_USER_NAME;
 			foreach (get_all_users() as $user_id=>$user_name) {
 				if (get_user_setting($user_id, 'verified_by_admin')=="yes") {
 					print "<option value=\"".$user_name."\"";
@@ -2131,7 +2131,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Contact Information')."\" 
 			<?php echo i18n::translate('Contact method'), help_link('CONTACT_METHOD'); ?>
 		</td>
 		<td class="optionbox"><select name="NEW_CONTACT_METHOD" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('CONTACT_METHOD');">
-		<?php if ($PGV_STORE_MESSAGES) { ?>
+		<?php if ($WT_STORE_MESSAGES) { ?>
 				<option value="messaging" <?php if ($CONTACT_METHOD=='messaging') print "selected=\"selected\""; ?>><?php print i18n::translate('webtrees internal messaging'); ?></option>
 				<option value="messaging2" <?php if ($CONTACT_METHOD=='messaging2') print "selected=\"selected\""; ?>><?php print i18n::translate('Internal messaging with emails'); ?></option>
 		<?php } else { ?>
@@ -2148,7 +2148,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Contact Information')."\" 
 		</td>
 		<td class="optionbox"><select name="NEW_WEBMASTER_EMAIL" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('WEBMASTER_EMAIL');">
 		<?php
-			if ($WEBMASTER_EMAIL=="webmaster@yourdomain.com") $WEBMASTER_EMAIL = PGV_USER_NAME;
+			if ($WEBMASTER_EMAIL=="webmaster@yourdomain.com") $WEBMASTER_EMAIL = WT_USER_NAME;
 			foreach (get_all_users() as $user_id=>$user_name) {
 				if (userIsAdmin($user_id)) {
 					print "<option value=\"".$user_name."\"";
@@ -2165,7 +2165,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Contact Information')."\" 
 			<?php echo i18n::translate('Support method'), help_link('SUPPORT_METHOD'); ?>
 		</td>
 		<td class="optionbox"><select name="NEW_SUPPORT_METHOD" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SUPPORT_METHOD');">
-		<?php if ($PGV_STORE_MESSAGES) { ?>
+		<?php if ($WT_STORE_MESSAGES) { ?>
 				<option value="messaging" <?php if ($SUPPORT_METHOD=='messaging') print "selected=\"selected\""; ?>><?php print i18n::translate('webtrees internal messaging'); ?></option>
 				<option value="messaging2" <?php if ($SUPPORT_METHOD=='messaging2') print "selected=\"selected\""; ?>><?php print i18n::translate('Internal messaging with emails'); ?></option>
 		<?php } else { ?>
@@ -2188,7 +2188,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Contact Information')."\" 
 
 <table class="facts_table"><tr><td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 <?php
-print "<a href=\"javascript: ".i18n::translate('Web Site and META Tag Settings')."\" onclick=\"expand_layer('config-meta');return false\"><img id=\"config-meta_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+print "<a href=\"javascript: ".i18n::translate('Web Site and META Tag Settings')."\" onclick=\"expand_layer('config-meta');return false\"><img id=\"config-meta_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 print "&nbsp;<a href=\"javascript: ".i18n::translate('Web Site and META Tag Settings')."\" onclick=\"expand_layer('config-meta');return false\">".i18n::translate('Web Site and META Tag Settings')."</a>";
 ?></td></tr></table>
 <div id="config-meta" style="display: none">
@@ -2314,7 +2314,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Web Site and META Tag Sett
 </table>
 </form>
 <br />
-<?php if (!PGV_GED_ID) { ?>
+<?php if (!WT_GED_ID) { ?>
 <script language="JavaScript" type="text/javascript">
 	helpPopup('welcome_new_help');
 </script>
@@ -2329,7 +2329,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Web Site and META Tag Sett
 	else print "document.configform.GEDCOMPATH.focus();"; ?>
 </script>
 <?php
-if ($CONTACT_EMAIL=="you@yourdomain.com") $CONTACT_EMAIL = PGV_USER_NAME;
-if ($WEBMASTER_EMAIL=="webmaster@yourdomain.com") $WEBMASTER_EMAIL = PGV_USER_NAME;
+if ($CONTACT_EMAIL=="you@yourdomain.com") $CONTACT_EMAIL = WT_USER_NAME;
+if ($WEBMASTER_EMAIL=="webmaster@yourdomain.com") $WEBMASTER_EMAIL = WT_USER_NAME;
 print_footer();
 ?>

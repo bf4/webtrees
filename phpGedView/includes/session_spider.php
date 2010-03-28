@@ -27,12 +27,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_SESSION_SPIDER_PHP', '');
+define('WT_SESSION_SPIDER_PHP', '');
 
 /**
  * Changes the session same for known spiders
@@ -79,7 +79,7 @@ function gen_spider_session_name($bot_name, $bot_language) {
 // Convert user-friendly such as '123.45.*.*' into SQL '%' wildcards.
 // Note: you may need to blcok IPv6 addresses as well as IPv4 ones.
 try {
-	$banned_ip=PGV_DB::prepareLimit(
+	$banned_ip=WT_DB::prepareLimit(
 		"SELECT ip_address, comment FROM {$TBLPREFIX}ip_address".
 		" WHERE category='banned' AND ? LIKE REPLACE(ip_address, '*', '%')",
 		1
@@ -157,10 +157,10 @@ if ($quitReason == "") {
 if ($quitReason != "") {
 	if ((!ini_get('register_globals'))||(strtolower(ini_get('register_globals'))=="off")) {
 		//-- load common functions
-		require_once PGV_ROOT.'includes/functions/functions.php';
+		require_once WT_ROOT.'includes/functions/functions.php';
 		//-- load db specific functions
-		require_once PGV_ROOT.'includes/functions/functions_db.php';
-		require_once PGV_ROOT.'includes/authentication.php';      // -- load the authentication system
+		require_once WT_ROOT.'includes/functions/functions_db.php';
+		require_once WT_ROOT.'includes/authentication.php';      // -- load the authentication system
 		AddToLog("MSG>{$quitReason}; script terminated.");
 		AddToLog("UA>{$ua}<");
 		AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
@@ -323,7 +323,7 @@ $bots_not_allowed = array(
 'clippings',
 'gedrecord.php'
 );
-if ($SEARCH_SPIDER && !in_array(PGV_SCRIPT_NAME, $bots_not_allowed)) {
+if ($SEARCH_SPIDER && !in_array(WT_SCRIPT_NAME, $bots_not_allowed)) {
 	header("HTTP/1.0 403 Forbidden");
 	print "Sorry, this page is not available for search engine bots.";
 	exit;
@@ -336,7 +336,7 @@ if ($SEARCH_SPIDER && !in_array(PGV_SCRIPT_NAME, $bots_not_allowed)) {
 //   To return to normal, the admin MUST use a different IP to get to admin
 //   mode or update the table pgv_ip_address directly.
 try {
-	$search_engine=PGV_DB::prepareLimit(
+	$search_engine=WT_DB::prepareLimit(
 		"SELECT ip_address, comment FROM {$TBLPREFIX}ip_address".
 		" WHERE category='search-engine' AND ? LIKE REPLACE(ip_address, '*', '%')",
 		1
@@ -379,7 +379,7 @@ if(!empty($SEARCH_SPIDER)) {
 		$spidercount = 1;
 		if ($logSpider) {
 			//adds a message to the log that a new spider session is starting
-			require_once PGV_ROOT.'includes/authentication.php';      // -- Loaded early so AddToLog works
+			require_once WT_ROOT.'includes/authentication.php';      // -- Loaded early so AddToLog works
 			AddToLog("New search engine encountered: ->".$outstr."<-");
 			AddToLog("UA>{$ua}<");
 			AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
@@ -389,7 +389,7 @@ if(!empty($SEARCH_SPIDER)) {
 		if($spiderdate != $_SESSION['last_spider_date']) {
 			//adds a message to the log that a new spider session is starting
 			if ($logSpider) {
-				require_once PGV_ROOT.'includes/authentication.php';      // -- Loaded early so AddToLog works
+				require_once WT_ROOT.'includes/authentication.php';      // -- Loaded early so AddToLog works
 				AddToLog("Returning search engine last seen ".$_SESSION['spider_count']." times on ".$_SESSION['last_spider_date']." from ".$_SESSION['last_spider_ip']." ->".$outstr."<-");
 			}
 			$_SESSION['last_spider_date'] = $spiderdate;

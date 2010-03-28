@@ -30,7 +30,7 @@
  * @version $Id: index.php 6652 2010-01-01 20:32:39Z yalnifj $
  */
 
-require_once PGV_ROOT.'modules/clippings/clippings_ctrl.php';
+require_once WT_ROOT.'modules/clippings/clippings_ctrl.php';
 loadlangfile('pgv_admin');		// we need some definitions from this file, even when not logged in as admin
 
 $controller = new ClippingsController();
@@ -39,11 +39,11 @@ $controller->init();
 // -- print html header information
 print_header(i18n::translate('Clippings Cart'));
 
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 
-echo PGV_JS_START;
+echo WT_JS_START;
 echo 'function radAncestors(elementid) {var radFamilies=document.getElementById(elementid);radFamilies.checked=true;}';
-echo PGV_JS_END;
+echo WT_JS_END;
 
 if (count($cart)==0) {?>
 <h2><?php print i18n::translate('Family Tree Clippings Cart');?></h2>
@@ -120,10 +120,10 @@ if ($ct==0) {
 
 		echo i18n::translate('The Clippings Cart allows you to take extracts ("clippings") from this family tree and bundle them up into a single file for downloading and subsequent importing into your own genealogy program.  The downloadable file is recorded in GEDCOM format.<br /><ul><li>How to take clippings?<br />This is really simple. Whenever you see a clickable name (individual, family, or source) you can go to the Details page of that name. There you will see the <b>Add to Clippings Cart</b> option.  When you click that link you will be offered several options to download.</li><li>How to download?<br />Once you have items in your cart, you can download them just by clicking the <b>Download Now</b> link.  Follow the instructions and links.</li></ul>');
 
-		echo PGV_JS_START;
+		echo WT_JS_START;
 		echo 'var pastefield;';
 		echo 'function paste_id(value) {pastefield.value=value;}';
-		echo PGV_JS_END;
+		echo WT_JS_END;
 		?>
 		<form method="get" name="addin" action="module.php">
 		<input type="hidden" name="mod" value="clippings" />
@@ -181,19 +181,19 @@ if ($ct==0) {
 
 		<?php
 		// Determine the Privatize options available to this user
-		if (PGV_USER_IS_ADMIN) {
+		if (WT_USER_IS_ADMIN) {
 			$radioPrivatizeNone = 'checked="checked" ';
 			$radioPrivatizeVisitor = '';
 			$radioPrivatizeUser = '';
 			$radioPrivatizeGedadmin = '';
 			$radioPrivatizeAdmin = '';
-		} else if (PGV_USER_GEDCOM_ADMIN) {
+		} else if (WT_USER_GEDCOM_ADMIN) {
 			$radioPrivatizeNone = 'DISABLED ';
 			$radioPrivatizeVisitor = 'checked="checked" ';
 			$radioPrivatizeUser = '';
 			$radioPrivatizeGedadmin = '';
 			$radioPrivatizeAdmin = 'DISABLED ';
-		} else if (PGV_USER_ID) {
+		} else if (WT_USER_ID) {
 			$radioPrivatizeNone = 'DISABLED ';
 			$radioPrivatizeVisitor = 'checked="checked" ';
 			$radioPrivatizeUser = '';
@@ -305,7 +305,7 @@ if ($ct==0) {
 			if ($tag=='OBJE') $icon = "media";
 			?>
 			<tr><td class="list_value">
-				<?php if (!empty($icon)) { ?><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES[$icon]["small"];?>" border="0" alt="<?php echo $tag;?>" title="<?php echo $tag;?>" /><?php } ?>
+				<?php if (!empty($icon)) { ?><img src="<?php echo $WT_IMAGE_DIR, "/", $WT_IMAGES[$icon]["small"];?>" border="0" alt="<?php echo $tag;?>" title="<?php echo $tag;?>" /><?php } ?>
 			</td>
 			<td class="list_value ltr"><?php echo $clipping['id']?></td>
 			<td class="list_value">
@@ -314,7 +314,7 @@ if ($ct==0) {
 			if ($record) echo '<a href="', encode_url($record->getLinkUrl()), '">', PrintReady($record->getListName()), '</a>';
 			?>
 			</td>
-			<td class="list_value center vmiddle"><a href="module.php?mod=clippings&amp;action=remove&amp;item=<?php echo $i;?>"><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["remove"]["other"];?>" border="0" alt="<?php echo i18n::translate('Remove')?>" title="<?php echo i18n::translate('Remove');?>" /></a></td>
+			<td class="list_value center vmiddle"><a href="module.php?mod=clippings&amp;action=remove&amp;item=<?php echo $i;?>"><img src="<?php echo $WT_IMAGE_DIR, "/", $WT_IMAGES["remove"]["other"];?>" border="0" alt="<?php echo i18n::translate('Remove')?>" title="<?php echo i18n::translate('Remove');?>" /></a></td>
 		</tr>
 		<?php
 		}

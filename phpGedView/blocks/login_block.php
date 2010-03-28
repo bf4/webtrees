@@ -29,18 +29,18 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_LOGIN_BLOCK_PHP', '');
+define('WT_LOGIN_BLOCK_PHP', '');
 
-$PGV_BLOCKS["print_login_block"]["name"]		= i18n::translate('Login');
-$PGV_BLOCKS["print_login_block"]["descr"]		= i18n::translate('The Login block accepts a user name and password for users to login.');
-$PGV_BLOCKS["print_login_block"]["type"]		= "both";		// On My Page, this becomes a Logout block
-$PGV_BLOCKS["print_login_block"]["canconfig"]	= false;
-$PGV_BLOCKS["print_login_block"]["config"]		= array("cache"=>0);
+$WT_BLOCKS["print_login_block"]["name"]		= i18n::translate('Login');
+$WT_BLOCKS["print_login_block"]["descr"]		= i18n::translate('The Login block accepts a user name and password for users to login.');
+$WT_BLOCKS["print_login_block"]["type"]		= "both";		// On My Page, this becomes a Logout block
+$WT_BLOCKS["print_login_block"]["canconfig"]	= false;
+$WT_BLOCKS["print_login_block"]["config"]		= array("cache"=>0);
 
 /**
  * Print Login Block
@@ -50,14 +50,14 @@ $PGV_BLOCKS["print_login_block"]["config"]		= array("cache"=>0);
 function print_login_block($block = true, $config="", $side, $index) {
 	global $QUERY_STRING, $USE_REGISTRATION_MODULE, $LOGIN_URL, $TEXT_DIRECTION;
 
-	if (PGV_USER_ID) {
+	if (WT_USER_ID) {
 		$id="logout_block";
 		$title = i18n::translate('Logout');
 
 		$i = 0;			// Initialize tab index
 
 		$content = '<div class="center"><form method="post" action="index.php?logout=1" name="logoutform" onsubmit="return true;">';
-		$content .= '<br /><a href="edituser.php" class="name2">'.i18n::translate('Logged in as ').' ('.PGV_USER_NAME.')</a><br /><br />';
+		$content .= '<br /><a href="edituser.php" class="name2">'.i18n::translate('Logged in as ').' ('.WT_USER_NAME.')</a><br /><br />';
 
 		$i++;
 		$content .= "<input type=\"submit\" tabindex=\"{$i}\" value=\"".i18n::translate('Logout')."\" />";
@@ -75,7 +75,7 @@ function print_login_block($block = true, $config="", $side, $index) {
 		$content = "<div class=\"center\"><form method=\"post\" action=\"$LOGIN_URL\" name=\"loginform\" onsubmit=\"t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;\">";
 		$content .= "<input type=\"hidden\" name=\"url\" value=\"index.php\" />";
 		$content .= "<input type=\"hidden\" name=\"ged\" value=\"";
-		$content .= PGV_GEDCOM;
+		$content .= WT_GEDCOM;
 		$content .= "\" />";
 		$content .= "<input type=\"hidden\" name=\"pid\" value=\"";
 		if (isset($pid)) $content .= $pid;

@@ -27,12 +27,12 @@
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once PGV_ROOT.'includes/classes/class_sidebar.php';
+require_once WT_ROOT.'includes/classes/class_sidebar.php';
 
 class clippings_Sidebar extends Sidebar {
 
@@ -43,7 +43,7 @@ class clippings_Sidebar extends Sidebar {
 	}
 
 	public function getCartList() {
-		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $WT_IMAGE_DIR, $WT_IMAGES;
 		global $cart, $GEDCOM;
 		$out ='<ul>';
 		$ct = count($cart);
@@ -65,7 +65,7 @@ class clippings_Sidebar extends Sidebar {
 					if (!empty($icon)) {
 						$out .= '<li>';
 						if (!empty($icon)) {
-							$out .= '<img src="'.$PGV_IMAGE_DIR."/".$PGV_IMAGES[$icon]["small"].'" border="0" alt="'.$tag.'" title="'.$tag.'" width="20" />';
+							$out .= '<img src="'.$WT_IMAGE_DIR."/".$WT_IMAGES[$icon]["small"].'" border="0" alt="'.$tag.'" title="'.$tag.'" width="20" />';
 						}
 						$record=GedcomRecord::getInstance($clipping['id']);
 						if ($record) {
@@ -79,7 +79,7 @@ class clippings_Sidebar extends Sidebar {
 							$out .= '</a>';
 						}
 						$out .= '<a	class="remove_cart" href="sidebar.php?sb_action=clippings&amp;remove='.$i.'">
-						<img src="'. $PGV_IMAGE_DIR. "/". $PGV_IMAGES["remove"]["other"].'" border="0" alt="'.i18n::translate('Remove').'" title="'.i18n::translate('Remove').'" /></a>';
+						<img src="'. $WT_IMAGE_DIR. "/". $WT_IMAGES["remove"]["other"].'" border="0" alt="'.i18n::translate('Remove').'" title="'.i18n::translate('Remove').'" /></a>';
 						$out .='</li>';
 					}
 				}
@@ -94,8 +94,8 @@ class clippings_Sidebar extends Sidebar {
 		return $out;
 	}
 	public function getContent() {
-		require_once PGV_ROOT.'modules/clippings/clippings_ctrl.php';
-		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+		require_once WT_ROOT.'modules/clippings/clippings_ctrl.php';
+		global $WT_IMAGE_DIR, $WT_IMAGES;
 		global $cart, $GEDCOM;
 
 		$out = '';
@@ -118,7 +118,7 @@ class clippings_Sidebar extends Sidebar {
 				$root = GedcomRecord::getInstance($this->controller->pid);
 				if ($root && $root->canDisplayDetails()) 
 					$out .= '<a href="sidebar.php?sb_action=clippings&amp;add='.$root->getXref().'" class="add_cart">
-					<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['clippings']['small'].'" width="20" /> '.i18n::translate('Add %s to cart', $root->getListName()).'</a>';
+					<img src="'.$WT_IMAGE_DIR.'/'.$WT_IMAGES['clippings']['small'].'" width="20" /> '.i18n::translate('Add %s to cart', $root->getListName()).'</a>';
 			}
 			else if ($this->controller->famid && !id_in_cart($this->controller->pid)) {
 				$fam = Family::getInstance($this->controller->famid);
@@ -134,14 +134,14 @@ class clippings_Sidebar extends Sidebar {
 	public function askAddOptions(&$person) {
 		global $MAX_PEDIGREE_GENERATIONS;
 		$out = "<b>".$person->getFullName()."</b>";
-		$out .= PGV_JS_START;
+		$out .= WT_JS_START;
 		$out .= 'function radAncestors(elementid) {var radFamilies=document.getElementById(elementid);radFamilies.checked=true;}
 			function continueAjax(frm) {
 				var others = jQuery("input[name=\'others\']:checked").val();
 				var link = "sidebar.php?sb_action=clippings&add1="+frm.pid.value+"&others="+others+"&level1="+frm.level1.value+"&level2="+frm.level2.value+"&level3="+frm.level3.value;
 				jQuery("#sb_clippings_content").load(link);
 			}';
-		$out .= PGV_JS_END;
+		$out .= WT_JS_END;
 		if ($person->getType()=='FAM') {
 
 			$out .= '<form action="module.php" method="get" onsubmit="continueAjax(this); return false;">
@@ -203,12 +203,12 @@ class clippings_Sidebar extends Sidebar {
 	public function downloadForm() {
 		global $TEXT_DIRECTION;
 		$controller = $this->clippingCtrl;
-		$out = PGV_JS_START;
+		$out = WT_JS_START;
 		$out .= 'function cancelDownload() {
 				var link = "sidebar.php?sb_action=clippings";
 				jQuery("#sb_clippings_content").load(link);
 			}';
-		$out .= PGV_JS_END;
+		$out .= WT_JS_END;
 		$out .= '<form method="get" action="module.php">
 		<input type="hidden" name="mod" value="clippings" />
 		<input type="hidden" name="pgv_action" value="index" />
@@ -234,19 +234,19 @@ class clippings_Sidebar extends Sidebar {
 		';
 		
 		// Determine the Privatize options available to this user
-		if (PGV_USER_IS_ADMIN) {
+		if (WT_USER_IS_ADMIN) {
 			$radioPrivatizeNone = 'checked="checked" ';
 			$radioPrivatizeVisitor = '';
 			$radioPrivatizeUser = '';
 			$radioPrivatizeGedadmin = '';
 			$radioPrivatizeAdmin = '';
-		} else if (PGV_USER_GEDCOM_ADMIN) {
+		} else if (WT_USER_GEDCOM_ADMIN) {
 			$radioPrivatizeNone = 'DISABLED ';
 			$radioPrivatizeVisitor = 'checked="checked" ';
 			$radioPrivatizeUser = '';
 			$radioPrivatizeGedadmin = '';
 			$radioPrivatizeAdmin = 'DISABLED ';
-		} else if (PGV_USER_ID) {
+		} else if (WT_USER_ID) {
 			$radioPrivatizeNone = 'DISABLED ';
 			$radioPrivatizeVisitor = 'checked="checked" ';
 			$radioPrivatizeUser = '';
@@ -286,13 +286,13 @@ class clippings_Sidebar extends Sidebar {
 
 	public function getAjaxContent() {
 		global $GEDCOM, $cart;
-		require_once PGV_ROOT.'modules/clippings/clippings_ctrl.php';
+		require_once WT_ROOT.'modules/clippings/clippings_ctrl.php';
 		$controller = new ClippingsController();
 		$this->clippingCtrl = $controller;
 		$add = safe_GET_xref('add','');
 		$add1 = safe_GET_xref('add1','');
-		$remove = safe_GET('remove', PGV_REGEX_INTEGER, -1);
-		$others = safe_GET('others', PGV_REGEX_ALPHANUM, '');
+		$remove = safe_GET('remove', WT_REGEX_INTEGER, -1);
+		$others = safe_GET('others', WT_REGEX_ALPHANUM, '');
 		$controller->level1 = safe_GET('level1');
 		$controller->level2 = safe_GET('level2');
 		$controller->level3 = safe_GET('level3');
@@ -317,12 +317,12 @@ class clippings_Sidebar extends Sidebar {
 				$controller->type=strtolower($record->getType());
 				if ($record->getType() == 'SOUR') {
 					if ($others == 'linked') {
-						foreach (fetch_linked_indi($record->getXref(), 'SOUR', PGV_GED_ID) as $indi) {
+						foreach (fetch_linked_indi($record->getXref(), 'SOUR', WT_GED_ID) as $indi) {
 							if ($indi->canDisplayName()) {
 								$controller->add_clipping(array('type'=>'indi', 'id'=>$indi->getXref()));
 							}
 						}
-						foreach (fetch_linked_fam($record->getXref(), 'SOUR', PGV_GED_ID) as $fam) {
+						foreach (fetch_linked_fam($record->getXref(), 'SOUR', WT_GED_ID) as $fam) {
 							if ($fam->canDisplayName()) {
 								$controller->add_clipping(array('type'=>'fam', 'id'=>$fam->getXref()));
 							}

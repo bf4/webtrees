@@ -31,22 +31,22 @@
  * @version $Id$
  */
 
-require PGV_ROOT.'includes/functions/functions_print_lists.php';
+require WT_ROOT.'includes/functions/functions_print_lists.php';
 
-$type           =safe_GET('type', PGV_REGEX_ALPHA, 'indi');
+$type           =safe_GET('type', WT_REGEX_ALPHA, 'indi');
 $filter         =safe_GET('filter');
 $action         =safe_GET('action');
-$callback       =safe_GET('callback', PGV_REGEX_NOSCRIPT, 'paste_id');
+$callback       =safe_GET('callback', WT_REGEX_NOSCRIPT, 'paste_id');
 $create         =safe_GET('create');
 $media          =safe_GET('media');
 $external_links =safe_GET('external_links');
-$directory      =safe_GET('directory', PGV_REGEX_NOSCRIPT, $MEDIA_DIRECTORY);
+$directory      =safe_GET('directory', WT_REGEX_NOSCRIPT, $MEDIA_DIRECTORY);
 $multiple       =safe_GET_bool('multiple');
 $showthumb      =safe_GET_bool('showthumb');
 $all            =safe_GET_bool('all');
 $subclick		=safe_GET('subclick');
-$choose         =safe_GET('choose', PGV_REGEX_NOSCRIPT, '0all');
-$level          =safe_GET('level', PGV_REGEX_INTEGER, 0);
+$choose         =safe_GET('choose', WT_REGEX_NOSCRIPT, '0all');
+$level          =safe_GET('level', WT_REGEX_INTEGER, 0);
 $language_filter=safe_GET('language_filter');
 $magnify        =safe_GET_bool('magnify');
 
@@ -91,7 +91,7 @@ if (empty($language_filter)) {
 		$language_filter=WT_LOCALE;
 	}
 }
-require PGV_ROOT.'includes/specialchars.php';
+require WT_ROOT.'includes/specialchars.php';
 // End variables for Find Special Character
 
 switch ($type) {
@@ -127,7 +127,7 @@ case "specialchar":
 	break;
 }
 
-echo PGV_JS_START;
+echo WT_JS_START;
 ?>
 
 	function pasterow(id, name, gend, yob, age, bpl) {
@@ -181,7 +181,7 @@ echo PGV_JS_START;
 		return true;
 	}
 <?php
-echo PGV_JS_END;
+echo WT_JS_END;
 
 $options = array();
 $options["option"][]= "findindi";
@@ -333,7 +333,7 @@ if ($type == "place") {
 }
 
 // Show repo and hide the rest
-if ($type == "repo" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
+if ($type == "repo" && $SHOW_SOURCES>=WT_USER_ACCESS_LEVEL) {
 	echo "<div align=\"center\">";
 	echo "<form name=\"filterrepo\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
 	echo "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
@@ -375,7 +375,7 @@ if ($type == "note") {
 }
 
 // Show source and hide the rest
-if ($type == "source" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
+if ($type == "source" && $SHOW_SOURCES>=WT_USER_ACCESS_LEVEL) {
 	echo "<div align=\"center\">";
 	echo "<form name=\"filtersource\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
 	echo "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
@@ -432,7 +432,7 @@ if ($action=="filter") {
 	// Output Individual
 	if ($type == "indi") {
 		echo "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
-		$myindilist=search_indis_names($filter_array, array(PGV_GED_ID), 'AND');
+		$myindilist=search_indis_names($filter_array, array(WT_GED_ID), 'AND');
 		if ($myindilist) {
 			echo "<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
 			usort($myindilist, array('GedcomRecord', 'Compare'));
@@ -474,8 +474,8 @@ if ($action=="filter") {
 		// Get the famrecs with hits on names from the family table
 		// Get the famrecs with hits in the gedcom record from the family table
 		$myfamlist = pgv_array_merge(
-			search_fams_names($filter_array, array(PGV_GED_ID), 'AND'),
-			search_fams($filter_array, array(PGV_GED_ID), 'AND', true)
+			search_fams_names($filter_array, array(WT_GED_ID), 'AND'),
+			search_fams($filter_array, array(WT_GED_ID), 'AND', true)
 		);
 		if ($myfamlist) {
 			$curged = $GEDCOM;
@@ -686,12 +686,12 @@ if ($action=="filter") {
 	// Output Repositories
 	if ($type == "repo") {
 		echo "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
-		$repo_list = get_repo_list(PGV_GED_ID);
+		$repo_list = get_repo_list(WT_GED_ID);
 		if ($repo_list) {
 			echo "<td class=\"list_value_wrap\"><ul>";
 			foreach ($repo_list as $repo) {
 				echo "<li><a href=\"javascript:;\" onclick=\"pasteid('", $repo->getXref(), "');\"><span class=\"list_item\">", $repo->getListName(), "&nbsp;&nbsp;&nbsp;";
-				echo PGV_LPARENS.$repo->getXref().PGV_RPARENS;
+				echo WT_LPARENS.$repo->getXref().WT_RPARENS;
 				echo "</span></a></li>";
 			}
 			echo "</ul></td></tr>";
@@ -710,9 +710,9 @@ if ($action=="filter") {
 	if ($type=="note") {
 		echo '<table class="tabs_table ', $TEXT_DIRECTION, ' width90">';
 		if ($filter) {
-			$mynotelist = search_notes($filter_array, array(PGV_GED_ID), 'AND', true);
+			$mynotelist = search_notes($filter_array, array(WT_GED_ID), 'AND', true);
 		} else {
-			$mynotelist = get_note_list(PGV_GED_ID);
+			$mynotelist = get_note_list(WT_GED_ID);
 		}
 		if ($mynotelist) {
 			usort($mynotelist, array('GedcomRecord', 'Compare'));
@@ -732,9 +732,9 @@ if ($action=="filter") {
 	if ($type=="source") {
 		echo '<table class="tabs_table ', $TEXT_DIRECTION, ' width90">';
 		if ($filter) {
-			$mysourcelist = search_sources($filter_array, array(PGV_GED_ID), 'AND', true);
+			$mysourcelist = search_sources($filter_array, array(WT_GED_ID), 'AND', true);
 		} else {
-			$mysourcelist = get_source_list(PGV_GED_ID);
+			$mysourcelist = get_source_list(WT_GED_ID);
 		}
 		if ($mysourcelist) {
 			usort($mysourcelist, array('GedcomRecord', 'Compare'));
@@ -800,7 +800,7 @@ if ($action=="filter") {
 echo "</div>"; // Close div that centers table
 
 // Set focus to the input field
-echo PGV_JS_START, 'document.filter', $type, '.filter.focus();', PGV_JS_END;
+echo WT_JS_START, 'document.filter', $type, '.filter.focus();', WT_JS_END;
 
 print_simple_footer();
 

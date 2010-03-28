@@ -27,9 +27,9 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'medialist.php');
+define('WT_SCRIPT_NAME', 'medialist.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
+require_once WT_ROOT.'includes/functions/functions_print_facts.php';
 
 // $LB_SS_SPEED = "5";
 $level = safe_GET("level", "", "0");
@@ -42,9 +42,9 @@ $max = safe_GET('max', array('10', '20', '30', '40', '50', '75', '100', '125', '
 $folder = safe_GET('folder');
 if (empty($folder)) $folder = $MEDIA_DIRECTORY;
 
-if (empty($_SESSION['medialist_ged'])) $_SESSION['medialist_ged'] = PGV_GEDCOM;
-if ($_SESSION['medialist_ged'] != PGV_GEDCOM) {
-	$_SESSION['medialist_ged'] = PGV_GEDCOM;
+if (empty($_SESSION['medialist_ged'])) $_SESSION['medialist_ged'] = WT_GEDCOM;
+if ($_SESSION['medialist_ged'] != WT_GEDCOM) {
+	$_SESSION['medialist_ged'] = WT_GEDCOM;
 	unset($_SESSION['medialist']);
 }
 
@@ -53,14 +53,14 @@ if (!isset($_SESSION['medialist'])) $search = "yes";
 $currentdironly = (isset($_REQUEST['subdirs']) && $_REQUEST['subdirs']=="on") ? false : true;
 print_header(i18n::translate('MultiMedia Objects'));
 
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 
 echo "\n\t<div class=\"center\"><h2>", i18n::translate('MultiMedia Objects'), "</h2></div>\n\t";
 
 // Get Javascript variables from lb_config.php ---------------------------
-if (PGV_USE_LIGHTBOX) {
-	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
+if (WT_USE_LIGHTBOX) {
+	require WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	require WT_ROOT.'modules/lightbox/functions/lb_call_js.php';
 
 	if ($theme_name=="Minimal") {
 		// Force icon options to "text" when we're dealing with the Minimal theme
@@ -72,7 +72,7 @@ if (PGV_USE_LIGHTBOX) {
 
 
 //-- automatically generate an image
-if (PGV_USER_IS_ADMIN && $action=="generate" && !empty($file) && !empty($thumb)) {
+if (WT_USER_IS_ADMIN && $action=="generate" && !empty($file) && !empty($thumb)) {
 	generate_thumbnail($file, $thumb);
 }
 if ($search == "yes") {
@@ -89,7 +89,7 @@ if ($search == "yes") {
 			echo " ";
 
 			// Display when user has Edit rights or when object belongs to current GEDCOM
-			$disp = PGV_USER_CAN_EDIT || $media["GEDFILE"]==PGV_GED_ID;
+			$disp = WT_USER_CAN_EDIT || $media["GEDFILE"]==WT_GED_ID;
 			// Display when Media objects aren't restricted by global privacy
 			$disp &= displayDetailsById($media["XREF"], "OBJE");
 			// Display when this Media object isn't restricted
@@ -219,10 +219,10 @@ if ($ct>0) {
 
 	$currentPage = ((int) ($start / $max)) + 1;
 	$lastPage = (int) (($ct + $max - 1) / $max);
-	$IconRarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"]."\" width=\"20\" height=\"20\" border=\"0\" alt=\"\" />";
-	$IconLarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow"]["other"]."\" width=\"20\" height=\"20\" border=\"0\" alt=\"\" />";
-	$IconRDarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rdarrow"]["other"]."\" width=\"20\" height=\"20\" border=\"0\" alt=\"\" />";
-	$IconLDarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["ldarrow"]["other"]."\" width=\"20\" height=\"20\" border=\"0\" alt=\"\" />";
+	$IconRarrow = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["rarrow"]["other"]."\" width=\"20\" height=\"20\" border=\"0\" alt=\"\" />";
+	$IconLarrow = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["larrow"]["other"]."\" width=\"20\" height=\"20\" border=\"0\" alt=\"\" />";
+	$IconRDarrow = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["rdarrow"]["other"]."\" width=\"20\" height=\"20\" border=\"0\" alt=\"\" />";
+	$IconLDarrow = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["ldarrow"]["other"]."\" width=\"20\" height=\"20\" border=\"0\" alt=\"\" />";
 
 	print"\n\t<table class=\"list_table\">\n";
 
@@ -297,7 +297,7 @@ if ($ct>0) {
 		$imgheight = $imgsize[1]+150;
 		$name = trim($media["TITL"]);
 //		$name1 = addslashes($media["TITL"]);
-		$showFile = PGV_USER_CAN_EDIT;
+		$showFile = WT_USER_CAN_EDIT;
 		if ($name=="") {
 			//$showFile = false;
 			if ($isExternal) $name = "URL";
@@ -324,8 +324,8 @@ if ($ct>0) {
 		echo ' alt="', PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')), '" title="', PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')), '" /></a>';
 		echo "</td>\n\t\t", '<td class="list_value_wrap" style="border: none;" width="100%">';
 
-		if (PGV_USE_LIGHTBOX) {
-			if (PGV_USER_CAN_EDIT) {
+		if (WT_USE_LIGHTBOX) {
+			if (WT_USER_CAN_EDIT) {
 
 				if ($LB_ML_THUMB_LINKS != "none") {
 					echo "<table border=0><tr>";
@@ -347,7 +347,7 @@ if ($ct>0) {
 
 					// ---------- Link Media to person, family or source  ---------------
 					echo "<td class=\"width33 wrap center font9\" valign=\"top\">";
-					require  PGV_ROOT.'modules/lightbox/functions/lb_link.php';
+					require  WT_ROOT.'modules/lightbox/functions/lb_link.php';
 					echo "</td>";
 
 					// ---------- View Media Details (mediaviewer) --------------------
@@ -494,9 +494,9 @@ Plus other Media Options - MediaViewer page') . "\" />";
 }
 echo "\n</div>\n";
 // -- load up the slideshow code
-if (!PGV_USE_LIGHTBOX) {
-	if (file_exists(PGV_ROOT.'modules/slideshow/slideshow.php')) {
-		require_once PGV_ROOT.'modules/slideshow/slideshow.php';
+if (!WT_USE_LIGHTBOX) {
+	if (file_exists(WT_ROOT.'modules/slideshow/slideshow.php')) {
+		require_once WT_ROOT.'modules/slideshow/slideshow.php';
 	}
 }
 print_footer();

@@ -31,12 +31,12 @@
  * @author Brian Holland
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_MOD_FAMILY_NAV_PHP', '');
+define('WT_MOD_FAMILY_NAV_PHP', '');
 
 require_once 'includes/classes/class_tab.php';
 require_once 'includes/classes/class_sidebar.php';
@@ -69,7 +69,7 @@ class family_nav_Tab extends Tab {
 
 		// =====================================================================
 
-		echo PGV_JS_START;
+		echo WT_JS_START;
 		echo 'function familyNavLoad(url) {
 			if (selectedTab!="") {
 				window.location = url+"&tab="+selectedTab;
@@ -80,11 +80,11 @@ class family_nav_Tab extends Tab {
 			}
 		}
 		';
-		echo PGV_JS_END;
+		echo WT_JS_END;
 		
 	 // Start Family Nav Table ----------------------------
 		echo "<table class=\"nav_content\" cellpadding=\"0\">"; 
-		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_MENUS_AS_LISTS;
+		global $SHOW_ID_NUMBERS, $WT_IMAGE_DIR, $WT_IMAGES, $WT_MENUS_AS_LISTS;
 		global $spouselinks, $parentlinks, $DeathYr, $BirthYr;
 		global $TEXT_DIRECTION;
 
@@ -125,9 +125,9 @@ class family_nav_Tab extends Tab {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" style="width:75px;">
-						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
 							$menu->printMenu();
-						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
+						if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]);?> nam">
@@ -160,9 +160,9 @@ class family_nav_Tab extends Tab {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" style="width:75px;">
-						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
 							$menu->printMenu();
-						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
+						if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?> nam">
@@ -204,9 +204,9 @@ class family_nav_Tab extends Tab {
 						if ($pid == $child->getXref() ) {
 							print $child->getLabel();
 						}else{
-							if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+							if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
 								$menu->printMenu();
-							if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
+							if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
 						}
 						?>
 						</td>
@@ -276,9 +276,9 @@ class family_nav_Tab extends Tab {
 
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>"  nowrap="nowrap" style="width:75px;">
-						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
 						$menu->printMenu();
-						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
+						if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]); ?> nam">
@@ -319,9 +319,9 @@ class family_nav_Tab extends Tab {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" style="width:75px;">
-						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
 							$menu->printMenu();
-						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
+						if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?> nam">
@@ -357,9 +357,9 @@ class family_nav_Tab extends Tab {
 					?>
 					<tr>
 						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" style="width:75px;">
-						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
 							$menu->printMenu();
-						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
+						if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 						</td>
 						<td align="center" class="<?php print $this->controller->getPersonStyle($child); ?> nam">
@@ -422,9 +422,9 @@ class family_nav_Tab extends Tab {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" style="width:75px;">
-						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
 						$menu->printMenu();
-						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
+						if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]); ?> nam">
@@ -462,9 +462,9 @@ class family_nav_Tab extends Tab {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" style="width:75px;">
-						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
 						$menu->printMenu();
-						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
+						if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?> nam">
@@ -504,9 +504,9 @@ class family_nav_Tab extends Tab {
 					?>
 					<tr>
 						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" style="width:75px;">
-						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
 						$menu->printMenu();
-						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
+						if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 						</td>
 						<td align="center" class="<?php print $this->controller->getPersonStyle($child); ?> nam">
@@ -542,7 +542,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $ZOOM_BOXES, $LINK_ICONS, $SCRIPT_NAME, $GEDCOM;
 	global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
 	global $CONTACT_EMAIL, $CONTACT_METHOD, $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
 	global $chart_style, $box_width, $generations, $show_spouse, $show_full;
 	global $CHART_BOX_TAGS, $SHOW_LDS_AT_GLANCE, $PEDIGREE_SHOW_GENDER;
 	global $SEARCH_SPIDER;
@@ -772,7 +772,7 @@ class family_nav_Sidebar extends Sidebar {
 	var $indi;
 	
 	public function getContent() {
-		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $WT_IMAGE_DIR, $WT_IMAGES;
 
 		$out = '<div id="sb_family_nav_content">';
 

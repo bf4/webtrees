@@ -31,27 +31,27 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'addmedia.php');
+define('WT_SCRIPT_NAME', 'addmedia.php');
 require './config.php';
-require PGV_ROOT.'includes/functions/functions_print_lists.php';
-require PGV_ROOT.'includes/functions/functions_edit.php';
+require WT_ROOT.'includes/functions/functions_print_lists.php';
+require WT_ROOT.'includes/functions/functions_edit.php';
 
 // TODO use GET/POST, rather than $_REQUEST
 // TODO decide what validation is required on these input parameters
-$pid        =safe_REQUEST($_REQUEST, 'pid',         PGV_REGEX_XREF);
-$mid        =safe_REQUEST($_REQUEST, 'mid',         PGV_REGEX_XREF);
-$gid        =safe_REQUEST($_REQUEST, 'gid',         PGV_REGEX_XREF);
-$linktoid   =safe_REQUEST($_REQUEST, 'linktoid',    PGV_REGEX_XREF);
-$action     =safe_REQUEST($_REQUEST, 'action',      PGV_REGEX_NOSCRIPT, 'showmediaform');
-$folder     =safe_REQUEST($_REQUEST, 'folder',      PGV_REGEX_UNSAFE);
-$oldFolder  =safe_REQUEST($_REQUEST, 'oldFolder',   PGV_REGEX_UNSAFE);
-$filename   =safe_REQUEST($_REQUEST, 'filename',    PGV_REGEX_UNSAFE);
-$oldFilename=safe_REQUEST($_REQUEST, 'oldFilename', PGV_REGEX_UNSAFE, $filename);
-$level      =safe_REQUEST($_REQUEST, 'level',       PGV_REGEX_UNSAFE);
-$text       =safe_REQUEST($_REQUEST, 'text',        PGV_REGEX_UNSAFE);
-$tag        =safe_REQUEST($_REQUEST, 'tag',         PGV_REGEX_UNSAFE);
-$islink     =safe_REQUEST($_REQUEST, 'islink',      PGV_REGEX_UNSAFE);
-$glevels    =safe_REQUEST($_REQUEST, 'glevels',     PGV_REGEX_UNSAFE);
+$pid        =safe_REQUEST($_REQUEST, 'pid',         WT_REGEX_XREF);
+$mid        =safe_REQUEST($_REQUEST, 'mid',         WT_REGEX_XREF);
+$gid        =safe_REQUEST($_REQUEST, 'gid',         WT_REGEX_XREF);
+$linktoid   =safe_REQUEST($_REQUEST, 'linktoid',    WT_REGEX_XREF);
+$action     =safe_REQUEST($_REQUEST, 'action',      WT_REGEX_NOSCRIPT, 'showmediaform');
+$folder     =safe_REQUEST($_REQUEST, 'folder',      WT_REGEX_UNSAFE);
+$oldFolder  =safe_REQUEST($_REQUEST, 'oldFolder',   WT_REGEX_UNSAFE);
+$filename   =safe_REQUEST($_REQUEST, 'filename',    WT_REGEX_UNSAFE);
+$oldFilename=safe_REQUEST($_REQUEST, 'oldFilename', WT_REGEX_UNSAFE, $filename);
+$level      =safe_REQUEST($_REQUEST, 'level',       WT_REGEX_UNSAFE);
+$text       =safe_REQUEST($_REQUEST, 'text',        WT_REGEX_UNSAFE);
+$tag        =safe_REQUEST($_REQUEST, 'tag',         WT_REGEX_UNSAFE);
+$islink     =safe_REQUEST($_REQUEST, 'islink',      WT_REGEX_UNSAFE);
+$glevels    =safe_REQUEST($_REQUEST, 'glevels',     WT_REGEX_UNSAFE);
 
 $update_CHAN=!safe_POST_bool('preserve_last_changed');
 
@@ -62,10 +62,10 @@ print_simple_header(i18n::translate('Add a new Media item'));
 $disp = true;
 if (empty($pid) && !empty($mid)) $pid = $mid;
 if (!empty($pid)) {
-	if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) {
-		$gedrec = find_media_record($pid, PGV_GED_ID);
+	if (!isset($pgv_changes[$pid."_".WT_GEDCOM])) {
+		$gedrec = find_media_record($pid, WT_GED_ID);
 	} else {
-		$gedrec = find_updated_record($pid, PGV_GED_ID);
+		$gedrec = find_updated_record($pid, WT_GED_ID);
 	}
 	$disp = displayDetailsById($pid, "OBJE");
 }
@@ -77,10 +77,10 @@ if ($action=="update" || $action=="newentry") {
 	}
 }
 
-if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
+if (!WT_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 	print i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
 	//-- display messages as to why the editing access was denied
-	if (!PGV_USER_CAN_EDIT) print "<br />".i18n::translate('This user name cannot edit this GEDCOM.');
+	if (!WT_USER_CAN_EDIT) print "<br />".i18n::translate('This user name cannot edit this GEDCOM.');
 	if (!$ALLOW_EDIT_GEDCOM) print "<br />".i18n::translate('Editing this GEDCOM has been disabled by the administrator.');
 	if (!$disp) {
 		print "<br />".i18n::translate('Privacy settings prevent you from editing this record.');
@@ -91,8 +91,8 @@ if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 	exit;
 }
 
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'/js/autocomplete.js.htm';
-echo PGV_JS_START;
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'/js/autocomplete.js.htm';
+echo WT_JS_START;
 ?>
 	// Shared Notes =========================
 	function findnote(field) {
@@ -128,7 +128,7 @@ echo PGV_JS_START;
 		}
 	}
 <?php
-echo PGV_JS_END;
+echo WT_JS_END;
 
 // Naming conventions used in this script:
 // folderName - this is the link to the folder in the standard media directory; the one that is stored in the gedcom.
@@ -148,7 +148,7 @@ if ($action=="newentry") {
 	$thumbFile = "";
 	if (!empty($_FILES['mediafile']["name"]) || !empty($_FILES['thumbnail']["name"])) {
 		// Validate and correct folder names
-		$folderName = trim(trim(safe_POST('folder', PGV_REGEX_NOSCRIPT)), '/');
+		$folderName = trim(trim(safe_POST('folder', WT_REGEX_NOSCRIPT)), '/');
 		$folderName = check_media_depth($folderName."/y.z", "BACK");
 		$folderName = dirname($folderName)."/";
 		$thumbFolderName = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folderName);
@@ -167,7 +167,7 @@ if ($action=="newentry") {
 		$error = "";
 
 		// Determine file name on server
-		if (PGV_USER_GEDCOM_ADMIN && !empty($text[0])) $fileName = trim(trim($text[0]), '/');
+		if (WT_USER_GEDCOM_ADMIN && !empty($text[0])) $fileName = trim(trim($text[0]), '/');
 		else $fileName = '';
 		$parts = pathinfo_utf($fileName);
 		if (!empty($parts["basename"])) {
@@ -198,7 +198,7 @@ if ($action=="newentry") {
 					// the file cannot be copied
 					$error .= i18n::translate('There was an error uploading your file.')."<br />".file_upload_error_text($_FILES["mediafile"]["error"])."<br />";
 				} else {
-					@chmod(filename_decode($newFile), PGV_PERM_FILE);
+					@chmod(filename_decode($newFile), WT_PERM_FILE);
 					AddToLog("Media file {$folderName}{$mediaFile} uploaded");
 				}
 			}
@@ -213,7 +213,7 @@ if ($action=="newentry") {
 					// the file cannot be copied
 					$error .= i18n::translate('There was an error uploading your file.')."<br />".file_upload_error_text($_FILES["thumbnail"]["error"])."<br />";
 				} else {
-					@chmod(filename_decode($newThum), PGV_PERM_FILE);
+					@chmod(filename_decode($newThum), WT_PERM_FILE);
 					AddToLog("Media file {$thumbFolderName}{$mediaFile} uploaded");
 				}
 			}
@@ -224,7 +224,7 @@ if ($action=="newentry") {
 				// the file cannot be copied
 				$error .= i18n::translate('There was an error uploading your file.')."<br />".i18n::translate('The file %s could not be copied from %s', $realThumbFolderName.$mediaFile, $realThumbFolderName.$mediaFile)."<br />";
 			} else {
-				@chmod(filename_decode($whichFile2), PGV_PERM_FILE);
+				@chmod(filename_decode($whichFile2), WT_PERM_FILE);
 				AddToLog("Media file {$folderName}{$mediaFile} copied from {$thumbFolderName}{$mediaFile}");
 			}
 		}
@@ -278,7 +278,7 @@ if ($action=="newentry") {
 			//-- check if the file is used in more than one gedcom
 			//-- do not allow it to be moved or renamed if it is
 			$myFile = str_replace($MEDIA_DIRECTORY, "", $oldFolder.$oldFilename);
-			$multi_gedcom=is_media_used_in_other_gedcom($myFile, PGV_GED_ID);
+			$multi_gedcom=is_media_used_in_other_gedcom($myFile, WT_GED_ID);
 
 			// Handle Admin request to rename or move media file
 			if ($filename!=$oldFilename) {
@@ -424,12 +424,12 @@ if ($action=="newentry") {
 		$media_id = get_new_xref("OBJE");
 		$newged = "0 @".$media_id."@ OBJE\n";
 		//-- set the FILE text to the correct file location in the standard media directory
-		if (PGV_USER_GEDCOM_ADMIN) $text[0] = $folderName.$mediaFile;
+		if (WT_USER_GEDCOM_ADMIN) $text[0] = $folderName.$mediaFile;
 		else $newged .= "1 FILE ".$folderName.$mediaFile."\n";
 
 		$newged = handle_updates($newged);
 
-		require_once PGV_ROOT.'includes/classes/class_media.php';
+		require_once WT_ROOT.'includes/classes/class_media.php';
 		$media_obje = new Media($newged);
 		$mediaid = Media::in_obje_list($media_obje);
 		if (!$mediaid) $mediaid = append_gedrec($newged, $linktoid);
@@ -441,9 +441,9 @@ if ($action=="newentry") {
 				AddToChangeLog("Media ID ".$media_id." successfully added to $linktoid.");
 			} else {
 				echo "<a href=\"javascript://OBJE $mediaid\" onclick=\"openerpasteid('$mediaid'); return false;\">", i18n::translate('Paste the following ID into your editing fields to reference the newly created record '), " <b>$mediaid</b></a><br /><br />\n";
-				echo PGV_JS_START;
+				echo WT_JS_START;
 				echo "openerpasteid('", $mediaid, "');";
-				echo PGV_JS_END;
+				echo WT_JS_END;
 			}
 		}
 		print i18n::translate('Update successful');
@@ -457,7 +457,7 @@ if ($action == "update") {
 	//-- check if the file is used in more than one gedcom
 	//-- do not allow it to be moved or renamed if it is
 	$myFile = str_replace($MEDIA_DIRECTORY, "", $oldFolder.$oldFilename);
-	$multi_gedcom=is_media_used_in_other_gedcom($myFile, PGV_GED_ID);
+	$multi_gedcom=is_media_used_in_other_gedcom($myFile, WT_GED_ID);
 
 	$isExternal = isFileExternal($oldFilename) || isFileExternal($filename);
 	$finalResult = true;
@@ -601,10 +601,10 @@ if ($action == "update") {
 		$text = array_merge(array($folder.$filename), $text);
 
 		if (!empty($pid)) {
-			if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) {
-				$gedrec = find_gedcom_record($pid, PGV_GED_ID);
+			if (!isset($pgv_changes[$pid."_".WT_GEDCOM])) {
+				$gedrec = find_gedcom_record($pid, WT_GED_ID);
 			} else {
-				$gedrec = find_updated_record($pid, PGV_GED_ID);
+				$gedrec = find_updated_record($pid, WT_GED_ID);
 			}
 		}
 		$newrec = "0 @$pid@ OBJE\n";

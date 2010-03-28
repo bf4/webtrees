@@ -30,21 +30,21 @@
  * $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require PGV_ROOT.'/modules/googlemap/googlemap.php'; // gives access to googlemap functions
+require WT_ROOT.'/modules/googlemap/googlemap.php'; // gives access to googlemap functions
 
 $action   =safe_POST     ('action'                                              );
-$gedcom_id=safe_POST     ('gedcom_id', array_keys(get_all_gedcoms()), PGV_GED_ID);
+$gedcom_id=safe_POST     ('gedcom_id', array_keys(get_all_gedcoms()), WT_GED_ID);
 $openinnew=safe_POST_bool('openinnew'                                           );
-$state    =safe_POST     ('state',     PGV_REGEX_UNSAFE,              'XYZ'     );
-$country  =safe_POST     ('country',   PGV_REGEX_UNSAFE,              'XYZ'     );
+$state    =safe_POST     ('state',     WT_REGEX_UNSAFE,              'XYZ'     );
+$country  =safe_POST     ('country',   WT_REGEX_UNSAFE,              'XYZ'     );
 
 // Must be an admin user to use this module
-if (!PGV_USER_GEDCOM_ADMIN) {
+if (!WT_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=placelist.php");
 	exit;
 }
@@ -80,7 +80,7 @@ echo "<td class='optionbox'><select name='country'>";
 echo "<option value='XYZ' selected='selected'>", i18n::translate('Select Top Level...'), "</option>";
 echo "<option value='XYZ'>", i18n::translate('ALL'), "</option>";
 $rows=
-	PGV_DB::prepare("SELECT pl_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_level=0 ORDER BY pl_place")
+	WT_DB::prepare("SELECT pl_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_level=0 ORDER BY pl_place")
 	->fetchAssoc();
 foreach ($rows as $id=>$place) {
 	echo "<option value='{$place}'";
@@ -99,7 +99,7 @@ if ($country!='XYZ') {
 	echo "<option value='XYZ' selected='selected'>", i18n::translate('Select Next Level...'), "</option>";
 	echo "<option value='XYZ'>", i18n::translate('ALL'), "</option>";
 	$places=
-		PGV_DB::prepare("SELECT pl_place FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=? ORDER BY pl_place")
+		WT_DB::prepare("SELECT pl_place FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=? ORDER BY pl_place")
 		->execute(array($par_id))
 		->fetchOneColumn();
 	foreach ($places as $place) {
@@ -151,7 +151,7 @@ case 'go':
 	echo "<strong>", i18n::translate('Place list for GEDCOM file'), ": </strong>", htmlspecialchars(get_gedcom_setting($gedcom_id, 'title')), "<br /><br />";
 	//Select all '2 PLAC ' tags in the file and create array
 	$place_list=array();
-	$ged_data=PGV_DB::prepare("SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_gedcom LIKE ? AND i_file=?")
+	$ged_data=WT_DB::prepare("SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_gedcom LIKE ? AND i_file=?")
 		->execute(array("%\n2 PLAC %", $gedcom_id))
 		->fetchOneColumn();
 	foreach ($ged_data as $ged_datum) {
@@ -160,7 +160,7 @@ case 'go':
 			$place_list[$match]=true;
 		}
 	}
-	$ged_data=PGV_DB::prepare("SELECT f_gedcom FROM {$TBLPREFIX}families WHERE f_gedcom LIKE ? AND f_file=?")
+	$ged_data=WT_DB::prepare("SELECT f_gedcom FROM {$TBLPREFIX}families WHERE f_gedcom LIKE ? AND f_file=?")
 		->execute(array("%\n2 PLAC %", $gedcom_id))
 		->fetchOneColumn();
 	foreach ($ged_data as $ged_datum) {
@@ -272,7 +272,7 @@ case 'go':
 			$placelist=create_possible_place_names($levels[$z], $z+1); // add the necessary prefix/postfix values to the place name
 			foreach ($placelist as $key=>$placename) {
 				$row=
-					PGV_DB::prepare("SELECT pl_id, pl_place, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place LIKE ? ORDER BY pl_place")
+					WT_DB::prepare("SELECT pl_id, pl_place, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place LIKE ? ORDER BY pl_place")
 					->execute(array($z, $id, $placename))
 					->fetchOneRow(PDO::FETCH_ASSOC);
 				if (!empty($row['pl_id'])) {

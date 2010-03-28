@@ -27,10 +27,10 @@
 * @version $Id$
 */
 
-define('PGV_SCRIPT_NAME', 'note.php');
+define('WT_SCRIPT_NAME', 'note.php');
 require './config.php';
-require PGV_ROOT.'includes/controllers/note_ctrl.php';
-require PGV_ROOT.'includes/functions/functions_print_lists.php';
+require WT_ROOT.'includes/controllers/note_ctrl.php';
+require WT_ROOT.'includes/functions/functions_print_lists.php';
 
 // We have finished writing to $_SESSION, so release the lock
 session_write_close();
@@ -44,9 +44,9 @@ $linkToID=$controller->nid;
 print_header($controller->getPageTitle());
 
 // LightBox
-if (PGV_USE_LIGHTBOX) {
-	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
+if (WT_USE_LIGHTBOX) {
+	require WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	require WT_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 
 if (!$controller->note){
@@ -58,7 +58,7 @@ else if ($controller->note->isMarkedDeleted()) {
 	echo '<span class="error">', i18n::translate('This record has been marked for deletion upon admin approval.'), '</span>';
 }
 
-echo PGV_JS_START;
+echo WT_JS_START;
 echo 'function show_gedcom_record() {';
 echo ' var recwin=window.open("gedrecord.php?pid=', $controller->nid, '", "_blank", "top=0, left=0, width=600, height=400, scrollbars=1, scrollable=1, resizable=1");';
 echo '}';
@@ -69,7 +69,7 @@ echo 'function edit_note() {';
 echo ' var win04 = window.open("edit_interface.php?action=editnote&pid=', $linkToID, '", "win04", "top=70, left=70, width=620, height=500, resizable=1, scrollbars=1");';
 echo ' if (window.focus) {win04.focus();}';
 echo '}';
-echo PGV_JS_END;
+echo WT_JS_END;
 
 echo '<table class="list_table width80"><tr><td>';
 if ($controller->accept_success) {
@@ -83,7 +83,7 @@ echo '</span><br />';
 echo '<table class="facts_table">';
 echo '<tr class="', $TEXT_DIRECTION, '"><td><table class="width100">';
 // Shared Note details ---------------------
-$noterec = find_gedcom_record($controller->nid, PGV_GED_ID);
+$noterec = find_gedcom_record($controller->nid, WT_GED_ID);
 $nt = preg_match("/0 @$controller->nid@ NOTE(.*)/", $noterec, $n1match);
 if ($nt==1) {
 	$note = print_note_record("<br />".$n1match[1], 1, $noterec, false, true);
@@ -92,11 +92,11 @@ if ($nt==1) {
 }
 echo '<tr><td align="left" class="descriptionbox ', $TEXT_DIRECTION, '">';
 	echo '<center>';
-	if (!empty($PGV_IMAGES["notes"]["small"]) && $SHOW_FACT_ICONS)
-		echo '<img src="', $PGV_IMAGE_DIR, "/", $PGV_IMAGES["notes"]["small"], '" alt="', i18n::translate('Shared Note'), '" title="', i18n::translate('Shared Note'), '" align="middle" /> ';
+	if (!empty($WT_IMAGES["notes"]["small"]) && $SHOW_FACT_ICONS)
+		echo '<img src="', $WT_IMAGE_DIR, "/", $WT_IMAGES["notes"]["small"], '" alt="', i18n::translate('Shared Note'), '" title="', i18n::translate('Shared Note'), '" align="middle" /> ';
 	echo i18n::translate('Shared Note'), "</center>";
 	echo '<br /><br />';
-	if (PGV_USER_CAN_EDIT) {
+	if (WT_USER_CAN_EDIT) {
 		echo "<a href=\"javascript: edit_note()\"> ";
 		echo i18n::translate('Edit');
 		echo "</a>";

@@ -27,15 +27,15 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_ANCESTRY_CTRL_PHP', '');
+define('WT_ANCESTRY_CTRL_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_charts.php';
-require_once PGV_ROOT.'includes/controllers/basecontrol.php';
+require_once WT_ROOT.'includes/functions/functions_charts.php';
+require_once WT_ROOT.'includes/controllers/basecontrol.php';
 
 // -- array of GEDCOM elements that will be found but should not be displayed
 $nonfacts[] = "FAMS";
@@ -149,7 +149,7 @@ class AncestryControllerRoot extends BaseController {
 	 */
 	function print_child_ascendancy($pid, $sosa, $depth) {
 		global $TEXT_DIRECTION, $OLD_PGENS;
-		global $PGV_IMAGE_DIR, $PGV_IMAGES, $Dindent;
+		global $WT_IMAGE_DIR, $WT_IMAGES, $Dindent;
 		global $SHOW_EMPTY_BOXES, $pidarr, $box_width;
 
 		$person = Person::getInstance($pid);
@@ -157,10 +157,10 @@ class AncestryControllerRoot extends BaseController {
 		print "\r\n<li>";
 		print "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td><a name=\"sosa".$sosa."\"></a>";
 		$new=($pid=="" or !isset($pidarr["$pid"]));
-		if ($sosa==1) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"3\" width=\"$Dindent\" border=\"0\" alt=\"\" /></td><td>\n";
+		if ($sosa==1) print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" height=\"3\" width=\"$Dindent\" border=\"0\" alt=\"\" /></td><td>\n";
 		else {
-			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"3\" width=\"2\" border=\"0\" alt=\"\" />";
-			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" height=\"3\" width=\"".($Dindent-2)."\" border=\"0\" alt=\"\" /></td><td>\n";
+			print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" height=\"3\" width=\"2\" border=\"0\" alt=\"\" />";
+			print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["hline"]["other"]."\" height=\"3\" width=\"".($Dindent-2)."\" border=\"0\" alt=\"\" /></td><td>\n";
 		}
 		print_pedigree_person($pid, 1, $this->view!="preview");
 		print "</td>";
@@ -201,7 +201,7 @@ class AncestryControllerRoot extends BaseController {
 		if (($parents || $SHOW_EMPTY_BOXES) && $new && $depth>0) {
 			// print marriage info
 			print "<span class=\"details1\" style=\"white-space: nowrap;\" >";
-			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"$Dindent\" border=\"0\" align=\"middle\" alt=\"\" /><a href=\"javascript: ".i18n::translate('View Family')."\" onclick=\"expand_layer('sosa_".$sosa."'); return false;\" class=\"top\"><img id=\"sosa_".$sosa."_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".i18n::translate('View Family')."\" /></a> ";
+			print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"$Dindent\" border=\"0\" align=\"middle\" alt=\"\" /><a href=\"javascript: ".i18n::translate('View Family')."\" onclick=\"expand_layer('sosa_".$sosa."'); return false;\" class=\"top\"><img id=\"sosa_".$sosa."_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".i18n::translate('View Family')."\" /></a> ";
 			print "&nbsp;<span class=\"person_box\">&nbsp;".($sosa*2)."&nbsp;</span>&nbsp;".i18n::translate('and');
 			print "&nbsp;<span class=\"person_boxF\">&nbsp;".($sosa*2+1)." </span>&nbsp;";
 			if (!empty($family)) {
@@ -222,9 +222,9 @@ class AncestryControllerRoot extends BaseController {
 
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists(PGV_ROOT.'includes/controllers/ancestry_ctrl_user.php'))
+if (file_exists(WT_ROOT.'includes/controllers/ancestry_ctrl_user.php'))
 {
-	require_once PGV_ROOT.'includes/controllers/ancestry_ctrl_user.php';
+	require_once WT_ROOT.'includes/controllers/ancestry_ctrl_user.php';
 }
 else
 {

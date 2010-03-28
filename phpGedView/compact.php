@@ -27,9 +27,9 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'compact.php');
+define('WT_SCRIPT_NAME', 'compact.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_charts.php';
+require_once WT_ROOT.'includes/functions/functions_charts.php';
 
 // Extract form variables
 $rootid    =safe_GET_xref('rootid');
@@ -46,12 +46,12 @@ $addname=$person->getAddName();
 // -- print html header information
 print_header(PrintReady($name) . " " . i18n::translate('Compact Chart'));
 
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 
 // LBox =====================================================================================
-if (PGV_USE_LIGHTBOX) {
-	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
+if (WT_USE_LIGHTBOX) {
+	require WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	require WT_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // ==========================================================================================
 
@@ -301,8 +301,8 @@ print "<br />";
 print_footer();
 
 function print_td_person($n) {
-	global $treeid, $PGV_IMAGE_DIR, $PGV_IMAGES;
-	global $TEXT_DIRECTION, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $USE_SILHOUETTE, $PGV_IMAGES;
+	global $treeid, $WT_IMAGE_DIR, $WT_IMAGES;
+	global $TEXT_DIRECTION, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $USE_SILHOUETTE, $WT_IMAGES;
 	global $showids, $showthumbs;
 
 	$text = "";
@@ -321,7 +321,7 @@ function print_td_person($n) {
 
 		if ($showthumbs && $MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES) {
 			if (showFact("OBJE", $pid)) {
-				$object = find_highlighted_object($pid, PGV_GED_ID, $indi->gedrec);
+				$object = find_highlighted_object($pid, WT_GED_ID, $indi->gedrec);
 				if (!empty($object)) {
 					$whichFile = thumb_or_main($object);	// Do we send the main image or a thumbnail?
 					$size = findImageSize($whichFile);
@@ -332,8 +332,8 @@ function print_td_person($n) {
 					$imgsize = findImageSize($object["file"]);
 					$imgwidth = $imgsize[0]+50;
 					$imgheight = $imgsize[1]+150;
-					if (PGV_USE_LIGHTBOX) {
-						$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" rev=\"" . $object['mid'] . "::" . PGV_GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">" . "\n";
+					if (WT_USE_LIGHTBOX) {
+						$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" rev=\"" . $object['mid'] . "::" . WT_GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">" . "\n";
 					} else {
 						$text .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
 					}
@@ -342,35 +342,35 @@ function print_td_person($n) {
 					$text .= "<img id=\"box-$pid\" src=\"".$whichFile."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".PrintReady(htmlspecialchars(strip_tags($name), ENT_QUOTES, 'UTF-8'))." - ".strip_tags(html_entity_decode($birth_date->Display(false)." - ".$death_date->Display(false),ENT_QUOTES,'UTF-8'))."\"";
 					if ($imgsize) $text .= " /></a>\n";
 					else $text .= " />\n";
-				} else if ($USE_SILHOUETTE && isset($PGV_IMAGES["default_image_U"]["other"])) {
+				} else if ($USE_SILHOUETTE && isset($WT_IMAGES["default_image_U"]["other"])) {
 					$class = "pedigree_image_portrait";
 					if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
 					$sex = $indi->getSex();
 					$text = "<img src=\"";
 					if ($sex == 'F') {
-						$text .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_F"]["other"];
+						$text .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_F"]["other"];
 					}
 					else if ($sex == 'M') {
-						$text .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_M"]["other"];
+						$text .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_M"]["other"];
 					}
 					else {
-						$text .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_U"]["other"];
+						$text .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_U"]["other"];
 					} 
 					$text .="\" class=\"".$class."\" border=\"none\" alt=\"\" />";
 				}
-			} else if ($USE_SILHOUETTE && isset($PGV_IMAGES["default_image_U"]["other"])) {
+			} else if ($USE_SILHOUETTE && isset($WT_IMAGES["default_image_U"]["other"])) {
 				$class = "pedigree_image_portrait";
 				if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
 				$sex = $indi->getSex();
 				$text = "<img src=\"";
 				if ($sex == 'F') {
-					$text .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_F"]["other"];
+					$text .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_F"]["other"];
 				}
 				else if ($sex == 'M') {
-					$text .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_M"]["other"];
+					$text .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_M"]["other"];
 				}
 				else {
-					$text .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_U"]["other"];
+					$text .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_U"]["other"];
 				} 
 				$text .="\" class=\"".$class."\" border=\"none\" alt=\"\" />";
 			}
@@ -429,7 +429,7 @@ function print_td_person($n) {
 function print_arrow_person($n, $arrow_dir) {
 	global $treeid;
 	global $view, $showids, $showthumbs;
-	global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES;
 
 	$pid = $treeid[$n];
 
@@ -448,8 +448,8 @@ function print_arrow_person($n, $arrow_dir) {
 	} else {
 		$title = $pid." :".i18n::translate('Compact Chart');
 	}
-	$arrow_img = "<img id='arrow$n' src='".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$arrow_dir."arrow"]["other"]."' border='0' align='middle' alt='$title' title='$title' />";
-	$hideArrow = "<img id='arrow$n' src='".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$arrow_dir."arrow"]["other"]."' border='0' align='middle' alt='$title' title='$title' style='visibility:hidden;' />";
+	$arrow_img = "<img id='arrow$n' src='".$WT_IMAGE_DIR."/".$WT_IMAGES[$arrow_dir."arrow"]["other"]."' border='0' align='middle' alt='$title' title='$title' />";
+	$hideArrow = "<img id='arrow$n' src='".$WT_IMAGE_DIR."/".$WT_IMAGES[$arrow_dir."arrow"]["other"]."' border='0' align='middle' alt='$title' title='$title' style='visibility:hidden;' />";
 
 	$text = "";
 	if ($pid) {

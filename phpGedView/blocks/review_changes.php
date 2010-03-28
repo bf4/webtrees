@@ -32,17 +32,17 @@
  * @todo add a time configuration option
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_REVIEW_CHANGES_PHP', '');
+define('WT_REVIEW_CHANGES_PHP', '');
 
-$PGV_BLOCKS["review_changes_block"]["name"]			= i18n::translate('Pending Changes');
-$PGV_BLOCKS["review_changes_block"]["descr"]		= i18n::translate('The Pending Changes block will give users with Edit rights a list of the records that have been changed online and that still need to be reviewed and accepted.  These changes are pending acceptance or rejection.<br /><br />If this block is enabled, users with Accept rights will receive an email once a day notifying them that changes need to be reviewed.');
-$PGV_BLOCKS["review_changes_block"]["canconfig"]	= false;
-$PGV_BLOCKS["review_changes_block"]["config"]		= array(
+$WT_BLOCKS["review_changes_block"]["name"]			= i18n::translate('Pending Changes');
+$WT_BLOCKS["review_changes_block"]["descr"]		= i18n::translate('The Pending Changes block will give users with Edit rights a list of the records that have been changed online and that still need to be reviewed and accepted.  These changes are pending acceptance or rejection.<br /><br />If this block is enabled, users with Accept rights will receive an email once a day notifying them that changes need to be reviewed.');
+$WT_BLOCKS["review_changes_block"]["canconfig"]	= false;
+$WT_BLOCKS["review_changes_block"]["config"]		= array(
 	"cache"=>0,
 	"days"=>1,
 	"sendmail"=>"yes"
@@ -54,11 +54,11 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
  * Prints a block allowing the user review all changes pending approval
  */
 function review_changes_block($block = true, $config="", $side, $index) {
-	global $ctype, $QUERY_STRING, $PGV_IMAGE_DIR, $PGV_IMAGES;
-	global $pgv_changes, $TEXT_DIRECTION, $SHOW_SOURCES, $PGV_BLOCKS;
-	global $PHPGEDVIEW_EMAIL;
+	global $ctype, $QUERY_STRING, $WT_IMAGE_DIR, $WT_IMAGES;
+	global $pgv_changes, $TEXT_DIRECTION, $SHOW_SOURCES, $WT_BLOCKS;
+	global $WEBTREES_EMAIL;
 
-	if (empty($config)) $config = $PGV_BLOCKS["review_changes_block"]["config"];
+	if (empty($config)) $config = $WT_BLOCKS["review_changes_block"]["config"];
 
 	if ($pgv_changes) {
 		//-- if the time difference from the last email is greater than 24 hours then send out another email
@@ -82,33 +82,33 @@ function review_changes_block($block = true, $config="", $side, $index) {
 					//-- send message
 					$message = array();
 					$message["to"]=$user_name;
-					$message["from"] = $PHPGEDVIEW_EMAIL;
+					$message["from"] = $WEBTREES_EMAIL;
 					$message["subject"] = i18n::translate('webtrees - Review changes');
 					$message["body"] = i18n::translate('Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that webtrees site and login to review the changes.');
 					$message["method"] = get_user_setting($user_id, 'contactmethod');
-					$message["url"] = PGV_SERVER_NAME.PGV_SCRIPT_PATH;
+					$message["url"] = WT_SERVER_NAME.WT_SCRIPT_PATH;
 					$message["no_from"] = true;
 					addMessage($message);
 				}
 			}
 		}
-		if (PGV_USER_CAN_EDIT) {
+		if (WT_USER_CAN_EDIT) {
 			$id="review_changes_block";
 			$title='';
-			if ($PGV_BLOCKS["review_changes_block"]["canconfig"]) {
-				if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+			if ($WT_BLOCKS["review_changes_block"]["canconfig"]) {
+				if ($ctype=="gedcom" && WT_USER_GEDCOM_ADMIN || $ctype=="user" && WT_USER_ID) {
 					if ($ctype=="gedcom") {
-						$name = PGV_GEDCOM;
+						$name = WT_GEDCOM;
 					} else {
-						$name = PGV_USER_NAME;
+						$name = WT_USER_NAME;
 					}
 					$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-					$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
+					$title .= "<img class=\"adminicon\" src=\"$WT_IMAGE_DIR/".$WT_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 				}
 			}
 			$title.=i18n::translate('Review GEDCOM Changes').help_link('review_changes');
 			$content = "";
-			if (PGV_USER_CAN_ACCEPT) {
+			if (WT_USER_CAN_ACCEPT) {
 				$content .= "<a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".i18n::translate('Accept / Reject Changes')."</a><br />";
 			}
 			if ($config["sendmail"]=="yes") {
@@ -117,9 +117,9 @@ function review_changes_block($block = true, $config="", $side, $index) {
 			}
 			foreach ($pgv_changes as $cid=>$changes) {
 				$change = $changes[count($changes)-1];
-				if ($change["gedcom"]==PGV_GEDCOM) {
+				if ($change["gedcom"]==WT_GEDCOM) {
 					$record=GedcomRecord::getInstance($change['gid']);
-					if ($record->getType()!='SOUR' || $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
+					if ($record->getType()!='SOUR' || $SHOW_SOURCES>=WT_USER_ACCESS_LEVEL) {
 						$content.='<b>'.PrintReady($record->getFullName()).'</b> '.getLRM().'('.$record->getXref().')'.getLRM();
 						switch ($record->getType()) {
 						case 'INDI':
@@ -146,8 +146,8 @@ function review_changes_block($block = true, $config="", $side, $index) {
 }
 
 function review_changes_block_config($config) {
-	global $PGV_BLOCKS;
-	if (empty($config)) $config = $PGV_BLOCKS["review_changes_block"]["config"];
+	global $WT_BLOCKS;
+	if (empty($config)) $config = $WT_BLOCKS["review_changes_block"]["config"];
 	print i18n::translate('Send out reminder emails?');
 	print "&nbsp;<select name='sendmail'>";
 	print "<option value='yes'";

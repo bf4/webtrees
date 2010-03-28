@@ -32,16 +32,16 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_MEDIA_CTRL_PHP', '');
+define('WT_MEDIA_CTRL_PHP', '');
 
-require_once PGV_ROOT.'includes/controllers/individual_ctrl.php';
-require_once PGV_ROOT.'includes/classes/class_media.php';
-require_once PGV_ROOT.'includes/functions/functions_import.php';
+require_once WT_ROOT.'includes/controllers/individual_ctrl.php';
+require_once WT_ROOT.'includes/classes/class_media.php';
+require_once WT_ROOT.'includes/functions/functions_import.php';
 
 class MediaControllerRoot extends IndividualController{
 
@@ -98,7 +98,7 @@ class MediaControllerRoot extends IndividualController{
 
 		if (is_null($this->mediaobject)) return false;
 
-		$this->mediaobject->ged_id=PGV_GED_ID; // This record is from a file
+		$this->mediaobject->ged_id=WT_GED_ID; // This record is from a file
 
 		//-- perform the desired action
 		switch($this->action) {
@@ -114,7 +114,7 @@ class MediaControllerRoot extends IndividualController{
 		}
 
 		if ($this->mediaobject->canDisplayDetails()) {
-			$this->canedit = PGV_USER_CAN_EDIT;
+			$this->canedit = WT_USER_CAN_EDIT;
 		}
 	}
 
@@ -123,7 +123,7 @@ class MediaControllerRoot extends IndividualController{
 	*/
 	function addFavorite() {
 		global $GEDCOM;
-		if (!PGV_USER_ID) {
+		if (!WT_USER_ID) {
 			return;
 		}
 		if (!empty($_REQUEST["gid"])) {
@@ -131,7 +131,7 @@ class MediaControllerRoot extends IndividualController{
 			$mediarec = find_media_record($gid, get_id_from_gedcom($GEDCOM));
 			if ($mediarec) {
 				$favorite = array();
-				$favorite["username"] = PGV_USER_NAME;
+				$favorite["username"] = WT_USER_NAME;
 				$favorite["gid"] = $gid;
 				$favorite["type"] = "OBJE";
 				$favorite["file"] = $GEDCOM;
@@ -149,7 +149,7 @@ class MediaControllerRoot extends IndividualController{
 	*/
 	function acceptChanges() {
 		global $GEDCOM;
-		if (!PGV_USER_CAN_ACCEPT) return;
+		if (!WT_USER_CAN_ACCEPT) return;
 		if (accept_changes($this->pid."_".$GEDCOM)) {
 			$this->show_changes=false;
 			$this->accept_success=true;
@@ -187,7 +187,7 @@ class MediaControllerRoot extends IndividualController{
 	* @return Menu
 	*/
 	function &getEditMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $TOTAL_NAMES;
+		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $TOTAL_NAMES;
 		global $NAME_LINENUM, $SEX_LINENUM, $pgv_changes;
 		global $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
@@ -201,10 +201,10 @@ class MediaControllerRoot extends IndividualController{
 		$menu = new Menu(i18n::translate('Edit'));
 		$click_link = "window.open('addmedia.php?action=editmedia&pid={$this->pid}&linktoid={$linktoid}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
 		$menu->addOnclick($click_link);
-		if (!empty($PGV_IMAGES["edit_indi"]["small"]))
-			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]);
+		if (!empty($WT_IMAGES["edit_indi"]["small"]))
+			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_indi"]["small"]);
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
-		if (PGV_USER_CAN_EDIT) {
+		if (WT_USER_CAN_EDIT) {
 			//- plain edit option
 			$submenu = new Menu(i18n::translate('Edit'));
 			$click_link = "window.open('addmedia.php?action=editmedia&pid={$this->pid}&linktoid={$linktoid}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
@@ -212,14 +212,14 @@ class MediaControllerRoot extends IndividualController{
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 
-			if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) {
+			if ($SHOW_GEDCOM_RECORD || WT_USER_IS_ADMIN) {
 				$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 				$submenu->addOnclick("return edit_raw('".$this->pid."');");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
 			//- end plain edit option
-			if (PGV_USER_GEDCOM_ADMIN) {
+			if (WT_USER_GEDCOM_ADMIN) {
 				//- remove object option
 				$submenu = new Menu(i18n::translate('Remove object'));
 				$submenu->addLink(encode_url("media.php?action=removeobject&xref=".$this->pid));
@@ -229,14 +229,14 @@ class MediaControllerRoot extends IndividualController{
 			}
 
 			// main link displayed on page
-			if (PGV_USER_GEDCOM_ADMIN && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
+			if (WT_USER_GEDCOM_ADMIN && file_exists(WT_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
 				$submenu = new Menu(i18n::translate('Manage links'));
 			} else {	
 				$submenu = new Menu(i18n::translate('Set link'));
 			}
 			
 			// GEDFact assistant Add Media Links =======================
-			if (PGV_USER_GEDCOM_ADMIN && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
+			if (WT_USER_GEDCOM_ADMIN && file_exists(WT_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
 				$submenu->addOnclick("return ilinkitem('".$this->pid."','manage');");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 				// Do not print ssubmunu
@@ -275,7 +275,7 @@ class MediaControllerRoot extends IndividualController{
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 
-			if (PGV_USER_CAN_ACCEPT) {
+			if (WT_USER_CAN_ACCEPT) {
 				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url("mediaviewer.php?mid={$this->pid}&action=undo"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
@@ -293,7 +293,7 @@ class MediaControllerRoot extends IndividualController{
 	*/
 	function canShowOtherMenu() {
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
-		if ($this->mediaobject->canDisplayDetails() && ($SHOW_GEDCOM_RECORD || $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL))
+		if ($this->mediaobject->canDisplayDetails() && ($SHOW_GEDCOM_RECORD || $ENABLE_CLIPPINGS_CART>=WT_USER_ACCESS_LEVEL))
 			return true;
 		return false;
 	}
@@ -303,46 +303,46 @@ class MediaControllerRoot extends IndividualController{
 	* @return Menu
 	*/
 	function &getOtherMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $THEME_DIR;
+		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $THEME_DIR;
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 		//-- main other menu item
 		$menu = new Menu(i18n::translate('Other'));
 		if ($SHOW_GEDCOM_RECORD) {
-			if (!empty($PGV_IMAGES["gedcom"]["small"]))
-				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes && PGV_USER_CAN_EDIT)
+			if (!empty($WT_IMAGES["gedcom"]["small"]))
+				$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["gedcom"]["small"]);
+			if ($this->show_changes && WT_USER_CAN_EDIT)
 				$menu->addOnclick("return show_gedcom_record('new');");
 			else
 				$menu->addOnclick("return show_gedcom_record('');");
 		}
 		else {
-			if (!empty($PGV_IMAGES["clippings"]["small"]))
-				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
+			if (!empty($WT_IMAGES["clippings"]["small"]))
+				$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["clippings"]["small"]);
 			$menu->addLink(encode_url("clippings.php?action=add&id={$this->pid}&type=obje"));
 		}
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 		if ($this->canShowGedcomRecord()) {
 			$submenu = new Menu(i18n::translate('View GEDCOM Record'));
-			if (!empty($PGV_IMAGES["gedcom"]["small"]))
-				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes && PGV_USER_CAN_EDIT) $submenu->addOnclick("return show_gedcom_record('new');");
+			if (!empty($WT_IMAGES["gedcom"]["small"]))
+				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["gedcom"]["small"]);
+			if ($this->show_changes && WT_USER_CAN_EDIT) $submenu->addOnclick("return show_gedcom_record('new');");
 			else $submenu->addOnclick("return show_gedcom_record();");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
-		if ($this->mediaobject->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL) {
+		if ($this->mediaobject->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=WT_USER_ACCESS_LEVEL) {
 			$submenu = new Menu(i18n::translate('Add to Clippings Cart'), encode_url("clippings.php?action=add&id={$this->pid}&type=obje"));
-			if (!empty($PGV_IMAGES["clippings"]["small"]))
-				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
+			if (!empty($WT_IMAGES["clippings"]["small"]))
+				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["clippings"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
-		if ($this->mediaobject->canDisplayDetails() && PGV_USER_ID) {
+		if ($this->mediaobject->canDisplayDetails() && WT_USER_ID) {
 			$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url("mediaviewer.php?action=addfav&mid={$this->pid}&gid={$this->pid}"));
-			if (!empty($PGV_IMAGES["gedcom"]["small"]))
-				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
+			if (!empty($WT_IMAGES["gedcom"]["small"]))
+				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["gedcom"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
@@ -369,7 +369,7 @@ class MediaControllerRoot extends IndividualController{
 		$ignore = array("TITL","FILE");
 		if ($this->show_changes) {
 			$ignore = array();
-		} elseif (PGV_USER_GEDCOM_ADMIN) {
+		} elseif (WT_USER_GEDCOM_ADMIN) {
 			$ignore = array("TITL");
 		}
 
@@ -381,7 +381,7 @@ class MediaControllerRoot extends IndividualController{
 		else $facts[] = new Event("1 TYPE ".i18n::translate('Other'));
 
 		if (isset($pgv_changes[$this->pid."_".$GEDCOM]) && ($this->show_changes)) {
-			$newrec = find_updated_record($this->pid, PGV_GED_ID);
+			$newrec = find_updated_record($this->pid, WT_GED_ID);
 			$newmedia = new Media($newrec);
 			$newfacts = $newmedia->getFacts($ignore);
 			if ($includeFileName) $newfacts[] = new Event("1 TYPE ".$MEDIA_TYPES[$mediaType]);
@@ -400,7 +400,7 @@ class MediaControllerRoot extends IndividualController{
 					}
 				}
 				if (!$found) {
-					$facts[$i]->gedcomRecord.="\nPGV_OLD\n";
+					$facts[$i]->gedcomRecord.="\nWT_OLD\n";
 				}
 			}
 			foreach($newfacts as $indexval => $newfact) {
@@ -412,7 +412,7 @@ class MediaControllerRoot extends IndividualController{
 					}
 				}
 				if (!$found) {
-					$newfact->gedcomRecord.="\nPGV_NEW\n";
+					$newfact->gedcomRecord.="\nWT_NEW\n";
 					$facts[]=$newfact;
 				}
 			}
@@ -455,8 +455,8 @@ class MediaControllerRoot extends IndividualController{
 }
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists(PGV_ROOT.'includes/controllers/media_ctrl_user.php')) {
-	require_once PGV_ROOT.'includes/controllers/media_ctrl_user.php';
+if (file_exists(WT_ROOT.'includes/controllers/media_ctrl_user.php')) {
+	require_once WT_ROOT.'includes/controllers/media_ctrl_user.php';
 } else {
 	class MediaController extends MediaControllerRoot {
 	}

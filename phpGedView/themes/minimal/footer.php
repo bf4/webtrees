@@ -27,7 +27,7 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -36,12 +36,12 @@ echo "</div><!-- closing div id=\"content\" -->";
 echo "<div id=\"footer\" class=\"$TEXT_DIRECTION\">";
 echo "\n\t<br /><div align=\"center\" style=\"width:99%;\">";
 echo contact_links();
-echo '<a href="', PGV_PHPGEDVIEW_URL, '" target="_blank" alt="', PGV_PHPGEDVIEW, PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "" , '" title="', PGV_PHPGEDVIEW , PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "", '"><span style="font-size:150%; color:#888888;">', PGV_PHPGEDVIEW, '</span></a>';
+echo '<a href="', WT_WEBTREES_URL, '" target="_blank" alt="', WT_WEBTREES, WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): "" , '" title="', WT_WEBTREES , WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): "", '"><span style="font-size:150%; color:#888888;">', WT_WEBTREES, '</span></a>';
 echo "\n\t<br />";
-echo '<a href="', PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(), '">', i18n::translate('Printer-friendly Version'), '</a>';
+echo '<a href="', WT_SCRIPT_NAME, '?view=preview&amp;', get_query_string(), '">', i18n::translate('Printer-friendly Version'), '</a>';
 echo help_link('preview');
 echo "<br />";
-if ($SHOW_STATS || PGV_DEBUG) {
+if ($SHOW_STATS || WT_DEBUG) {
 	echo execution_stats();
 }
 if (exists_pending_change()) {

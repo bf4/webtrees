@@ -27,8 +27,8 @@
  * $Id$
  * @author windmillway
  */
-if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
-	require_once PGV_ROOT.'modules/googlemap/googlemap.php';
+if (file_exists(WT_ROOT.'modules/googlemap/defaultconfig.php')) {
+	require_once WT_ROOT.'modules/googlemap/googlemap.php';
 
 //	echo "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >\n";
 	echo '<span class="subheaders">', i18n::translate('Map'), "</span>\n";
@@ -36,7 +36,7 @@ if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
 	if (!$GOOGLEMAP_ENABLED) {
 		echo "<table class=\"facts_table\">\n";
 		echo '<tr><td id="no_tab8" colspan="2" class="facts_value">', i18n::translate('GoogleMap module disabled'), "</td></tr>\n";
-		if (PGV_USER_IS_ADMIN) {
+		if (WT_USER_IS_ADMIN) {
 			echo "<tr><td align=\"center\" colspan=\"2\">\n";
 			echo '<a href="module.php?mod=googlemap&amp;pgvaction=editconfig">', i18n::translate('Manage GoogleMap configuration'), '</a>';
 			echo '</td>';
@@ -58,11 +58,11 @@ if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
 			$tNew = str_replace("&", "&amp;", $tNew);
 			if ($SESSION_HIDE_GOOGLEMAP == "true") {
 				echo '&nbsp;&nbsp;&nbsp;<span class="font9"><a href="', $tNew, '&amp;HIDE_GOOGLEMAP=false">';
-				echo '<img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["plus"]["other"], '" border="0" width="11" height="11" alt="', i18n::translate('Activate'), '" title="', i18n::translate('Activate'), '" />';
+				echo '<img src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["plus"]["other"], '" border="0" width="11" height="11" alt="', i18n::translate('Activate'), '" title="', i18n::translate('Activate'), '" />';
 				echo ' ', i18n::translate('Activate'), "</a></span>\n";
 				} else {
 					echo '&nbsp;&nbsp;&nbsp;<span class="font9"><a href="', $tNew, '&amp;HIDE_GOOGLEMAP=true">';
-					echo '<img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["minus"]["other"], '" border="0" width="11" height="11" alt="', i18n::translate('Deactivate'), '" title="', i18n::translate('Deactivate'), '" />';
+					echo '<img src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["minus"]["other"], '" border="0" width="11" height="11" alt="', i18n::translate('Deactivate'), '" title="', i18n::translate('Deactivate'), '" />';
 					echo ' ', i18n::translate('Deactivate'), "</a></span>\n";
 				}
 		}
@@ -77,13 +77,13 @@ if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
 		} else {
 			if (empty($SEARCH_SPIDER)) {
 				if ($SESSION_HIDE_GOOGLEMAP == "false") {
-					require_once PGV_ROOT.'modules/googlemap/googlemap.php';
+					require_once WT_ROOT.'modules/googlemap/googlemap.php';
 					echo "<table width=\"100%\" border=\"0\" class=\"facts_table\">\n";
 					echo "<tr><td valign=\"top\">\n";
 					echo "<div id=\"googlemap_left\">\n";
 					echo '<img src="images/hline.gif" width="', $GOOGLEMAP_XSIZE, '" height="0" alt="" /><br />';
 					echo '<div id="map_pane" style="border: 1px solid gray; color:black; width: 100%; height: ', $GOOGLEMAP_YSIZE, "px\"></div>\n";
-					if (PGV_USER_IS_ADMIN) {
+					if (WT_USER_IS_ADMIN) {
 						echo "<table width=\"100%\"><tr>\n";
 						echo "<td width=\"33%\" align=\"left\">\n";
 						echo '<a href="module.php?mod=googlemap&amp;pgvaction=editconfig">', i18n::translate('Manage GoogleMap configuration'), '</a>';
@@ -128,7 +128,7 @@ if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
 		}
 	}
 	// start
-	echo '<img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["spacer"]["other"], '" id="marker6" width="1" height="1" alt="" />';
+	echo '<img src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["spacer"]["other"], '" id="marker6" width="1" height="1" alt="" />';
 	// end
 //	echo "</div>\n";
 }

@@ -29,27 +29,27 @@
 * @version $Id$
 */
 
-define('PGV_SCRIPT_NAME', 'edit_merge.php');
+define('WT_SCRIPT_NAME', 'edit_merge.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_edit.php';
-require_once PGV_ROOT.'includes/functions/functions_import.php';
+require_once WT_ROOT.'includes/functions/functions_edit.php';
+require_once WT_ROOT.'includes/functions/functions_import.php';
 
 $ged=$GEDCOM;
 $gid1=safe_POST_xref('gid1');
 $gid2=safe_POST_xref('gid2');
-$action=safe_POST('action', PGV_REGEX_ALPHA, 'choose');
-$ged2=safe_POST('ged2', PGV_REGEX_NOSCRIPT, $GEDCOM);
-$keep1=safe_POST('keep1', PGV_REGEX_UNSAFE);
-$keep2=safe_POST('keep2', PGV_REGEX_UNSAFE);
+$action=safe_POST('action', WT_REGEX_ALPHA, 'choose');
+$ged2=safe_POST('ged2', WT_REGEX_NOSCRIPT, $GEDCOM);
+$keep1=safe_POST('keep1', WT_REGEX_UNSAFE);
+$keep2=safe_POST('keep2', WT_REGEX_UNSAFE);
 if (empty($keep1)) $keep1=array();
 if (empty($keep2)) $keep2=array();
 
 print_header(i18n::translate('Merge records'));
 
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 
 //-- make sure they have accept access privileges
-if (!PGV_USER_CAN_ACCEPT) {
+if (!WT_USER_CAN_ACCEPT) {
 	echo "<span class=\"error\">", i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.'), "</span>";
 	print_footer();
 	exit;
@@ -60,8 +60,8 @@ if ($action!="choose") {
 		$action="choose";
 		echo "<span class=\"error\">", i18n::translate('You entered the same IDs.  You cannot merge the same records.'), "</span>\n";
 	} else {
-		if (!isset($pgv_changes[$gid1."_".PGV_GEDCOM])) {
-			$gedrec1 = find_gedcom_record($gid1, PGV_GED_ID);
+		if (!isset($pgv_changes[$gid1."_".WT_GEDCOM])) {
+			$gedrec1 = find_gedcom_record($gid1, WT_GED_ID);
 		} else {
 			$gedrec1 = find_updated_record($gid1, get_id_from_gedcom($GEDCOM));
 		}
@@ -183,13 +183,13 @@ if ($action!="choose") {
 						}
 
 						//-- replace all the records that linked to gid2
-						$ids=fetch_all_links($gid2, PGV_GED_ID);
+						$ids=fetch_all_links($gid2, WT_GED_ID);
 
 						foreach ($ids as $id) {
-							if (isset($pgv_changes[$id."_".PGV_GEDCOM])) {
-								$record=find_updated_record($id, PGV_GED_ID);
+							if (isset($pgv_changes[$id."_".WT_GEDCOM])) {
+								$record=find_updated_record($id, WT_GED_ID);
 							} else {
-								$record=fetch_gedcom_record($id, PGV_GED_ID);
+								$record=fetch_gedcom_record($id, WT_GED_ID);
 								$record=$record['gedrec'];
 								echo i18n::translate('Updating linked record'), " {$id}<br />\n";
 								$newrec=str_replace("@$gid2@", "@$gid1@", $record);
@@ -203,22 +203,22 @@ if ($action!="choose") {
 						}
 
 						// Merge hit counters
-						$hits=PGV_DB::prepare(
+						$hits=WT_DB::prepare(
 							"SELECT page_name, SUM(page_count)".
 							" FROM {$TBLPREFIX}hit_counter".
 							" WHERE gedcom_id=? AND page_parameter IN (?, ?)".
 							" GROUP BY page_name"
-						)->execute(array(PGV_GED_ID, $gid1, $gid2))->fetchAssoc();
+						)->execute(array(WT_GED_ID, $gid1, $gid2))->fetchAssoc();
 						foreach ($hits as $page_name=>$page_count) {
-							PGV_DB::prepare(
+							WT_DB::prepare(
 								"UPDATE {$TBLPREFIX}hit_counter SET page_count=?".
 								" WHERE gedcom_id=? AND page_name=? AND page_parameter=?"
-							)->execute(array($page_count, PGV_GED_ID, $page_name, $gid1));
+							)->execute(array($page_count, WT_GED_ID, $page_name, $gid1));
 						}
-						PGV_DB::prepare(
+						WT_DB::prepare(
 							"DELETE FROM {$TBLPREFIX}hit_counter".
 						 	" WHERE gedcom_id=? AND page_parameter=?"
-						)->execute(array(PGV_GED_ID, $gid2));
+						)->execute(array(WT_GED_ID, $gid2));
 					}
 					$newgedrec = "0 @$gid1@ $type1\n";
 					for($i=0; ($i<count($facts1) || $i<count($facts2)); $i++) {
@@ -295,7 +295,7 @@ if ($action=="choose") {
 	asort($all_gedcoms);
 	foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		echo "<option value=\"", $ged_name, "\"";
-		if (empty($ged) && $ged_id==PGV_GED_ID || !empty($ged) && $ged==$ged_name) {
+		if (empty($ged) && $ged_id==WT_GED_ID || !empty($ged) && $ged==$ged_name) {
 			echo " selected=\"selected\"";
 		}
 		echo ">", PrintReady(strip_tags(get_gedcom_setting($ged_id, 'title'))), "</option>\n";
@@ -312,7 +312,7 @@ if ($action=="choose") {
 	echo "<select name=\"ged2\" tabindex=\"5\">\n";
 	foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		echo "<option value=\"", $ged_name, "\"";
-		if (empty($ged2) && $ged_id==PGV_GED_ID || !empty($ged2) && $ged2==$ged_name) {
+		if (empty($ged2) && $ged_id==WT_GED_ID || !empty($ged2) && $ged2==$ged_name) {
 			echo " selected=\"selected\"";
 		}
 		echo ">", PrintReady(strip_tags(get_gedcom_setting($ged_id, 'title'))), "</option>\n";

@@ -36,16 +36,16 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 header('HTTP/1.0 403 Forbidden');
 exit;
 }
 
-define('PGV_GM_DB_SCHEMA_1_2', '');
+define('WT_GM_DB_SCHEMA_1_2', '');
 
-if (file_exists(PGV_ROOT.'modules/googlemap/config.php')) {
+if (file_exists(WT_ROOT.'modules/googlemap/config.php')) {
 	// Use @, in case the config.php file is incomplete/corrupt
-	@require PGV_ROOT.'modules/googlemap/config.php';
+	@require WT_ROOT.'modules/googlemap/config.php';
 	// Rename settings from GOOGLEMAP_ to GM_ for consistency.
 	@set_site_setting('GM_ENABLED',           (int)$GOOGLEMAP_ENABLED);
 	@set_site_setting('GM_API_KEY',           $GOOGLEMAP_API_KEY);
@@ -79,7 +79,7 @@ if (file_exists(PGV_ROOT.'modules/googlemap/config.php')) {
 		@set_site_setting('GM_POSTFIX_'.$i,       $GM_POSTFIX[$i]);
 		@set_site_setting('GM_PRE_POST_MODE_'.$i, $GM_PRE_POST_MODE[$i]);
 	}
-	@unlink(PGV_ROOT.'modules/googlemap/config.php');
+	@unlink(WT_ROOT.'modules/googlemap/config.php');
 }
 
 // Update the version to indicate sucess

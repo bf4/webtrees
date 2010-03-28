@@ -31,14 +31,14 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FUNCTIONS_PRINT_FACTS_PHP', '');
+define('WT_FUNCTIONS_PRINT_FACTS_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_person.php';
+require_once WT_ROOT.'includes/classes/class_person.php';
 
 /**
  * Turn URLs in text into HTML links.  Insert breaks into long URLs
@@ -73,7 +73,7 @@ function expand_urls($text) {
  */
 function print_fact(&$eventObj, $noedit=false) {
 	global $nonfacts;
-	global $PGV_IMAGE_DIR, $PGV_MENUS_AS_LISTS;
+	global $WT_IMAGE_DIR, $WT_MENUS_AS_LISTS;
 	global $GEDCOM;
 	global $lang_short_cut, $LANGUAGE;
 	global $WORD_WRAPPED_NOTES;
@@ -100,8 +100,8 @@ function print_fact(&$eventObj, $noedit=false) {
 	if ($fact=="NOTE") return print_main_notes($factrec, 1, $pid, $linenum, $noedit);
 	if ($fact=="SOUR") return print_main_sources($factrec, 1, $pid, $linenum, $noedit);
 	$styleadd="";
-	if (strpos($factrec, "PGV_NEW")!==false) $styleadd="change_new";
-	if (strpos($factrec, "PGV_OLD")!==false) $styleadd="change_old";
+	if (strpos($factrec, "WT_NEW")!==false) $styleadd="change_new";
+	if (strpos($factrec, "WT_OLD")!==false) $styleadd="change_old";
 
 	if (($linenum<1) && (!empty($SEARCH_SPIDER)))  return; // don't add relatives for spiders.
 	if ($linenum<1) $styleadd="rela"; // not editable
@@ -156,7 +156,7 @@ function print_fact(&$eventObj, $noedit=false) {
 		if ($fact=="_BIRT_CHIL" and isset($n_chil)) echo "<br />", i18n::translate('#%d', $n_chil++);
 		if ($fact=="_BIRT_GCHI" and isset($n_gchi)) echo "<br />", i18n::translate('#%d', $n_gchi++);
 		if ($fact=="_BIRT_GGCH" and isset($n_ggch)) echo "<br />", i18n::translate('#%d', $n_ggch++);
-		if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
+		if (!$noedit && WT_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
 			$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
 			$menu->addOnclick("return edit_record('$pid', $linenum);");
 			$menu->addClass("", "", "submenu");
@@ -175,7 +175,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			$submenu->addClass("submenuitem", "submenuitem_hover");
 			$menu->addSubMenu($submenu);
 
-			if (!$PGV_MENUS_AS_LISTS) {
+			if (!$WT_MENUS_AS_LISTS) {
 				echo " <div style=\"width:25px;\">";
 				$menu->printMenu();
 				echo "</div>";
@@ -201,7 +201,7 @@ function print_fact(&$eventObj, $noedit=false) {
 		if ($SHOW_FACT_ICONS)
 			echo $eventObj->Icon(), ' ';
 		echo i18n::translate($factref);
-		if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
+		if (!$noedit && WT_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
 			$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
 			$menu->addOnclick("return edit_record('$pid', $linenum);");
 			$menu->addClass("", "", "submenu");
@@ -320,7 +320,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			} elseif (strstr('FAX PHON ', $fact.' ')) {
 				echo getLRM(), $event, ' ' , getLRM();
 			} elseif (strstr('FILE ', $fact.' ')) {
-				if ($SHOW_MEDIA_FILENAME || PGV_USER_GEDCOM_ADMIN) echo getLRM(), $event, ' ' , getLRM();
+				if ($SHOW_MEDIA_FILENAME || WT_USER_GEDCOM_ADMIN) echo getLRM(), $event, ' ' , getLRM();
 			} elseif ($event!='Y') {
 				if (!strstr('ADDR _CREM ', substr($fact, 0, 5).' ')) {
 					if ($factref=='file_size' || $factref=='image_size') {
@@ -345,9 +345,9 @@ function print_fact(&$eventObj, $noedit=false) {
 		// -- print BURIal -> CEMEtery
 		$ct = preg_match("/2 CEME (.*)/", $factrec, $match);
 		if ($ct>0) {
-			if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/CEME.gif"))
+			if ($SHOW_FACT_ICONS && file_exists($WT_IMAGE_DIR."/facts/CEME.gif"))
 				//echo $eventObj->Icon(), ' '; // echo incorrect fact icon !!!
-				echo "<img src=\"{$PGV_IMAGE_DIR}/facts/CEME.gif\" alt=\"".i18n::translate('CEME')."\" title=\"".i18n::translate('CEME')."\" align=\"middle\" /> ";
+				echo "<img src=\"{$WT_IMAGE_DIR}/facts/CEME.gif\" alt=\"".i18n::translate('CEME')."\" title=\"".i18n::translate('CEME')."\" align=\"middle\" /> ";
 			echo "<b>", i18n::translate('CEME'), ":</b> ", $match[1], "<br />\n";
 		}
 		//-- print address structure
@@ -426,9 +426,9 @@ function print_fact(&$eventObj, $noedit=false) {
 				$factref = $match[$i][1];
 				if (!in_array($factref, $special_facts)) {
 					$label = translate_fact($fact.':'.$factref);
-					if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif"))
+					if ($SHOW_FACT_ICONS && file_exists($WT_IMAGE_DIR."/facts/".$factref.".gif"))
 						//echo $eventObj->Icon(), ' '; // print incorrect fact icon !!!
-						echo "<img src=\"{$PGV_IMAGE_DIR}/facts/", $factref, ".gif\" alt=\"{$label}\" title=\"{$label}\" align=\"middle\" /> ";
+						echo "<img src=\"{$WT_IMAGE_DIR}/facts/", $factref, ".gif\" alt=\"{$label}\" title=\"{$label}\" align=\"middle\" /> ";
 					else echo "<span class=\"label\">", $label, ": </span>";
 					echo htmlspecialchars($match[$i][2], ENT_COMPAT, 'UTF-8');
 					echo "<br />";
@@ -502,11 +502,11 @@ function print_repository_record($sid) {
  * @param boolean $return	whether to return the data or print the data
  */
 function print_fact_sources($factrec, $level, $return=false) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES, $EXPAND_SOURCES;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $SHOW_SOURCES, $EXPAND_SOURCES;
 	$printDone = false;
 	$data = "";
 	$nlevel = $level+1;
-	if ($SHOW_SOURCES<PGV_USER_ACCESS_LEVEL) return "";
+	if ($SHOW_SOURCES<WT_USER_ACCESS_LEVEL) return "";
 	// -- Systems not using source records [ 1046971 ]
 	$ct = preg_match_all("/$level SOUR (.*)/", $factrec, $match, PREG_SET_ORDER);
 	for($j=0; $j<$ct; $j++) {
@@ -534,7 +534,7 @@ function print_fact_sources($factrec, $level, $return=false) {
 			$elementID = $sid."-".floor(microtime()*1000000);
 			if ($EXPAND_SOURCES) $plusminus="minus"; else $plusminus="plus";
 			if ($lt>0) {
-				$data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"";
+				$data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"";
 				if ($plusminus=="plus") $data .= i18n::translate('Show Details')."\" title=\"".i18n::translate('Show Details')."\" /></a> ";
 				else $data .= i18n::translate('Hide Details')."\" title=\"".i18n::translate('Hide Details')."\" /></a> ";
 			}
@@ -592,12 +592,12 @@ function print_media_links($factrec, $level, $pid='') {
 		$media_id = str_replace("@", "", trim($omatch[$objectNum][1]));
 		if (displayDetailsById($media_id, "OBJE")) {
 			$row=
-				PGV_DB::prepare("SELECT m_titl, m_file, m_gedrec FROM {$TBLPREFIX}media where m_media=? AND m_gedfile=?")
-				->execute(array($media_id, PGV_GED_ID))
+				WT_DB::prepare("SELECT m_titl, m_file, m_gedrec FROM {$TBLPREFIX}media where m_media=? AND m_gedfile=?")
+				->execute(array($media_id, WT_GED_ID))
 				->fetchOneRow(PDO::FETCH_ASSOC);
 
 			// A new record, pending acceptance?
-			if (!$row && PGV_USER_CAN_EDIT) {
+			if (!$row && WT_USER_CAN_EDIT) {
 				$mediarec = find_updated_record($media_id, $ged_id);
 				$row["m_file"] = get_gedcom_value("FILE", 1, $mediarec);
 				$row["m_titl"] = get_gedcom_value("TITL", 1, $mediarec);
@@ -620,11 +620,11 @@ function print_media_links($factrec, $level, $pid='') {
 				if ($isExternal || media_exists($thumbnail)) {
 
 					//LBox --------  change for Lightbox Album --------------------------------------------
-					if (PGV_USE_LIGHTBOX && preg_match("/\.(jpe?g|gif|png)$/i", $mainMedia)) {
+					if (WT_USE_LIGHTBOX && preg_match("/\.(jpe?g|gif|png)$/i", $mainMedia)) {
 						$name = trim($row["m_titl"]);
 						echo "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "\">" . "\n";
-					} else if (PGV_USE_LIGHTBOX && preg_match("/\.(pdf|avi|txt)$/i", $mainMedia)) {
-						require_once PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+					} else if (WT_USE_LIGHTBOX && preg_match("/\.(pdf|avi|txt)$/i", $mainMedia)) {
+						require_once WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
 						$name = trim($row["m_titl"]);
 						echo "<a href=\"" . $mainMedia . "\" rel='clearbox({$LB_URL_WIDTH}, {$LB_URL_HEIGHT}, click)' rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "\">" . "\n";
 					// --------------------------------------------------------------------------------------
@@ -686,7 +686,7 @@ function print_media_links($factrec, $level, $pid='') {
 				//echo "</span>";
 				echo "<br />\n";
 				//-- print spouse name for marriage events
-				$ct = preg_match("/PGV_SPOUSE: (.*)/", $factrec, $match);
+				$ct = preg_match("/WT_SPOUSE: (.*)/", $factrec, $match);
 				if ($ct>0) {
 					$spouse=Person::getInstance($match[1]);
 					if ($spouse) {
@@ -700,7 +700,7 @@ function print_media_links($factrec, $level, $pid='') {
 					}
 					if ($view!="preview" && $spouse && empty($SEARCH_SPIDER)) echo " - ";
 					if ($view != "preview") {
-						$ct = preg_match("/PGV_FAMILY_ID: (.*)/", $factrec, $match);
+						$ct = preg_match("/WT_FAMILY_ID: (.*)/", $factrec, $match);
 						if ($ct>0) {
 							$famid = trim($match[1]);
 							if(empty($SEARCH_SPIDER)) {
@@ -848,13 +848,13 @@ function print_address_structure($factrec, $level) {
 
 function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $view;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES;
-	if ($SHOW_SOURCES<PGV_USER_ACCESS_LEVEL) return;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $SHOW_SOURCES;
+	if ($SHOW_SOURCES<WT_USER_ACCESS_LEVEL) return;
 
 	$nlevel = $level+1;
 	$styleadd="";
-	if (strpos($factrec, "PGV_NEW")!==false) $styleadd="change_new";
-	if (strpos($factrec, "PGV_OLD")!==false) $styleadd="change_old";
+	if (strpos($factrec, "WT_NEW")!==false) $styleadd="change_new";
+	if (strpos($factrec, "WT_OLD")!==false) $styleadd="change_old";
 	// -- find source for each fact
 	$ct = preg_match_all("/$level SOUR @(.*)@/", $factrec, $match, PREG_SET_ORDER);
 	$spos2 = 0;
@@ -871,10 +871,10 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 			echo "<td class=\"descriptionbox";
 			if ($level==2) echo " rela";
 			echo " $styleadd center width20\">";
-			if ($level==1) echo "<img class=\"icon\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["source"]["small"], "\" alt=\"\" /><br />";
+			if ($level==1) echo "<img class=\"icon\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["source"]["small"], "\" alt=\"\" /><br />";
 			$temp = preg_match("/^\d (\w*)/", $factrec, $factname);
 			echo i18n::translate($factname[1]);
-			if (!$noedit && PGV_USER_CAN_EDIT && !FactEditRestricted($pid, $factrec) && $styleadd!="red" && $view!="preview") {
+			if (!$noedit && WT_USER_CAN_EDIT && !FactEditRestricted($pid, $factrec) && $styleadd!="red" && $view!="preview") {
 				$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
 				$menu->addOnclick("return edit_record('$pid', $linenum);");
 				$menu->addClass("", "", "submenu");
@@ -1092,13 +1092,13 @@ function getSourceStructure($srec) {
 function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $pgv_changes, $GEDCOM;
 	global $view;
-	global $PGV_IMAGE_DIR;
-	global $PGV_IMAGES;
+	global $WT_IMAGE_DIR;
+	global $WT_IMAGES;
 	global $TEXT_DIRECTION;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 	$styleadd="";
-	if (strpos($factrec, "PGV_NEW")!==false) $styleadd="change_new";
-	if (strpos($factrec, "PGV_OLD")!==false) $styleadd="change_old";
+	if (strpos($factrec, "WT_NEW")!==false) $styleadd="change_new";
+	if (strpos($factrec, "WT_OLD")!==false) $styleadd="change_old";
 	$nlevel = $level+1;
 	$ct = preg_match_all("/$level NOTE(.*)/", $factrec, $match, PREG_SET_ORDER);
 	for($j=0; $j<$ct; $j++) {
@@ -1109,7 +1109,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			$nid = $nmatch[1];
 			if (isset($pgv_changes[$nid."_".$GEDCOM]) && empty($styleadd)) {
 				$styleadd = "change_old";
-				$newfactrec = $factrec.="\nPGV_NEW";
+				$newfactrec = $factrec.="\nWT_NEW";
 				print_main_notes($factrec, $level, $pid, $linenum, $noedit);
 			}
 		}
@@ -1119,7 +1119,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 		if ($level>=2) echo " rela";
 		echo " $styleadd center width20\">";
 		if ($level<2) {
-			echo "<img class=\"icon\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["notes"]["small"], "\" alt=\"\" />";
+			echo "<img class=\"icon\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["notes"]["small"], "\" alt=\"\" />";
 			if (strstr($factrec, "1 NOTE @" )) {
 				echo "<br />", i18n::translate('SHARED_NOTE');
 			} else {
@@ -1136,7 +1136,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			}
 			echo i18n::translate($factname);
 		}
-		if (!$noedit && PGV_USER_CAN_EDIT && !FactEditRestricted($pid, $factrec) && $styleadd!="change_old" && $view!="preview") {
+		if (!$noedit && WT_USER_CAN_EDIT && !FactEditRestricted($pid, $factrec) && $styleadd!="change_old" && $view!="preview") {
 			$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
 			$menu->addOnclick("return edit_record('$pid', $linenum);");
 			$menu->addClass("", "", "submenu");
@@ -1175,7 +1175,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			$text ="";
 			if ($nt>0) {
 				// If Census assistant installed, enable hotspot link on shared note title ---------------------
-				if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php')) {
+				if (file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php')) {
 					$centitl  = str_replace("~~", "", trim($n1match[1]));
 					$centitl  = str_replace("<br />", "", $centitl);
 					$centitl  = "<a href=\"note.php?nid=$nid\">".$centitl."</a>";
@@ -1187,8 +1187,8 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			$text = expand_urls($text);
 			$text = PrintReady($text)." <br />\n";
 			// If Census assistant installed, and if Formatted Shared Note (using pipe "|" as delimiter) -------
-			if ( strstr($text, "|") && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php') ) {
-				require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php';
+			if ( strstr($text, "|") && file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php') ) {
+				require WT_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php';
 			}
 		}
 		
@@ -1246,10 +1246,10 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		}
 	}
 
-	//LBox -- if  exists, get a list of the sorted current objects in the indi gedcom record  -  (1 _PGV_OBJS @xxx@ .... etc) ----------
+	//LBox -- if  exists, get a list of the sorted current objects in the indi gedcom record  -  (1 _WT_OBJS @xxx@ .... etc) ----------
 	$sort_current_objes = array();
-	if ($level>0) $sort_regexp = "/".$level." _PGV_OBJS @(.*)@/";
-	else $sort_regexp = "/_PGV_OBJS @(.*)@/";
+	if ($level>0) $sort_regexp = "/".$level." _WT_OBJS @(.*)@/";
+	else $sort_regexp = "/_WT_OBJS @(.*)@/";
 	$sort_ct = preg_match_all($sort_regexp, $gedrec, $sort_match, PREG_SET_ORDER);
 	for($i=0; $i<$sort_ct; $i++) {
 		if (!isset($sort_current_objes[$sort_match[$i][1]])) $sort_current_objes[$sort_match[$i][1]] = 1;
@@ -1290,7 +1290,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		$i++;
 	}
 	$sqlmm .= ") AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile ";
-	$vars[]=PGV_GED_ID;
+	$vars[]=WT_GED_ID;
 	//-- for family and source page only show level 1 obje references
 	if ($level>0) {
 		$sqlmm .= "AND mm_gedrec LIKE ?";
@@ -1305,7 +1305,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	}
 	// ---------------------------------------------------------------
 
-	$rows=PGV_DB::prepare($sqlmm)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
+	$rows=WT_DB::prepare($sqlmm)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
 
 	$foundObjs = array();
 	foreach ($rows as $rowm) {
@@ -1381,7 +1381,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 			//-- check if we need to get the object from a remote location
 			$ct = preg_match("/(.*):(.*)/", $media_id, $match);
 			if ($ct>0) {
-				require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
+				require_once WT_ROOT.'includes/classes/class_serviceclient.php';
 				$client = ServiceClient::getInstance($match[1]);
 				if (!is_null($client)) {
 					$newrec = $client->getRemoteRecord($match[2]);
@@ -1431,7 +1431,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
  * @param string $pid	The record id this media item was attached to
  */
 function print_main_media_row($rtype, $rowm, $pid) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $TEXT_DIRECTION, $SERVER_URL;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $view, $TEXT_DIRECTION, $SERVER_URL;
 	global $SHOW_ID_NUMBERS, $GEDCOM, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $SEARCH_SPIDER, $MEDIA_TYPES;
 
@@ -1448,8 +1448,8 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	$isExternal = isFileExternal($thumbnail);
 
 	$linenum = 0;
-	echo "\n\t\t<tr><td class=\"descriptionbox $styleadd center width20\"><img class=\"icon\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["media"]["small"], "\" alt=\"\" /><br />", i18n::translate('OBJE');
-	if ($rowm['mm_gid']==$pid && PGV_USER_CAN_EDIT && (!FactEditRestricted($rowm['m_media'], $rowm['m_gedrec'])) && ($styleadd!="change_old") && ($view!="preview")) {
+	echo "\n\t\t<tr><td class=\"descriptionbox $styleadd center width20\"><img class=\"icon\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["media"]["small"], "\" alt=\"\" /><br />", i18n::translate('OBJE');
+	if ($rowm['mm_gid']==$pid && WT_USER_CAN_EDIT && (!FactEditRestricted($rowm['m_media'], $rowm['m_gedrec'])) && ($styleadd!="change_old") && ($view!="preview")) {
 		$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
 		$menu->addOnclick("return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1');");
 		$menu->addClass("", "", "submenu");
@@ -1493,7 +1493,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		} else {
 			$file_type = 'local_';
 		}
-		if (preg_match("/\.flv$/i", $rowm['m_file']) && file_exists(PGV_ROOT.'modules/JWplayer/flvVideo.php')) {
+		if (preg_match("/\.flv$/i", $rowm['m_file']) && file_exists(WT_ROOT.'modules/JWplayer/flvVideo.php')) {
 			$file_type .= 'flv';
 		} elseif (preg_match("/\.(jpg|jpeg|gif|png)$/i", $rowm['m_file'])) {
 			$file_type .= 'image';
@@ -1603,7 +1603,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			echo "<br />\n";
 		}
 		//-- don't show _PRIM option to regular users
-		if (PGV_USER_GEDCOM_ADMIN) {
+		if (WT_USER_GEDCOM_ADMIN) {
 			$prim = get_gedcom_value("_PRIM", 2, $rowm["mm_gedrec"]);
 			if (empty($prim)) $prim = get_gedcom_value("_PRIM", 1, $rowm["m_gedrec"]);
 			if (!empty($prim)) {
@@ -1613,7 +1613,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			}
 		}
 		//-- don't show _THUM option to regular users
-		if (PGV_USER_GEDCOM_ADMIN) {
+		if (WT_USER_GEDCOM_ADMIN) {
 			$thum = get_gedcom_value("_THUM", 2, $rowm["mm_gedrec"]);
 			if (empty($thum)) $thum = get_gedcom_value("_THUM", 1, $rowm["m_gedrec"]);
 			if (!empty($thum)) {
@@ -1635,12 +1635,12 @@ function print_main_media_row($rtype, $rowm, $pid) {
 //  Extra print_facts_functions for lightbox and reorder media
 // -----------------------------------------------------------------------------
 
-if (PGV_USE_LIGHTBOX) {
-	require_once PGV_ROOT.'modules/lightbox/functions/lightbox_print_media.php';
-	require_once PGV_ROOT.'modules/lightbox/functions/lightbox_print_media_row.php';
+if (WT_USE_LIGHTBOX) {
+	require_once WT_ROOT.'modules/lightbox/functions/lightbox_print_media.php';
+	require_once WT_ROOT.'modules/lightbox/functions/lightbox_print_media_row.php';
 }
 
-require_once PGV_ROOT.'includes/functions/functions_media_reorder.php';
+require_once WT_ROOT.'includes/functions/functions_media_reorder.php';
 
 // -----------------------------------------------------------------------------
 //  End extra print_facts_functions for lightbox and reorder media

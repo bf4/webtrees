@@ -28,10 +28,10 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'index.php');
+define('WT_SCRIPT_NAME', 'index.php');
 require './config.php';
-require_once PGV_ROOT.'includes/index_cache.php';
-require_once PGV_ROOT.'includes/functions/functions_print_facts.php';  //--needed for the expand url function in some of the blocks
+require_once WT_ROOT.'includes/index_cache.php';
+require_once WT_ROOT.'includes/functions/functions_print_facts.php';  //--needed for the expand url function in some of the blocks
 
 if (!isset($CONFIGURED)) {
 	print "Unable to include the config.php file.  Make sure that . is in your PHP include path in the php.ini file.";
@@ -44,7 +44,7 @@ $message_id = safe_GET('message_id');
 $gid = safe_POST("gid");
 $favnote = safe_POST("favnote");
 $favtype = safe_POST("favtype");
-$url = safe_POST("url", PGV_REGEX_URL);
+$url = safe_POST("url", WT_REGEX_URL);
 $favtitle = safe_POST("favtitle");
 $fv_id = safe_GET("fv_id");
 $news_id = safe_GET("news_id");
@@ -60,17 +60,17 @@ $news_id = safe_GET("news_id");
  * "type" the options are "user" or "gedcom" or undefined
  * - The type determines which lists the block is available in.
  * - Leaving the type undefined allows it to be on both the user and gedcom portal
- * @global $PGV_BLOCKS
+ * @global $WT_BLOCKS
  */
 
 /**
  * Load List of Blocks in blocks directory (unchanged)
  */
-$PGV_BLOCKS = array();
+$WT_BLOCKS = array();
 $d = dir("blocks");
 while (false !== ($entry = $d->read())) {
 	if (($entry!=".") && ($entry!="..") && ($entry!="CVS") && (preg_match("/\.php$/", $entry)>0)) {
-		require_once PGV_ROOT.'blocks/'.$entry;
+		require_once WT_ROOT.'blocks/'.$entry;
 	}
 }
 $d->close();
@@ -79,11 +79,11 @@ $d->close();
  *
  * Load List of Blocks in modules/XX/blocks directories
  */
-if (file_exists(PGV_ROOT.'modules')) {
-	$dir=dir(PGV_ROOT.'modules');
+if (file_exists(WT_ROOT.'modules')) {
+	$dir=dir(WT_ROOT.'modules');
 	while (false !== ($entry = $dir->read())) {
 		if (!strstr($entry,".") && ($entry!="..") && ($entry!="CVS")&& !strstr($entry, "svn")) {
-			$path = PGV_ROOT.'modules/' . $entry.'/blocks';
+			$path = WT_ROOT.'modules/' . $entry.'/blocks';
 			if (is_readable($path)) {
 				$d=dir($path);
 				while (false !== ($entry = $d->read())) {
@@ -106,7 +106,7 @@ if (!isset($action)) $action="";
 
 //-- make sure that they have user status before they can use this page
 //-- otherwise have them login again
-if (!PGV_USER_ID) {
+if (!WT_USER_ID) {
 	if (!empty($ctype) && $ctype=="user") {
 		header("Location: login.php?help_message=mygedview_login_help&url=".urlencode("index.php?ctype=user"));
 		exit;
@@ -120,11 +120,11 @@ if (empty($ctype)) {
 	else $ctype = 'user';
 }
 
-if (PGV_USER_ID) {
+if (WT_USER_ID) {
 	//-- add favorites action
 	if ($action=="addfav" && !empty($gid)) {
 		$gid = strtoupper($gid);
-		$indirec = find_gedcom_record($gid, PGV_GED_ID);
+		$indirec = find_gedcom_record($gid, WT_GED_ID);
 		$ct = preg_match("/0 @(.*)@ (.*)/", $indirec, $match);
 		if ($indirec && $ct>0) {
 			$favorite = array();
@@ -136,7 +136,7 @@ if (PGV_USER_ID) {
 				$favtype = $GEDCOM;
 				$_SESSION['clearcache'] = true;
 			}
-			else $favtype=PGV_USER_NAME;
+			else $favtype=WT_USER_NAME;
 			$favorite["username"] = $favtype;
 			$favorite["gid"] = $gid;
 			$favorite["type"] = trim($match[2]);
@@ -158,7 +158,7 @@ if (PGV_USER_ID) {
 			$favtype = $GEDCOM;
 			$_SESSION['clearcache'] = true;
 		}
-		else $favtype=PGV_USER_NAME;
+		else $favtype=WT_USER_NAME;
 		$favorite["username"] = $favtype;
 		$favorite["gid"] = "";
 		$favorite["type"] = "URL";
@@ -191,7 +191,7 @@ if (PGV_USER_ID) {
 
 //-- get the blocks list
 if ($ctype=="user") {
-	$ublocks = getBlocks(PGV_USER_NAME);
+	$ublocks = getBlocks(WT_USER_NAME);
 	if ((count($ublocks["main"])==0) && (count($ublocks["right"])==0)) {
 		$ublocks["main"][] = array("print_todays_events", "");
 		$ublocks["main"][] = array("print_user_messages", "");
@@ -267,24 +267,24 @@ if ($action=="ajax") {
 	if (isset($_REQUEST['bindex'])) {
 		if (isset($ublocks[$side][$_REQUEST['bindex']])) {
 			$blockval = $ublocks[$side][$_REQUEST['bindex']];
-			if ($blockval[0]==$block && array_key_exists($blockval[0], $PGV_BLOCKS)) {
+			if ($blockval[0]==$block && array_key_exists($blockval[0], $WT_BLOCKS)) {
 				if ($side=="main") {
 					$param1 = "false";
 				} else {
 					$param1 = "true";
 				}
-				if (array_key_exists($blockval[0], $PGV_BLOCKS) && !loadCachedBlock($blockval, $side.$_REQUEST['bindex'])) {
+				if (array_key_exists($blockval[0], $WT_BLOCKS) && !loadCachedBlock($blockval, $side.$_REQUEST['bindex'])) {
 					ob_start();
 					eval($blockval[0]."($param1, \$blockval[1], \"$side\", ".$_REQUEST['bindex'].");");
 					$content = ob_get_contents();
 					saveCachedBlock($blockval, $side.$_REQUEST['bindex'], $content);
 					ob_end_flush();
 				}
-				if (PGV_DEBUG) {
+				if (WT_DEBUG) {
 					echo execution_stats();
 				}
-				if (PGV_DEBUG_SQL) {
-					echo PGV_DB::getQueryLog();
+				if (WT_DEBUG_SQL) {
+					echo WT_DB::getQueryLog();
 				}
 				exit;
 			}
@@ -293,12 +293,12 @@ if ($action=="ajax") {
 
 	//-- not sure which block to call so call the first one we find
 	foreach($ublocks["main"] as $bindex=>$blockval) {
-		if ($blockval[0]==$block && array_key_exists($blockval[0], $PGV_BLOCKS)) {
+		if ($blockval[0]==$block && array_key_exists($blockval[0], $WT_BLOCKS)) {
 			eval($blockval[0]."(false, \$blockval[1], \"main\", $bindex);");
 		}
 	}
 	foreach($ublocks["right"] as $bindex=>$blockval) {
-		if ($blockval[0]==$block && array_key_exists($blockval[0], $PGV_BLOCKS)) {
+		if ($blockval[0]==$block && array_key_exists($blockval[0], $WT_BLOCKS)) {
 			eval($blockval[0]."(true, \$blockval[1], \"right\", $bindex);");
 		}
 	}
@@ -310,15 +310,15 @@ if ($ctype=="user") {
 	$helpindex = "index_myged_help";
 	print_header(i18n::translate('My Page'));
 } else {
-	print_header(get_gedcom_setting(PGV_GED_ID, 'title'));
+	print_header(get_gedcom_setting(WT_GED_ID, 'title'));
 }
 
-if (PGV_USE_LIGHTBOX) {
-	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
+if (WT_USE_LIGHTBOX) {
+	require WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	require WT_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 
-echo PGV_JS_START;
+echo WT_JS_START;
 ?>
 	function refreshpage() {
 		window.location = 'index.php?ctype=<?php print $ctype; ?>';
@@ -364,7 +364,7 @@ echo PGV_JS_START;
  		return false;
 	}
 <?php
-echo PGV_JS_END;
+echo WT_JS_END;
 //-- start of main content section
 print "<table width=\"100%\"><tr><td>";		// This is needed so that page footers print in the right place
 if ($ctype=="user") {
@@ -382,12 +382,12 @@ if (count($ublocks["main"])!=0) {
 	echo '<script src="js/jquery/jquery.min.js" type="text/javascript"></script>';
 	echo '<script type="text/javascript">jQuery.noConflict();</script>';
 	foreach($ublocks["main"] as $bindex=>$block) {
-		if (PGV_DEBUG) {
+		if (WT_DEBUG) {
 			echo execution_stats();
 		}
-		if (array_key_exists($block[0], $PGV_BLOCKS) && !loadCachedBlock($block, "main".$bindex)) {
+		if (array_key_exists($block[0], $WT_BLOCKS) && !loadCachedBlock($block, "main".$bindex)) {
 			$url="index.php?action=ajax&block={$block[0]}&side=main&bindex={$bindex}&ctype={$ctype}";
-			if ($SEARCH_SPIDER || PGV_DEBUG) {
+			if ($SEARCH_SPIDER || WT_DEBUG) {
 				// Search spiders get the blocks directly
 				ob_start();
 				eval($block[0]."(false, \$block[1], \"main\", $bindex);");
@@ -400,7 +400,7 @@ if (count($ublocks["main"])!=0) {
 			} else {
 				// Interactive users get the blocks via ajax
 				echo '<div id="block_main_', $bindex, '"><img src="images/loading.gif" alt="', htmlspecialchars(i18n::translate('Loading...')),  '"/></div>';
-				echo PGV_JS_START, "jQuery('#block_main_{$bindex}').load('{$url}');", PGV_JS_END;
+				echo WT_JS_START, "jQuery('#block_main_{$bindex}').load('{$url}');", WT_JS_END;
 			}
 		}
 	}
@@ -416,12 +416,12 @@ if (count($ublocks["right"])!=0) {
 		print "<div id=\"index_full_blocks\">";
 	}
 	foreach($ublocks["right"] as $bindex=>$block) {
-		if (PGV_DEBUG) {
+		if (WT_DEBUG) {
 			echo execution_stats();
 		}
-		if (array_key_exists($block[0], $PGV_BLOCKS) && !loadCachedBlock($block, "right".$bindex)) {
+		if (array_key_exists($block[0], $WT_BLOCKS) && !loadCachedBlock($block, "right".$bindex)) {
 			$url="index.php?action=ajax&block={$block[0]}&side=right&bindex={$bindex}&ctype={$ctype}";
-			if ($SEARCH_SPIDER || PGV_DEBUG) {
+			if ($SEARCH_SPIDER || WT_DEBUG) {
 				// Search spiders get the blocks directly
 				ob_start();
 				eval($block[0]."(true, \$block[1], \"right\", $bindex);");
@@ -431,7 +431,7 @@ if (count($ublocks["right"])!=0) {
 			} else {
 				// Interactive users get the blocks via ajax
 				echo '<div id="block_right_', $bindex, '"><img src="images/loading.gif" alt="', htmlspecialchars(i18n::translate('Loading...')),  '"/></div>';
-				echo PGV_JS_START, "jQuery('#block_right_{$bindex}').load('{$url}');", PGV_JS_END;
+				echo WT_JS_START, "jQuery('#block_right_{$bindex}').load('{$url}');", WT_JS_END;
 			}
 		}
 	}
@@ -443,12 +443,12 @@ print "</td></tr></table><br />";		// Close off that table
 
 if ($ctype=="user" && !$welcome_block_present) {
 	print "<div align=\"center\" style=\"width: 99%;\">";
-	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".PGV_USER_NAME."&ctype=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".i18n::translate('Customize My Page')."</a>";
+	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".WT_USER_NAME."&ctype=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".i18n::translate('Customize My Page')."</a>";
 	echo help_link('mygedview_customize');
 	print "</div>";
 }
 if ($ctype=="gedcom" && !$gedcom_block_present) {
-	if (PGV_USER_IS_ADMIN) {
+	if (WT_USER_IS_ADMIN) {
 		print "<div align=\"center\" style=\"width: 99%;\">";
 		print "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name={$GEDCOM}&ctype=gedcom", false)."', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".i18n::translate('Customize this GEDCOM Home Page')."</a>";
 		print "</div>";

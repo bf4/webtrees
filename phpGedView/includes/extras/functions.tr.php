@@ -30,12 +30,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FUNCTIONS_TR_PHP', '');
+define('WT_FUNCTIONS_TR_PHP', '');
 
 ////////////////////////////////////////////////////////////////////////////////
 // Localise a date. "[qualifier] date [qualifier date] [qualifier]"

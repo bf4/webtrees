@@ -29,27 +29,27 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_USER_BLOG_PHP', '');
+define('WT_USER_BLOG_PHP', '');
 
-$PGV_BLOCKS["print_user_news"]["name"]		= i18n::translate('User Journal');
-$PGV_BLOCKS["print_user_news"]["descr"]		= i18n::translate('The User Journal block lets the user keep notes or a journal online.');
-$PGV_BLOCKS["print_user_news"]["type"]		= "user";
-$PGV_BLOCKS["print_user_news"]["canconfig"]	= false;
-$PGV_BLOCKS["print_user_news"]["config"]	= array("cache"=>0);
+$WT_BLOCKS["print_user_news"]["name"]		= i18n::translate('User Journal');
+$WT_BLOCKS["print_user_news"]["descr"]		= i18n::translate('The User Journal block lets the user keep notes or a journal online.');
+$WT_BLOCKS["print_user_news"]["type"]		= "user";
+$WT_BLOCKS["print_user_news"]["canconfig"]	= false;
+$WT_BLOCKS["print_user_news"]["config"]	= array("cache"=>0);
 
 /**
  * Prints a user news/journal
  *
  */
 function print_user_news($block=true, $config="", $side, $index) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $TEXT_DIRECTION, $ctype;
 
-	$usernews = getUserNews(PGV_USER_ID);
+	$usernews = getUserNews(WT_USER_ID);
 
 	$id="user_news";
 	$title = i18n::translate('My Journal');
@@ -74,8 +74,8 @@ function print_user_news($block=true, $config="", $side, $index) {
 		$content .= "<a href=\"".encode_url("index.php?action=deletenews&news_id={$key}&ctype={$ctype}")."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this Journal entry?')."');\">".i18n::translate('Delete')."</a><br />";
 		$content .= "</div><br />";
 	}
-	if (PGV_USER_ID) {
-		$content .= "<br /><a href=\"javascript:;\" onclick=\"addnews('".PGV_USER_ID."'); return false;\">".i18n::translate('Add a new Journal entry')."</a>";
+	if (WT_USER_ID) {
+		$content .= "<br /><a href=\"javascript:;\" onclick=\"addnews('".WT_USER_ID."'); return false;\">".i18n::translate('Add a new Journal entry')."</a>";
 	}
 
 	global $THEME_DIR;

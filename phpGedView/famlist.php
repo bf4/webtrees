@@ -45,9 +45,9 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'famlist.php');
+define('WT_SCRIPT_NAME', 'famlist.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+require_once WT_ROOT.'includes/functions/functions_print_lists.php';
 
 // We show three different lists:
 $alpha   =safe_GET('alpha'); // All surnames beginning with this letter where "@"=unknown and ","=none
@@ -86,7 +86,7 @@ setcookie('show_marnm_famlist', $show_marnm);
 $SHOW_MARRIED_NAMES=($show_marnm=='yes');
 
 // Fetch a list of the initial letters of all surnames in the database
-$initials=get_indilist_salpha($SHOW_MARRIED_NAMES, true, PGV_GED_ID);
+$initials=get_indilist_salpha($SHOW_MARRIED_NAMES, true, WT_GED_ID);
 
 // Make sure selections are consistent.
 // i.e. can't specify show_all and surname at the same time.
@@ -206,7 +206,7 @@ if (!$SEARCH_SPIDER) {
 echo '</div>';
 
 if ($showList) {
-	$surns=get_famlist_surns($surname, $alpha, $SHOW_MARRIED_NAMES, PGV_GED_ID);
+	$surns=get_famlist_surns($surname, $alpha, $SHOW_MARRIED_NAMES, WT_GED_ID);
 	if ($surname_sublist=='yes') {
 		// Show the surname list
 		switch ($SURNAME_LIST_STYLE) {
@@ -231,7 +231,7 @@ if ($showList) {
 			$falpha='';
 			$show_all_firstnames='no';
 		} else {
-			$givn_initials=get_indilist_galpha($surname, $alpha, $SHOW_MARRIED_NAMES, true, PGV_GED_ID);
+			$givn_initials=get_indilist_galpha($surname, $alpha, $SHOW_MARRIED_NAMES, true, WT_GED_ID);
 			// Break long lists by initial letter of given name
 			if (($surname || $show_all=='yes') && $count>$SUBLIST_TRIGGER_F) {
 				// Don't show the list until we have some filter criteria
@@ -276,7 +276,7 @@ if ($showList) {
 			if ($legend && $show_all=='no') {
 				$legend=i18n::translate('Families with surname %s', check_NN($legend));
 			}
-			$families=get_famlist_fams($surname, $alpha, $falpha, $SHOW_MARRIED_NAMES, PGV_GED_ID);
+			$families=get_famlist_fams($surname, $alpha, $falpha, $SHOW_MARRIED_NAMES, WT_GED_ID);
 			print_fam_table($families, $legend);
 		}
 	}

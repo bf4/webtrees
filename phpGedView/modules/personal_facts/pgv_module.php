@@ -27,14 +27,14 @@
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-require_once(PGV_ROOT."includes/classes/class_module.php");
-require_once(PGV_ROOT."modules/personal_facts/personal_facts.php");
+require_once(WT_ROOT."includes/classes/class_module.php");
+require_once(WT_ROOT."modules/personal_facts/personal_facts.php");
 
-class personal_facts_PGVModule extends PGVModule {
+class personal_facts_WTModule extends WTModule {
 	protected $name = 'personal_facts';
 	protected $description = 'Adds a tab to the individual page which displays the facts of an individual and their close relatives.';
 	protected $version = '4.2.2';

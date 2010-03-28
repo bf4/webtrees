@@ -28,22 +28,22 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'edit_privacy.php');
+define('WT_SCRIPT_NAME', 'edit_privacy.php');
 require './config.php';
-require PGV_ROOT.'includes/functions/functions_print_facts.php';
+require WT_ROOT.'includes/functions/functions_print_facts.php';
 
 if (empty($ged)) $ged = $GEDCOM;
 
-if (!userGedcomAdmin(PGV_USER_ID, $ged)) {
+if (!userGedcomAdmin(WT_USER_ID, $ged)) {
 	header('Location: editgedcoms.php');
 	exit;
 }
 
 $PRIVACY_CONSTANTS=array(
-	PGV_PRIV_NONE  =>'PGV_PRIV_NONE',
-	PGV_PRIV_USER  =>'PGV_PRIV_USER',
-	PGV_PRIV_PUBLIC=>'PGV_PRIV_PUBLIC',
-	PGV_PRIV_HIDE  =>'PGV_PRIV_HIDE'
+	WT_PRIV_NONE  =>'WT_PRIV_NONE',
+	WT_PRIV_USER  =>'WT_PRIV_USER',
+	WT_PRIV_PUBLIC=>'WT_PRIV_PUBLIC',
+	WT_PRIV_HIDE  =>'WT_PRIV_HIDE'
 );
 
 $action=safe_POST('action', 'update');
@@ -56,13 +56,13 @@ $all_tags=array_unique(array_merge(
 	explode(',', $REPO_FACTS_ADD)
 ));
 
-$v_new_person_privacy_access_ID		= safe_POST('v_new_person_privacy_access_ID',		PGV_REGEX_XREF);
+$v_new_person_privacy_access_ID		= safe_POST('v_new_person_privacy_access_ID',		WT_REGEX_XREF);
 $v_new_person_privacy_access_option	= safe_POST('v_new_person_privacy_access_option',	$PRIVACY_CONSTANTS);
 $v_person_privacy_del				= safe_POST('v_person_privacy_del',					'1');
 $v_person_privacy					= safe_POST('v_person_privacy',						$PRIVACY_CONSTANTS);
 
 $v_new_user_privacy_username		= safe_POST('v_new_user_privacy_username',			get_all_users());
-$v_new_user_privacy_access_ID		= safe_POST('v_new_user_privacy_access_ID',			PGV_REGEX_XREF);
+$v_new_user_privacy_access_ID		= safe_POST('v_new_user_privacy_access_ID',			WT_REGEX_XREF);
 $v_new_user_privacy_access_option	= safe_POST('v_new_user_privacy_access_option',		$PRIVACY_CONSTANTS);
 $v_user_privacy_del					= safe_POST('v_user_privacy_del',					'1');
 $v_user_privacy						= safe_POST('v_user_privacy');
@@ -73,7 +73,7 @@ $v_new_global_facts_access_option	= safe_POST('v_new_global_facts_access_option'
 $v_global_facts_del					= safe_POST('v_global_facts_del',					'1');
 $v_global_facts						= safe_POST('v_global_facts');
 
-$v_new_person_facts_access_ID		= safe_POST('v_new_person_facts_access_ID',			PGV_REGEX_XREF);
+$v_new_person_facts_access_ID		= safe_POST('v_new_person_facts_access_ID',			WT_REGEX_XREF);
 $v_new_person_facts_abbr			= safe_POST('v_new_person_facts_abbr',				$all_tags);
 $v_new_person_facts_choice			= safe_POST('v_new_person_facts_choice',			array('show', 'details'));
 $v_new_person_facts_access_option	= safe_POST('v_new_person_facts_access_option',		$PRIVACY_CONSTANTS);
@@ -127,11 +127,11 @@ function search_ID_details($checkVar, $outputVar) {
 }
 
 
-$PRIVACY_MODULE = get_privacy_file(PGV_GED_ID);
+$PRIVACY_MODULE = get_privacy_file(WT_GED_ID);
 
 print_header(i18n::translate('Edit privacy settings'));
 
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 ?>
 <table class="facts_table <?php print $TEXT_DIRECTION; ?>">
 	<tr>
@@ -184,7 +184,7 @@ if ($action=="update") {
 		else $person_privacy_text .= "\$person_privacy['$key'] = ".$PRIVACY_CONSTANTS[$value].";\n";
 	}
 	if ($v_new_person_privacy_access_ID && $v_new_person_privacy_access_option) {
-		$gedobj = new GedcomRecord(find_gedcom_record($v_new_person_privacy_access_ID, PGV_GED_ID));
+		$gedobj = new GedcomRecord(find_gedcom_record($v_new_person_privacy_access_ID, WT_GED_ID));
 		$v_new_person_privacy_access_ID = $gedobj->getXref();
 		if ($v_new_person_privacy_access_ID) $person_privacy_text .= "\$person_privacy['$v_new_person_privacy_access_ID'] = ".$v_new_person_privacy_access_option.";\n";
 	}
@@ -203,7 +203,7 @@ if ($action=="update") {
 		}
 	}
 	if ($v_new_user_privacy_username && $v_new_user_privacy_access_ID && $v_new_user_privacy_access_option) {
-		$gedobj = new GedcomRecord(find_gedcom_record($v_new_user_privacy_access_ID, PGV_GED_ID));
+		$gedobj = new GedcomRecord(find_gedcom_record($v_new_user_privacy_access_ID, WT_GED_ID));
 		$v_new_user_privacy_access_ID = $gedobj->getXref();
 		if ($v_new_user_privacy_access_ID) $person_privacy_text .= "\$user_privacy['$v_new_user_privacy_username']['$v_new_user_privacy_access_ID'] = ".$v_new_user_privacy_access_option.";\n";
 	}
@@ -241,7 +241,7 @@ if ($action=="update") {
 		}
 	}
 	if ($v_new_person_facts_access_ID && $v_new_person_facts_abbr && $v_new_global_facts_choice && $v_new_global_facts_access_option) {
-		$gedobj = new GedcomRecord(find_gedcom_record($v_new_person_facts_access_ID, PGV_GED_ID));
+		$gedobj = new GedcomRecord(find_gedcom_record($v_new_person_facts_access_ID, WT_GED_ID));
 		$v_new_person_facts_access_ID = $gedobj->getXref();
 		if ($v_new_person_facts_access_ID) $person_privacy_text .= "\$person_facts['$v_new_person_facts_access_ID']['$v_new_person_facts_abbr']['$v_new_person_facts_choice'] = ".$v_new_person_facts_access_option.";\n";
 	}
@@ -262,7 +262,7 @@ if ($action=="update") {
  	check_in($logline, $gedcomprivname, $INDEX_DIRECTORY);
 
  	//-- delete the cache files for the Home Page blocks
-	require_once PGV_ROOT.'includes/index_cache.php';
+	require_once WT_ROOT.'includes/index_cache.php';
 	clearCache();
 }
 ?>
@@ -284,7 +284,7 @@ if ($action=="update") {
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php
-				print "<a href=\"javascript: ".i18n::translate('General Privacy settings')."\" onclick=\"expand_layer('general-privacy-options');return false\"><img id=\"general-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> ";
+				print "<a href=\"javascript: ".i18n::translate('General Privacy settings')."\" onclick=\"expand_layer('general-privacy-options');return false\"><img id=\"general-privacy-options_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> ";
 				?>
 				<a href="javascript: <?php print i18n::translate('General Privacy settings'); ?>" onclick="expand_layer('general-privacy-options');return false"><b><?php echo i18n::translate('General Privacy settings'), help_link('general_privacy'); ?></b></a>
 			</td>
@@ -416,7 +416,7 @@ if ($action=="update") {
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php
-				print "<a href=\"javascript: ".i18n::translate('Privacy settings by ID')."\" onclick=\"expand_layer('person-privacy-options');return false\"><img id=\"person-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
+				print "<a href=\"javascript: ".i18n::translate('Privacy settings by ID')."\" onclick=\"expand_layer('person-privacy-options');return false\"><img id=\"person-privacy-options_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
 				<a href="javascript: <?php echo i18n::translate('Privacy settings by ID'); ?>" onclick="expand_layer('person-privacy-options');return false"><b><?php echo i18n::translate('Privacy settings by ID'); ?></b></a><?php echo help_link('person_privacy'); ?>
 			</td>
 		</tr>
@@ -494,7 +494,7 @@ if ($action=="update") {
 	<table class="facts_table">
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
-				<?php print "<a href=\"javascript: ".i18n::translate('User Privacy settings')."\" onclick=\"expand_layer('user-privacy-options');return false\"><img id=\"user-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
+				<?php print "<a href=\"javascript: ".i18n::translate('User Privacy settings')."\" onclick=\"expand_layer('user-privacy-options');return false\"><img id=\"user-privacy-options_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
 				<a href="javascript: <?php print i18n::translate('User Privacy settings'); ?>" onclick="expand_layer('user-privacy-options');return false"><b><?php echo i18n::translate('User Privacy settings'); ?></b></a><?php echo help_link('user_privacy'); ?>
 			</td>
 		</tr>
@@ -594,7 +594,7 @@ if ($action=="update") {
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php
-				print "<a href=\"javascript: ".i18n::translate('Global Fact Privacy settings')."\" onclick=\"expand_layer('global-facts-options');return false\"><img id=\"global-facts-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
+				print "<a href=\"javascript: ".i18n::translate('Global Fact Privacy settings')."\" onclick=\"expand_layer('global-facts-options');return false\"><img id=\"global-facts-options_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
 				<a href="javascript: <?php print i18n::translate('Global Fact Privacy settings'); ?>" onclick="expand_layer('global-facts-options');return false"><b><?php echo i18n::translate('Global Fact Privacy settings'); ?></b></a><?php echo help_link('global_facts'); ?>
 			</td>
 		</tr>
@@ -684,7 +684,7 @@ if ($action=="update") {
 	<table class="facts_table">
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
-				<?php print "<a href=\"javascript: ".i18n::translate('Facts Privacy settings by ID')."\" onclick=\"expand_layer('person-facts-options');return false\"><img id=\"person-facts-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
+				<?php print "<a href=\"javascript: ".i18n::translate('Facts Privacy settings by ID')."\" onclick=\"expand_layer('person-facts-options');return false\"><img id=\"person-facts-options_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
 				<a href="javascript: <?php print i18n::translate('Facts Privacy settings by ID'); ?>" onclick="expand_layer('person-facts-options');return false"><b><?php echo i18n::translate('Facts Privacy settings by ID'); ?></b></a><?php echo help_link('person_facts'); ?>
 			</td>
 		</tr>

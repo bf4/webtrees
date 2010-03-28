@@ -2,7 +2,7 @@
 require_once("includes/classes/class_module.php");
 require_once("modules/googlemap/googlemap.php");
 
-class googlemap_PGVModule extends PGVModule {
+class googlemap_WTModule extends WTModule {
 	protected $name = 'googlemap';
 	protected $description = 'Adds a tab to the individual page which maps the events of an individual and their close relatives on a Google map.';
 	protected $version = '4.2.2';

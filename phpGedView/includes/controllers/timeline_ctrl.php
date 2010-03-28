@@ -27,16 +27,16 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_TIMELINE_CTRL_PHP', '');
+define('WT_TIMELINE_CTRL_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_charts.php';
-require_once PGV_ROOT.'includes/controllers/basecontrol.php';
-require_once PGV_ROOT.'includes/classes/class_person.php';
+require_once WT_ROOT.'includes/functions/functions_charts.php';
+require_once WT_ROOT.'includes/controllers/basecontrol.php';
+require_once WT_ROOT.'includes/classes/class_person.php';
 /**
 * Main controller class for the timeline page.
 */
@@ -72,7 +72,7 @@ class TimelineControllerRoot extends BaseController {
 		//-- new pid
 		$newpid=safe_GET_xref('newpid');
 		if ($newpid) {
-			$indirec = find_person_record($newpid, PGV_GED_ID);
+			$indirec = find_person_record($newpid, WT_GED_ID);
 			if (empty($indirec) && $GEDCOM_ID_PREFIX) {
 				if (stristr($newpid, $GEDCOM_ID_PREFIX)===false) $newpid = $GEDCOM_ID_PREFIX.$newpid;
 			}
@@ -180,7 +180,7 @@ class TimelineControllerRoot extends BaseController {
 
 	function print_time_fact($event) {
 		global $basexoffset, $baseyoffset, $factcount, $TEXT_DIRECTION;
-		global $lang_short_cut, $LANGUAGE, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_PEDIGREE_PLACES, $placements;
+		global $lang_short_cut, $LANGUAGE, $WT_IMAGE_DIR, $WT_IMAGES, $SHOW_PEDIGREE_PLACES, $placements;
 		global $familyfacts, $GEDCOM;
 		/* @var $event Event */
 		$factrec = $event->getGedComRecord();
@@ -228,7 +228,7 @@ class TimelineControllerRoot extends BaseController {
 
 				print "\n\t\t<div id=\"fact$factcount\" style=\"position:absolute; ".($TEXT_DIRECTION =="ltr"?"left: ".($xoffset):"right: ".($xoffset))."px; top:".($yoffset)."px; font-size: 8pt; height: ".($this->bheight)."px; \" onmousedown=\"factMD(this, '".$factcount."', ".($yoffset-$tyoffset).");\">\n";
 				print "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"cursor: hand;\"><tr><td>\n";
-				print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" name=\"boxline$factcount\" id=\"boxline$factcount\" height=\"3\" align=\"left\" hspace=\"0\" width=\"10\" vspace=\"0\" alt=\"\" style=\"padding-";
+				print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["hline"]["other"]."\" name=\"boxline$factcount\" id=\"boxline$factcount\" height=\"3\" align=\"left\" hspace=\"0\" width=\"10\" vspace=\"0\" alt=\"\" style=\"padding-";
 				if ($TEXT_DIRECTION=="ltr") print "left";
 				else print "right";
 				print ": 3px;\" />\n";
@@ -345,15 +345,15 @@ class TimelineControllerRoot extends BaseController {
 				}
 				//-- print the diagnal line
 				print "\n\t\t<div id=\"dbox$factcount\" style=\"position:absolute; ".($TEXT_DIRECTION =="ltr"?"left: ".($basexoffset+25):"right: ".($basexoffset+25))."px; top:".($dyoffset)."px; font-size: 8pt; height: ".(abs($tyoffset))."px; width: ".(abs($tyoffset))."px;";
-				print " background-image: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$img]["other"]."');";
+				print " background-image: url('".$WT_IMAGE_DIR."/".$WT_IMAGES[$img]["other"]."');";
 				print " background-position: 0% $ypos; \" >\n";
 				print "</div>\n";
 	}
 }
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists(PGV_ROOT.'includes/controllers/timeline_ctrl_user.php')) {
-	require_once PGV_ROOT.'includes/controllers/timeline_ctrl_user.php';
+if (file_exists(WT_ROOT.'includes/controllers/timeline_ctrl_user.php')) {
+	require_once WT_ROOT.'includes/controllers/timeline_ctrl_user.php';
 } else {
 	class TimelineController extends TimelineControllerRoot
 	{

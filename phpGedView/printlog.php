@@ -26,11 +26,11 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'printlog.php');
+define('WT_SCRIPT_NAME', 'printlog.php');
 require './config.php';
 
 //-- only allow admins
-if (!PGV_USER_GEDCOM_ADMIN) {
+if (!WT_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=admin.php");
 	exit;
 }
@@ -69,10 +69,10 @@ if ($logtype == "searchlog") {
 
 //-- make sure that they have admin status before they can use this page
 $auth = false;
-if (($logtype == "syslog") && PGV_USER_IS_ADMIN) {
+if (($logtype == "syslog") && WT_USER_IS_ADMIN) {
 	$auth = true;
 }
-if ((($logtype == "gedlog") || ($logtype == "searchlog")) && (userGedcomAdmin(PGV_USER_ID, get_gedcom_from_id($gedname)))) {
+if ((($logtype == "gedlog") || ($logtype == "searchlog")) && (userGedcomAdmin(WT_USER_ID, get_gedcom_from_id($gedname)))) {
 	$auth = true;
 }
 

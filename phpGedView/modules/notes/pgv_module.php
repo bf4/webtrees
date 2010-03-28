@@ -27,14 +27,14 @@
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-require_once(PGV_ROOT."includes/classes/class_module.php");
-require_once(PGV_ROOT."modules/notes/notes.php");
+require_once(WT_ROOT."includes/classes/class_module.php");
+require_once(WT_ROOT."modules/notes/notes.php");
 
-class notes_PGVModule extends PGVModule {
+class notes_WTModule extends WTModule {
 	protected $name = 'notes';
 	protected $description = 'Adds a tab to the individual page which displays the notes of an individual.';
 	protected $version = '4.2.2';

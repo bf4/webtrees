@@ -29,25 +29,25 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_HTML_BLOCK_PHP', '');
+define('WT_HTML_BLOCK_PHP', '');
 
-$PGV_BLOCKS["print_html_block"]["name"]			= i18n::translate('HTML');
-$PGV_BLOCKS["print_html_block"]["descr"]		= i18n::translate('This is a simple HTML block that you can place on your page to add any sort of message you may want.');
-$PGV_BLOCKS["print_html_block"]["canconfig"]= true;
-$PGV_BLOCKS["print_html_block"]["config"]		= array(
+$WT_BLOCKS["print_html_block"]["name"]			= i18n::translate('HTML');
+$WT_BLOCKS["print_html_block"]["descr"]		= i18n::translate('This is a simple HTML block that you can place on your page to add any sort of message you may want.');
+$WT_BLOCKS["print_html_block"]["canconfig"]= true;
+$WT_BLOCKS["print_html_block"]["config"]		= array(
 	"cache"=>1,
-	"html"=>i18n::translate('<p class="blockhc"><b>Put your title here</b></p><br /><p>Click the configure button')." <img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["admin"]["small"]."\" alt=\"".i18n::translate('Configure')."\" /> ".i18n::translate('to change what is printed here.</p>')
+	"html"=>i18n::translate('<p class="blockhc"><b>Put your title here</b></p><br /><p>Click the configure button')." <img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["admin"]["small"]."\" alt=\"".i18n::translate('Configure')."\" /> ".i18n::translate('to change what is printed here.</p>')
 );
 
 function print_html_block($block=true, $config="", $side, $index) {
-	global $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_IMAGES, $HTML_BLOCK_COUNT, $PGV_BLOCKS, $ctype;
+	global $WT_IMAGE_DIR, $TEXT_DIRECTION, $WT_IMAGES, $HTML_BLOCK_COUNT, $WT_BLOCKS, $ctype;
 
-	if (empty($config)) $config = $PGV_BLOCKS["print_html_block"]["config"];
+	if (empty($config)) $config = $WT_BLOCKS["print_html_block"]["config"];
 	if (!isset($HTML_BLOCK_COUNT)) $HTML_BLOCK_COUNT = 0;
 	$HTML_BLOCK_COUNT++;
 
@@ -55,15 +55,15 @@ function print_html_block($block=true, $config="", $side, $index) {
 	$title = "";
 	$content = embed_globals($config['html']);
 
-	if ($PGV_BLOCKS["print_html_block"]["canconfig"]) {
-		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+	if ($WT_BLOCKS["print_html_block"]["canconfig"]) {
+		if ($ctype=="gedcom" && WT_USER_GEDCOM_ADMIN || $ctype=="user" && WT_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = PGV_GEDCOM;
+				$name = WT_GEDCOM;
 			} else {
-				$name = PGV_USER_NAME;
+				$name = WT_USER_NAME;
 			}
 			$content .= "<br /><a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$content .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" title=\"".i18n::translate('Configure')."\" /></a>\n";
+			$content .= "<img class=\"adminicon\" src=\"$WT_IMAGE_DIR/".$WT_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" title=\"".i18n::translate('Configure')."\" /></a>\n";
 		}
 	}
 
@@ -76,13 +76,13 @@ function print_html_block($block=true, $config="", $side, $index) {
 }
 
 function print_html_block_config($config) {
-	global $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings;
-	$useFCK = file_exists(PGV_ROOT.'modules/FCKeditor/fckeditor.php');
+	global $ctype, $WT_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings;
+	$useFCK = file_exists(WT_ROOT.'modules/FCKeditor/fckeditor.php');
 	if($useFCK){
-		require PGV_ROOT.'modules/FCKeditor/fckeditor.php';
+		require WT_ROOT.'modules/FCKeditor/fckeditor.php';
 	}
-	if (empty($config)) $config = $PGV_BLOCKS["print_html_block"]["config"];
-	if (empty($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_html_block"]["config"]["cache"];
+	if (empty($config)) $config = $WT_BLOCKS["print_html_block"]["config"];
+	if (empty($config["cache"])) $config["cache"] = $WT_BLOCKS["print_html_block"]["config"]["cache"];
 	?>
 	<tr>
 	<td class="optionbox" colspan="2"><?php

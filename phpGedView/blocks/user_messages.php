@@ -29,26 +29,26 @@
  * @subpackage Blocks
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_USER_MESSAGES_PHP', '');
+define('WT_USER_MESSAGES_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
+require_once WT_ROOT.'includes/functions/functions_print_facts.php';
 
-$PGV_BLOCKS["print_user_messages"]["name"]		= i18n::translate('User Messages');
-$PGV_BLOCKS["print_user_messages"]["descr"]		= i18n::translate('The User Messages block shows a list of the messages that have been sent to the active user.');
-$PGV_BLOCKS["print_user_messages"]["type"]		= "user";
-$PGV_BLOCKS["print_user_messages"]["canconfig"]	= false;
-$PGV_BLOCKS["print_user_messages"]["config"]	= array("cache"=>0);
+$WT_BLOCKS["print_user_messages"]["name"]		= i18n::translate('User Messages');
+$WT_BLOCKS["print_user_messages"]["descr"]		= i18n::translate('The User Messages block shows a list of the messages that have been sent to the active user.');
+$WT_BLOCKS["print_user_messages"]["type"]		= "user";
+$WT_BLOCKS["print_user_messages"]["canconfig"]	= false;
+$WT_BLOCKS["print_user_messages"]["config"]	= array("cache"=>0);
 
 //-- print user messages
 function print_user_messages($block=true, $config="", $side, $index) {
-	global $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $PGV_IMAGES;
+	global $WT_IMAGE_DIR, $TEXT_DIRECTION, $WT_STORE_MESSAGES, $WT_IMAGES;
 
-	$usermessages = getUserMessages(PGV_USER_NAME);
+	$usermessages = getUserMessages(WT_USER_NAME);
 
 	$id="user_messages";
 	$title = i18n::translate('My Messages');
@@ -96,7 +96,7 @@ function print_user_messages($block=true, $config="", $side, $index) {
 			$content .= "<td class=\"list_value_wrap\"><input type=\"checkbox\" id=\"cb_message$key\" name=\"message_id[]\" value=\"$key\" /></td>";
 			$showmsg=preg_replace("/(\w)\/(\w)/","\$1/<span style=\"font-size:1px;\"> </span>\$2",PrintReady($message["subject"]));
 			$showmsg=str_replace("@","@<span style=\"font-size:1px;\"> </span>",$showmsg);
-			$content .= "<td class=\"list_value_wrap\"><a href=\"javascript:;\" onclick=\"expand_layer('message$key'); return false;\"><img id=\"message${key}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"".i18n::translate('Show Details')."\" title=\"".i18n::translate('Show Details')."\" /> <b>".$showmsg."</b></a></td>";
+			$content .= "<td class=\"list_value_wrap\"><a href=\"javascript:;\" onclick=\"expand_layer('message$key'); return false;\"><img id=\"message${key}_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"".i18n::translate('Show Details')."\" title=\"".i18n::translate('Show Details')."\" /> <b>".$showmsg."</b></a></td>";
 			if (!empty($message["created"])) {
 				$time = strtotime($message["created"]);
 			} else {
@@ -135,13 +135,13 @@ function print_user_messages($block=true, $config="", $side, $index) {
 	}
 	if (get_user_count()>1) {
 		$content .= i18n::translate('Send Message')." <select name=\"touser\">";
-		if (PGV_USER_IS_ADMIN) {
+		if (WT_USER_IS_ADMIN) {
 			$content .= "<option value=\"all\">".i18n::translate('Broadcast to all users')."</option>";
 			$content .= "<option value=\"never_logged\">".i18n::translate('Send message to users who have never logged in')."</option>";
 			$content .= "<option value=\"last_6mo\">".i18n::translate('Send message to users who have not logged in for 6 months')."</option>";
 		}
 		foreach (get_all_users() as $user_id=>$user_name) {
-			if ($user_id!=PGV_USER_ID && get_user_setting($user_id, 'verified_by_admin')=='yes' && get_user_setting($user_id, 'contactmethod')!='none') {
+			if ($user_id!=WT_USER_ID && get_user_setting($user_id, 'verified_by_admin')=='yes' && get_user_setting($user_id, 'contactmethod')!='none') {
 				$content .= "<option value=\"".$user_name."\">".PrintReady(getUserFullName($user_id))." ";
 				if ($TEXT_DIRECTION=="ltr") {
 					$content .= stripLRMRLM(getLRM()." - ".$user_name.getLRM());

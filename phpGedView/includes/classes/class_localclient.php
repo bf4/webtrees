@@ -26,14 +26,14 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_LOCALCLIENT_PHP', '');
+define('WT_CLASS_LOCALCLIENT_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
+require_once WT_ROOT.'includes/classes/class_serviceclient.php';
 
 class LocalClient extends ServiceClient {
 	/**
@@ -57,7 +57,7 @@ class LocalClient extends ServiceClient {
 	 * @param string $remoteid	the id of the record to get
 	 */
 	function getRemoteRecord($remoteid) {
-		$rec = find_gedcom_record($remoteid, PGV_GED_ID);
+		$rec = find_gedcom_record($remoteid, WT_GED_ID);
 		$rec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $rec);
 		return $rec;
 	}
@@ -71,7 +71,7 @@ class LocalClient extends ServiceClient {
 	 */
 	function mergeGedcomRecord($xref, $localrec, $isStub=false, $firstLink=false) {
 		//-- get the record from the database
-		$gedrec = find_gedcom_record($xref, PGV_GED_ID);
+		$gedrec = find_gedcom_record($xref, WT_GED_ID);
 		$gedrec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $gedrec);
 		$gedrec = $this->checkIds($gedrec);
 		if (empty($localrec)) return $gedrec;
@@ -79,7 +79,7 @@ class LocalClient extends ServiceClient {
 
 		//-- used to force an update on the first time linking a person
 		if ($firstLink) {
-			require_once PGV_ROOT.'includes/functions/functions_edit.php';
+			require_once WT_ROOT.'includes/functions/functions_edit.php';
 			$ct=preg_match("/0 @(.*)@/", $localrec, $match);
 			if ($ct>0)
 			{

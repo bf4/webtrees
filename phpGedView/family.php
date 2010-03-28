@@ -29,9 +29,9 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'family.php');
+define('WT_SCRIPT_NAME', 'family.php');
 require './config.php';
-require_once PGV_ROOT.'includes/controllers/family_ctrl.php';
+require_once WT_ROOT.'includes/controllers/family_ctrl.php';
 
 $controller = new FamilyController();
 $controller->init();
@@ -50,9 +50,9 @@ else if (!$controller->family->canDisplayDetails()) {
 }
 
 // LB added for Lightbox viewer ==============================================================
-if (PGV_USE_LIGHTBOX) {
-	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	require_once PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
+if (WT_USE_LIGHTBOX) {
+	require WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	require_once WT_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // LB ======================================================================================
 
@@ -101,7 +101,7 @@ if (empty($SEARCH_SPIDER) && !$controller->isPrintPreview() && $controller->acce
 						<table><tr><td> <!--//parents pedigree chart //-->
 						<?php
 						echo print_family_parents($controller->getFamilyID());
-						if (!$controller->isPrintPreview() && $controller->display && PGV_USER_CAN_EDIT) {
+						if (!$controller->isPrintPreview() && $controller->display && WT_USER_CAN_EDIT) {
 							$husb = $controller->getHusband();
 							if (empty($husb)) { ?>
 			<a href="javascript <?php echo i18n::translate('Add a new father'); ?>" onclick="return addnewparentfamily('', 'HUSB', '<?php echo $controller->famid; ?>');"><?php echo i18n::translate('Add a new father'), help_link('edit_add_parent'); ?></a><br />

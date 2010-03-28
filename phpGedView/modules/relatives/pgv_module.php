@@ -27,14 +27,14 @@
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-require_once(PGV_ROOT."includes/classes/class_module.php");
-require_once(PGV_ROOT."modules/relatives/relatives.php");
+require_once(WT_ROOT."includes/classes/class_module.php");
+require_once(WT_ROOT."modules/relatives/relatives.php");
 
-class relatives_PGVModule extends PGVModule {
+class relatives_WTModule extends WTModule {
 	protected $name = 'relatives';
 	protected $description = 'Adds a tab to the individual page which displays the families and close relatives of an individual.';
 	protected $version = '4.2.2';

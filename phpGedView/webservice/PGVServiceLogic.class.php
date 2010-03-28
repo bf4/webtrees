@@ -27,16 +27,16 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_PGV_SERVICELOGIC_CLASS_PHP', '');
+define('WT_WT_SERVICELOGIC_CLASS_PHP', '');
 
-require_once PGV_ROOT.'webservice/genealogyService.php';
-require_once PGV_ROOT.'includes/functions/functions_edit.php';
-require_once PGV_ROOT.'includes/classes/class_gewebservice.php';
+require_once WT_ROOT.'webservice/genealogyService.php';
+require_once WT_ROOT.'includes/functions/functions_edit.php';
+require_once WT_ROOT.'includes/classes/class_gewebservice.php';
 
 class PGVServiceLogic extends GenealogyService {
 
@@ -182,7 +182,7 @@ class PGVServiceLogic extends GenealogyService {
 		$data=array(
 			'compression' => $this->getCompressionLibs(),
 			'apiVersion'  => $this->service_version,
-			'server'      => PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT,
+			'server'      => WT_WEBTREES.' '.WT_VERSION_TEXT,
 			'gedcoms'     => new SOAP_Value('gedcoms', '{urn:'.$this->__namespace.'}ArrayOfGedcomList', $gedcomlist)
 		);
 
@@ -239,7 +239,7 @@ class PGVServiceLogic extends GenealogyService {
 	*/
 	function postAppendRecord($SID, $gedrec) {
 		if (!empty($gedrec)) {
-			if ((empty($_SESSION['readonly']))&& PGV_USER_CAN_EDIT) {
+			if ((empty($_SESSION['readonly']))&& WT_USER_CAN_EDIT) {
 				$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
 				$xref = append_gedrec($gedrec);
 				if ($xref) {
@@ -266,7 +266,7 @@ class PGVServiceLogic extends GenealogyService {
 	*/
 	function postDeleteRecord($SID, $RID) {
 		if (!empty($RID)) {
-			if (((empty($_SESSION['readonly']))&& PGV_USER_CAN_EDIT)&&(displayDetailsById($RID))) {
+			if (((empty($_SESSION['readonly']))&& WT_USER_CAN_EDIT)&&(displayDetailsById($RID))) {
 				$success = delete_gedrec($RID);
 				if ($success) {
 					addDebugLog("delete RID=$RID SUCCESS");
@@ -294,7 +294,7 @@ class PGVServiceLogic extends GenealogyService {
 	function postUpdateRecord($SID, $RID, $gedcom) {
 		if (!empty($RID)) {
 			if (!empty($gedcom)) {
-				if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT && displayDetailsById($RID)) {
+				if (empty($_SESSION['readonly']) && WT_USER_CAN_EDIT && displayDetailsById($RID)) {
 					$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedcom);
 					$success = replace_gedrec($RID, $gedrec);
 					return 'Gedcom updated.';
@@ -335,7 +335,7 @@ class PGVServiceLogic extends GenealogyService {
 		$fams = find_families_in_record($gedrec, "FAMS");
 		$familyS = array();
 		foreach ($fams as $f=>$famid) {
-//			$famrec = find_family_record($famid, PGV_GED_ID);
+//			$famrec = find_family_record($famid, WT_GED_ID);
 	//		$family = $this->createFamily($famid, $famrec, "item");
 			$familyS[] = $famid;
 		}
@@ -343,7 +343,7 @@ class PGVServiceLogic extends GenealogyService {
 		$famc = find_families_in_record($gedrec, "FAMC");
 		$familyC = array();
 		foreach ($famc as $f=>$famid) {
-			$famrec = find_family_record($famid, PGV_GED_ID);
+			$famrec = find_family_record($famid, WT_GED_ID);
 //			$family = $this->createFamily($famid, $famrec, "item");
 			$familyC[] = $famid;
 		}
@@ -372,11 +372,11 @@ class PGVServiceLogic extends GenealogyService {
 				$xref1 = trim($xref1);
 				if (!empty($xref1)) {
 					if (isset($pgv_changes[$xref1."_".$GEDCOM])) {
-						$gedrec = find_updated_record($xref1, PGV_GED_ID);
+						$gedrec = find_updated_record($xref1, WT_GED_ID);
 					}
 
 					if (empty($gedrec)) {
-						$gedrec = find_person_record($xref1, PGV_GED_ID);
+						$gedrec = find_person_record($xref1, WT_GED_ID);
 					}
 
 					if (!empty($gedrec)) {
@@ -448,11 +448,11 @@ class PGVServiceLogic extends GenealogyService {
 				$xref1 = trim($xref1);
 				if (!empty($xref1)) {
 					if (isset($pgv_changes[$xref1."_".$GEDCOM])) {
-						$gedrec = find_updated_record($xref1, PGV_GED_ID);
+						$gedrec = find_updated_record($xref1, WT_GED_ID);
 					}
 
 					if (empty($gedrec)) {
-						$gedrec = find_family_record($xref1, PGV_GED_ID);
+						$gedrec = find_family_record($xref1, WT_GED_ID);
 					}
 
 					if (!empty($gedrec)) {
@@ -511,11 +511,11 @@ class PGVServiceLogic extends GenealogyService {
 				$xref1 = trim($xref1);
 				if (!empty($xref1)) {
 					if (isset($pgv_changes[$xref1."_".$GEDCOM])) {
-						$gedrec = find_updated_record($xref1, PGV_GED_ID);
+						$gedrec = find_updated_record($xref1, WT_GED_ID);
 					}
 
 					if (empty($gedrec)) {
-						$gedrec = find_source_record($xref1, PGV_GED_ID);
+						$gedrec = find_source_record($xref1, WT_GED_ID);
 					}
 
 					if (!empty($gedrec)) {
@@ -553,11 +553,11 @@ class PGVServiceLogic extends GenealogyService {
 				$xref1 = trim($xref1);
 				if (!empty($xref1)) {
 					if (isset($pgv_changes[$xref1."_".$GEDCOM])) {
-						$gedrec = find_updated_record($xref1, PGV_GED_ID);
+						$gedrec = find_updated_record($xref1, WT_GED_ID);
 					}
 
 					if (empty($gedrec)) {
-						$gedrec = find_gedcom_record($xref1, PGV_GED_ID);
+						$gedrec = find_gedcom_record($xref1, WT_GED_ID);
 					}
 
 					if (!empty($gedrec)) {
@@ -615,7 +615,7 @@ class PGVServiceLogic extends GenealogyService {
 				//if its just a key word search
 				$results = array();
 				$results_array = array();
-				$search_results = search_indis(array($query), array(PGV_GED_ID), 'AND', true);
+				$search_results = search_indis(array($query), array(WT_GED_ID), 'AND', true);
 
 				// loop thru the returned result of the method call
 
@@ -724,7 +724,7 @@ class PGVServiceLogic extends GenealogyService {
 					$newarray = array();
 				}
 				if (count($queries)>0) {
-					$newarray = search_indis($queries, array(PGV_GED_ID), 'AND', true);
+					$newarray = search_indis($queries, array(WT_GED_ID), 'AND', true);
 				}
 			}
 			$results = array();
@@ -783,7 +783,7 @@ class PGVServiceLogic extends GenealogyService {
 
 	function postCheckUpdatesByID($SID,$RID,$lastUpdate) {
 		// Method call used to retrieve data by the Gedcom Id form PGV
-		$indirec = find_person_record($RID, PGV_GED_ID);
+		$indirec = find_person_record($RID, WT_GED_ID);
 
 		if (!empty($indirec)) {
 			// MEthod call used to reteave data by the Person Created above by there gedcom id.
@@ -995,7 +995,7 @@ class PGVServiceLogic extends GenealogyService {
 			addDebugLog("getXref type=$type position=$position ");
 			return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', $myindilist);
 		} elseif ($position=='new') {
-			if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT) {
+			if (empty($_SESSION['readonly']) && WT_USER_CAN_EDIT) {
 				if ((empty($type))||(!in_array($type, array("INDI","FAM","SOUR","REPO","NOTE","OBJE","OTHER")))) {
 					addDebugLog("getXref type=$type position=$position ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER");
 					//print "ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER\n";

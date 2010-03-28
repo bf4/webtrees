@@ -25,15 +25,15 @@
 // @subpackage Themes
 // @version $Id$
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
 echo '</div><div id="footer" class="block">', contact_links();
 
-if ($SHOW_STATS || PGV_DEBUG) {
+if ($SHOW_STATS || WT_DEBUG) {
 	echo execution_stats();
 }
 echo '</div>';
-echo '<div id="footer" ><a href="', PGV_PHPGEDVIEW_URL, '" target="_blank" alt="', PGV_PHPGEDVIEW, PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "" , '" title="', PGV_PHPGEDVIEW , PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "", '"><span style="font-size:150%; color:#888888;">', PGV_PHPGEDVIEW, '</span></a></div>';
+echo '<div id="footer" ><a href="', WT_WEBTREES_URL, '" target="_blank" alt="', WT_WEBTREES, WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): "" , '" title="', WT_WEBTREES , WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): "", '"><span style="font-size:150%; color:#888888;">', WT_WEBTREES, '</span></a></div>';

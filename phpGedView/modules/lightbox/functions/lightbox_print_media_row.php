@@ -30,7 +30,7 @@
  * @author Brian Holland
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -43,7 +43,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
  */
 function lightbox_print_media_row($rtype, $rowm, $pid) {
 
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
 	global $SHOW_ID_NUMBERS, $GEDCOM, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $SEARCH_SPIDER;
 	global $t, $n, $item, $items, $p, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note;
@@ -245,13 +245,13 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 				$submenu->addClass($submenu_class, $submenu_hoverclass);
 				$menu->addSubMenu($submenu);
 			}
-			if (PGV_USER_CAN_EDIT) {
+			if (WT_USER_CAN_EDIT) {
 				// Edit Media
 				$submenu = new Menu("&nbsp;&nbsp;" . i18n::translate('Edit Media') . "&nbsp;&nbsp;", "#", "right");
 				$submenu->addOnclick("return window.open('addmedia.php?action=editmedia&amp;pid={$rowm['m_media']}&amp;linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=700,resizable=1,scrollbars=1');");
 				$submenu->addClass($submenu_class, $submenu_hoverclass);
 				$menu->addSubMenu($submenu);
-				if (PGV_USER_IS_ADMIN) {
+				if (WT_USER_IS_ADMIN) {
 					// Manage Links
 					$submenu = new Menu("&nbsp;&nbsp;" . i18n::translate('Manage links') . "&nbsp;&nbsp;", "#", "right");
 					$submenu->addOnclick("return window.open('inverselink.php?mediaid={$rowm['m_media']}&amp;linkto=manage', '_blank', 'top=50,left=50,width=570,height=650,resizable=1,scrollbars=1');");

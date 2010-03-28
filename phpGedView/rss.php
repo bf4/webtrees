@@ -31,12 +31,12 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'rss.php');
+define('WT_SCRIPT_NAME', 'rss.php');
 require './config.php';
 
-require_once PGV_ROOT.'includes/classes/class_feedcreator.php';
-require_once PGV_ROOT.'includes/functions/functions_rss.php';
-require_once PGV_ROOT.'includes/index_cache.php';
+require_once WT_ROOT.'includes/classes/class_feedcreator.php';
+require_once WT_ROOT.'includes/functions/functions_rss.php';
+require_once WT_ROOT.'includes/index_cache.php';
 
 $feedCacheName = "fullFeed";
 
@@ -93,8 +93,8 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 	$author=getUserFullName($CONTACT_EMAIL);
 
 	$feed = new UniversalFeedCreator();
-	$feed->generator = PGV_PHPGEDVIEW_URL;
-	$feed->title = get_gedcom_setting(PGV_GED_ID, 'title');
+	$feed->generator = WT_WEBTREES_URL;
+	$feed->title = get_gedcom_setting(WT_GED_ID, 'title');
 	$feed->language = $lang_short_cut[$LANGUAGE]; //$lang_langcode[$LANGUAGE];
 	$feed->descriptionHtmlSyndicated = true;
 	//$feed->descriptionTruncSize = 500; // does not make sense to truncate HTML since it will result in unpredictable output
@@ -111,7 +111,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 	$image = new FeedImage();
 	$image->title = i18n::translate('Feed created by webtrees');
 	$image->url = $SERVER_URL."images/gedview.gif";
-	$image->link = PGV_PHPGEDVIEW_URL;
+	$image->link = WT_WEBTREES_URL;
 	$image->description = i18n::translate('Feed created by webtrees');
 	$image->descriptionHtmlSyndicated = true;
 	//$feed->descriptionTruncSize = 500; // does not make sense to truncate HTML since it will result in unpredictable output
@@ -121,7 +121,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 
 	if($ENABLE_RSS) {
 		// determine if to show parts of feed based on their exsistance in the blocks on index.php
-		$blocks=  getBlocks(PGV_GEDCOM);
+		$blocks=  getBlocks(WT_GEDCOM);
 		$main = $blocks["main"];
 
 		if(empty($module)) {
@@ -130,7 +130,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 				$printGedcomNews = true;
 			} else {
 				foreach($main as $mname => $value){
-					$PGV_BLOCKS[$value[0]]['config'] = $value[1]; //set the config needed by functions_rss
+					$WT_BLOCKS[$value[0]]['config'] = $value[1]; //set the config needed by functions_rss
 					if($value[0] == "print_todays_events"){
 						$printTodays = true;
 					} else if($value[0] == "print_upcoming_events"){
@@ -153,7 +153,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 				$printTodays = true;
 			} else {
 				foreach($right as $mname => $value){
-					$PGV_BLOCKS[$value[0]]['config'] = $value[1]; //set the config needed by functions_rss
+					$WT_BLOCKS[$value[0]]['config'] = $value[1]; //set the config needed by functions_rss
 					if($value[0] == "print_todays_events"){
 						$printTodays = true;
 					} else if($value[0] == "print_upcoming_events"){

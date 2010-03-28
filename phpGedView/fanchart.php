@@ -27,9 +27,9 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'fanchart.php');
+define('WT_SCRIPT_NAME', 'fanchart.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_charts.php';
+require_once WT_ROOT.'includes/functions/functions_charts.php';
 
 /**
  * split and center text by lines
@@ -100,18 +100,18 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 	global $PEDIGREE_GENERATIONS, $fan_width, $fan_style;
 	global $name, $SHOW_ID_NUMBERS, $view, $TEXT_DIRECTION;
 	global $stylesheet, $print_stylesheet;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $LINK_ICONS, $GEDCOM, $SERVER_URL;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $LINK_ICONS, $GEDCOM, $SERVER_URL;
 	global $fanChart;
 
 	// check for GD 2.x library
 	if (!defined("IMG_ARC_PIE")) {
 		echo "<span class=\"error\">".i18n::translate('PHP server misconfiguration: GD 2.x library required to use image functions.')."</span>";
-		echo " <a href=\"" . i18n::translate('http://www.php.net/gd') . "\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["help"]["small"]."\" class=\"icon\" alt=\"\" /></a><br /><br />";
+		echo " <a href=\"" . i18n::translate('http://www.php.net/gd') . "\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["help"]["small"]."\" class=\"icon\" alt=\"\" /></a><br /><br />";
 		return false;
 	}
 	if (!function_exists("ImageTtfBbox")) {
 		echo "<span class=\"error\">".i18n::translate('PHP server misconfiguration: FreeType library required to use TrueType fonts.')."</span>";
-		echo " <a href=\"" . i18n::translate('http://www.php.net/gd') . "\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["help"]["small"]."\" class=\"icon\" alt=\"\" /></a><br /><br />";
+		echo " <a href=\"" . i18n::translate('http://www.php.net/gd') . "\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["help"]["small"]."\" class=\"icon\" alt=\"\" /></a><br /><br />";
 		return false;
 	}
 
@@ -187,8 +187,8 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 		while ($sosa >= $p2) {
 			$pid=$treeid[$sosa];
 			if (!empty($pid)) {
-				$indirec=find_person_record($pid, PGV_GED_ID);
-				if (!$indirec) $indirec = find_updated_record($pid, PGV_GED_ID);
+				$indirec=find_person_record($pid, WT_GED_ID);
+				if (!$indirec) $indirec = find_updated_record($pid, WT_GED_ID);
 
 				if ($sosa%2) $bg=$bgcolorF;
 				else $bg=$bgcolorM;
@@ -296,11 +296,11 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 				if (!empty($addname)) echo "<br />" . PrintReady($addname);
 				echo "</a>";
 				echo "<br /><a href=\"pedigree.php?rootid=$pid\" >".i18n::translate('Pedigree Tree')."</a>";
-				if (file_exists(PGV_ROOT.'modules/googlemap/pedigree_map.php')) {
+				if (file_exists(WT_ROOT.'modules/googlemap/pedigree_map.php')) {
 					echo "<br /><a href=\"module.php?mod=googlemap&pgvaction=pedigree_map&rootid=".$pid."\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".i18n::translate('Pedigree Map')."</a>";
 				}
-				if (PGV_USER_GEDCOM_ID && PGV_USER_GEDCOM_ID!=$pid) {
-					echo "<br /><a href=\"".encode_url("relationship.php?pid1=".PGV_USER_GEDCOM_ID."&pid2={$pid}&ged={$GEDCOM}")."\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".i18n::translate('Relationship to me')."</a>";
+				if (WT_USER_GEDCOM_ID && WT_USER_GEDCOM_ID!=$pid) {
+					echo "<br /><a href=\"".encode_url("relationship.php?pid1=".WT_USER_GEDCOM_ID."&pid2={$pid}&ged={$GEDCOM}")."\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".i18n::translate('Relationship to me')."</a>";
 				}
 				echo "<br /><a href=\"descendancy.php?pid=$pid\" >".i18n::translate('Descendancy Chart')."</a>";
 				echo "<br /><a href=\"ancestry.php?rootid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".i18n::translate('Ancestry Chart')."</a>";
@@ -314,13 +314,13 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 					$cfamids = find_family_ids($pid);
 					$num=0;
 					for ($f=0; $f<count($cfamids); $f++) {
-						$famrec = find_family_record($cfamids[$f], PGV_GED_ID);
+						$famrec = find_family_record($cfamids[$f], WT_GED_ID);
 						if ($famrec) $num += preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 					}
 					if ($famids ||($num>1)) {
 						//-- spouse(s) and children
 						for ($f=0; $f<count($famids); $f++) {
-							$famrec = find_family_record(trim($famids[$f]), PGV_GED_ID);
+							$famrec = find_family_record(trim($famids[$f]), WT_GED_ID);
 							if ($famrec) {
 								$parents = find_parents($famids[$f]);
 								if ($parents) {
@@ -342,7 +342,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 						}
 						//-- siblings
 						for ($f=0; $f<count($cfamids); $f++) {
-							$famrec = find_family_record($cfamids[$f], PGV_GED_ID);
+							$famrec = find_family_record($cfamids[$f], WT_GED_ID);
 							if ($famrec) {
 								$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 								if ($num>2) echo "<br /><span class=\"name1\">".i18n::translate('Siblings')."</span>";
@@ -381,7 +381,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 		ImageStringUp($image, 1, $fanw-10, $fanh/3, $SERVER_URL, $color);
 	} else {
 		// PGV banner ;-)
-		ImageStringUp($image, 1, $fanw-10, $fanh/3, PGV_PHPGEDVIEW_URL, $color);
+		ImageStringUp($image, 1, $fanw-10, $fanh/3, WT_WEBTREES_URL, $color);
 	}
 
 	// here we cannot send image to browser ('header already sent')
@@ -423,7 +423,7 @@ $addname=$person->getAddName();
 // -- print html header information
 print_header(PrintReady($name) . " " . i18n::translate('Circle Diagram'));
 
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 
 if (strlen($name)<30) $cellwidth="420";
 else $cellwidth=(strlen($name)*14);
@@ -436,9 +436,9 @@ echo "</h2>";
 
 // -- print the form to change the number of displayed generations
 if ($view != "preview") {
-	echo PGV_JS_START;
+	echo WT_JS_START;
 	echo "var pastefield; function paste_id(value) { pastefield.value=value; }";
-	echo PGV_JS_END;
+	echo WT_JS_END;
 	echo "</td><td><form name=\"people\" method=\"get\" action=\"?\">";
 	echo "<table class=\"list_table $TEXT_DIRECTION\"><tr>";
 

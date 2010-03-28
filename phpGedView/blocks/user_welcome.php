@@ -29,37 +29,37 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_USER_WELCOME_PHP', '');
+define('WT_USER_WELCOME_PHP', '');
 
-$PGV_BLOCKS["print_welcome_block"]["name"]		= i18n::translate('User Welcome');
-$PGV_BLOCKS["print_welcome_block"]["descr"]		= i18n::translate('The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his My Page.');
-$PGV_BLOCKS["print_welcome_block"]["type"]		= "user";
-$PGV_BLOCKS["print_welcome_block"]["canconfig"]	= false;
-$PGV_BLOCKS["print_welcome_block"]["config"]	= array("cache"=>0);
+$WT_BLOCKS["print_welcome_block"]["name"]		= i18n::translate('User Welcome');
+$WT_BLOCKS["print_welcome_block"]["descr"]		= i18n::translate('The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his My Page.');
+$WT_BLOCKS["print_welcome_block"]["type"]		= "user";
+$WT_BLOCKS["print_welcome_block"]["canconfig"]	= false;
+$WT_BLOCKS["print_welcome_block"]["config"]	= array("cache"=>0);
 
 //-- function to print the welcome block
 function print_welcome_block($block=true, $config="", $side, $index) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $WT_IMAGE_DIR, $WT_IMAGES;
 
 	$id="user_welcome";
-	$title = i18n::translate('Welcome')." ".getUserFullName(PGV_USER_ID);
+	$title = i18n::translate('Welcome')." ".getUserFullName(WT_USER_ID);
 
 	$content = "<table class=\"blockcontent\" cellspacing=\"0\" cellpadding=\"0\" style=\" width: 100%; direction:ltr;\"><tr>";
 	$content .= "<td class=\"tab_active_bottom\" colspan=\"3\" ></td></tr><tr>";
-	if (get_user_setting(PGV_USER_ID, 'editaccount')=='Y') {
-		$content .= "<td class=\"center details2\" style=\" width: 33%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"edituser.php\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]."\" border=\"0\" alt=\"".i18n::translate('My Account')."\" title=\"".i18n::translate('My Account')."\" /><br />".i18n::translate('My Account')."</a></td>";
+	if (get_user_setting(WT_USER_ID, 'editaccount')=='Y') {
+		$content .= "<td class=\"center details2\" style=\" width: 33%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"edituser.php\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["mygedview"]["small"]."\" border=\"0\" alt=\"".i18n::translate('My Account')."\" title=\"".i18n::translate('My Account')."\" /><br />".i18n::translate('My Account')."</a></td>";
 	}
-	if (PGV_USER_GEDCOM_ID) {
-		$content .= "<td class=\"center details2\" style=\" width: 34%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"".encode_url("pedigree.php?rootid=".PGV_USER_GEDCOM_ID)."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]."\" border=\"0\" alt=\"".i18n::translate('My Pedigree')."\" title=\"".i18n::translate('My Pedigree')."\" /><br />".i18n::translate('My Pedigree')."</a></td>";
-		$content .= "<td class=\"center details2\" style=\" width: 33%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"".encode_url("individual.php?pid=".PGV_USER_GEDCOM_ID)."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"".i18n::translate('My Individual Record')."\" title=\"".i18n::translate('My Individual Record')."\" /><br />".i18n::translate('My Individual Record')."</a></td>";
+	if (WT_USER_GEDCOM_ID) {
+		$content .= "<td class=\"center details2\" style=\" width: 34%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"".encode_url("pedigree.php?rootid=".WT_USER_GEDCOM_ID)."\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["pedigree"]["small"]."\" border=\"0\" alt=\"".i18n::translate('My Pedigree')."\" title=\"".i18n::translate('My Pedigree')."\" /><br />".i18n::translate('My Pedigree')."</a></td>";
+		$content .= "<td class=\"center details2\" style=\" width: 33%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"".encode_url("individual.php?pid=".WT_USER_GEDCOM_ID)."\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"".i18n::translate('My Individual Record')."\" title=\"".i18n::translate('My Individual Record')."\" /><br />".i18n::translate('My Individual Record')."</a></td>";
 	}
 	$content .= "</tr><tr><td class=\"center\" colspan=\"3\">";
-	$content .= "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name=".PGV_USER_NAME."&ctype=user")."', '_blank', 'top=50,left=10,width=600,height=350,scrollbars=1,resizable=1');\">".i18n::translate('Customize My Page')."</a>";
+	$content .= "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name=".WT_USER_NAME."&ctype=user")."', '_blank', 'top=50,left=10,width=600,height=350,scrollbars=1,resizable=1');\">".i18n::translate('Customize My Page')."</a>";
 	$content .= help_link('mygedview_customize');
 	$content .= "<br />".format_timestamp(client_time());
 	$content .= "</td>";

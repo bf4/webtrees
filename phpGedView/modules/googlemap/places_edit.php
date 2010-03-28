@@ -27,13 +27,13 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require PGV_ROOT.'modules/googlemap/defaultconfig.php';
-require PGV_ROOT.'includes/functions/functions_edit.php';
+require WT_ROOT.'modules/googlemap/defaultconfig.php';
+require WT_ROOT.'includes/functions/functions_edit.php';
 require $INDEX_DIRECTORY."pgv_changes.php";
 
 if (isset($_REQUEST['placeid'])) $placeid = $_REQUEST['placeid'];
@@ -42,7 +42,7 @@ if (isset($_REQUEST['action']))  $action  = $_REQUEST['action'];
 
 print_simple_header(i18n::translate('Edit geographic place locations'));
 
-if (!PGV_USER_IS_ADMIN) {
+if (!WT_USER_IS_ADMIN) {
 	echo "<table class=\"facts_table\">\n";
 	echo "<tr><td colspan=\"2\" class=\"facts_value\">", i18n::translate('Page only for Administrators');
 	echo "</td></tr></table>\n";
@@ -112,7 +112,7 @@ function place_id_to_hierarchy($id) {
 	global $TBLPREFIX;
 
 	$statement=
-		PGV_DB::prepare("SELECT pl_parent_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_id=?");
+		WT_DB::prepare("SELECT pl_parent_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_id=?");
 	$arr=array();
 	while ($id!=0) {
 		$row=$statement->execute(array($id))->fetchOneRow();
@@ -126,15 +126,15 @@ function place_id_to_hierarchy($id) {
 function getHighestIndex() {
 	global $TBLPREFIX;
 
-	return (int)PGV_DB::prepare("SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation")->fetchOne();
+	return (int)WT_DB::prepare("SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation")->fetchOne();
 }
 
 $where_am_i=place_id_to_hierarchy($placeid);
 $level=count($where_am_i);
 
-if ($action=='addrecord' && PGV_USER_IS_ADMIN) {
+if ($action=='addrecord' && WT_USER_IS_ADMIN) {
 	$statement=
-		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+		WT_DB::prepare("INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
 	if (($_POST['LONG_CONTROL'] == '') || ($_POST['NEW_PLACE_LONG'] == '') || ($_POST['NEW_PLACE_LATI'] == '')) {
 		$statement->execute(array(getHighestIndex()+1, $placeid, $level, stripLRMRLM($_POST['NEW_PLACE_NAME']), null, null, $_POST['NEW_ZOOM_FACTOR'], $_POST['icon']));
@@ -142,7 +142,7 @@ if ($action=='addrecord' && PGV_USER_IS_ADMIN) {
 		$statement->execute(array(getHighestIndex()+1, $placeid, $level, stripLRMRLM($_POST['NEW_PLACE_NAME']), $_POST['LONG_CONTROL'][3].$_POST['NEW_PLACE_LONG'], $_POST['LATI_CONTROL'][3].$_POST['NEW_PLACE_LATI'], $_POST['NEW_ZOOM_FACTOR'], $_POST['icon']));
 	}
 
-	if ($EDIT_AUTOCLOSE && !PGV_DEBUG) {
+	if ($EDIT_AUTOCLOSE && !WT_DEBUG) {
 		echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 	}
 	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();return false;\">", i18n::translate('Close Window'), "</a></div><br />\n";
@@ -150,9 +150,9 @@ if ($action=='addrecord' && PGV_USER_IS_ADMIN) {
 	exit;
 }
 
-if ($action=='updaterecord' && PGV_USER_IS_ADMIN) {
+if ($action=='updaterecord' && WT_USER_IS_ADMIN) {
 	$statement=
-		PGV_DB::prepare("UPDATE {$TBLPREFIX}placelocation SET pl_place=?, pl_lati=?, pl_long=?, pl_zoom=?, pl_icon=? WHERE pl_id=?");
+		WT_DB::prepare("UPDATE {$TBLPREFIX}placelocation SET pl_place=?, pl_lati=?, pl_long=?, pl_zoom=?, pl_icon=? WHERE pl_id=?");
 
 	if (($_POST['LONG_CONTROL'] == '') || ($_POST['NEW_PLACE_LONG'] == '') || ($_POST['NEW_PLACE_LATI'] == '')) {
 		$statement->execute(array(stripLRMRLM($_POST['NEW_PLACE_NAME']), null, null, $_POST['NEW_ZOOM_FACTOR'], $_POST['icon'], $placeid));
@@ -160,7 +160,7 @@ if ($action=='updaterecord' && PGV_USER_IS_ADMIN) {
 		$statement->execute(array(stripLRMRLM($_POST['NEW_PLACE_NAME']), $_POST['LATI_CONTROL'][3].$_POST['NEW_PLACE_LATI'], $_POST['LONG_CONTROL'][3].$_POST['NEW_PLACE_LONG'], $_POST['NEW_ZOOM_FACTOR'], $_POST['icon'], $placeid));
 	}
 
-	if ($EDIT_AUTOCLOSE && !PGV_DEBUG) {
+	if ($EDIT_AUTOCLOSE && !WT_DEBUG) {
 		echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 	}
 	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();return false;\">", i18n::translate('Close Window'), "</a></div><br />\n";
@@ -171,7 +171,7 @@ if ($action=='updaterecord' && PGV_USER_IS_ADMIN) {
 if ($action=="update") {
 	// --- find the place in the file
 	$row=
-		PGV_DB::prepare("SELECT pl_place, pl_lati, pl_long, pl_icon, pl_parent_id, pl_level, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
+		WT_DB::prepare("SELECT pl_place, pl_lati, pl_long, pl_icon, pl_parent_id, pl_level, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
 		->execute(array($placeid))
 		->fetchOneRow();
 	$place_name = $row->pl_place;
@@ -199,7 +199,7 @@ if ($action=="update") {
 
 	do {
 		$row=
-			PGV_DB::prepare("SELECT pl_lati, pl_long, pl_parent_id, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
+			WT_DB::prepare("SELECT pl_lati, pl_long, pl_parent_id, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
 			->execute(array($parent_id))
 			->fetchOneRow();
 		if (!$row) {
@@ -233,7 +233,7 @@ if ($action=="add") {
 		$parent_id=$placeid;
 		do {
 			$row=
-				PGV_DB::prepare("SELECT pl_lati, pl_long, pl_parent_id, pl_zoom, pl_level FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
+				WT_DB::prepare("SELECT pl_lati, pl_long, pl_parent_id, pl_zoom, pl_level FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
 				->execute(array($parent_id))
 				->fetchOneRow();
 			if ($row->pl_lati!==null && $row->pl_long!==null) {
@@ -533,7 +533,7 @@ if ($action=="add") {
 			childicon.infoWindowAnchor = new GPoint(5, 1);
 <?php
 			$rows=
-				PGV_DB::prepare("SELECT pl_place, pl_lati, pl_long, pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=?")
+				WT_DB::prepare("SELECT pl_place, pl_lati, pl_long, pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=?")
 				->execute(array($placeid))
 				->fetchAll();
 			$i = 0;

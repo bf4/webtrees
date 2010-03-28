@@ -31,14 +31,14 @@
  * @subpackage Lists
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_STATS_UI_PHP', '');
+define('WT_CLASS_STATS_UI_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_stats.php';
+require_once WT_ROOT.'includes/classes/class_stats.php';
 class stats_ui extends stats
 {
 ///////////////////////////////////////////////////////////////////////////////
@@ -46,7 +46,7 @@ class stats_ui extends stats
 ///////////////////////////////////////////////////////////////////////////////
 
 	static function _getFavorites($isged=true) {
-		global $GEDCOM, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $TEXT_DIRECTION, $INDEX_DIRECTORY;
+		global $GEDCOM, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $ctype, $TEXT_DIRECTION, $INDEX_DIRECTORY;
 		global $show_full, $PEDIGREE_FULL_DETAILS;
 
 		// Override GEDCOM configuration temporarily
@@ -59,12 +59,12 @@ class stats_ui extends stats
 			$userfavs = getUserFavorites($GEDCOM);
 		}
 		else {
-			$userfavs = getUserFavorites(PGV_USER_NAME);
+			$userfavs = getUserFavorites(WT_USER_NAME);
 		}
 		$content = '';
 		if(!count($userfavs)) {
 			if($isged) {
-				if(PGV_USER_GEDCOM_ADMIN) {
+				if(WT_USER_GEDCOM_ADMIN) {
 					$content .= i18n::translate('You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title.');
 				} else {
 					$content .= i18n::translate('At this moment there are no selected Favorites.	The admin can add Favorites to display at startup.');
@@ -90,7 +90,7 @@ class stats_ui extends stats
 				$content .= '<tr><td>';
 				if($favorite['type'] == 'URL') {
 					$content .= "<div id=\"boxurl{$k}.0\" class=\"person_box\">\n";
-					if($ctype == 'user' || PGV_USER_GEDCOM_ADMIN){$content .= $removeFavourite;}
+					if($ctype == 'user' || WT_USER_GEDCOM_ADMIN){$content .= $removeFavourite;}
 					$content .= "<a href=\"{$favorite['url']}\"><b>".PrintReady($favorite['title']).'</b></a>';
 					$content .= "<br />\n".PrintReady($favorite['note'], false, true);
 					$content .= "</div>\n";
@@ -108,7 +108,7 @@ class stats_ui extends stats
 								elseif(strpos($indirec, "\n1 SEX M")!==false){$content .= '';}
 								else{$content .= 'NN';}
 								$content .= "\">\n";
-								if($ctype == 'user' || PGV_USER_GEDCOM_ADMIN){$content .= $removeFavourite;}
+								if($ctype == 'user' || WT_USER_GEDCOM_ADMIN){$content .= $removeFavourite;}
 								ob_start();
 								print_pedigree_person($favorite['gid'], 2, 1, $k);
 								$content .= ob_get_clean();
@@ -120,7 +120,7 @@ class stats_ui extends stats
 							{
 								$record=GedcomRecord::getInstance($favorite['gid']);
 								$content .= "<div id=\"box{$favorite['gid']}.0\" class=\"person_box\">\n";
-								if($ctype == 'user' || PGV_USER_GEDCOM_ADMIN){$content .= $removeFavourite;}
+								if($ctype == 'user' || WT_USER_GEDCOM_ADMIN){$content .= $removeFavourite;}
 								$content .= $record->format_list('span');
 								$content .= "<br />\n".PrintReady($favorite['note'], false, true);
 								$content .= "</div>\n";
@@ -139,7 +139,7 @@ class stats_ui extends stats
 			}
 			$content .= "</table>\n";
 		}
-		if(($isged && PGV_USER_GEDCOM_ADMIN) || !$isged) {
+		if(($isged && WT_USER_GEDCOM_ADMIN) || !$isged) {
 			$content .= '
 				<script language="JavaScript" type="text/javascript">
 				var pastefield;
@@ -152,7 +152,7 @@ class stats_ui extends stats
 			$uniqueID = floor(microtime() * 1000000);
 			if($isged) {
 				$content .=
-					"<b><a href=\"javascript://".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>"
+					"<b><a href=\"javascript://".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>"
 				 	.help_link('index_add_favorites')
 					."<br />\n<div id=\"add_ged_fav\" style=\"display: none;\">\n"
 					."<form name=\"addgfavform\" method=\"post\" action=\"index.php\">\n"
@@ -162,7 +162,7 @@ class stats_ui extends stats
 			}
 			else {
 				$content .=
-					"<b><a href=\"javascript://".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>"
+					"<b><a href=\"javascript://".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>"
 					.help_link('index_add_favorites')
 					."<br />\n<div id=\"add_user_fav\" style=\"display: none;\">\n"
 					."<form name=\"addufavform\" method=\"post\" action=\"index.php\">\n"
@@ -205,16 +205,16 @@ class stats_ui extends stats
 	static function userFavorites(){return self::_getFavorites(false);}
 
 	static function totalGedcomFavorites(){return count(getUserFavorites($GLOBALS['GEDCOM']));}
-	static function totalUserFavorites(){return count(getUserFavorites(PGV_USER_NAME));}
+	static function totalUserFavorites(){return count(getUserFavorites(WT_USER_NAME));}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Messages                                                                  //
 ///////////////////////////////////////////////////////////////////////////////
 
 	static function userMessages() {
-		global $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $PGV_IMAGES;
+		global $WT_IMAGE_DIR, $TEXT_DIRECTION, $WT_STORE_MESSAGES, $WT_IMAGES;
 
-		$usermessages = getUserMessages(PGV_USER_NAME);
+		$usermessages = getUserMessages(WT_USER_NAME);
 
 		$content = "<form name=\"messageform\" action=\"\" onsubmit=\"return confirm('".i18n::translate('Are you sure you want to delete this message?  It cannot be retrieved later.')."');\">";
 		if(count($usermessages) == 0) {
@@ -254,7 +254,7 @@ class stats_ui extends stats
 				$content .= "<tr>\n<td class=\"list_value_wrap\"><input type=\"checkbox\" id=\"cb_message{$k}\" name=\"message_id[]\" value=\"{$k}\" /></td>\n";
 				$showmsg = preg_replace('/(\w)\/(\w)/',"\$1/<span style=\"font-size:1px;\"> </span>\$2", PrintReady($message['subject']));
 				$showmsg = str_replace("@","@<span style=\"font-size:1px;\"> </span>", $showmsg);
-				$content .= "<td class=\"list_value_wrap\"><a href=\"javascript:;\" onclick=\"expand_layer('message{$k}'); return false;\"><b>{$showmsg}</b> <img id=\"message{$k}_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" title=\"\" /></a></td>\n";
+				$content .= "<td class=\"list_value_wrap\"><a href=\"javascript:;\" onclick=\"expand_layer('message{$k}'); return false;\"><b>{$showmsg}</b> <img id=\"message{$k}_img\" src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" title=\"\" /></a></td>\n";
 				if(!empty($message['created'])){$t = strtotime($message['created']);}else{$t = time();}
 				$content .= '<td class="list_value_wrap">'.format_timestamp($t)."</td>\n".'<td class="list_value_wrap">';
 				$user_id = get_user_id($message['from']);
@@ -290,14 +290,14 @@ class stats_ui extends stats
 		}
 		if(get_user_count() > 1) {
 			$content .= i18n::translate('Send Message')." <select name=\"touser\">";
-			if(PGV_USER_IS_ADMIN) {
+			if(WT_USER_IS_ADMIN) {
 				$content .= "<option value=\"all\">".i18n::translate('Broadcast to all users')."</option>\n"
 					."<option value=\"never_logged\">".i18n::translate('Send message to users who have never logged in')."</option>\n"
 					."<option value=\"last_6mo\">".i18n::translate('Send message to users who have not logged in for 6 months')."</option>\n"
 				;
 			}
 			foreach(get_all_users() as $user_id=>$user_name) {
-				if($user_id != PGV_USER_ID && get_user_setting($user_id, 'verified_by_admin') == 'yes') {
+				if($user_id != WT_USER_ID && get_user_setting($user_id, 'verified_by_admin') == 'yes') {
 					$content .= "<option value=\"{$user_id}\">".PrintReady(getUserFullName($user_id)).' ';
 					if($TEXT_DIRECTION == 'ltr') {
 						$content .= getLRM()." - {$user_id}".getLRM();
@@ -314,16 +314,16 @@ class stats_ui extends stats
 		return $content;
 	}
 
-	function totalUserMessages(){return count(getUserMessages(PGV_USER_NAME));}
+	function totalUserMessages(){return count(getUserMessages(WT_USER_NAME));}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Journal                                                                //
 ///////////////////////////////////////////////////////////////////////////////
 
 	static function userJournal() {
-		global $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype;
+		global $WT_IMAGE_DIR, $WT_IMAGES, $TEXT_DIRECTION, $ctype;
 
-		$usernews = getUserNews(PGV_USER_ID);
+		$usernews = getUserNews(WT_USER_ID);
 		$content = '';
 		if(count($usernews) == 0) {
 			$content .= i18n::translate('You have not created any Journal items.')." ";
@@ -343,20 +343,20 @@ class stats_ui extends stats
 				."</div><br />\n"
 			;
 		}
-		if(PGV_USER_ID) {
-			$content .= "<br />\n<a href=\"javascript:;\" onclick=\"addnews('".PGV_USER_ID."'); return false;\">".i18n::translate('Add a new Journal entry')."</a>";
+		if(WT_USER_ID) {
+			$content .= "<br />\n<a href=\"javascript:;\" onclick=\"addnews('".WT_USER_ID."'); return false;\">".i18n::translate('Add a new Journal entry')."</a>";
 		}
 		return $content;
 	}
 
-	function totalUserJournal(){ return count(getUserNews(PGV_USER_ID));}
+	function totalUserJournal(){ return count(getUserNews(WT_USER_ID));}
 
 ///////////////////////////////////////////////////////////////////////////////
 // News                                                                      //
 ///////////////////////////////////////////////////////////////////////////////
 
 	static function gedcomNews($params=null) {
-		global $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $PGV_BLOCKS;
+		global $WT_IMAGE_DIR, $WT_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $WT_BLOCKS;
 
 		if($params === null){$params = array();}
 		if(isset($params[0]) && $params[0] != ''){$limit = strtolower($params[0]);}else{$limit = 'count';}
@@ -400,7 +400,7 @@ class stats_ui extends stats
 			$content .= PrintReady($newsText)."<br />\n";
 
 			// Print Admin options for this News item
-			if(PGV_USER_GEDCOM_ADMIN) {
+			if(WT_USER_GEDCOM_ADMIN) {
 				$content .= "<hr size=\"1\" />"
 					."<a href=\"javascript:;\" onclick=\"editnews('{$k}'); return false;\">".i18n::translate('Edit')."</a> | "
 					."<a href=\"".encode_url("index.php?action=deletenews&news_id={$k}&ctype={$ctype}")."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this News entry?')."');\">".i18n::translate('Delete')."</a><br />"
@@ -409,7 +409,7 @@ class stats_ui extends stats
 			$content .= "</div>\n";
 		}
 		$printedAddLink = false;
-		if(PGV_USER_GEDCOM_ADMIN) {
+		if(WT_USER_GEDCOM_ADMIN) {
 			$content .= "<a href=\"javascript:;\" onclick=\"addnews('".str_replace("'", "\'", $GEDCOM)."'); return false;\">".i18n::translate('Add a News article')."</a>";
 			$printedAddLink = true;
 		}

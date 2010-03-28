@@ -27,17 +27,17 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_DESCENDANCY_PHP', '');
+define('WT_DESCENDANCY_PHP', '');
 
-require_once PGV_ROOT.'includes/controllers/basecontrol.php';
-require_once PGV_ROOT.'includes/functions/functions_charts.php';
+require_once WT_ROOT.'includes/controllers/basecontrol.php';
+require_once WT_ROOT.'includes/functions/functions_charts.php';
 
-require_once PGV_ROOT.'includes/classes/class_person.php';
+require_once WT_ROOT.'includes/classes/class_person.php';
 
 // -- array of GEDCOM elements that will be found but should not be displayed
 $nonfacts[] = "FAMS";
@@ -198,17 +198,17 @@ class DescendancyControllerRoot extends BaseController {
  * @param int $depth the descendancy depth to show
  */
 function print_child_descendancy(&$person, $depth) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $Dindent;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $Dindent;
 	global $personcount;
 
 	if (is_null($person)) return;
 	//print_r($person);
 	print "<li>";
 	print "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td>";
-	if ($depth==$this->generations) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"3\" width=\"$Dindent\" border=\"0\" alt=\"\" /></td><td>\n";
+	if ($depth==$this->generations) print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" height=\"3\" width=\"$Dindent\" border=\"0\" alt=\"\" /></td><td>\n";
 	else {
-		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"3\" width=\"3\" border=\"0\" alt=\"\" />";
-		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" height=\"3\" width=\"".($Dindent-3)."\" border=\"0\" alt=\"\" /></td><td>\n";
+		print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" height=\"3\" width=\"3\" border=\"0\" alt=\"\" />";
+		print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["hline"]["other"]."\" height=\"3\" width=\"".($Dindent-3)."\" border=\"0\" alt=\"\" /></td><td>\n";
 	}
 	print_pedigree_person($person->getXref(), 1, $this->view!="preview",'',$personcount);
 	print "</td>";
@@ -265,7 +265,7 @@ function print_child_descendancy(&$person, $depth) {
  * @param int $depth the descendancy depth to show
  */
 function print_family_descendancy(&$person, &$family, $depth) {
-	global $GEDCOM, $PGV_IMAGE_DIR, $PGV_IMAGES, $Dindent, $personcount;
+	global $GEDCOM, $WT_IMAGE_DIR, $WT_IMAGES, $Dindent, $personcount;
 
 	if (is_null($family)) return;
 	if (is_null($person)) return;
@@ -281,9 +281,9 @@ function print_family_descendancy(&$person, &$family, $depth) {
 
 		// print marriage info
 		print "<li>";
-		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"".($Dindent+4)."\" border=\"0\" alt=\"\" />";
+		print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"".($Dindent+4)."\" border=\"0\" alt=\"\" />";
 		print "<span class=\"details1\" style=\"white-space: nowrap; \" >";
-		print "<a href=\"#\" onclick=\"expand_layer('".$famid.$personcount."'); return false;\" class=\"top\"><img id=\"".$famid.$personcount."_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".i18n::translate('View Family')."\" /></a>";
+		print "<a href=\"#\" onclick=\"expand_layer('".$famid.$personcount."'); return false;\" class=\"top\"><img id=\"".$famid.$personcount."_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".i18n::translate('View Family')."\" /></a>";
 		$marriage = $family->getMarriage();
 		if ($marriage->canShow()) {
 			echo ' <a href="', encode_url($family->getLinkUrl()), '" class="details1">';
@@ -346,9 +346,9 @@ function print_family_descendancy(&$person, &$family, $depth) {
 
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists(PGV_ROOT.'includes/controllers/descendancy_ctrl_user.php'))
+if (file_exists(WT_ROOT.'includes/controllers/descendancy_ctrl_user.php'))
 {
-	require_once PGV_ROOT.'includes/controllers/descendancy_ctrl_user.php';
+	require_once WT_ROOT.'includes/controllers/descendancy_ctrl_user.php';
 }
 else
 {

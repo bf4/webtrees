@@ -29,7 +29,7 @@
  * @version $Id$
  * @author Brian Holland
  */
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -37,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 global $tabno, $LB_MUSIC_FILE, $LB_SS_SPEED, $LB_TRANSITION, $TEXT_DIRECTION;
 
 // Get Javascript variables from lb_config.php ---------------------------
-//			require_once PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+//			require_once WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
 //			if ($theme_name=="Minimal") {
 				// Force icon options to "text" when we're dealing with the Minimal theme
 //				if ($LB_AL_HEAD_LINKS!="none") $LB_AL_HEAD_LINKS = "text";
@@ -103,7 +103,7 @@ global $tabno, $LB_MUSIC_FILE, $LB_SS_SPEED, $LB_TRANSITION, $TEXT_DIRECTION;
 
 <?php
 
-		require_once PGV_ROOT.'js/prototype.js.htm';
+		require_once WT_ROOT.'js/prototype.js.htm';
 
 
 // -------------------------------------------------------------------------------

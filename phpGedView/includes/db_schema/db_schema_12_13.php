@@ -50,12 +50,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_SCHEMA_12_13', '');
+define('WT_SCHEMA_12_13', '');
 
 if (!self::table_exists("{$TBLPREFIX}hit_counter")) {
 	self::exec(
@@ -72,14 +72,14 @@ if (!self::table_exists("{$TBLPREFIX}hit_counter")) {
 // Migrate the data from *pgv_counters.txt to the new table
 global $INDEX_DIRECTORY;
 
-$statement=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}hit_counter (gedcom_id, page_name, page_parameter, page_count) VALUES (?, ?, ?, ?)");
+$statement=WT_DB::prepare("INSERT INTO {$TBLPREFIX}hit_counter (gedcom_id, page_name, page_parameter, page_count) VALUES (?, ?, ?, ?)");
 
 foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 	// Caution these files might be quite large...
 	$file=$INDEX_DIRECTORY.$ged_name.'pgv_counters.txt';
 	if (file_exists($file)) {
 		foreach (file($file) as $line) {
-			if (preg_match('/(@('.PGV_REGEX_XREF.')@ )?(\d+)/', $line, $match)) {
+			if (preg_match('/(@('.WT_REGEX_XREF.')@ )?(\d+)/', $line, $match)) {
 				if ($match[2]) {
 					$page_name='individual.php';
 					$page_parameter=$match[2];

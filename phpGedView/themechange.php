@@ -28,12 +28,12 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'themechange.php');
+define('WT_SCRIPT_NAME', 'themechange.php');
 require './config.php';
 
 // Extract request variables
 $mytheme =safe_GET('mytheme');
-$frompage=safe_GET('frompage', PGV_REGEX_URL, 'index.php');
+$frompage=safe_GET('frompage', WT_REGEX_URL, 'index.php');
 // decode frompage address to recover the address with variables
 $frompage = base64_decode($frompage);
 
@@ -42,8 +42,8 @@ foreach (get_theme_names() as $themename=>$themedir) {
 	if ($themedir==$mytheme) {
 		$_SESSION['theme_dir']=$mytheme;
 		// Make the change permanent, if allowed
-		if (get_user_setting(PGV_USER_ID, 'editaccount')=='Y') {
-			set_user_setting(PGV_USER_ID, 'theme', $mytheme);
+		if (get_user_setting(WT_USER_ID, 'editaccount')=='Y') {
+			set_user_setting(WT_USER_ID, 'theme', $mytheme);
 		}
 		break;
 	}

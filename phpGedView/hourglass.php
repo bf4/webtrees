@@ -31,9 +31,9 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'hourglass.php');
+define('WT_SCRIPT_NAME', 'hourglass.php');
 require './config.php';
-require_once PGV_ROOT.'includes/controllers/hourglass_ctrl.php';
+require_once WT_ROOT.'includes/controllers/hourglass_ctrl.php';
 
 $controller = new HourglassController();
 $controller->init();
@@ -41,7 +41,7 @@ $controller->init();
 // -- print html header information
 print_header(PrintReady($controller->name)." ".i18n::translate('Hourglass Chart'));
 
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 
 if ($controller->view=="preview") {
 	print "<h2 style=\"text-align: center\">".i18n::translate('Hourglass Chart').":&nbsp;&nbsp;&nbsp;".PrintReady($controller->name)."</h2>";
@@ -54,9 +54,9 @@ if ($controller->view=="preview") {
 $controller->setupJavascript();
 
 // LBox =====================================================================================
-if (PGV_USE_LIGHTBOX) {
-	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
+if (WT_USE_LIGHTBOX) {
+	require WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	require WT_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // ==========================================================================================
 

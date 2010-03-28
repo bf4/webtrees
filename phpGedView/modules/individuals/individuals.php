@@ -27,23 +27,23 @@
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once PGV_ROOT.'includes/classes/class_sidebar.php';
+require_once WT_ROOT.'includes/classes/class_sidebar.php';
 
-if (!defined('PGV_AUTOCOMPLETE_LIMIT')) define('PGV_AUTOCOMPLETE_LIMIT', 500);
+if (!defined('WT_AUTOCOMPLETE_LIMIT')) define('WT_AUTOCOMPLETE_LIMIT', 500);
 
 class individuals_Sidebar extends Sidebar {
 
 	public function getContent() {
 		global $SHOW_MARRIED_NAMES;
-		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $WT_IMAGE_DIR, $WT_IMAGES;
 
 		// Fetch a list of the initial letters of all surnames in the database
-		$initials=get_indilist_salpha($SHOW_MARRIED_NAMES, false, PGV_GED_ID);
+		$initials=get_indilist_salpha($SHOW_MARRIED_NAMES, false, WT_GED_ID);
 
 		$out = '<script type="text/javascript">
 		<!--
@@ -79,7 +79,7 @@ class individuals_Sidebar extends Sidebar {
 					  success: function(html){
 					    jQuery("#sb_indi_"+surname+" div").html(html);
 					    jQuery("#sb_indi_"+surname+" div").show();
-					    jQuery("#sb_indi_"+surname).css("list-style-image", "url('.$PGV_IMAGE_DIR."/".$PGV_IMAGES['minus']['other'].')");
+					    jQuery("#sb_indi_"+surname).css("list-style-image", "url('.$WT_IMAGE_DIR."/".$WT_IMAGES['minus']['other'].')");
 					    loadedNames[surname]=2;
 					  }
 					});
@@ -87,12 +87,12 @@ class individuals_Sidebar extends Sidebar {
 				else if (loadedNames[surname]==1) {
 					loadedNames[surname]=2;
 					jQuery("#sb_indi_"+surname+" div").show();
-					jQuery("#sb_indi_"+surname).css("list-style-image", "url('.$PGV_IMAGE_DIR."/".$PGV_IMAGES['minus']['other'].')");
+					jQuery("#sb_indi_"+surname).css("list-style-image", "url('.$WT_IMAGE_DIR."/".$WT_IMAGES['minus']['other'].')");
 				}
 				else {
 					loadedNames[surname]=1;
 					jQuery("#sb_indi_"+surname+" div").hide();
-					jQuery("#sb_indi_"+surname).css("list-style-image", "url('.$PGV_IMAGE_DIR."/".$PGV_IMAGES['plus']['other'].')");
+					jQuery("#sb_indi_"+surname).css("list-style-image", "url('.$WT_IMAGE_DIR."/".$WT_IMAGES['plus']['other'].')");
 				}
 				return false;
 			});
@@ -136,7 +136,7 @@ class individuals_Sidebar extends Sidebar {
 
 	public function getAlphaSurnames($alpha, $surname1='') {
 		global $SHOW_MARRIED_NAMES;
-		$surns=get_indilist_surns('', $alpha, $SHOW_MARRIED_NAMES, false, PGV_GED_ID);
+		$surns=get_indilist_surns('', $alpha, $SHOW_MARRIED_NAMES, false, WT_GED_ID);
 		$out = '<ul>';
 		foreach($surns as $surname=>$surns) {
 			$out .= '<li id="sb_indi_'.$surname.'" class="sb_indi_surname_li"><a href="'.$surname.'" title="'.$surname.'" alt="'.$alpha.'" class="sb_indi_surname">'.$surname.'</a>';
@@ -155,7 +155,7 @@ class individuals_Sidebar extends Sidebar {
 
 	public function getSurnameIndis($alpha, $surname) {
 		global $SHOW_MARRIED_NAMES;
-		$indis=get_indilist_indis($surname, $alpha, '', $SHOW_MARRIED_NAMES, false, PGV_GED_ID);
+		$indis=get_indilist_indis($surname, $alpha, '', $SHOW_MARRIED_NAMES, false, WT_GED_ID);
 		$out = '<ul>';
 		$private_count = 0;
 		foreach($indis as $person) {
@@ -180,12 +180,12 @@ class individuals_Sidebar extends Sidebar {
 		$sql=
 		"SELECT ? AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
 		" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
-		" WHERE (i_id ".PGV_DB::$LIKE." ? OR n_sort ".PGV_DB::$LIKE." ?)".
+		" WHERE (i_id ".WT_DB::$LIKE." ? OR n_sort ".WT_DB::$LIKE." ?)".
 		" AND i_id=n_id AND i_file=n_file AND i_file=?".
 		" ORDER BY n_sort";
 		$rows=
-		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
-		->execute(array('INDI', "%{$query}%", "%{$query}%", PGV_GED_ID))
+		WT_DB::prepareLimit($sql, WT_AUTOCOMPLETE_LIMIT)
+		->execute(array('INDI', "%{$query}%", "%{$query}%", WT_GED_ID))
 		->fetchAll(PDO::FETCH_ASSOC);
 
 		$out = '<ul>';

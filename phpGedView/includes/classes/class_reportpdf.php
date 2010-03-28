@@ -31,7 +31,7 @@
  * @link http://www.tcpdf.org
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -39,10 +39,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 /**
 * @todo add info
 */
-define('PGV_CLASS_REPORTPDF_PHP', '');
+define('WT_CLASS_REPORTPDF_PHP', '');
 
-require_once PGV_ROOT."includes/classes/class_reportbase.php";
-require_once PGV_ROOT."library/tcpdf/tcpdf.php";
+require_once WT_ROOT."includes/classes/class_reportbase.php";
+require_once WT_ROOT."library/tcpdf/tcpdf.php";
 
 /**
 * Main PGV Report Class for PDF
@@ -93,9 +93,9 @@ class PGVReportBasePDF extends PGVReportBase {
 		$this->pdf->setRTL($this->rtl);
 		// Set the document information
 		// Only admin should see the version number
-		$appversion = PGV_PHPGEDVIEW;
-		if (PGV_USER_IS_ADMIN) {
-			$appversion .= " ".PGV_VERSION_TEXT;
+		$appversion = WT_WEBTREES;
+		if (WT_USER_IS_ADMIN) {
+			$appversion .= " ".WT_VERSION_TEXT;
 		}
 		$this->pdf->SetCreator($appversion." (".parent::pgv_url.")");
 		// Not implemented yet - PGVReportBase::setup()

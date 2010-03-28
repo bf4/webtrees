@@ -26,12 +26,12 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_MENU_PHP', '');
+define('WT_CLASS_MENU_PHP', '');
 
 class Menu {
 	var $separator = false;
@@ -195,8 +195,8 @@ class Menu {
 		global
 			$menucount,
 			$TEXT_DIRECTION,
-			$PGV_IMAGE_DIR,
-			$PGV_IMAGES
+			$WT_IMAGE_DIR,
+			$WT_IMAGES
 		;
 
 		if (!isset($menucount))
@@ -211,7 +211,7 @@ class Menu {
 		if ($this->separator)
 		{
 			$output = "<div id=\"menu{$id}\" class=\"menu_separator center\">"
-			."<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['hline']['other']}\" alt=\"\" />"
+			."<img src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['hline']['other']}\" alt=\"\" />"
 			."</div>";
 			return $output;
 		}
@@ -332,9 +332,9 @@ class Menu {
 	}
 
 	function printMenu() {
-		global $PGV_MENUS_AS_LISTS;
+		global $WT_MENUS_AS_LISTS;
 
-		if ($PGV_MENUS_AS_LISTS) {
+		if ($WT_MENUS_AS_LISTS) {
 			echo $this->getMenuAsList();
 		} else {
 			echo $this->getMenu();

@@ -29,11 +29,11 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'admin.php');
+define('WT_SCRIPT_NAME', 'admin.php');
 require './config.php';
 
-if (!PGV_USER_GEDCOM_ADMIN) {
-	if (PGV_USER_ID) {
+if (!WT_USER_GEDCOM_ADMIN) {
+	if (WT_USER_ID) {
 		header("Location: index.php");
 		exit;
 	} else {
@@ -108,7 +108,7 @@ foreach(get_all_users() as $user_id=>$user_name) {
 	}
 }
 
-echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_END;
+echo WT_JS_START, 'function showchanges() {window.location.reload();}', WT_JS_END;
 ?>
 <script type="text/javascript">
 //<![CDATA[
@@ -120,12 +120,12 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 <table class="center <?php echo $TEXT_DIRECTION ?> width90">
 	<tr>
 		<td colspan="2" class="center"><?php
-		echo '<h2>', PGV_PHPGEDVIEW, ' ', PGV_VERSION_TEXT, '<br />', i18n::translate('Administration'), '</h2>';
+		echo '<h2>', WT_WEBTREES, ' ', WT_VERSION_TEXT, '<br />', i18n::translate('Administration'), '</h2>';
 		echo i18n::translate('Current Server Time:');
 		echo " ".format_timestamp(time());
 		echo "<br />".i18n::translate('Current User Time:');
 		echo " ".format_timestamp(client_time());
-		if (PGV_USER_IS_ADMIN) {
+		if (WT_USER_IS_ADMIN) {
 			if ($err_write) {
 				echo "<br /><span class=\"error\">";
 				echo i18n::translate('Your <i>config.php</i> file is still writable.  For security, you should set the permissions of this file back to read-only when you have finished configuring your site.');
@@ -151,15 +151,15 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 	<ul>
 		<li><a href="#info"><span><?php echo i18n::translate('Informational')?></span></a></li>
 		<li><a href="#gedcom"><span><?php echo i18n::translate('Data and GEDCOM administration')?></span></a></li>
-		<?php if (PGV_USER_CAN_EDIT) { ?>
+		<?php if (WT_USER_CAN_EDIT) { ?>
 		<li><a href="#unlinked"><span><?php echo i18n::translate('Unlinked Records')?></span></a></li>
 		<?php } ?>
-		<?php if (PGV_USER_IS_ADMIN) { ?>
+		<?php if (WT_USER_IS_ADMIN) { ?>
 		<li><a href="#site"><span><?php echo i18n::translate('Site administration')?></span></a></li>
 		<?php } ?>
 		<?php 
-		$modules = PGVModule::getActiveListAllGeds();
-		if (PGV_USER_IS_ADMIN || count($modules)>0) {?>
+		$modules = WTModule::getActiveListAllGeds();
+		if (WT_USER_IS_ADMIN || count($modules)>0) {?>
 		<!-- ---- MODIFIED BY BH ------------------------------------ -->
 			<!-- <li><a href="#modules"><span><?php // echo i18n::translate('Module Administration')?></span></a></li> -->
 			<li><a href="#modules" onclick="window.location='module_admin.php';" ><span><?php echo i18n::translate('Module Administration')?></span></a></li>
@@ -195,10 +195,10 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 					href="edit_merge.php"><?php echo i18n::translate('Merge records'); ?></a><?php echo help_link('help_edit_merge.php'); ?></td>
 			</tr>
 			<tr>
-				<td class="optionbox width50"><?php if (PGV_USER_IS_ADMIN) {  echo '<a href="dir_editor.php">', i18n::translate('Cleanup Index directory'), '</a>', help_link('help_dir_editor.php'); } ?></td>
+				<td class="optionbox width50"><?php if (WT_USER_IS_ADMIN) {  echo '<a href="dir_editor.php">', i18n::translate('Cleanup Index directory'), '</a>', help_link('help_dir_editor.php'); } ?></td>
 				<td class="optionbox width50"><?php if ($d_pgv_changes != "") echo $d_pgv_changes; else echo "&nbsp;"; ?></td>
 			</tr>
-			<?php if (PGV_USER_GEDCOM_ADMIN && is_dir('./modules/batch_update')) { ?>
+			<?php if (WT_USER_GEDCOM_ADMIN && is_dir('./modules/batch_update')) { ?>
 			<tr>
 				<td class="optionbox with50"><a
 					href="module.php?mod=batch_update"><?php echo i18n::translate('Batch Update'); ?></a><?php echo help_link('batch_update'); ?></td>
@@ -208,7 +208,7 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 		</table>
 	</div>
 	
-	<?php if (PGV_USER_CAN_EDIT) { 
+	<?php if (WT_USER_CAN_EDIT) { 
 		?>
 		<div id="unlinked">
 		<table class="center <?php echo $TEXT_DIRECTION ?> width100">
@@ -236,7 +236,7 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 		<?php 
 	} 
 	
-	if (PGV_USER_IS_ADMIN) { 
+	if (WT_USER_IS_ADMIN) { 
 		?>
 		<div id="site">
 		<table class="center <?php echo $TEXT_DIRECTION ?> width100">
@@ -270,7 +270,7 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 		<?php
 	} 
 
-	if (PGV_USER_IS_ADMIN || count($modules)>0) {
+	if (WT_USER_IS_ADMIN || count($modules)>0) {
 		echo '<div id="modules">';
 			// Added by BH ------------------------
 			echo i18n::translate('Loading...'); 
@@ -294,11 +294,11 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 		}
 		echo "</td></tr></table><hr>";
 	}
-	echo PGV_JS_START;
+	echo WT_JS_START;
 	echo 'function manageservers() {';
 	echo ' window.open("manageservers.php", "", "top=50,left=50,width=700,height=500,scrollbars=1,resizable=1");';
 	echo '}';
-	echo PGV_JS_END;
+	echo WT_JS_END;
 echo '<br /><br />';
 print_footer();
 ?>

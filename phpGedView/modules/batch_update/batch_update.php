@@ -28,17 +28,17 @@
  * $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-if (!PGV_USER_GEDCOM_ADMIN) {
+if (!WT_USER_GEDCOM_ADMIN) {
 	header('Location: module.php?mod=batch_update');
 	exit;
 }
 
-require PGV_ROOT.'includes/functions/functions_edit.php';
+require WT_ROOT.'includes/functions/functions_edit.php';
 
 class batch_update {
 	var $plugin   =null; // Form parameter: chosen plugin
@@ -71,7 +71,7 @@ class batch_update {
 		$all_gedcoms=get_all_gedcoms();
 		asort($all_gedcoms);
 		foreach ($all_gedcoms as $ged_id=>$gedcom) {
-			$html.='<option value="'.$gedcom.'"'.($ged_id==PGV_GED_ID ? ' selected="selected"' : '').'>'.get_gedcom_setting($ged_id, 'title').'</option>';
+			$html.='<option value="'.$gedcom.'"'.($ged_id==WT_GED_ID ? ' selected="selected"' : '').'>'.get_gedcom_setting($ged_id, 'title').'</option>';
 		}
 		$html.='</select></td></tr><tr valign="top"><td class="list_label">'.i18n::translate('Batch Update').':</td><td class="optionbox wrap"><select name="plugin" onchange="reset_reload();">';
 		if (!$this->plugin) {
@@ -124,7 +124,7 @@ class batch_update {
 	function __construct() {
 		$this->plugins=self::getPluginList();              // List of available plugins
 		$this->plugin =safe_GET('plugin', array_keys($this->plugins)); // User parameters
-		$this->xref   =safe_GET('xref',   PGV_REGEX_XREF);
+		$this->xref   =safe_GET('xref',   WT_REGEX_XREF);
 		$this->action =safe_GET('action');
 		$this->data   =safe_GET('data');
 
@@ -247,30 +247,30 @@ class batch_update {
 			switch ($type) {
 			case 'INDI':
 				$sql[]="SELECT i_id, 'INDI' FROM {$TBLPREFIX}individuals WHERE i_file=?";
-				$vars[]=PGV_GED_ID;
+				$vars[]=WT_GED_ID;
 				break;
 			case 'FAM':
 				$sql[]="SELECT f_id, 'FAM' FROM {$TBLPREFIX}families WHERE f_file=?";
-				$vars[]=PGV_GED_ID;
+				$vars[]=WT_GED_ID;
 				break;
 			case 'SOUR':
 				$sql[]="SELECT s_id, 'SOUR' FROM {$TBLPREFIX}sources WHERE s_file=?";
-				$vars[]=PGV_GED_ID;
+				$vars[]=WT_GED_ID;
 				break;
 			case 'OBJE':
 				$sql[]="SELECT m_media, 'OBJE' FROM {$TBLPREFIX}media WHERE m_gedfile=?";
-				$vars[]=PGV_GED_ID;
+				$vars[]=WT_GED_ID;
 				break;
 			default:
 				$sql[]="SELECT o_id, ? FROM {$TBLPREFIX}other WHERE o_type=? AND o_file=?";
 				$vars[]=$type;
 				$vars[]=$type;
-				$vars[]=PGV_GED_ID;
+				$vars[]=WT_GED_ID;
 				break;
 			}
 		}
 		$this->all_xrefs=
-			PGV_DB::prepare(implode(' UNION ', $sql).' ORDER BY 1 ASC')
+			WT_DB::prepare(implode(' UNION ', $sql).' ORDER BY 1 ASC')
 			->execute($vars)
 			->fetchAssoc();
 	}

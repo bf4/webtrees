@@ -51,7 +51,7 @@
 * with a backslash or enclose the entire URL in apostrophes instead of quotation marks.
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -72,14 +72,14 @@ if (empty($SEARCH_SPIDER)) {
 }
 
 // Third sub-menu (visible only to users with site Admin rights)
-if (PGV_USER_IS_ADMIN) {
+if (WT_USER_IS_ADMIN) {
 	$submenu = new Menu("Custom Menu Item 3", "custom link #2");
 	$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 	$menu->addSubmenu($submenu);
 }
 
 // Fourth sub-menu (visible only to users with GEDCOM Admin rights)
-if (PGV_USER_GEDCOM_ADMIN) {
+if (WT_USER_GEDCOM_ADMIN) {
 	$submenu = new Menu("Custom Menu Item 4", "custom link #2");
 	$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 	$menu->addSubmenu($submenu);

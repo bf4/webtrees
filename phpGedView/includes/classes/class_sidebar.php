@@ -27,16 +27,16 @@
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_SIDEBAR_PHP', '');
+define('WT_CLASS_SIDEBAR_PHP', '');
 
 /**
  * Defines the base class for a sidebar
- * Sidebars are created by Modules through instances of the PGVModule class
+ * Sidebars are created by Modules through instances of the WTModule class
  * @author jfinlay
  *
  */

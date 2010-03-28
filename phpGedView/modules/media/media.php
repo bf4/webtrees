@@ -27,12 +27,12 @@
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once PGV_ROOT.'includes/classes/class_tab.php';
+require_once WT_ROOT.'includes/classes/class_tab.php';
 
 class media_Tab extends Tab {
 
@@ -44,7 +44,7 @@ class media_Tab extends Tab {
 		
 		ob_start();
 		// For Reorder media ------------------------------------
-		if (PGV_USER_CAN_EDIT) {
+		if (WT_USER_CAN_EDIT) {
 			echo "<center>";
 			require_once './includes/media_tab_head.php';
 			echo "</center>";
@@ -63,7 +63,7 @@ class media_Tab extends Tab {
 			$media_found = print_main_media($this->controller->pid, 0, true);
 			if (!$media_found) print "<tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".i18n::translate('There are no media objects for this individual.')."</td></tr>\n";
 			//-- New Media link
-			if (!$this->controller->isPrintPreview() && PGV_USER_CAN_EDIT && $this->controller->indi->canDisplayDetails()) {
+			if (!$this->controller->isPrintPreview() && WT_USER_CAN_EDIT && $this->controller->indi->canDisplayDetails()) {
 		?>
 				<tr>
 					<td class="facts_label"><?php echo i18n::translate('Add Media'), help_link('add_media'); ?></td>

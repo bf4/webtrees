@@ -28,13 +28,13 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'addsearchlink.php');
+define('WT_SCRIPT_NAME', 'addsearchlink.php');
 require './config.php';
 
 print_simple_header(i18n::translate('Add Local Link'));
 
 //-- only allow users with editing access to this page
-if (!PGV_USER_CAN_EDIT) {
+if (!WT_USER_CAN_EDIT) {
 	print i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
 	print_simple_footer();
 	exit;

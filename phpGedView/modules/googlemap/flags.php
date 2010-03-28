@@ -27,13 +27,13 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require PGV_ROOT.'modules/googlemap/defaultconfig.php';
-require PGV_ROOT.'includes/functions/functions_edit.php';
+require WT_ROOT.'modules/googlemap/defaultconfig.php';
+require WT_ROOT.'includes/functions/functions_edit.php';
 require $INDEX_DIRECTORY."pgv_changes.php";
 
 if (isset($_REQUEST['countrySelected'])) $countrySelected = $_REQUEST['countrySelected'];
@@ -91,7 +91,7 @@ if ($action == "ChangeFlag") {
 	//-->
 	</script>
 <?php
-	if ($EDIT_AUTOCLOSE && !PGV_DEBUG) {
+	if ($EDIT_AUTOCLOSE && !WT_DEBUG) {
 		echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 	}
 	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">", i18n::translate('Close Window'), "</a></div><br />\n";

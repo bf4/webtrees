@@ -27,7 +27,7 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -48,10 +48,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			<link href="<?php echo encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}"); ?>" rel="alternate" type="<?php echo $applicationType; ?>" title=" <?php echo htmlspecialchars($GEDCOM_TITLE); ?>" />
 		<?php } ?>
 		<?php if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
-			<link rel="stylesheet" href="<?php echo PGV_THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
+			<link rel="stylesheet" href="<?php echo WT_THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 		<?php }
 		// Additional css files required
-		if (PGV_USE_LIGHTBOX) {
+		if (WT_USE_LIGHTBOX) {
 			if ($TEXT_DIRECTION=='rtl') {
 				echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />';
 				echo '<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';
@@ -77,19 +77,19 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		<?php if (!empty($META_PAGE_TYPE)) {?><meta name="page-type" content="<?php echo htmlspecialchars($META_PAGE_TYPE); ?>" /><?php } ?>
 		<?php if (!empty($META_ROBOTS)) {?><meta name="robots" content="<?php echo htmlspecialchars($META_ROBOTS); ?>" /><?php } ?>
 		<?php if (!empty($META_REVISIT)) {?><meta name="revisit-after" content="<?php echo htmlspecialchars($META_REVISIT); ?>" /><?php } ?>
-		<meta name="generator" content="<?php echo PGV_PHPGEDVIEW, ' - ', PGV_PHPGEDVIEW_URL; ?>" />
+		<meta name="generator" content="<?php echo WT_WEBTREES, ' - ', WT_WEBTREES_URL; ?>" />
 	<?php } ?>
 	<?php echo $javascript; ?>
 	<?php echo $head; //-- additional header information ?>
 	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
 	<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
 	<?php if ($TEXT_DIRECTION=='rtl') {?>
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>style_rtl.css" rel="Stylesheet"  media="all" />  
+	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo WT_THEME_DIR?>style_rtl.css" rel="Stylesheet"  media="all" />  
 	<?php }?>
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>modules.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo WT_THEME_DIR?>modules.css" rel="Stylesheet" />
 	<link type="text/css" href="<?php echo $stylesheet; ?>"  rel="stylesheet" media="all" />
 </head>
 <body id="body" <?php echo $bodyOnLoad; ?>>
@@ -116,7 +116,7 @@ else if ($view!='simple'){?>
 				<input type="hidden" name="action" value="general" />
 				<input type="hidden" name="topsearch" value="yes" />
 				<input type="text" class="formbut" name="query" size="15" value="<?php echo i18n::translate('Search')?>" onfocus="if (this.value == '<?php echo i18n::translate('Search')?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php echo i18n::translate('Search')?>';" />
-				<input type="image" src="<?php echo $PGV_IMAGE_DIR ?>/go.gif" align="top" title="<?php echo i18n::translate('Search')?>" />
+				<input type="image" src="<?php echo $WT_IMAGE_DIR ?>/go.gif" align="top" title="<?php echo i18n::translate('Search')?>" />
 			</form>
 			</div>
 			<div align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right" ?>">

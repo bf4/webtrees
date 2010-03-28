@@ -30,12 +30,12 @@
  * functionality, such as mixed RTL and LTR text.
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_I18N_PHP', '');
+define('WT_CLASS_I18N_PHP', '');
 
 class i18n {
 	static private $locale='';
@@ -63,9 +63,9 @@ class i18n {
 				} else {
 					$prefs=array();
 				}
-				if (PGV_GED_ID) {
+				if (WT_GED_ID) {
 					// TODO: this value isn't currently stored in the DB!
-					$locale=get_gedcom_setting(PGV_GED_ID, 'language');
+					$locale=get_gedcom_setting(WT_GED_ID, 'language');
 					if (array_key_exists($locale, $installed_languages)) {
 						$prefs[]=$locale.';q=0.2';
 					}
@@ -90,7 +90,7 @@ class i18n {
 		}
 		// We now have a valid locale.  Save it and load it.
 		$_SESSION['locale']=$locale;
-		$translate=new Zend_Translate('gettext', PGV_ROOT.'language/'.$locale.'.mo', $locale);
+		$translate=new Zend_Translate('gettext', WT_ROOT.'language/'.$locale.'.mo', $locale);
 		// TODO: This is where we would use $translate->addTranslation() to add module translations
 		// Make the locale and translation adapter available to the rest of the Zend Framework
 		Zend_Registry::set('Zend_Locale',    $locale);
@@ -139,7 +139,7 @@ class i18n {
 			return $_SESSION['installed_languages'];
 		} else {
 			$_SESSION['installed_languages']=array();
-			$d=opendir(PGV_ROOT.'language');
+			$d=opendir(WT_ROOT.'language');
 			while (($f=readdir($d))!==false) {
 				if (preg_match('/^([a-z][a-z][a-z]?(@[a-z]+|_[A-Z][A-Z])?)\.mo$/', $f, $match)) {
 					// TODO: gettext() and ZF use different standards for locale names :-(

@@ -27,22 +27,22 @@
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_class_MODULE_PHP', '');
+define('WT_class_MODULE_PHP', '');
 
-require_once(PGV_ROOT.'includes/classes/class_tab.php');
-require_once(PGV_ROOT.'includes/classes/class_sidebar.php');
+require_once(WT_ROOT.'includes/classes/class_tab.php');
+require_once(WT_ROOT.'includes/classes/class_sidebar.php');
 
 /**
  * abstract class that is to be overidden by implementing modules
  * @author jfinlay
  *
  */
-abstract class PGVModule {
+abstract class WTModule {
 	private $id = 0;
 	private $accessLevel = array();
 	private $menuEnabled = array();
@@ -69,13 +69,13 @@ abstract class PGVModule {
 	/**
 	 * Get an instance of the desired module class based on a db row
 	 * @param $row
-	 * @return PGVModule
+	 * @return WTModule
 	 */
 	static function &getInstance($row) {
 		$entry=$row->mod_name;
 		if (file_exists("modules/$entry/pgv_module.php")) {
 			include_once("modules/$entry/pgv_module.php");
-			$menu_class = $entry."_PGVModule";
+			$menu_class = $entry."_WTModule";
 			$obj = new $menu_class();
 			$obj->setId($row->mod_id);
 			$obj->setName($entry);
@@ -97,20 +97,20 @@ abstract class PGVModule {
 	public function getSidebarorder() { return $this->sidebarorder; }
 	public function getVersion() { return $this->version; }
 	public function getPgvVersion() { return $this->pgvVersion; }
-	public function getAccessLevel($gedId = PGV_GED_ID) {
-		if (!isset($this->accessLevel[$gedId])) $this->accessLevel[$gedId] = PGV_PRIV_PUBLIC;
+	public function getAccessLevel($gedId = WT_GED_ID) {
+		if (!isset($this->accessLevel[$gedId])) $this->accessLevel[$gedId] = WT_PRIV_PUBLIC;
 		return $this->accessLevel[$gedId];
 	}
-	public function getMenuEnabled($gedId = PGV_GED_ID) {
-		if (!isset($this->menuEnabled[$gedId])) $this->menuEnabled[$gedId] = PGV_PRIV_PUBLIC;
+	public function getMenuEnabled($gedId = WT_GED_ID) {
+		if (!isset($this->menuEnabled[$gedId])) $this->menuEnabled[$gedId] = WT_PRIV_PUBLIC;
 		return $this->menuEnabled[$gedId];
 	}
-	public function getTabEnabled($gedId = PGV_GED_ID) {
-		if (!isset($this->tabEnabled[$gedId])) $this->tabEnabled[$gedId] = PGV_PRIV_PUBLIC;
+	public function getTabEnabled($gedId = WT_GED_ID) {
+		if (!isset($this->tabEnabled[$gedId])) $this->tabEnabled[$gedId] = WT_PRIV_PUBLIC;
 		return $this->tabEnabled[$gedId];
 	}
-	public function getSidebarEnabled($gedId = PGV_GED_ID) {
-		if (!isset($this->sidebarEnabled[$gedId])) $this->sidebarEnabled[$gedId] = PGV_PRIV_PUBLIC;
+	public function getSidebarEnabled($gedId = WT_GED_ID) {
+		if (!isset($this->sidebarEnabled[$gedId])) $this->sidebarEnabled[$gedId] = WT_PRIV_PUBLIC;
 		return $this->sidebarEnabled[$gedId];
 	}
 	public function getAccessLevelArray() {
@@ -134,16 +134,16 @@ abstract class PGVModule {
 	public function setTaborder($o) { $this->taborder = $o; }
 	public function setSidebarorder($o) { $this->sidebarorder = $o; }
 
-	public function setAccessLevel($access, $gedId=PGV_GED_ID) {
+	public function setAccessLevel($access, $gedId=WT_GED_ID) {
 		$this->accessLevel[$gedId] = $access;
 	}
-	public function setMenuEnabled($access, $gedId=PGV_GED_ID) {
+	public function setMenuEnabled($access, $gedId=WT_GED_ID) {
 		$this->menuEnabled[$gedId] = $access;
 	}
-	public function setTabEnabled($access, $gedId=PGV_GED_ID) {
+	public function setTabEnabled($access, $gedId=WT_GED_ID) {
 		$this->tabEnabled[$gedId] = $access;
 	}
-	public function setSidebarEnabled($access, $gedId=PGV_GED_ID) {
+	public function setSidebarEnabled($access, $gedId=WT_GED_ID) {
 		$this->sidebarEnabled[$gedId] = $access;
 	}
 	public function setGeneralAccess($type, $access, $gedId) {
@@ -225,11 +225,11 @@ abstract class PGVModule {
 		return strcmp($a->getName(), $b->getName());
 	}
 
-	static function getActiveList($type='A', $access = PGV_USER_ACCESS_LEVEL, $ged_id = PGV_GED_ID) {
+	static function getActiveList($type='A', $access = WT_USER_ACCESS_LEVEL, $ged_id = WT_GED_ID) {
 		global $TBLPREFIX;
 
 		$modules = array();
-		$statement=PGV_DB::prepare(
+		$statement=WT_DB::prepare(
 			"SELECT * FROM {$TBLPREFIX}module JOIN {$TBLPREFIX}module_privacy ON mod_id=mp_mod_id WHERE mp_access>=? AND mp_type='{$type}' AND mp_file=?"
 		);
 		$statement->execute(array($access, $ged_id));
@@ -237,7 +237,7 @@ abstract class PGVModule {
 		while($row = $statement->fetch()) {
 			if ($row->mod_name!=$entry) {
 				$entry = $row->mod_name;
-				$mod = PGVModule::getInstance($row);
+				$mod = WTModule::getInstance($row);
 				if ($mod) {
 					$modules[$entry] = $mod;
 					$mod->setGeneralAccess($row->mp_type, $row->mp_access, $row->mp_file);
@@ -253,11 +253,11 @@ abstract class PGVModule {
 		return $modules;
 	}
 
-	static function getActiveListAllGeds($access = PGV_USER_ACCESS_LEVEL) {
+	static function getActiveListAllGeds($access = WT_USER_ACCESS_LEVEL) {
 		global $TBLPREFIX;
 
 		$modules = array();
-		$statement=PGV_DB::prepare(
+		$statement=WT_DB::prepare(
 			"SELECT * FROM {$TBLPREFIX}module JOIN {$TBLPREFIX}module_privacy ON mod_id=mp_mod_id WHERE mp_access>=?"
 		);
 		$statement->execute(array($access));
@@ -265,7 +265,7 @@ abstract class PGVModule {
 		while($row = $statement->fetch()) {
 			if ($row->mod_name!=$entry) {
 				$entry = $row->mod_name;
-				$mod = PGVModule::getInstance($row);
+				$mod = WTModule::getInstance($row);
 				if ($mod) { 
 					$modules[$entry] = $mod;
 					$mod->setGeneralAccess($row->mp_type, $row->mp_access, $row->mp_file);
@@ -291,9 +291,9 @@ abstract class PGVModule {
 				if ($entry{0}!="." && $entry!=".svn" && is_dir("modules/$entry")) {
 					if (file_exists("modules/$entry/pgv_module.php")) {
 						include_once("modules/$entry/pgv_module.php");
-						$menu_class = $entry."_PGVModule";
+						$menu_class = $entry."_WTModule";
 						$obj = new $menu_class();
-						$mod = PGVModule::getModuleByName($entry);
+						$mod = WTModule::getModuleByName($entry);
 						if ($mod!=null) {
 							$mod->setVersion($obj->getVersion());
 							$mod->setPgvVersion($obj->getPgvVersion());
@@ -313,7 +313,7 @@ abstract class PGVModule {
 	static function getModuleByName($name) {
 		global $TBLPREFIX;
 
-		$stmt = PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}module JOIN {$TBLPREFIX}module_privacy ON mod_id=mp_mod_id WHERE mod_name=?");
+		$stmt = WT_DB::prepare("SELECT * FROM {$TBLPREFIX}module JOIN {$TBLPREFIX}module_privacy ON mod_id=mp_mod_id WHERE mod_name=?");
 		$stmt->execute(array($name));
 		$row = $stmt->fetchOne();
 		$entry = "";
@@ -321,7 +321,7 @@ abstract class PGVModule {
 		while($row = $stmt->fetch()) {
 			if ($row->mod_name!=$entry) {
 				$entry = $row->mod_name;
-				$mod = PGVModule::getInstance($row);
+				$mod = WTModule::getInstance($row);
 				$modules[$entry] = $mod;
 				$mod->setGeneralAccess($row->mp_type, $row->mp_access, $row->mp_file);
 			}
@@ -337,7 +337,7 @@ abstract class PGVModule {
 	static function getById($id) {
 		global $TBLPREFIX;
 
-		$stmt = PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}module JOIN {$TBLPREFIX}module_privacy ON mod_id=mp_mod_id WHERE mod_id=?");
+		$stmt = WT_DB::prepare("SELECT * FROM {$TBLPREFIX}module JOIN {$TBLPREFIX}module_privacy ON mod_id=mp_mod_id WHERE mod_id=?");
 		$stmt->execute(array($id));
 		$row = $stmt->fetchOne();
 		$entry = "";
@@ -345,7 +345,7 @@ abstract class PGVModule {
 		while($row = $stmt->fetch()) {
 			if ($row->mod_name!=$entry) {
 				$entry = $row->mod_name;
-				$mod = PGVModule::getInstance($row);
+				$mod = WTModule::getInstance($row);
 				$modules[$entry] = $mod;
 				$mod->setGeneralAccess($row->mp_type, $row->mp_access, $row->mp_file);
 			}
@@ -360,18 +360,18 @@ abstract class PGVModule {
 
 	/**
 	 * Insert or Update a module in the database
-	 * @param $mod PGVModule
+	 * @param $mod WTModule
 	 * @return null
 	 */
 	static function updateModule(&$mod) {
 		global $TBLPREFIX;
 		if ($mod->getId()==0) {
 			$sql = "insert into {$TBLPREFIX}module (mod_id, mod_name, mod_description, mod_taborder, mod_menuorder, mod_sidebarorder) values(?,?,?,?,?,?)";
-			$stmt = PGV_DB::prepare($sql);
+			$stmt = WT_DB::prepare($sql);
 			$mod->setId(get_next_id("module","mod_id"));
 			$stmt->execute(array($mod->getId(),$mod->getName(), $mod->getDescription(), $mod->getTaborder(), $mod->getMenuorder(), $mod->getSidebarorder()));
 			$sql = "insert into {$TBLPREFIX}module_privacy (mp_mod_id,mp_file,mp_access,mp_type) values(?,?,?,?)";
-			$stmt = PGV_DB::prepare($sql);
+			$stmt = WT_DB::prepare($sql);
 			foreach ($mod->getAccessLevelArray() as $ged_id=>$mp) {
 				$stmt->execute(array($mod->getId(), $ged_id, $mp, 'A'));
 			}
@@ -387,17 +387,17 @@ abstract class PGVModule {
 		}
 		else {
 			$sql = "UPDATE {$TBLPREFIX}module SET mod_name=?, mod_description=?, mod_taborder=?, mod_menuorder=?, mod_sidebarorder=? WHERE mod_id=?";
-			$stmt = PGV_DB::prepare($sql);
+			$stmt = WT_DB::prepare($sql);
 			$stmt->execute(array($mod->getName(), $mod->getDescription(), $mod->getTaborder(), $mod->getMenuorder(), $mod->getSidebarorder(), $mod->getId()));
 
 			//-- delete the old privacy settings
 			$sql = "delete from {$TBLPREFIX}module_privacy where mp_mod_id=?";
-			$stmt = PGV_DB::prepare($sql);
+			$stmt = WT_DB::prepare($sql);
 			$stmt->execute(array($mod->getId()));
 
 			//-- store the new privacy settings
 			$sql = "insert into {$TBLPREFIX}module_privacy (mp_mod_id,mp_file,mp_access,mp_type) values(?,?,?,?)";
-			$stmt = PGV_DB::prepare($sql);
+			$stmt = WT_DB::prepare($sql);
 			foreach ($mod->getAccessLevelArray() as $ged_id=>$mp) {
 				$stmt->execute(array($mod->getId(), $ged_id, $mp, 'A'));
 			}
@@ -414,16 +414,16 @@ abstract class PGVModule {
 	}
 
 	static function setDefaultTabs($ged_id) {
-		$modules = PGVModule::getInstalledList();
+		$modules = WTModule::getInstalledList();
 		$taborder = 1;
 		foreach(self::$default_tabs as $modname) {
 			if (isset($modules[$modname])) {
 				$mod = $modules[$modname];
 				if ($mod->hasTab()) {
 					$mod->setTaborder($taborder);
-					$mod->setAccessLevel(PGV_PRIV_PUBLIC, $ged_id);
-					$mod->setTabEnabled(PGV_PRIV_PUBLIC, $ged_id);
-					PGVModule::updateModule($mod);
+					$mod->setAccessLevel(WT_PRIV_PUBLIC, $ged_id);
+					$mod->setTabEnabled(WT_PRIV_PUBLIC, $ged_id);
+					WTModule::updateModule($mod);
 					$taborder++;
 				}
 			}
@@ -431,16 +431,16 @@ abstract class PGVModule {
 	}
 
 	static function setDefaultMenus($ged_id) {
-		$modules = PGVModule::getInstalledList();
+		$modules = WTModule::getInstalledList();
 		$taborder = 0;
 		foreach(self::$default_menus as $modname) {
 			if (isset($modules[$modname])) {
 				$mod = $modules[$modname];
 				if ($mod->hasMenu()) {
 					$mod->setMenuorder($taborder);
-					$mod->setAccessLevel(PGV_PRIV_PUBLIC, $ged_id);
-					$mod->setMenuEnabled(PGV_PRIV_PUBLIC, $ged_id);
-					PGVModule::updateModule($mod);
+					$mod->setAccessLevel(WT_PRIV_PUBLIC, $ged_id);
+					$mod->setMenuEnabled(WT_PRIV_PUBLIC, $ged_id);
+					WTModule::updateModule($mod);
 					$taborder++;
 				}
 			}
@@ -448,16 +448,16 @@ abstract class PGVModule {
 	}
 
 	static function setDefaultSidebars($ged_id) {
-		$modules = PGVModule::getInstalledList();
+		$modules = WTModule::getInstalledList();
 		$taborder = 0;
 		foreach(self::$default_sidebars as $modname) {
 			if (isset($modules[$modname])) {
 				$mod = $modules[$modname];
 				if ($mod->hasSidebar()) {
 					$mod->setSidebarorder($taborder);
-					$mod->setAccessLevel(PGV_PRIV_PUBLIC, $ged_id);
-					$mod->setSidebarEnabled(PGV_PRIV_PUBLIC, $ged_id);
-					PGVModule::updateModule($mod);
+					$mod->setAccessLevel(WT_PRIV_PUBLIC, $ged_id);
+					$mod->setSidebarEnabled(WT_PRIV_PUBLIC, $ged_id);
+					WTModule::updateModule($mod);
 					$taborder++;
 				}
 			}

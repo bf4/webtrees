@@ -33,7 +33,7 @@
  
  	$CensDate="yes"; 
  
- 	require PGV_ROOT.'includes/functions/functions_print_lists.php';  //  *** NOTE THIS is necessary for the function below ***
+ 	require WT_ROOT.'includes/functions/functions_print_lists.php';  //  *** NOTE THIS is necessary for the function below ***
 	
 // ***  LINKS tags --- This will be added later **** =========================================
 /*
@@ -94,7 +94,7 @@
 /*
 function print_indi_list($datalist, $legend="", $option="") {
 	global $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $SHOW_EST_LIST_DATES;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $SEARCH_SPIDER, $SHOW_EST_LIST_DATES;
 
 	if ($option=="MARR_PLAC") return;
 	if (count($datalist)<1) return;

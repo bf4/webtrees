@@ -29,7 +29,7 @@
  * @version $Id$
  * @author Brian Holland
  */
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -75,7 +75,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 				<?php
 				//-- Add Family Members to Census  -------------------------------------------
-				global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_MENUS_AS_LISTS;
+				global $SHOW_ID_NUMBERS, $WT_IMAGE_DIR, $WT_IMAGES, $WT_MENUS_AS_LISTS;
 				global $spouselinks, $parentlinks, $DeathYr, $BirthYr;
 				global $TEXT_DIRECTION, $GEDCOM; 
 				// echo "CENS = " . $censyear;
@@ -89,9 +89,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								<font size=1>
 								<?php
 								// Header text with "Head" button =================================================
-								if (isset($PGV_IMAGES["head"]["button"])) {
-									$headImg  = "<img class=\"headimg vmiddle\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["head"]["button"]."\" />";
-									$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["head"]["button"]."\" alt=\"".i18n::translate('Click to choose person as Head of family.')."\" title=\"".i18n::translate('Click to choose person as Head of family.')."\" />";
+								if (isset($WT_IMAGES["head"]["button"])) {
+									$headImg  = "<img class=\"headimg vmiddle\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["head"]["button"]."\" />";
+									$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["head"]["button"]."\" alt=\"".i18n::translate('Click to choose person as Head of family.')."\" title=\"".i18n::translate('Click to choose person as Head of family.')."\" />";
 								} else {
 									$headImg  = "<img class=\"headimg vmiddle\" src=\"images/buttons/head.gif\" />";
 									$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"images/buttons/head.gif\" alt=\"".i18n::translate('Click to choose person as Head of family.')."\" title=\"".i18n::translate('Click to choose person as Head of family.')."\" />";
@@ -1360,9 +1360,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							<tr>
 								<td align="left" class="linkcell optionbox">
 									<font size=1>
-									<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+									<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
 									$menu->printMenu();
-									if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
+									if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
 									?>
 									</font>
 								</td>
@@ -1477,7 +1477,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $ZOOM_BOXES, $LINK_ICONS, $SCRIPT_NAME, $GEDCOM;
 	global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
 	global $CONTACT_EMAIL, $CONTACT_METHOD, $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
 	global $chart_style, $box_width, $generations, $show_spouse, $show_full;
 	global $CHART_BOX_TAGS, $SHOW_LDS_AT_GLANCE, $PEDIGREE_SHOW_GENDER;
 	global $SEARCH_SPIDER;

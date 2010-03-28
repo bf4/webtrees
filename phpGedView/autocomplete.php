@@ -27,7 +27,7 @@
 * @version $Id$
 */
 
-define('PGV_SCRIPT_NAME', 'autocomplete.php');
+define('WT_SCRIPT_NAME', 'autocomplete.php');
 require './config.php';
 header('Content-Type: text/plain; charset=UTF-8');
 
@@ -35,7 +35,7 @@ header('Content-Type: text/plain; charset=UTF-8');
 session_write_close();
 
 //-- args
-$FILTER=safe_GET('term', PGV_REGEX_UNSAFE); // we can search on '"><& etc.
+$FILTER=safe_GET('term', WT_REGEX_UNSAFE); // we can search on '"><& etc.
 $FILTER=utf8_strtoupper($FILTER);
 $OPTION=safe_GET('option');
 $FORMAT=safe_GET('fmt');

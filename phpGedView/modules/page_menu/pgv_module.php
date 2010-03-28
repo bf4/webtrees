@@ -27,7 +27,7 @@
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -35,7 +35,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 require_once("includes/classes/class_module.php");
 require_once("modules/notes/notes.php");
 
-class page_menu_PGVModule extends PGVModule {
+class page_menu_WTModule extends WTModule {
 	protected $name = 'page_menu';
 	protected $description = 'Adds a menu to the menu bar which provides page specific options.';
 	protected $version = '4.2.2';
@@ -70,7 +70,7 @@ class page_menu_PGVModule extends PGVModule {
 	 * @return Menu
 	 */
 	public function &getMenu() { 
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
 		global $controller;
 
 		$menu = null;
@@ -83,7 +83,7 @@ class page_menu_PGVModule extends PGVModule {
 			$menu->addClass('menuitem'.$ff, 'menuitem_hover'.$ff, 'submenu'.$ff, 'icon_large_gedcom');
 			$menu->addLabel($menu->label, 'down');
 		}
-		if (PGV_USER_CAN_EDIT && method_exists($controller, 'getEditMenu')) {
+		if (WT_USER_CAN_EDIT && method_exists($controller, 'getEditMenu')) {
 			$editmenu = $controller->getEditMenu();
 			if ($menu==null) $menu = $editmenu;
 			else {

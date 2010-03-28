@@ -30,9 +30,9 @@
  * @TODO use more theme specific CSS, allow a more fluid layout to take advantage of the page width
  */
 
-define('PGV_SCRIPT_NAME', 'mediaviewer.php');
+define('WT_SCRIPT_NAME', 'mediaviewer.php');
 require './config.php';
-require_once PGV_ROOT.'includes/controllers/media_ctrl.php';
+require_once WT_ROOT.'includes/controllers/media_ctrl.php';
 
 $controller = new MediaController();
 $controller->init();
@@ -56,9 +56,9 @@ global $tmb;
 
 // LBox =============================================================================
 // Get Javascript variables from lb_config.php ---------------------------
-if (PGV_USE_LIGHTBOX) {
-	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
+if (WT_USE_LIGHTBOX) {
+	require WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	require WT_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // LBox  ============================================================================
 
@@ -84,7 +84,7 @@ if (PGV_USE_LIGHTBOX) {
 					// attempt to get the image size
 					$imgwidth = $controller->mediaobject->getWidth()+40;
 					$imgheight = $controller->mediaobject->getHeight()+150;
-					if (PGV_USE_LIGHTBOX) $dwidth = 200;
+					if (WT_USE_LIGHTBOX) $dwidth = 200;
 					else $dwidth = 300;
 					if ($imgwidth<$dwidth) $dwidth = $imgwidth;
 
@@ -144,7 +144,7 @@ if (PGV_USE_LIGHTBOX) {
 			<br /><b><?php print i18n::translate('The image relates to:'); ?></b><br /><br />
 			<?php
 				// PrintMediaLinks($links, "");
-				require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+				require_once WT_ROOT.'includes/functions/functions_print_lists.php';
 				print_changes_table($links, $SHOW_LAST_CHANGE, i18n::translate('Total links'));
 			}	?>
 		</td>

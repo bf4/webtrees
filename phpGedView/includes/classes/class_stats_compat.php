@@ -31,14 +31,14 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_STATS_COMPAT_PHP', '');
+define('WT_CLASS_STATS_COMPAT_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_stats.php';
+require_once WT_ROOT.'includes/classes/class_stats.php';
 class stats_compat extends stats
 {
 ///////////////////////////////////////////////////////////////////////////////

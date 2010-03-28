@@ -31,9 +31,9 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'lifespan.php');
+define('WT_SCRIPT_NAME', 'lifespan.php');
 require './config.php';
-require_once PGV_ROOT.'includes/controllers/lifespan_ctrl.php';
+require_once WT_ROOT.'includes/controllers/lifespan_ctrl.php';
 
 $controller = new LifespanController();
 $controller->init();
@@ -43,7 +43,7 @@ $zoomfactor = 10;
 
 print_header(i18n::translate('Lifespan Chart'));
 
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 ?>
 	<script language="JavaScript" type="text/javascript">
 	<!--
@@ -342,18 +342,18 @@ var oldMx = 0;
 		<table style="margin-left: 20px" dir="ltr" border="0" cellpadding="0">
 		<tr>
 			<td></td>
-			<td colspan="2" align="center"><a href="#" onclick="return false;" onmousedown="startScroll('down')" onmouseup="stopScroll()"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["lsuparrow"]["other"]; ?>" border="0" alt="" /></a></td>
+			<td colspan="2" align="center"><a href="#" onclick="return false;" onmousedown="startScroll('down')" onmouseup="stopScroll()"><img src="<?php print $WT_IMAGE_DIR.'/'.$WT_IMAGES["lsuparrow"]["other"]; ?>" border="0" alt="" /></a></td>
 			<td></td>
 		</tr>
 		<tr>
-			<td><a href="#" onclick="return false;" onmousedown="startScroll('right')" onmouseup="stopScroll()"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["lsltarrow"]["other"]; ?>" border="0" alt="" /></a></td>
-			<td align="center"><!-- <a href="#" onclick="return false;" onmousedown="startZoom('increase')"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["zoomin"]["other"]; ?>" border="0" alt="" /></a> --></td>
-			<td align="center"><!-- <a href="#" onclick="return false;" onmousedown="startZoom('decrease')"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["zoomout"]["other"]; ?>" border="0" alt="" /></a> --></td>
-			<td><a href="#" onclick="return false;" onmousedown="startScroll('left')" onmouseup="stopScroll()"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["lsrtarrow"]["other"]; ?>" border="0" alt="" /></a></td>
+			<td><a href="#" onclick="return false;" onmousedown="startScroll('right')" onmouseup="stopScroll()"><img src="<?php print $WT_IMAGE_DIR.'/'.$WT_IMAGES["lsltarrow"]["other"]; ?>" border="0" alt="" /></a></td>
+			<td align="center"><!-- <a href="#" onclick="return false;" onmousedown="startZoom('increase')"><img src="<?php print $WT_IMAGE_DIR.'/'.$WT_IMAGES["zoomin"]["other"]; ?>" border="0" alt="" /></a> --></td>
+			<td align="center"><!-- <a href="#" onclick="return false;" onmousedown="startZoom('decrease')"><img src="<?php print $WT_IMAGE_DIR.'/'.$WT_IMAGES["zoomout"]["other"]; ?>" border="0" alt="" /></a> --></td>
+			<td><a href="#" onclick="return false;" onmousedown="startScroll('left')" onmouseup="stopScroll()"><img src="<?php print $WT_IMAGE_DIR.'/'.$WT_IMAGES["lsrtarrow"]["other"]; ?>" border="0" alt="" /></a></td>
 		</tr>
 		<tr>
 		<td> </td>
-		<td colspan="2" align="center"><a href="#" onclick="return false;" onmousedown="startScroll('up')" onmouseup="stopScroll()"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["lsdnarrow"]["other"]; ?>" border="0" alt="" /></a></td>
+		<td colspan="2" align="center"><a href="#" onclick="return false;" onmousedown="startScroll('up')" onmouseup="stopScroll()"><img src="<?php print $WT_IMAGE_DIR.'/'.$WT_IMAGES["lsdnarrow"]["other"]; ?>" border="0" alt="" /></a></td>
 	<td> </td>
 	</tr>
 	</table>

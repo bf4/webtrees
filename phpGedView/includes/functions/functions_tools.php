@@ -28,12 +28,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FUNCTIONS_TOOLS_PHP', '');
+define('WT_FUNCTIONS_TOOLS_PHP', '');
 
 /**
  * check if Gedcom needs BOM cleanup
@@ -46,7 +46,7 @@ define('PGV_FUNCTIONS_TOOLS_PHP', '');
 function need_BOM_cleanup() {
 	global $fcontents;
 
-	return strpos($fcontents, PGV_UTF8_BOM)===0;
+	return strpos($fcontents, WT_UTF8_BOM)===0;
 }
 
 /**
@@ -59,8 +59,8 @@ function need_BOM_cleanup() {
 function BOM_cleanup() {
 	global $fcontents;
 
-	if (strpos($fcontents, PGV_UTF8_BOM)===0) {
-		$fcontents=substr($fcontents, strlen(PGV_UTF8_BOM));
+	if (strpos($fcontents, WT_UTF8_BOM)===0) {
+		$fcontents=substr($fcontents, strlen(WT_UTF8_BOM));
 		return true;
 	}
 	return false;
@@ -79,7 +79,7 @@ function need_head_cleanup() {
 	global $fcontents;
 
 	// Don't report BOM as data preceding 0 HEAD
-	return strpos($fcontents, '0 HEAD')>0 && strpos($fcontents, PGV_UTF8_BOM.'0 HEAD')!==0;
+	return strpos($fcontents, '0 HEAD')>0 && strpos($fcontents, WT_UTF8_BOM.'0 HEAD')!==0;
 }
 
 /**

@@ -29,14 +29,14 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FUNCTIONS_EXPORT_PHP', '');
+define('WT_FUNCTIONS_EXPORT_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_gedownloadgedcom.php';
+require_once WT_ROOT.'includes/classes/class_gedownloadgedcom.php';
 
 // Tidy up a gedcom record on export, for compatibility/portability
 function reformat_record_export($rec) {
@@ -56,14 +56,14 @@ function reformat_record_export($rec) {
 		// The total length of a GEDCOM line, including level number, cross-reference number,
 		// tag, value, delimiters, and terminator, must not exceed 255 (wide) characters.
 		// Use quick strlen() check before using slower utf8_strlen() check
-		if (strlen($line)>PGV_GEDCOM_LINE_LENGTH && utf8_strlen($line)>PGV_GEDCOM_LINE_LENGTH) {
+		if (strlen($line)>WT_GEDCOM_LINE_LENGTH && utf8_strlen($line)>WT_GEDCOM_LINE_LENGTH) {
 			list($level, $tag)=explode(' ', $line, 3);
 			if ($tag!='CONT' && $tag!='CONC') {
 				$level++;
 			}
 			do {
 				// Split after $pos chars
-				$pos=PGV_GEDCOM_LINE_LENGTH;
+				$pos=WT_GEDCOM_LINE_LENGTH;
 				if ($WORD_WRAPPED_NOTES) {
 					// Split on a space, and remove it (for compatibility with some desktop apps)
 					while ($pos && utf8_substr($line, $pos-1, 1)!=' ') {
@@ -73,7 +73,7 @@ function reformat_record_export($rec) {
 						// No spaces in the data! Can't split it :-(
 						break;
 					} else {
-						$newrec.=utf8_substr($line, 0, $pos-1).PGV_EOL;
+						$newrec.=utf8_substr($line, 0, $pos-1).WT_EOL;
 						$line=$level.' CONC '.utf8_substr($line, $pos);
 					}
 				} else {
@@ -85,12 +85,12 @@ function reformat_record_export($rec) {
 						// No non-spaces in the data! Can't split it :-(
 						break;
 					}
-					$newrec.=utf8_substr($line, 0, $pos).PGV_EOL;
+					$newrec.=utf8_substr($line, 0, $pos).WT_EOL;
 					$line=$level.' CONC '.utf8_substr($line, $pos);
 				}
-			} while (utf8_strlen($line)>PGV_GEDCOM_LINE_LENGTH);
+			} while (utf8_strlen($line)>WT_GEDCOM_LINE_LENGTH);
 		}
-		$newrec.=$line.PGV_EOL;
+		$newrec.=$line.WT_EOL;
 	}
 	return $newrec;
 }
@@ -105,7 +105,7 @@ function gedcom_header($gedfile) {
 
 	// Default values for a new header
 	$HEAD="0 HEAD";
-	$SOUR="\n1 SOUR ".PGV_PHPGEDVIEW."\n2 NAME ".PGV_PHPGEDVIEW."\n2 VERS ".PGV_VERSION_TEXT;
+	$SOUR="\n1 SOUR ".WT_WEBTREES."\n2 NAME ".WT_WEBTREES."\n2 VERS ".WT_VERSION_TEXT;
 	$DEST="\n1 DEST DISKETTE";
 	$DATE="\n1 DATE ".strtoupper(date("d M Y"))."\n2 TIME ".date("H:i:s");
 	$GEDC="\n1 GEDC\n2 VERS 5.5.1\n2 FORM Lineage-Linked";
@@ -115,7 +115,7 @@ function gedcom_header($gedfile) {
 	$PLAC="\n1 PLAC\n2 FORM City, County, State/Province, Country";
 	$COPR="";
 	$SUBN="";
-	$SUBM="\n1 SUBM @SUBM@\n0 @SUBM@ SUBM\n1 NAME ".PGV_USER_NAME; // The SUBM record is mandatory
+	$SUBM="\n1 SUBM @SUBM@\n0 @SUBM@ SUBM\n1 NAME ".WT_USER_NAME; // The SUBM record is mandatory
 
 	// Preserve some values from the original header
 	if (get_gedcom_setting($ged_id, 'imported')) {
@@ -137,14 +137,14 @@ function gedcom_header($gedfile) {
 		}
 		// Link to SUBM/SUBN records, if they exist
 		$subn=
-			PGV_DB::prepare("SELECT o_id FROM ${TBLPREFIX}other WHERE o_type=? AND o_file=?")
+			WT_DB::prepare("SELECT o_id FROM ${TBLPREFIX}other WHERE o_type=? AND o_file=?")
 			->execute(array('SUBN', $ged_id))
 			->fetchOne();
 		if ($subn) {
 			$SUBN="\n1 SUBN @{$subn}@";
 		}
 		$subm=
-			PGV_DB::prepare("SELECT o_id FROM ${TBLPREFIX}other WHERE o_type=? AND o_file=?")
+			WT_DB::prepare("SELECT o_id FROM ${TBLPREFIX}other WHERE o_type=? AND o_file=?")
 			->execute(array('SUBM', $ged_id))
 			->fetchOne();
 		if ($subm) {
@@ -286,7 +286,7 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
 	$buffer=reformat_record_export($head);
 
 	$recs=
-		PGV_DB::prepare("SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id NOT LIKE ? ORDER BY i_id")
+		WT_DB::prepare("SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id NOT LIKE ? ORDER BY i_id")
 		->execute(array($ged_id, '%:%'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
@@ -301,7 +301,7 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
 	}
 
 	$recs=
-		PGV_DB::prepare("SELECT f_gedcom FROM {$TBLPREFIX}families WHERE f_file=? AND f_id NOT LIKE ? ORDER BY f_id")
+		WT_DB::prepare("SELECT f_gedcom FROM {$TBLPREFIX}families WHERE f_file=? AND f_id NOT LIKE ? ORDER BY f_id")
 		->execute(array($ged_id, '%:%'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
@@ -316,7 +316,7 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
 	}
 
 	$recs=
-		PGV_DB::prepare("SELECT s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id NOT LIKE ? ORDER BY s_id")
+		WT_DB::prepare("SELECT s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id NOT LIKE ? ORDER BY s_id")
 		->execute(array($ged_id, '%:%'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
@@ -331,7 +331,7 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
 	}
 
 	$recs=
-		PGV_DB::prepare("SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_file=? AND o_id NOT LIKE ? AND o_type!=? AND o_type!=? ORDER BY o_id")
+		WT_DB::prepare("SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_file=? AND o_id NOT LIKE ? AND o_type!=? AND o_type!=? ORDER BY o_id")
 		->execute(array($ged_id, '%:%', 'HEAD', 'TRLR'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
@@ -346,7 +346,7 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
 	}
 
 	$recs=
-		PGV_DB::prepare("SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media NOT LIKE ? ORDER BY m_media")
+		WT_DB::prepare("SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media NOT LIKE ? ORDER BY m_media")
 		->execute(array($ged_id, '%:%'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
@@ -361,7 +361,7 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
 		}
 	}
 
-	fwrite($gedout, $buffer."0 TRLR".PGV_EOL);
+	fwrite($gedout, $buffer."0 TRLR".WT_EOL);
 
 	if ($exportOptions['privatize']!='none') {
 		$_SESSION["pgv_user"]=$_SESSION["org_user"];
@@ -408,7 +408,7 @@ function export_gramps($gedcom, $gedout, $exportOptions) {
 	$geDownloadGedcom->begin_xml();
 
 	$recs=
-		PGV_DB::prepare("SELECT i_id, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id NOT LIKE ? ORDER BY i_id")
+		WT_DB::prepare("SELECT i_id, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id NOT LIKE ? ORDER BY i_id")
 		->execute(array($ged_id, '%:%'))
 		->fetchAssoc();
 	foreach ($recs as $id=>$rec) {
@@ -418,7 +418,7 @@ function export_gramps($gedcom, $gedout, $exportOptions) {
 	}
 
 	$recs=
-		PGV_DB::prepare("SELECT f_id, f_gedcom FROM {$TBLPREFIX}families WHERE f_file=? AND f_id NOT LIKE ? ORDER BY f_id")
+		WT_DB::prepare("SELECT f_id, f_gedcom FROM {$TBLPREFIX}families WHERE f_file=? AND f_id NOT LIKE ? ORDER BY f_id")
 		->execute(array($ged_id, '%:%'))
 		->fetchAssoc();
 	foreach ($recs as $id=>$rec) {
@@ -428,7 +428,7 @@ function export_gramps($gedcom, $gedout, $exportOptions) {
 	}
 
 	$recs=
-		PGV_DB::prepare("SELECT s_id, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id NOT LIKE ? ORDER BY s_id")
+		WT_DB::prepare("SELECT s_id, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id NOT LIKE ? ORDER BY s_id")
 		->execute(array($ged_id, '%:%'))
 		->fetchAssoc();
 	foreach ($recs as $id=>$rec) {
@@ -438,7 +438,7 @@ function export_gramps($gedcom, $gedout, $exportOptions) {
 	}
 
 	$recs=
-		PGV_DB::prepare("SELECT m_media, m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media NOT LIKE ? ORDER BY m_media")
+		WT_DB::prepare("SELECT m_media, m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media NOT LIKE ? ORDER BY m_media")
 		->execute(array($ged_id, '%:%'))
 		->fetchAssoc();
 	foreach ($recs as $id=>$rec) {
@@ -514,7 +514,7 @@ function um_export($proceed) {
 	$messages=array();
 	$mesid=1;
 	$rows=
-		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}messages ORDER BY m_id DESC")
+		WT_DB::prepare("SELECT * FROM {$TBLPREFIX}messages ORDER BY m_id DESC")
 		->fetchAll(PDO::FETCH_ASSOC);
 	foreach ($rows as $row){
 		$message=array();
@@ -556,7 +556,7 @@ function um_export($proceed) {
 	}
 	$favorites=array();
 	$rows=
-		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}favorites")
+		WT_DB::prepare("SELECT * FROM {$TBLPREFIX}favorites")
 		->fetchAll(PDO::FETCH_ASSOC);
 	$favid=1;
 	foreach ($rows as $row){
@@ -601,7 +601,7 @@ function um_export($proceed) {
 	}
 	$allnews=array();
 	$rows=
-		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}news ORDER BY n_date DESC")
+		WT_DB::prepare("SELECT * FROM {$TBLPREFIX}news ORDER BY n_date DESC")
 		->fetchAll(PDO::FETCH_ASSOC);
 	foreach ($rows as $row){
 		$news=array();
@@ -643,7 +643,7 @@ function um_export($proceed) {
 	$blocks["main"]=array();
 	$blocks["right"]=array();
 	$rows=
-		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}blocks ORDER BY b_location, b_order")
+		WT_DB::prepare("SELECT * FROM {$TBLPREFIX}blocks ORDER BY b_location, b_order")
 		->fetchAll(PDO::FETCH_ASSOC);
 	foreach ($rows as $row){
 		$blocks=array();

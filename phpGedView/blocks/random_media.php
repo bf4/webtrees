@@ -29,19 +29,19 @@
  * @subpackage Blocks
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_RANDOM_MEDIA_PHP', '');
+define('WT_RANDOM_MEDIA_PHP', '');
 
 //-- only enable this block if multi media has been enabled
 if ($MULTI_MEDIA) {
-	$PGV_BLOCKS['print_random_media']['name']		= i18n::translate('Random Media');
-	$PGV_BLOCKS['print_random_media']['descr']		= i18n::translate('The Random Media block randomly selects a photo or other media item from the currently active database and displays it to the user.<br /><br />The administrator determines whether this block can show media items associated with persons or events.');
-	$PGV_BLOCKS['print_random_media']['canconfig']	= true;
-	$PGV_BLOCKS['print_random_media']['config']		= array(
+	$WT_BLOCKS['print_random_media']['name']		= i18n::translate('Random Media');
+	$WT_BLOCKS['print_random_media']['descr']		= i18n::translate('The Random Media block randomly selects a photo or other media item from the currently active database and displays it to the user.<br /><br />The administrator determines whether this block can show media items associated with persons or events.');
+	$WT_BLOCKS['print_random_media']['canconfig']	= true;
+	$WT_BLOCKS['print_random_media']['config']		= array(
 		'cache'   =>0,
 		'filter'  =>'all',
 		'controls'=>'yes',
@@ -79,19 +79,19 @@ if ($MULTI_MEDIA) {
 		'filter_video'		=>'no'
 	);
 
-	require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
+	require_once WT_ROOT.'includes/functions/functions_print_facts.php';
 
 	//-- function to display a random picture from the gedcom
 	function print_random_media($block = true, $config="", $side, $index) {
-		global $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES;
 		global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES;
 		global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
-		global $PGV_BLOCKS, $ctype, $action;
-		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $WT_BLOCKS, $ctype, $action;
+		global $WT_IMAGE_DIR, $WT_IMAGES;
 
 		if (!$MULTI_MEDIA) return;
 
-			if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
+			if (empty($config)) $config = $WT_BLOCKS["print_random_media"]["config"];
 			if (isset($config["filter"])) $filter = $config["filter"];  // indi, event, or all
 			else $filter = "all";
 			if (!isset($config['controls'])) $config['controls'] ="yes";
@@ -109,39 +109,39 @@ if ($MULTI_MEDIA) {
 			while($i<40) {
 				$error = false;
 				$value = array_rand($medialist);
-				if (PGV_DEBUG) {
+				if (WT_DEBUG) {
 					print "<br />";print_r($medialist[$value]);print "<br />";
 					print "Trying ".$medialist[$value]["XREF"]."<br />";
 				}
 				$links = $medialist[$value]["LINKS"];
 				$disp = ($medialist[$value]["EXISTS"]>0) && $medialist[$value]["LINKED"] && $medialist[$value]["CHANGE"]!="delete" ;
-				if (PGV_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />";}
+				if (WT_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />";}
 
 				$disp &= displayDetailsById($medialist[$value]["XREF"], "OBJE");
 				$disp &= !FactViewRestricted($medialist[$value]["XREF"], $medialist[$value]["GEDCOM"]);
 
-				if (PGV_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />";}
+				if (WT_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />";}
 
 				$isExternal = isFileExternal($medialist[$value]["FILE"]);
 
 				if ($block && !$isExternal) $disp &= ($medialist[$value]["THUMBEXISTS"]>0);
-				if (PGV_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />";}
+				if (WT_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />";}
 
 				// Filter according to format and type  (Default: unless configured otherwise, don't filter)
 				if (!empty($medialist[$value]["FORM"]) && isset($config["filter_".$medialist[$value]["FORM"]]) && $config["filter_".$medialist[$value]["FORM"]]!="yes") $disp = false;
 				if (!empty($medialist[$value]["TYPE"]) && isset($config["filter_".$medialist[$value]["TYPE"]]) && $config["filter_".$medialist[$value]["TYPE"]]!="yes") $disp = false;
-				if (PGV_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed Format or Type filters</span><br />";}
+				if (WT_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed Format or Type filters</span><br />";}
 
 				if ($disp && count($links) != 0){
 					/** link privacy allready checked in displayDetailsById
 					foreach($links as $key=>$type) {
-						$gedrec = find_gedcom_record($key, PGV_GED_ID);
+						$gedrec = find_gedcom_record($key, WT_GED_ID);
 						$disp &= !empty($gedrec);
 						//-- source privacy is now available through the display details by id method
 						// $disp &= $type!="SOUR";
 						$disp &= displayDetailsById($key, $type);
 					}
-					if (PGV_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed link privacy</span><br />";}
+					if (WT_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed link privacy</span><br />";}
 					*/
 					if ($disp && $filter!="all") {
 						// Apply filter criteria
@@ -149,13 +149,13 @@ if ($MULTI_MEDIA) {
 						$objectID = $match[1];
 						//-- we could probably use the database for this filter
 						foreach($links as $key=>$type) {
-							$gedrec = find_gedcom_record($key, PGV_GED_ID);
+							$gedrec = find_gedcom_record($key, WT_GED_ID);
 							$ct2 = preg_match("/(\d)\sOBJE\s{$objectID}/", $gedrec, $match2);
 							if ($ct2>0) {
 								$objectRefLevel = $match2[1];
 								if ($filter=="indi" && $objectRefLevel!="1") $disp = false;
 								if ($filter=="event" && $objectRefLevel=="1") $disp = false;
-								if (PGV_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed to pass config filter</span><br />";}
+								if (WT_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed to pass config filter</span><br />";}
 							}
 							else $disp = false;
 						}
@@ -167,7 +167,7 @@ if ($MULTI_MEDIA) {
 				}
 				//-- otherwise remove the private media item from the list
 				else {
-					if (PGV_DEBUG) print "<span class=\"error\">".$medialist[$value]["XREF"]." Will not be shown</span><br />";
+					if (WT_DEBUG) print "<span class=\"error\">".$medialist[$value]["XREF"]." Will not be shown</span><br />";
 					unset($medialist[$value]);
 				}
 				//-- if there are no more media items, then try to get some more
@@ -180,15 +180,15 @@ if ($MULTI_MEDIA) {
 				$id = "";
 					$id = "random_picture$index";
 					$title='';
-				if ($PGV_BLOCKS["print_random_media"]["canconfig"]) {
-					if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+				if ($WT_BLOCKS["print_random_media"]["canconfig"]) {
+					if ($ctype=="gedcom" && WT_USER_GEDCOM_ADMIN || $ctype=="user" && WT_USER_ID) {
 						if ($ctype=="gedcom") {
-							$name = PGV_GEDCOM;
+							$name = WT_GEDCOM;
 						} else {
-							$name = PGV_USER_NAME;
+							$name = WT_USER_NAME;
 						}
 							$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-							$title .= "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
+							$title .= "<img class=\"adminicon\" src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 					}
 				}
 				$title .= i18n::translate('Random Picture');
@@ -197,12 +197,12 @@ if ($MULTI_MEDIA) {
 				if ($config['controls']=='yes') {
 					if ($config['start']=='yes' || (isset($_COOKIE['rmblockplay'])&&$_COOKIE['rmblockplay']=='true')) $image = "stop";
 					else $image = "rarrow";
-					$linkNextImage = "<a href=\"javascript: ".i18n::translate('Next image')."\" onclick=\"return ajaxBlock('random_picture$index', 'print_random_media', '$side', $index, '$ctype', true);\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['rdarrow']['other']}\" border=\"0\" alt=\"".i18n::translate('Next image')."\" title=\"".i18n::translate('Next image')."\" /></a>";
+					$linkNextImage = "<a href=\"javascript: ".i18n::translate('Next image')."\" onclick=\"return ajaxBlock('random_picture$index', 'print_random_media', '$side', $index, '$ctype', true);\"><img src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['rdarrow']['other']}\" border=\"0\" alt=\"".i18n::translate('Next image')."\" title=\"".i18n::translate('Next image')."\" /></a>";
 
 						$content .= "<div class=\"center\" id=\"random_picture_controls$index\"><br />";
 						if ($TEXT_DIRECTION=="rtl") $content .= $linkNextImage;
 						$content .= "<a href=\"javascript: ".i18n::translate('Play')."/".i18n::translate('Stop')."\" onclick=\"togglePlay(); return false;\">";
-						if (isset($PGV_IMAGES[$image]['other'])) $content .= "<img id=\"play_stop\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES[$image]['other']}\" border=\"0\" alt=\"".i18n::translate('Play')."/".i18n::translate('Stop')."\" title=\"".i18n::translate('Play')."/".i18n::translate('Stop')."\" />";
+						if (isset($WT_IMAGES[$image]['other'])) $content .= "<img id=\"play_stop\" src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES[$image]['other']}\" border=\"0\" alt=\"".i18n::translate('Play')."/".i18n::translate('Stop')."\" title=\"".i18n::translate('Play')."/".i18n::translate('Stop')."\" />";
 						else $content .= i18n::translate('Play')."/".i18n::translate('Stop');
 						$content .= "</a>";
 						if ($TEXT_DIRECTION=="ltr") $content .= $linkNextImage;
@@ -215,13 +215,13 @@ if ($MULTI_MEDIA) {
 							if (play) {
 								play = false;
 								imgid = document.getElementById("play_stop");
-								imgid.src = \''.$PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]['other'].'\';
+								imgid.src = \''.$WT_IMAGE_DIR."/".$WT_IMAGES["rarrow"]['other'].'\';
 							}
 							else {
 								play = true;
 								playSlideShow();
 								imgid = document.getElementById("play_stop");
-								imgid.src = \''.$PGV_IMAGE_DIR."/".$PGV_IMAGES["stop"]['other'].'\';
+								imgid.src = \''.$WT_IMAGE_DIR."/".$WT_IMAGES["stop"]['other'].'\';
 							}
 						}
 
@@ -240,7 +240,7 @@ if ($MULTI_MEDIA) {
 					<!--
 						play = true;
 						imgid = document.getElementById("play_stop");
-						imgid.src = \''.$PGV_IMAGE_DIR."/".$PGV_IMAGES["stop"]['other'].'\';
+						imgid.src = \''.$WT_IMAGE_DIR."/".$WT_IMAGES["stop"]['other'].'\';
 						window.setTimeout("playSlideShow()", 6000);
 					//-->
 					</script>';
@@ -274,7 +274,7 @@ function openPic(filename, width, height) {
 -->
 </script><?php
 
-			if (PGV_USE_LIGHTBOX) {
+			if (WT_USE_LIGHTBOX) {
 				// $content .= " ><a href=\"javascript:;\" onclick=\"return openPic('".$medialist[$value]["FILE"]."', $imgwidth, $imgheight);\">";
 				// $content .= " ><a href=\"javascript:;\" onclick=\"return openImage('".$medialist[$value]["FILE"]."', $imgwidth, $imgheight);\">";
 				// $content .= "><a href=\"" . $medialist[$value]["FILE"] . "\" rel=\"clearbox[general_4]\" title=\"" . $mediaid . "\">" . "\n";
@@ -326,9 +326,9 @@ function openPic(filename, width, height) {
 
 
 	function print_random_media_config($config) {
-		global $PGV_BLOCKS, $TEXT_DIRECTION;
+		global $WT_BLOCKS, $TEXT_DIRECTION;
 
-		$defaultConfig = $PGV_BLOCKS['print_random_media']['config'];
+		$defaultConfig = $WT_BLOCKS['print_random_media']['config'];
 		if (empty($config)) $config = $defaultConfig;
 
 		// Add options missing from old block configurations

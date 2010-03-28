@@ -27,17 +27,17 @@
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once PGV_ROOT.'includes/classes/class_tab.php';
+require_once WT_ROOT.'includes/classes/class_tab.php';
 
 class personal_facts_Tab extends Tab {
 	
 	public function getContent() {
-		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $EXPAND_RELATIVES_EVENTS;
+		global $FACT_COUNT, $CONTACT_EMAIL, $WT_IMAGE_DIR, $WT_IMAGES, $EXPAND_RELATIVES_EVENTS;
 		global $n_chil, $n_gchi, $n_ggch;
 		global $EXPAND_RELATIVES_EVENTS, $LANGUAGE, $lang_short_cut;
 		global $NAV_FACTS;

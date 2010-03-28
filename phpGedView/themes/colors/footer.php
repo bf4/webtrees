@@ -24,7 +24,7 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -47,12 +47,12 @@ if(empty($SEARCH_SPIDER)) { ?>
 
 echo contact_links();
 echo "\n\t<br />";
-echo '<a href="', PGV_PHPGEDVIEW_URL, '" target="_blank"><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['gedview']['other'], '" width="100" border="0" alt="', PGV_PHPGEDVIEW, PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "" , '" title="', PGV_PHPGEDVIEW , PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "" , '" />';
+echo '<a href="', WT_WEBTREES_URL, '" target="_blank"><img src="', $WT_IMAGE_DIR, '/', $WT_IMAGES['gedview']['other'], '" width="100" border="0" alt="', WT_WEBTREES, WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): "" , '" title="', WT_WEBTREES , WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): "" , '" />';
 echo '</a><br />';
 echo "\n\t<br />";
 
 
-if ($SHOW_STATS || PGV_DEBUG) {
+if ($SHOW_STATS || WT_DEBUG) {
     echo execution_stats();
 }
 

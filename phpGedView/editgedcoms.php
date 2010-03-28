@@ -30,7 +30,7 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'editgedcoms.php');
+define('WT_SCRIPT_NAME', 'editgedcoms.php');
 require './config.php';
 
 $all_gedcoms=get_all_gedcoms();
@@ -63,7 +63,7 @@ function check_gedcom_downloadable($gedfile) {
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
-if (!PGV_USER_GEDCOM_ADMIN) {
+if (!WT_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=editgedcoms.php");
 	exit;
 }
@@ -89,7 +89,7 @@ if (($action=="setdefault") && in_array($default_ged, $all_gedcoms)) {
 <?php
 // Default gedcom choice
 print "<br />";
-if (PGV_USER_IS_ADMIN && count($all_gedcoms)>1) {
+if (WT_USER_IS_ADMIN && count($all_gedcoms)>1) {
 	echo i18n::translate('Default GEDCOM'), ' ', help_link('default_gedcom');
 	print "<select name=\"default_ged\" class=\"header_select\" onchange=\"document.defaultform.submit();\">";
 	if (!in_array($DEFAULT_GEDCOM, $all_gedcoms)) {
@@ -107,7 +107,7 @@ if (PGV_USER_IS_ADMIN && count($all_gedcoms)>1) {
 echo'<a href="editgedcoms.php?check_download=true">', i18n::translate('Check if GEDCOM files are downloadable'), '</a>', help_link('SECURITY_CHECK_GEDCOM_DOWNLOADABLE');
 // Print table heading
 print "<table class=\"gedcom_table\">";
-if (PGV_USER_IS_ADMIN) {
+if (WT_USER_IS_ADMIN) {
 	print "<tr><td class=\"list_label\">";
 	print "<a href=\"editconfig_gedcom.php?source=add_form\">".i18n::translate('Add GEDCOM')."</a>".help_link('help_addgedcom.php');
 	print "</td>";
@@ -115,7 +115,7 @@ if (PGV_USER_IS_ADMIN) {
 	print "<a href=\"editconfig_gedcom.php?source=upload_form\">".i18n::translate('Upload GEDCOM')."</a>".help_link('help_uploadgedcom.php');
 	print "</td>";
 }
-if (PGV_USER_IS_ADMIN) {
+if (WT_USER_IS_ADMIN) {
 	print "<td class=\"list_label\">";
 	print "<a href=\"editconfig_gedcom.php?source=add_new_form\">".i18n::translate('Create a new GEDCOM')."</a>".help_link('help_addnewgedcom.php');
 	print "</td>";
@@ -127,7 +127,7 @@ $GedCount = 0;
 
 // Print the table of available GEDCOMs
 foreach ($all_gedcoms as $ged_id=>$ged_name) {
-	if (userGedcomAdmin(PGV_USER_ID, $ged_id)) {
+	if (userGedcomAdmin(WT_USER_ID, $ged_id)) {
 		// Row 0: Separator line
 		if ($GedCount!=0) {
 			print "<tr>";
@@ -352,7 +352,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 }
 echo '</table></form></center>';
 
-require get_config_file(PGV_GED_ID);
+require get_config_file(WT_GED_ID);
 
 print_footer();
 ?>

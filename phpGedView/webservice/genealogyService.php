@@ -50,12 +50,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_GENEALOGYSERVICE_PHP', '');
+define('WT_GENEALOGYSERVICE_PHP', '');
 
 require_once 'SOAP/Server.php';
 

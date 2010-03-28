@@ -26,12 +26,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FUNCTIONS_NAME_PHP', '');
+define('WT_FUNCTIONS_NAME_PHP', '');
 
 /**
  * Get array of common surnames
@@ -43,7 +43,7 @@ define('PGV_FUNCTIONS_NAME_PHP', '');
 function get_common_surnames($min) {
 	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE;
 
-	$topsurns=get_top_surnames(PGV_GED_ID, $min, 0);
+	$topsurns=get_top_surnames(WT_GED_ID, $min, 0);
 	foreach (preg_split('/[,;] /', $COMMON_NAMES_ADD) as $surname) {
 		if (!array_key_exists($surname, $topsurns)) {
 			$topsurns[$surname]=$min;
@@ -162,8 +162,8 @@ function DMSoundex($name) {
 	global $transformNameTable, $dmsounds, $maxchar;
 
 	// If the code tables are not loaded, reload! Keep them global!
-	if (!defined('PGV_DMSOUNDS_UTF8_PHP')) {
-		require PGV_ROOT.'includes/dmsounds_UTF8.php';
+	if (!defined('WT_DMSOUNDS_UTF8_PHP')) {
+		require WT_ROOT.'includes/dmsounds_UTF8.php';
 	}
 
 	// Apply special transformation rules to the input string

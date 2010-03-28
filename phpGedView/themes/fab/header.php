@@ -25,7 +25,7 @@
 // @subpackage Themes
 // @version $Id$
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -33,11 +33,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 // Definitions to simplify logic on pages with right-to-left languages
 // TODO: merge this into the trunk?
 if ($TEXT_DIRECTION=='ltr') {
-	define ('PGV_CSS_ALIGN',         'left');
-	define ('PGV_CSS_REVERSE_ALIGN', 'right');
+	define ('WT_CSS_ALIGN',         'left');
+	define ('WT_CSS_REVERSE_ALIGN', 'right');
 } else {
-	define ('PGV_CSS_ALIGN',         'right');
-	define ('PGV_CSS_REVERSE_ALIGN', 'left');
+	define ('WT_CSS_ALIGN',         'right');
+	define ('WT_CSS_REVERSE_ALIGN', 'left');
 }
 
 echo
@@ -49,10 +49,10 @@ echo
 	'<link rel="stylesheet" href="', $stylesheet, '" type="text/css" media="all" />';
 
 if ($ENABLE_RSS && !$REQUIRE_AUTHENTICATION) {
-	echo '<link href="', urlencode($SERVER_URL.'rss.php?ged='.PGV_GEDCOM), '" rel="alternate" type="', $applicationType, '" title="', htmlspecialchars($GEDCOM_TITLE), '" />';
+	echo '<link href="', urlencode($SERVER_URL.'rss.php?ged='.WT_GEDCOM), '" rel="alternate" type="', $applicationType, '" title="', htmlspecialchars($GEDCOM_TITLE), '" />';
 }
 
-if (PGV_USE_LIGHTBOX) {
+if (WT_USE_LIGHTBOX) {
 	if ($TEXT_DIRECTION=='rtl') {
 		echo
 			'<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />',
@@ -75,27 +75,27 @@ echo
 	'<meta name="robots" content="', htmlspecialchars($META_ROBOTS), '" />',
 	'<meta name="revisit-after" content="', htmlspecialchars($META_REVISIT), '" />',
 	'<meta name="keywords" content="', htmlspecialchars($META_KEYWORDS), '" />',
-	'<meta name="generator" content="', PGV_PHPGEDVIEW, ' ', PGV_VERSION_TEXT, '" />';
+	'<meta name="generator" content="', WT_WEBTREES, ' ', WT_VERSION_TEXT, '" />';
 
 echo
 	$javascript, $head, 
 	'<script type="text/javascript" src="js/jquery/jquery.min.js"></script>',
 	'<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>',
 	'<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />',
-	'<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />';
+	'<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />';
 	
 if ($TEXT_DIRECTION=='rtl') {
-	echo '<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />';
+	echo '<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />';
 }
 
 echo
-	'<link type="text/css" href="<?php echo PGV_THEME_DIR?>modules.css" rel="Stylesheet" />',
+	'<link type="text/css" href="<?php echo WT_THEME_DIR?>modules.css" rel="Stylesheet" />',
 	'</head><body id="body" ', $bodyOnLoad, '>';
 flush(); // Allow the browser to start fetching external stylesheets, javascript, etc.
 echo '<div id="header" class="block">'; // Every page has a header
 if ($view!='simple') {
 	echo
-		'<div style="float:', PGV_CSS_ALIGN, '; font-size:250%;"><a style="color:#888888;" href="', $HOME_SITE_URL, '?>">', $HOME_SITE_TEXT, '</div>';
+		'<div style="float:', WT_CSS_ALIGN, '; font-size:250%;"><a style="color:#888888;" href="', $HOME_SITE_URL, '?>">', $HOME_SITE_TEXT, '</div>';
 	// Print the user links
 	if ($SEARCH_SPIDER) {
 		// Search engines get a reduced menu
@@ -106,24 +106,24 @@ if ($view!='simple') {
 		);
 	} else {
 		// Options for real users
-		echo '<div style="float:', PGV_CSS_REVERSE_ALIGN, ';"><ul class="makeMenu">';
-		if (PGV_USER_ID) {
+		echo '<div style="float:', WT_CSS_REVERSE_ALIGN, ';"><ul class="makeMenu">';
+		if (WT_USER_ID) {
 			echo
-				'<li><a href="edituser.php" class="link">', getUserFullName(PGV_USER_ID), '</a></li>',
+				'<li><a href="edituser.php" class="link">', getUserFullName(WT_USER_ID), '</a></li>',
 				' | <li><a href="index.php?logout=1" class="link">', i18n::translate('Logout'), '</a></li>';
-			if (PGV_USER_GEDCOM_ADMIN) {
+			if (WT_USER_GEDCOM_ADMIN) {
 				echo ' | <li><a href="admin.php" class="link">', i18n::translate('Admin'), '</a></li>';
 			}
-			if (PGV_USER_CAN_ACCEPT && exists_pending_change()) {
+			if (WT_USER_CAN_ACCEPT && exists_pending_change()) {
 				echo ' | <li><a href="javascript:;" onclick="window.open(\'edit_changes.php\',\'_blank\',\'width=600,height=500,resizable=1,scrollbars=1\'); return false;" style="color:red;">', i18n::translate('Pending Changes'), '</a></li>';
 			}
 		} else {
 			global $LOGIN_URL;
-			if (PGV_SCRIPT_NAME==basename($LOGIN_URL)) {
+			if (WT_SCRIPT_NAME==basename($LOGIN_URL)) {
 				echo '<li><a href="', $LOGIN_URL, '" class="link">', i18n::translate('Login'), '</a></li>';
 			} else {
 				$QUERY_STRING = normalize_query_string($QUERY_STRING.'&amp;logout=');
-				echo '<li><a href="', $LOGIN_URL, '?url=', PGV_SCRIPT_PATH, PGV_SCRIPT_NAME, decode_url(normalize_query_string($QUERY_STRING.'&amp;ged='.PGV_GEDCOM)), '" class="link">', i18n::translate('Login'), '</a></li>';
+				echo '<li><a href="', $LOGIN_URL, '?url=', WT_SCRIPT_PATH, WT_SCRIPT_NAME, decode_url(normalize_query_string($QUERY_STRING.'&amp;ged='.WT_GEDCOM)), '" class="link">', i18n::translate('Login'), '</a></li>';
 			}
 		}
 			echo '<span class="link"> | ', MenuBar::getFavoritesMenu()->getMenuAsList();
@@ -155,10 +155,10 @@ if ($view!='simple') {
 
 		// Help menu
 		$menu = new Menu(i18n::translate('Help'), "#", "down");
-		$menu->addOnclick('return helpPopup("'.PGV_SCRIPT_NAME.'");');
+		$menu->addOnclick('return helpPopup("'.WT_SCRIPT_NAME.'");');
 		$menu_items[]=$menu;
 		echo
-			'<div style="float:', PGV_CSS_ALIGN, '; clear:', PGV_CSS_ALIGN, '; font-size:175%;">',
+			'<div style="float:', WT_CSS_ALIGN, '; clear:', WT_CSS_ALIGN, '; font-size:175%;">',
 			htmlspecialchars($GEDCOM_TITLE),
 			'</div>';
 	}

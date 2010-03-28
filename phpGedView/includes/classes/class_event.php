@@ -28,14 +28,14 @@
  *
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_EVENT_PHP', '');
+define('WT_CLASS_EVENT_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_date.php';
+require_once WT_ROOT.'includes/classes/class_date.php';
 
 /**
  * Event
@@ -78,10 +78,10 @@ class Event {
 	function getValue($code) {
 		if (is_null($this->values)) {
 			$this->values=array();
-			preg_match_all('/\n2 ('.PGV_REGEX_TAG.') (.+)/', $this->gedcomRecord, $matches, PREG_SET_ORDER);
+			preg_match_all('/\n2 ('.WT_REGEX_TAG.') (.+)/', $this->gedcomRecord, $matches, PREG_SET_ORDER);
 			foreach ($matches as $match) {
 				// If this is a link, remove the "@"
-				if (preg_match('/^@'.PGV_REGEX_XREF.'@$/', $match[2])) {
+				if (preg_match('/^@'.WT_REGEX_XREF.'@$/', $match[2])) {
 					$this->values[$match[1]]=trim($match[2], "@");
 				} else {
 					$this->values[$match[1]]=$match[2];
@@ -103,7 +103,7 @@ class Event {
 	 * @return Event
 	 */
 	function __construct($subrecord, $lineNumber=-1) {
-		if (preg_match('/^1 ('.PGV_REGEX_TAG.') *(.*)/', $subrecord, $match)) {
+		if (preg_match('/^1 ('.WT_REGEX_TAG.') *(.*)/', $subrecord, $match)) {
 			$this->tag=$match[1];
 			$this->detail=$match[2];
 			$this->lineNumber=$lineNumber;
@@ -328,7 +328,7 @@ class Event {
  * Examples: 1900_CENS.gif 1910_CENS.gif 1900_OCCU_FARM.gif 1800_OCCU_FARM.gif
  */
  function Icon() {
-		global $PGV_IMAGE_DIR;
+		global $WT_IMAGE_DIR;
 
 		// Need the gregorian century/decade
 		$date=$this->getDate();
@@ -342,7 +342,7 @@ class Event {
 		$decade=floor($gdate->y/10).'0';
 
 		$tag=$this->getTag();
-		$dir="{$PGV_IMAGE_DIR}/facts";
+		$dir="{$WT_IMAGE_DIR}/facts";
 
 		// Which era (century/decade)
 		$eras=array("{$decade}_", "{$century}_", '');

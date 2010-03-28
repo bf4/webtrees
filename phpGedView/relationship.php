@@ -29,10 +29,10 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'relationship.php');
+define('WT_SCRIPT_NAME', 'relationship.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_charts.php';
-require_once PGV_ROOT.'includes/classes/class_person.php';
+require_once WT_ROOT.'includes/functions/functions_charts.php';
+require_once WT_ROOT.'includes/classes/class_person.php';
 
 $show_full=$PEDIGREE_FULL_DETAILS;
 if (isset($_REQUEST['show_full'])) $show_full = $_REQUEST['show_full'];
@@ -82,12 +82,12 @@ $title_string .= i18n::translate('Relationship Chart');
 // -- print html header information
 print_header($title_string);
 
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 
 // Lbox additions if installed ---------------------------------------------------------------------------------------------
-if (PGV_USE_LIGHTBOX) {
-	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	require_once PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
+if (WT_USE_LIGHTBOX) {
+	require WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	require_once WT_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // ------------------------------------------------------------------------------------------------------------------------------
 
@@ -413,23 +413,23 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 			$maxxoffset = -1*$Dbwidth-20;
 			$maxyoffset = $yoffset;
 			if ($TEXT_DIRECTION=="ltr") {
-				$rArrow = $PGV_IMAGES["rarrow"]["other"];
-				$lArrow = $PGV_IMAGES["larrow"]["other"];
+				$rArrow = $WT_IMAGES["rarrow"]["other"];
+				$lArrow = $WT_IMAGES["larrow"]["other"];
 			} else {
-				$rArrow = $PGV_IMAGES["larrow"]["other"];
-				$lArrow = $PGV_IMAGES["rarrow"]["other"];
+				$rArrow = $WT_IMAGES["larrow"]["other"];
+				$lArrow = $WT_IMAGES["rarrow"]["other"];
 			}
 			foreach($node["path"] as $index=>$pid) {
 				print "\r\n\r\n<!-- Node:{$index} -->\r\n";
 				$linex = $xoffset;
 				$liney = $yoffset;
 				$mfstyle = "NN";
-				$indirec = find_person_record($pid, PGV_GED_ID);
+				$indirec = find_person_record($pid, WT_GED_ID);
 				if (strpos($indirec, "1 SEX F")!==false) $mfstyle="F";
 				if (strpos($indirec, "1 SEX M")!==false) $mfstyle="";
-				$arrow_img = $PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"];
+				$arrow_img = $WT_IMAGE_DIR."/".$WT_IMAGES["darrow"]["other"];
 				if ($node["relations"][$index]=="father" || $node["relations"][$index]=="mother" || $node["relations"][$index]=="parent") {
-					$line = $PGV_IMAGES["vline"]["other"];
+					$line = $WT_IMAGES["vline"]["other"];
 					$liney += $Dbheight;
 					$linex += $Dbwidth/2;
 					$lh = 54;
@@ -437,7 +437,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					//check for paternal grandparent relationship
 					if ($pretty) {
 						if ($asc==0) $asc=1;
-						if ($asc==-1) $arrow_img = $PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"];
+						if ($asc==-1) $arrow_img = $WT_IMAGE_DIR."/".$WT_IMAGES["uarrow"]["other"];
 						$lh=$ys;
 						$linex=$xoffset+$Dbwidth/2;
 						// put the box up or down ?
@@ -455,11 +455,11 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 							if ($asc==-1) $liney=$yoffset+$Dbheight; else $liney=$yoffset-$lh;
 							$joinx = $xoffset-$xs;
 							$joiny = $liney-2-($asc-1)/2*$lh;
-							echo "<div id=\"joina", $index, "\" style=\"position:absolute; ", $TEXT_DIRECTION=="ltr"?"left":"right", ":", $joinx + $Dbxspacing, "px; top:", $joiny + $Dbyspacing, "px; z-index:-100; \" align=\"center\"><img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["hline"]["other"], "\" align=\"left\" width=\"", $joinw, "\" height=\"", $joinh, "\" alt=\"\" /></div>\n";
+							echo "<div id=\"joina", $index, "\" style=\"position:absolute; ", $TEXT_DIRECTION=="ltr"?"left":"right", ":", $joinx + $Dbxspacing, "px; top:", $joiny + $Dbyspacing, "px; z-index:-100; \" align=\"center\"><img src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["hline"]["other"], "\" align=\"left\" width=\"", $joinw, "\" height=\"", $joinh, "\" alt=\"\" /></div>\n";
 							$joinw = $xs/2+2;
 							$joinx = $joinx+$xs/2;
 							$joiny = $joiny+$asc*$lh;
-							echo "<div id=\"joinb", $index, "\" style=\"position:absolute; ", $TEXT_DIRECTION=="ltr"?"left":"right", ":", $joinx + $Dbxspacing, "px; top:", $joiny + $Dbyspacing, "px; z-index:-100; \" align=\"center\"><img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["hline"]["other"], "\" align=\"left\" width=\"", $joinw, "\" height=\"", $joinh, "\" alt=\"\" /></div>\n";
+							echo "<div id=\"joinb", $index, "\" style=\"position:absolute; ", $TEXT_DIRECTION=="ltr"?"left":"right", ":", $joinx + $Dbxspacing, "px; top:", $joiny + $Dbyspacing, "px; z-index:-100; \" align=\"center\"><img src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["hline"]["other"], "\" align=\"left\" width=\"", $joinw, "\" height=\"", $joinh, "\" alt=\"\" /></div>\n";
 						}
 						$previous2=$previous;
 						$previous="parent";
@@ -467,11 +467,11 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					else $yoffset += $Dbheight+$Dbyspacing+50;
 				}
 				if ($node["relations"][$index]=="brother" || $node["relations"][$index]=="sister" || $node["relations"][$index]=="sibling") {
-					$arrow_img = $PGV_IMAGE_DIR."/".$rArrow;
+					$arrow_img = $WT_IMAGE_DIR."/".$rArrow;
 					$xoffset += $Dbwidth+$Dbxspacing+70;
 					$colNum ++;
 					//$rowNum is inherited from the box immediately to the left
-					$line = $PGV_IMAGES["hline"]["other"];
+					$line = $WT_IMAGES["hline"]["other"];
 					$linex += $Dbwidth;
 					$liney += $Dbheight/2;
 					$lh = 3;
@@ -485,11 +485,11 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					}
 				}
 				if ($node["relations"][$index]=="husband" || $node["relations"][$index]=="wife" || $node["relations"][$index]=="spouse") {
-					$arrow_img = $PGV_IMAGE_DIR."/".$rArrow;
+					$arrow_img = $WT_IMAGE_DIR."/".$rArrow;
 					$xoffset += $Dbwidth+$Dbxspacing+70;
 					$colNum ++;
 					//$rowNum is inherited from the box immediately to the left
-					$line = $PGV_IMAGES["hline"]["other"];
+					$line = $WT_IMAGES["hline"]["other"];
 					$linex += $Dbwidth;
 					$liney += $Dbheight/2;
 					$lh = 3;
@@ -503,14 +503,14 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					}
 				}
 				if ($node["relations"][$index]=="son" || $node["relations"][$index]=="daughter" || $node["relations"][$index]=="child") {
-					$line = $PGV_IMAGES["vline"]["other"];
+					$line = $WT_IMAGES["vline"]["other"];
 					$liney += $Dbheight;
 					$linex += $Dbwidth/2;
 					$lh = 54;
 					$lw = 3;
 					if ($pretty) {
 						if ($asc==0) $asc=-1;
-						if ($asc==1) $arrow_img = $PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"];
+						if ($asc==1) $arrow_img = $WT_IMAGE_DIR."/".$WT_IMAGES["uarrow"]["other"];
 						$lh=$ys;
 						$linex = $xoffset+$Dbwidth/2;
 						// put the box up or down ?
@@ -528,11 +528,11 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 							if ($asc==1) $liney=$yoffset+$Dbheight; else $liney=$yoffset-($lh+$Dbyspacing);
 							$joinx = $xoffset-$xs;
 							$joiny = $liney-2+($asc+1)/2*$lh;
-							print "<div id=\"joina$index\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($joinx+$Dbxspacing)."px; top:".($joiny+$Dbyspacing)."px; z-index:-100; \" align=\"center\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" align=\"left\" width=\"".$joinw."\" height=\"".$joinh."\" alt=\"\" /></div>\n";
+							print "<div id=\"joina$index\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($joinx+$Dbxspacing)."px; top:".($joiny+$Dbyspacing)."px; z-index:-100; \" align=\"center\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["hline"]["other"]."\" align=\"left\" width=\"".$joinw."\" height=\"".$joinh."\" alt=\"\" /></div>\n";
 							$joinw = $xs/2+2;
 							$joinx = $joinx+$xs/2;
 							$joiny = $joiny-$asc*$lh;
-							print "<div id=\"joinb$index\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($joinx+$Dbxspacing)."px; top:".($joiny+$Dbyspacing)."px; z-index:-100; \" align=\"center\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" align=\"left\" width=\"".$joinw."\" height=\"".$joinh."\" alt=\"\" /></div>\n";
+							print "<div id=\"joinb$index\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($joinx+$Dbxspacing)."px; top:".($joiny+$Dbyspacing)."px; z-index:-100; \" align=\"center\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["hline"]["other"]."\" align=\"left\" width=\"".$joinw."\" height=\"".$joinh."\" alt=\"\" /></div>\n";
 						}
 						$previous2=$previous;
 						$previous="child";
@@ -549,15 +549,15 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 				$pyoffset = $yoffset - 2;
 
 				if ($index>0) {
-					if ($TEXT_DIRECTION=="rtl" && $line!=$PGV_IMAGES["hline"]["other"]) {
+					if ($TEXT_DIRECTION=="rtl" && $line!=$WT_IMAGES["hline"]["other"]) {
 						print "<div id=\"line$index\" dir=\"ltr\" style=\"background:none; position:absolute; right:".($plinex+$Dbxspacing)."px; top:".($liney+$Dbyspacing)."px; width:".($lw+$lh*2)."px; z-index:-100; \" align=\"right\">";
-						print "<img src=\"$PGV_IMAGE_DIR/$line\" align=\"right\" width=\"$lw\" height=\"$lh\" alt=\"\" />\n";
+						print "<img src=\"$WT_IMAGE_DIR/$line\" align=\"right\" width=\"$lw\" height=\"$lh\" alt=\"\" />\n";
 						print "<br />";
 						print i18n::translate($node["relations"][$index])."\n";
 						print "<img src=\"$arrow_img\" border=\"0\" align=\"middle\" alt=\"\" />\n";
 					}
 					else {
-						print "<div id=\"line$index\" style=\"background:none;  position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($plinex+$Dbxspacing)."px; top:".($liney+$Dbyspacing)."px; width:".($lw+$lh*2)."px; z-index:-100; \" align=\"".($lh==3?"center":"left")."\"><img src=\"$PGV_IMAGE_DIR/$line\" align=\"left\" width=\"$lw\" height=\"$lh\" alt=\"\" />\n";
+						print "<div id=\"line$index\" style=\"background:none;  position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($plinex+$Dbxspacing)."px; top:".($liney+$Dbyspacing)."px; width:".($lw+$lh*2)."px; z-index:-100; \" align=\"".($lh==3?"center":"left")."\"><img src=\"$WT_IMAGE_DIR/$line\" align=\"left\" width=\"$lw\" height=\"$lh\" alt=\"\" />\n";
 						print "<br />";
 						print "<img src=\"$arrow_img\" border=\"0\" align=\"middle\" alt=\"\" />\n";
 						if ($lh == 3) print "<br />"; // note: $lh==3 means horiz arrow

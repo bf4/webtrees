@@ -28,17 +28,17 @@
  * @author Brian Holland
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_MEDIA_TAB_HEAD_PHP', '');
+define('WT_MEDIA_TAB_HEAD_PHP', '');
 
 global $LB_AL_HEAD_LINKS, $gedrec;
 
-require_once PGV_ROOT.'js/prototype.js.htm';
-require_once PGV_ROOT.'js/scriptaculous.js.htm';
+require_once WT_ROOT.'js/prototype.js.htm';
+require_once WT_ROOT.'js/scriptaculous.js.htm';
 ?>
 <script language="javascript" type="text/javascript">
 <!--
@@ -53,7 +53,7 @@ require_once PGV_ROOT.'js/scriptaculous.js.htm';
 	// Find if indi and family associated media exists and then count them ( $tot_med_ct)
 	require 'includes/media_reorder_count.php';
 
-	$gedrec = find_gedcom_record($pid, PGV_GED_ID);
+	$gedrec = find_gedcom_record($pid, WT_GED_ID);
 	$regexp = "/OBJE @(.*)@/";
 	$ct = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
 

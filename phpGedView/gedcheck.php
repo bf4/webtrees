@@ -29,11 +29,11 @@
 // @version $Id$
 //
 
-define('PGV_SCRIPT_NAME', 'gedcheck.php');
+define('WT_SCRIPT_NAME', 'gedcheck.php');
 require './config.php';
 
 // Must be an admin user to use this module
-if (!PGV_USER_GEDCOM_ADMIN) {
+if (!WT_USER_GEDCOM_ADMIN) {
 	header('Location: login.php?url=gedcheck.php');
 	exit;
 }
@@ -131,7 +131,7 @@ if (!isset($_POST['action'])) {
 }
 
 // If we're checking a gedcom that is imported into the database, check that the file is synchronised
-if ($ged==PGV_GEDCOM && !$SYNC_GEDCOM_FILE) {
+if ($ged==WT_GEDCOM && !$SYNC_GEDCOM_FILE) {
 	$ged_link='href="javascript:" onclick="window.open(\''.encode_url("export_gedcom.php?export={$ged}").'\', \'_blank\',\'left=50,top=50,width=500,height=500,resizable=1,scrollbars=1\');"';
 	echo '<div class="error">', i18n::translate('Edits made to the database are not synchronized to the file %s.  The file contents may be out-of-date.  You can synchronize it with the database now by performing an <b><a "%s">export</a></b>.', $ged, $ged_link), '</div><hr/>';
 }
@@ -147,7 +147,7 @@ $XREF_LINK=array(
 	'ALIA'=>'INDI',
 	'ANCI'=>'SUBM',
 	'DESI'=>'SUBM',
-	'_PGV_OBJS'=>'OBJE',
+	'_WT_OBJS'=>'OBJE',
 	'AUTH'=>'INDI'  // This is not valid gedcom, but it is not an error if used.
 );
 
@@ -178,7 +178,7 @@ function no_link ($text) { return '&lrm;'.$text.'&lrm; '.i18n::translate('does n
 ////////////////////////////////////////////////////////////////////////////////
 // Create a link to a PGV object
 ////////////////////////////////////////////////////////////////////////////////
-$PGV_LINK=array(
+$WT_LINK=array(
 	'INDI'=>'individual.php?pid=',
 	'FAM'=>'family.php?famid=',
 	'SOUR'=>'source.php?sid=',
@@ -188,10 +188,10 @@ $PGV_LINK=array(
 $target=($openinnew==1 ? ' target="_new"' : '');
 function pgv_href($tag, $xref, $name='')
 {
-	global $PGV_LINK, $target, $ged;
+	global $WT_LINK, $target, $ged;
 	$text=($name=='' ? "$tag $xref" : "$name ($xref)");
-	if (isset($PGV_LINK[$tag]) && get_id_from_gedcom($ged)) {
-		return '&lrm;<a href="'.$PGV_LINK[$tag].str_replace('@','',$xref).'"&amp;ged='.$ged.$target.'>'.$text.'</a>&lrm;';
+	if (isset($WT_LINK[$tag]) && get_id_from_gedcom($ged)) {
+		return '&lrm;<a href="'.$WT_LINK[$tag].str_replace('@','',$xref).'"&amp;ged='.$ged.$target.'>'.$text.'</a>&lrm;';
 	} else {
 		return "&lrm;$tag $xref&lrm;";
 	}
@@ -808,7 +808,7 @@ fclose($handle);
 echo '<div lang="en" xml:lang="en" dir="ltr" align="left">';
 $num_lines=count($gedfile);
 // Ignore the Byte-Order-Mark on UTF files
-if ($num_lines>0) $gedfile[0]=preg_replace('/^'.PGV_UTF8_BOM.'/', '', $gedfile[0]);
+if ($num_lines>0) $gedfile[0]=preg_replace('/^'.WT_UTF8_BOM.'/', '', $gedfile[0]);
 $context=array('GEDCOM'); $curr_xref='';
 foreach ($gedfile as $num=>$value) {
 	preg_match('/^(\s*)(\d*)(\s*)(@[^@#]+@)?(\s*)(\S*)(\s?)(.*)/', $value, $match);

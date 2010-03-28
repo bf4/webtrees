@@ -30,7 +30,7 @@
  * @author Brian Holland
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -89,10 +89,10 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 <?php
 
 // Load Lightbox javascript and css files
-// require_once PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
+// require_once WT_ROOT.'modules/lightbox/functions/lb_call_js.php';
 
 // Find if indi and family associated media exists and then count them ( $tot_med_ct)
-require_once PGV_ROOT.'includes/media_reorder_count.php';
+require_once WT_ROOT.'includes/media_reorder_count.php';
 
 	// If in re-order mode do not show header links, but instead, show drag and drop title.
 	if (isset($reorder) && $reorder==1){
@@ -105,12 +105,12 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 		echo '<table border="0" width="75%"><tr>';
 		// print "<td class=\"width10 center wrap\" valign=\"top\"></td>";
 
-		if ($LB_AL_HEAD_LINKS == "icon" || (!PGV_USER_IS_ADMIN && !PGV_USER_CAN_EDIT)) {
+		if ($LB_AL_HEAD_LINKS == "icon" || (!WT_USER_IS_ADMIN && !WT_USER_CAN_EDIT)) {
 		print "<td>";
 		}
 
 		// Configuration
-        if (PGV_USER_IS_ADMIN) {
+        if (WT_USER_IS_ADMIN) {
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 				// print "<a href=\"".encode_url("module.php?mod=lightbox&pgvaction=lb_editconfig&pid={$pid}&gedcom={$GEDCOM}&tab=4")."\">";
@@ -139,7 +139,7 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
         }
 
 		//Add a new multimedia object
-        if (PGV_USER_CAN_EDIT) {
+        if (WT_USER_CAN_EDIT) {
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 	            print "<a href=\"javascript: album_add()\"> ";
@@ -167,7 +167,7 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
         }
 
 		//Link to an existing item
-        if (PGV_USER_CAN_EDIT) {
+        if (WT_USER_CAN_EDIT) {
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 	            print "<a href=\"javascript: album_link()\"> ";
@@ -195,10 +195,10 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
         }
 /*
 		//Album Reorder Media  ( If media exists and is greater than 1 item ) -----
-		if (PGV_USER_CAN_EDIT && $tot_med_ct>1) {
+		if (WT_USER_CAN_EDIT && $tot_med_ct>1) {
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
-				print "<a href=\"".encode_url(PGV_SCRIPT_NAME."?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
+				print "<a href=\"".encode_url(WT_SCRIPT_NAME."?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
 				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\" title=\"".i18n::translate('Re-order media')."\" alt=\"".i18n::translate('Re-order media')."\" /><br />" ;
 				print "" . i18n::translate('Re-order media') . "&nbsp;";
 				print '</a>';
@@ -208,7 +208,7 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 				print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "text") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
-				print "<a href=\"".encode_url(PGV_SCRIPT_NAME."?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
+				print "<a href=\"".encode_url(WT_SCRIPT_NAME."?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
 				print "" . i18n::translate('Re-order media') . "&nbsp;";
 				print '</a>';
 				print "</td>";
@@ -216,7 +216,7 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 				print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "&nbsp;&nbsp;&nbsp;";
-				print "<a href=\"".encode_url(PGV_SCRIPT_NAME."?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
+				print "<a href=\"".encode_url(WT_SCRIPT_NAME."?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
 				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\" title=\"".i18n::translate('Re-order media')."\" alt=\"".i18n::translate('Re-order media')."\" />" ;
 				print '</a>';
 				//print "<td width=\"5%\">&nbsp;</td>";
@@ -225,7 +225,7 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 */
 
 		//Popup Reorder Media ( If media exists and is greater than 1 item ) -----
-		if (PGV_USER_CAN_EDIT && $tot_med_ct>1) {
+		if (WT_USER_CAN_EDIT && $tot_med_ct>1) {
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 				print "<a href=\"javascript: reorder_media()\">" ;
@@ -256,7 +256,7 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 		}
 
 
-		if ($LB_AL_HEAD_LINKS == "icon" || (!PGV_USER_IS_ADMIN && !PGV_USER_CAN_EDIT)) {
+		if ($LB_AL_HEAD_LINKS == "icon" || (!WT_USER_IS_ADMIN && !WT_USER_CAN_EDIT)) {
 		print "</td>";
 		}
 

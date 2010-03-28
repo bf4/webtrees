@@ -27,7 +27,7 @@
  * @version $Id: header.php 7095 2010-03-01 19:33:01Z veit $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -49,10 +49,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		<link rel="stylesheet" href="<?php echo $stylesheet; ?>" type="text/css" media="all" />
 		<?php if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) {?> <link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" /> <?php } ?>
 		<?php if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
-			<link rel="stylesheet" href="<?php echo PGV_THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
+			<link rel="stylesheet" href="<?php echo WT_THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 		<?php }
 		// Additional css files required (Only if Lightbox installed)
-		if (PGV_USE_LIGHTBOX) {
+		if (WT_USE_LIGHTBOX) {
 			if ($TEXT_DIRECTION=='rtl') {
 				echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />';
 				echo '<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';
@@ -79,18 +79,18 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		<?php if (!empty($META_PAGE_TYPE)) {?><meta name="page-type" content="<?php echo htmlspecialchars($META_PAGE_TYPE); ?>" /><?php } ?>
 		<?php if (!empty($META_ROBOTS)) {?><meta name="robots" content="<?php echo htmlspecialchars($META_ROBOTS); ?>" /><?php } ?>
 		<?php if (!empty($META_REVISIT)) {?><meta name="revisit-after" content="<?php echo htmlspecialchars($META_REVISIT); ?>" /><?php } ?>
-		<meta name="generator" content="<?php echo PGV_PHPGEDVIEW, ' - ', PGV_PHPGEDVIEW_URL; ?>" />
+		<meta name="generator" content="<?php echo WT_WEBTREES, ' - ', WT_WEBTREES_URL; ?>" />
 	<?php } ?>
 	<?php echo $javascript; ?>
 	<?php echo $head; //-- additional header information ?>
 	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
 	<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
 	<?php if ($TEXT_DIRECTION=='rtl') {?>
-		<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
+		<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
 	<?php }?>
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>modules.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo WT_THEME_DIR?>modules.css" rel="Stylesheet" />
 </head>
 <body id="body" <?php echo $bodyOnLoad; ?>>
 <!-- begin header section -->
@@ -107,7 +107,7 @@ function switchMenu(openMe,closeMe)
 	    closeIt.style.display = 'none';
 	    openIt.style.display = '';
 		SetCookie("menu",document.getElementById(openMe).id.toString(),7);
-		window.location = '<?php echo PGV_SCRIPT_NAME,"?",$QUERY_STRING; ?>';
+		window.location = '<?php echo WT_SCRIPT_NAME,"?",$QUERY_STRING; ?>';
 	}
 function SetCookie(cookieName,cookieValue,nDays)
 	{
@@ -122,7 +122,7 @@ function SetCookie(cookieName,cookieValue,nDays)
 <div id="header" class="<?php echo $TEXT_DIRECTION; ?>">
 <table width="99%">
 	<tr>
-		<td><img src="<?php echo PGV_THEME_DIR; ?>header.jpg" width="281" height="50" alt="" /></td>
+		<td><img src="<?php echo WT_THEME_DIR; ?>header.jpg" width="281" height="50" alt="" /></td>
 		<td>
 			<table width="100%">
 			<tr>

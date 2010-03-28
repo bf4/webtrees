@@ -47,13 +47,13 @@
  *  $dirs = list of subdirectories within current directory.  Built with medialist.
  */
 
-define('PGV_SCRIPT_NAME', 'media.php');
+define('WT_SCRIPT_NAME', 'media.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
-require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
-require_once PGV_ROOT.'includes/functions/functions_edit.php';
-require_once PGV_ROOT.'includes/functions/functions_import.php';
-require_once PGV_ROOT.'includes/functions/functions_mediadb.php';
+require_once WT_ROOT.'includes/functions/functions_print_lists.php';
+require_once WT_ROOT.'includes/functions/functions_print_facts.php';
+require_once WT_ROOT.'includes/functions/functions_edit.php';
+require_once WT_ROOT.'includes/functions/functions_import.php';
+require_once WT_ROOT.'includes/functions/functions_mediadb.php';
 
 /**
  * This functions checks if an existing directory is physically writeable
@@ -180,18 +180,18 @@ function set_perms($path) {
 			if ($element!= "." && $element!= ".." && $element!=".svn") {
 				$fullpath = $path."/".$element;
 				if (is_dir($fullpath)) {
-					if (@chmod($fullpath, PGV_PERM_EXE)) {
-						print "<div>".i18n::translate('Permissions Set')." [".decoct(PGV_PERM_EXE)."] [".$fullpath."]</div>";
+					if (@chmod($fullpath, WT_PERM_EXE)) {
+						print "<div>".i18n::translate('Permissions Set')." [".decoct(WT_PERM_EXE)."] [".$fullpath."]</div>";
 					} else {
-						print "<div>".i18n::translate('Permissions Not Set')." [".decoct(PGV_PERM_EXE)."] [".$fullpath."]</div>";
+						print "<div>".i18n::translate('Permissions Not Set')." [".decoct(WT_PERM_EXE)."] [".$fullpath."]</div>";
 					}
 					// call this function recursively on this directory
 					set_perms($fullpath);
 				} else {
-					if (@chmod($fullpath, PGV_PERM_FILE)) {
-						print "<div>".i18n::translate('Permissions Set')." [".decoct(PGV_PERM_FILE)."] [".$fullpath."]</div>";
+					if (@chmod($fullpath, WT_PERM_FILE)) {
+						print "<div>".i18n::translate('Permissions Set')." [".decoct(WT_PERM_FILE)."] [".$fullpath."]</div>";
 					} else {
-						print "<div>".i18n::translate('Permissions Not Set')." [".decoct(PGV_PERM_FILE)."] [".$fullpath."]</div>";
+						print "<div>".i18n::translate('Permissions Not Set')." [".decoct(WT_PERM_FILE)."] [".$fullpath."]</div>";
 					}
 				}
 			}
@@ -206,17 +206,17 @@ $starttime = time();
 
 // TODO Determine source and validation requirements for these variables
 $filename=decrypt(safe_REQUEST($_REQUEST, 'filename'));
-$directory=safe_REQUEST($_REQUEST, 'directory', PGV_REGEX_NOSCRIPT, $MEDIA_DIRECTORY);
+$directory=safe_REQUEST($_REQUEST, 'directory', WT_REGEX_NOSCRIPT, $MEDIA_DIRECTORY);
 $movetodir=safe_REQUEST($_REQUEST, 'movetodir');
 $movefile=safe_REQUEST($_REQUEST, 'movefile');
-$action=safe_REQUEST($_REQUEST, 'action', PGV_REGEX_ALPHA, 'filter');
-$subclick=safe_REQUEST($_REQUEST, 'subclick', PGV_REGEX_ALPHA, 'none');
+$action=safe_REQUEST($_REQUEST, 'action', WT_REGEX_ALPHA, 'filter');
+$subclick=safe_REQUEST($_REQUEST, 'subclick', WT_REGEX_ALPHA, 'none');
 $media=safe_REQUEST($_REQUEST, 'media');
-$filter=safe_REQUEST($_REQUEST, 'filter', PGV_REGEX_NOSCRIPT);
+$filter=safe_REQUEST($_REQUEST, 'filter', WT_REGEX_NOSCRIPT);
 $sortby=safe_REQUEST($_REQUEST, 'sortby', 'file', 'title');
-$level=safe_REQUEST($_REQUEST, 'level', PGV_REGEX_INTEGER, 0);
-$start=safe_REQUEST($_REQUEST, 'start', PGV_REGEX_INTEGER, 0);
-$max=safe_REQUEST($_REQUEST, 'max', PGV_REGEX_INTEGER, 20);
+$level=safe_REQUEST($_REQUEST, 'level', WT_REGEX_INTEGER, 0);
+$start=safe_REQUEST($_REQUEST, 'start', WT_REGEX_INTEGER, 0);
+$max=safe_REQUEST($_REQUEST, 'max', WT_REGEX_INTEGER, 20);
 
 $showthumb=safe_REQUEST($_REQUEST, 'showthumb');
 
@@ -244,14 +244,14 @@ $directory_fw = get_media_firewall_path($directory);
 $thumbdir_fw = get_media_firewall_path($thumbdir);
 
 //-- only allow users with Admin privileges to access script.
-if (!PGV_USER_IS_ADMIN || !$ALLOW_EDIT_GEDCOM) {
+if (!WT_USER_IS_ADMIN || !$ALLOW_EDIT_GEDCOM) {
 	header("Location: login.php?url=media.php");
 	exit;
 }
 
 //-- TODO add check for -- admin can manipulate files
 $fileaccess = false;
-if (PGV_USER_IS_ADMIN) {
+if (WT_USER_IS_ADMIN) {
 	$fileaccess = true;
 }
 
@@ -297,7 +297,7 @@ function checkpath(folder) {
 }
 
 function showchanges() {
-	window.location = '<?php echo PGV_SCRIPT_NAME."?show_changes=yes&directory=".$directory."&level=".$level."&filter=".$filter."&subclick=".$subclick; ?>';
+	window.location = '<?php echo WT_SCRIPT_NAME."?show_changes=yes&directory=".$directory."&level=".$level."&filter=".$filter."&subclick=".$subclick; ?>';
 }
 
 //-->
@@ -604,7 +604,7 @@ if (check_media_structure()) {
 		//-- figure out how many levels are in this file
 		$mlevels = preg_split("~[/\\\]~", $filename);
 
-		$statement=PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}media WHERE m_file LIKE ?")->execute(array("%{$myFile}"));
+		$statement=WT_DB::prepare("SELECT * FROM {$TBLPREFIX}media WHERE m_file LIKE ?")->execute(array("%{$myFile}"));
 		while ($row=$statement->fetch(PDO::FETCH_ASSOC)) {
 			$rlevels = preg_split("~[/\\\]~", $row["m_file"]);
 			//-- make sure we only delete a file at the same level of directories
@@ -624,7 +624,7 @@ if (check_media_structure()) {
 				if ($k>$MEDIA_DIRECTORY_LEVELS) break;
 			}
 			if ($match) {
-				if ($row["m_gedfile"]!=PGV_GED_ID) $onegedcom = false;
+				if ($row["m_gedfile"]!=WT_GED_ID) $onegedcom = false;
 				else $xrefs[] = $row["m_media"];
 			}
 		}
@@ -678,8 +678,8 @@ if (check_media_structure()) {
 			if ($xref != "") {
 				$links = get_media_relations($xref);
 				foreach($links as $pid=>$type) {
-					if (isset($pgv_changes[$pid."_".PGV_GEDCOM])) $gedrec = find_updated_record($pid, PGV_GED_ID);
-					else $gedrec = find_gedcom_record($pid, PGV_GED_ID);
+					if (isset($pgv_changes[$pid."_".WT_GEDCOM])) $gedrec = find_updated_record($pid, WT_GED_ID);
+					else $gedrec = find_gedcom_record($pid, WT_GED_ID);
 					$gedrec = remove_subrecord($gedrec, "OBJE", $xref, -1);
 					if (replace_gedrec($pid, $gedrec, true, $xref)) {
 						echo i18n::translate('Record %s successfully updated.', $pid);
@@ -696,8 +696,8 @@ if (check_media_structure()) {
 
 				// Record changes to the Media object
 					//-- why do we accept changes just to delete the item?
-					accept_changes($xref."_".PGV_GEDCOM);
-					$objerec = find_gedcom_record($xref, PGV_GED_ID);
+					accept_changes($xref."_".WT_GEDCOM);
+					$objerec = find_gedcom_record($xref, WT_GED_ID);
 
 					// Remove media object from gedcom
 					if (delete_gedrec($xref)) {
@@ -875,8 +875,8 @@ if (check_media_structure()) {
 			if ($TEXT_DIRECTION=="rtl") $uplink .= getLRM();
 			$uplink .= "</a>\n";
 
-			$uplink2 = "<a href=\"".encode_url("media.php?directory={$pdir}&sortby={$sortby}&level=".($level-1).$thumbget)."\"><img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/";
-			$uplink2 .= $PGV_IMAGES["larrow"]["other"];
+			$uplink2 = "<a href=\"".encode_url("media.php?directory={$pdir}&sortby={$sortby}&level=".($level-1).$thumbget)."\"><img class=\"icon\" src=\"".$WT_IMAGE_DIR."/";
+			$uplink2 .= $WT_IMAGES["larrow"]["other"];
 			$uplink2 .= "\" alt=\"\" /></a>\n";
 		}
 
@@ -939,7 +939,7 @@ if (check_media_structure()) {
 						print "<input type=\"hidden\" name=\"action\" value=\"\" />";
 						print "<input type=\"hidden\" name=\"showthumb\" value=\"{$showthumb}\" />";
 						print "<input type=\"hidden\" name=\"sortby\" value=\"{$sortby}\" />";
-						print "<input type=\"image\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]."\" alt=\"".i18n::translate('Delete')."\" onclick=\"this.form.action.value='deletedir';return confirm('".i18n::translate('Are you sure you want to delete this folder?')."');\" />";
+						print "<input type=\"image\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["remove"]["other"]."\" alt=\"".i18n::translate('Delete')."\" onclick=\"this.form.action.value='deletedir';return confirm('".i18n::translate('Are you sure you want to delete this folder?')."');\" />";
 						if ($USE_MEDIA_FIREWALL) {
 							print "<br /><input type=\"submit\" value=\"".i18n::translate('Move to standard')."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirstandard';\" />";
 							print "<br /><input type=\"submit\" value=\"".i18n::translate('Move to protected')."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirprotected';\" />";
@@ -963,10 +963,10 @@ if (check_media_structure()) {
 
 		// display the images
 		if (count($medialist) && ($subclick=='search' || $subclick=='all')) {
-			if (PGV_USE_LIGHTBOX) {
+			if (WT_USE_LIGHTBOX) {
 				// Get Lightbox config variables
-				require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-				require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
+				require WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
+				require WT_ROOT.'modules/lightbox/functions/lb_call_js.php';
 			}
 
 			// Sort the media list according to the user's wishes

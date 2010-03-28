@@ -27,13 +27,13 @@
  * @subpackage Lists
  */
 
-define('PGV_SCRIPT_NAME', 'notelist.php');
+define('WT_SCRIPT_NAME', 'notelist.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+require_once WT_ROOT.'includes/functions/functions_print_lists.php';
 
 print_header(i18n::translate('Shared Notes'));
 echo '<div class="center"><h2>', i18n::translate('Shared Notes'), '</h2>';
-print_note_table(get_note_list(PGV_GED_ID));
+print_note_table(get_note_list(WT_GED_ID));
 echo '</div>';
 print_footer();
 ?>

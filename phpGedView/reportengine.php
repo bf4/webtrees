@@ -29,7 +29,7 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'reportengine.php');
+define('WT_SCRIPT_NAME', 'reportengine.php');
 require './config.php';
 
 // We have finished writing to $_SESSION, so release the lock
@@ -94,7 +94,7 @@ $newvars = array();
 foreach($vars as $name=>$var) {
 	$newvars[$name]["id"] = $var;
 	if (!empty($type[$name]) && (($type[$name]=="INDI") || ($type[$name]=="FAM") || ($type[$name]=="SOUR"))) {
-		$gedcom = find_gedcom_record($var, PGV_GED_ID);
+		$gedcom = find_gedcom_record($var, WT_GED_ID);
 		if (empty($gedcom)) {
 			$action="setup";
 		}
@@ -102,7 +102,7 @@ foreach($vars as $name=>$var) {
 			if (preg_match("/0 @.*@ INDI/", $gedcom)>0) {
 				$fams = find_sfamily_ids($var);
 				if (!empty($fams[0])) {
-					$gedcom = find_family_record($fams[0], PGV_GED_ID);
+					$gedcom = find_family_record($fams[0], WT_GED_ID);
 					if (!empty($gedcom)) {
 						$vars[$name] = $fams[0];
 					} else {
@@ -128,7 +128,7 @@ if (!empty($report)) {
 	$r = basename($report);
 	if (!isset($reports[$r]["access"])) {
 		$action = "choose";
-	} elseif ($reports[$r]["access"]<PGV_USER_ACCESS_LEVEL) {
+	} elseif ($reports[$r]["access"]<WT_USER_ACCESS_LEVEL) {
 		$action = "choose";
 	}
 }
@@ -157,7 +157,7 @@ if ($action=="choose") {
 	echo "<tr><td class=\"descriptionbox wrap width33 vmiddle\">", i18n::translate('Select report'), "</td>";
 	echo "<td class=\"optionbox\"><select onchange=\"this.form.submit();\" name=\"report\">\n";
 	foreach($reports as $file=>$report) {
-		if ($report["access"] >= PGV_USER_ACCESS_LEVEL) {
+		if ($report["access"] >= WT_USER_ACCESS_LEVEL) {
 			echo "<option value=\"", $report["file"], "\">", $report["title"][$LANGUAGE], "</option>\n";
 		}
 	}
@@ -173,14 +173,14 @@ elseif ($action=="setup") {
 	print_header(i18n::translate('Enter report values'));
 
 	if ($ENABLE_AUTOCOMPLETE) {
-		require_once PGV_ROOT."js/autocomplete.js.htm";
+		require_once WT_ROOT."js/autocomplete.js.htm";
 	}
 
 	//-- make sure the report exists
 	if (!file_exists($report)) {
 		echo "<span class=\"error\">", i18n::translate('File not found.'), "</span> ", $report, "\n";
 	} else {
-		require_once PGV_ROOT."includes/reportheader.php";
+		require_once WT_ROOT."includes/reportheader.php";
 		$report_array = array();
 		//-- start the sax parser
 		$xml_parser = xml_parser_create();
@@ -203,14 +203,14 @@ elseif ($action=="setup") {
 		}
 		xml_parser_free($xml_parser);
 		// Paste Found ID from a pop-up window
-		echo PGV_JS_START;
+		echo WT_JS_START;
 			?>
 			var pastefield;
 			function paste_id(value) {
 				pastefield.value=value;
 			}
 			<?php
-		echo PGV_JS_END;
+		echo WT_JS_END;
 		
 		init_calendar_popup();
 		echo "<form name=\"setupreport\" method=\"get\" target=\"_blank\" action=\"reportengine.php\">\n";
@@ -227,7 +227,7 @@ elseif ($action=="setup") {
 			$report_array["inputs"] = array();
 		}
 		foreach($report_array["inputs"] as $indexval => $input) {
-			if ((($input["name"] == "sources") && ($SHOW_SOURCES >= PGV_USER_ACCESS_LEVEL)) || ($input["name"] != "sources")) {
+			if ((($input["name"] == "sources") && ($SHOW_SOURCES >= WT_USER_ACCESS_LEVEL)) || ($input["name"] != "sources")) {
 				if (($input["name"] != "photos") || ($MULTI_MEDIA)) {
 					// url forced default value ?
 					if (isset($_REQUEST[$input["name"]])) {
@@ -313,8 +313,8 @@ elseif ($action=="setup") {
 							print_findsource_link($input["name"]);
 						} elseif ($input["lookup"]=="DATE") {
 							$text = i18n::translate('Select a date');
-							if (isset($PGV_IMAGES["calendar"]["button"])) {
-								$Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["calendar"]["button"]."\" name=\"a_".$input["name"]."\" id=\"a_".$input["name"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
+							if (isset($WT_IMAGES["calendar"]["button"])) {
+								$Link = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["calendar"]["button"]."\" name=\"a_".$input["name"]."\" id=\"a_".$input["name"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 							} else {
 								$Link = $text;
 							}
@@ -335,8 +335,8 @@ elseif ($action=="setup") {
 		<tr><td class="descriptionbox width30 wrap"></td>
 		<td class="optionbox">
 		<table><tr>
-		<td><img src="<?php echo isset($PGV_IMAGES["media"]["pdf"]) ? $PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["pdf"] : "images/media/pdf.gif";?>" alt="PDF" title="PDF" /></td>
-		<td><img src="<?php echo isset($PGV_IMAGES["media"]["html"]) ? $PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["html"] : "images/media/html.gif";?>" alt="HTML" title="HTML" /></td>
+		<td><img src="<?php echo isset($WT_IMAGES["media"]["pdf"]) ? $WT_IMAGE_DIR."/".$WT_IMAGES["media"]["pdf"] : "images/media/pdf.gif";?>" alt="PDF" title="PDF" /></td>
+		<td><img src="<?php echo isset($WT_IMAGES["media"]["html"]) ? $WT_IMAGE_DIR."/".$WT_IMAGES["media"]["html"] : "images/media/html.gif";?>" alt="HTML" title="HTML" /></td>
 		</tr><tr>
 		<td><center><input type="radio" name="output" value="PDF" checked="checked" /></center></td>
 		<td><center><input type="radio" name="output" value="HTML" <?php if ($output=="HTML") echo " checked=\"checked\"";?> /></center></td>
@@ -347,7 +347,7 @@ elseif ($action=="setup") {
 		echo " <input type=\"submit\" value=\"", i18n::translate('Download report'), "\" onclick=\"document.setupreport.elements['download'].value='1';\"/>";
 		echo " <input type=\"submit\" value=\"", i18n::translate('Cancel'), "\" onclick=\"document.setupreport.elements['action'].value='setup';document.setupreport.target='';\"/>";
 		echo "</td></tr></table></form><br /><br />\n";
-		echo PGV_JS_START, "document.title = \"", $doctitle, "\"", PGV_JS_END;
+		echo WT_JS_START, "document.title = \"", $doctitle, "\"", WT_JS_END;
 	}
 	print_footer();
 }
@@ -356,11 +356,11 @@ elseif ($action=="run") {
 	//-- load the report generator
 	switch ($output) {
 		case "HTML":
-			require_once PGV_ROOT."includes/classes/class_reporthtml.php";
+			require_once WT_ROOT."includes/classes/class_reporthtml.php";
 			break;
 		case "PDF":
 		default:
-			require_once PGV_ROOT."includes/classes/class_reportpdf.php";
+			require_once WT_ROOT."includes/classes/class_reportpdf.php";
 			break;
 	}
 

@@ -27,14 +27,14 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'placelist.php');
+define('WT_SCRIPT_NAME', 'placelist.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+require_once WT_ROOT.'includes/functions/functions_print_lists.php';
 
 $use_googlemap = false;
 
-if (file_exists(PGV_ROOT.'modules/googlemap/placehierarchy.php')) {
-	require PGV_ROOT.'modules/googlemap/placehierarchy.php';
+if (file_exists(WT_ROOT.'modules/googlemap/placehierarchy.php')) {
+	require WT_ROOT.'modules/googlemap/placehierarchy.php';
 	if (isset($GOOGLEMAP_ENABLED) && $GOOGLEMAP_ENABLED && isset($GOOGLEMAP_PLACE_HIERARCHY) && $GOOGLEMAP_PLACE_HIERARCHY) {
 		$use_googlemap = true;
 	}
@@ -48,7 +48,7 @@ function case_in_array($value, $array) {
 }
 $action = safe_GET('action');
 $display = safe_GET('display');
-$parent = safe_GET('parent', PGV_REGEX_UNSAFE);
+$parent = safe_GET('parent', WT_REGEX_UNSAFE);
 $level = safe_GET('level');
 
 if (empty($action)) $action = "find";
@@ -89,7 +89,7 @@ if ($level>count($parent)) $level = count($parent);
 if ($level<count($parent)) $level = 0;
 
 //-- extract the place form encoded in the gedcom
-$header = find_gedcom_record("HEAD", PGV_GED_ID);
+$header = find_gedcom_record("HEAD", WT_GED_ID);
 $hasplaceform = strpos($header, "1 PLAC");
 
 //-- hierarchical display
@@ -307,7 +307,7 @@ if ($display=="hierarchy") {
 				echo "colspan=\"2\"";
 			}
 			echo ">&nbsp;";
-			echo "<img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["place"]["small"], "\" border=\"0\" title=\"", i18n::translate('Place'), "\" alt=\"", i18n::translate('Place'), "\" />&nbsp;&nbsp;";
+			echo "<img src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["place"]["small"], "\" border=\"0\" title=\"", i18n::translate('Place'), "\" alt=\"", i18n::translate('Place'), "\" />&nbsp;&nbsp;";
 			if ($level>0) {
 				echo " ", i18n::translate('Place Hierarchy after'), ": ";
 				echo PrintReady($num_place);
@@ -429,7 +429,7 @@ if ($display=="list") {
 		echo ">\n\t\t<tr>\n\t\t<td class=\"list_label\" ";
 		$ct = count($placelist);
 		echo " colspan=\"", $ct>20 ? "3" : "2", "\">&nbsp;";
-		echo "<img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["place"]["small"], "\" border=\"0\" title=\"", i18n::translate('Place'), "\" alt=\"", i18n::translate('Place'), "\" />&nbsp;&nbsp;";
+		echo "<img src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["place"]["small"], "\" border=\"0\" title=\"", i18n::translate('Place'), "\" alt=\"", i18n::translate('Place'), "\" />&nbsp;&nbsp;";
 		echo i18n::translate('Place List');
 		echo help_link('ppp_placelist');
 		echo "</td></tr><tr><td class=\"list_value_wrap\"><ul>";

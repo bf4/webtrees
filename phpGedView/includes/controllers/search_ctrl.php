@@ -29,14 +29,14 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_SEARCH_CTRL_PHP', '');
+define('WT_SEARCH_CTRL_PHP', '');
 
-require_once PGV_ROOT.'includes/controllers/basecontrol.php';
+require_once WT_ROOT.'includes/controllers/basecontrol.php';
 
 /**
  * Main controller class for the search page.
@@ -168,7 +168,7 @@ class SearchControllerRoot extends BaseController {
 				}
 			}
 		} else {
-			$this->sgeds[PGV_GED_ID] = $GEDCOM;
+			$this->sgeds[WT_GED_ID] = $GEDCOM;
 		}
 
 		// Retrieve the sites that can be searched
@@ -332,7 +332,7 @@ class SearchControllerRoot extends BaseController {
 			{
 				if($varName == "action")
 				if($_REQUEST[$varName] == "replace")
-				if(!PGV_USER_CAN_ACCEPT)
+				if(!WT_USER_CAN_ACCEPT)
 				{
 					$this->action = "general";
 					continue;
@@ -494,7 +494,7 @@ class SearchControllerRoot extends BaseController {
 		AddToLog("Search And Replace old:".$oldquery." new:".$this->replace);
 		$manual_save = true;
 		// Include edit functions.
-		require_once PGV_ROOT.'includes/functions/functions_edit.php';
+		require_once WT_ROOT.'includes/functions/functions_edit.php';
 		// These contain the search query and the replace string
 		// $this->replace;
 		// $this->query;
@@ -507,7 +507,7 @@ class SearchControllerRoot extends BaseController {
 		$name_tags[] = "_MARNM";
 		foreach($this->myindilist as $id=>$individual) {
 			if (isset($pgv_changes[$individual->getXref().'_'.$GEDCOM])) {
-				$indirec=find_updated_record($individual->getXref(), PGV_GED_ID);
+				$indirec=find_updated_record($individual->getXref(), WT_GED_ID);
 			} else {
 				$indirec=$individual->getGedcomRecord();
 			}
@@ -536,7 +536,7 @@ class SearchControllerRoot extends BaseController {
 
 		foreach($this->myfamlist as $id=>$family) {
 			if (isset($pgv_changes[$family->getXref().'_'.$GEDCOM])) {
-				$indirec=find_updated_record($family->getXref(), PGV_GED_ID);
+				$indirec=find_updated_record($family->getXref(), WT_GED_ID);
 			} else {
 				$indirec=$family->getGedcomRecord();
 			}
@@ -562,7 +562,7 @@ class SearchControllerRoot extends BaseController {
 
 		foreach ($this->mysourcelist as $id=>$source) {
 			if (isset($pgv_changes[$source->getXref().'_'.$GEDCOM])) {
-				$indirec=find_updated_record($source->getXref(), PGV_GED_ID);
+				$indirec=find_updated_record($source->getXref(), WT_GED_ID);
 			} else {
 				$indirec=$source->getGedcomRecord();
 			}
@@ -591,7 +591,7 @@ class SearchControllerRoot extends BaseController {
 
 		foreach ($this->mynotelist as $id=>$note) {
 			if (isset($pgv_changes[$note->getXref().'_'.$GEDCOM])) {
-				$indirec=find_updated_record($note->getXref(), PGV_GED_ID);
+				$indirec=find_updated_record($note->getXref(), WT_GED_ID);
 			} else {
 				$indirec=$note->getGedcomRecord();
 			}
@@ -679,7 +679,7 @@ class SearchControllerRoot extends BaseController {
 	 *
 	 */
 	function MultiSiteSearch() {
-		require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
+		require_once WT_ROOT.'includes/classes/class_serviceclient.php';
 
 		if (!empty ($this->Sites) && count($this->Sites) > 0) {
 			$this->myindilist = array ();
@@ -747,8 +747,8 @@ class SearchControllerRoot extends BaseController {
 	}
 
 	function printResults() {
-		require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
-		global $GEDCOM, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $global_facts;
+		require_once WT_ROOT.'includes/functions/functions_print_lists.php';
+		global $GEDCOM, $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $global_facts;
 		//-- all privacy settings must be global if we are going to load up privacy files
 		global $SHOW_DEAD_PEOPLE,$SHOW_LIVING_NAMES,$SHOW_SOURCES,$MAX_ALIVE_AGE,$USE_RELATIONSHIP_PRIVACY,$MAX_RELATION_PATH_LENGTH;
 		global $CHECK_MARRIAGE_RELATIONS,$PRIVACY_BY_YEAR,$PRIVACY_BY_RESN,$SHOW_PRIVATE_RELATIONSHIPS,$person_privacy,$user_privacy;
@@ -860,7 +860,7 @@ class SearchControllerRoot extends BaseController {
 						$this->multiTotalResults = 0;
 						$somethingPrinted = true;
 						foreach ($this->multisiteResults as $key => $siteResults) {
-							require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
+							require_once WT_ROOT.'includes/classes/class_serviceclient.php';
 							$serviceClient = ServiceClient :: getInstance($key);
 							$siteName = $serviceClient->getServiceTitle();
 							$siteURL = dirname($serviceClient->getURL());
@@ -885,7 +885,7 @@ class SearchControllerRoot extends BaseController {
 										if (!$displayed_once) {
 											if (!$no_results_found) {
 												$no_results_found = true;
-												print "<tr><td class=\"list_label\" colspan=\"2\" width=\"100%\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["large"]."\" border=\"0\" width=\"25\" alt=\"\" /> ".i18n::translate('People')."</td></tr>";
+												print "<tr><td class=\"list_label\" colspan=\"2\" width=\"100%\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["indis"]["large"]."\" border=\"0\" width=\"25\" alt=\"\" /> ".i18n::translate('People')."</td></tr>";
 												print "<tr><td><table id=\"multiResultsInTbl\" align=\"center\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" ><tr>";
 											}
 											$displayed_once = true;
@@ -912,7 +912,7 @@ class SearchControllerRoot extends BaseController {
 										print "</a></li></ul></td>";
 
 										/*******************************  Remote Links Per Result *************************************************/
-										if (PGV_USER_CAN_EDIT) {
+										if (WT_USER_CAN_EDIT) {
 											print "<td class=\"list_value $TEXT_DIRECTION\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" >"."<ul style=\"list-style: NONE\"><li><a href=\"javascript:;\" "."onclick=\"return open_link('".$key."', '".$person->PID."', '".$person->getFullName()."');\">"."<b>".i18n::translate('Add Local Link')."</b></a></ul></li></td></tr>\n";
 										}
 									}
@@ -1063,8 +1063,8 @@ class SearchControllerRoot extends BaseController {
 // -- end of class
 
 //-- load a user extended class if one exists
-if (file_exists(PGV_ROOT.'includes/controllers/search_ctrl_user.php')) {
-	require_once PGV_ROOT.'includes/controllers/search_ctrl_user.php';
+if (file_exists(WT_ROOT.'includes/controllers/search_ctrl_user.php')) {
+	require_once WT_ROOT.'includes/controllers/search_ctrl_user.php';
 } else {
 	class SearchController extends SearchControllerRoot {
 	}

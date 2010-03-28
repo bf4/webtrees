@@ -27,10 +27,10 @@
  * @subpackage Charts
  */
 
-define('PGV_SCRIPT_NAME', 'gedrecord.php');
+define('WT_SCRIPT_NAME', 'gedrecord.php');
 require './config.php';
 
-require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
+require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
 header('Content-Type: text/html; charset=UTF-8');
 
 $pid=safe_GET_xref('pid');
@@ -44,7 +44,7 @@ $pid=safe_GET_xref('pid');
 	</head>
 	<body><?php
 
-if (!$SHOW_GEDCOM_RECORD && !PGV_USER_CAN_ACCEPT) {
+if (!$SHOW_GEDCOM_RECORD && !WT_USER_CAN_ACCEPT) {
 	echo "<span class=\"error\">", i18n::translate('This page has been disabled by the site administrator.'), "</span>\n";
 	echo "</body></html>";
 	exit;
@@ -60,7 +60,7 @@ if (is_null($obj) || !$obj->canDisplayDetails()) {
 if (!isset($fromfile)) {
 	$indirec=$obj->getGedcomRecord();
 } else  {
-	$indirec=find_updated_record($pid, PGV_GED_ID);
+	$indirec=find_updated_record($pid, WT_GED_ID);
 	$indirec=privatize_gedcom($indirec);
 }
 $indirec=htmlspecialchars($indirec);

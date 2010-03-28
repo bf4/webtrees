@@ -29,17 +29,17 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_RECENT_CHANGES_PHP', '');
+define('WT_RECENT_CHANGES_PHP', '');
 
-$PGV_BLOCKS["print_recent_changes"]["name"]     = i18n::translate('Recent Changes');
-$PGV_BLOCKS["print_recent_changes"]["descr"]    = i18n::translate('The Recent Changes block will list all of the changes that have been made to the database in the last month.  This block can help you stay current with the changes that have been made.  Changes are detected automatically, using the CHAN tag defined in the GEDCOM Standard.');
-$PGV_BLOCKS["print_recent_changes"]["canconfig"]= true;
-$PGV_BLOCKS["print_recent_changes"]["config"]   = array(
+$WT_BLOCKS["print_recent_changes"]["name"]     = i18n::translate('Recent Changes');
+$WT_BLOCKS["print_recent_changes"]["descr"]    = i18n::translate('The Recent Changes block will list all of the changes that have been made to the database in the last month.  This block can help you stay current with the changes that have been made.  Changes are detected automatically, using the CHAN tag defined in the GEDCOM Standard.');
+$WT_BLOCKS["print_recent_changes"]["canconfig"]= true;
+$WT_BLOCKS["print_recent_changes"]["config"]   = array(
 	"cache"=>1,
 	"days"=>30,
 	"hide_empty"=>"no"
@@ -49,11 +49,11 @@ $PGV_BLOCKS["print_recent_changes"]["config"]   = array(
 //-- this block prints a list of changes that have occurred recently in your gedcom
 function print_recent_changes($block=true, $config="", $side, $index) {
 	global $ctype;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $WT_BLOCKS;
 
 	$block = true;  // Always restrict this block's height
 
-	if (empty($config)) $config = $PGV_BLOCKS["print_recent_changes"]["config"];
+	if (empty($config)) $config = $WT_BLOCKS["print_recent_changes"]["config"];
 	if ($config["days"]<1) $config["days"] = 30;
 	if (isset($config["hide_empty"])) $HideEmpty = $config["hide_empty"];
 	else $HideEmpty = "no";
@@ -65,15 +65,15 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 // Print block header
 	$id="recent_changes";
 	$title='';
-	if ($PGV_BLOCKS["print_recent_changes"]["canconfig"]) {
-		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+	if ($WT_BLOCKS["print_recent_changes"]["canconfig"]) {
+		if ($ctype=="gedcom" && WT_USER_GEDCOM_ADMIN || $ctype=="user" && WT_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = PGV_GEDCOM;
+				$name = WT_GEDCOM;
 			} else {
-				$name = PGV_USER_NAME;
+				$name = WT_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"$WT_IMAGE_DIR/".$WT_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
 	$title.=i18n::translate('Recent Changes').help_link('recent_changes');
@@ -85,7 +85,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 	} else {
 		$content .= i18n::translate('Changes made within the last %s days', $config["days"]);
 		// sortable table
-		require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+		require_once WT_ROOT.'includes/functions/functions_print_lists.php';
 		ob_start();
 		print_changes_table($found_facts);
 		$content .= ob_get_clean();
@@ -100,9 +100,9 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 }
 
 function print_recent_changes_config($config) {
-	global $ctype, $PGV_BLOCKS;
-	if (empty($config)) $config = $PGV_BLOCKS["print_recent_changes"]["config"];
-	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_recent_changes"]["config"]["cache"];
+	global $ctype, $WT_BLOCKS;
+	if (empty($config)) $config = $WT_BLOCKS["print_recent_changes"]["config"];
+	if (!isset($config["cache"])) $config["cache"] = $WT_BLOCKS["print_recent_changes"]["config"]["cache"];
 
 	print "<tr><td class=\"descriptionbox wrap width33\">".i18n::translate('Number of days to show')."</td>";?>
 	<td class="optionbox">

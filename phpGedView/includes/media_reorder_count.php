@@ -28,17 +28,17 @@
  * @author Brian Holland
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_MEDIA_REORDER_COUNT_PHP', '');
+define('WT_MEDIA_REORDER_COUNT_PHP', '');
 
 global $pid, $TBLPREFIX;
 // Find if indi and family associated media exists and then count them ( $tot_med_ct)  ===================================================
 // Check indi gedcom items
-$gedrec = find_gedcom_record($pid, PGV_GED_ID);
+$gedrec = find_gedcom_record($pid, WT_GED_ID);
 $level=0;
 $regexp = "/OBJE @(.*)@/";
 $ct_indi = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
@@ -71,11 +71,11 @@ if ($ct>0) {
 		$i++;
 	}
 	$sqlmm .= ") AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile ";
-	$vars[]=PGV_GED_ID;
+	$vars[]=WT_GED_ID;
 	// Order by -------------------------------------------------------
 	$sqlmm .= " ORDER BY mm_gid DESC ";
 	// Perform DB Query -----------------------
-	$rows=PGV_DB::prepare($sqlmm)->execute($vars)->fetchAll();
+	$rows=WT_DB::prepare($sqlmm)->execute($vars)->fetchAll();
 	// Get related media item count
 	$ct_db = count($rows);
 	//else if indi not related

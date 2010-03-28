@@ -32,9 +32,9 @@
 * @version $Id$
 */
 
-define('PGV_SCRIPT_NAME', 'client.php');
+define('WT_SCRIPT_NAME', 'client.php');
 require './config.php';
-require PGV_ROOT.'includes/functions/functions_edit.php';
+require WT_ROOT.'includes/functions/functions_edit.php';
 
 header('Content-Type: text/plain; charset=UTF-8');
 
@@ -73,8 +73,8 @@ case '':
 	print "ERROR 1: No action specified.\n";
 	exit;
 case 'version':
-	addDebugLog($action." SUCCESS\n".PGV_VERSION_TEXT."\n");
-	print "SUCCESS\n".PGV_VERSION_TEXT."\n";
+	addDebugLog($action." SUCCESS\n".WT_VERSION_TEXT."\n");
+	print "SUCCESS\n".WT_VERSION_TEXT."\n";
 	exit;
 case 'connect':
 	$username=safe_REQUEST($_REQUEST,'username');
@@ -124,8 +124,8 @@ default:
 // The following actions can only be performed when connected
 switch ($action) {
 case 'get':
-	$xref=safe_REQUEST($_REQUEST,'xref', PGV_REGEX_XREF.'([ ,;]+'.PGV_REGEX_XREF.')*');
-	$view=safe_REQUEST($_REQUEST,'view', PGV_REGEX_ALPHANUM);
+	$xref=safe_REQUEST($_REQUEST,'xref', WT_REGEX_XREF.'([ ,;]+'.WT_REGEX_XREF.')*');
+	$view=safe_REQUEST($_REQUEST,'view', WT_REGEX_ALPHANUM);
 	if ($xref) {
 		$xrefs = preg_split("/[;, ]/", $xref, 0, PREG_SPLIT_NO_EMPTY);
 		$gedrecords="";
@@ -181,7 +181,7 @@ case 'getvar':
 	if ($var && in_array($var, $public_vars) && isset($$var)) {
 		addDebugLog($action." var=$var SUCCESS\n".$$var);
 		print "SUCCESS\n".$$var;
-	} else if (PGV_USER_ID && $var && isset($$var) && !in_array($var, $CONFIG_VARS)) {
+	} else if (WT_USER_ID && $var && isset($$var) && !in_array($var, $CONFIG_VARS)) {
 		addDebugLog($action." var=$var SUCCESS\n".$$var);
 		print "SUCCESS\n".$$var;
 	} else {
@@ -190,11 +190,11 @@ case 'getvar':
 	}
 	exit;
 case 'update':
-	$xref=safe_REQUEST($_REQUEST,'xref', PGV_REGEX_XREF);
+	$xref=safe_REQUEST($_REQUEST,'xref', WT_REGEX_XREF);
 	if ($xref) {
-		$gedrec=safe_REQUEST($_REQUEST,'gedrec', PGV_REGEX_UNSAFE); // raw data may contain any characters
+		$gedrec=safe_REQUEST($_REQUEST,'gedrec', WT_REGEX_UNSAFE); // raw data may contain any characters
 		if ($gedrec) {
-			if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT && displayDetailsById($xref)) {
+			if (empty($_SESSION['readonly']) && WT_USER_CAN_EDIT && displayDetailsById($xref)) {
 				$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
 				$success = replace_gedrec($xref, $gedrec);
 				if ($success) {
@@ -217,7 +217,7 @@ case 'update':
 case 'append':
 	$gedrec=safe_REQUEST($_REQUEST,'gedrec', '.*'); // raw data may contain any characters
 	if ($gedrec) {
-		if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT) {
+		if (empty($_SESSION['readonly']) && WT_USER_CAN_EDIT) {
 			$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
 			$xref = append_gedrec($gedrec);
 			if ($xref) {
@@ -234,9 +234,9 @@ case 'append':
 	}
 	exit;
 case 'delete':
-	$xref=safe_REQUEST($_REQUEST,'xref', PGV_REGEX_XREF);
+	$xref=safe_REQUEST($_REQUEST,'xref', WT_REGEX_XREF);
 	if ($xref) {
-		if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT && displayDetailsById($xref)) {
+		if (empty($_SESSION['readonly']) && WT_USER_CAN_EDIT && displayDetailsById($xref)) {
 			$success = delete_gedrec($xref);
 			if ($success) {
 				addDebugLog($action." xref=$xref SUCCESS");
@@ -252,7 +252,7 @@ case 'delete':
 	}
 	exit;
 case 'getnext':
-	$xref=safe_REQUEST($_REQUEST,'xref', PGV_REGEX_XREF);
+	$xref=safe_REQUEST($_REQUEST,'xref', WT_REGEX_XREF);
 	if ($xref) {
 		$xref1 = get_next_xref($xref, $GED_ID);
 		$gedrec = find_updated_record($xref1, $GED_ID);
@@ -271,7 +271,7 @@ case 'getnext':
 	}
 	exit;
 case 'getprev':
-	$xref=safe_REQUEST($_REQUEST,'xref', PGV_REGEX_XREF);
+	$xref=safe_REQUEST($_REQUEST,'xref', WT_REGEX_XREF);
 	if ($xref) {
 		$xref1 = get_prev_xref($xref, $GED_ID);
 		$gedrec = find_updated_record($xref1, $GED_ID);
@@ -292,7 +292,7 @@ case 'getprev':
 case 'search':
 	$query=safe_REQUEST($_REQUEST,'query');
 	if ($query) {
-		$sindilist=search_indis(array($query), array(PGV_GED_ID), 'AND', true);
+		$sindilist=search_indis(array($query), array(WT_GED_ID), 'AND', true);
 		print "SUCCESS\n";
 		addDebugLog($action." query=$query SUCCESS");
 		foreach($sindilist as $indi) {
@@ -310,7 +310,7 @@ case 'soundex':
 	$soundex=safe_REQUEST($_REQUEST,'soundex', '\w+', 'Russell');
 
 	if ($lastname || $firstname) {
-		$sindilist=search_indis_soundex($soundex, $lastname, $firstname, $place, array(PGV_GED_ID));
+		$sindilist=search_indis_soundex($soundex, $lastname, $firstname, $place, array(WT_GED_ID));
 		print "SUCCESS\n";
 		addDebugLog($action." lastname=$lastname firstname=$firstname SUCCESS");
 		foreach($sindilist as $indi) {
@@ -324,7 +324,7 @@ case 'soundex':
 case 'getxref':
 	$position=safe_REQUEST($_REQUEST,'position', array('first','last','next','prev','new','all'));
 	$type=safe_REQUEST($_REQUEST,'type', array('INDI','FAM','SOUR','REPO','NOTE','OBJE','OTHER'));
-	$xref=safe_REQUEST($_REQUEST,'xref', PGV_REGEX_XREF);
+	$xref=safe_REQUEST($_REQUEST,'xref', WT_REGEX_XREF);
 
 	if ($position=='next' && !$xref) {
 		$position='first';
@@ -363,30 +363,30 @@ case 'getxref':
 		switch($type) {
 			case "INDI":
 				$statement=
-					PGV_DB::prepare("SELECT i_id FROM {$TBLPREFIX}individuals WHERE i_file=? ORDER BY i_id")
+					WT_DB::prepare("SELECT i_id FROM {$TBLPREFIX}individuals WHERE i_file=? ORDER BY i_id")
 					->execute(array($GED_ID));
 				break;
 			case "FAM":
 				$statement=
-					PGV_DB::prepare("SELECT f_id FROM {$TBLPREFIX}families WHERE f_file=? ORDER BY f_id")
+					WT_DB::prepare("SELECT f_id FROM {$TBLPREFIX}families WHERE f_file=? ORDER BY f_id")
 					->execute(array($GED_ID));
 				break;
 			case "SOUR":
 				$statement=
-					PGV_DB::prepare("SELECT s_id FROM {$TBLPREFIX}sources WHERE s_file=? ORDER BY s_id")
+					WT_DB::prepare("SELECT s_id FROM {$TBLPREFIX}sources WHERE s_file=? ORDER BY s_id")
 					->execute(array($GED_ID));
 			case "OBJE":
 				$statement=
-					PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_gedfile=? ORDER BY m_media")
+					WT_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_gedfile=? ORDER BY m_media")
 					->execute(array($GED_ID));
 			case "OTHER":
 				$statement=
-					PGV_DB::prepare("SELECT o_id FROM {$TBLPREFIX}other WHERE o_file=? AND o_type NOT IN ('REPO', 'NOTE') ORDER BY o_id")
+					WT_DB::prepare("SELECT o_id FROM {$TBLPREFIX}other WHERE o_file=? AND o_type NOT IN ('REPO', 'NOTE') ORDER BY o_id")
 					->execute(array($GED_ID));
 				break;
 			default:
 				$statement=
-					PGV_DB::prepare("SELECT o_id FROM {$TBLPREFIX}other WHERE o_file=? AND o_type=? ORDER BY o_id")
+					WT_DB::prepare("SELECT o_id FROM {$TBLPREFIX}other WHERE o_file=? AND o_type=? ORDER BY o_id")
 					->execute(array($GED_ID, $type));
 		}
 		print "SUCCESS\n";
@@ -396,7 +396,7 @@ case 'getxref':
 		addDebugLog($action." type=$type position=$position ");
 		break;
 	case 'new':
-		if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT) {
+		if (empty($_SESSION['readonly']) && WT_USER_CAN_EDIT) {
 			$gedrec = "0 @REF@ $type";
 			$xref = append_gedrec($gedrec);
 			if ($xref) {

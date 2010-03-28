@@ -29,22 +29,22 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'login.php');
+define('WT_SCRIPT_NAME', 'login.php');
 require './config.php';
 
 // Extract query parameters
-$url         =safe_POST('url',      PGV_REGEX_URL);
+$url         =safe_POST('url',      WT_REGEX_URL);
 $type        =safe_POST('type',     array('full', 'simple'));
 $action      =safe_POST('action');
-$username    =safe_POST('username', PGV_REGEX_USERNAME);
-$password    =safe_POST('password', PGV_REGEX_PASSWORD);
+$username    =safe_POST('username', WT_REGEX_USERNAME);
+$password    =safe_POST('password', WT_REGEX_PASSWORD);
 $usertime    =safe_POST('usertime');
-$pid         =safe_POST('pid',      PGV_REGEX_XREF);
+$pid         =safe_POST('pid',      WT_REGEX_XREF);
 $ged         =safe_POST('ged',      get_all_gedcoms(), $GEDCOM);
 $help_message=safe_GET('help_message');
 
 // Some variables can come from the URL as well as the form
-if (!$url)    $url   =safe_GET('url',  PGV_REGEX_URL);
+if (!$url)    $url   =safe_GET('url',  WT_REGEX_URL);
 if (!$type)   $type  =safe_GET('type', array('full', 'simple'), 'full');
 if (!$action) $action=safe_GET('action');
 
@@ -69,7 +69,7 @@ if ($action=='login') {
 
 		// If we have no access rights to the current gedcom, switch to one where we do
 		if (!userIsAdmin($user_id)) {
-			if (!userCanAccess($user_id, PGV_GED_ID)) {
+			if (!userCanAccess($user_id, WT_GED_ID)) {
 				foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 					if (userCanAccess($user_id, $ged_id)) {
 						$ged=$ged_name;

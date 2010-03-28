@@ -28,14 +28,14 @@
  * @author Brian Holland
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_MEDIA_REORDER_PHP', '');
+define('WT_MEDIA_REORDER_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
+require_once WT_ROOT.'includes/functions/functions_print_facts.php';
 
 	print "<br /><b>".i18n::translate('Re-order media')."</b>";
 	print "&nbsp --- &nbsp;" . i18n::translate('Click a row, then drag-and-drop to re-order media ');
@@ -43,7 +43,7 @@ require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 	global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 	global $pgv_changes;
 	global $MEDIATYPE, $pgv_changes;
-	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
+	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $WT_IMAGE_DIR, $WT_IMAGES, $TEXT_DIRECTION;
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
 	global $edit, $tabno ;
 	global $ids, $pid, $related, $level, $gedrec, $media_data, $order, $order1, $order2, $j ;
@@ -68,8 +68,8 @@ require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 	  print "\n";
 
       if (!showFact("OBJE", $pid)) return false;
-      if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) $gedrec = find_gedcom_record($pid, PGV_GED_ID);
-      else $gedrec = find_updated_record($pid, PGV_GED_ID);
+      if (!isset($pgv_changes[$pid."_".WT_GEDCOM])) $gedrec = find_gedcom_record($pid, WT_GED_ID);
+      else $gedrec = find_updated_record($pid, WT_GED_ID);
 
 	//related=true means show related items
 	$related="true";
@@ -83,10 +83,10 @@ require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 		}
 	}
 
-	//-- If  they exist, get a list of the sorted current objects in the indi gedcom record  -  (1 _PGV_OBJS @xxx@ .... etc) ----------
+	//-- If  they exist, get a list of the sorted current objects in the indi gedcom record  -  (1 _WT_OBJS @xxx@ .... etc) ----------
 	$sort_current_objes = array();
-	if ($level>0) $sort_regexp = "/".$level." _PGV_OBJS @(.*)@/";
-	else $sort_regexp = "/_PGV_OBJS @(.*)@/";
+	if ($level>0) $sort_regexp = "/".$level." _WT_OBJS @(.*)@/";
+	else $sort_regexp = "/_WT_OBJS @(.*)@/";
 	$sort_ct = preg_match_all($sort_regexp, $gedrec, $sort_match, PREG_SET_ORDER);
 	for ($i=0; $i<$sort_ct; $i++) {
 		if (!isset($sort_current_objes[$sort_match[$i][1]])) $sort_current_objes[$sort_match[$i][1]] = 1;
@@ -129,10 +129,10 @@ require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 		$i++;
 	}
 	$sqlmm .= ") AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile ";
-	$vars[]=PGV_GED_ID;
+	$vars[]=WT_GED_ID;
 	//-- for family and source page only show level 1 obje references
 	if ($level>0) {
-		$sqlmm .= "AND mm_gedrec ".PGV_DB::$LIKE." ?";
+		$sqlmm .= "AND mm_gedrec ".WT_DB::$LIKE." ?";
 		$vars[]="{$level} OBJE%";
 	}
 
@@ -143,7 +143,7 @@ require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 		$sqlmm .= " ORDER BY mm_gid DESC ";
 	}
 
-	$rows=PGV_DB::prepare($sqlmm)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
+	$rows=WT_DB::prepare($sqlmm)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
 
 	$foundObjs = array();
 

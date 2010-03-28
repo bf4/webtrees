@@ -27,12 +27,12 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_GEDCOMRECORD_PHP', '');
+define('WT_CLASS_GEDCOMRECORD_PHP', '');
 
 require_once 'includes/classes/class_person.php';
 require_once 'includes/classes/class_family.php';
@@ -71,7 +71,7 @@ class GedcomRecord {
 		} else {
 			// Construct from raw GEDCOM data
 			$this->gedrec=$data;
-			if (preg_match('/^0 (?:@('.PGV_REGEX_XREF.')@ )?('.PGV_REGEX_TAG.')/', $data, $match)) {
+			if (preg_match('/^0 (?:@('.WT_REGEX_XREF.')@ )?('.WT_REGEX_TAG.')/', $data, $match)) {
 				$this->xref=$match[1];
 				$this->type=$match[2];
 			}
@@ -167,7 +167,7 @@ class GedcomRecord {
 			}
 
 			// If we didn't find the record in the database, it may be new/pending
-			if (!$data && PGV_USER_CAN_EDIT && isset($pgv_changes[$pid.'_'.$GEDCOM])) {
+			if (!$data && WT_USER_CAN_EDIT && isset($pgv_changes[$pid.'_'.$GEDCOM])) {
 				$data=find_updated_record($pid, $ged_id);
 				$is_pending=true;
 			}
@@ -181,7 +181,7 @@ class GedcomRecord {
 		// Create the object
 		if (is_array($data)) {
 			$type=$data['type'];
-		} elseif (preg_match('/^0 @'.PGV_REGEX_XREF.'@ ('.PGV_REGEX_TAG.')/', $data, $match)) {
+		} elseif (preg_match('/^0 @'.WT_REGEX_XREF.'@ ('.WT_REGEX_TAG.')/', $data, $match)) {
 			$type=$match[1];
 		} else {
 			$type='';
@@ -308,7 +308,7 @@ class GedcomRecord {
 			$url = $link.$this->getXref().'&ged='.get_gedcom_from_id($this->ged_id);
 		} else {
 			// If the record was created from a text string, assume the current gedcom
-			$url = $link.$this->getXref().'&ged='.PGV_GEDCOM;
+			$url = $link.$this->getXref().'&ged='.WT_GEDCOM;
 		}
 		if ($this->isRemote()) {
 			list($servid, $aliaid)=explode(':', $this->rfn);
@@ -384,7 +384,7 @@ class GedcomRecord {
 	function undoChange() {
 		global $GEDCOM, $pgv_changes;
 		require_once 'includes/functions/functions_edit.php';
-		if (!PGV_USER_CAN_ACCEPT) {
+		if (!WT_USER_CAN_ACCEPT) {
 			return false;
 		}
 		$cid = $this->xref.'_'.$GEDCOM;
@@ -405,7 +405,7 @@ class GedcomRecord {
 	function isMarkedDeleted() {
 		global $pgv_changes, $GEDCOM;
 
-		if (!PGV_USER_CAN_EDIT) {
+		if (!WT_USER_CAN_EDIT) {
 			return false;
 		}
 		if (isset($pgv_changes[$this->xref.'_'.$GEDCOM])) {
@@ -668,7 +668,7 @@ class GedcomRecord {
 		}
 		$html='<a href="'.$href.'" class="list_item"><b>'.PrintReady($name).'</b>';
 		if ($SHOW_ID_NUMBERS) {
-			$html.=' '.PGV_LPARENS.$this->getXref().PGV_RPARENS;
+			$html.=' '.WT_LPARENS.$this->getXref().WT_RPARENS;
 		}
 		$html.=$this->format_list_details();
 		$html='<'.$tag.' class="'.$dir.'" dir="'.$dir.'">'.$html.'</a></'.$tag.'>';
@@ -889,7 +889,7 @@ class GedcomRecord {
 				}
 			}
 			if (!$found) {
-				$this->facts[$key]->gedcomRecord.="\nPGV_OLD\n";
+				$this->facts[$key]->gedcomRecord.="\nWT_OLD\n";
 			}
 		}
 		//-- look for new facts
@@ -904,7 +904,7 @@ class GedcomRecord {
 				}
 			}
 			if (!$found) {
-				$newevent->gedcomRecord.="\nPGV_NEW\n";
+				$newevent->gedcomRecord.="\nWT_NEW\n";
 				$this->facts[]=$newevent;
 			}
 		}

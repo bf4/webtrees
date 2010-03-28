@@ -33,25 +33,25 @@
 
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_USERMIGRATE_CTRL_PHP', '');
+define('WT_USERMIGRATE_CTRL_PHP', '');
 
-require_once PGV_ROOT.'includes/controllers/basecontrol.php';
-require_once PGV_ROOT.'includes/functions/functions_export.php';
+require_once WT_ROOT.'includes/controllers/basecontrol.php';
+require_once WT_ROOT.'includes/functions/functions_export.php';
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
-if (PGV_SCRIPT_NAME=='usermigrate_cli.php') {
-	if (PGV_USER_IS_ADMIN || !isset($argc)) {
+if (WT_SCRIPT_NAME=='usermigrate_cli.php') {
+	if (WT_USER_IS_ADMIN || !isset($argc)) {
 		header("Location: usermigrate.php");
 		exit;
 	}
 }
-else if (!PGV_USER_IS_ADMIN) {
+else if (!WT_USER_IS_ADMIN) {
 	header("Location: login.php?url=usermigrate.php");
 	exit;
 }
@@ -214,7 +214,7 @@ class UserMigrateControllerRoot extends BaseController {
 			}
 
 			//-- restore the old configuration file
-			require get_config_file(PGV_GED_ID);
+			require get_config_file(WT_GED_ID);
 			$this->flist[] = $INDEX_DIRECTORY."pgv_changes.php";
 		}
 
@@ -258,10 +258,10 @@ class UserMigrateControllerRoot extends BaseController {
 
 		// Make the zip
 		if (count($this->flist) > 0) {
-			require_once PGV_ROOT.'library/pclzip.lib.php';
+			require_once WT_ROOT.'library/pclzip.lib.php';
 			$this->buname = date("YmdHis").".zip";
 			$this->fname = $INDEX_DIRECTORY.$this->buname;
-			$comment = "Created by ".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT." on ".date("r").".";
+			$comment = "Created by ".WT_WEBTREES." ".WT_VERSION_TEXT." on ".date("r").".";
 			$archive = new PclZip($this->fname);
 			//-- remove ../ from file paths when creating zip
 			$ct = preg_match("~((\.\./)+)~", $INDEX_DIRECTORY, $match);
@@ -293,7 +293,7 @@ class UserMigrateControllerRoot extends BaseController {
 		} else {
 			require $INDEX_DIRECTORY.'authenticate.php';
 			$countold = count($users);
-			PGV_DB::exec("DELETE FROM {$TBLPREFIX}users");
+			WT_DB::exec("DELETE FROM {$TBLPREFIX}users");
 			foreach($users as $username=>$user) {
 				if ($user["editaccount"] == "1") $user["editaccount"] = "Y";
 				else $user["editaccount"] = "N";
@@ -360,14 +360,14 @@ class UserMigrateControllerRoot extends BaseController {
 			$this->msgSuccess = false;
 		}
 		else {
-			PGV_DB::exec("DELETE FROM {$TBLPREFIX}messages");
+			WT_DB::exec("DELETE FROM {$TBLPREFIX}messages");
 			$messages = array();
 			$fp = fopen($INDEX_DIRECTORY."messages.dat", "rb");
 			$mstring = fread($fp, filesize($INDEX_DIRECTORY."messages.dat"));
 			fclose($fp);
 			$messages = unserialize($mstring);
 			foreach($messages as $newid => $message) {
-				PGV_DB::prepare("INSERT INTO {$TBLPREFIX}messages (m_id, m_from, m_to, m_subject, m_body, m_created) VALUES (?, ? ,? ,? ,? ,?)")
+				WT_DB::prepare("INSERT INTO {$TBLPREFIX}messages (m_id, m_from, m_to, m_subject, m_body, m_created) VALUES (?, ? ,? ,? ,? ,?)")
 					->execute(array($newid, $message["from"], $message["to"], $message["subject"], $message["body"], $message["created"]));
 			}
 			$this->msgSuccess = true;
@@ -378,7 +378,7 @@ class UserMigrateControllerRoot extends BaseController {
 			print i18n::translate('No Favorites seem to be present in the system.')."<br /><br />";
 		}
 		else {
-			PGV_DB::exec("DELETE FROM {$TBLPREFIX}favorites");
+			WT_DB::exec("DELETE FROM {$TBLPREFIX}favorites");
 			$favorites = array();
 			$fp = fopen($INDEX_DIRECTORY."favorites.dat", "rb");
 			$mstring = fread($fp, filesize($INDEX_DIRECTORY."favorites.dat"));
@@ -399,7 +399,7 @@ class UserMigrateControllerRoot extends BaseController {
 			$this->newsSuccess = false;
 		}
 		else {
-			PGV_DB::exec("DELETE FROM {$TBLPREFIX}news");
+			WT_DB::exec("DELETE FROM {$TBLPREFIX}news");
 			$allnews = array();
 			$fp = fopen($INDEX_DIRECTORY."news.dat", "rb");
 			$mstring = fread($fp, filesize($INDEX_DIRECTORY."news.dat"));
@@ -419,7 +419,7 @@ class UserMigrateControllerRoot extends BaseController {
 			$this->blockSuccess = false;
 		}
 		else {
-			PGV_DB::exec("DELETE FROM {$TBLPREFIX}blocks");
+			WT_DB::exec("DELETE FROM {$TBLPREFIX}blocks");
 			$allblocks = array();
 			$fp = fopen($INDEX_DIRECTORY."blocks.dat", "rb");
 			$mstring = fread($fp, filesize($INDEX_DIRECTORY."blocks.dat"));
@@ -427,7 +427,7 @@ class UserMigrateControllerRoot extends BaseController {
 			$allblocks = unserialize($mstring);
 			foreach($allblocks as $bid => $blocks) {
 				$username = $blocks["username"];
-				PGV_DB::prepare("INSERT INTO {$TBLPREFIX}blocks (b_id, b_username, b_location, b_order, b_name, b_config) VALUES (?, ? ,? , ?, ?, ?)")
+				WT_DB::prepare("INSERT INTO {$TBLPREFIX}blocks (b_id, b_username, b_location, b_order, b_name, b_config) VALUES (?, ? ,? , ?, ?, ?)")
 					->execute(array($bid, $blocks["username"], $blocks["location"], $blocks["order"], $blocks["name"], serialize($blocks["config"])));
 			}
 			$this->blockSuccess = true;
@@ -436,9 +436,9 @@ class UserMigrateControllerRoot extends BaseController {
 }
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists(PGV_ROOT.'includes/controllers/usermigrate_ctrl_user.php'))
+if (file_exists(WT_ROOT.'includes/controllers/usermigrate_ctrl_user.php'))
 {
-	require_once PGV_ROOT.'includes/controllers/usermigrate_ctrl_user.php';
+	require_once WT_ROOT.'includes/controllers/usermigrate_ctrl_user.php';
 }
 else
 {

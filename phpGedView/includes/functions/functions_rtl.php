@@ -30,12 +30,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FUNCTIONS_RTL_PHP', '');
+define('WT_FUNCTIONS_RTL_PHP', '');
 
 $SpecialChar = array(' ','.',',','"','\'','/','\\','|',':',';','+','&','#','@','-','=','*','%','!','?','$','<','>',"\n");
 $SpecialPar = array('(',')','[',']','{','}');
@@ -66,7 +66,7 @@ function getRLM(){
  * @return	string	The input string, with &lrm; and &rlm; stripped
  */
 function stripLRMRLM($inputText) {
-	return str_replace(array(PGV_UTF8_LRM, PGV_UTF8_RLM, PGV_UTF8_LRO, PGV_UTF8_RLO, PGV_UTF8_LRE, PGV_UTF8_RLE, PGV_UTF8_PDF, "&lrm;", "&rlm;", "&LRM;", "&RLM;"), "", $inputText);
+	return str_replace(array(WT_UTF8_LRM, WT_UTF8_RLM, WT_UTF8_LRO, WT_UTF8_RLO, WT_UTF8_LRE, WT_UTF8_RLE, WT_UTF8_PDF, "&lrm;", "&rlm;", "&LRM;", "&RLM;"), "", $inputText);
 }
 
 /**
@@ -134,7 +134,7 @@ function spanLTRRTL($inputText, $direction='BOTH', $class='') {
 			if (strlen($element < 7) && $temp == '<br') {		// assume we have '<br />' or a variant thereof
 				if ($numberState) {
 					$numberState = false;
-					$waitingText .= PGV_UTF8_PDF;
+					$waitingText .= WT_UTF8_PDF;
 				}
 				breakCurrentSpan($result);
 			} else if ($waitingText == '') {
@@ -163,7 +163,7 @@ function spanLTRRTL($inputText, $direction='BOTH', $class='') {
 					// we have a New-Line code
 					if ($numberState) {
 						$numberState = false;
-						$waitingText .= PGV_UTF8_PDF;
+						$waitingText .= WT_UTF8_PDF;
 					}
 					breakCurrentSpan($result);
 					$workingText = substr($workingText, $currentLen);
@@ -212,9 +212,9 @@ function spanLTRRTL($inputText, $direction='BOTH', $class='') {
 						// This is not a digit.  End the run of digits and punctuation.
 						$numberState = false;
 						if (strpos($numberPrefix, $currentLetter) === false) {
-							$currentLetter = PGV_UTF8_PDF . $currentLetter;
+							$currentLetter = WT_UTF8_PDF . $currentLetter;
 						} else {
-							$currentLetter = $currentLetter . PGV_UTF8_PDF;		// Include a trailing + or - in the run
+							$currentLetter = $currentLetter . WT_UTF8_PDF;		// Include a trailing + or - in the run
 						}
 					}
 				}
@@ -226,11 +226,11 @@ function spanLTRRTL($inputText, $direction='BOTH', $class='') {
 					$nextChar = substr($workingText."\n", $offset, 1);
 					if (strpos($numbers, $nextChar) !== false) {
 						$numberState = true;		// We found a digit: the lead-in is therefore numeric
-						$currentLetter = PGV_UTF8_LRE . $currentLetter;
+						$currentLetter = WT_UTF8_LRE . $currentLetter;
 					}
 				} else if (strpos($numbers, $currentLetter) !== false) {
 					$numberState = true;		// The current letter is a digit
-					$currentLetter = PGV_UTF8_LRE . $currentLetter;
+					$currentLetter = WT_UTF8_LRE . $currentLetter;
 				}
 			}
 
@@ -270,7 +270,7 @@ function spanLTRRTL($inputText, $direction='BOTH', $class='') {
 						}
 					}
 					// This is a solitary RTL letter : wrap it in UTF8 control codes to force LTR directionality
-					$currentLetter = PGV_UTF8_LRO . $currentLetter . PGV_UTF8_PDF;
+					$currentLetter = WT_UTF8_LRO . $currentLetter . WT_UTF8_PDF;
 					$newState = 'LTR';
 					break;
 				}
@@ -353,9 +353,9 @@ function spanLTRRTL($inputText, $direction='BOTH', $class='') {
 	if ($numberState) {
 		$numberState = false;
 		if ($waitingText == '') {
-			$result .= PGV_UTF8_PDF;
+			$result .= WT_UTF8_PDF;
 		} else {
-			$waitingText .= PGV_UTF8_PDF;
+			$waitingText .= WT_UTF8_PDF;
 		}
 	}
 	finishCurrentSpan($result, true);
@@ -379,7 +379,7 @@ function spanLTRRTL($inputText, $direction='BOTH', $class='') {
 	
 	// Move leading RTL numeric strings to following LTR text
 	// (this happens when the page direction is RTL and the original text begins with a number and is followed by LTR text)
-	while (substr($result, 0, $lenStart+3) == $startRTL.PGV_UTF8_LRE) {
+	while (substr($result, 0, $lenStart+3) == $startRTL.WT_UTF8_LRE) {
 		$spanEnd = strpos($result, $endRTL.$startLTR);
 		if ($spanEnd === false) {
 			break;
@@ -395,7 +395,7 @@ function spanLTRRTL($inputText, $direction='BOTH', $class='') {
 	
 	// On RTL pages, put trailing "." in RTL numeric strings into its own RTL span
 	if ($TEXT_DIRECTION == 'rtl') {
-		$result = str_replace(PGV_UTF8_PDF.'.'.$endRTL, PGV_UTF8_PDF.$endRTL.$startRTL.'.'.$endRTL, $result);
+		$result = str_replace(WT_UTF8_PDF.'.'.$endRTL, WT_UTF8_PDF.$endRTL.$startRTL.'.'.$endRTL, $result);
 	}
 	
 	// Trim trailing blanks preceding <br /> in LTR text
@@ -598,9 +598,9 @@ function finishCurrentSpan(&$result, $theEnd=false) {
 	while ($textSpan != '') {
 		$posColon = strpos($textSpan, ':');
 		if ($posColon === false) break;		// No more possible time strings
-		$posLRE = strpos($textSpan, PGV_UTF8_LRE);
+		$posLRE = strpos($textSpan, WT_UTF8_LRE);
 		if ($posLRE === false) break;		// No more numeric strings
-		$posPDF = strpos($textSpan, PGV_UTF8_PDF, $posLRE);
+		$posPDF = strpos($textSpan, WT_UTF8_PDF, $posLRE);
 		if ($posPDF === false) break;		// No more numeric strings
 
 		$tempResult .= substr($textSpan, 0, $posLRE+3);					// Copy everything preceding the numeric string
@@ -624,9 +624,9 @@ function finishCurrentSpan(&$result, $theEnd=false) {
 		if ($posColon > $posSeparator) {
 			// We have a time string preceded by a blank: Exclude that blank from the numeric string
 			$tempResult .= substr($numericString, 0, $posSeparator);
-			$tempResult .= PGV_UTF8_PDF;
+			$tempResult .= WT_UTF8_PDF;
 			$tempResult .= substr($numericString, $posSeparator, $lengthSeparator);
-			$tempResult .= PGV_UTF8_LRE;
+			$tempResult .= WT_UTF8_LRE;
 			$numericString = substr($numericString, $posSeparator+$lengthSeparator);
 		}
 
@@ -653,11 +653,11 @@ function finishCurrentSpan(&$result, $theEnd=false) {
 			$lengthSeparator = 6;
 		}
 		$tempResult .= substr($numericString, 0, $posSeparator);
-		$tempResult .= PGV_UTF8_PDF;
+		$tempResult .= WT_UTF8_PDF;
 		$tempResult .= substr($numericString, $posSeparator, $lengthSeparator);
 		$posSeparator += $lengthSeparator;
 		$numericString = substr($numericString, $posSeparator);
-		$textSpan = PGV_UTF8_LRE . $numericString . $textSpan;
+		$textSpan = WT_UTF8_LRE . $numericString . $textSpan;
 	}
 	$textSpan = $tempResult . $textSpan;
 	$trailingBlanks = '';
@@ -682,14 +682,14 @@ function finishCurrentSpan(&$result, $theEnd=false) {
 					$textSpan = substr($textSpan, 0, -1);
 					continue;
 				}
-				if (substr($textSpan, -3) != PGV_UTF8_PDF) {
+				if (substr($textSpan, -3) != WT_UTF8_PDF) {
 					// There is no trailing numeric string
 					$textSpan = $savedSpan;
 					break;
 				}
 
 				// We have a numeric string
-				$posStartNumber = strrpos($textSpan, PGV_UTF8_LRE);
+				$posStartNumber = strrpos($textSpan, WT_UTF8_LRE);
 				if ($posStartNumber === false) $posStartNumber = 0;
 				$trailingString = substr($textSpan, $posStartNumber, strlen($textSpan)-$posStartNumber) . $trailingString;
 				$textSpan = substr($textSpan, 0, $posStartNumber);
@@ -926,14 +926,14 @@ function finishCurrentSpan(&$result, $theEnd=false) {
 					$textSpan = substr($textSpan, 0, -1);
 					continue;
 				}
-				if (substr($textSpan, -3) != PGV_UTF8_PDF) {
+				if (substr($textSpan, -3) != WT_UTF8_PDF) {
 					// There is no trailing numeric string
 					$textSpan = $savedSpan;
 					break;
 				}
 
 				// We have a numeric string
-				$posStartNumber = strrpos($textSpan, PGV_UTF8_LRE);
+				$posStartNumber = strrpos($textSpan, WT_UTF8_LRE);
 				if ($posStartNumber === false) $posStartNumber = 0;
 				$trailingString = substr($textSpan, $posStartNumber, strlen($textSpan)-$posStartNumber) . $trailingString;
 				$textSpan = substr($textSpan, 0, $posStartNumber);
@@ -1058,8 +1058,8 @@ function finishCurrentSpan(&$result, $theEnd=false) {
  */
 function unhtmlentities($string)  {
 	$trans_tbl=array_flip(get_html_translation_table (HTML_ENTITIES));
-	$trans_tbl['&lrm;']=PGV_UTF8_LRM;
-	$trans_tbl['&rlm;']=PGV_UTF8_RLM;
+	$trans_tbl['&lrm;']=WT_UTF8_LRM;
+	$trans_tbl['&rlm;']=WT_UTF8_RLM;
 	return preg_replace('/&#(\d+);/e', "chr(\\1)", strtr($string, $trans_tbl));
 }
 
@@ -1129,7 +1129,7 @@ function bidi_text($text) {
 			if ($i < strlen($text)-2) {
 				$l = $letter.$text{$i+1}.$text{$i+2};
 				$i += 2;
-				if (($l==PGV_UTF8_LRM)||($l==PGV_UTF8_RLM)) {
+				if (($l==WT_UTF8_LRM)||($l==WT_UTF8_RLM)) {
 					if (!empty($temp)) {
 						$last = array_pop($parts);
 						if ($temp{0}==")") $last = '(' . $last;
@@ -1267,7 +1267,7 @@ function reverseText($text) {
 	$UTF8_brackets=WT_UTF8_PARENTHESES;
 
 	$text = strip_tags(html_entity_decode($text,ENT_COMPAT,'UTF-8'));
-	$text = str_replace(array('&lrm;', '&rlm;', PGV_UTF8_LRM, PGV_UTF8_RLM), '', $text);
+	$text = str_replace(array('&lrm;', '&rlm;', WT_UTF8_LRM, WT_UTF8_RLM), '', $text);
 	$textLanguage = utf8_script($text);
 	if ($textLanguage!='hebrew' && $textLanguage!='arabic') return $text;
 

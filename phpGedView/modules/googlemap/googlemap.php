@@ -30,14 +30,14 @@
  * @author Johan Borkhuis
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
 require_once('includes/classes/class_tab.php');
 
-require PGV_ROOT.'modules/googlemap/defaultconfig.php';
+require WT_ROOT.'modules/googlemap/defaultconfig.php';
 
 global $SESSION_HIDE_GOOGLEMAP;
 $SESSION_HIDE_GOOGLEMAP = "empty";
@@ -74,7 +74,7 @@ class googlemap_Tab extends Tab {
 	public function canLoadAjax() { return true; }
 
 	public function getContent() {
-		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $CONTACT_EMAIL, $WT_IMAGE_DIR, $WT_IMAGES;
 		global $LANGUAGE, $TBLPREFIX;
 		global $GOOGLEMAP_ENABLED, $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
 		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
@@ -90,7 +90,7 @@ class googlemap_Tab extends Tab {
 		if (!$GOOGLEMAP_ENABLED) {
 			print "<table class=\"facts_table\">\n";
 			print "<tr><td id=\"no_tab8\" colspan=\"2\" class=\"facts_value\">".i18n::translate('GoogleMap module disabled')."</td></tr>\n";
-			if (PGV_USER_IS_ADMIN) {
+			if (WT_USER_IS_ADMIN) {
 				print "<tr><td align=\"center\" colspan=\"2\">\n";
 				print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".i18n::translate('Manage GoogleMap configuration')."</a>";
 				print "</td>";
@@ -105,7 +105,7 @@ class googlemap_Tab extends Tab {
 			</script> <?php
 		}else{
 			$tNew = str_replace(array("&HIDE_GOOGLEMAP=true", "&HIDE_GOOGLEMAP=false", "action=ajax&module=googlemap&"), "", $_SERVER["REQUEST_URI"]);
-			$tab = PGV_DB::prepare("SELECT mod_taborder AS tab FROM {$TBLPREFIX}module WHERE mod_name=?")
+			$tab = WT_DB::prepare("SELECT mod_taborder AS tab FROM {$TBLPREFIX}module WHERE mod_name=?")
 				->execute(array('googlemap'))
 				->fetchOneRow();
 			$tab = $tab->tab-2;
@@ -113,11 +113,11 @@ class googlemap_Tab extends Tab {
 			$tNew = str_replace("&", "&amp;", $tNew);
 			if($SESSION_HIDE_GOOGLEMAP=="true") {
 				print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"".$tNew."&amp;HIDE_GOOGLEMAP=false\">";
-				print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Activate')."\" title=\"".i18n::translate('Activate')."\" />";
+				print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Activate')."\" title=\"".i18n::translate('Activate')."\" />";
 				print " ".i18n::translate('Activate')."</a></span>\n";
 			} else {
 				print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"" .$tNew."&amp;HIDE_GOOGLEMAP=true\">";
-				print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Deactivate')."\" title=\"".i18n::translate('Deactivate')."\" />";
+				print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Deactivate')."\" title=\"".i18n::translate('Deactivate')."\" />";
 				print " ".i18n::translate('Deactivate')."</a></span>\n";
 			}
 
@@ -136,7 +136,7 @@ class googlemap_Tab extends Tab {
 					print "<div id=\"googlemap_left\">\n";
 					print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br/>";
 					print "<div id=\"map_pane\" style=\"border: 1px solid gray; color:black; width: 100%; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
-					if (PGV_USER_IS_ADMIN) {
+					if (WT_USER_IS_ADMIN) {
 						print "<table width=\"100%\"><tr>\n";
 						print "<td width=\"33%\" align=\"left\">\n";
 						print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".i18n::translate('Manage GoogleMap configuration')."</a>";
@@ -172,7 +172,7 @@ class googlemap_Tab extends Tab {
 			}
 		}
 		// start
-		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" id=\"marker6\" width=\"1\" height=\"1\" alt=\"\" />";
+		print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" id=\"marker6\" width=\"1\" height=\"1\" alt=\"\" />";
 		// end
 		?>
 		</td>
@@ -187,7 +187,7 @@ class googlemap_Tab extends Tab {
 	public function hasContent() {
 		global $GOOGLEMAP_ENABLED, $SEARCH_SPIDER;
 
-		return !$SEARCH_SPIDER && ($GOOGLEMAP_ENABLED || PGV_USER_IS_ADMIN);
+		return !$SEARCH_SPIDER && ($GOOGLEMAP_ENABLED || WT_USER_IS_ADMIN);
 	}
 
 	public function getJSCallback() {
@@ -440,7 +440,7 @@ function get_lati_long_placelocation ($place) {
 		$placelist = create_possible_place_names($parent[$i], $i+1);
 		foreach ($placelist as $key => $placename) {
 			$pl_id=
-				PGV_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place LIKE ? ORDER BY pl_place")
+				WT_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place LIKE ? ORDER BY pl_place")
 				->execute(array($i, $place_id, $placename))
 				->fetchOne();
 			if (!empty($pl_id)) break;
@@ -450,7 +450,7 @@ function get_lati_long_placelocation ($place) {
 	}
 
 	$row=
-		PGV_DB::prepare("SELECT pl_lati, pl_long, pl_zoom, pl_icon, pl_level FROM {$TBLPREFIX}placelocation WHERE pl_id=? ORDER BY pl_place")
+		WT_DB::prepare("SELECT pl_lati, pl_long, pl_zoom, pl_icon, pl_level FROM {$TBLPREFIX}placelocation WHERE pl_id=? ORDER BY pl_place")
 		->execute(array($place_id))
 		->fetchOneRow();
 	if ($row) {
@@ -637,7 +637,7 @@ function build_indiv_map($indifacts, $famids) {
 		echo "<tr><td colspan=\"2\" class=\"facts_value\">", i18n::translate('GoogleMap module disabled'), "<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
 		echo "<script type=\"text/javascript\">\n";
 		echo "function ResizeMap ()\n{\n}\nfunction SetMarkersAndBounds ()\n{\n}\n</script>\n";
-		if (PGV_USER_IS_ADMIN) {
+		if (WT_USER_IS_ADMIN) {
 			echo "<tr><td align=\"center\" colspan=\"2\">\n";
 			echo "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">", i18n::translate('Manage GoogleMap configuration'), "</a>";
 			echo "</td></tr>\n";
@@ -655,7 +655,7 @@ function build_indiv_map($indifacts, $famids) {
 	$markers=array();
 
 	$zoomLevel = $GOOGLEMAP_MAX_ZOOM;
-	$placelocation=PGV_DB::table_exists("{$TBLPREFIX}placelocation");
+	$placelocation=WT_DB::table_exists("{$TBLPREFIX}placelocation");
 	//-- sort the facts
 	//sort_facts($indifacts); facts should already be sorted
 	$i = 0;
@@ -755,14 +755,14 @@ function build_indiv_map($indifacts, $famids) {
 		$hparents=false;
 		for($f=0; $f<count($famids); $f++) {
 			if (!empty($famids[$f])) {
-				$famrec = find_family_record($famids[$f], PGV_GED_ID);
-				if (empty($famrec)) $famrec = find_updated_record($famids[$f], PGV_GED_ID);
+				$famrec = find_family_record($famids[$f], WT_GED_ID);
+				if (empty($famrec)) $famrec = find_updated_record($famids[$f], WT_GED_ID);
 				if ($famrec) {
 					$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch, PREG_SET_ORDER);
 					for($j=0; $j<$num; $j++) {
 						$person=Person::getInstance($smatch[$j][1]);
 						if ($person->canDisplayDetails()) {
-							$srec = find_person_record($smatch[$j][1], PGV_GED_ID);
+							$srec = find_person_record($smatch[$j][1], WT_GED_ID);
 							$birthrec = '';
 							$placerec = '';
 							foreach ($person->getAllFactsByType('BIRT') as $sEvent) {
@@ -845,7 +845,7 @@ function build_indiv_map($indifacts, $famids) {
 		echo "</td></tr>\n";
 		echo "<script type=\"text/javascript\">\n";
 		echo "function ResizeMap ()\n{\n}\n</script>\n";
-		if (PGV_USER_IS_ADMIN) {
+		if (WT_USER_IS_ADMIN) {
 			echo "<tr><td align=\"center\" colspan=\"2\">\n";
 			echo "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">", i18n::translate('Manage GoogleMap configuration'), "</a>";
 			echo "</td></tr>\n";
@@ -924,7 +924,7 @@ function build_indiv_map($indifacts, $famids) {
 					}
 					if (($markers[$j]["lati"] == NULL) || ($markers[$j]["lng"] == NULL) || (($markers[$j]["lati"] == "0") && ($markers[$j]["lng"] == "0"))) {
 						echo "<br /><br />", i18n::translate('This place has no coordinates');
-						if (PGV_USER_IS_ADMIN)
+						if (WT_USER_IS_ADMIN)
 							echo '<br /><a href=\"module.php?mod=googlemap&pgvaction=places&display=inactive\">', i18n::translate('Edit geographic location'), '</a>';
 						echo "\");\n";
 					}

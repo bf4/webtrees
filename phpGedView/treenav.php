@@ -31,9 +31,9 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'treenav.php');
+define('WT_SCRIPT_NAME', 'treenav.php');
 require './config.php';
-require_once PGV_ROOT.'includes/classes/class_treenav.php';
+require_once WT_ROOT.'includes/classes/class_treenav.php';
 
 $zoom = 0;
 $rootid = '';

@@ -30,14 +30,14 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FUNCTIONS_EDIT_PHP', '');
+define('WT_FUNCTIONS_EDIT_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_import.php';
+require_once WT_ROOT.'includes/functions/functions_import.php';
 
 // Create a <select> control for a form
 // $name     - the ID for the form element
@@ -86,7 +86,7 @@ function edit_field_log_frequency($name, $selected='', $extra='') {
 
 // Print an edit control for a contact method field
 function edit_field_contact($name, $selected='', $extra='') {
-	global $PGV_STORE_MESSAGES;
+	global $WT_STORE_MESSAGES;
 	// Different ways to contact the users
 	$CONTACT_METHODS=array(
 		'messaging' =>i18n::translate('webtrees internal messaging'),
@@ -95,7 +95,7 @@ function edit_field_contact($name, $selected='', $extra='') {
 		'mailto'    =>i18n::translate('Mailto link'),
 		'none'      =>i18n::translate('No contact'),
 	);
-	if (!$PGV_STORE_MESSAGES) {
+	if (!$WT_STORE_MESSAGES) {
 		unset($CONTACT_METHODS['messaging'], $CONTACT_METHODS['messaging2']);
 	}
 	return select_edit_control($name, $CONTACT_METHODS, null, $selected, $extra);
@@ -150,8 +150,8 @@ function checkChangeTime($pid, $gedrec, $last_time) {
 	//-- check if the record changes since last access
 	$changeTime = 0;
 	$changeUser = '';
-	if (isset($pgv_changes[$pid."_".PGV_GEDCOM])) {
-		$change = end($pgv_changes[$pid."_".PGV_GEDCOM]);
+	if (isset($pgv_changes[$pid."_".WT_GEDCOM])) {
+		$change = end($pgv_changes[$pid."_".WT_GEDCOM]);
 		$changeTime = $change['time'];
 		$changeUser = $change['user'];
 	}
@@ -212,23 +212,23 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 				}
 				else {
 					AddToChangeLog("Warning: $oldgid was changed to $gid");
-					if (isset($pgv_changes[$oldgid."_".PGV_GEDCOM])) unset($pgv_changes[$oldgid."_".PGV_GEDCOM]);
+					if (isset($pgv_changes[$oldgid."_".WT_GEDCOM])) unset($pgv_changes[$oldgid."_".WT_GEDCOM]);
 				}
 			}
 		}
 
 			$change = array();
 			$change["gid"] = $gid;
-			$change["gedcom"] = PGV_GEDCOM;
+			$change["gedcom"] = WT_GEDCOM;
 			$change["type"] = "replace";
 			$change["status"] = "submitted";
-			$change["user"] = PGV_USER_NAME;
+			$change["user"] = WT_USER_NAME;
 			$change["time"] = time();
 			if (!empty($linkpid)) $change["linkpid"] = $linkpid;
 			$change["undo"] = reformat_record_import($gedrec);
-			if (!isset($pgv_changes[$gid."_".PGV_GEDCOM])) $pgv_changes[$gid."_".PGV_GEDCOM] = array();
+			if (!isset($pgv_changes[$gid."_".WT_GEDCOM])) $pgv_changes[$gid."_".WT_GEDCOM] = array();
 			else {
-				$lastchange = end($pgv_changes[$gid."_".PGV_GEDCOM]);
+				$lastchange = end($pgv_changes[$gid."_".WT_GEDCOM]);
 				if (!empty($lastchange)) {
 					//-- append recods should continue to be marked as append
 					if ($lastchange["type"]=="append") $change["type"] = "append";
@@ -239,10 +239,10 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 					}
 				}
 			}
-			$pgv_changes[$gid."_".PGV_GEDCOM][] = $change;
+			$pgv_changes[$gid."_".WT_GEDCOM][] = $change;
 
-		if (PGV_USER_AUTO_ACCEPT) {
-			accept_changes($gid."_".PGV_GEDCOM);
+		if (WT_USER_AUTO_ACCEPT) {
+			accept_changes($gid."_".WT_GEDCOM);
 		} else {
 			write_changes();
 		}
@@ -251,9 +251,9 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 		if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
 		if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
 		if (isset($backtrace[0])) $temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
-		$action=PGV_SCRIPT_NAME;
+		$action=WT_SCRIPT_NAME;
 		if (!empty($_REQUEST['action'])) $action .= ' '.$_REQUEST['action'];
-		AddToChangeLog($action.' '.$temp." Replacing gedcom record $gid ->" . PGV_USER_NAME ."<-");
+		AddToChangeLog($action.' '.$temp." Replacing gedcom record $gid ->" . WT_USER_NAME ."<-");
 		return true;
 	}
 	return false;
@@ -265,7 +265,7 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 	global $fcontents, $pgv_changes, $manual_save;
 
 	if (($gedrec = check_gedcom($gedrec, $chan))!==false) {
-		$ct = preg_match("/0 @(".PGV_REGEX_XREF.")@ (".PGV_REGEX_TAG.")/", $gedrec, $match);
+		$ct = preg_match("/0 @(".WT_REGEX_XREF.")@ (".WT_REGEX_TAG.")/", $gedrec, $match);
 		$gid = $match[1];
 		$type = trim($match[2]);
 
@@ -275,18 +275,18 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 
 		$change = array();
 		$change["gid"] = $xref;
-		$change["gedcom"] = PGV_GEDCOM;
+		$change["gedcom"] = WT_GEDCOM;
 		$change["type"] = "append";
 		$change["status"] = "submitted";
-		$change["user"] = PGV_USER_NAME;
+		$change["user"] = WT_USER_NAME;
 		$change["time"] = time();
 		if (!empty($linkpid)) $change["linkpid"] = $linkpid;
 		$change["undo"] = reformat_record_import($gedrec);
-		if (!isset($pgv_changes[$xref."_".PGV_GEDCOM])) $pgv_changes[$xref."_".PGV_GEDCOM] = array();
-		$pgv_changes[$xref."_".PGV_GEDCOM][] = $change;
+		if (!isset($pgv_changes[$xref."_".WT_GEDCOM])) $pgv_changes[$xref."_".WT_GEDCOM] = array();
+		$pgv_changes[$xref."_".WT_GEDCOM][] = $change;
 
-		if (PGV_USER_AUTO_ACCEPT) {
-			accept_changes($xref."_".PGV_GEDCOM);
+		if (WT_USER_AUTO_ACCEPT) {
+			accept_changes($xref."_".WT_GEDCOM);
 		} else {
 			write_changes();
 		}
@@ -295,9 +295,9 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 		if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
 		if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
 		if (isset($backtrace[0])) $temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
-		$action=PGV_SCRIPT_NAME;
+		$action=WT_SCRIPT_NAME;
 		if (!empty($_REQUEST['action'])) $action .= ' '.$_REQUEST['action'];
-		AddToChangeLog($action.' '.$temp." Appending new $type record $xref ->" . PGV_USER_NAME ."<-");
+		AddToChangeLog($action.' '.$temp." Appending new $type record $xref ->" . WT_USER_NAME ."<-");
 		return $xref;
 	}
 	return false;
@@ -309,27 +309,27 @@ function delete_gedrec($gid, $linkpid='') {
 	global $fcontents, $pgv_changes, $manual_save;
 
 	//-- first check if the record is not already deleted
-	if (isset($pgv_changes[$gid."_".PGV_GEDCOM])) {
-		$change = end($pgv_changes[$gid."_".PGV_GEDCOM]);
+	if (isset($pgv_changes[$gid."_".WT_GEDCOM])) {
+		$change = end($pgv_changes[$gid."_".WT_GEDCOM]);
 		if ($change["type"]=="delete") return true;
 	}
 
-	$undo = find_gedcom_record($gid, PGV_GED_ID);
+	$undo = find_gedcom_record($gid, WT_GED_ID);
 	if (empty($undo)) return false;
 		$change = array();
 		$change["gid"] = $gid;
-		$change["gedcom"] = PGV_GEDCOM;
+		$change["gedcom"] = WT_GEDCOM;
 		$change["type"] = "delete";
 		$change["status"] = "submitted";
-		$change["user"] = PGV_USER_NAME;
+		$change["user"] = WT_USER_NAME;
 		$change["time"] = time();
 		if (!empty($linkpid)) $change["linkpid"] = $linkpid;
 		$change["undo"] = '';
-		if (!isset($pgv_changes[$gid."_".PGV_GEDCOM])) $pgv_changes[$gid."_".PGV_GEDCOM] = array();
-		$pgv_changes[$gid."_".PGV_GEDCOM][] = $change;
+		if (!isset($pgv_changes[$gid."_".WT_GEDCOM])) $pgv_changes[$gid."_".WT_GEDCOM] = array();
+		$pgv_changes[$gid."_".WT_GEDCOM][] = $change;
 
-	if (PGV_USER_AUTO_ACCEPT) {
-		accept_changes($gid."_".PGV_GEDCOM);
+	if (WT_USER_AUTO_ACCEPT) {
+		accept_changes($gid."_".WT_GEDCOM);
 	}
 	else {
 		write_changes();
@@ -339,9 +339,9 @@ function delete_gedrec($gid, $linkpid='') {
 	if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
 	if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
 	if (isset($backtrace[0])) $temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
-	$action=PGV_SCRIPT_NAME;
+	$action=WT_SCRIPT_NAME;
 	if (!empty($_REQUEST['action'])) $action .= ' '.$_REQUEST['action'];
-	AddToChangeLog($action.' '.$temp." Deleting gedcom record $gid ->" . PGV_USER_NAME ."<-");
+	AddToChangeLog($action.' '.$temp." Deleting gedcom record $gid ->" . WT_USER_NAME ."<-");
 	return true;
 }
 
@@ -352,8 +352,8 @@ function check_gedcom($gedrec, $chan=true) {
 	$ct = preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
 	if ($ct==0) {
 		echo "ERROR 20: Invalid GEDCOM format";
-		AddToChangeLog("ERROR 20: Invalid GEDCOM format.->" . PGV_USER_NAME ."<-");
-		if (PGV_DEBUG) {
+		AddToChangeLog("ERROR 20: Invalid GEDCOM format.->" . WT_USER_NAME ."<-");
+		if (WT_DEBUG) {
 			echo "<pre>$gedrec</pre>\n";
 			echo debug_print_backtrace();
 		}
@@ -368,14 +368,14 @@ function check_gedcom($gedrec, $chan=true) {
 			$newgedrec = substr($gedrec, 0, $pos1);
 			$newgedrec .= "1 CHAN\n2 DATE ".strtoupper(date("d M Y"))."\n";
 			$newgedrec .= "3 TIME ".date("H:i:s")."\n";
-			$newgedrec .= "2 _PGVU ".PGV_USER_NAME."\n";
+			$newgedrec .= "2 _PGVU ".WT_USER_NAME."\n";
 			$newgedrec .= substr($gedrec, $pos2);
 			$gedrec = $newgedrec;
 		}
 		else {
 			$newgedrec = "\n1 CHAN\n2 DATE ".strtoupper(date("d M Y"))."\n";
 			$newgedrec .= "3 TIME ".date("H:i:s")."\n";
-			$newgedrec .= "2 _PGVU ".PGV_USER_NAME;
+			$newgedrec .= "2 _PGVU ".WT_USER_NAME;
 			$gedrec .= $newgedrec;
 		}
 	}
@@ -480,7 +480,7 @@ function undo_change($cid, $index) {
 			}
 			if (count($pgv_changes[$cid])==0) unset($pgv_changes[$cid]);
 		}
-		AddToChangeLog("Undoing change $cid - $index ".$change["type"]." ->" . PGV_USER_NAME ."<-");
+		AddToChangeLog("Undoing change $cid - $index ".$change["type"]." ->" . WT_USER_NAME ."<-");
 		if (!isset($manual_save) || $manual_save==false) write_changes();
 		return true;
 	}
@@ -496,7 +496,7 @@ function undo_change($cid, $index) {
 * @param string $famtag how the new person is added to the family
 */
 function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag="CHIL", $sextag='') {
-	global $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $WORD_WRAPPED_NOTES;
+	global $pid, $WT_IMAGE_DIR, $WT_IMAGES, $WORD_WRAPPED_NOTES;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $NAME_REVERSE;
 	global $bdm, $TEXT_DIRECTION, $STANDARD_NAME_FACTS, $REVERSED_NAME_FACTS, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $NO_UPDATE_CHAN;
@@ -537,18 +537,18 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 	// Inherit surname from parents, spouse or child
 	if (empty($namerec)) {
 		// We'll need the parent's name to set the child's surname
-		if (isset($pgv_changes[$famid."_".PGV_GEDCOM]))
-			$famrec=find_updated_record($famid, PGV_GED_ID);
+		if (isset($pgv_changes[$famid."_".WT_GEDCOM]))
+			$famrec=find_updated_record($famid, WT_GED_ID);
 		else
-			$famrec=find_family_record($famid, PGV_GED_ID);
+			$famrec=find_family_record($famid, WT_GED_ID);
 		$parents=find_parents_in_record($famrec);
-		$father_name=get_gedcom_value('NAME', 0, find_person_record($parents['HUSB'], PGV_GED_ID));
-		$mother_name=get_gedcom_value('NAME', 0, find_person_record($parents['WIFE'], PGV_GED_ID));
+		$father_name=get_gedcom_value('NAME', 0, find_person_record($parents['HUSB'], WT_GED_ID));
+		$mother_name=get_gedcom_value('NAME', 0, find_person_record($parents['WIFE'], WT_GED_ID));
 		// We'll need the spouse/child's name to set the spouse/parent's surname
-		if (isset($pgv_changes[$pid."_".PGV_GEDCOM]))
-			$prec=find_updated_record($pid, PGV_GED_ID);
+		if (isset($pgv_changes[$pid."_".WT_GEDCOM]))
+			$prec=find_updated_record($pid, WT_GED_ID);
 		else
-			$prec=find_person_record($pid, PGV_GED_ID);
+			$prec=find_person_record($pid, WT_GED_ID);
 		$indi_name=get_gedcom_value('NAME', 0, $prec);
 		// Different cultures do surnames differently
 		switch ($SURNAME_TRADITION) {
@@ -701,7 +701,7 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 
 	// Get the advanced name fields
 	$adv_name_fields=array();
-	if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_NAME_FACTS, $match))
+	if (preg_match_all('/('.WT_REGEX_TAG.')/', $ADVANCED_NAME_FACTS, $match))
 		foreach ($match[1] as $tag)
 			$adv_name_fields[$tag]='';
 	// This is a custom tag, but PGV uses it extensively.
@@ -781,9 +781,9 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 			add_simple_tag("0 SEX");
 		}
 		$bdm = "BD";
-		if (preg_match_all('/('.PGV_REGEX_TAG.')/', $QUICK_REQUIRED_FACTS, $matches)) {
+		if (preg_match_all('/('.WT_REGEX_TAG.')/', $QUICK_REQUIRED_FACTS, $matches)) {
 			foreach ($matches[1] as $match) {
-				if (!in_array($match, explode('|', PGV_EVENTS_DEAT))) {
+				if (!in_array($match, explode('|', WT_EVENTS_DEAT))) {
 					addSimpleTags($match);
 				}
 			}
@@ -791,21 +791,21 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 		//-- if adding a spouse add the option to add a marriage fact to the new family
 		if ($nextaction=='addspouseaction' || ($nextaction=='addnewparentaction' && $famid!='new')) {
 			$bdm .= "M";
-			if (preg_match_all('/('.PGV_REGEX_TAG.')/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
+			if (preg_match_all('/('.WT_REGEX_TAG.')/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
 				foreach ($matches[1] as $match) {
 					addSimpleTags($match);
 				}
 			}
 		}
-		if (preg_match_all('/('.PGV_REGEX_TAG.')/', $QUICK_REQUIRED_FACTS, $matches)) {
+		if (preg_match_all('/('.WT_REGEX_TAG.')/', $QUICK_REQUIRED_FACTS, $matches)) {
 			foreach ($matches[1] as $match) {
-				if (in_array($match, explode('|', PGV_EVENTS_DEAT))) {
+				if (in_array($match, explode('|', WT_EVENTS_DEAT))) {
 					addSimpleTags($match);
 				}
 			}
 		}
 	}
-	if (PGV_USER_IS_ADMIN) {
+	if (WT_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
@@ -1032,11 +1032,11 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 * @see init_calendar_popup()
 */
 function print_calendar_popup($id, $asString=false) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $WT_IMAGE_DIR, $WT_IMAGES;
 
 	// calendar button
 	$text = i18n::translate('Select a date');
-	if (isset($PGV_IMAGES["calendar"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["calendar"]["button"]."\" name=\"img".$id."\" id=\"img".$id."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
+	if (isset($WT_IMAGES["calendar"]["button"])) $Link = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["calendar"]["button"]."\" name=\"img".$id."\" id=\"img".$id."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	$out = ' ';
 	$out .= "<a href=\"javascript: ".$text."\" onclick=\"cal_toggleDate('caldiv".$id."', '".$id."'); return false;\">";
@@ -1050,10 +1050,10 @@ function print_calendar_popup($id, $asString=false) {
 * @todo add comments
 */
 function print_addnewmedia_link($element_id) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $pid;
 	
 	$text = i18n::translate('Add a new Media item');
-	if (isset($PGV_IMAGES["addmedia"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addmedia"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
+	if (isset($WT_IMAGES["addmedia"]["button"])) $Link = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["addmedia"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo '&nbsp;&nbsp;&nbsp;<a href="javascript:;" onclick="pastefield=document.getElementById(\'', $element_id, '\'); window.open(\'addmedia.php?action=showmediaform&linktoid={$linkToID}&level={$level}\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">';
 	echo $Link;
@@ -1063,10 +1063,10 @@ function print_addnewmedia_link($element_id) {
 * @todo add comments
 */
 function print_addnewrepository_link($element_id) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $WT_IMAGE_DIR, $WT_IMAGES;
 
 	$text = i18n::translate('Create Repository');
-	if (isset($PGV_IMAGES["addrepository"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addrepository"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
+	if (isset($WT_IMAGES["addrepository"]["button"])) $Link = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["addrepository"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"addnewrepository(document.getElementById('", $element_id, "')); return false;\">";
 	echo $Link;
@@ -1077,10 +1077,10 @@ function print_addnewrepository_link($element_id) {
 * @todo add comments
 */
 function print_addnewnote_link($element_id) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $pid;
 	
 	$text = i18n::translate('Create a new Shared Note');
-	if (isset($PGV_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
+	if (isset($WT_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:ADD;\" onclick=\"addnewnote(document.getElementById('", $element_id, "')); return false;\">";
 	echo $Link;
@@ -1091,9 +1091,9 @@ function print_addnewnote_link($element_id) {
 * // Used in GEDFact CENS assistant =====================
 */
 function print_addnewnote_assisted_link($element_id) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $pid;
 	$text = i18n::translate('Create a new Shared Note using Assistant');
-	if (isset($PGV_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
+	if (isset($WT_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:ADD;\" onclick=\"addnewnote_assisted(document.getElementById('", $element_id, "'), '", $pid, "' ); return false;\">";
 	echo $Link;
@@ -1105,9 +1105,9 @@ function print_addnewnote_assisted_link($element_id) {
 */
 
 function print_editnote_link($note_id) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $WT_IMAGE_DIR, $WT_IMAGES;
 	$text = i18n::translate('Edit Shared Note');
-	if (isset($PGV_IMAGES["note"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["note"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
+	if (isset($WT_IMAGES["note"]["button"])) $Link = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["note"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo "<a href=\"javascript: var win02=window.open('edit_interface.php?action=editnote&pid=$note_id', 'win02', 'top=70, left=70, width=620, height=500, resizable=1, scrollbars=1 ' )\">";
 	echo $Link;
@@ -1118,10 +1118,10 @@ function print_editnote_link($note_id) {
 * @todo add comments
 */
 function print_addnewsource_link($element_id) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $WT_IMAGE_DIR, $WT_IMAGES;
 
 	$text = i18n::translate('Create a new source');
-	if (isset($PGV_IMAGES["addsource"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addsource"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
+	if (isset($WT_IMAGES["addsource"]["button"])) $Link = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["addsource"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"addnewsource(document.getElementById('", $element_id, "')); return false;\">";
 	echo $Link;
@@ -1148,7 +1148,7 @@ function print_addnewsource_link($element_id) {
 * @param boolean $rowDisplay True to have the row displayed by default, false to hide it by default
 */
 function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose='', $rowDisplay=true) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
 	global $tags, $emptyfacts, $main_fact, $TEXT_DIRECTION, $pgv_changes;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
@@ -1340,7 +1340,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 			} elseif ($fact=="FORM" && $upperlevel!='OBJE') {
 				echo help_link('FORM');
 			} elseif ($fact=="NOTE" && $islink){
-				if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
+				if (file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
 					echo help_link('edit_add_GEDFact_ASSISTED');
 				}else{
 					echo help_link('edit_add_SHARED_NOTE');
@@ -1366,7 +1366,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 			}
 		}
 	}
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		echo $element_name, "<br />\n";
 	}
 	
@@ -1382,7 +1382,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		if ($fact=="NOTE" && $islink){
 			echo i18n::translate('SHARED_NOTE');
 			/*
-			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
+			if (file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
 				//	use $label (GEDFact Assistant); 
 			}else{
 				echo i18n::translate('Shared Note');
@@ -1421,7 +1421,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 
 	// value
 	echo "<td class=\"optionbox wrap\">\n";
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		echo $tag, "<br />\n";
 	}
 
@@ -1446,7 +1446,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page && action is ADD a new CENS event 
 		// Then show the add Shared note input field and the GEDFact assisted icon.
 		// If GEDFAct_assistant/_CENS/ module not installed  ... do not show 
-		if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $fact=="CENS") {
+		if (file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $fact=="CENS") {
 			$type_pid=GedcomRecord::getInstance($pid);
 			if ($type_pid->getType()=="INDI" && $action=="add" ) { 
 				add_simple_tag("2 SHARED_NOTE", "", "GEDFact Assistant");
@@ -1571,7 +1571,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		echo "<input type=\"hidden\" id=\"", $element_id, "\" name=\"", $element_name, "\" onchange=\"updateTextName('", $element_id, "');\" value=\"", PrintReady(htmlspecialchars($value, ENT_COMPAT, 'UTF-8')), "\" />";
 		echo "<span id=\"", $element_id, "_display\">", PrintReady(htmlspecialchars($value, ENT_COMPAT, 'UTF-8')), "</span>";
 		echo " <a href=\"#edit_name\" onclick=\"convertHidden('", $element_id, "'); return false;\"> ";
-		if (isset($PGV_IMAGES["edit_indi"]["small"])) echo "<img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["edit_indi"]["small"], "\" border=\"0\" width=\"20\" alt=\"", i18n::translate('Edit Name'), "\" align=\"top\" />";
+		if (isset($WT_IMAGES["edit_indi"]["small"])) echo "<img src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["edit_indi"]["small"], "\" border=\"0\" width=\"20\" alt=\"", i18n::translate('Edit Name'), "\" align=\"top\" />";
 		else echo "<span class=\"age\">[", i18n::translate('Edit Name'), "]</span>";
 		echo "</a>";
 	} else {
@@ -1603,7 +1603,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 			echo "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"", i18n::translate('LATI'), " / ", i18n::translate('LONG'), "\" title=\"", i18n::translate('LATI'), " / ", i18n::translate('LONG'), "\" /></a>";
 			if ($SPLIT_PLACES) {
 				if (!function_exists("print_place_subfields")) {
-					require PGV_ROOT.'includes/functions/functions_places.php';
+					require WT_ROOT.'includes/functions/functions_places.php';
 				}
 				setup_place_subfields($element_id);
 				print_place_subfields($element_id);
@@ -1634,9 +1634,9 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		if ($fact=="DATE") {
 			print_calendar_popup($element_id);
 			// If GEDFact_assistant/_CENS/ module is installed -------------------------------------------------
-			if ($action=="add" && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') ) {
+			if ($action=="add" && file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') ) {
 				if (isset($CensDate) && $CensDate=="yes") {
-					require_once PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_asst_date.php';
+					require_once WT_ROOT.'modules/GEDFact_assistant/_CENS/census_asst_date.php';
 				}
 			}
 			// -------------------------------------------------------------------------------------------------
@@ -1666,9 +1666,9 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 				if (strpos($bdm, 'B')!==false) {
 					echo '&nbsp;<input type="checkbox" name="SOUR_INDI" ', $level1_checked, ' value="Y" />';
 					echo i18n::translate('Individual');
-					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $QUICK_REQUIRED_FACTS, $matches)) {
+					if (preg_match_all('/('.WT_REGEX_TAG.')/', $QUICK_REQUIRED_FACTS, $matches)) {
 						foreach ($matches[1] as $match) {
-							if (!in_array($match, explode('|', PGV_EVENTS_DEAT))) {
+							if (!in_array($match, explode('|', WT_EVENTS_DEAT))) {
 								echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '"', $level2_checked, ' value="Y" />';
 								echo i18n::translate($match);
 							}
@@ -1676,9 +1676,9 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 					}
 				}
 				if (strpos($bdm, 'D')!==false) {
-					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $QUICK_REQUIRED_FACTS, $matches)) {
+					if (preg_match_all('/('.WT_REGEX_TAG.')/', $QUICK_REQUIRED_FACTS, $matches)) {
 						foreach ($matches[1] as $match) {
-							if (in_array($match, explode('|', PGV_EVENTS_DEAT))) {
+							if (in_array($match, explode('|', WT_EVENTS_DEAT))) {
 								echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '"', $level2_checked, ' value="Y" />';
 								echo i18n::translate($match);
 							}
@@ -1688,7 +1688,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 				if (strpos($bdm, 'M')!==false) {
 					echo '&nbsp;<input type="checkbox" name="SOUR_FAM" ', $level1_checked, ' value="Y" />';
 					echo i18n::translate('Family');
-					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
+					if (preg_match_all('/('.WT_REGEX_TAG.')/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
 						foreach ($matches[1] as $match) {
 							echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '"', $level2_checked, ' value="Y" />';
 							echo i18n::translate($match);
@@ -1714,7 +1714,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 			}
 			// If GEDFact_assistant/_CENS/ module exists && we are on the INDI page and the action is a GEDFact CENS assistant addition.
 			// Then show the add Shared note assisted icon, if not  ... show regular Shared note icons. 
-			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && ($action=="add" || $action=="edit" ) && $pid) {
+			if (file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && ($action=="add" || $action=="edit" ) && $pid) {
 				// Check if a CENS event ---------------------------
 				if ($event_add=="census_add") {
 					$type_pid=GedcomRecord::getInstance($pid);
@@ -1790,13 +1790,13 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 * @param string $tag Gedcom tag name
 */
 function print_add_layer($tag, $level=2, $printSaveButton=true) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $WT_IMAGE_DIR, $WT_IMAGES;
 	global $MEDIA_DIRECTORY, $TEXT_DIRECTION, $PRIVACY_BY_RESN;
 	global $gedrec, $FULL_SOURCES;
 	global $islink;
 	if ($tag=="SOUR") {
 		//-- Add new source to fact
-		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newsource');\"><img id=\"newsource_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Source Citation'), "</a>";
+		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newsource');\"><img id=\"newsource_img\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Source Citation'), "</a>";
 		echo help_link('edit_add_SOUR');
 		echo "<br />";
 		echo "<div id=\"newsource\" style=\"display: none;\">\n";
@@ -1827,12 +1827,12 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	if ($tag=="ASSO" || $tag=="ASSO2") {
 		//-- Add a new ASSOciate
 		if ($tag=="ASSO") {
-			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso');\"><img id=\"newasso_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Associate'), "</a>";
+			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso');\"><img id=\"newasso_img\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Associate'), "</a>";
 			echo help_link('edit_add_ASSO');
 			echo "<br />";
 			echo "<div id=\"newasso\" style=\"display: none;\">\n";
 		} else {
-			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso2');\"><img id=\"newasso2_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Associate'), "</a>";
+			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso2');\"><img id=\"newasso2_img\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Associate'), "</a>";
 			echo help_link('edit_add_ASSO');
 			echo "<br />";
 			echo "<div id=\"newasso2\" style=\"display: none;\">\n";
@@ -1852,7 +1852,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	if ($tag=="NOTE") {
 		//-- Retrieve existing note or add new note to fact
 		$text = '';
-		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newnote');\"><img id=\"newnote_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Note'), "</a>";
+		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newnote');\"><img id=\"newnote_img\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Note'), "</a>";
 		echo help_link('edit_add_NOTE');
 		echo "<br />\n";
 		echo "<div id=\"newnote\" style=\"display: none;\">\n";
@@ -1865,7 +1865,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	if ($tag=="SHARED_NOTE") {
 		//-- Retrieve existing shared note or add new shared note to fact
 		$text = '';
-		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newshared_note');\"><img id=\"newshared_note_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Shared Note'), "</a>";
+		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newshared_note');\"><img id=\"newshared_note_img\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Shared Note'), "</a>";
 		echo help_link('edit_add_SHARED_NOTE');
 		echo "<br />\n";
 		echo "<div id=\"newshared_note\" style=\"display: none;\">\n";
@@ -1878,7 +1878,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	}
 	if ($tag=="OBJE") {
 		//-- Add new obje to fact
-		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newobje');\"><img id=\"newobje_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Multimedia object'), "</a>";
+		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newobje');\"><img id=\"newobje_img\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Multimedia object'), "</a>";
 		echo help_link('add_media');
 		echo "<br />";
 		echo "<div id=\"newobje\" style=\"display: none;\">\n";
@@ -1894,7 +1894,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		} else {
 			//-- Retrieve existing resn or add new resn to fact
 			$text = '';
-			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newresn');\"><img id=\"newresn_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('RESN'), "</a>";
+			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newresn');\"><img id=\"newresn_img\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('RESN'), "</a>";
 			echo help_link('RESN');
 			echo "<br />\n";
 			echo "<div id=\"newresn\" style=\"display: none;\">\n";
@@ -1914,7 +1914,7 @@ function addSimpleTags($fact) {
 	add_simple_tag("0 DATE", $fact, fact_label("{$fact}:DATE"));
 	add_simple_tag("0 PLAC", $fact, fact_label("{$fact}:PLAC"));
 
-	if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
+	if (preg_match_all('/('.WT_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
 		foreach ($match[1] as $tag) {
 			add_simple_tag("0 {$tag}", $fact, fact_label("{$fact}:PLAC:{$tag}"));
 		}
@@ -1928,15 +1928,15 @@ function addSimpleTags($fact) {
 function addNewName() {
 	global $ADVANCED_NAME_FACTS;
 
-	$gedrec='1 NAME '.safe_POST('NAME', PGV_REGEX_UNSAFE, '//')."\n";
+	$gedrec='1 NAME '.safe_POST('NAME', WT_REGEX_UNSAFE, '//')."\n";
 
 	$tags=array('TYPE', 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX', '_MARNM');
 
-	if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_NAME_FACTS, $match)) {
+	if (preg_match_all('/('.WT_REGEX_TAG.')/', $ADVANCED_NAME_FACTS, $match)) {
 		$tags=array_merge($tags, $match[1]);
 	}
 	foreach ($tags as $tag) {
-		$TAG=safe_POST($tag, PGV_REGEX_UNSAFE);
+		$TAG=safe_POST($tag, WT_REGEX_UNSAFE);
 		if ($TAG) {
 			$gedrec.="2 {$tag} {$TAG}\n";
 		}
@@ -1956,9 +1956,9 @@ function addNewSex() {
 function addNewFact($fact) {
 	global $tagSOUR, $ADVANCED_PLAC_FACTS;
 
-	$FACT=safe_POST($fact,          PGV_REGEX_UNSAFE);
-	$DATE=safe_POST("{$fact}_DATE", PGV_REGEX_UNSAFE);
-	$PLAC=safe_POST("{$fact}_PLAC", PGV_REGEX_UNSAFE);
+	$FACT=safe_POST($fact,          WT_REGEX_UNSAFE);
+	$DATE=safe_POST("{$fact}_DATE", WT_REGEX_UNSAFE);
+	$PLAC=safe_POST("{$fact}_PLAC", WT_REGEX_UNSAFE);
 	if ($DATE || $PLAC || $FACT && $FACT!='Y') {
 		if ($FACT && $FACT!='Y') {
 			$gedrec="1 {$fact} {$FACT}\n";
@@ -1971,16 +1971,16 @@ function addNewFact($fact) {
 		if ($PLAC) {
 			$gedrec.="2 PLAC {$PLAC}\n";
 
-			if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
+			if (preg_match_all('/('.WT_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
 				foreach ($match[1] as $tag) {
-					$TAG=safe_POST("{$fact}_{$tag}", PGV_REGEX_UNSAFE);
+					$TAG=safe_POST("{$fact}_{$tag}", WT_REGEX_UNSAFE);
 					if ($TAG) {
 						$gedrec.="3 {$tag} {$TAG}\n";
 					}
 				}
 			}
-			$LATI=safe_POST("{$fact}_LATI", PGV_REGEX_UNSAFE);
-			$LONG=safe_POST("{$fact}_LONG", PGV_REGEX_UNSAFE);
+			$LATI=safe_POST("{$fact}_LATI", WT_REGEX_UNSAFE);
+			$LONG=safe_POST("{$fact}_LONG", WT_REGEX_UNSAFE);
 			if ($LATI || $LONG) {
 				$gedrec.="3 MAP\n4 LATI {$LATI}\n4 LONG {$LONG}\n";
 			}
@@ -2009,7 +2009,7 @@ function addNewFact($fact) {
 * @param string $logstr the string to add to the log
 */
 function addDebugLog($logstr) {
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		AddToChangeLog($logstr);
 	}
 }
@@ -2197,11 +2197,11 @@ function handle_updates($newged, $levelOverride="no") {
 				delete_gedrec($text[$j]);
 				$text[$j] = '';
 			} else {
-				$noterec = find_gedcom_record($text[$j], PGV_GED_ID);
+				$noterec = find_gedcom_record($text[$j], WT_GED_ID);
 				$newnote = "0 @$text[$j]@ NOTE\n";
 				$newline = "1 CONC ".rtrim(stripLRMRLM($NOTE[$text[$j]]));
 				$newnote .= breakConts($newline);
-				if (PGV_DEBUG) {
+				if (WT_DEBUG) {
 					echo "<pre>$newnote</pre>";
 				}
 				replace_gedrec($text[$j], $newnote);
@@ -2289,10 +2289,10 @@ function linkMedia($mediaid, $linktoid, $level=1, $chan=true) {
 	if (empty($level)) $level = 1;
 	if ($level!=1) return false; // Level 2 items get linked elsewhere
 	// find Indi, Family, or Source record to link to
-	if (isset($pgv_changes[$linktoid."_".PGV_GEDCOM])) {
-		$gedrec = find_updated_record($linktoid, PGV_GED_ID);
+	if (isset($pgv_changes[$linktoid."_".WT_GEDCOM])) {
+		$gedrec = find_updated_record($linktoid, WT_GED_ID);
 	} else {
-		$gedrec = find_gedcom_record($linktoid, PGV_GED_ID);
+		$gedrec = find_gedcom_record($linktoid, WT_GED_ID);
 	}
 
 	//-- check if we are re-editing an unaccepted link that is not already in the DB
@@ -2325,10 +2325,10 @@ function unlinkMedia($linktoid, $linenum, $mediaid, $level=1, $chan=true) {
 	if (empty($level)) $level = 1;
 	if ($level!=1) return false; // Level 2 items get unlinked elsewhere (maybe ??)
 	// find Indi, Family, or Source record to unlink from
-	if (isset($pgv_changes[$linktoid."_".PGV_GEDCOM])) {
-		$gedrec = find_updated_record($linktoid, PGV_GED_ID);
+	if (isset($pgv_changes[$linktoid."_".WT_GEDCOM])) {
+		$gedrec = find_updated_record($linktoid, WT_GED_ID);
 	} else {
-		$gedrec = find_gedcom_record($linktoid, PGV_GED_ID);
+		$gedrec = find_gedcom_record($linktoid, WT_GED_ID);
 	}
 	
 	//-- when deleting/unlinking a media link
@@ -2352,8 +2352,8 @@ function create_add_form($fact) {
 	$tags = array();
 	
 	// GEDFact_assistant ================================================
-	if ($fact=="CENS" && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php') ) {
-		require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php';
+	if ($fact=="CENS" && file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php') ) {
+		require WT_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php';
 	}
 	// ==================================================================
 
@@ -2419,8 +2419,8 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	$level1type = $type;
 	
 	// GEDFact_assistant ================================================
-	if ($type=="CENS" && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php') ) {
-			require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php';
+	if ($type=="CENS" && file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php') ) {
+			require WT_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php';
 	}
 	// ==================================================================
 	
@@ -2448,7 +2448,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 		$expected_subtags['SOUR'][]='QUAY';
 		$expected_subtags['DATA'][]='DATE';
 	}
-	if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
+	if (preg_match_all('/('.WT_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
 		$expected_subtags['PLAC']=array_merge($match[1], $expected_subtags['PLAC']);
 	}
 	
@@ -2578,7 +2578,7 @@ function insert_missing_subtags($level1tag, $add_date=false) {
 			} elseif ($level1tag=='_TODO' && $key=='DATE') {
 				add_simple_tag("2 ".$key.' '.strtoupper(date('d F Y')));
 			} elseif ($level1tag=='_TODO' && $key=='_PGVU') {
-				add_simple_tag("2 ".$key.' '.PGV_USER_NAME);
+				add_simple_tag("2 ".$key.' '.WT_USER_NAME);
 			} else if ($level1tag=='TITL' && strstr($ADVANCED_NAME_FACTS, $key)!==false) {
 				add_simple_tag("2 ".$key);
 			} else if ($level1tag!='TITL') {
@@ -2586,7 +2586,7 @@ function insert_missing_subtags($level1tag, $add_date=false) {
 			}
 			switch ($key) { // Add level 3/4 tags as appropriate
 				case "PLAC":
-					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
+					if (preg_match_all('/('.WT_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
 						foreach ($match[1] as $tag) {
 							add_simple_tag("3 $tag", '', fact_label("{$level1tag}:PLAC:{$tag}"));
 						}
@@ -2629,7 +2629,7 @@ function insert_missing_subtags($level1tag, $add_date=false) {
 			if (!in_array($tag, $tags)) {
 				add_simple_tag("2 {$tag}");
 				if ($tag=='PLAC') {
-					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
+					if (preg_match_all('/('.WT_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
 						foreach ($match[1] as $tag) {
 							add_simple_tag("3 $tag", '', fact_label("{$level1tag}:PLAC:{$tag}"));
 						}
@@ -2649,19 +2649,19 @@ function insert_missing_subtags($level1tag, $add_date=false) {
 */
 function delete_person($pid, $gedrec='') {
 	// NOTE: $pgv_changes isn't a global.  Making it global appears to cause problems.
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 		echo "<pre>$gedrec</pre>";
 	}
 
-	if (empty($gedrec)) $gedrec = find_person_record($pid, PGV_GED_ID);
+	if (empty($gedrec)) $gedrec = find_person_record($pid, WT_GED_ID);
 	if (!empty($gedrec)) {
 		$success = true;
 		$ct = preg_match_all("/1 FAM. @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
 		for($i=0; $i<$ct; $i++) {
 			$famid = $match[$i][1];
-			if (!isset($pgv_changes[$famid."_".PGV_GEDCOM])) $famrec = find_gedcom_record($famid, PGV_GED_ID);
-			else $famrec = find_updated_record($famid, PGV_GED_ID);
+			if (!isset($pgv_changes[$famid."_".WT_GEDCOM])) $famrec = find_gedcom_record($famid, WT_GED_ID);
+			else $famrec = find_updated_record($famid, WT_GED_ID);
 			if (!empty($famrec)) {
 				$lines = explode("\n", $famrec);
 				$newfamrec = '';
@@ -2683,10 +2683,10 @@ function delete_person($pid, $gedrec='') {
 					for ($j=0; $j<$pt; $j++) {
 						$xref = $pmatch[$j][1];
 						if($xref!=$pid) {
-							if (!isset($pgv_changes[$xref."_".PGV_GEDCOM])) $indirec = find_gedcom_record($xref, PGV_GED_ID);
-							else $indirec = find_updated_record($xref, PGV_GED_ID);
+							if (!isset($pgv_changes[$xref."_".WT_GEDCOM])) $indirec = find_gedcom_record($xref, WT_GED_ID);
+							else $indirec = find_updated_record($xref, WT_GED_ID);
 							$indirec = preg_replace("/1.*@$famid@.*/", '', $indirec);
-							if (PGV_DEBUG) {
+							if (WT_DEBUG) {
 								echo "<pre>$indirec</pre>";
 							}
 							replace_gedrec($xref, $indirec);
@@ -2713,18 +2713,18 @@ function delete_person($pid, $gedrec='') {
 */
 function delete_family($pid, $gedrec='') {
 	// NOTE: $pgv_changes isn't a global.  Making it global appears to cause problems.
-	if (empty($gedrec)) $gedrec = find_family_record($pid, PGV_GED_ID);
+	if (empty($gedrec)) $gedrec = find_family_record($pid, WT_GED_ID);
 	if (!empty($gedrec)) {
 		$success = true;
 		$ct = preg_match_all("/1 (\w+) @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
 		for($i=0; $i<$ct; $i++) {
 			$type = $match[$i][1];
 			$id = $match[$i][2];
-			if (PGV_DEBUG) {
+			if (WT_DEBUG) {
 				echo $type, ' ', $id, ' ';
 			}
-			if (!isset($pgv_changes[$id."_".PGV_GEDCOM])) $indirec = find_gedcom_record($id, PGV_GED_ID);
-			else $indirec = find_updated_record($id, PGV_GED_ID);
+			if (!isset($pgv_changes[$id."_".WT_GEDCOM])) $indirec = find_gedcom_record($id, WT_GED_ID);
+			else $indirec = find_updated_record($id, WT_GED_ID);
 			if (!empty($indirec)) {
 				$lines = explode("\n", $indirec);
 				$newindirec = '';

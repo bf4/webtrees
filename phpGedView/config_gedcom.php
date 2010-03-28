@@ -35,7 +35,7 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -127,7 +127,7 @@ $WORD_WRAPPED_NOTES = false;			//-- some programs wrap notes at word boundaries 
 $GEDCOM_DEFAULT_TAB = "0";				//-- this setting controls which tab on the individual page should first be displayed to visitors
 
 $SHOW_CONTEXT_HELP = true;				// show ? links on the page for contextual popup help
-$PHPGEDVIEW_EMAIL = "";			// -- "From:" address for automatically generated e-mails
+$WEBTREES_EMAIL = "";			// -- "From:" address for automatically generated e-mails
 $CONTACT_EMAIL = "you@yourdomain.com";		// -- this is who the user should contact for more information
 $CONTACT_METHOD = "messaging2";						// -- the method to allow users to contact you. options are: mailto, messaging, messaging2
 $WEBMASTER_EMAIL = "webmaster@yourdomain.com";		// -- this is who the user should contact in case of errors

@@ -45,12 +45,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_SPECIALCHARS_PHP', '');
+define('WT_SPECIALCHARS_PHP', '');
 
 $specialchar_languages = array(
 	"af" => Zend_Locale::getTranslation('af', 'language', WT_LOCALE),

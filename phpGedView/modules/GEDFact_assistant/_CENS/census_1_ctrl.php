@@ -29,7 +29,7 @@
  * @version $Id$
  */
  
- if (!defined('PGV_PHPGEDVIEW')) {
+ if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -63,10 +63,10 @@ $currpid=$pid;
 
 
 <?php
-	echo PGV_JS_START;
+	echo WT_JS_START;
 		 echo "var TheCenYear = opener.document.getElementById('setyear').value;";
 		 echo "var TheCenCtry = opener.document.getElementById('setctry').value;"; 
-	echo PGV_JS_END;
+	echo WT_JS_END;
 
 
 	// Header of assistant window =====================================================

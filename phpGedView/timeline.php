@@ -31,16 +31,16 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'timeline.php');
+define('WT_SCRIPT_NAME', 'timeline.php');
 require './config.php';
-require_once PGV_ROOT.'includes/controllers/timeline_ctrl.php';
+require_once WT_ROOT.'includes/controllers/timeline_ctrl.php';
 
 $controller = new TimelineController();
 $controller->init();
 
 print_header(i18n::translate('Timeline'));
 
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -187,11 +187,11 @@ function MM(e) {
 			// check if we are above the starting point and switch the background image
 			if (newy < boxmean) {
 				if (textDirection=='ltr') {
-					dbox.style.backgroundImage = "url('<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["dline"]["other"]; ?>')";
+					dbox.style.backgroundImage = "url('<?php print $WT_IMAGE_DIR."/".$WT_IMAGES["dline"]["other"]; ?>')";
 					dbox.style.backgroundPosition = "0% 100%";
 				}
 				else {
-					dbox.style.backgroundImage = "url('<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["dline2"]["other"]; ?>')";
+					dbox.style.backgroundImage = "url('<?php print $WT_IMAGE_DIR."/".$WT_IMAGES["dline2"]["other"]; ?>')";
 					dbox.style.backgroundPosition = "0% 0%";
 				}
 				dy = (-1)*dy;
@@ -200,11 +200,11 @@ function MM(e) {
 			}
 			else {
 				if (textDirection=='ltr') {
-					dbox.style.backgroundImage = "url('<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["dline2"]["other"]; ?>')";
+					dbox.style.backgroundImage = "url('<?php print $WT_IMAGE_DIR."/".$WT_IMAGES["dline2"]["other"]; ?>')";
 					dbox.style.backgroundPosition = "0% 0%";
 				}
 				else {
-					dbox.style.backgroundImage = "url('<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["dline"]["other"]; ?>')";
+					dbox.style.backgroundImage = "url('<?php print $WT_IMAGE_DIR."/".$WT_IMAGES["dline"]["other"]; ?>')";
 					dbox.style.backgroundPosition = "0% 100%";
 				}
 
@@ -332,8 +332,8 @@ $controller->checkPrivacy();
 		$scalemod = round($controller->scale*.2) + 1;
 		?>
 		<td class="list_value" style="padding: 5px">
-			<a href="<?php echo PGV_SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale+$scalemod); ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other']; ?>" title="<?php print i18n::translate('Zoom In'); ?>" alt="<?php print i18n::translate('Zoom In'); ?>" border="0" /></a><br />
-			<a href="<?php echo PGV_SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale-$scalemod); ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other']; ?>" title="<?php print i18n::translate('Zoom Out'); ?>" alt="<?php print i18n::translate('Zoom Out'); ?>" border="0" /></a><br />
+			<a href="<?php echo WT_SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale+$scalemod); ?>"><img src="<?php print $WT_IMAGE_DIR."/".$WT_IMAGES['zoomin']['other']; ?>" title="<?php print i18n::translate('Zoom In'); ?>" alt="<?php print i18n::translate('Zoom In'); ?>" border="0" /></a><br />
+			<a href="<?php echo WT_SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale-$scalemod); ?>"><img src="<?php print $WT_IMAGE_DIR."/".$WT_IMAGES['zoomout']['other']; ?>" title="<?php print i18n::translate('Zoom Out'); ?>" alt="<?php print i18n::translate('Zoom Out'); ?>" border="0" /></a><br />
 			<input type="button" value="<?php print i18n::translate('Clear Chart'); ?>" onclick="window.location = 'timeline.php?clear=1';" />
 		</td>
 	<?php } ?>
@@ -349,7 +349,7 @@ if (count($controller->people)>0) {
 <div id="timeline_chart">
 	<!-- print the timeline line image -->
 	<div id="line" style="position:absolute; <?php print $TEXT_DIRECTION =="ltr"?"left: ".($basexoffset+22):"right: ".($basexoffset+22); ?>px; top: <?php print $baseyoffset; ?>px; ">
-		<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]; ?>" width="3" height="<?php print ($baseyoffset+(($controller->topyear-$controller->baseyear)*$controller->scale)); ?>" alt="" />
+		<img src="<?php print $WT_IMAGE_DIR."/".$WT_IMAGES["vline"]["other"]; ?>" width="3" height="<?php print ($baseyoffset+(($controller->topyear-$controller->baseyear)*$controller->scale)); ?>" alt="" />
 	</div>
 	<!-- print divs for the grid -->
 	<div id="scale<?php print $controller->baseyear; ?>" style="font-family: Arial; position:absolute; <?php print ($TEXT_DIRECTION =="ltr"?"left: $basexoffset":"right: $basexoffset"); ?>px; top: <?php print ($baseyoffset-5); ?>px; font-size: 7pt; text-align: <?php print ($TEXT_DIRECTION =="ltr"?"left":"right"); ?>;">
@@ -386,7 +386,7 @@ if (count($controller->people)>0) {
 			<table cellspacing="0" cellpadding="0">
 				<tr>
 					<td>
-						<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]; ?>" name="ageline<?php print $p; ?>" id="ageline<?php print $p; ?>" align="left" hspace="0" vspace="0" width="25" height="3" alt="" />
+						<img src="<?php print $WT_IMAGE_DIR."/".$WT_IMAGES["hline"]["other"]; ?>" name="ageline<?php print $p; ?>" id="ageline<?php print $p; ?>" align="left" hspace="0" vspace="0" width="25" height="3" alt="" />
 					</td>
 					<td valign="top">
 						<?php

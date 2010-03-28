@@ -30,21 +30,21 @@
  * $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
-	require PGV_ROOT.'modules/googlemap/defaultconfig.php';
-	require PGV_ROOT.'modules/googlemap/googlemap.php';
+if (file_exists(WT_ROOT.'modules/googlemap/defaultconfig.php')) {
+	require WT_ROOT.'modules/googlemap/defaultconfig.php';
+	require WT_ROOT.'modules/googlemap/googlemap.php';
 }
-require_once PGV_ROOT.'includes/classes/class_stats.php';
+require_once WT_ROOT.'includes/classes/class_stats.php';
 $stats = new stats($GEDCOM);
 
 function check_exist_table() {
 	global $TBLPREFIX;
-	return PGV_DB::table_exists("{$TBLPREFIX}placelocation");
+	return WT_DB::table_exists("{$TBLPREFIX}placelocation");
 }
 
 
@@ -52,12 +52,12 @@ function get_place_list_loc($parent_id, $inactive=false) {
 	global $display, $TBLPREFIX;
 	if ($inactive) {
 		$rows=
-			PGV_DB::prepare("SELECT pl_id, pl_place, pl_lati, pl_long, pl_zoom, pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=? ORDER BY pl_place")
+			WT_DB::prepare("SELECT pl_id, pl_place, pl_lati, pl_long, pl_zoom, pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=? ORDER BY pl_place")
 			->execute(array($parent_id))
 			->fetchAll();
 	} else {
 		$rows=
-			PGV_DB::prepare(
+			WT_DB::prepare(
 				"SELECT DISTINCT pl_id, pl_place, pl_lati, pl_long, pl_zoom, pl_icon".
 				" FROM {$TBLPREFIX}placelocation".
 				" INNER JOIN {$TBLPREFIX}places ON {$TBLPREFIX}placelocation.pl_place={$TBLPREFIX}places.p_place AND {$TBLPREFIX}placelocation.pl_level={$TBLPREFIX}places.p_level".
@@ -78,7 +78,7 @@ function place_id_to_hierarchy($id) {
 	global $TBLPREFIX;
 
 	$statement=
-		PGV_DB::prepare("SELECT pl_parent_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_id=?");
+		WT_DB::prepare("SELECT pl_parent_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_id=?");
 	$arr=array();
 	while ($id!=0) {
 		$row=$statement->execute(array($id))->fetchOneRow();
@@ -100,7 +100,7 @@ function get_placeid($place) {
 			$placelist = create_possible_place_names($par[$i], $i+1);
 			foreach ($placelist as $key => $placename) {
 				$pl_id=
-					PGV_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place LIKE ? ORDER BY pl_place")
+					WT_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place LIKE ? ORDER BY pl_place")
 					->execute(array($i, $place_id, $placename))
 					->fetchOne();
 				if (!empty($pl_id)) break;
@@ -122,8 +122,8 @@ function get_p_id($place) {
 		$placelist = create_possible_place_names($par[$i], $i+1);
 		foreach ($placelist as $key => $placename) {
 			$pl_id=
-				PGV_DB::prepare("SELECT p_id FROM {$TBLPREFIX}places WHERE p_level=? AND p_parent_id=? AND p_file=? AND p_place LIKE ? ORDER BY p_place")
-				->execute(array($i, $place_id, PGV_GED_ID, $placename))
+				WT_DB::prepare("SELECT p_id FROM {$TBLPREFIX}places WHERE p_level=? AND p_parent_id=? AND p_file=? AND p_place LIKE ? ORDER BY p_place")
+				->execute(array($i, $place_id, WT_GED_ID, $placename))
 				->fetchOne();
 			if (!empty($pl_id)) break;
 		}
@@ -183,7 +183,7 @@ function create_map() {
 	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
 	<script src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
 	<?php
-	if (PGV_USER_IS_ADMIN) {
+	if (WT_USER_IS_ADMIN) {
 		echo "<table style=\"width: ", $GOOGLEMAP_PH_XSIZE, "px\">";
 		echo "<tr><td align=\"left\">\n";
 		echo "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">", i18n::translate('Manage GoogleMap configuration'), "</a>";
@@ -303,9 +303,9 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			}
 		}
 		echo "<br />", i18n::translate('This place has no coordinates');
-		if (PGV_USER_IS_ADMIN)
+		if (WT_USER_IS_ADMIN)
 			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=", $levelm, "&display=inactive'>", i18n::translate('Edit geographic location'), "</a>";
-		echo "</div></td>\", icon_type, \"", str_replace(array('&lrm;', '&rlm;'), array(PGV_UTF8_LRM, PGV_UTF8_RLM), PrintReady(addslashes($place2['place']))), "\");\n";
+		echo "</div></td>\", icon_type, \"", str_replace(array('&lrm;', '&rlm;'), array(WT_UTF8_LRM, WT_UTF8_RLM), PrintReady(addslashes($place2['place']))), "\");\n";
 	} else {
 		$lati = str_replace(array('N', 'S', ','), array('', '-', '.'), $place2['lati']);
 		$long = str_replace(array('E', 'W', ','), array('', '-', '.'), $place2['long']);
@@ -387,7 +387,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			}
 		}
 		$temp=PrintReady(addslashes($place2['place']));
-		$temp=str_replace(array('&lrm;', '&rlm;'), array(PGV_UTF8_LRM, PGV_UTF8_RLM), $temp);
+		$temp=str_replace(array('&lrm;', '&rlm;'), array(WT_UTF8_LRM, WT_UTF8_RLM), $temp);
 		if (!$GOOGLEMAP_COORD){
 			echo "<br /><br /></div></td>\", icon_type, \"", $temp, "\");\n";
 		} else { 
@@ -614,7 +614,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 							echo "var point = new GLatLng(0, 0);\n";
 							echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'><b>";
 							echo substr($placelevels, 2), "</b><br />", i18n::translate('This place has no coordinates');
-							if (PGV_USER_IS_ADMIN)
+							if (WT_USER_IS_ADMIN)
 								echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=0&display=inactive'>", i18n::translate('Edit geographic location'), "</a>";
 							echo "<br /></div></td>\", icon_type, \"", i18n::translate('Edit geographic location'), "\");\n";
 							echo "place_map.addOverlay(marker);\n";
@@ -671,7 +671,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 		echo "var point = new GLatLng(0, 0);\n";
 		echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'>";
 		echo "<br />", i18n::translate('This place has no coordinates');
-		if (PGV_USER_IS_ADMIN)
+		if (WT_USER_IS_ADMIN)
 			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=0&display=inactive'>", i18n::translate('Edit geographic location'), "</a>";
 		echo "<br /></div></td>\", icon_type, \"", i18n::translate('Edit geographic location'), "\");\n";
 		echo "place_map.addOverlay(marker);\n";

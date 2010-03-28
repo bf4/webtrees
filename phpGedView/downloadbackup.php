@@ -27,12 +27,12 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'downloadbackup.php');
+define('WT_SCRIPT_NAME', 'downloadbackup.php');
 require './config.php';
 
 $fname=safe_GET('fname');
 
-if (!PGV_USER_GEDCOM_ADMIN || !preg_match('/\.zip$/', $fname)) {
+if (!WT_USER_GEDCOM_ADMIN || !preg_match('/\.zip$/', $fname)) {
 	print i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
 	exit;
 }

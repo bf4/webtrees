@@ -36,12 +36,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_SCHEMA_1_2', '');
+define('WT_SCHEMA_1_2', '');
 
 if (!self::table_exists("{$TBLPREFIX}messages")) {
 	self::exec(

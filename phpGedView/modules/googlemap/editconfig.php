@@ -29,12 +29,12 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require PGV_ROOT.'modules/googlemap/defaultconfig.php';
+require WT_ROOT.'modules/googlemap/defaultconfig.php';
 
 if (isset($_REQUEST['action'])) {
 	$action  = $_REQUEST['action'];
@@ -92,7 +92,7 @@ print_header(i18n::translate('GoogleMap Configuration'));
 
 echo '<span class="subheaders">', i18n::translate('GoogleMap Configuration'), '</span>';
 
-if (!PGV_USER_IS_ADMIN) {
+if (!WT_USER_IS_ADMIN) {
 	echo "<table class=\"facts_table\">";
 	echo "<tr><td colspan=\"2\" class=\"facts_value\">", i18n::translate('Page only for Administrators');
 	echo "</td></tr></table>";
@@ -135,7 +135,7 @@ if ($action=="update" && !isset($security_user)) {
 
 	AddToLog('Googlemap config updated');
 	// read the config file again, to set the vars
-	require PGV_ROOT.'modules/googlemap/defaultconfig.php';
+	require WT_ROOT.'modules/googlemap/defaultconfig.php';
 }
 
 $i = 0;

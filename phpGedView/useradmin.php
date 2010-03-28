@@ -29,13 +29,13 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'useradmin.php');
+define('WT_SCRIPT_NAME', 'useradmin.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_edit.php';
+require_once WT_ROOT.'includes/functions/functions_edit.php';
 
 // Only admin users can access this page
-if (!PGV_USER_IS_ADMIN) {
-	$loginURL = "$LOGIN_URL?url=".urlencode(PGV_SCRIPT_NAME."?".$QUERY_STRING);
+if (!WT_USER_IS_ADMIN) {
+	$loginURL = "$LOGIN_URL?url=".urlencode(WT_SCRIPT_NAME."?".$QUERY_STRING);
 	header("Location: $loginURL");
 	exit;
 }
@@ -58,30 +58,30 @@ $ALL_EDIT_OPTIONS=array(
 // Extract form actions (GET overrides POST if both set)
 $action                  =safe_POST('action',  $ALL_ACTIONS);
 $usrlang                 =safe_POST('usrlang', array_keys(i18n::installed_languages()));
-$username                =safe_POST('username', PGV_REGEX_USERNAME);
+$username                =safe_POST('username', WT_REGEX_USERNAME);
 $filter                  =safe_POST('filter'   );
 $sort                    =safe_POST('sort'     );
 $ged                     =safe_POST('ged'      );
 
 $action                  =safe_GET('action',   $ALL_ACTIONS,                            $action);
 $usrlang                 =safe_GET('usrlang',  array_keys(i18n::installed_languages()), $usrlang);
-$username                =safe_GET('username', PGV_REGEX_USERNAME,                      $username);
-$filter                  =safe_GET('filter',   PGV_REGEX_NOSCRIPT,                      $filter);
-$sort                    =safe_GET('sort',     PGV_REGEX_NOSCRIPT,                      $sort);
-$ged                     =safe_GET('ged',      PGV_REGEX_NOSCRIPT,                      $ged);
+$username                =safe_GET('username', WT_REGEX_USERNAME,                      $username);
+$filter                  =safe_GET('filter',   WT_REGEX_NOSCRIPT,                      $filter);
+$sort                    =safe_GET('sort',     WT_REGEX_NOSCRIPT,                      $sort);
+$ged                     =safe_GET('ged',      WT_REGEX_NOSCRIPT,                      $ged);
 
 // Extract form variables
-$oldusername             =safe_POST('oldusername',  PGV_REGEX_USERNAME);
+$oldusername             =safe_POST('oldusername',  WT_REGEX_USERNAME);
 $firstname               =safe_POST('firstname'  );
 $lastname                =safe_POST('lastname'   );
-$pass1                   =safe_POST('pass1',        PGV_REGEX_PASSWORD);
-$pass2                   =safe_POST('pass2',        PGV_REGEX_PASSWORD);
-$emailaddress            =safe_POST('emailaddress', PGV_REGEX_EMAIL);
+$pass1                   =safe_POST('pass1',        WT_REGEX_PASSWORD);
+$pass2                   =safe_POST('pass2',        WT_REGEX_PASSWORD);
+$emailaddress            =safe_POST('emailaddress', WT_REGEX_EMAIL);
 $user_theme              =safe_POST('user_theme',               $ALL_THEME_DIRS);
 $user_language           =safe_POST('user_language',            array_keys(i18n::installed_languages()), $LANGUAGE);
 $new_contact_method      =safe_POST('new_contact_method');
 $new_default_tab         =safe_POST('new_default_tab',          array_keys($ALL_DEFAULT_TABS), $GEDCOM_DEFAULT_TAB);
-$new_comment             =safe_POST('new_comment',              PGV_REGEX_UNSAFE);
+$new_comment             =safe_POST('new_comment',              WT_REGEX_UNSAFE);
 $new_comment_exp         =safe_POST('new_comment_exp'           );
 $new_max_relation_path   =safe_POST_integer('new_max_relation_path', 1, $MAX_RELATION_PATH_LENGTH, 2);
 $new_relationship_privacy=safe_POST('new_relationship_privacy', 'Y',   'N');
@@ -105,7 +105,7 @@ asort($all_gedcoms);
 if ($action=='deleteuser') {
 	// don't delete ourselves
 	$user_id=get_user_id($username);
-	if ($user_id!=PGV_USER_ID) {
+	if ($user_id!=WT_USER_ID) {
 		delete_user($user_id);
 		AddToLog("deleted user ->{$username}<-");
 	}
@@ -193,8 +193,8 @@ if ($action=='createuser' || $action=='edituser2') {
 					$serverURL = rtrim($SERVER_URL, '/');
 					$message=array();
 					$message["to"]=$username;
-					$headers="From: ".$PHPGEDVIEW_EMAIL;
-					$message["from"]=PGV_USER_NAME;
+					$headers="From: ".$WEBTREES_EMAIL;
+					$message["from"]=WT_USER_NAME;
 					$message["subject"]=i18n::translate('Approval of account at %s', $serverURL);
 					$message["body"]=i18n::translate('The administrator at the webtrees site %s has approved your application for an account.  You may now login by accessing the following link: %s#', $serverURL, $serverURL);
 					$message["created"]="";
@@ -202,8 +202,8 @@ if ($action=='createuser' || $action=='edituser2') {
 					addMessage($message);
 					// and send a copy to the admin
 /*					$message=array();
-					$message["to"]=PGV_USER_NAME;
-					$headers="From: ".$PHPGEDVIEW_EMAIL;
+					$message["to"]=WT_USER_NAME;
+					$headers="From: ".$WEBTREES_EMAIL;
 					$message["from"]=$username; // fake the from address - so the admin can "reply" to it.
 					$message["subject"]=i18n::translate('Approval of account at %s', $serverURL));
 					$message["body"]=i18n::translate('The administrator at the webtrees site %s has approved your application for an account.  You may now login by accessing the following link: %s', $serverURL, $serverURL));
@@ -220,7 +220,7 @@ if ($action=='createuser' || $action=='edituser2') {
 } else {
 	print_header(i18n::translate('User administration'));
 
-	if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+	if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 }
 
 // Print the form to edit a user
@@ -315,7 +315,7 @@ if ($action=="edituser") {
 		$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
 		$person=Person::getInstance($pid);
 		if ($person) {
-			echo ' <span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady($person->getFullName()), '</a>', $person->format_first_major_fact(PGV_EVENTS_BIRT, 1), $person->format_first_major_fact(PGV_EVENTS_DEAT, 1), '</span>';
+			echo ' <span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady($person->getFullName()), '</a>', $person->format_first_major_fact(WT_EVENTS_BIRT, 1), $person->format_first_major_fact(WT_EVENTS_DEAT, 1), '</span>';
 		}
 		echo "</td></tr>";
 	}
@@ -337,7 +337,7 @@ if ($action=="edituser") {
 		$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
 		$person=Person::getInstance($pid);
 		if ($person) {
-			echo ' <span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady($person->getFullName()), '</a>', $person->format_first_major_fact(PGV_EVENTS_BIRT, 1), $person->format_first_major_fact(PGV_EVENTS_DEAT, 1), '</span>';
+			echo ' <span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady($person->getFullName()), '</a>', $person->format_first_major_fact(WT_EVENTS_BIRT, 1), $person->format_first_major_fact(WT_EVENTS_DEAT, 1), '</span>';
 		}
 		?>
 		</td></tr>
@@ -349,7 +349,7 @@ if ($action=="edituser") {
 	<td class="descriptionbox wrap"><?php echo i18n::translate('User can administer'), help_link('useradmin_can_admin'); ?></td>
 	<?php
 	// Forms won't send the value of checkboxes if they are disabled :-(  Instead, create a hidden field
-	if ($user_id==PGV_USER_ID) {
+	if ($user_id==WT_USER_ID) {
 		?>
 		<td class="optionbox wrap"><input type="checkbox" name="dummy" <?php if (get_user_setting($user_id, 'canadmin')=='Y') echo "checked=\"checked\""; ?> disabled="disabled" /></td>
 		<input type="hidden" name="canadmin" value="<?php echo get_user_setting($user_id, 'canadmin'); ?>" />
@@ -422,7 +422,7 @@ if ($action=="edituser") {
 	<td class="descriptionbox wrap"><?php echo i18n::translate('Preferred Contact Method'), help_link('useradmin_user_contact'); ?></td>
 	<td class="optionbox wrap">
 	<?php
-		echo edit_field_contact('new_contact_method', get_user_setting(PGV_USER_ID, 'contactmethod'), 'tabindex="'.(++$tab).'"');
+		echo edit_field_contact('new_contact_method', get_user_setting(WT_USER_ID, 'contactmethod'), 'tabindex="'.(++$tab).'"');
 	?>
 	</td>
 	</tr>
@@ -552,9 +552,9 @@ if ($action == "listusers") {
 	<td class="descriptionbox" style="padding-left:2px"><a href="javascript: <?php echo i18n::translate('Privileges'); ?>" onclick="<?php
 	$k = 1;
 	for ($i=1, $max=count($users)+1; $i<=$max; $i++) echo "expand_layer('user-geds", $i, "'); ";
-	echo " return false;\"><img id=\"user-geds", $k, "_img\" src=\"", $PGV_IMAGE_DIR, "/";
-	if ($showprivs == false) echo $PGV_IMAGES["plus"]["other"];
-	else echo $PGV_IMAGES["minus"]["other"];
+	echo " return false;\"><img id=\"user-geds", $k, "_img\" src=\"", $WT_IMAGE_DIR, "/";
+	if ($showprivs == false) echo $WT_IMAGES["plus"]["other"];
+	else echo $WT_IMAGES["minus"]["other"];
 	echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 	echo "<div id=\"user-geds", $k, "\" style=\"display: ";
 	if ($showprivs == false) echo "none\">";
@@ -577,7 +577,7 @@ if ($action == "listusers") {
 		echo "<tr>\n";
 		if ($view != "preview") {
 			echo "\t<td class=\"optionbox wrap\">";
-			if ($user_id!=PGV_USER_ID && get_user_setting($user_id, 'contactmethod')!='none') {
+			if ($user_id!=WT_USER_ID && get_user_setting($user_id, 'contactmethod')!='none') {
 				echo "<a href=\"javascript:;\" onclick=\"return message('", $user_name, "');\">", i18n::translate('Send Message'), "</a>";
 			} else {
 				echo '&nbsp;';
@@ -596,14 +596,14 @@ if ($action == "listusers") {
 		else echo "\t<td class=\"optionbox wrap\">", $user_name;
 		if (get_user_setting($user_id, "comment")) {
 			$tempTitle = PrintReady(get_user_setting($user_id, "comment"));
-			echo "<br /><img class=\"adminicon\" align=\"top\" alt=\"{$tempTitle}\" title=\"{$tempTitle}\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}\" />";
+			echo "<br /><img class=\"adminicon\" align=\"top\" alt=\"{$tempTitle}\" title=\"{$tempTitle}\" src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['notes']['small']}\" />";
 		}
 		echo "</td>\n";
 		echo "\t<td class=\"optionbox wrap\">", Zend_Locale::getTranslation(get_user_setting($user_id, 'language'), 'language', WT_LOCALE), "</td>\n";
 		echo "\t<td class=\"optionbox\">";
-		echo "<a href=\"javascript: ", i18n::translate('Privileges'), "\" onclick=\"expand_layer('user-geds", $k, "'); return false;\"><img id=\"user-geds", $k, "_img\" src=\"", $PGV_IMAGE_DIR, "/";
-		if ($showprivs == false) echo $PGV_IMAGES["plus"]["other"];
-		else echo $PGV_IMAGES["minus"]["other"];
+		echo "<a href=\"javascript: ", i18n::translate('Privileges'), "\" onclick=\"expand_layer('user-geds", $k, "'); return false;\"><img id=\"user-geds", $k, "_img\" src=\"", $WT_IMAGE_DIR, "/";
+		if ($showprivs == false) echo $WT_IMAGES["plus"]["other"];
+		else echo $WT_IMAGES["minus"]["other"];
 		echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" />";
 		echo "</a>";
 		echo "<div id=\"user-geds", $k, "\" style=\"display: ";
@@ -654,7 +654,7 @@ if ($action == "listusers") {
 		echo "</td>\n";
 		if ($view != "preview") {
 			echo "\t<td class=\"optionbox wrap\">";
-			if (PGV_USER_ID!=$user_id) echo "<a href=\"", encode_url("useradmin.php?action=deleteuser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" onclick=\"return confirm('", i18n::translate('Are you sure you want to delete the user'), " $user_name');\">", i18n::translate('Delete'), "</a>";
+			if (WT_USER_ID!=$user_id) echo "<a href=\"", encode_url("useradmin.php?action=deleteuser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" onclick=\"return confirm('", i18n::translate('Are you sure you want to delete the user'), " $user_name');\">", i18n::translate('Delete'), "</a>";
 			echo "</td>\n";
 		}
 		echo "</tr>\n";
@@ -809,7 +809,7 @@ if ($action == "createform") {
 		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Change Language'), help_link('useradmin_change_lang'); ?></td><td class="optionbox wrap" valign="top"><?php
 
 		$tab++;
-		echo edit_field_language('user_language', get_user_setting(PGV_USER_ID, 'language'), 'tabindex="'.$tab.'"');
+		echo edit_field_language('user_language', get_user_setting(WT_USER_ID, 'language'), 'tabindex="'.$tab.'"');
 		?></td></tr>
 		<?php if ($ALLOW_USER_THEMES) { ?>
 			<tr><td class="descriptionbox wrap" valign="top" align="left"><?php echo i18n::translate('My Theme'), help_link('useradmin_user_theme'); ?></td><td class="optionbox wrap" valign="top">
@@ -828,7 +828,7 @@ if ($action == "createform") {
 			<td class="descriptionbox wrap"><?php echo i18n::translate('Preferred Contact Method'), help_link('useradmin_user_contact');  ?></td>
 			<td class="optionbox wrap">
 	<?php
-		echo edit_field_contact('new_contact_method', $PGV_STORE_MESSAGES ? 'messaging2' : 'messaging3', 'tabindex="'.(++$tab).'"');
+		echo edit_field_contact('new_contact_method', $WT_STORE_MESSAGES ? 'messaging2' : 'messaging3', 'tabindex="'.(++$tab).'"');
 	?>
 			</td>
 		</tr>
@@ -855,7 +855,7 @@ if ($action == "createform") {
 			</select>
 			</td>
 		</tr>
-		<?php if (PGV_USER_IS_ADMIN) { ?>
+		<?php if (WT_USER_IS_ADMIN) { ?>
 		<tr>
 			<td class="descriptionbox wrap"><?php echo i18n::translate('Admin comments on user'), help_link('useradmin_comment'); ?></td>
 			<td class="optionbox wrap"><textarea cols="50" rows="5" name="new_comment" tabindex="<?php echo ++$tab; ?>" ></textarea></td>

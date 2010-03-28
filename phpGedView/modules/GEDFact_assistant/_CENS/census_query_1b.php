@@ -41,9 +41,9 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 require_once 'includes/functions/functions_print_lists.php';
 
 //	$links = get_media_relations($mediaid);
-print_note_table(get_note_list(PGV_GED_ID));
+print_note_table(get_note_list(WT_GED_ID));
 
-	$links = get_note_list(PGV_GED_ID);
+	$links = get_note_list(WT_GED_ID);
 	 // var_dump($links);
 	echo "<table><tr><td>";
 	echo "<table id=\"existLinkTbl\" width=\"430\" cellspacing=\"1\" >";
@@ -90,11 +90,11 @@ print_note_table(get_note_list(PGV_GED_ID));
 
 		if ($record->getType()=='INDI') {
 			?>
-			<td class="row2" align="center"><a href="#"><img style="border-style:none; margin-top:5px;" src="<?php echo $PGV_IMAGE_DIR;?>/buttons/family.gif" alt="<?php echo i18n::translate('Open Family Navigator'); ?>" title="<?php echo i18n::translate('Open Family Navigator'); ?>" name="family_'<?php echo $link; ?>'" onclick="javascript:openFamNav('<?php echo $link; ?>');" /></a></td>
+			<td class="row2" align="center"><a href="#"><img style="border-style:none; margin-top:5px;" src="<?php echo $WT_IMAGE_DIR;?>/buttons/family.gif" alt="<?php echo i18n::translate('Open Family Navigator'); ?>" title="<?php echo i18n::translate('Open Family Navigator'); ?>" name="family_'<?php echo $link; ?>'" onclick="javascript:openFamNav('<?php echo $link; ?>');" /></a></td>
 			<?php
 		} elseif ($record->getType()=='FAM') {
 			?>
-			<td class="row2" align="center"><a href="#"><img style="border-style:none; margin-top:5px;" src="<?php echo $PGV_IMAGE_DIR;?>/buttons/family.gif" alt="<?php echo i18n::translate('Open Family Navigator'); ?>" title="<?php echo i18n::translate('Open Family Navigator'); ?>" name="family_'<?php echo $link; ?>'" onclick="javascript:openFamNav('<?php echo $head; ?>');" /></a></td>
+			<td class="row2" align="center"><a href="#"><img style="border-style:none; margin-top:5px;" src="<?php echo $WT_IMAGE_DIR;?>/buttons/family.gif" alt="<?php echo i18n::translate('Open Family Navigator'); ?>" title="<?php echo i18n::translate('Open Family Navigator'); ?>" name="family_'<?php echo $link; ?>'" onclick="javascript:openFamNav('<?php echo $head; ?>');" /></a></td>
 			<?php
 		} else { 
 			echo '<td></td>';

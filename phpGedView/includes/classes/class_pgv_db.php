@@ -3,7 +3,7 @@
 // Class file for the database access.  Extend PHP's native PDO and
 // PDOStatement classes to provide database access with logging, etc.
 //
-// See documentation at http://wiki.phpgedview.net/en/index.php?title=PGV_Database_Functions
+// See documentation at http://wiki.phpgedview.net/en/index.php?title=WT_Database_Functions
 //
 // webtrees: Web based Family History software
 // Copyright (C) 2010 webtrees development team.
@@ -28,14 +28,14 @@
 // @package webtrees
 // @version $Id$
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_PGV_DB_PHP', '');
+define('WT_CLASS_WT_DB_PHP', '');
 
-class PGV_DB {
+class WT_DB {
 	//////////////////////////////////////////////////////////////////////////////
 	// CONSTRUCTION
 	// Implement a singleton to decorate a PDO object.
@@ -71,18 +71,18 @@ class PGV_DB {
 	public static $COL_YEAR=null;
 	public static $COL_CAL =null;
 
-	// Prevent instantiation via new PGV_DB
+	// Prevent instantiation via new WT_DB
 	private final function __construct() {
 	}
 
 	// Prevent instantiation via clone()
 	public final function __clone() {
-		trigger_error('PGV_DB::clone() is not allowed.', E_USER_ERROR);
+		trigger_error('WT_DB::clone() is not allowed.', E_USER_ERROR);
 	}
  	
 	// Prevent instantiation via serialize()
 	public final function __wakeup() {
-		trigger_error('PGV_DB::unserialize() is not allowed.', E_USER_ERROR);
+		trigger_error('WT_DB::unserialize() is not allowed.', E_USER_ERROR);
 	}
 
 	// Disconnect from the server, so we can connect to another one during install.php
@@ -93,7 +93,7 @@ class PGV_DB {
 	// Implement the singleton pattern
 	public static function createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DB_UTF8_COLLATION) {
 		if (self::$pdo instanceof PDO) {
-			trigger_error('PGV_DB::createInstance() can only be called once.', E_USER_ERROR);
+			trigger_error('WT_DB::createInstance() can only be called once.', E_USER_ERROR);
 		}
 		// mysqli is legacy, from PEAR::DB
 		if ($DBTYPE=='mysqli') {
@@ -145,7 +145,7 @@ class PGV_DB {
 		if (self::$pdo instanceof PDO) {
 			return self::$instance;
 		} else {
-			trigger_error('PGV_DB::createInstance() must be called before PGV_DB::getInstance().', E_USER_ERROR);
+			trigger_error('WT_DB::createInstance() must be called before WT_DB::getInstance().', E_USER_ERROR);
 		}
 	}
 
@@ -161,7 +161,7 @@ class PGV_DB {
 
 	// Add an entry to the log
 	public static function logQuery($query, $rows, $microtime, $bind_variables) {
-		if (PGV_DEBUG_SQL) {
+		if (WT_DEBUG_SQL) {
 			// Full logging
 			// Trace
 			$trace=debug_backtrace();
@@ -235,7 +235,7 @@ class PGV_DB {
 		default:
 			// Catch-all for other databases
 			try {
-				PGV_DB::prepare("SELECT 1 FROM {$table}")->fetchOne();
+				WT_DB::prepare("SELECT 1 FROM {$table}")->fetchOne();
 				return true;
 			} catch (PDOException $ex) {
 				return false;
@@ -252,7 +252,7 @@ class PGV_DB {
 		default:
 			// Catch-all for other databases
 			try {
-				PGV_DB::prepare("SELECT {$column} FROM {$table}")->fetchOne();
+				WT_DB::prepare("SELECT {$column} FROM {$table}")->fetchOne();
 				return true;
 			} catch (PDOException $ex) {
 				return false;
@@ -307,7 +307,7 @@ class PGV_DB {
 		if (!self::$pdo instanceof PDO) {
 			throw new PDOException("No Connection Established");
 		}
-		return new PGV_DBStatement(self::$pdo->prepare($statement));
+		return new WT_DBStatement(self::$pdo->prepare($statement));
 	}
 
 	// Limit a query to the first $n rows
@@ -322,7 +322,7 @@ class PGV_DB {
 				break;
 			}
 		}
-		return new PGV_DBStatement(self::$pdo->prepare($statement));
+		return new WT_DBStatement(self::$pdo->prepare($statement));
 	}
 	
 	// Map all other functions onto the base PDO object
@@ -373,7 +373,7 @@ class PGV_DB {
 	}
 }
 
-class PGV_DBStatement {
+class WT_DBStatement {
 	//////////////////////////////////////////////////////////////////////////////
 	// CONSTRUCTION
 	// Decorate a PDOStatement object.
@@ -413,7 +413,7 @@ class PGV_DBStatement {
 			return $this;
 		case 'execute':
 			if ($this->executed) {
-				trigger_error('PGV_DBStatement::execute() called twice.', E_USER_ERROR);
+				trigger_error('WT_DBStatement::execute() called twice.', E_USER_ERROR);
 			} else {
 				$start=microtime(true);
 				$result=call_user_func_array(array($this->pdostatement, $function), $params);
@@ -422,7 +422,7 @@ class PGV_DBStatement {
 				if ($params) {
 					$this->bind_variables=$params[0];
 				}
-				PGV_DB::logQuery($this->pdostatement->queryString, $this->pdostatement->rowCount(), $end-$start, $this->bind_variables);
+				WT_DB::logQuery($this->pdostatement->queryString, $this->pdostatement->rowCount(), $end-$start, $this->bind_variables);
 				return $this;
 			}
 		case 'fetch':

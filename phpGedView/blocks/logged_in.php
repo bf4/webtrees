@@ -29,17 +29,17 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_LOGGED_IN_PHP', '');
+define('WT_LOGGED_IN_PHP', '');
 
-$PGV_BLOCKS["print_logged_in_users"]["name"]		= i18n::translate('Logged In Users');
-$PGV_BLOCKS["print_logged_in_users"]["descr"]		= i18n::translate('The Logged In Users block shows a list of the users who are currently logged in.');
-$PGV_BLOCKS["print_logged_in_users"]["canconfig"]	= false;
-$PGV_BLOCKS["print_logged_in_users"]["config"]		= array("cache"=>0);
+$WT_BLOCKS["print_logged_in_users"]["name"]		= i18n::translate('Logged In Users');
+$WT_BLOCKS["print_logged_in_users"]["descr"]		= i18n::translate('The Logged In Users block shows a list of the users who are currently logged in.');
+$WT_BLOCKS["print_logged_in_users"]["canconfig"]	= false;
+$WT_BLOCKS["print_logged_in_users"]["config"]		= array("cache"=>0);
 
 /**
  * logged in users
@@ -52,13 +52,13 @@ $PGV_BLOCKS["print_logged_in_users"]["config"]		= array("cache"=>0);
  * prints a list of other users who are logged in
  */
 function print_logged_in_users($block = true, $config = "", $side, $index) {
-	global $PGV_SESSION_TIME, $TEXT_DIRECTION;
+	global $WT_SESSION_TIME, $TEXT_DIRECTION;
 
 	$block = true; // Always restrict this block's height
 
 	// Log out inactive users
-	foreach (get_idle_users(time()-$PGV_SESSION_TIME) as $user_id=>$user_name) {
-		if ($user_id!=PGV_USER_ID) {
+	foreach (get_idle_users(time()-$WT_SESSION_TIME) as $user_id=>$user_name) {
+		if ($user_id!=WT_USER_ID) {
 			userLogout($user_id);
 		}
 	}
@@ -67,7 +67,7 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 	$NumAnonymous = 0;
 	$loggedusers = array ();
 	foreach (get_logged_in_users() as $user_id=>$user_name) {
-		if (PGV_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline')=='Y') {
+		if (WT_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline')=='Y') {
 			$loggedusers[$user_id]=$user_name;
 		} else {
 			$NumAnonymous++;
@@ -88,10 +88,10 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 	if ($LoginUsers>0) {
 		$content.='<tr><td><b>' . i18n::plural('%d logged-in user', '%d logged-in users', $LoginUsers, $LoginUsers) . '</b></td></tr>';
 	}
-	if (PGV_USER_ID) {
+	if (WT_USER_ID) {
 		foreach ($loggedusers as $user_id=>$user_name) {
 			$content .= "<tr><td><br />".PrintReady(getUserFullName($user_id))." - ".$user_name;
-			if (PGV_USER_ID!=$user_id && get_user_setting($user_id, 'contactmethod')!="none") {
+			if (WT_USER_ID!=$user_id && get_user_setting($user_id, 'contactmethod')!="none") {
 				$content .= "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user_id . "');\">" . i18n::translate('Send Message') . "</a>";
 			}
 			$content .= "</td></tr>";

@@ -29,19 +29,19 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'inverselink.php');
+define('WT_SCRIPT_NAME', 'inverselink.php');
 require './config.php';
-require PGV_ROOT.'includes/functions/functions_edit.php';
+require WT_ROOT.'includes/functions/functions_edit.php';
 	
 //-- page parameters and checking
 $linktoid	= safe_GET_xref('linktoid');
 $mediaid	= safe_GET_xref('mediaid');
 $linkto		= safe_GET     ('linkto', array('person', 'source', 'family', 'manage', 'repository', 'note'));
-$action		= safe_GET     ('action', PGV_REGEX_ALPHA, 'choose');
+$action		= safe_GET     ('action', WT_REGEX_ALPHA, 'choose');
 
 // If GedFAct_assistant/_MEDIA/ installed ======================
-if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
-	require PGV_ROOT.'modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php';
+if (WT_USER_IS_ADMIN && $linkto=='manage' && file_exists(WT_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
+	require WT_ROOT.'modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php';
 } else {
 
 	if (empty($linktoid) || empty($linkto)) {
@@ -69,10 +69,10 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists(PGV_ROOT.'modules/GEDF
 
 	print_simple_header(i18n::translate('Link Media')." ".$toitems);
 
-	if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+	if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 
 	//-- check for admin
-	$paramok =  PGV_USER_CAN_EDIT;
+	$paramok =  WT_USER_CAN_EDIT;
 	if (!empty($linktoid)) $paramok = displayDetailsById($linktoid);
 
 	if ($action == "choose" && $paramok) {
@@ -121,8 +121,8 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists(PGV_ROOT.'modules/GEDF
 		if (!empty($mediaid)) {
 			//-- Get the title of this existing Media item
 			$title=
-				PGV_DB::prepare("SELECT m_titl FROM {$TBLPREFIX}media where m_media=? AND m_gedfile=?")
-				->execute(array($mediaid, PGV_GED_ID))
+				WT_DB::prepare("SELECT m_titl FROM {$TBLPREFIX}media where m_media=? AND m_gedfile=?")
+				->execute(array($mediaid, WT_GED_ID))
 				->fetchOne();
 			if ($title) {
 				echo '<b>', PrintReady($title), '</b>&nbsp;&nbsp;&nbsp;';

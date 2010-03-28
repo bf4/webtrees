@@ -34,13 +34,13 @@
  * $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require PGV_ROOT.'modules/googlemap/googlemap.php';
-require PGV_ROOT.'includes/controllers/pedigree_ctrl.php';
+require WT_ROOT.'modules/googlemap/googlemap.php';
+require WT_ROOT.'includes/controllers/pedigree_ctrl.php';
 
 // Default is show for both of these.
 $hideflags = safe_GET('hideflags');
@@ -81,7 +81,7 @@ print_header($controller->getPageTitle());
 if (!$GOOGLEMAP_ENABLED) {
 	echo "<table class=\"facts_table\">\n";
 	echo "<tr><td class=\"facts_value\">", i18n::translate('GoogleMap module disabled'), "</td></tr>\n";
-	if (PGV_USER_IS_ADMIN) {
+	if (WT_USER_IS_ADMIN) {
 		echo "<tr><td align=\"center\">\n";
 		echo "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">", i18n::translate('Manage GoogleMap configuration'), "</a>";
 		echo "</td></tr>\n";
@@ -130,7 +130,7 @@ if (!$GOOGLEMAP_ENABLED) {
 	}
 	</style>
 	<?php
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 echo '<div><table><tr><td valign="middle">';
 echo "<h2>" . i18n::translate('Pedigree Map') . " " . i18n::translate('for') . " ";
 echo PrintReady($controller->getPersonName())."</h2>";
@@ -298,7 +298,7 @@ if (($cloudy_locked) && ($theme_name == "Cloudy")) {
 	echo " width: ".$GOOGLEMAP_XSIZE."px;";
 }
 echo " background-image: url('images/loading.gif'); background-position: center; background-repeat: no-repeat; overflow: hidden;\"></div>\n";
-if (PGV_USER_IS_ADMIN) {
+if (WT_USER_IS_ADMIN) {
 	echo "<table width=\"100%\">";
 	echo "<tr><td align=\"left\">\n";
 	echo "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">", i18n::translate('Manage GoogleMap configuration'), "</a>";
@@ -645,7 +645,7 @@ for ($i=0; $i<($controller->treesize); $i++) {
 		// add thumbnail image
 		$image = "";
 		if ($MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $pid)) {
-			$object = find_highlighted_object($pid, PGV_GED_ID, $indirec);
+			$object = find_highlighted_object($pid, WT_GED_ID, $indirec);
 			if (!empty($object["thumb"])) {
 				$size = findImageSize($object["thumb"]);
 				$class = "pedigree_image_portrait";
@@ -657,9 +657,9 @@ for ($i=0; $i<($controller->treesize); $i++) {
 				if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
 				$sex = $person->getSex();
 				$image = "<img src=\'./";
-				if ($sex == 'F') { $image .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_F"]["other"]; }
-				elseif ($sex == 'M') { $image .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_M"]["other"]; }
-				else { $image .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_U"]["other"]; }
+				if ($sex == 'F') { $image .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_F"]["other"]; }
+				elseif ($sex == 'M') { $image .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_M"]["other"]; }
+				else { $image .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_U"]["other"]; }
 				$image .="\' align=\'left\' class=\'".$class."\' border=\'none\' alt=\'\' />";
 			}
 		}

@@ -27,14 +27,14 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_FAMILY_PHP', '');
+define('WT_CLASS_FAMILY_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
+require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
 
 class Family extends GedcomRecord {
 	private $husb = null;
@@ -63,7 +63,7 @@ class Family extends GedcomRecord {
 			$this->numChildren=$data['f_numchil'];
 			// Check for divorce, etc. *before* we privatize the data so
 			// we can correctly label spouses/ex-spouses/partners
-			$this->_isDivorced=(bool)preg_match('/\n1 ('.PGV_EVENTS_DIV.')( Y|\n)/', $data['gedrec']);
+			$this->_isDivorced=(bool)preg_match('/\n1 ('.WT_EVENTS_DIV.')( Y|\n)/', $data['gedrec']);
 			$this->_isNotMarried=(bool)preg_match('/\n1 _NMR( Y|\n)/', $data['gedrec']);
 		} else {
 			// Construct from raw GEDCOM data
@@ -83,7 +83,7 @@ class Family extends GedcomRecord {
 			}
 			// Check for divorce, etc. *before* we privatize the data so
 			// we can correctly label spouses/ex-spouses/partners
-			$this->_isDivorced=(bool)preg_match('/\n1 ('.PGV_EVENTS_DIV.')( Y|\n)/', $data);
+			$this->_isDivorced=(bool)preg_match('/\n1 ('.WT_EVENTS_DIV.')( Y|\n)/', $data);
 			$this->_isNotMarried=(bool)preg_match('/\n1 _NMR( Y|\n)/', $data);
 		}
 
@@ -221,7 +221,7 @@ class Family extends GedcomRecord {
 		if ($this->getChanged()) {
 			return $this;
 		}
-		if (PGV_USER_CAN_EDIT && $this->canDisplayDetails()) {
+		if (WT_USER_CAN_EDIT && $this->canDisplayDetails()) {
 			if (isset($pgv_changes[$this->xref.'_'.$GEDCOM])) {
 				$newrec = find_updated_record($this->xref, $this->ged_id);
 				if (!empty($newrec)) {
@@ -355,7 +355,7 @@ class Family extends GedcomRecord {
 	// Get all the dates/places for marriages - for the FAM lists
 	function getAllMarriageDates() {
 		if ($this->canDisplayDetails()) {
-			foreach (explode('|', PGV_EVENTS_MARR) as $event) {
+			foreach (explode('|', WT_EVENTS_MARR) as $event) {
 				if ($array=$this->getAllEventDates($event)) {
 					return $array;
 				}
@@ -365,7 +365,7 @@ class Family extends GedcomRecord {
 	}
 	function getAllMarriagePlaces() {
 		if ($this->canDisplayDetails()) {
-			foreach (explode('|', PGV_EVENTS_MARR) as $event) {
+			foreach (explode('|', WT_EVENTS_MARR) as $event) {
 				if ($array=$this->getAllEventPlaces($event)) {
 					return $array;
 				}
@@ -427,8 +427,8 @@ class Family extends GedcomRecord {
 	// selection items or favorites.
 	function format_list_details() {
 		return
-		  $this->format_first_major_fact(PGV_EVENTS_MARR, 1).
-		  $this->format_first_major_fact(PGV_EVENTS_DIV, 1);
+		  $this->format_first_major_fact(WT_EVENTS_MARR, 1).
+		  $this->format_first_major_fact(WT_EVENTS_DIV, 1);
 	}
 
 }

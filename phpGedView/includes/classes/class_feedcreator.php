@@ -48,12 +48,12 @@ Please refer to to /example directory
 *          A little setup                                                 *
 **************************************************************************/
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_FEEDCREATOR_PHP', '');
+define('WT_CLASS_FEEDCREATOR_PHP', '');
 
 // your local timezone, set to "" to disable or for GMT
 define("TIME_ZONE","");

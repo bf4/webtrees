@@ -27,12 +27,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FUNCTIONS_PLACE_PHP', '');
+define('WT_FUNCTIONS_PLACE_PHP', '');
 
 function get_plac_label() {
 	global $GEDCOM;
@@ -51,11 +51,11 @@ function get_plac_label() {
 }
 
 function setup_place_subfields($element_id) {
-	global $PGV_PLACES_SETUP;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $lang_short_cut, $LANGUAGE;
+	global $WT_PLACES_SETUP;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $lang_short_cut, $LANGUAGE;
 
-	if (!empty($PGV_PLACES_SETUP)) return;
-	$PGV_PLACES_SETUP = true;
+	if (!empty($WT_PLACES_SETUP)) return;
+	$WT_PLACES_SETUP = true;
 
 	$plac_label = get_plac_label();
 
@@ -282,14 +282,14 @@ function setup_place_subfields($element_id) {
  * @param string $element_id	id of PLAC input element in the form
  */
 function print_place_subfields($element_id) {
-	global $iso3166, $PGV_IMAGE_DIR, $PGV_IMAGES, $lang_short_cut, $LANGUAGE;
+	global $iso3166, $WT_IMAGE_DIR, $WT_IMAGES, $lang_short_cut, $LANGUAGE;
 
 	//if ($element_id=="DEAT_PLAC") return; // known bug - waiting for a patch
 	$plac_label = get_plac_label();
 	print "<div id='mapdata'></div>";
 
 	$cols=40;
-	print "&nbsp;<a href=\"javascript:;\" onclick=\"expand_layer('".$element_id."_div'); toggleplace('".$element_id."'); return false;\"><img id=\"".$element_id."_div_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" />&nbsp;</a>";
+	print "&nbsp;<a href=\"javascript:;\" onclick=\"expand_layer('".$element_id."_div'); toggleplace('".$element_id."'); return false;\"><img id=\"".$element_id."_div_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" />&nbsp;</a>";
 	print "<br /><div id=\"".$element_id."_div\" style=\"display: none; border-width:thin; border-style:none; padding:0px\">\n";
 	// subtags creation : _0 _1 _2 etc...
 	$icountry=-1;

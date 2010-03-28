@@ -29,9 +29,9 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'mediafirewall.php');
+define('WT_SCRIPT_NAME', 'mediafirewall.php');
 require './config.php';
-require_once PGV_ROOT.'includes/controllers/media_ctrl.php';
+require_once WT_ROOT.'includes/controllers/media_ctrl.php';
 
 // We have finished writing to $_SESSION, so release the lock
 session_write_close();
@@ -57,7 +57,7 @@ $debug_verboseLogging = 0;		// set to 1 for extra logging details
 function sendErrorAndExit($type, $line1, $line2 = false) {
 
 	// line2 contains the information that only an admin/editor should see, such as the full path to a file
-	if(!PGV_USER_CAN_EDIT) {
+	if(!WT_USER_CAN_EDIT) {
 		$line2 = false;
 	}
 
@@ -133,7 +133,7 @@ function sendErrorAndExit($type, $line1, $line2 = false) {
 function getWatermarkPath ($path) {
 	global $MEDIA_DIRECTORY;
 	$serverroot = get_media_firewall_path($MEDIA_DIRECTORY);
-	$path = str_replace($serverroot, $serverroot . 'watermark/'.PGV_GEDCOM.'/', $path);
+	$path = str_replace($serverroot, $serverroot . 'watermark/'.WT_GEDCOM.'/', $path);
 	return $path;
 }
 
@@ -146,7 +146,7 @@ function applyWatermark($im) {
 	// in the future these options will be set in the gedcom configuration area
 
 	// text to watermark with
-	$word1_text   = get_gedcom_setting(PGV_GED_ID, 'title');
+	$word1_text   = get_gedcom_setting(WT_GED_ID, 'title');
 	// maximum font size for "word1" ; will be automaticaly reduced to fit in the image
 	$word1_maxsize = 100;
 	// rgb color codes for text
@@ -180,9 +180,9 @@ function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
 	// (fall back) if that is not available, you can insert basic monospaced text
 	if ($useTTF) {
 		// imagettftext is available, make sure the requested font exists
-		if (!isset($font)||($font=='')||!file_exists(PGV_ROOT.'includes/fonts/'.$font)) {
+		if (!isset($font)||($font=='')||!file_exists(WT_ROOT.'includes/fonts/'.$font)) {
 			$font = 'DejaVuSans.ttf'; // this font ships with PGV
-			if (!file_exists(PGV_ROOT.'includes/fonts/'.$font)) {
+			if (!file_exists(WT_ROOT.'includes/fonts/'.$font)) {
 				$useTTF = false;
 			}
 		}
@@ -340,7 +340,7 @@ if (!file_exists($serverFilename)) {
 
 if (empty($controller->pid)) {
 	// the requested file IS NOT in the gedcom, but it exists (the check for fileExists was above)
-	if (!PGV_USER_IS_ADMIN) {
+	if (!WT_USER_IS_ADMIN) {
 		// only show these files to admin users
 		// bail since current user is not admin
 		// Note: the 404 error status is still in effect.
@@ -368,7 +368,7 @@ if ($type && function_exists("applyWatermark")) {
 	// if this is not a thumbnail, or WATERMARK_THUMB is true
 	if (!$isThumb || $WATERMARK_THUMB ) {
 		// if the user's priv's justify it...
-		if (PGV_USER_ACCESS_LEVEL > $SHOW_NO_WATERMARK ) {
+		if (WT_USER_ACCESS_LEVEL > $SHOW_NO_WATERMARK ) {
 			// add a watermark
 			$usewatermark = true;
 		}
@@ -405,7 +405,7 @@ if ($usewatermark) {
 $mimetype = $controller->mediaobject->getMimetype();
 
 // setup the etag.  use enough info so that if anything important changes, the etag won't match
-$etag_string = basename($serverFilename).$filetime.PGV_USER_ACCESS_LEVEL.$SHOW_NO_WATERMARK;
+$etag_string = basename($serverFilename).$filetime.WT_USER_ACCESS_LEVEL.$SHOW_NO_WATERMARK;
 $etag = dechex(crc32($etag_string));
 
 // parse IF_MODIFIED_SINCE header from client
@@ -426,7 +426,7 @@ if ($debug_mediafirewall) {
 	header('ETag: "'.$etag.'"');
 
 	echo  '<table border="1">';
-	echo  '<tr><td>GEDCOM</td><td>', PGV_GEDCOM, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>GEDCOM</td><td>', WT_GEDCOM, '</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>MEDIA_DIRECTORY_LEVELS</td><td>', $MEDIA_DIRECTORY_LEVELS, '</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>$controller->pid</td><td>', $controller->pid, '</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>Requested URL</td><td>', urldecode($_SERVER['REQUEST_URI']), '</td><td>&nbsp;</td></tr>';
@@ -451,7 +451,7 @@ if ($debug_mediafirewall) {
 	echo  '<tr><td>expireHeader</td><td>', $expireHeader, '</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>protocol</td><td>', $protocol, '</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>SHOW_NO_WATERMARK</td><td>', $SHOW_NO_WATERMARK, '</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>PGV_USER_ACCESS_LEVEL</td><td>', PGV_USER_ACCESS_LEVEL, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>WT_USER_ACCESS_LEVEL</td><td>', WT_USER_ACCESS_LEVEL, '</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>usewatermark</td><td>', $usewatermark, '</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>generatewatermark</td><td>', $generatewatermark, '</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>watermarkfile</td><td>', $watermarkfile, '</td><td>&nbsp;</td></tr>';
@@ -464,7 +464,7 @@ if ($debug_mediafirewall) {
 	echo '<pre>';
 	print_r (@getimagesize($serverFilename));
 	print_r ($controller->mediaobject);
-	print_r (PGV_GEDCOM);
+	print_r (WT_GEDCOM);
 	echo '</pre>';
 
 	phpinfo();

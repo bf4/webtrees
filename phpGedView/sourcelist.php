@@ -27,13 +27,13 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'sourcelist.php');
+define('WT_SCRIPT_NAME', 'sourcelist.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+require_once WT_ROOT.'includes/functions/functions_print_lists.php';
 
 print_header(i18n::translate('Sources'));
 echo '<div class="center"><h2>', i18n::translate('Sources'), '</h2>';
-print_sour_table(get_source_list(PGV_GED_ID));
+print_sour_table(get_source_list(WT_GED_ID));
 echo '</div>';
 print_footer();
 ?>

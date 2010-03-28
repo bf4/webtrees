@@ -29,16 +29,16 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_REMOTELINK_CTRL_PHP', '');
+define('WT_REMOTELINK_CTRL_PHP', '');
 
-require_once PGV_ROOT.'includes/controllers/basecontrol.php';
-require_once PGV_ROOT.'includes/functions/functions_edit.php';
-require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
+require_once WT_ROOT.'includes/controllers/basecontrol.php';
+require_once WT_ROOT.'includes/functions/functions_edit.php';
+require_once WT_ROOT.'includes/classes/class_serviceclient.php';
 
 class RemoteLinkController extends BaseController {
 	var $has_familysearch=null;
@@ -68,35 +68,35 @@ class RemoteLinkController extends BaseController {
 	// Initialize the controller for the add remote link
 	function init() {
 		// Coming soon ???
-		$this->has_familysearch=file_exists(PGV_ROOT.'modules/FamilySearch/familySearchWrapper.php');
+		$this->has_familysearch=file_exists(WT_ROOT.'modules/FamilySearch/familySearchWrapper.php');
 		if ($this->has_familysearch) {;
-			require_once PGV_ROOT.'modules/FamilySearch/familySearchWrapper.php';
+			require_once WT_ROOT.'modules/FamilySearch/familySearchWrapper.php';
 		}
 
 		// The PID can come from a URL or a form
-		$this->pid=safe_REQUEST($_REQUEST, 'pid', PGV_REGEX_XREF);
+		$this->pid=safe_REQUEST($_REQUEST, 'pid', WT_REGEX_XREF);
 
 		$this->person=Person::getInstance($this->pid);
 		$this->server_list=get_server_list();
 		$this->gedcom_list=get_all_gedcoms();
 
 		// Other input values come from the form
-		$this->form_txtPID           =safe_POST('txtPID', PGV_REGEX_XREF);
+		$this->form_txtPID           =safe_POST('txtPID', WT_REGEX_XREF);
 		$this->form_cbRelationship   =safe_POST('cbRelationship');
 		$this->form_location         =safe_POST('location');
-		$this->form_txtURL           =safe_POST('txtURL', PGV_REGEX_URL);
+		$this->form_txtURL           =safe_POST('txtURL', WT_REGEX_URL);
 		$this->form_txtTitle         =safe_POST('txtTitle', '[^<>"%{};]+');
 		$this->form_txtGID           =safe_POST('txtGID', $this->gedcom_list);
-		$this->form_txtUsername      =safe_POST('txtUsername', PGV_REGEX_USERNAME);
-		$this->form_txtPassword      =safe_POST('txtPassword', PGV_REGEX_PASSWORD);
+		$this->form_txtUsername      =safe_POST('txtUsername', WT_REGEX_USERNAME);
+		$this->form_txtPassword      =safe_POST('txtPassword', WT_REGEX_PASSWORD);
 		$this->form_cbExistingServers=safe_POST('cbExistingServers', array_keys($this->server_list));
 		$this->form_txtCB_Title      =safe_POST('txtCB_Title', '[^<>"%{};]+');
 		$this->form_txtCB_GID        =safe_POST('txtCB_GID', $this->gedcom_list);			
-		$this->form_txtFS_URL        =safe_POST('txtFS_URL', PGV_REGEX_URL);
+		$this->form_txtFS_URL        =safe_POST('txtFS_URL', WT_REGEX_URL);
 		$this->form_txtFS_Title      =safe_POST('txtFS_Title', '[^<>"%{};]+');
 		$this->form_txtFS_GID        =safe_POST('txtFS_GID', $this->gedcom_list);
-		$this->form_txtFS_Username   =safe_POST('txtFS_Username', PGV_REGEX_USERNAME);
-		$this->form_txtFS_Password   =safe_POST('txtFS_Password', PGV_REGEX_PASSWORD);
+		$this->form_txtFS_Username   =safe_POST('txtFS_Username', WT_REGEX_USERNAME);
+		$this->form_txtFS_Password   =safe_POST('txtFS_Password', WT_REGEX_PASSWORD);
 
 		if (is_null($this->form_location)) {
 			if ($this->server_list) {
@@ -241,7 +241,7 @@ class RemoteLinkController extends BaseController {
 				$indirec = $change["undo"];
 				$surl = get_gedcom_value("URL", 1, $indirec);
 				if (!empty($surl) && stristr($surl, $turl)) {
-					if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ *('.PGV_REGEX_TAG.')/', $indirec, $match)) {
+					if (preg_match('/^0 @('.WT_REGEX_XREF.')@ *('.WT_REGEX_TAG.')/', $indirec, $match)) {
 						$id = $match[1];
 						$type=$match[2];
 						if ($type=="SOUR") {
@@ -293,16 +293,16 @@ class RemoteLinkController extends BaseController {
 		$relation_type=$this->form_cbRelationship;
 		if ($serverID && $link_pid) {
 			if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
-				$indirec=find_updated_record($this->pid, PGV_GED_ID);
+				$indirec=find_updated_record($this->pid, WT_GED_ID);
 			} else {
-				$indirec=find_person_record($this->pid, PGV_GED_ID);
+				$indirec=find_person_record($this->pid, WT_GED_ID);
 			}
 	
 			switch ($relation_type) {
 			case "father":
 				$indistub="0 @new@ INDI\n1 SOUR @{$serverID}@\n2 PAGE {$link_pid}\n1 RFN {$serverID}:{$link_pid}";
 				$stub_id=append_gedrec($indistub, false);
-				$indistub=find_updated_record($stub_id, PGV_GED_ID);
+				$indistub=find_updated_record($stub_id, WT_GED_ID);
 	
 				$gedcom_fam="0 @new@ FAM\n1 HUSB @{$stub_id}@\n1 CHIL @{$this->pid}@";
 				$fam_id=append_gedrec($gedcom_fam);
@@ -318,7 +318,7 @@ class RemoteLinkController extends BaseController {
 			case "mother":
 				$indistub="0 @new@ INDI\n1 SOUR @{$serverID}@\n2 PAGE {$link_pid}\n1 RFN {$serverID}:{$link_pid}";
 				$stub_id=append_gedrec($indistub, false);
-				$indistub=find_updated_record($stub_id, PGV_GED_ID);
+				$indistub=find_updated_record($stub_id, WT_GED_ID);
 	
 				$gedcom_fam="0 @new@ FAM\n1 WIFE @{$stub_id}@\n1 CHIL @{$this->pid}@";
 				$fam_id=append_gedrec($gedcom_fam);
@@ -334,7 +334,7 @@ class RemoteLinkController extends BaseController {
 			case "husband":
 				$indistub="0 @new@ INDI\n1 SOUR @{$serverID}@\n2 PAGE {$link_pid}\n1 RFN {$serverID}:{$link_pid}";
 				$stub_id=append_gedrec($indistub, false);
-				$indistub=find_updated_record($stub_id, PGV_GED_ID);
+				$indistub=find_updated_record($stub_id, WT_GED_ID);
 	
 				$gedcom_fam="0 @new@ FAM\n1 MARR Y\n1 WIFE @{$this->pid}@\n1 HUSB @{$stub_id}@\n";
 				$fam_id=append_gedrec($gedcom_fam);
@@ -350,7 +350,7 @@ class RemoteLinkController extends BaseController {
 			case "wife":
 				$indistub="0 @new@ INDI\n1 SOUR @{$serverID}@\n2 PAGE {$link_pid}\n1 RFN {$serverID}:{$link_pid}";
 				$stub_id=append_gedrec($indistub, false);
-				$indistub=find_updated_record($stub_id, PGV_GED_ID);
+				$indistub=find_updated_record($stub_id, WT_GED_ID);
 
 				$gedcom_fam="0 @new@ FAM\n1 MARR Y\n1 WIFE @{$stub_id}@\n1 HUSB @{$this->pid}@";
 				$fam_id=append_gedrec($gedcom_fam);
@@ -367,7 +367,7 @@ class RemoteLinkController extends BaseController {
 			case "daughter":
 				$indistub="0 @new@ INDI\n1 SOUR @{$serverID}@\n2 PAGE {$link_pid}\n1 RFN {$serverID}:{$link_pid}";
 				$stub_id=append_gedrec($indistub, false);
-				$indistub=find_updated_record($stub_id, PGV_GED_ID);
+				$indistub=find_updated_record($stub_id, WT_GED_ID);
 	
 				if (get_gedcom_value('SEX', 1, $indirec, '', false)=='F') {
 					$gedcom_fam="0 @new@ FAM\n1 WIFE @{$this->pid}@\n1 CHIL @{$stub_id}@";
@@ -414,7 +414,7 @@ class RemoteLinkController extends BaseController {
 	function canAccess() {
 		global $ALLOW_EDIT_GEDCOM;
 
-		return $ALLOW_EDIT_GEDCOM  && PGV_USER_GEDCOM_ADMIN && $this->person->canDisplayDetails();
+		return $ALLOW_EDIT_GEDCOM  && WT_USER_GEDCOM_ADMIN && $this->person->canDisplayDetails();
 	}
 }
 

@@ -28,9 +28,9 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'downloadgedcom.php');
+define('WT_SCRIPT_NAME', 'downloadgedcom.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_export.php';
+require_once WT_ROOT.'includes/functions/functions_export.php';
 
 // Validate user parameters
 if (!isset($_SESSION['exportConvPath'])) $_SESSION['exportConvPath'] = $MEDIA_DIRECTORY;
@@ -41,7 +41,7 @@ $action				= safe_GET('action',			'download');
 $remove				= safe_GET('remove',			'yes', 'no');
 $convert			= safe_GET('convert',			'yes', 'no');
 $zip				= safe_GET('zip',				'yes', 'no');
-$conv_path			= safe_GET('conv_path',			PGV_REGEX_NOSCRIPT,				$_SESSION['exportConvPath']);
+$conv_path			= safe_GET('conv_path',			WT_REGEX_NOSCRIPT,				$_SESSION['exportConvPath']);
 $conv_slashes		= safe_GET('conv_slashes',		array('forward', 'backward'),	$_SESSION['exportConvSlashes']);
 $privatize_export	= safe_GET('privatize_export',	array('none', 'visitor', 'user', 'gedadmin', 'admin'));
 $filetype			= safe_GET('filetype',			array('gedcom', 'gramps'));
@@ -50,7 +50,7 @@ $conv_path = stripLRMRLM($conv_path);
 $_SESSION['exportConvPath'] = $conv_path;		// remember this for the next Download
 $_SESSION['exportConvSlashes'] = $conv_slashes;
 
-if (!PGV_USER_GEDCOM_ADMIN || !$ged) {
+if (!WT_USER_GEDCOM_ADMIN || !$ged) {
 	header("Location: editgedcoms.php");
 	exit;
 }
@@ -68,7 +68,7 @@ if ($action == 'download') {
 }
 
 if ($action == "download" && $zip == "yes") {
-	require PGV_ROOT.'library/pclzip.lib.php';
+	require WT_ROOT.'library/pclzip.lib.php';
 
 	$temppath = $INDEX_DIRECTORY . "tmp/";
 	$fileName = $ged;
@@ -96,7 +96,7 @@ if ($action == "download" && $zip == "yes") {
 		break;
 	}
 	fclose($gedout);
-	$comment = "Created by ".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT." on " . date("r") . ".";
+	$comment = "Created by ".WT_WEBTREES." ".WT_VERSION_TEXT." on " . date("r") . ".";
 	$archive = new PclZip(filename_decode($zipfile));
 	$v_list = $archive->create(filename_decode($gedname), PCLZIP_OPT_COMMENT, $comment, PCLZIP_OPT_REMOVE_PATH, filename_decode($temppath));
 	if ($v_list == 0) print "Error : " . $archive->errorInfo(true);
@@ -149,7 +149,7 @@ print_header(i18n::translate('Download GEDCOM'));
 		<td class="list_value"><input type="checkbox" name="zip" value="yes" checked="checked" /></td></tr>
 	<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Apply privacy settings?'), help_link('apply_privacy'); ?></td>
 		<td class="list_value">
-		<?php if (PGV_USER_IS_ADMIN) { ?>
+		<?php if (WT_USER_IS_ADMIN) { ?>
 			<input type="radio" name="privatize_export" value="none" checked="checked" />&nbsp;&nbsp;<?php print i18n::translate('None'); ?><br />
 			<input type="radio" name="privatize_export" value="visitor" />&nbsp;&nbsp;<?php print i18n::translate('Visitor'); ?><br />
 		<?php } else { ?>
@@ -158,7 +158,7 @@ print_header(i18n::translate('Download GEDCOM'));
 		<?php } ?>
 		<input type="radio" name="privatize_export" value="user" />&nbsp;&nbsp;<?php print i18n::translate('Authenticated user'); ?><br />
 		<input type="radio" name="privatize_export" value="gedadmin" />&nbsp;&nbsp;<?php print i18n::translate('GEDCOM administrator'); ?><br />
-		<input type="radio" name="privatize_export" value="admin"<?php if (!PGV_USER_IS_ADMIN) print " DISABLED"; ?> />&nbsp;&nbsp;<?php print i18n::translate('Site administrator'); ?>
+		<input type="radio" name="privatize_export" value="admin"<?php if (!WT_USER_IS_ADMIN) print " DISABLED"; ?> />&nbsp;&nbsp;<?php print i18n::translate('Site administrator'); ?>
 		</td></tr>
 	<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Convert from UTF-8 to ANSI (ISO-8859-1)'), help_link('utf8_ansi'); ?></td>
 		<td class="list_value"><input type="checkbox" name="convert" value="yes" /></td></tr>

@@ -29,13 +29,13 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'edituser.php');
+define('WT_SCRIPT_NAME', 'edituser.php');
 require './config.php';
-require PGV_ROOT.'includes/functions/functions_print_lists.php';
-require PGV_ROOT.'includes/functions/functions_edit.php';
+require WT_ROOT.'includes/functions/functions_print_lists.php';
+require WT_ROOT.'includes/functions/functions_edit.php';
 
 // prevent users with editing account disabled from being able to edit their account
-if (get_user_setting(PGV_USER_ID, 'editaccount')!='Y') {
+if (get_user_setting(WT_USER_ID, 'editaccount')!='Y') {
 	header('Location: index.php?ctype=user');
 	exit;
 }
@@ -50,13 +50,13 @@ foreach (get_theme_names() as $themename=>$themedir) {
 
 // Extract form variables
 $form_action        =safe_POST('form_action'   );
-$form_username      =safe_POST('form_username',       PGV_REGEX_USERNAME);
+$form_username      =safe_POST('form_username',       WT_REGEX_USERNAME);
 $form_firstname     =safe_POST('form_firstname');
 $form_lastname      =safe_POST('form_lastname' );
-$form_pass1         =safe_POST('form_pass1',          PGV_REGEX_PASSWORD);
-$form_pass2         =safe_POST('form_pass2',          PGV_REGEX_PASSWORD);
-$form_email         =safe_POST('form_email',          PGV_REGEX_EMAIL,                         'email@example.com');
-$form_rootid        =safe_POST('form_rootid',         PGV_REGEX_XREF,                          PGV_USER_ROOT_ID   );
+$form_pass1         =safe_POST('form_pass1',          WT_REGEX_PASSWORD);
+$form_pass2         =safe_POST('form_pass2',          WT_REGEX_PASSWORD);
+$form_email         =safe_POST('form_email',          WT_REGEX_EMAIL,                         'email@example.com');
+$form_rootid        =safe_POST('form_rootid',         WT_REGEX_XREF,                          WT_USER_ROOT_ID   );
 $form_theme         =safe_POST('form_theme',          $ALL_THEME_DIRS,                         $THEME_DIR         );
 $form_language      =safe_POST('form_language',       array_keys(i18n::installed_languages()), $LANGUAGE          );
 $form_contact_method=safe_POST('form_contact_method');
@@ -65,7 +65,7 @@ $form_visible_online=safe_POST('form_visible_online', 'Y', 'N');
 
 // Respond to form action
 if ($form_action=='update') {
-	if ($form_username!=PGV_USER_NAME && get_user_id($form_username)) {
+	if ($form_username!=WT_USER_NAME && get_user_id($form_username)) {
 		print_header(i18n::translate('User administration'));
 		echo '<span class="error">', i18n::translate('Duplicate user name.  A user with that user name already exists.  Please choose another user name.'), '</span><br />';
 	} else {
@@ -86,26 +86,26 @@ if ($form_action=='update') {
 			// Change password
 			if (!empty($form_pass1)) {
 				AddToLog('User changed password');
-				set_user_password(PGV_USER_ID, crypt($form_pass1));
+				set_user_password(WT_USER_ID, crypt($form_pass1));
 			}
-			$old_firstname=get_user_setting(PGV_USER_ID, 'firstname');
-			$old_lastname =get_user_setting(PGV_USER_ID, 'lastname');
-			$old_email    =get_user_setting(PGV_USER_ID, 'email');
+			$old_firstname=get_user_setting(WT_USER_ID, 'firstname');
+			$old_lastname =get_user_setting(WT_USER_ID, 'lastname');
+			$old_email    =get_user_setting(WT_USER_ID, 'email');
 			// Change other settings
-			set_user_setting(PGV_USER_ID, 'firstname',     $form_firstname);
-			set_user_setting(PGV_USER_ID, 'lastname',      $form_lastname);
-			set_user_setting(PGV_USER_ID, 'email',         $form_email);
-			set_user_setting(PGV_USER_ID, 'theme',         $form_theme);
-			set_user_setting(PGV_USER_ID, 'language',      $form_language);
-			set_user_setting(PGV_USER_ID, 'contactmethod', $form_contact_method);
-			set_user_setting(PGV_USER_ID, 'visibleonline', $form_visible_online);
-			set_user_setting(PGV_USER_ID, 'defaulttab',    $form_default_tab);
-			set_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'rootid', $form_rootid);
+			set_user_setting(WT_USER_ID, 'firstname',     $form_firstname);
+			set_user_setting(WT_USER_ID, 'lastname',      $form_lastname);
+			set_user_setting(WT_USER_ID, 'email',         $form_email);
+			set_user_setting(WT_USER_ID, 'theme',         $form_theme);
+			set_user_setting(WT_USER_ID, 'language',      $form_language);
+			set_user_setting(WT_USER_ID, 'contactmethod', $form_contact_method);
+			set_user_setting(WT_USER_ID, 'visibleonline', $form_visible_online);
+			set_user_setting(WT_USER_ID, 'defaulttab',    $form_default_tab);
+			set_user_gedcom_setting(WT_USER_ID, WT_GED_ID, 'rootid', $form_rootid);
 
 			// Change username
-			if ($form_username!=PGV_USER_NAME) {
+			if ($form_username!=WT_USER_NAME) {
 				AddToLog('User renamed to ->'.$form_username.'<-');
-				rename_user(PGV_USER_ID, $form_username);
+				rename_user(WT_USER_ID, $form_username);
 				$_SESSION['pgv_user']=$form_username;
 			}
 			// Reload page to pick up changes such as theme and user_id
@@ -116,7 +116,7 @@ if ($form_action=='update') {
 } else {
 	print_header(i18n::translate('User administration'));
 
-	if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+	if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 }
 
 // Form validation
@@ -176,20 +176,20 @@ echo '<tr><td class="topbottombar" colspan="2"><input type="submit" tabindex="',
 
 echo '<tr><td class="descriptionbox width20 wrap">';
 echo i18n::translate('User name'), help_link('edituser_username'), '</td><td class="optionbox">';
-echo '<input type="text" name="form_username" tabindex="', ++$tab, '" value="', PGV_USER_NAME, '" />';
+echo '<input type="text" name="form_username" tabindex="', ++$tab, '" value="', WT_USER_NAME, '" />';
 echo '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
 echo i18n::translate('First Name'), help_link('edituser_firstname'), '</td><td class="optionbox">';
-echo '<input type="text" name="form_firstname" tabindex="', ++$tab, '" value="', get_user_setting(PGV_USER_ID, 'firstname'), '" />';
+echo '<input type="text" name="form_firstname" tabindex="', ++$tab, '" value="', get_user_setting(WT_USER_ID, 'firstname'), '" />';
 echo '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
 echo i18n::translate('Last Name'),  help_link('edituser_lastname'), '</td><td class="optionbox">';
-echo '<input type="text" name="form_lastname" tabindex="', ++$tab, '" value="', get_user_setting(PGV_USER_ID, 'lastname'), '" />';
+echo '<input type="text" name="form_lastname" tabindex="', ++$tab, '" value="', get_user_setting(WT_USER_ID, 'lastname'), '" />';
 echo '</td></tr>';
 
-$person=Person::getInstance(PGV_USER_GEDCOM_ID);
+$person=Person::getInstance(WT_USER_GEDCOM_ID);
 if ($person) {
 	echo '<tr><td class="descriptionbox wrap">';
 	echo i18n::translate('GEDCOM INDI record ID'), help_link('edituser_gedcomid'), '</td><td class="optionbox">';
@@ -197,10 +197,10 @@ if ($person) {
 	echo '</td></tr>';
 }
 
-$person=Person::getInstance(PGV_USER_ROOT_ID);
+$person=Person::getInstance(WT_USER_ROOT_ID);
 echo '<tr><td class="descriptionbox wrap">';
 echo i18n::translate('Pedigree Chart Root Person'), help_link('edituser_rootid'), '</td><td class="optionbox">';
-echo '<input type="text" name="form_rootid" id="rootid" tabindex="', ++$tab, '" value="', PGV_USER_ROOT_ID, '" />';
+echo '<input type="text" name="form_rootid" id="rootid" tabindex="', ++$tab, '" value="', WT_USER_ROOT_ID, '" />';
 echo print_findindi_link('rootid', '', true), '<br/>';
 if ($person) {
 	echo $person->format_list('span');
@@ -218,12 +218,12 @@ echo '<input type="password" name="form_pass2" tabindex="', ++$tab, '" /></td></
 echo '<tr><td class="descriptionbox wrap">';
 echo i18n::translate('Change Language'), help_link('edituser_change_lang');
 echo '</td><td class="optionbox" valign="top">';
-echo edit_field_language('form_language', get_user_setting(PGV_USER_ID, 'language'), 'tabindex="'.(++$tab).'"');
+echo edit_field_language('form_language', get_user_setting(WT_USER_ID, 'language'), 'tabindex="'.(++$tab).'"');
 echo '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
 echo i18n::translate('Email Address'), help_link('edituser_email'), '</td><td class="optionbox" valign="top">';
-echo '<input type="text" name="form_email" tabindex="', ++$tab, '" value="', get_user_setting(PGV_USER_ID, 'email'), '" size="50" /></td></tr>';
+echo '<input type="text" name="form_email" tabindex="', ++$tab, '" value="', get_user_setting(WT_USER_ID, 'email'), '" size="50" /></td></tr>';
 
 if ($ALLOW_USER_THEMES) {
 	echo '<tr><td class="descriptionbox wrap">';
@@ -232,7 +232,7 @@ if ($ALLOW_USER_THEMES) {
 		echo '<option value="">', i18n::translate('Site Default'), '</option>';
 		foreach (get_theme_names() as $themename=>$themedir) {
 			echo '<option value="', $themedir, '"';
-			if ($themedir==get_user_setting(PGV_USER_ID, 'theme')) {
+			if ($themedir==get_user_setting(WT_USER_ID, 'theme')) {
 				echo ' selected="selected"';
 			}
 			echo '>', $themename, '</option>';
@@ -243,13 +243,13 @@ if ($ALLOW_USER_THEMES) {
 echo '<tr><td class="descriptionbox wrap">';
 echo i18n::translate('Preferred Contact Method'), help_link('edituser_user_contact');
 echo '</td><td class="optionbox">';
-echo edit_field_contact('form_contact_method', get_user_setting(PGV_USER_ID, 'contactmethod'), 'tabindex="'.(++$tab).'"');
+echo edit_field_contact('form_contact_method', get_user_setting(WT_USER_ID, 'contactmethod'), 'tabindex="'.(++$tab).'"');
 echo '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
 echo i18n::translate('Visible to other users when online'), help_link('useradmin_visibleonline'), '</td><td class="optionbox">';
 echo '<input type="checkbox" name="form_visible_online" tabindex="', ++$tab, '" value="Y"';
-if (get_user_setting(PGV_USER_ID, 'visibleonline')=='Y') {
+if (get_user_setting(WT_USER_ID, 'visibleonline')=='Y') {
 	echo ' checked="checked"';
 }
 echo ' /></td></tr>';
@@ -259,7 +259,7 @@ echo i18n::translate('Default Tab to show on Individual Information page'), help
 echo '<select name="form_default_tab" tabindex="', ++$tab, '">';
 foreach ($ALL_DEFAULT_TABS as $key=>$value) {
 	echo '<option value="', $key,'"';
-	if ($key==get_user_setting(PGV_USER_ID, 'defaulttab')) {
+	if ($key==get_user_setting(WT_USER_ID, 'defaulttab')) {
 		echo ' selected="selected"';
 	}
 	echo '>', $value, '</option>';

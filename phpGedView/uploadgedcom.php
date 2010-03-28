@@ -49,12 +49,12 @@
 // NOTE: $replace_gedcom = When uploading a GEDCOM, user will be asked to replace an existing one. If yes, overwrite
 // NOTE: $bakfile = Name and path of the backupfile, this file is created if a file with the same name exists
 
-define('PGV_SCRIPT_NAME', 'uploadgedcom.php');
+define('WT_SCRIPT_NAME', 'uploadgedcom.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_import.php';
-require_once PGV_ROOT.'includes/functions/functions_export.php';
+require_once WT_ROOT.'includes/functions/functions_import.php';
+require_once WT_ROOT.'includes/functions/functions_export.php';
 
-if (!PGV_USER_GEDCOM_ADMIN) {
+if (!WT_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=uploadgedcom.php");
 	exit;
 }
@@ -110,7 +110,7 @@ else if ($check == "add") {
 			"2 DATE 01 JAN 1850\n".
 			"2 PLAC Click edit and change me\n".
 			"0 TRLR\n";
-			$newgedcom = preg_replace('/[\r\n]+/', PGV_EOL, $newgedcom);
+			$newgedcom = preg_replace('/[\r\n]+/', WT_EOL, $newgedcom);
 			fwrite($fp, $newgedcom);
 			fclose($fp);
 			$logline = AddToLog($GEDFILENAME." updated");
@@ -141,7 +141,7 @@ else if ($check == "add") {
 			"2 DATE 01 JAN 1850\n".
 			"2 PLAC Click edit and change me\n".
 			"0 TRLR\n";
-			$newgedcom = preg_replace('/[\r\n]+/', PGV_EOL, $newgedcom);
+			$newgedcom = preg_replace('/[\r\n]+/', WT_EOL, $newgedcom);
 			fwrite($fp, $newgedcom);
 			fclose($fp);
 			if ($path != "")
@@ -172,7 +172,7 @@ if ($check == "cancel_upload") {
 }
 
 if ($cleanup_needed == "cleanup_needed" && $continue == i18n::translate('Continue')) {
-	require_once PGV_ROOT.'includes/functions/functions_tools.php';
+	require_once WT_ROOT.'includes/functions/functions_tools.php';
 
 	$filechanged = false;
 	if (file_is_writeable(get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path')) && (file_exists(get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path')))) {
@@ -279,11 +279,11 @@ if ($action == "add_form") {
 	} else {
 		echo i18n::translate('Add GEDCOM');
 	}
-	echo "\" onclick=\"expand_layer('add-form');return false\"><img id=\"add-form_img\" src=\"", $PGV_IMAGE_DIR, "/";
+	echo "\" onclick=\"expand_layer('add-form');return false\"><img id=\"add-form_img\" src=\"", $WT_IMAGE_DIR, "/";
 	if ($startimport != "true") {
-		echo $PGV_IMAGES["minus"]["other"];
+		echo $WT_IMAGES["minus"]["other"];
 	} else {
-		echo $PGV_IMAGES["plus"]["other"];
+		echo $WT_IMAGES["plus"]["other"];
 	}
 	echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 	echo help_link('add_gedcom');
@@ -338,11 +338,11 @@ if ($action == "add_form") {
 // NOTE: Upload GEDCOM form
 elseif ($action == "upload_form") {
 	echo "<tr><td class=\"topbottombar ", $TEXT_DIRECTION, "\" colspan=\"2\">";
-	echo "<a href=\"javascript: ", i18n::translate('Upload GEDCOM'), "\" onclick=\"expand_layer('upload_gedcom'); return false;\"><img id=\"upload_gedcom_img\" src=\"", $PGV_IMAGE_DIR, "/";
+	echo "<a href=\"javascript: ", i18n::translate('Upload GEDCOM'), "\" onclick=\"expand_layer('upload_gedcom'); return false;\"><img id=\"upload_gedcom_img\" src=\"", $WT_IMAGE_DIR, "/";
 	if ($startimport != "true") {
-		echo $PGV_IMAGES["minus"]["other"];
+		echo $WT_IMAGES["minus"]["other"];
 	} else {
-		echo $PGV_IMAGES["plus"]["other"];
+		echo $WT_IMAGES["plus"]["other"];
 	}
 	echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 	echo "&nbsp;<a href=\"javascript: ", i18n::translate('Upload GEDCOM'), "\" onclick=\"expand_layer('upload_gedcom');return false\">", i18n::translate('Upload GEDCOM'), "</a>";
@@ -397,11 +397,11 @@ echo "</td></tr>";
 // NOTE: Add new GEDCOM form
 elseif ($action == "add_new_form") {
 	echo "<tr><td class=\"topbottombar ", $TEXT_DIRECTION, "\" colspan=\"2\">";
-	echo "<a href=\"javascript: ", i18n::translate('Create a new GEDCOM'), "\" onclick=\"expand_layer('add_new_gedcom');return false\"><img id=\"add_new_gedcom_img\" src=\"", $PGV_IMAGE_DIR, "/";
+	echo "<a href=\"javascript: ", i18n::translate('Create a new GEDCOM'), "\" onclick=\"expand_layer('add_new_gedcom');return false\"><img id=\"add_new_gedcom_img\" src=\"", $WT_IMAGE_DIR, "/";
 	if ($startimport != "true") {
-		echo $PGV_IMAGES["minus"]["other"];
+		echo $WT_IMAGES["minus"]["other"];
 	} else {
-		echo $PGV_IMAGES["plus"]["other"];
+		echo $WT_IMAGES["plus"]["other"];
 	}
 	echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 	echo "&nbsp;<a href=\"javascript: ", i18n::translate('Create a new GEDCOM'), "\" onclick=\"expand_layer('add_new_gedcom');return false\">", i18n::translate('Create a new GEDCOM'), "</a>";
@@ -451,11 +451,11 @@ if ($verify == "verify_gedcom") {
 	if ($imported || (!empty($bakfile) && file_exists($bakfile))) {
 		// NOTE: If GEDCOM exists show warning
 		print "<tr><td class=\"topbottombar $TEXT_DIRECTION\" colspan=\"2\">";
-		print "<a href=\"javascript: ".i18n::translate('Verify GEDCOM')."\" onclick=\"expand_layer('verify_gedcom');return false\"><img id=\"verify_gedcom_img\" src=\"".$PGV_IMAGE_DIR."/";
+		print "<a href=\"javascript: ".i18n::translate('Verify GEDCOM')."\" onclick=\"expand_layer('verify_gedcom');return false\"><img id=\"verify_gedcom_img\" src=\"".$WT_IMAGE_DIR."/";
 		if ($startimport != "true")
-		print $PGV_IMAGES["minus"]["other"];
+		print $WT_IMAGES["minus"]["other"];
 		else
-		print $PGV_IMAGES["plus"]["other"];
+		print $WT_IMAGES["plus"]["other"];
 		print "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 		print "&nbsp;<a href=\"javascript: ".i18n::translate('Verify GEDCOM')."\" onclick=\"expand_layer('verify_gedcom');return false\">".i18n::translate('Verify GEDCOM')."</a>";
 		print help_link('verify_gedcom');
@@ -526,11 +526,11 @@ if ($verify == "verify_gedcom") {
 
 if ($verify == "validate_form") {
 	print "<tr><td class=\"topbottombar $TEXT_DIRECTION\" colspan=\"2\">";
-	print "<a href=\"javascript: ".i18n::translate('Validate GEDCOM')."\" onclick=\"expand_layer('validate_gedcom');return false\"><img id=\"validate_gedcom_img\" src=\"".$PGV_IMAGE_DIR."/";
+	print "<a href=\"javascript: ".i18n::translate('Validate GEDCOM')."\" onclick=\"expand_layer('validate_gedcom');return false\"><img id=\"validate_gedcom_img\" src=\"".$WT_IMAGE_DIR."/";
 	if ($startimport != "true")
-	print $PGV_IMAGES["minus"]["other"];
+	print $WT_IMAGES["minus"]["other"];
 	else
-	print $PGV_IMAGES["plus"]["other"];
+	print $WT_IMAGES["plus"]["other"];
 	print "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 	print "&nbsp;<a href=\"javascript: ".i18n::translate('Validate GEDCOM')."\" onclick=\"expand_layer('validate_gedcom');return false\">".i18n::translate('Validate GEDCOM')."</a>";
 	print help_link('validate_gedcom');
@@ -548,7 +548,7 @@ if ($verify == "validate_form") {
 	print "<span class=\"error\">$error</span>\n";
 
 	if ($import != true) {
-		require_once PGV_ROOT.'includes/functions/functions_tools.php';
+		require_once WT_ROOT.'includes/functions/functions_tools.php';
 
 		$l_BOMcleanup = false;
 		$l_headcleanup = false;
@@ -692,11 +692,11 @@ if ($verify == "validate_form") {
 if ($import == true) {
 	// NOTE: Additional import options
 	print "<tr><td class=\"topbottombar $TEXT_DIRECTION\" colspan=\"2\">";
-	print "<a href=\"javascript: ".i18n::translate('Import Options')."\" onclick=\"expand_layer('import_options');return false\"><img id=\"import_options_img\" src=\"".$PGV_IMAGE_DIR."/";
+	print "<a href=\"javascript: ".i18n::translate('Import Options')."\" onclick=\"expand_layer('import_options');return false\"><img id=\"import_options_img\" src=\"".$WT_IMAGE_DIR."/";
 	if ($startimport != "true")
-	print $PGV_IMAGES["minus"]["other"];
+	print $WT_IMAGES["minus"]["other"];
 	else
-	print $PGV_IMAGES["plus"]["other"];
+	print $WT_IMAGES["plus"]["other"];
 	print "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 	print "&nbsp;<a href=\"javascript: ".i18n::translate('Import Options')."\" onclick=\"expand_layer('import_options');return false\">".i18n::translate('Import Options')."</a>";
 	print help_link('import_options');
@@ -970,7 +970,7 @@ if ($stage == 1) {
 				// There is no safe way of handling these.  Just display them
 				// and let the user decide.
 				echo '<pre class="error">', $ex->getMessage(), '</pre>';
-				echo '<pre>', PGV_GEDCOM, ': ', $ged_id, '</pre>';
+				echo '<pre>', WT_GEDCOM, ': ', $ged_id, '</pre>';
 				echo '<pre>', htmlspecialchars($indirec), '</pre>';
 				// Don't let the error message disappear off the screen.
 				$autoContinue=false;
@@ -1000,7 +1000,7 @@ if ($stage == 1) {
 			if ($i % 25 == 0) {
 				$newtime = time();
 				$exectime = $newtime - $oldtime;
-				echo PGV_JS_START, "update_progress($pos2, $exectime);", PGV_JS_END;
+				echo WT_JS_START, "update_progress($pos2, $exectime);", WT_JS_END;
 				flush();
 			} else {
 				print ' ';
@@ -1101,9 +1101,9 @@ if ($stage == 1) {
 	$go_pedi = i18n::translate('Click here to go to the Pedigree tree.');
 	$go_welc = i18n::translate('Home Page');
 	if ($LANGUAGE == "french" || $LANGUAGE == "italian") {
-		echo PGV_JS_START, "complete_progress($importtime, \"$exec_text\", \"$go_pedi\", \"$go_welc\");", PGV_JS_END;
+		echo WT_JS_START, "complete_progress($importtime, \"$exec_text\", \"$go_pedi\", \"$go_welc\");", WT_JS_END;
 	} else {
-		echo PGV_JS_START, "complete_progress($importtime, '$exec_text', '$go_pedi', '$go_welc');", PGV_JS_END;
+		echo WT_JS_START, "complete_progress($importtime, '$exec_text', '$go_pedi', '$go_welc');", WT_JS_END;
 	}
 	flush();
 
@@ -1127,7 +1127,7 @@ if ($stage == 1) {
 		$show_table1 .= "<td class=\"optionbox\">".$type."</td></tr>";
 	}
 	$show_table1 .= "<tr><td class=\"optionbox indent\">".sprintf("%.2f %s", $total_seconds, i18n::translate('sec.'))."</td>";
-	$show_table1 .= "<td class=\"optionbox indent\">".$total_bytes.PGV_JS_START."update_progress($total_bytes, $exectime);".PGV_JS_END;
+	$show_table1 .= "<td class=\"optionbox indent\">".$total_bytes.WT_JS_START."update_progress($total_bytes, $exectime);".WT_JS_END;
 	$show_table1 .= "<td class=\"optionbox indent\">". $total_records."</td>";
 	$show_table1 .= "<td class=\"optionbox\">&nbsp;</td></tr>";
 	$show_table1 .= "</table>";
@@ -1143,7 +1143,7 @@ if ($stage == 1) {
 	// NOTE: Finished Links
 	import_max_ids($ged_id, $MAX_IDS);
 	set_gedcom_setting($ged_id, 'imported', true);
-	set_gedcom_setting($ged_id, 'pgv_ver', PGV_VERSION);
+	set_gedcom_setting($ged_id, 'pgv_ver', WT_VERSION);
 	print "</td></tr>";
 
 	$record_count = 0;

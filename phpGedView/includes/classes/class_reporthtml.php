@@ -29,14 +29,14 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_REPORTHTML_PHP', '');
+define('WT_CLASS_REPORTHTML_PHP', '');
 
-require_once PGV_ROOT."includes/classes/class_reportbase.php";
+require_once WT_ROOT."includes/classes/class_reportbase.php";
 
 /**
 * Main PGV Report Class for HTML
@@ -237,7 +237,7 @@ class PGVReportBaseHTML extends PGVReportBase {
 		}
 		//-- body
 		echo "
-</div>", PGV_JS_START, "document.getElementById('headerdiv').style.height='", $this->topmargin - $this->headermargin, "pt';", PGV_JS_END,
+</div>", WT_JS_START, "document.getElementById('headerdiv').style.height='", $this->topmargin - $this->headermargin, "pt';", WT_JS_END,
 "<div id=\"bodydiv\" style=\"position:relative; top:auto; width:", $this->noMarginWidth, "pt; height:100%;\">";
 		$this->Y = 0;
 		$this->maxY = 0;
@@ -253,7 +253,7 @@ class PGVReportBaseHTML extends PGVReportBase {
 		}
 		//-- footer
 		echo "
-</div>", PGV_JS_START, "document.getElementById('bodydiv').style.height='", $this->maxY, "pt';", PGV_JS_END,
+</div>", WT_JS_START, "document.getElementById('bodydiv').style.height='", $this->maxY, "pt';", WT_JS_END,
 "<div id=\"bottommargin\" style=\"position:relative; top:auto; height:", $this->bottommargin - $this->footermargin, "pt; width:", $this->noMarginWidth, "pt;\"></div>
 <div id=\"footerdiv\" style=\"position:relative; top:auto; width: ", $this->noMarginWidth, "pt; height:auto;\">";
 		$this->Y = 0;
@@ -269,7 +269,7 @@ class PGVReportBaseHTML extends PGVReportBase {
 			}
 		}
 		echo "
-</div>", PGV_JS_START, "document.getElementById('footerdiv').style.height='", $this->maxY, "pt';", PGV_JS_END,
+</div>", WT_JS_START, "document.getElementById('footerdiv').style.height='", $this->maxY, "pt';", WT_JS_END,
 "<div id=\"footermargin\" style=\"position:relative; top:auto; height:", $this->footermargin, "pt; width:", $this->noMarginWidth, "pt;\"></div>
 </body>\n</html>\n";
 	}
@@ -573,7 +573,7 @@ class PGVReportBaseHTML extends PGVReportBase {
 			}
 		}
 		$htmlcode .= ">$text</span>";
-		$htmlcode = str_replace(array("(", ")", "\n", "> ", " <", "+", ","), array(PGV_LPARENS, PGV_RPARENS, "<br />", ">&nbsp;", "&nbsp;<", $this->entityRTL."+", $this->entityRTL.","), $htmlcode);
+		$htmlcode = str_replace(array("(", ")", "\n", "> ", " <", "+", ","), array(WT_LPARENS, WT_RPARENS, "<br />", ">&nbsp;", "&nbsp;<", $this->entityRTL."+", $this->entityRTL.","), $htmlcode);
 		echo $htmlcode;
 	}
 

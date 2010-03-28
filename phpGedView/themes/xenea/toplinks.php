@@ -27,7 +27,7 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -118,9 +118,9 @@ $menubar = new MenuBar();
 </table>
 </td></tr></table>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-image:url('<?php print $PGV_IMAGE_DIR; ?>/sombra.gif'); height:4px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-image:url('<?php print $WT_IMAGE_DIR; ?>/sombra.gif'); height:4px;">
 	<tr>
-		<td><img src="<?php print $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td>
+		<td><img src="<?php print $WT_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td>
 	</tr>
 </table>
 <br />

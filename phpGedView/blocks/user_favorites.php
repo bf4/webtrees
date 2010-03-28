@@ -29,24 +29,24 @@
  * @subpackage Blocks
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_USER_FAVORITES_PHP', '');
+define('WT_USER_FAVORITES_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+require_once WT_ROOT.'includes/functions/functions_print_lists.php';
 
-$PGV_BLOCKS["print_user_favorites"]["name"]			= i18n::translate('User Favorites');
-$PGV_BLOCKS["print_user_favorites"]["descr"]		= i18n::translate('The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them.');
-$PGV_BLOCKS["print_user_favorites"]["type"]			= "user";
-$PGV_BLOCKS["print_user_favorites"]["canconfig"]	= false;
-$PGV_BLOCKS["print_user_favorites"]["config"]		= array("cache"=>0);
+$WT_BLOCKS["print_user_favorites"]["name"]			= i18n::translate('User Favorites');
+$WT_BLOCKS["print_user_favorites"]["descr"]		= i18n::translate('The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them.');
+$WT_BLOCKS["print_user_favorites"]["type"]			= "user";
+$WT_BLOCKS["print_user_favorites"]["canconfig"]	= false;
+$WT_BLOCKS["print_user_favorites"]["config"]		= array("cache"=>0);
 
 //-- print user favorites
 function print_user_favorites($block=true, $config="", $side, $index) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $TEXT_DIRECTION, $INDEX_DIRECTORY, $MEDIA_DIRECTORY, $MULTI_MEDIA, $MEDIA_DIRECTORY_LEVELS, $ctype;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $TEXT_DIRECTION, $INDEX_DIRECTORY, $MEDIA_DIRECTORY, $MULTI_MEDIA, $MEDIA_DIRECTORY_LEVELS, $ctype;
 	global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE, $ENABLE_AUTOCOMPLETE;
 
 	// Override GEDCOM configuration temporarily
@@ -55,7 +55,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	$show_full = 1;
 	$PEDIGREE_FULL_DETAILS = 1;
 
-	$userfavs = getUserFavorites(PGV_USER_NAME);
+	$userfavs = getUserFavorites(WT_USER_NAME);
 	if (!is_array($userfavs)) $userfavs = array();
 
 	$id="user_favorites";
@@ -110,19 +110,19 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 			$content .= "<tr><td>";
 			if ($favorite["type"]=="URL") {
 				$content .= "<div id=\"boxurl".$key.".0\" class=\"person_box\">";
-				if ($ctype=="user" || PGV_USER_IS_ADMIN) $content .= $removeFavourite;
+				if ($ctype=="user" || WT_USER_IS_ADMIN) $content .= $removeFavourite;
 				$content .= "<a href=\"".$favorite["url"]."\">".PrintReady($favorite["title"])."</a>";
 				$content .= "<br />".PrintReady($favorite["note"]);
 			} else {
 				require $INDEX_DIRECTORY.$GEDCOM.'_conf.php';
-				$indirec = find_gedcom_record($favorite["gid"], PGV_GED_ID);
+				$indirec = find_gedcom_record($favorite["gid"], WT_GED_ID);
 				if ($favorite["type"]=="INDI") {
 					$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box";
 					if (strpos($indirec, "\n1 SEX F")!==false) $content .= "F";
 					elseif (strpos($indirec, "\n1 SEX M")!==false) $content .= "";
 					else $content .= "NN";
 					$content .= "\">";
-					if ($ctype=="user" || PGV_USER_IS_ADMIN) $content .= $removeFavourite;
+					if ($ctype=="user" || WT_USER_IS_ADMIN) $content .= $removeFavourite;
 					ob_start();
 					print_pedigree_person($favorite["gid"], $style, 1, $key);
 					$content .= ob_get_clean();
@@ -130,7 +130,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 				} else {
 					$record=GedcomRecord::getInstance($favorite['gid']);
 					$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">";
-					if ($ctype=="user" || PGV_USER_IS_ADMIN) $content .= $removeFavourite;
+					if ($ctype=="user" || WT_USER_IS_ADMIN) $content .= $removeFavourite;
 					if ($record) {
 						$content.=$record->format_list('span');
 					} else {
@@ -156,7 +156,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	<br />
 	';
 	$uniqueID = floor(microtime() * 1000000);
-	$content .= "<b><a href=\"javascript: ".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>";
+	$content .= "<b><a href=\"javascript: ".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>";
 	$content .= help_link('index_add_favorites');
 	$content .= "<br /><div id=\"add_user_fav\" style=\"display: none;\">";
 	$content .= "<form name=\"addufavform\" method=\"post\" action=\"index.php\">";

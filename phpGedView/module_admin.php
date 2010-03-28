@@ -27,38 +27,38 @@
  * @version $Id: admin.php 5151 2009-03-04 18:51:04Z canajun2eh $
  */
 
-define('PGV_SCRIPT_NAME', 'module_admin.php');
+define('WT_SCRIPT_NAME', 'module_admin.php');
 require_once 'config.php';
-require_once(PGV_ROOT.'includes/classes/class_module.php');
+require_once(WT_ROOT.'includes/classes/class_module.php');
 
 
-if (!PGV_USER_GEDCOM_ADMIN) {
+if (!WT_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=module_admin.php");
 	exit;
 }
 
 function write_access_option_numeric($checkVar) {
-	echo "<option value=\"".PGV_PRIV_PUBLIC."\"";
-	echo ($checkVar==PGV_PRIV_PUBLIC) ? " selected=\"selected\"" : '';
+	echo "<option value=\"".WT_PRIV_PUBLIC."\"";
+	echo ($checkVar==WT_PRIV_PUBLIC) ? " selected=\"selected\"" : '';
 	echo ">".i18n::translate('Show to public')."</option>\n";
 
-	echo "<option value=\"".PGV_PRIV_USER."\"";
-	echo ($checkVar==PGV_PRIV_USER) ? " selected=\"selected\"" : '';
+	echo "<option value=\"".WT_PRIV_USER."\"";
+	echo ($checkVar==WT_PRIV_USER) ? " selected=\"selected\"" : '';
 	echo ">".i18n::translate('Show only to authenticated users')."</option>\n";
 
-	echo "<option value=\"".PGV_PRIV_NONE."\"";
-	echo ($checkVar==PGV_PRIV_NONE) ? " selected=\"selected\"" : '';
+	echo "<option value=\"".WT_PRIV_NONE."\"";
+	echo ($checkVar==WT_PRIV_NONE) ? " selected=\"selected\"" : '';
 	echo ">".i18n::translate('Show only to admin users')."</option>\n";
 
-	echo "<option value=\"".PGV_PRIV_HIDE."\"";
-	echo ($checkVar==PGV_PRIV_HIDE) ? " selected=\"selected\"" : '';
+	echo "<option value=\"".WT_PRIV_HIDE."\"";
+	echo ($checkVar==WT_PRIV_HIDE) ? " selected=\"selected\"" : '';
 	echo ">".i18n::translate('Hide even from admin users')."</option>\n";
 }
 
 $action = safe_POST('action');
 
-$modules = PGVModule::getInstalledList();
-uasort($modules, "PGVModule::compare_name");
+$modules = WTModule::getInstalledList();
+uasort($modules, "WTModule::compare_name");
 
 if ($action=='update_mods') {
   foreach($modules as $mod) {
@@ -87,7 +87,7 @@ if ($action=='update_mods') {
     $mod->setTaborder($value);
     $mod->setMenuorder(safe_POST_integer('menuorder-'.$mod->getName(), 0, 100, $mod->getMenuorder()));
     $mod->setSidebarorder(safe_POST_integer('sideorder-'.$mod->getName(), 0, 100, $mod->getSidebarorder()));
-	PGVModule::updateModule($mod);
+	WTModule::updateModule($mod);
   }
 }
 
@@ -213,7 +213,7 @@ print_header(i18n::translate('Module Administration'));
 foreach($modules as $mod) {
 	?><tr>
 	<td class="list_value"><?php if ($mod->getId()>0) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
-	<td class="list_value"><?php if ($mod->getConfigLink()) echo '<a href="'.$mod->getConfigLink().'"><img class="adminicon" src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES["admin"]["small"].'" border="0" alt="'.$mod->getName().'" /></a>'; ?></td>
+	<td class="list_value"><?php if ($mod->getConfigLink()) echo '<a href="'.$mod->getConfigLink().'"><img class="adminicon" src="'.$WT_IMAGE_DIR.'/'.$WT_IMAGES["admin"]["small"].'" border="0" alt="'.$mod->getName().'" /></a>'; ?></td>
 	<td class="list_value"><?php echo $mod->getName()?></td>
 	<td class="list_value_wrap"><?php echo $mod->getDescription()?></td>
 	<td class="list_value"><?php echo $mod->getVersion() . " / " . $mod->getPgvVersion() ?></td>
@@ -255,7 +255,7 @@ foreach($modules as $mod) {
     </thead>
     <tbody>
 <?php
-uasort($modules, "PGVModule::compare_menu_order");
+uasort($modules, "WTModule::compare_menu_order");
 $order = 1;
 foreach($modules as $mod) {
 	if(!$mod->hasMenu()) continue;
@@ -265,10 +265,10 @@ if ($mod->getMenuorder()==0) $mod->setMenuorder($order);
 	<td class="list_value_wrap"><?php echo $mod->getDescription()?></td>
 	<td class="list_value"><input type="text" size="5" value="<?php echo $order; ?>" name="menuorder-<?php echo $mod->getName() ?>" />
 		<br />
-		<img class="uarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"];?>" border="0" title="move up" />
-		<img class="udarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["udarrow"]["other"];?>" border="0" title="move to top" />
-		<img class="darrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"];?>" border="0" title="move down" />
-		<img class="ddarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["ddarrow"]["other"];?>" border="0" title="move to bottom" />
+		<img class="uarrow" src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES["uarrow"]["other"];?>" border="0" title="move up" />
+		<img class="udarrow" src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES["udarrow"]["other"];?>" border="0" title="move to top" />
+		<img class="darrow" src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES["darrow"]["other"];?>" border="0" title="move down" />
+		<img class="ddarrow" src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES["ddarrow"]["other"];?>" border="0" title="move to bottom" />
 	</td>
 	<td class="list_value_wrap">
 	  <table>
@@ -306,7 +306,7 @@ $order++;
     </thead>
     <tbody>
 <?php
-uasort($modules, "PGVModule::compare_tab_order");
+uasort($modules, "WTModule::compare_tab_order");
 $order = 1;
 foreach($modules as $mod) {
 	if(!$mod->hasTab()) continue;
@@ -316,10 +316,10 @@ foreach($modules as $mod) {
 	<td class="list_value_wrap"><?php echo $mod->getDescription()?></td>
 	<td class="list_value"><input type="text" size="5" value="<?php echo $order; ?>" name="taborder-<?php echo $mod->getName() ?>" />
 		<br />
-		<img class="uarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"];?>" border="0" title="move up" />
-		<img class="udarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["udarrow"]["other"];?>" border="0" title="move to top" />
-		<img class="darrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"];?>" border="0" title="move down" />
-		<img class="ddarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["ddarrow"]["other"];?>" border="0" title="move to bottom" />
+		<img class="uarrow" src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES["uarrow"]["other"];?>" border="0" title="move up" />
+		<img class="udarrow" src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES["udarrow"]["other"];?>" border="0" title="move to top" />
+		<img class="darrow" src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES["darrow"]["other"];?>" border="0" title="move down" />
+		<img class="ddarrow" src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES["ddarrow"]["other"];?>" border="0" title="move to bottom" />
 	</td>
 	<td class="list_value_wrap">
 	<table>
@@ -357,7 +357,7 @@ $order++;
     </thead>
     <tbody>
 <?php
-uasort($modules, "PGVModule::compare_sidebar_order");
+uasort($modules, "WTModule::compare_sidebar_order");
 $order = 1;
 foreach($modules as $mod) {
 	if(!$mod->hasSidebar()) continue;
@@ -367,10 +367,10 @@ foreach($modules as $mod) {
 	<td class="list_value_wrap"><?php echo $mod->getDescription()?></td>
 	<td class="list_value"><input type="text" size="5" value="<?php echo $order; ?>" name="sideorder-<?php echo $mod->getName() ?>" />
 		<br />
-		<img class="uarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"];?>" border="0" title="move up" />
-		<img class="udarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["udarrow"]["other"];?>" border="0" title="move to top" />
-		<img class="darrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"];?>" border="0" title="move down" />
-		<img class="ddarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["ddarrow"]["other"];?>" border="0" title="move to bottom" />
+		<img class="uarrow" src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES["uarrow"]["other"];?>" border="0" title="move up" />
+		<img class="udarrow" src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES["udarrow"]["other"];?>" border="0" title="move to top" />
+		<img class="darrow" src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES["darrow"]["other"];?>" border="0" title="move down" />
+		<img class="ddarrow" src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES["ddarrow"]["other"];?>" border="0" title="move to bottom" />
 	</td>
 	<td class="list_value_wrap">
 	<table>

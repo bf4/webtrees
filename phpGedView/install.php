@@ -42,7 +42,7 @@
  * 8. Get Started
  */
 
-define('PGV_SCRIPT_NAME', 'install.php');
+define('WT_SCRIPT_NAME', 'install.php');
 //-- load up the configuration or the default configuration
 if (file_exists('./config.php')) {
 	require_once './config.php';
@@ -50,10 +50,10 @@ if (file_exists('./config.php')) {
 	require_once './config.dist';
 }
 
-require_once PGV_ROOT.'includes/functions/functions_import.php';
+require_once WT_ROOT.'includes/functions/functions_import.php';
 
 //-- if we are configured, then make sure that only admins access this page
-if (PGV_DB::isConnected() && PGV_ADMIN_USER_EXISTS && !PGV_USER_IS_ADMIN) {
+if (WT_DB::isConnected() && WT_ADMIN_USER_EXISTS && !WT_USER_IS_ADMIN) {
 	header("Location: login.php?url=install.php");
 	exit;
 }
@@ -99,12 +99,12 @@ header('Content-Type: text/html; charset=UTF-8');
 <?php
 
 //-- don't allow configuration if the DB is down but the site is configured
-if ($CONFIGURED && !PGV_DB::isConnected()) {
+if ($CONFIGURED && !WT_DB::isConnected()) {
 	?>
 	<tr>
 		<td class="center">
-			<?php if (file_exists(PGV_THEME_DIR."/header.jpg")) { ?>
-			<img src="<?php print PGV_THEME_DIR;?>header.jpg" width="281" height="50" alt="webtrees" />
+			<?php if (file_exists(WT_THEME_DIR."/header.jpg")) { ?>
+			<img src="<?php print WT_THEME_DIR;?>header.jpg" width="281" height="50" alt="webtrees" />
 			<?php } else { ?>
 			<h2>PhpGedView</h2>
 			<?php } ?>
@@ -129,8 +129,8 @@ $total_steps = 8;
 $step = 1;
 if (isset($_REQUEST['step'])) $step = $_REQUEST['step'];
 else {
-	if (PGV_DB::isConnected()) $step = 3;
-	if (PGV_ADMIN_USER_EXISTS) $step = 8;
+	if (WT_DB::isConnected()) $step = 3;
+	if (WT_ADMIN_USER_EXISTS) $step = 8;
 }
 if (isset($_REQUEST['prev'])) $step--;
 $errors = array();
@@ -154,8 +154,8 @@ switch($step) {
 			//-- create db connection
 			$TBLPREFIX = $_SESSION['install_config']['TBLPREFIX'];
 			try {
-				PGV_DB::disconnect(); // from the connect defined in config.php
-				PGV_DB::createInstance(
+				WT_DB::disconnect(); // from the connect defined in config.php
+				WT_DB::createInstance(
 					$_SESSION['install_config']['DBTYPE'], 
 					$_SESSION['install_config']['DBHOST'], 
 					$_SESSION['install_config']['DBPORT'], 
@@ -192,20 +192,20 @@ switch($step) {
 			$_SESSION['install_config']['ALLOW_CHANGE_GEDCOM'] = $_POST['NEW_ALLOW_CHANGE_GEDCOM']=="yes"?true:false;
 			$_SESSION['install_modified'] = true;
 		}
-		if (isset($_POST['NEW_PGV_STORE_MESSAGES'])) $_SESSION['install_config']['PGV_STORE_MESSAGES'] = $_POST['NEW_PGV_STORE_MESSAGES']=="yes"?true:false;
+		if (isset($_POST['NEW_WT_STORE_MESSAGES'])) $_SESSION['install_config']['WT_STORE_MESSAGES'] = $_POST['NEW_WT_STORE_MESSAGES']=="yes"?true:false;
 		if (isset($_POST['NEW_USE_REGISTRATION_MODULE'])) $_SESSION['install_config']['USE_REGISTRATION_MODULE'] = $_POST['NEW_USE_REGISTRATION_MODULE']=="yes"?true:false;
 		if (isset($_POST['NEW_REQUIRE_ADMIN_AUTH_REGISTRATION'])) $_SESSION['install_config']['REQUIRE_ADMIN_AUTH_REGISTRATION'] = $_POST['NEW_REQUIRE_ADMIN_AUTH_REGISTRATION']=="yes"?true:false;
-		if (isset($_POST['NEW_PGV_SIMPLE_MAIL'])) $_SESSION['install_config']['PGV_SIMPLE_MAIL'] = $_POST['NEW_PGV_SIMPLE_MAIL']=="yes"?true:false;
-		if (isset($_POST["NEW_PGV_SMTP_ACTIVE"])) $_SESSION['install_config']['PGV_SMTP_ACTIVE'] = $_POST["NEW_PGV_SMTP_ACTIVE"]=="yes"?true:false;
-		if (isset($_POST["NEW_PGV_SMTP_HOST"])) $_SESSION['install_config']['PGV_SMTP_HOST'] = $_POST['NEW_PGV_SMTP_HOST'];
-		if (isset($_POST["NEW_PGV_SMTP_HELO"])) $_SESSION['install_config']['PGV_SMTP_HELO'] = $_POST["NEW_PGV_SMTP_HELO"];
-		if (isset($_POST["NEW_PGV_SMTP_PORT"])) $_SESSION['install_config']['PGV_SMTP_PORT'] = $_POST["NEW_PGV_SMTP_PORT"];
-		if (empty($_SESSION['install_config']['PGV_SMTP_PORT'])) $_SESSION['install_config']['PGV_SMTP_PORT'] = '25';
-		if (isset($_POST["NEW_PGV_SMTP_AUTH"])) $_SESSION['install_config']['PGV_SMTP_AUTH'] = $_POST["NEW_PGV_SMTP_AUTH"]=="yes"?true:false;
-		if (isset($_POST["NEW_PGV_SMTP_AUTH_USER"])) $_SESSION['install_config']['PGV_SMTP_AUTH_USER'] = $_POST["NEW_PGV_SMTP_AUTH_USER"];
-		if (isset($_POST["NEW_PGV_SMTP_AUTH_PASS"])) $_SESSION['install_config']['PGV_SMTP_AUTH_PASS'] = $_POST["NEW_PGV_SMTP_AUTH_PASS"];
-		if (isset($_POST["NEW_PGV_SMTP_SSL"])) $_SESSION['install_config']['PGV_SMTP_SSL'] = $_POST["NEW_PGV_SMTP_SSL"];
-		if (isset($_POST["NEW_PGV_SMTP_FROM_NAME"])) $_SESSION['install_config']['PGV_SMTP_FROM_NAME'] = $_POST["NEW_PGV_SMTP_FROM_NAME"];
+		if (isset($_POST['NEW_WT_SIMPLE_MAIL'])) $_SESSION['install_config']['WT_SIMPLE_MAIL'] = $_POST['NEW_WT_SIMPLE_MAIL']=="yes"?true:false;
+		if (isset($_POST["NEW_WT_SMTP_ACTIVE"])) $_SESSION['install_config']['WT_SMTP_ACTIVE'] = $_POST["NEW_WT_SMTP_ACTIVE"]=="yes"?true:false;
+		if (isset($_POST["NEW_WT_SMTP_HOST"])) $_SESSION['install_config']['WT_SMTP_HOST'] = $_POST['NEW_WT_SMTP_HOST'];
+		if (isset($_POST["NEW_WT_SMTP_HELO"])) $_SESSION['install_config']['WT_SMTP_HELO'] = $_POST["NEW_WT_SMTP_HELO"];
+		if (isset($_POST["NEW_WT_SMTP_PORT"])) $_SESSION['install_config']['WT_SMTP_PORT'] = $_POST["NEW_WT_SMTP_PORT"];
+		if (empty($_SESSION['install_config']['WT_SMTP_PORT'])) $_SESSION['install_config']['WT_SMTP_PORT'] = '25';
+		if (isset($_POST["NEW_WT_SMTP_AUTH"])) $_SESSION['install_config']['WT_SMTP_AUTH'] = $_POST["NEW_WT_SMTP_AUTH"]=="yes"?true:false;
+		if (isset($_POST["NEW_WT_SMTP_AUTH_USER"])) $_SESSION['install_config']['WT_SMTP_AUTH_USER'] = $_POST["NEW_WT_SMTP_AUTH_USER"];
+		if (isset($_POST["NEW_WT_SMTP_AUTH_PASS"])) $_SESSION['install_config']['WT_SMTP_AUTH_PASS'] = $_POST["NEW_WT_SMTP_AUTH_PASS"];
+		if (isset($_POST["NEW_WT_SMTP_SSL"])) $_SESSION['install_config']['WT_SMTP_SSL'] = $_POST["NEW_WT_SMTP_SSL"];
+		if (isset($_POST["NEW_WT_SMTP_FROM_NAME"])) $_SESSION['install_config']['WT_SMTP_FROM_NAME'] = $_POST["NEW_WT_SMTP_FROM_NAME"];
 		if (isset($_POST['NEW_ALLOW_USER_THEMES'])) $_SESSION['install_config']['ALLOW_USER_THEMES'] = $_POST['NEW_ALLOW_USER_THEMES']=="yes"?true:false;
 		if (isset($_POST['NEW_LOGFILE_CREATE'])) $_SESSION['install_config']['LOGFILE_CREATE'] = $_POST['NEW_LOGFILE_CREATE'];
 		if (isset($_POST['NEW_SERVER_URL'])) {
@@ -217,10 +217,10 @@ switch($step) {
 			$_SESSION['install_config']['SERVER_URL'] = $temp;
 		}
 		if (isset($_POST['NEW_LOGIN_URL'])) $_SESSION['install_config']['LOGIN_URL'] = $_POST['NEW_LOGIN_URL'];
-		if (isset($_POST['NEW_PGV_SESSION_SAVE_PATH'])) $_SESSION['install_config']['PGV_SESSION_SAVE_PATH'] = $_POST['NEW_PGV_SESSION_SAVE_PATH'];
-		if (isset($_POST['NEW_PGV_SESSION_TIME'])) $_SESSION['install_config']['PGV_SESSION_TIME'] = $_POST['NEW_PGV_SESSION_TIME'];
+		if (isset($_POST['NEW_WT_SESSION_SAVE_PATH'])) $_SESSION['install_config']['WT_SESSION_SAVE_PATH'] = $_POST['NEW_WT_SESSION_SAVE_PATH'];
+		if (isset($_POST['NEW_WT_SESSION_TIME'])) $_SESSION['install_config']['WT_SESSION_TIME'] = $_POST['NEW_WT_SESSION_TIME'];
 		if (isset($_POST['NEW_COMMIT_COMMAND'])) $_SESSION['install_config']['COMMIT_COMMAND'] = $_POST['NEW_COMMIT_COMMAND'];
-		if (isset($_POST['NEW_PGV_MEMORY_LIMIT'])) $_SESSION['install_config']['PGV_MEMORY_LIMIT'] = $_POST['NEW_PGV_MEMORY_LIMIT'];
+		if (isset($_POST['NEW_WT_MEMORY_LIMIT'])) $_SESSION['install_config']['WT_MEMORY_LIMIT'] = $_POST['NEW_WT_MEMORY_LIMIT'];
 		if (isset($_POST['NEW_MAX_VIEWS'])) $_SESSION['install_config']['MAX_VIEWS'] = $_POST['NEW_MAX_VIEWS'];
 		if (isset($_POST['NEW_MAX_VIEW_TIME'])) $_SESSION['install_config']['MAX_VIEW_TIME'] = $_POST['NEW_MAX_VIEW_TIME'];
 
@@ -247,7 +247,7 @@ switch($step) {
 			$config_array['CONFIGURED'] = true;
 			
 			// Clear the SERVER_URL when it's identical to the calculated value
-			$GUESS_URL = PGV_SERVER_NAME.PGV_SCRIPT_PATH;
+			$GUESS_URL = WT_SERVER_NAME.WT_SCRIPT_PATH;
 			if (!isset($config_array['SERVER_URL'])) $config_array['SERVER_URL'] = '';
 			$config_array['SERVER_URL'] = rtrim(trim($config_array['SERVER_URL']),'/').'/';
 			if ($config_array['SERVER_URL'] == $GUESS_URL || $config_array['SERVER_URL'] == '/') $config_array['SERVER_URL'] = '';
@@ -278,7 +278,7 @@ switch($step) {
 
 				// Save the languages the user has chosen to have active on the website
 				$Filename = $INDEX_DIRECTORY . "lang_settings.php";
-				if (!file_exists($Filename)) copy(PGV_ROOT.'includes/lang_settings_std.php', $Filename);
+				if (!file_exists($Filename)) copy(WT_ROOT.'includes/lang_settings_std.php', $Filename);
 
 				$NEW_LANGS = $_POST['NEW_LANGS'];
 				// Set the chosen languages to active
@@ -306,10 +306,10 @@ switch($step) {
 		if (adminUserExists()) {
 			break;
 		}
-		$username =safe_POST('username', PGV_REGEX_USERNAME);
-		$pass1    =safe_POST('pass1', PGV_REGEX_PASSWORD);
-		$pass2    =safe_POST('pass2', PGV_REGEX_PASSWORD);
-		$email    =safe_POST('emailadress', PGV_REGEX_EMAIL);
+		$username =safe_POST('username', WT_REGEX_USERNAME);
+		$pass1    =safe_POST('pass1', WT_REGEX_PASSWORD);
+		$pass2    =safe_POST('pass2', WT_REGEX_PASSWORD);
+		$email    =safe_POST('emailadress', WT_REGEX_EMAIL);
 		$firstname=safe_POST('firstname');
 		$lastname =safe_POST('lastname');
 		if ($username && $pass1 && $firstname && $lastname) {
@@ -372,8 +372,8 @@ $errormsg = "";
 ?>
 	<tr>
 		<td colspan="2" class="center">
-			<?php if (file_exists(PGV_THEME_DIR."/header.jpg")) { ?>
-			<img src="<?php print PGV_THEME_DIR;?>header.jpg" width="281" height="50" alt="webtrees" />
+			<?php if (file_exists(WT_THEME_DIR."/header.jpg")) { ?>
+			<img src="<?php print WT_THEME_DIR;?>header.jpg" width="281" height="50" alt="webtrees" />
 			<?php } else { ?>
 			<h1>PhpGedView</h1>
 			<?php } ?>
@@ -419,7 +419,7 @@ $errormsg = "";
 					break;
 				case 3:
 					try {
-						PGV_DB::updateSchema('includes/db_schema/', 'PGV_SCHEMA_VERSION', PGV_SCHEMA_VERSION);
+						WT_DB::updateSchema('includes/db_schema/', 'WT_SCHEMA_VERSION', WT_SCHEMA_VERSION);
 						echo '<span class="pass">', i18n::translate('Database Tables created successfully'), '</span><br /><br /><br />';
 						$success=true;
 					} catch (PDOException $ex) {
@@ -444,7 +444,7 @@ $errormsg = "";
 					$success = printAdminUserForm();
 					break;
 				case 8:
-					require_once PGV_ROOT.'blocks/getting_started.php';
+					require_once WT_ROOT.'blocks/getting_started.php';
 					getting_started_block(false,"",0,0);
 					break;
 				default:	// case 1
@@ -488,17 +488,17 @@ function checkEnvironment() {
 	$success = true;
 	echo "<h4>".i18n::translate('Checking for errors...')."</h4>";
 	echo "<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
-	$phpcheck = (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0);
+	$phpcheck = (version_compare(PHP_VERSION, WT_REQUIRED_PHP_VERSION)<0);
 	if ($phpcheck) {
 		echo '<tr><td valign="top">';
 		echo i18n::translate('Checking required PHP version:'), '<br />';
 		echo '<span class="error">', i18n::translate('Failed'), '</span><br />';
-		echo i18n::translate('webtrees requires PHP version %s or higher.', PGV_REQUIRED_PHP_VERSION), '<br />';
+		echo i18n::translate('webtrees requires PHP version %s or higher.', WT_REQUIRED_PHP_VERSION), '<br />';
 		echo i18n::translate('You are using PHP version %s', PHP_VERSION), '</td></tr>';
 	}
 
 	// Check we have one or more PDO drivers available
-	if (!extension_loaded('pdo') || !PGV_DB::getAvailableDrivers()) {
+	if (!extension_loaded('pdo') || !WT_DB::getAvailableDrivers()) {
 		echo "<tr><td valign=\"top\">";
 		echo i18n::translate('Checking for minimum database support:')."<br />";
 		echo "<span class=\"error\">".i18n::translate('You do not have any of the supported database extensions.')."</span><br />";
@@ -508,7 +508,7 @@ function checkEnvironment() {
 	//config.php file
 	echo "<tr><td valign=\"top\">";
 	echo $pgv_lang["checking_config.php"]."<br />";
-	if (!file_exists(PGV_ROOT.'config.php')) {
+	if (!file_exists(WT_ROOT.'config.php')) {
 		echo "<span class=\"error\">".$pgv_lang["config.php_missing"]."</span><br />".$pgv_lang["config.php_missing_instr"];
 	}
 	else if (!file_is_writeable('config.php')) {
@@ -634,7 +634,7 @@ function printDBForm() {
 		<td class="optionbox">
 			<select name="NEW_DBTYPE" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBTYPE_help');" onchange="changeDBtype(this);">
 			<?php
-				foreach (PGV_DB::getAvailableDrivers() as $driver) {
+				foreach (WT_DB::getAvailableDrivers() as $driver) {
 					echo '<option value="', $driver, '"';
 					if ($DBTYPE==$driver) {
 						echo 'selected="selected"';
@@ -691,49 +691,49 @@ function printDBForm() {
 }
 
 function printConfigForm(){
-	global $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $USE_REGISTRATION_MODULE, $REQUIRE_ADMIN_AUTH_REGISTRATION;
-	global $ALLOW_CHANGE_GEDCOM, $PGV_SIMPLE_MAIL, $ALLOW_USER_THEMES, $LOGFILE_CREATE, $SERVER_URL;
-	global $PGV_SMTP_ACTIVE, $PGV_SMTP_HOST, $PGV_SMTP_HELO, $PGV_SMTP_PORT, $PGV_SMTP_AUTH, $PGV_SMTP_AUTH_USER, $PGV_SMTP_AUTH_PASS, $PGV_SMTP_SSL, $PGV_SMTP_FROM_NAME;
-	global $LOGIN_URL, $PGV_SESSION_SAVE_PATH, $PGV_SESSION_TIME, $COMMIT_COMMAND, $PGV_MEMORY_LIMIT, $MAX_VIEWS;
+	global $TEXT_DIRECTION, $WT_STORE_MESSAGES, $USE_REGISTRATION_MODULE, $REQUIRE_ADMIN_AUTH_REGISTRATION;
+	global $ALLOW_CHANGE_GEDCOM, $WT_SIMPLE_MAIL, $ALLOW_USER_THEMES, $LOGFILE_CREATE, $SERVER_URL;
+	global $WT_SMTP_ACTIVE, $WT_SMTP_HOST, $WT_SMTP_HELO, $WT_SMTP_PORT, $WT_SMTP_AUTH, $WT_SMTP_AUTH_USER, $WT_SMTP_AUTH_PASS, $WT_SMTP_SSL, $WT_SMTP_FROM_NAME;
+	global $LOGIN_URL, $WT_SESSION_SAVE_PATH, $WT_SESSION_TIME, $COMMIT_COMMAND, $WT_MEMORY_LIMIT, $MAX_VIEWS;
 	global $MAX_VIEW_TIME, $INDEX_DIRECTORY;
 
 	$i=1;
 	if (isset($_SESSION['install_config']['INDEX_DIRECTORY'])) $INDEX_DIRECTORY = $_SESSION['install_config']['INDEX_DIRECTORY'];
 	if (isset($_SESSION['install_config']['ALLOW_CHANGE_GEDCOM'])) $ALLOW_CHANGE_GEDCOM = $_SESSION['install_config']['ALLOW_CHANGE_GEDCOM'];
-	if (isset($_SESSION['install_config']['PGV_STORE_MESSAGES'])) $PGV_STORE_MESSAGES = $_SESSION['install_config']['PGV_STORE_MESSAGES'];
+	if (isset($_SESSION['install_config']['WT_STORE_MESSAGES'])) $WT_STORE_MESSAGES = $_SESSION['install_config']['WT_STORE_MESSAGES'];
 	if (isset($_SESSION['install_config']['USE_REGISTRATION_MODULE'])) $USE_REGISTRATION_MODULE = $_SESSION['install_config']['USE_REGISTRATION_MODULE'];
 	if (isset($_SESSION['install_config']['REQUIRE_ADMIN_AUTH_REGISTRATION'])) $REQUIRE_ADMIN_AUTH_REGISTRATION = $_SESSION['install_config']['REQUIRE_ADMIN_AUTH_REGISTRATION'];
-	if (isset($_SESSION['install_config']['PGV_SIMPLE_MAIL'])) $PGV_SIMPLE_MAIL = $_SESSION['install_config']['PGV_SIMPLE_MAIL'];
+	if (isset($_SESSION['install_config']['WT_SIMPLE_MAIL'])) $WT_SIMPLE_MAIL = $_SESSION['install_config']['WT_SIMPLE_MAIL'];
 	if (isset($_SESSION['install_config']['ALLOW_USER_THEMES'])) $ALLOW_USER_THEMES = $_SESSION['install_config']['ALLOW_USER_THEMES'];
 	if (isset($_SESSION['install_config']['LOGFILE_CREATE'])) $LOGFILE_CREATE = $_SESSION['install_config']['LOGFILE_CREATE'];
 	if (isset($_SESSION['install_config']['SERVER_URL'])) $SERVER_URL = $_SESSION['install_config']['SERVER_URL'];
 	if (isset($_SESSION['install_config']['LOGIN_URL'])) $LOGIN_URL = $_SESSION['install_config']['LOGIN_URL'];
-	if (isset($_SESSION['install_config']['PGV_SMTP_ACTIVE'])) $PGV_SMTP_ACTIVE = $_SESSION['install_config']['PGV_SMTP_ACTIVE'];
-	if (isset($_SESSION['install_config']['PGV_SMTP_HOST'])) $PGV_SMTP_HOST = $_SESSION['install_config']['PGV_SMTP_HOST'];
-	if (isset($_SESSION['install_config']['PGV_SMTP_HELO'])) $PGV_SMTP_HELO = $_SESSION['install_config']['PGV_SMTP_HELO'];
-	if (isset($_SESSION['install_config']['PGV_SMTP_PORT'])) $PGV_SMTP_PORT = $_SESSION['install_config']['PGV_SMTP_PORT'];
-	if (isset($_SESSION['install_config']['PGV_SMTP_AUTH'])) $PGV_SMTP_AUTH = $_SESSION['install_config']['PGV_SMTP_AUTH'];
-	if (isset($_SESSION['install_config']['PGV_SMTP_AUTH_USER'])) $PGV_SMTP_AUTH_USER = $_SESSION['install_config']['PGV_SMTP_AUTH_USER'];
-	if (isset($_SESSION['install_config']['PGV_SMTP_AUTH_PASS'])) $PGV_SMTP_AUTH_PASS = $_SESSION['install_config']['PGV_SMTP_AUTH_PASS'];
-	if (isset($_SESSION['install_config']['PGV_SMTP_SSL'])) $PGV_SMTP_SSL = $_SESSION['install_config']['PGV_SMTP_SSL'];
-	if (isset($_SESSION['install_config']['PGV_SMTP_FROM_NAME'])) $PGV_SMTP_FROM_NAME = $_SESSION['install_config']['PGV_SMTP_FROM_NAME'];
-	if (isset($_SESSION['install_config']['PGV_SESSION_SAVE_PATH'])) $PGV_SESSION_SAVE_PATH = $_SESSION['install_config']['PGV_SESSION_SAVE_PATH'];
-	if (isset($_SESSION['install_config']['PGV_SESSION_TIME'])) $PGV_SESSION_TIME = $_SESSION['install_config']['PGV_SESSION_TIME'];
+	if (isset($_SESSION['install_config']['WT_SMTP_ACTIVE'])) $WT_SMTP_ACTIVE = $_SESSION['install_config']['WT_SMTP_ACTIVE'];
+	if (isset($_SESSION['install_config']['WT_SMTP_HOST'])) $WT_SMTP_HOST = $_SESSION['install_config']['WT_SMTP_HOST'];
+	if (isset($_SESSION['install_config']['WT_SMTP_HELO'])) $WT_SMTP_HELO = $_SESSION['install_config']['WT_SMTP_HELO'];
+	if (isset($_SESSION['install_config']['WT_SMTP_PORT'])) $WT_SMTP_PORT = $_SESSION['install_config']['WT_SMTP_PORT'];
+	if (isset($_SESSION['install_config']['WT_SMTP_AUTH'])) $WT_SMTP_AUTH = $_SESSION['install_config']['WT_SMTP_AUTH'];
+	if (isset($_SESSION['install_config']['WT_SMTP_AUTH_USER'])) $WT_SMTP_AUTH_USER = $_SESSION['install_config']['WT_SMTP_AUTH_USER'];
+	if (isset($_SESSION['install_config']['WT_SMTP_AUTH_PASS'])) $WT_SMTP_AUTH_PASS = $_SESSION['install_config']['WT_SMTP_AUTH_PASS'];
+	if (isset($_SESSION['install_config']['WT_SMTP_SSL'])) $WT_SMTP_SSL = $_SESSION['install_config']['WT_SMTP_SSL'];
+	if (isset($_SESSION['install_config']['WT_SMTP_FROM_NAME'])) $WT_SMTP_FROM_NAME = $_SESSION['install_config']['WT_SMTP_FROM_NAME'];
+	if (isset($_SESSION['install_config']['WT_SESSION_SAVE_PATH'])) $WT_SESSION_SAVE_PATH = $_SESSION['install_config']['WT_SESSION_SAVE_PATH'];
+	if (isset($_SESSION['install_config']['WT_SESSION_TIME'])) $WT_SESSION_TIME = $_SESSION['install_config']['WT_SESSION_TIME'];
 	if (isset($_SESSION['install_config']['COMMIT_COMMAND'])) $COMMIT_COMMAND = $_SESSION['install_config']['COMMIT_COMMAND'];
-	if (isset($_SESSION['install_config']['PGV_MEMORY_LIMIT'])) $PGV_MEMORY_LIMIT = $_SESSION['install_config']['PGV_MEMORY_LIMIT'];
+	if (isset($_SESSION['install_config']['WT_MEMORY_LIMIT'])) $WT_MEMORY_LIMIT = $_SESSION['install_config']['WT_MEMORY_LIMIT'];
 	if (isset($_SESSION['install_config']['MAX_VIEWS'])) $MAX_VIEWS = $_SESSION['install_config']['MAX_VIEWS'];
 	if (isset($_SESSION['install_config']['MAX_VIEW_TIME'])) $MAX_VIEW_TIME = $_SESSION['install_config']['MAX_VIEW_TIME'];
 
 	$oldmemorylimit = @ini_get('memory_limit');
-	if ($oldmemorylimit > $PGV_MEMORY_LIMIT) $PGV_MEMORY_LIMIT = $oldmemorylimit;
+	if ($oldmemorylimit > $WT_MEMORY_LIMIT) $WT_MEMORY_LIMIT = $oldmemorylimit;
 
 	?>
 	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
 	<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
 	<?php if ($TEXT_DIRECTION=='rtl') {?>
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
 	<?php }?>
 	<script type="text/javascript">
 	//<![CDATA[
@@ -760,7 +760,7 @@ function printConfigForm(){
 				<td class="descriptionbox wrap width30"><?php echo i18n::translate('webtrees URL'), help_link('SERVER_URL'); ?></td>
 				<td class="optionbox wrap"><input type="text" name="NEW_SERVER_URL" value="<?php print $SERVER_URL?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SERVER_URL_help');" size="50" />
 				<br /><?php
-					echo i18n::translate('This should be the URL to your webtrees folder.  You should only change this setting if you are sure you know what you are doing.  webtrees has determined this value to be <b>%s</b>', PGV_SERVER_NAME.PGV_SCRIPT_PATH);
+					echo i18n::translate('This should be the URL to your webtrees folder.  You should only change this setting if you are sure you know what you are doing.  webtrees has determined this value to be <b>%s</b>', WT_SERVER_NAME.WT_SCRIPT_PATH);
 					?>
 				</td>
 			</tr>
@@ -813,20 +813,20 @@ function printConfigForm(){
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php echo i18n::translate('Allow messages to be stored online'), help_link('PGV_STORE_MESSAGES'); ?></td>
+				<td class="descriptionbox wrap width30"><?php echo i18n::translate('Allow messages to be stored online'), help_link('WT_STORE_MESSAGES'); ?></td>
 				<td class="optionbox">
-					<select name="NEW_PGV_STORE_MESSAGES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_STORE_MESSAGES_help');">
-						<option value="yes" <?php if ($PGV_STORE_MESSAGES) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
-						<option value="no" <?php if (!$PGV_STORE_MESSAGES) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
+					<select name="NEW_WT_STORE_MESSAGES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WT_STORE_MESSAGES_help');">
+						<option value="yes" <?php if ($WT_STORE_MESSAGES) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
+						<option value="no" <?php if (!$WT_STORE_MESSAGES) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
 					</select>
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php echo i18n::translate('Use simple mail headers in external mails'), help_link('PGV_SIMPLE_MAIL'); ?></td>
+				<td class="descriptionbox wrap width30"><?php echo i18n::translate('Use simple mail headers in external mails'), help_link('WT_SIMPLE_MAIL'); ?></td>
 				<td class="optionbox">
-					<select name="NEW_PGV_SIMPLE_MAIL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SIMPLE_MAIL_help');">
-						<option value="yes" <?php if ($PGV_SIMPLE_MAIL) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
-						<option value="no" <?php if (!$PGV_SIMPLE_MAIL) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
+					<select name="NEW_WT_SIMPLE_MAIL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WT_SIMPLE_MAIL_help');">
+						<option value="yes" <?php if ($WT_SIMPLE_MAIL) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
+						<option value="no" <?php if (!$WT_SIMPLE_MAIL) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
 					</select>
 				</td>
 			</tr>
@@ -843,12 +843,12 @@ function printConfigForm(){
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php echo i18n::translate('Session save path'), help_link('PGV_SESSION_SAVE_PATH'); ?></td>
-				<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SESSION_SAVE_PATH" value="<?php print $PGV_SESSION_SAVE_PATH?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SESSION_SAVE_PATH_help');" /></td>
+				<td class="descriptionbox wrap width30"><?php echo i18n::translate('Session save path'), help_link('WT_SESSION_SAVE_PATH'); ?></td>
+				<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_WT_SESSION_SAVE_PATH" value="<?php print $WT_SESSION_SAVE_PATH?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WT_SESSION_SAVE_PATH_help');" /></td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php echo i18n::translate('Session timeout'), help_link('PGV_SESSION_TIME'); ?></td>
-				<td class="optionbox"><input type="text" name="NEW_PGV_SESSION_TIME" value="<?php print $PGV_SESSION_TIME?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SESSION_TIME_help');" /></td>
+				<td class="descriptionbox wrap width30"><?php echo i18n::translate('Session timeout'), help_link('WT_SESSION_TIME'); ?></td>
+				<td class="optionbox"><input type="text" name="NEW_WT_SESSION_TIME" value="<?php print $WT_SESSION_TIME?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WT_SESSION_TIME_help');" /></td>
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap width30"><?php echo i18n::translate('Maximum page view rate'), help_link('MAX_VIEW_RATE'); ?></td>
@@ -876,8 +876,8 @@ function printConfigForm(){
 				</td>
 		 	</tr>
 		 	<tr>
-				<td class="descriptionbox wrap width30"><?php echo i18n::translate('Memory limit'), help_link('PGV_MEMORY_LIMIT'); ?></td>
-				<td class="optionbox"><input type="text" name="NEW_PGV_MEMORY_LIMIT" value="<?php print $PGV_MEMORY_LIMIT?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_MEMORY_LIMIT_help');" /></td>
+				<td class="descriptionbox wrap width30"><?php echo i18n::translate('Memory limit'), help_link('WT_MEMORY_LIMIT'); ?></td>
+				<td class="optionbox"><input type="text" name="NEW_WT_MEMORY_LIMIT" value="<?php print $WT_MEMORY_LIMIT?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WT_MEMORY_LIMIT_help');" /></td>
 			</tr>
 			</table>
 		</div>
@@ -887,56 +887,56 @@ function printConfigForm(){
 		<table>
 		<tr><td colspan="2" class="center"><br /><b>SMTP</b></td></tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php  echo i18n::translate('Use SMTP to send external mails'), help_link('PGV_SMTP_ACTIVE'); ?></td>
+		<td class="descriptionbox wrap width30"><?php  echo i18n::translate('Use SMTP to send external mails'), help_link('WT_SMTP_ACTIVE'); ?></td>
 		<td class="optionbox">
-			<select name="NEW_PGV_SMTP_ACTIVE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_ACTIVE_help');">
-				<option value="yes" <?php if ($PGV_SMTP_ACTIVE) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
-				<option value="no" <?php if (!$PGV_SMTP_ACTIVE) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
+			<select name="NEW_WT_SMTP_ACTIVE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WT_SMTP_ACTIVE_help');">
+				<option value="yes" <?php if ($WT_SMTP_ACTIVE) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
+				<option value="no" <?php if (!$WT_SMTP_ACTIVE) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
 			</select>
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php echo i18n::translate('Outgoing server (SMTP) name'), help_link('PGV_SMTP_HOST'); ?></td>
-		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SMTP_HOST" value="<?php print $PGV_SMTP_HOST?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_HOST_help');" /></td>
+		<td class="descriptionbox wrap width30"><?php echo i18n::translate('Outgoing server (SMTP) name'), help_link('WT_SMTP_HOST'); ?></td>
+		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_WT_SMTP_HOST" value="<?php print $WT_SMTP_HOST?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WT_SMTP_HOST_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php echo i18n::translate('Sending domain name'), help_link('PGV_SMTP_HELO'); ?></td>
-		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SMTP_HELO" value="<?php print $PGV_SMTP_HELO?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_HELO_help');" /></td>
+		<td class="descriptionbox wrap width30"><?php echo i18n::translate('Sending domain name'), help_link('WT_SMTP_HELO'); ?></td>
+		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_WT_SMTP_HELO" value="<?php print $WT_SMTP_HELO?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WT_SMTP_HELO_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php  echo i18n::translate('SMTP Port'), help_link('PGV_SMTP_PORT'); ?></td>
-		<td class="optionbox"><input type="text" dir="ltr" size="5" name="NEW_PGV_SMTP_PORT" value="<?php print $PGV_SMTP_PORT?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_PORT_help');" /></td>
+		<td class="descriptionbox wrap width30"><?php  echo i18n::translate('SMTP Port'), help_link('WT_SMTP_PORT'); ?></td>
+		<td class="optionbox"><input type="text" dir="ltr" size="5" name="NEW_WT_SMTP_PORT" value="<?php print $WT_SMTP_PORT?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WT_SMTP_PORT_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php echo i18n::translate('Use name and password'), help_link('PGV_SMTP_AUTH'); ?></td>
+		<td class="descriptionbox wrap width30"><?php echo i18n::translate('Use name and password'), help_link('WT_SMTP_AUTH'); ?></td>
 		<td class="optionbox">
-			<select name="NEW_PGV_SMTP_AUTH" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_AUTH_help');">
-			<option value="yes" <?php if ($PGV_SMTP_AUTH) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
-			<option value="no" <?php if (!$PGV_SMTP_AUTH) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
+			<select name="NEW_WT_SMTP_AUTH" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WT_SMTP_AUTH_help');">
+			<option value="yes" <?php if ($WT_SMTP_AUTH) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
+			<option value="no" <?php if (!$WT_SMTP_AUTH) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
 			</select>
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php echo i18n::translate('User name'), help_link('PGV_SMTP_AUTH_USER'); ?></td>
-		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SMTP_AUTH_USER" value="<?php print $PGV_SMTP_AUTH_USER?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_AUTH_USER_help');" /></td>
+		<td class="descriptionbox wrap width30"><?php echo i18n::translate('User name'), help_link('WT_SMTP_AUTH_USER'); ?></td>
+		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_WT_SMTP_AUTH_USER" value="<?php print $WT_SMTP_AUTH_USER?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WT_SMTP_AUTH_USER_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php echo i18n::translate('Password'), help_link('PGV_SMTP_AUTH_PASS'); ?></td>
-		<td class="optionbox"><input type="password" name="NEW_PGV_SMTP_AUTH_PASS" value="<?php print $PGV_SMTP_AUTH_PASS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_AUTH_PASS_help');" /></td>
+		<td class="descriptionbox wrap width30"><?php echo i18n::translate('Password'), help_link('WT_SMTP_AUTH_PASS'); ?></td>
+		<td class="optionbox"><input type="password" name="NEW_WT_SMTP_AUTH_PASS" value="<?php print $WT_SMTP_AUTH_PASS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WT_SMTP_AUTH_PASS_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php echo i18n::translate('Secure connection'), help_link('PGV_SMTP_SSL'); ?></td>
+		<td class="descriptionbox wrap width30"><?php echo i18n::translate('Secure connection'), help_link('WT_SMTP_SSL'); ?></td>
 		<td class="optionbox">
-			<select name="NEW_PGV_SMTP_SSL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_SSL_help');">
-				<option value="none" <?php if ($PGV_SMTP_SSL=='none') print "selected=\"selected\""; ?>><?php print i18n::translate('None'); ?></option>
-				<option value="ssl" <?php if ($PGV_SMTP_SSL=='ssl') print "selected=\"selected\""; ?>>SSL</option>
-				<option value="tls" <?php if ($PGV_SMTP_SSL=='tls') print "selected=\"selected\""; ?>>TLS</option>
+			<select name="NEW_WT_SMTP_SSL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WT_SMTP_SSL_help');">
+				<option value="none" <?php if ($WT_SMTP_SSL=='none') print "selected=\"selected\""; ?>><?php print i18n::translate('None'); ?></option>
+				<option value="ssl" <?php if ($WT_SMTP_SSL=='ssl') print "selected=\"selected\""; ?>>SSL</option>
+				<option value="tls" <?php if ($WT_SMTP_SSL=='tls') print "selected=\"selected\""; ?>>TLS</option>
 			</select>
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php echo i18n::translate('Sender name'), help_link('PGV_SMTP_FROM_NAME'); ?></td>
-		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SMTP_FROM_NAME" value="<?php print $PGV_SMTP_FROM_NAME?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_FROM_NAME_help');" /></td>
+		<td class="descriptionbox wrap width30"><?php echo i18n::translate('Sender name'), help_link('WT_SMTP_FROM_NAME'); ?></td>
+		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_WT_SMTP_FROM_NAME" value="<?php print $WT_SMTP_FROM_NAME?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WT_SMTP_FROM_NAME_help');" /></td>
 	</tr>
 	</table>
 		</div>

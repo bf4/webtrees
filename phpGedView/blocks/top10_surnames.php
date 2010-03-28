@@ -29,17 +29,17 @@
  * @subpackage Blocks
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_TOP10SURNAMES_PHP', '');
+define('WT_TOP10SURNAMES_PHP', '');
 
-$PGV_BLOCKS["print_block_name_top10"]["name"]		= i18n::translate('Top 10 Surnames');
-$PGV_BLOCKS["print_block_name_top10"]["descr"]		= i18n::translate('This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list.');
-$PGV_BLOCKS["print_block_name_top10"]["canconfig"]	= true;
-$PGV_BLOCKS["print_block_name_top10"]["config"]		= array(
+$WT_BLOCKS["print_block_name_top10"]["name"]		= i18n::translate('Top 10 Surnames');
+$WT_BLOCKS["print_block_name_top10"]["descr"]		= i18n::translate('This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list.');
+$WT_BLOCKS["print_block_name_top10"]["canconfig"]	= true;
+$WT_BLOCKS["print_block_name_top10"]["config"]		= array(
 	"cache"=>7,
 	"num"=>10,
 	);
@@ -57,18 +57,18 @@ function top_surname_sort($a, $b) {
 }
 
 function print_block_name_top10($block=true, $config="", $side, $index) {
-	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SURNAME_LIST_STYLE;
+	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $WT_BLOCKS, $ctype, $WT_IMAGES, $WT_IMAGE_DIR, $SURNAME_LIST_STYLE;
 
 	if (empty($config)) {
-		$config=$PGV_BLOCKS["print_block_name_top10"]["config"];
+		$config=$WT_BLOCKS["print_block_name_top10"]["config"];
 	}
 
 	// This next function is a bit out of date, and doesn't cope well with surname variants
-	$top_surnames=get_top_surnames(PGV_GED_ID, 1, $config["num"]);
+	$top_surnames=get_top_surnames(WT_GED_ID, 1, $config["num"]);
 
 	$all_surnames=array();
 	foreach (array_keys($top_surnames) as $top_surname) {
-		$all_surnames=array_merge($all_surnames, get_indilist_surns($top_surname, '', false, false, PGV_GED_ID));
+		$all_surnames=array_merge($all_surnames, get_indilist_surns($top_surname, '', false, false, WT_GED_ID));
 	}
 
 	// Insert from the "Add Names" list if not already in there
@@ -104,15 +104,15 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 
 	$id="top10surnames";
 	$title='';
-	if ($PGV_BLOCKS["print_block_name_top10"]["canconfig"]) {
-		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+	if ($WT_BLOCKS["print_block_name_top10"]["canconfig"]) {
+		if ($ctype=="gedcom" && WT_USER_GEDCOM_ADMIN || $ctype=="user" && WT_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = PGV_GEDCOM;
+				$name = WT_GEDCOM;
 			} else {
-				$name = PGV_USER_NAME;
+				$name = WT_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"$WT_IMAGE_DIR/".$WT_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
 	// I18N: There are separate lists of male/female names, containing %d names each
@@ -140,9 +140,9 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 }
 
 function print_block_name_top10_config($config) {
-	global $ctype, $PGV_BLOCKS;
-	if (empty($config)) $config = $PGV_BLOCKS["print_block_name_top10"]["config"];
-	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_block_name_top10"]["config"]["cache"];
+	global $ctype, $WT_BLOCKS;
+	if (empty($config)) $config = $WT_BLOCKS["print_block_name_top10"]["config"];
+	if (!isset($config["cache"])) $config["cache"] = $WT_BLOCKS["print_block_name_top10"]["config"]["cache"];
 ?>
 	<tr>
 		<td class="descriptionbox wrap width33"><?php print i18n::translate('Number of items to show') ?></td>

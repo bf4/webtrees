@@ -27,15 +27,15 @@
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once(PGV_ROOT."includes/classes/class_module.php");
-require_once(PGV_ROOT."modules/descendancy/descendancy.php");
+require_once(WT_ROOT."includes/classes/class_module.php");
+require_once(WT_ROOT."modules/descendancy/descendancy.php");
 
-class descendancy_PGVModule extends PGVModule {
+class descendancy_WTModule extends WTModule {
 	protected $name = 'descendancy';
 	protected $description = 'Adds a sidebar which allows for easy navigation of indiviuals in a descendants tree-view format.';
 	protected $version = '4.2.2';

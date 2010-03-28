@@ -26,15 +26,15 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_TREENAV_PHP', '');
+define('WT_CLASS_TREENAV_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_person.php';
-require_once PGV_ROOT.'includes/functions/functions_charts.php';
+require_once WT_ROOT.'includes/classes/class_person.php';
+require_once WT_ROOT.'includes/functions/functions_charts.php';
 
 class TreeNav {
 	var $rootPerson = null;
@@ -74,8 +74,8 @@ class TreeNav {
 				document.writeln('<script type="text/javascript" src="<?php print $SERVER_URL; ?>/js/phpgedview.js"></script>');
 				<?php
 				ob_start();
-				$w = safe_GET('width', PGV_REGEX_INTEGER, '');
-				$h = safe_GET('height', PGV_REGEX_INTEGER, '');
+				$w = safe_GET('width', WT_REGEX_INTEGER, '');
+				$h = safe_GET('height', WT_REGEX_INTEGER, '');
 				if (!empty($w)) $w.="px";
 				if (!empty($h)) $h.="px";
 				$this->drawViewport($rootid, $w, $h);
@@ -148,7 +148,7 @@ class TreeNav {
 	* @param string $height the height parameter for the outer style
 	*/
 	function drawViewport($id='', $width='', $height='') {
-		global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $CONTACT_EMAIL, $SERVER_URL;
+		global $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $CONTACT_EMAIL, $SERVER_URL;
 		if (empty($id)) $id = $this->rootPerson->getXref();
 		$widthS = "";
 		$heightS = "";
@@ -166,10 +166,10 @@ class TreeNav {
 			</div>
 			<div id="controls" style="position: absolute; left: 0px; top: 0px; z-index: 100; background-color: #EEEEEE">
 			<table>
-				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomIn(); return false;"><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other'];?>" border="0" alt="zoomin" /></a></td></tr>
-				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomOut(); return false;"><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other'];?>" border="0" alt="zoomout" /></a></td></tr>
-				<tr><td <?php if (is_null($this->rootPerson) || PGV_SCRIPT_NAME=='treenav.php') print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8');?>'); return false;" title="<?php print i18n::translate('View this tree in the full page interactive tree'); ?>"><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small'];?>" border="0" alt="" /></a></td></tr>
-				<tr><td><a href="#" onclick="<?php print $this->name; ?>.toggleSpouses('<?php if ($this->rootPerson!=null) print $this->rootPerson->getXref(); ?>'); return false;" title="<?php print i18n::translate('Show or hide multiple spouses'); ?>"><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['sfamily']['small']; ?>" border="0" alt="" /></a></td></tr>
+				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomIn(); return false;"><img src="<?php print $SERVER_URL.$WT_IMAGE_DIR."/".$WT_IMAGES['zoomin']['other'];?>" border="0" alt="zoomin" /></a></td></tr>
+				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomOut(); return false;"><img src="<?php print $SERVER_URL.$WT_IMAGE_DIR."/".$WT_IMAGES['zoomout']['other'];?>" border="0" alt="zoomout" /></a></td></tr>
+				<tr><td <?php if (is_null($this->rootPerson) || WT_SCRIPT_NAME=='treenav.php') print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8');?>'); return false;" title="<?php print i18n::translate('View this tree in the full page interactive tree'); ?>"><img src="<?php print $SERVER_URL.$WT_IMAGE_DIR."/".$WT_IMAGES['gedcom']['small'];?>" border="0" alt="" /></a></td></tr>
+				<tr><td><a href="#" onclick="<?php print $this->name; ?>.toggleSpouses('<?php if ($this->rootPerson!=null) print $this->rootPerson->getXref(); ?>'); return false;" title="<?php print i18n::translate('Show or hide multiple spouses'); ?>"><img src="<?php print $SERVER_URL.$WT_IMAGE_DIR."/".$WT_IMAGES['sfamily']['small']; ?>" border="0" alt="" /></a></td></tr>
 				<tr><td><?php echo help_link('help_treenav.php'); ?></td></tr>
 				<tr><td><img id="<?php print $this->name; ?>_loading" src="<?php print $SERVER_URL; ?>images/loading.gif" style="display: none;" alt="Loading..." /></td></tr>
 			</table>
@@ -190,10 +190,10 @@ class TreeNav {
 	*/
 	function setupJS() {
 		global $SERVER_URL;
-		require_once PGV_ROOT.'js/prototype.js.htm';
-		require_once PGV_ROOT.'js/behaviour.js.htm';
-		require_once PGV_ROOT.'js/overlib.js.htm';
-		require_once PGV_ROOT.'js/scriptaculous.js.htm';
+		require_once WT_ROOT.'js/prototype.js.htm';
+		require_once WT_ROOT.'js/behaviour.js.htm';
+		require_once WT_ROOT.'js/overlib.js.htm';
+		require_once WT_ROOT.'js/scriptaculous.js.htm';
 		?>
 	<script type="text/javascript" src="<?php print $SERVER_URL; ?>js/treenav.js"></script>
 	<script type="text/javascript">
@@ -247,7 +247,7 @@ class TreeNav {
 	* @param Person $person the person to print the details for
 	*/
 	function getDetails(&$person) {
-		global $SHOW_ID_NUMBERS, $USE_SILHOUETTE, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SERVER_URL;
+		global $SHOW_ID_NUMBERS, $USE_SILHOUETTE, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $SERVER_URL;
 		global $TEXT_DIRECTION;
 
 		if (empty($person)) $person = $this->rootPerson;
@@ -289,25 +289,25 @@ class TreeNav {
 		<?php $thumb = $this->getThumbnail($person); 
 		if (!empty($thumb)) {
 			echo $thumb;
-		} else if ($USE_SILHOUETTE && isset($PGV_IMAGES["default_image_U"]["other"])) {
+		} else if ($USE_SILHOUETTE && isset($WT_IMAGES["default_image_U"]["other"])) {
 			$class = "pedigree_image_portrait";
 			if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
 			$sex = $person->getSex();
 			$thumbnail = "<img src=\"";
 			if ($sex == 'F') {
-				$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_F"]["other"];
+				$thumbnail .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_F"]["other"];
 			}
 			else if ($sex == 'M') {
-				$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_M"]["other"];
+				$thumbnail .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_M"]["other"];
 			}
 			else {
-				$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_U"]["other"];
+				$thumbnail .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_U"]["other"];
 			} 
 			$thumbnail .="\" class=\"".$class."\" border=\"none\" alt=\"\" />";
 			echo $thumbnail;
 		} ?>
 		<a href="<?php print $person->getLinkUrl(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><?php print $person->getSexImage().PrintReady($name); ?></a>
-		<img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $person->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />
+		<img src="<?php print $SERVER_URL.$WT_IMAGE_DIR."/".$WT_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $person->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />
 		</span><br />
 		<div class="details1 indent">
 			<?php
@@ -329,33 +329,33 @@ class TreeNav {
 				<?php $thumb = $this->getThumbnail($spouse); 
 				if (!empty($thumb)) {
 					echo $thumb;
-				} else if ($USE_SILHOUETTE && isset($PGV_IMAGES["default_image_U"]["other"])) {
+				} else if ($USE_SILHOUETTE && isset($WT_IMAGES["default_image_U"]["other"])) {
 					$class = "pedigree_image_portrait";
 					if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
 					$sex = $spouse->getSex();
 					$thumbnail = "<img src=\"";
 					if ($sex == 'F') {
-						$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_F"]["other"];
+						$thumbnail .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_F"]["other"];
 					}
 					else if ($sex == 'M') {
-						$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_M"]["other"];
+						$thumbnail .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_M"]["other"];
 					}
 					else {
-						$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_U"]["other"];
+						$thumbnail .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_U"]["other"];
 					} 
 					$thumbnail .="\" class=\"".$class."\" border=\"none\" alt=\"\" />";
 					echo $thumbnail;
 				} ?>
 				<a href="<?php print $spouse->getLinkUrl(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;">
 				<?php print $spouse->getSexImage().PrintReady($name); ?></a>
-				<img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />
+				<img src="<?php print $SERVER_URL.$WT_IMAGE_DIR."/".$WT_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />
 				<br />
 				<div class="details1 indent">
 					<?php
 						echo '<b>', i18n::fact_abbreviation('BIRT'), '</b> ', $spouse->getBirthDate()->Display(), ' ', PrintReady($spouse->getBirthPlace()), '<br />';
 						echo '<b>', i18n::fact_abbreviation('MARR'), '</b> ', $family->getMarriageDate()->Display(), ' ', $family->getMarriagePlace();
 					?>
-					<a href="family.php?famid=<?php print $family->getXref(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><img id="d_<?php print $family->getXref(); ?>" alt="<?php print $family->getXref(); ?>" class="draggable" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['family']['button']; ?>" border="0" /></a><br />
+					<a href="family.php?famid=<?php print $family->getXref(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><img id="d_<?php print $family->getXref(); ?>" alt="<?php print $family->getXref(); ?>" class="draggable" src="<?php print $SERVER_URL.$WT_IMAGE_DIR."/".$WT_IMAGES['family']['button']; ?>" border="0" /></a><br />
 					<?php
 						if ($spouse->isDead()) {
 							echo '<b>', i18n::fact_abbreviation('DEAT'), '</b> ', $spouse->getDeathDate()->Display(), ' ', PrintReady($spouse->getDeathPlace()), '<br />';
@@ -444,7 +444,7 @@ class TreeNav {
 	* @param int $state Whether we are going up or down the tree, -1 for descendents +1 for ancestors
 	*/
 	function drawPersonAllSpouses(&$person, $gen, $state) {
-		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $SERVER_URL;
+		global $SHOW_ID_NUMBERS, $WT_IMAGE_DIR, $WT_IMAGES, $TEXT_DIRECTION, $SERVER_URL;
 
 		if ($gen<0) {
 			return;
@@ -492,11 +492,11 @@ class TreeNav {
 						?>
 					</td>
 					<?php
-					if ($hasChildren && $person->getNumberOfChildren()>1) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" name="vertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" alt="" /></td><?php }
-					else if ($hasChildren) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" name="vertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="3"  alt=""/></td><?php }
+					if ($hasChildren && $person->getNumberOfChildren()>1) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" name="vertline" src="<?php print $SERVER_URL.$WT_IMAGE_DIR."/".$WT_IMAGES['vline']['other']; ?>" width="3" alt="" /></td><?php }
+					else if ($hasChildren) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" name="vertline" src="<?php print $SERVER_URL.$WT_IMAGE_DIR."/".$WT_IMAGES['hline']['other']; ?>" width="3"  alt=""/></td><?php }
 					}
 					if ($state>0) {
-						?><td><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" alt="" /></td><?php
+						?><td><img src="<?php print $SERVER_URL.$WT_IMAGE_DIR."/".$WT_IMAGES['hline']['other']; ?>" width="8" height="3" alt="" /></td><?php
 					}
 					/* print the person */ ?>
 					<td>
@@ -521,7 +521,7 @@ class TreeNav {
 					</td>
 					<?php
 					if ($state<0) {
-						?><td><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" alt="" /></td><?php
+						?><td><img src="<?php print $SERVER_URL.$WT_IMAGE_DIR."/".$WT_IMAGES['hline']['other']; ?>" width="8" height="3" alt="" /></td><?php
 					}
 					/* print the father */
 					if ($state>=0 && (!empty($father) || !empty($mother))) {
@@ -530,7 +530,7 @@ class TreeNav {
 						$lineid.="_";
 						if (!empty($mother)) $lineid.=$mother->getXref();
 						?>
-					<?php if (!empty($father) && (!empty($mother))) { ?><td><img style="position: absolute;" id="<?php print $lineid;?>" name="pvertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" alt="" /></td><?php } ?>
+					<?php if (!empty($father) && (!empty($mother))) { ?><td><img style="position: absolute;" id="<?php print $lineid;?>" name="pvertline" src="<?php print $SERVER_URL.$WT_IMAGE_DIR."/".$WT_IMAGES['vline']['other']; ?>" width="3" alt="" /></td><?php } ?>
 					<td align="left">
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tbody>
@@ -577,7 +577,7 @@ class TreeNav {
 	* @param Family $pfamily
 	*/
 	function drawPerson(&$person, $gen, $state, &$pfamily) {
-		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $SERVER_URL;
+		global $SHOW_ID_NUMBERS, $WT_IMAGE_DIR, $WT_IMAGES, $TEXT_DIRECTION, $SERVER_URL;
 
 		$gen++;
 		if ($gen<0) {
@@ -626,10 +626,10 @@ class TreeNav {
 						?>
 					</td>
 					<?php
-					if ($hasChildren && $family->getNumberOfChildren()>1) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" name="vertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" alt="" /></td><?php }
+					if ($hasChildren && $family->getNumberOfChildren()>1) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" name="vertline" src="<?php print $SERVER_URL.$WT_IMAGE_DIR."/".$WT_IMAGES['vline']['other']; ?>" width="3" alt="" /></td><?php }
 					}
 					if ($state>0) {
-						?><td><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" alt="" /></td><?php
+						?><td><img src="<?php print $SERVER_URL.$WT_IMAGE_DIR."/".$WT_IMAGES['hline']['other']; ?>" width="8" height="3" alt="" /></td><?php
 					}
 					/* print the person */ ?>
 					<td>
@@ -646,7 +646,7 @@ class TreeNav {
 					</td>
 					<?php
 					if ($state<0) {
-						?><td><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" alt="" /></td><?php
+						?><td><img src="<?php print $SERVER_URL.$WT_IMAGE_DIR."/".$WT_IMAGES['hline']['other']; ?>" width="8" height="3" alt="" /></td><?php
 					}
 					/* print the father */
 					if ($state>=0 && (!empty($father) || !empty($mother))) {
@@ -655,7 +655,7 @@ class TreeNav {
 						$lineid.="_";
 						if (!empty($mother)) $lineid.=$mother->getXref();
 						?>
-					<?php if (!empty($father) && (!empty($mother))) { ?><td><img style="position: absolute;" id="<?php print $lineid;?>" name="pvertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" alt="" /></td><?php } ?>
+					<?php if (!empty($father) && (!empty($mother))) { ?><td><img style="position: absolute;" id="<?php print $lineid;?>" name="pvertline" src="<?php print $SERVER_URL.$WT_IMAGE_DIR."/".$WT_IMAGES['vline']['other']; ?>" width="3" alt="" /></td><?php } ?>
 					<td align="left">
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tbody>

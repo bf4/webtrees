@@ -27,29 +27,29 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'descendancy.php');
+define('WT_SCRIPT_NAME', 'descendancy.php');
 require './config.php';
-require PGV_ROOT.'includes/controllers/descendancy_ctrl.php';
-require PGV_ROOT.'includes/functions/functions_print_lists.php';
+require WT_ROOT.'includes/controllers/descendancy_ctrl.php';
+require WT_ROOT.'includes/functions/functions_print_lists.php';
 
 $controller=new DescendancyController();
 $controller->init();
 
 print_header($controller->name." ".i18n::translate('Descendancy Chart'));
 
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 
 // LBox =====================================================================================
-if (PGV_USE_LIGHTBOX) {
-	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
+if (WT_USE_LIGHTBOX) {
+	require WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	require WT_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // ==========================================================================================
 
 echo '<table><tr><td valign="top"><h2>', i18n::translate('Descendancy Chart'), ':<br />', PrintReady($controller->name), '</h2>';
-echo PGV_JS_START;
+echo WT_JS_START;
 echo 'var pastefield; function paste_id(value) {pastefield.value=value;}';
-echo PGV_JS_END;
+echo WT_JS_END;
 
 $gencount=0;
 if ($view!="preview") {

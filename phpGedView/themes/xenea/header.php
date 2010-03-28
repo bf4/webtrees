@@ -27,7 +27,7 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -56,7 +56,7 @@ $displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMA
 			<link rel="stylesheet" href="<?php echo $THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 		<?php }
 		// Additional css files required (Only if Lightbox installed)
-		if (PGV_USE_LIGHTBOX) {
+		if (WT_USE_LIGHTBOX) {
 			if ($TEXT_DIRECTION=='rtl') {
 				echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />';
 				echo '<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';
@@ -83,18 +83,18 @@ $displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMA
 		<?php if (!empty($META_PAGE_TYPE)) {?><meta name="page-type" content="<?php echo htmlspecialchars($META_PAGE_TYPE); ?>" /><?php } ?>
 		<?php if (!empty($META_ROBOTS)) {?><meta name="robots" content="<?php echo htmlspecialchars($META_ROBOTS); ?>" /><?php } ?>
 		<?php if (!empty($META_REVISIT)) {?><meta name="revisit-after" content="<?php echo htmlspecialchars($META_REVISIT); ?>" /><?php } ?>
-		<meta name="generator" content="<?php echo PGV_PHPGEDVIEW, ' - ', PGV_PHPGEDVIEW_URL; ?>" />
+		<meta name="generator" content="<?php echo WT_WEBTREES, ' - ', WT_WEBTREES_URL; ?>" />
 	<?php } ?>
 	<?php echo $javascript; ?>
 	<?php echo $head; //-- additional header information ?>
 	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
 	<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
 	<?php if ($TEXT_DIRECTION=='rtl') {?>
-		<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
+		<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
 	<?php }?>
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>modules.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo WT_THEME_DIR?>modules.css" rel="Stylesheet" />
 </head>
 <body id="body" <?php echo $bodyOnLoad; ?>>
 <!-- begin header section -->
@@ -107,15 +107,15 @@ else if ($view!='simple'){?>
 	  <td>
 	  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-image:url('<?php
 			if ($TEXT_DIRECTION=="ltr") {
-				echo $PGV_IMAGE_DIR,"/cabeza.jpg'); ";
+				echo $WT_IMAGE_DIR,"/cabeza.jpg'); ";
 				echo "background-position:left top; ";
 			} else {
-				echo $PGV_IMAGE_DIR,"/cabeza_rtl.jpg'); ";
+				echo $WT_IMAGE_DIR,"/cabeza_rtl.jpg'); ";
 				echo "background-position:right top; ";
 			}
 			?>background-repeat:repeat-y; height:40px;">
 			  <tr>
-				<td width="10"><img src="<?php echo $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td>
+				<td width="10"><img src="<?php echo $WT_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td>
 				<td valign="middle"><font color="#FFFFFF" size="5" face="Verdana, Arial, Helvetica, sans-serif">
 				<?php echo PrintReady($GEDCOM_TITLE, true); ?>
 				</font></td>
@@ -128,19 +128,19 @@ else if ($view!='simple'){?>
 				<input type="submit" name="search" value="&gt;" />
 				</form>
 				</td>
-				<td width="10"><img src="<?php echo $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td>
+				<td width="10"><img src="<?php echo $WT_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td>
 		<?php } ?>
 			  </tr></table>
 		<?php if (empty($SEARCH_SPIDER)) { ?>
-			  <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#84beff" style="background-image:url('<?php echo $PGV_IMAGE_DIR; ?>/barra.gif');">
+			  <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#84beff" style="background-image:url('<?php echo $WT_IMAGE_DIR; ?>/barra.gif');">
 			  <tr>
-				<td width="10"  height="40"><img src="<?php echo $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="18" alt="" /></td>
+				<td width="10"  height="40"><img src="<?php echo $WT_IMAGE_DIR; ?>/pixel.gif" width="1" height="18" alt="" /></td>
 				<td width="115"><div id="favtheme" align="<?php echo $TEXT_DIRECTION=="rtl"?"right":"left" ?>" class="blanco"><?php print_theme_dropdown(1); ?><?php print_favorite_selector(1); ?></div></td>
 				<td><div align="center"><?php print_user_links(); ?></div></td>
 				<td width="120"><div id="favdate" align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right" ?>" class="blanco" align="right" ><?php print_lang_form(1); ?><?php echo $displayDate; ?>
 
 
-				</div></td><td width="10"><img src="<?php echo $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td></tr></table>
+				</div></td><td width="10"><img src="<?php echo $WT_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td></tr></table>
 		<?php } ?>
 <?php include($toplinks);
 } ?>

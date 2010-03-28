@@ -27,12 +27,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_INDEX_CACHE_PHP', '');
+define('WT_INDEX_CACHE_PHP', '');
 
 /**
  * load a cached block from a file
@@ -41,11 +41,11 @@ define('PGV_INDEX_CACHE_PHP', '');
  * @return boolean  returns false if the block could not be loaded from cache
  */
 function loadCachedBlock($block, $index) {
-	global $PGV_BLOCKS, $INDEX_DIRECTORY, $theme_name, $lang_short_cut, $LANGUAGE, $GEDCOM;
+	global $WT_BLOCKS, $INDEX_DIRECTORY, $theme_name, $lang_short_cut, $LANGUAGE, $GEDCOM;
 
 	//-- ignore caching when DEBUG is set
 	//-- ignore caching for logged in users
-	if (PGV_DEBUG || PGV_USER_ID) {
+	if (WT_DEBUG || WT_USER_ID) {
 		return false;
 	}
 
@@ -53,7 +53,7 @@ function loadCachedBlock($block, $index) {
 	$cacheLife = 0;
 	if (isset($block[1]['cache'])) $cacheLife = $block[1]['cache'];
 	else {
-		if (isset($PGV_BLOCKS[$block[0]]['config']['cache'])) $cacheLife = $PGV_BLOCKS[$block[0]]['config']['cache'];
+		if (isset($WT_BLOCKS[$block[0]]['config']['cache'])) $cacheLife = $WT_BLOCKS[$block[0]]['config']['cache'];
 	}
 	if ($cacheLife==0) return false;
 
@@ -81,11 +81,11 @@ function loadCachedBlock($block, $index) {
  * @return boolean  returns false if the block could not be saved to cache
  */
 function saveCachedBlock($block, $index, $content) {
-	global $PGV_BLOCKS, $INDEX_DIRECTORY, $theme_name, $lang_short_cut, $LANGUAGE, $GEDCOM;
+	global $WT_BLOCKS, $INDEX_DIRECTORY, $theme_name, $lang_short_cut, $LANGUAGE, $GEDCOM;
 
 	//-- ignore caching when DEBUG is set
 	//-- ignore caching for logged in users
-	if (PGV_DEBUG || PGV_USER_ID) {
+	if (WT_DEBUG || WT_USER_ID) {
 		return false;
 	}
 
@@ -93,8 +93,8 @@ function saveCachedBlock($block, $index, $content) {
 	$cacheLife = 0;
 	if (isset($block[1]['cache'])) {
 		$cacheLife = $block[1]['cache'];
-	} elseif (isset($PGV_BLOCKS[$block[0]]['config']['cache'])) {
-		$cacheLife = $PGV_BLOCKS[$block[0]]['config']['cache'];
+	} elseif (isset($WT_BLOCKS[$block[0]]['config']['cache'])) {
+		$cacheLife = $WT_BLOCKS[$block[0]]['config']['cache'];
 	}
 	if ($cacheLife==0) {
 		return false;
@@ -129,7 +129,7 @@ function saveCachedBlock($block, $index, $content) {
  */
 function removeDir($dir) {
 	if (!is_writable($dir)) {
-		if (!@chmod($dir, PGV_PERM_EXE)) return FALSE;
+		if (!@chmod($dir, WT_PERM_EXE)) return FALSE;
 	}
 
 	$d = dir($dir);
@@ -155,7 +155,7 @@ function removeDir($dir) {
  * clears the cache files
  */
 function clearCache() {
-	global $PGV_BLOCKS, $INDEX_DIRECTORY, $lang_short_cut, $LANGUAGE, $GEDCOM;
+	global $WT_BLOCKS, $INDEX_DIRECTORY, $lang_short_cut, $LANGUAGE, $GEDCOM;
 
 	removeDir("{$INDEX_DIRECTORY}/cache");
 }

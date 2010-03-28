@@ -27,18 +27,18 @@
 * @version $Id: clippings_ctrl.php 6607 2009-12-23 17:43:48Z yalnifj $
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLIPPINGS_CTRL', '');
+define('WT_CLIPPINGS_CTRL', '');
 
-require_once PGV_ROOT.'includes/classes/class_grampsexport.php';
-require_once PGV_ROOT.'includes/classes/class_person.php';
-require_once PGV_ROOT.'includes/functions/functions.php';
-require_once PGV_ROOT.'includes/controllers/basecontrol.php';
-require_once PGV_ROOT.'library/pclzip.lib.php';
+require_once WT_ROOT.'includes/classes/class_grampsexport.php';
+require_once WT_ROOT.'includes/classes/class_person.php';
+require_once WT_ROOT.'includes/functions/functions.php';
+require_once WT_ROOT.'includes/controllers/basecontrol.php';
+require_once WT_ROOT.'library/pclzip.lib.php';
 
 function same_group($a, $b) {
 	if ($a['type'] == $b['type'])
@@ -102,7 +102,7 @@ class ClippingsControllerRoot extends BaseController {
 		$ENABLE_CLIPPINGS_CART = $PRIV_HIDE;
 		if ($ENABLE_CLIPPINGS_CART === true)
 		$ENABLE_CLIPPING_CART = $PRIV_PUBLIC;
-		if ($ENABLE_CLIPPINGS_CART < PGV_USER_ACCESS_LEVEL) {
+		if ($ENABLE_CLIPPINGS_CART < WT_USER_ACCESS_LEVEL) {
 			header("Location: index.php");
 			exit;
 		}
@@ -116,7 +116,7 @@ class ClippingsControllerRoot extends BaseController {
 		$convert = safe_GET('convert',"","no");
 		$this->Zip = safe_GET('Zip');
 		$this->IncludeMedia = safe_GET('IncludeMedia');
-		$this->conv_path = safe_GET('conv_path', PGV_REGEX_NOSCRIPT, $_SESSION['exportConvPath']);
+		$this->conv_path = safe_GET('conv_path', WT_REGEX_NOSCRIPT, $_SESSION['exportConvPath']);
 		$this->conv_slashes = safe_GET('conv_slashes', array('forward', 'backward'), $_SESSION['exportConvSlashes']);
 		$this->privatize_export = safe_GET('privatize_export', array('none', 'visitor', 'user', 'gedadmin', 'admin'));
 		$this->filetype = safe_GET('filetype');
@@ -157,12 +157,12 @@ class ClippingsControllerRoot extends BaseController {
 			if ($ret) {
 				if ($this->type == 'sour') {
 					if ($others == 'linked') {
-						foreach (fetch_linked_indi($this->id, 'SOUR', PGV_GED_ID) as $indi) {
+						foreach (fetch_linked_indi($this->id, 'SOUR', WT_GED_ID) as $indi) {
 							if ($indi->canDisplayName()) {
 								$this->add_clipping(array('type'=>'indi', 'id'=>$indi->getXref()));
 							}
 						}
-						foreach (fetch_linked_fam($this->id, 'SOUR', PGV_GED_ID) as $fam) {
+						foreach (fetch_linked_fam($this->id, 'SOUR', WT_GED_ID) as $fam) {
 							if ($fam->canDisplayName()) {
 								$this->add_clipping(array('type'=>'fam', 'id'=>$fam->getXref()));
 							}
@@ -262,9 +262,9 @@ class ClippingsControllerRoot extends BaseController {
 				$media = array ();
 				$mediacount = 0;
 				$ct = count($cart);
-				$filetext = "0 HEAD\n1 SOUR ".PGV_PHPGEDVIEW."\n2 NAME ".PGV_PHPGEDVIEW."\n2 VERS ".PGV_VERSION_TEXT."\n1 DEST DISKETTE\n1 DATE " . date("j M Y") . "\n2 TIME " . date("H:i:s") . "\n";
+				$filetext = "0 HEAD\n1 SOUR ".WT_WEBTREES."\n2 NAME ".WT_WEBTREES."\n2 VERS ".WT_VERSION_TEXT."\n1 DEST DISKETTE\n1 DATE " . date("j M Y") . "\n2 TIME " . date("H:i:s") . "\n";
 				$filetext .= "1 GEDC\n2 VERS 5.5\n2 FORM LINEAGE-LINKED\n1 CHAR UTF-8\n";
-				$head = find_gedcom_record("HEAD", PGV_GED_ID);
+				$head = find_gedcom_record("HEAD", WT_GED_ID);
 				$placeform = trim(get_sub_record(1, "1 PLAC", $head));
 				if (!empty ($placeform))
 				$filetext .= $placeform . "\n";
@@ -288,7 +288,7 @@ class ClippingsControllerRoot extends BaseController {
 				for ($i = 0; $i < $ct; $i++) {
 					$clipping = $cart[$i];
 					if ($clipping['gedcom'] == $GEDCOM) {
-						$record = find_gedcom_record($clipping['id'], PGV_GED_ID);
+						$record = find_gedcom_record($clipping['id'], WT_GED_ID);
 						$savedRecord = $record;		// Save this for the "does this file exist" check
 						if ($clipping['type']=='obje') $record = convert_media_path($record, $this->conv_path, $this->conv_slashes);
 						$record = privatize_gedcom($record);
@@ -419,14 +419,14 @@ class ClippingsControllerRoot extends BaseController {
 				$filetext .= "1 PUBL " . $HOME_SITE_URL . "\n";
 				$filetext .= "0 TRLR\n";
 				//-- make sure the preferred line endings are used
-				$filetext = preg_replace("/[\r\n]+/", PGV_EOL, $filetext);
+				$filetext = preg_replace("/[\r\n]+/", WT_EOL, $filetext);
 				$this->download_data = $filetext;
 				$this->download_clipping();
 			} else
 			if ($this->filetype == "gramps") {
 				// Sort the clippings cart because the export works better when the cart is sorted
 				usort($cart, "same_group");
-				require_once PGV_ROOT.'includes/classes/class_geclippings.php';
+				require_once WT_ROOT.'includes/classes/class_geclippings.php';
 				$gramps_Exp = new GEClippings();
 				$gramps_Exp->begin_xml();
 				$ct = count($cart);
@@ -437,21 +437,21 @@ class ClippingsControllerRoot extends BaseController {
 
 					switch ($clipping['type']) {
 					case 'indi':
-						$rec = find_person_record($clipping['id'], PGV_GED_ID);
+						$rec = find_person_record($clipping['id'], WT_GED_ID);
 						$rec = remove_custom_tags($rec, $remove);
 						if ($this->privatize_export!='none') $rec = privatize_gedcom($rec);
 						$gramps_Exp->create_person($rec, $clipping['id']);
 						break;
 
 					case 'fam':
-						$rec = find_family_record($clipping['id'], PGV_GED_ID);
+						$rec = find_family_record($clipping['id'], WT_GED_ID);
 						$rec = remove_custom_tags($rec, $remove);
 						if ($this->privatize_export!='none') $rec = privatize_gedcom($rec);
 						$gramps_Exp->create_family($rec, $clipping['id']);
 						break;
 
 					case 'source':
-						$rec = find_source_record($clipping['id'], PGV_GED_ID);
+						$rec = find_source_record($clipping['id'], WT_GED_ID);
 						$rec = remove_custom_tags($rec, $remove);
 						if ($this->privatize_export!='none') $rec = privatize_gedcom($rec);
 						$gramps_Exp->create_source($rec, $clipping['id']);
@@ -490,7 +490,7 @@ class ClippingsControllerRoot extends BaseController {
 			fclose($fp);
 			$zipName = "clippings".rand(0, 1500).".zip";
 			$fname = $INDEX_DIRECTORY.$zipName;
-			$comment = "Created by ".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT." on ".date("d M Y").".";
+			$comment = "Created by ".WT_WEBTREES." ".WT_VERSION_TEXT." on ".date("d M Y").".";
 			$archive = new PclZip($fname);
 			// add the ged/gramps file to the root of the zip file (strip off the index_directory)
 			$this->media_list[]= array (PCLZIP_ATT_FILE_NAME => $INDEX_DIRECTORY.$tempFileName, PCLZIP_ATT_FILE_NEW_FULL_NAME => $tempFileName);
@@ -586,8 +586,8 @@ class ClippingsControllerRoot extends BaseController {
 			}
 			//-- look in the gedcom record for any linked SOUR, NOTE, or OBJE and also add them to the
 			//- clippings cart
-			$gedrec = find_gedcom_record($clipping['id'], PGV_GED_ID);
-			if ($SHOW_SOURCES >= PGV_USER_ACCESS_LEVEL) {
+			$gedrec = find_gedcom_record($clipping['id'], WT_GED_ID);
+			if ($SHOW_SOURCES >= WT_USER_ACCESS_LEVEL) {
 				$st = preg_match_all("/\d SOUR @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
 				for ($i = 0; $i < $st; $i++) {
 					// add SOUR
@@ -597,7 +597,7 @@ class ClippingsControllerRoot extends BaseController {
 					$clipping['gedcom'] = $GEDCOM;
 					$this->add_clipping($clipping);
 					// add REPO
-					$sourec = find_gedcom_record($match[$i][1], PGV_GED_ID);
+					$sourec = find_gedcom_record($match[$i][1], WT_GED_ID);
 					$rt = preg_match_all("/\d REPO @(.*)@/", $sourec, $rmatch, PREG_SET_ORDER);
 					for ($j = 0; $j < $rt; $j++) {
 						$clipping = array ();
@@ -636,7 +636,7 @@ class ClippingsControllerRoot extends BaseController {
 
 		if (!$famid)
 			return;
-		$famrec = find_family_record($famid, PGV_GED_ID);
+		$famrec = find_family_record($famid, WT_GED_ID);
 		if ($famrec) {
 			$parents = find_parents_in_record($famrec);
 			if (!empty ($parents["HUSB"])) {
@@ -692,7 +692,7 @@ class ClippingsControllerRoot extends BaseController {
 			$clipping['id'] = $parents["WIFE"];
 			$this->add_clipping($clipping);
 		}
-		$famrec = find_family_record($famid, PGV_GED_ID);
+		$famrec = find_family_record($famid, WT_GED_ID);
 		if ($famrec) {
 			$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch, PREG_SET_ORDER);
 			for ($i = 0; $i < $num; $i++) {
@@ -766,7 +766,7 @@ class ClippingsControllerRoot extends BaseController {
 							$ret = $this->add_clipping($clipping);
 							$this->add_ancestors_to_cart_families($parents["WIFE"], $level);
 						}
-						$famrec = find_family_record($famid, PGV_GED_ID);
+						$famrec = find_family_record($famid, WT_GED_ID);
 						if ($famrec) {
 							$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch, PREG_SET_ORDER);
 							for ($i = 0; $i < $num; $i++) {
@@ -785,8 +785,8 @@ class ClippingsControllerRoot extends BaseController {
 // -- end of class
 
 //-- load a user extended class if one exists
-if (file_exists(PGV_ROOT.'includes/controllers/clippings_ctrl_user.php')) {
-	require_once PGV_ROOT.'includes/controllers/clippings_ctrl_user.php';
+if (file_exists(WT_ROOT.'includes/controllers/clippings_ctrl_user.php')) {
+	require_once WT_ROOT.'includes/controllers/clippings_ctrl_user.php';
 } else {
 	class ClippingsController extends ClippingsControllerRoot {
 	}

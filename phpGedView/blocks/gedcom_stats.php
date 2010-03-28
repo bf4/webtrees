@@ -30,20 +30,20 @@
  * @subpackage Blocks
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_GEDCOM_STATS_PHP', '');
+define('WT_GEDCOM_STATS_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
-require_once PGV_ROOT.'includes/classes/class_stats.php';
+require_once WT_ROOT.'includes/functions/functions_print_lists.php';
+require_once WT_ROOT.'includes/classes/class_stats.php';
 
-$PGV_BLOCKS['print_gedcom_stats']['name']     =i18n::translate('GEDCOM Statistics');
-$PGV_BLOCKS['print_gedcom_stats']['descr']    =i18n::translate('The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration.');
-$PGV_BLOCKS['print_gedcom_stats']['canconfig']=true;
-$PGV_BLOCKS['print_gedcom_stats']['config']   =array(
+$WT_BLOCKS['print_gedcom_stats']['name']     =i18n::translate('GEDCOM Statistics');
+$WT_BLOCKS['print_gedcom_stats']['descr']    =i18n::translate('The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration.');
+$WT_BLOCKS['print_gedcom_stats']['canconfig']=true;
+$WT_BLOCKS['print_gedcom_stats']['config']   =array(
 	'cache'               =>1,
 	'show_common_surnames'=>'yes',
 	'stat_indi'           =>'yes',
@@ -68,35 +68,35 @@ $PGV_BLOCKS['print_gedcom_stats']['config']   =array(
 //-- function to print the gedcom statistics block
 
 function print_gedcom_stats($block=true, $config='', $side, $index) {
-	global $PGV_BLOCKS, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $PGV_IMAGE_DIR, $PGV_IMAGES, $MULTI_MEDIA;
+	global $WT_BLOCKS, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $WT_IMAGE_DIR, $WT_IMAGES, $MULTI_MEDIA;
 	global $top10_block_present;
 
-	if (empty($config)) $config = $PGV_BLOCKS['print_gedcom_stats']['config'];
-	if (!isset($config['stat_indi'])) $config = $PGV_BLOCKS['print_gedcom_stats']['config'];
-	if (!isset($config['stat_first_death'])) $config['stat_first_death'] = $PGV_BLOCKS['print_gedcom_stats']['config']['stat_first_death'];
-	if (!isset($config['stat_last_death'])) $config['stat_last_death'] = $PGV_BLOCKS['print_gedcom_stats']['config']['stat_last_death'];
-	if (!isset($config['stat_media'])) $config['stat_media'] = $PGV_BLOCKS['print_gedcom_stats']['config']['stat_media'];
-	if (!isset($config['stat_link'])) $config['stat_link'] = $PGV_BLOCKS['print_gedcom_stats']['config']['stat_link'];
+	if (empty($config)) $config = $WT_BLOCKS['print_gedcom_stats']['config'];
+	if (!isset($config['stat_indi'])) $config = $WT_BLOCKS['print_gedcom_stats']['config'];
+	if (!isset($config['stat_first_death'])) $config['stat_first_death'] = $WT_BLOCKS['print_gedcom_stats']['config']['stat_first_death'];
+	if (!isset($config['stat_last_death'])) $config['stat_last_death'] = $WT_BLOCKS['print_gedcom_stats']['config']['stat_last_death'];
+	if (!isset($config['stat_media'])) $config['stat_media'] = $WT_BLOCKS['print_gedcom_stats']['config']['stat_media'];
+	if (!isset($config['stat_link'])) $config['stat_link'] = $WT_BLOCKS['print_gedcom_stats']['config']['stat_link'];
 
 	$id = 'gedcom_stats';
 	$title='';
-	if ($PGV_BLOCKS['print_gedcom_stats']['canconfig']) {
-		if ($ctype=='gedcom' && PGV_USER_GEDCOM_ADMIN || $ctype=='user' && PGV_USER_ID) {
+	if ($WT_BLOCKS['print_gedcom_stats']['canconfig']) {
+		if ($ctype=='gedcom' && WT_USER_GEDCOM_ADMIN || $ctype=='user' && WT_USER_ID) {
 			if ($ctype=='gedcom') {
-				$name = PGV_GEDCOM;
+				$name = WT_GEDCOM;
 			} else {
-				$name = PGV_USER_NAME;
+				$name = WT_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=700,height=400,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES['admin']['small']."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"$WT_IMAGE_DIR/".$WT_IMAGES['admin']['small']."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
 	$title.=i18n::translate('GEDCOM Statistics').help_link('index_stats');
 
-	$stats=new stats(PGV_GEDCOM);
+	$stats=new stats(WT_GEDCOM);
 
-	$content = "<b><a href=\"index.php?ctype=gedcom\">".PrintReady(strip_tags(get_gedcom_setting(PGV_GED_ID, 'title')))."</a></b><br />";
-	$head = find_other_record('HEAD', PGV_GED_ID);
+	$content = "<b><a href=\"index.php?ctype=gedcom\">".PrintReady(strip_tags(get_gedcom_setting(WT_GED_ID, 'title')))."</a></b><br />";
+	$head = find_other_record('HEAD', WT_GED_ID);
 	$ct=preg_match('/1 SOUR (.*)/', $head, $match);
 	if ($ct>0) {
 		$softrec = get_sub_record(1, '1 SOUR', $head);
@@ -120,12 +120,12 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 
 	$content .= '<br /><table><tr><td valign="top" class="width20"><table cellspacing="1" cellpadding="0">';
 	if ($config['stat_indi']=='yes') {
-		$content.='<tr><td class="facts_label">'.i18n::translate('Individuals').'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?surname_sublist=no&ged=".PGV_GEDCOM).'">'.$stats->totalIndividuals().'</a></div></td></tr>';
+		$content.='<tr><td class="facts_label">'.i18n::translate('Individuals').'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?surname_sublist=no&ged=".WT_GEDCOM).'">'.$stats->totalIndividuals().'</a></div></td></tr>';
 		$content.='<tr><td class="facts_label">'.i18n::translate('Males').'</td><td class="facts_value"><div dir="rtl">'.$stats->totalSexMales().'<br />'.$stats->totalSexMalesPercentage().'%</div></td></tr>';
 		$content.='<tr><td class="facts_label">'.i18n::translate('Females').'</td><td class="facts_value"><div dir="rtl">'.$stats->totalSexFemales().'<br />'.$stats->totalSexFemalesPercentage().'%</div></td></tr>';
 	}
 	if ($config['stat_surname']=='yes') {
-		$content .= '<tr><td class="facts_label">'.i18n::translate('Total surnames').'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?show_all=yes&surname_sublist=yes&ged=".PGV_GEDCOM).'">'.$stats->totalSurnames().'</a></div></td></tr>';
+		$content .= '<tr><td class="facts_label">'.i18n::translate('Total surnames').'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?show_all=yes&surname_sublist=yes&ged=".WT_GEDCOM).'">'.$stats->totalSurnames().'</a></div></td></tr>';
 	}
 	if ($config['stat_fam']=='yes') {
 		$content .= '<tr><td class="facts_label">'. i18n::translate('Families').'</td><td class="facts_value"><div dir="rtl"><a href="famlist.php">'.$stats->totalFamilies().'</a></div></td></tr>';
@@ -144,7 +144,7 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 	}
 	if ($config['stat_users']=='yes') {
 		$content .= '<tr><td class="facts_label">'. i18n::translate('Total users').'</td><td class="facts_value"><div dir="rtl">';
-			if (PGV_USER_GEDCOM_ADMIN){
+			if (WT_USER_GEDCOM_ADMIN){
 			$content .= '<a href="useradmin.php">'.$stats->totalUsers().'</a>';
 		} else {
 			$content .= $stats->totalUsers();
@@ -232,7 +232,7 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 					if ($i>0) {
 						$content .= ', ';
 					}
-					$content .= '<a href="'.encode_url("indilist.php?ged=".PGV_GEDCOM."&surname=".$surname['name']).'">'.PrintReady($surname['name']).'</a>';
+					$content .= '<a href="'.encode_url("indilist.php?ged=".WT_GEDCOM."&surname=".$surname['name']).'">'.PrintReady($surname['name']).'</a>';
 					$i++;
 				}
 			}
@@ -248,14 +248,14 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 }
 
 function print_gedcom_stats_config($config) {
-	global $ctype, $PGV_BLOCKS, $TEXT_DIRECTION;
-	if (empty($config)) $config = $PGV_BLOCKS['print_gedcom_stats']['config'];
-	if (!isset($config['stat_indi'])) $config = $PGV_BLOCKS['print_gedcom_stats']['config'];
-	if (!isset($config['stat_first_death'])) $config['stat_first_death'] = $PGV_BLOCKS['print_gedcom_stats']['config']['stat_first_death'];
-	if (!isset($config['stat_last_death'])) $config['stat_last_death'] = $PGV_BLOCKS['print_gedcom_stats']['config']['stat_last_death'];
-	if (!isset($config['stat_media'])) $config['stat_media'] = $PGV_BLOCKS['print_gedcom_stats']['config']['stat_media'];
-	if (!isset($config['stat_link'])) $config['stat_link'] = $PGV_BLOCKS['print_gedcom_stats']['config']['stat_link'];
-	if (!isset($config['cache'])) $config['cache'] = $PGV_BLOCKS['print_gedcom_stats']['config']['cache'];
+	global $ctype, $WT_BLOCKS, $TEXT_DIRECTION;
+	if (empty($config)) $config = $WT_BLOCKS['print_gedcom_stats']['config'];
+	if (!isset($config['stat_indi'])) $config = $WT_BLOCKS['print_gedcom_stats']['config'];
+	if (!isset($config['stat_first_death'])) $config['stat_first_death'] = $WT_BLOCKS['print_gedcom_stats']['config']['stat_first_death'];
+	if (!isset($config['stat_last_death'])) $config['stat_last_death'] = $WT_BLOCKS['print_gedcom_stats']['config']['stat_last_death'];
+	if (!isset($config['stat_media'])) $config['stat_media'] = $WT_BLOCKS['print_gedcom_stats']['config']['stat_media'];
+	if (!isset($config['stat_link'])) $config['stat_link'] = $WT_BLOCKS['print_gedcom_stats']['config']['stat_link'];
+	if (!isset($config['cache'])) $config['cache'] = $WT_BLOCKS['print_gedcom_stats']['config']['cache'];
 
 	?><tr><td class="descriptionbox wrap width33"> <?php echo i18n::translate('Show common surnames?'); ?></td>
 <td class="optionbox"><select name="show_common_surnames">

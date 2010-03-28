@@ -35,16 +35,16 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 header('HTTP/1.0 403 Forbidden');
 exit;
 }
 
-define('PGV_LB_DB_SCHEMA_0_1', '');
+define('WT_LB_DB_SCHEMA_0_1', '');
 
-if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
+if (file_exists(WT_ROOT.'modules/lightbox/lb_config.php')) {
 	// Use @, in case the lb_config.php file is incomplete/corrupt
-	@require_once PGV_ROOT.'modules/lightbox/lb_config.php';
+	@require_once WT_ROOT.'modules/lightbox/lb_config.php';
   @set_site_setting('LB_ENABLED',        $mediatab);
   @set_site_setting('LB_AL_HEAD_LINKS',  $LB_AL_HEAD_LINKS);
   @set_site_setting('LB_AL_THUMB_LINKS', $LB_AL_THUMB_LINKS);
@@ -55,7 +55,7 @@ if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
   @set_site_setting('LB_TRANSITION',     $LB_TRANSITION);
 	@set_site_setting('LB_URL_WIDTH',      $LB_URL_WIDTH);
 	@set_site_setting('LB_URL_HEIGHT',     $LB_URL_HEIGHT);
-	@unlink(PGV_ROOT.'modules/lightbox/lb_config.php');
+	@unlink(WT_ROOT.'modules/lightbox/lb_config.php');
 }
 
 // Update the version to indicate sucess

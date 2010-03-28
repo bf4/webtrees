@@ -29,18 +29,18 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_GEDCOM_NEWS_PHP', '');
+define('WT_GEDCOM_NEWS_PHP', '');
 
-$PGV_BLOCKS['print_gedcom_news']['name']		= i18n::translate('GEDCOM News');
-$PGV_BLOCKS['print_gedcom_news']['descr']		= i18n::translate('The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child.');
-$PGV_BLOCKS['print_gedcom_news']['type']		= 'gedcom';
-$PGV_BLOCKS['print_gedcom_news']['canconfig']	= true;
-$PGV_BLOCKS['print_gedcom_news']['config']		= array(
+$WT_BLOCKS['print_gedcom_news']['name']		= i18n::translate('GEDCOM News');
+$WT_BLOCKS['print_gedcom_news']['descr']		= i18n::translate('The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child.');
+$WT_BLOCKS['print_gedcom_news']['type']		= 'gedcom';
+$WT_BLOCKS['print_gedcom_news']['canconfig']	= true;
+$WT_BLOCKS['print_gedcom_news']['config']		= array(
 	'cache'=>7,
 	'limit' => 'nolimit',
 	'flag' => 0
@@ -53,10 +53,10 @@ $PGV_BLOCKS['print_gedcom_news']['config']		= array(
  */
 function print_gedcom_news($block = true, $config='', $side, $index)
 {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype, $PGV_BLOCKS;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $TEXT_DIRECTION, $ctype, $WT_BLOCKS;
 
 	if(empty($config)) {
-		$config = $PGV_BLOCKS['print_gedcom_news']['config'];
+		$config = $WT_BLOCKS['print_gedcom_news']['config'];
 	}
 	if ($config['flag'] == 0) {
 		$config['limit'] = 'nolimit';
@@ -66,24 +66,24 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		$config['flag'] = 0;
 	}
 
-	$usernews = getUserNews(PGV_GEDCOM);
+	$usernews = getUserNews(WT_GEDCOM);
 
 	$id = "gedcom_news";
 	$title = "";
-	if ($PGV_BLOCKS['print_gedcom_news']['canconfig']) {
-		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+	if ($WT_BLOCKS['print_gedcom_news']['canconfig']) {
+		if ($ctype=="gedcom" && WT_USER_GEDCOM_ADMIN || $ctype=="user" && WT_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = PGV_GEDCOM;
+				$name = WT_GEDCOM;
 			} else {
-				$name = PGV_USER_NAME;
+				$name = WT_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name={$name}&amp;ctype={$ctype}&amp;action=configure&amp;side={$side}&amp;index={$index}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">"
-			."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>\n"
+			."<img class=\"adminicon\" src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>\n"
 			;
 		}
 	}
 	$title .= i18n::translate('News');
-	if(PGV_USER_GEDCOM_ADMIN) {
+	if(WT_USER_GEDCOM_ADMIN) {
 		$title .= help_link('index_gedcom_news_adm');
 	} else {
 		$title .= help_link('index_gedcom_news');
@@ -125,7 +125,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		$content .= PrintReady($newsText)."<br />\n";
 
 		// Print Admin options for this News item
-		if(PGV_USER_GEDCOM_ADMIN) {
+		if(WT_USER_GEDCOM_ADMIN) {
 			$content .= "<hr size=\"1\" />"
 			."<a href=\"javascript:;\" onclick=\"editnews('".$news['id']."'); return false;\">".i18n::translate('Edit')."</a> | "
 			."<a href=\"".encode_url("index.php?action=deletenews&news_id=".$news['id']."&ctype={$ctype}")."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this News entry?')."');\">".i18n::translate('Delete')."</a><br />";
@@ -133,8 +133,8 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		$content .= "</div>\n";
 	}
 	$printedAddLink = false;
-	if (PGV_USER_GEDCOM_ADMIN) {
-		$content .= "<a href=\"javascript:;\" onclick=\"addnews('".urlencode(PGV_GEDCOM)."'); return false;\">".i18n::translate('Add a News article')."</a>";
+	if (WT_USER_GEDCOM_ADMIN) {
+		$content .= "<a href=\"javascript:;\" onclick=\"addnews('".urlencode(WT_GEDCOM)."'); return false;\">".i18n::translate('Add a News article')."</a>";
 		$printedAddLink = true;
 	}
 	if ($config['limit'] == 'date' || $config['limit'] == 'count') {
@@ -153,11 +153,11 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 
 function print_gedcom_news_config($config)
 {
-	global $ctype, $PGV_BLOCKS;
-	if (empty ($config)) $config = $PGV_BLOCKS["print_gedcom_news"]["config"];
+	global $ctype, $WT_BLOCKS;
+	if (empty ($config)) $config = $WT_BLOCKS["print_gedcom_news"]["config"];
 	if (!isset ($config["limit"])) $config["limit"] = "nolimit";
 	if (!isset ($config["flag"])) $config["flag"] = 0;
-	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_gedcom_news"]["config"]["cache"];
+	if (!isset($config["cache"])) $config["cache"] = $WT_BLOCKS["print_gedcom_news"]["config"]["cache"];
 
 	// Limit Type
 	echo

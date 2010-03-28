@@ -27,14 +27,14 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'export_gedcom.php');
+define('WT_SCRIPT_NAME', 'export_gedcom.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_export.php';
+require_once WT_ROOT.'includes/functions/functions_export.php';
 
 // Which gedcoms do we have permission to export?
 $gedcoms=array();
 foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
-	if (userGedcomAdmin(PGV_USER_ID, $ged_id)) {
+	if (userGedcomAdmin(WT_USER_ID, $ged_id)) {
 		$gedcoms[$ged_id]=$gedcom;
 	}
 }

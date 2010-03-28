@@ -51,12 +51,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_SCHEMA_13_14', '');
+define('WT_SCHEMA_13_14', '');
 
 if (!self::table_exists("{$TBLPREFIX}ip_address")) {
 	self::exec(
@@ -72,7 +72,7 @@ if (!self::table_exists("{$TBLPREFIX}ip_address")) {
 // Migrate the data from banned.php and search_engines.php to the new table
 global $INDEX_DIRECTORY;
 
-$statement=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}ip_address (ip_address, category, comment) VALUES (?, ?, ?)");
+$statement=WT_DB::prepare("INSERT INTO {$TBLPREFIX}ip_address (ip_address, category, comment) VALUES (?, ?, ?)");
 
 if (file_exists($INDEX_DIRECTORY.'banned.php')) {
 	require $INDEX_DIRECTORY.'banned.php';

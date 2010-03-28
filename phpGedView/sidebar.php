@@ -1,13 +1,13 @@
 <?php
-if (!defined('PGV_SCRIPT_NAME')) define('PGV_SCRIPT_NAME', 'sidebar.php');
+if (!defined('WT_SCRIPT_NAME')) define('WT_SCRIPT_NAME', 'sidebar.php');
 require_once('config.php');
-require_once(PGV_ROOT.'includes/classes/class_module.php');
+require_once(WT_ROOT.'includes/classes/class_module.php');
 
-$sb_action = safe_GET('sb_action', PGV_REGEX_ALPHANUM, 'none');
+$sb_action = safe_GET('sb_action', WT_REGEX_ALPHANUM, 'none');
 //-- handle ajax calls
 if ($sb_action!='none') {
-	$sidebarmods = PGVModule::getActiveList('S', PGV_USER_ACCESS_LEVEL);
-	uasort($sidebarmods, "PGVModule::compare_sidebar_order");
+	$sidebarmods = WTModule::getActiveList('S', WT_USER_ACCESS_LEVEL);
+	uasort($sidebarmods, "WTModule::compare_sidebar_order");
 	class tempController {
 		var $pid;
 		var $famid;
@@ -25,13 +25,13 @@ if ($sb_action!='none') {
 	if (!empty($pid)) {
 		$controller->pid = $pid;
 	}
-	$famid = safe_GET('famid', PGV_REGEX_XREF, '');
-	if (empty($famid)) $famid = safe_POST('famid', PGV_REGEX_XREF, '');
+	$famid = safe_GET('famid', WT_REGEX_XREF, '');
+	if (empty($famid)) $famid = safe_POST('famid', WT_REGEX_XREF, '');
 	if (!empty($famid)) {
 		$controller->famid = $famid;
 	}
-	$sid = safe_GET('sid', PGV_REGEX_XREF, '');
-	if (empty($sid)) $sid = safe_POST('sid', PGV_REGEX_XREF, '');
+	$sid = safe_GET('sid', WT_REGEX_XREF, '');
+	if (empty($sid)) $sid = safe_POST('sid', WT_REGEX_XREF, '');
 	if (!empty($sid)) {
 		$controller->sid = $sid;
 	}
@@ -46,7 +46,7 @@ if ($sb_action!='none') {
 					?><h3 title="<?php echo $mod->getName()?>"><a href="#"><?php echo $sb->getTitle()?></a></h3>
 					<div id="sb_content_<?php echo $mod->getName()?>">
 					<?php if ($counter==0) echo $sb->getContent();
-					else {?><img src="<?php echo $PGV_IMAGE_DIR ?>/loading.gif" /><?php }?>
+					else {?><img src="<?php echo $WT_IMAGE_DIR ?>/loading.gif" /><?php }?>
 					</div>
 					<?php 
 					$counter++;
@@ -56,7 +56,7 @@ if ($sb_action!='none') {
 		exit;
 	}
 	if ($sb_action=='loadmod') {
-		$modName = safe_GET('mod', PGV_REGEX_URL, '');
+		$modName = safe_GET('mod', WT_REGEX_URL, '');
 		if (isset($sidebarmods[$modName])) {
 			$mod = $sidebarmods[$modName];
 			if ($mod->hasSidebar()) {
@@ -92,8 +92,8 @@ if (isset($controller)) {
 	if (empty($pid)) $pid = safe_POST_xref('rootid', '');
 	if (empty($pid)) $pid = safe_POST_xref('sid', '');
 	if (empty($pid)) $pid = safe_GET_xref('sid', '');
-	$famid = safe_GET('famid', PGV_REGEX_XREF, '');
-	if (empty($famid)) $famid = safe_POST('famid', PGV_REGEX_XREF, '');
+	$famid = safe_GET('famid', WT_REGEX_XREF, '');
+	if (empty($famid)) $famid = safe_POST('famid', WT_REGEX_XREF, '');
 }
 ?>
 <style type="text/css">
@@ -248,7 +248,7 @@ jQuery(document).ready(function() {
 
 	var modsLoaded = false;
 	jQuery('#sidebar_open').toggle(function() {
-		jQuery('#sidebar_open img').attr('src', '<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other'];?>');
+		jQuery('#sidebar_open img').attr('src', '<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES['rdarrow']['other'];?>');
 		jQuery('#sidebar').animate({
 			right: "0px",
 			width: "310px"
@@ -260,7 +260,7 @@ jQuery(document).ready(function() {
 		else jQuery("#sidebarAccordion").accordion("resize");
 		jQuery('#sidebarAccordion').show();
 	}, function() {
-		jQuery('#sidebar_open img').attr('src', '<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['ldarrow']['other'];?>');
+		jQuery('#sidebar_open img').attr('src', '<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES['ldarrow']['other'];?>');
 		jQuery('#sidebar').css('left', '');
 		jQuery('#sidebar').animate({
 			right: "0px",
@@ -272,11 +272,11 @@ jQuery(document).ready(function() {
 </script>
 <div id="sidebar">
 	<div id="sidebar_controls" class="ui-accordion-header ui-helper-reset ui-state-active ui-corner-top ui-state-focus">
-		<a id="sidebar_open" href="#open"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['ldarrow']['other'];?>" border="0" alt=""/></a>
-		<a id="sidebar_pin" href="#pin"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['pin-out']['other'];?>" border="0" alt=""/></a>
+		<a id="sidebar_open" href="#open"><img src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES['ldarrow']['other'];?>" border="0" alt=""/></a>
+		<a id="sidebar_pin" href="#pin"><img src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES['pin-out']['other'];?>" border="0" alt=""/></a>
 	</div>
 	<div id="sidebarAccordion">
-		<img src="<?php echo $PGV_IMAGE_DIR ?>/loading.gif" alt="" />
+		<img src="<?php echo $WT_IMAGE_DIR ?>/loading.gif" alt="" />
 	</div>
 	<span class="ui-icon ui-icon-grip-dotted-horizontal" style="margin:2px auto;"></span>
 </div>

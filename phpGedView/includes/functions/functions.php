@@ -31,16 +31,16 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FUNCTIONS_PHP', '');
+define('WT_FUNCTIONS_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_mutex.php';
-require_once PGV_ROOT.'includes/classes/class_media.php';
-require_once PGV_ROOT.'includes/functions/functions_utf-8.php';
+require_once WT_ROOT.'includes/classes/class_mutex.php';
+require_once WT_ROOT.'includes/classes/class_media.php';
+require_once WT_ROOT.'includes/functions/functions_utf-8.php';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Extract, sanitise and validate FORM (POST), URL (GET) and COOKIE variables.
@@ -51,7 +51,7 @@ require_once PGV_ROOT.'includes/functions/functions_utf-8.php';
 // $var     - The variable to check
 // $regex   - Regular expression to validate the variable (or an array of
 //            regular expressions).  A number of common regexes are defined in
-//            session.php as constants PGV_REGEX_*.  If no value is specified,
+//            session.php as constants WT_REGEX_*.  If no value is specified,
 //            the default blocks all characters that could introduce scripts.
 // $default - A value to use if $var is undefined or invalid.
 //
@@ -66,24 +66,24 @@ require_once PGV_ROOT.'includes/functions/functions_utf-8.php';
 // to validate against a list of valid languages and supply a sensible default.
 ////////////////////////////////////////////////////////////////////////////////
 
-function safe_POST($var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
+function safe_POST($var, $regex=WT_REGEX_NOSCRIPT, $default=null) {
 	return safe_REQUEST($_POST, $var, $regex, $default);
 }
-function safe_GET($var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
+function safe_GET($var, $regex=WT_REGEX_NOSCRIPT, $default=null) {
 	return safe_REQUEST($_GET, $var, $regex, $default);
 }
-function safe_COOKIE($var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
+function safe_COOKIE($var, $regex=WT_REGEX_NOSCRIPT, $default=null) {
 	return safe_REQUEST($_COOKIE, $var, $regex, $default);
 }
 
 function safe_GET_integer($var, $min, $max, $default) {
-	$num=safe_GET($var, PGV_REGEX_INTEGER, $default);
+	$num=safe_GET($var, WT_REGEX_INTEGER, $default);
 	$num=max($num, $min);
 	$num=min($num, $max);
 	return (int)$num;
 }
 function safe_POST_integer($var, $min, $max, $default) {
-	$num=safe_POST($var, PGV_REGEX_INTEGER, $default);
+	$num=safe_POST($var, WT_REGEX_INTEGER, $default);
 	$num=max($num, $min);
 	$num=min($num, $max);
 	return (int)$num;
@@ -97,13 +97,13 @@ function safe_POST_bool($var, $true='(y|Y|1|yes|YES|Yes|true|TRUE|True|on)') {
 }
 
 function safe_GET_xref($var, $default=null) {
-	return safe_GET($var, PGV_REGEX_XREF, $default);
+	return safe_GET($var, WT_REGEX_XREF, $default);
 }
 function safe_POST_xref($var, $default=null) {
-	return safe_POST($var, PGV_REGEX_XREF, $default);
+	return safe_POST($var, WT_REGEX_XREF, $default);
 }
 
-function safe_REQUEST($arr, $var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
+function safe_REQUEST($arr, $var, $regex=WT_REGEX_NOSCRIPT, $default=null) {
 	if (is_array($regex)) {
 		$regex='(?:'.join('|', $regex).')';
 	}
@@ -209,7 +209,7 @@ function file_upload_error_text($error_code) {
  * this function returns the path to the currently active GEDCOM configuration file
  * @return string path to gedcom.ged_conf.php configuration file
  */
-function get_config_file($ged_id=PGV_GED_ID) {
+function get_config_file($ged_id=WT_GED_ID) {
 	global $INDEX_DIRECTORY;
 
 	$config=get_gedcom_setting($ged_id, 'config');
@@ -229,20 +229,20 @@ function get_config_file($ged_id=PGV_GED_ID) {
  * @param string $checkVar
  */
 function write_access_option($checkVar) {
-	echo "<option value=\"PGV_PRIV_PUBLIC\"";
-	echo $checkVar==PGV_PRIV_PUBLIC ? " selected=\"selected\"" : '';
+	echo "<option value=\"WT_PRIV_PUBLIC\"";
+	echo $checkVar==WT_PRIV_PUBLIC ? " selected=\"selected\"" : '';
 	echo ">", i18n::translate('Show to public'), "</option>\n";
 
-	echo "<option value=\"PGV_PRIV_USER\"";
-	echo $checkVar==PGV_PRIV_USER ? " selected=\"selected\"" : '';
+	echo "<option value=\"WT_PRIV_USER\"";
+	echo $checkVar==WT_PRIV_USER ? " selected=\"selected\"" : '';
 	echo ">", i18n::translate('Show only to authenticated users'), "</option>\n";
 
-	echo "<option value=\"PGV_PRIV_NONE\"";
-	echo $checkVar==PGV_PRIV_NONE ? " selected=\"selected\"" : '';
+	echo "<option value=\"WT_PRIV_NONE\"";
+	echo $checkVar==WT_PRIV_NONE ? " selected=\"selected\"" : '';
 	echo ">", i18n::translate('Show only to admin users'), "</option>\n";
 
-	echo "<option value=\"PGV_PRIV_HIDE\"";
-	echo $checkVar==PGV_PRIV_HIDE ? " selected=\"selected\"" : '';
+	echo "<option value=\"WT_PRIV_HIDE\"";
+	echo $checkVar==WT_PRIV_HIDE ? " selected=\"selected\"" : '';
 	echo ">", i18n::translate('Hide even from admin users'), "</option>\n";
 }
 
@@ -274,21 +274,21 @@ function get_privacy_file_version($privfile) {
  * Get the path to the privacy file for the currently active GEDCOM
  * @return string path to the privacy file
  */
-function get_privacy_file($ged_id=PGV_GED_ID) {
+function get_privacy_file($ged_id=WT_GED_ID) {
 	global $INDEX_DIRECTORY;
 
 	$privfile=get_gedcom_setting($ged_id, 'privacy');
 	// Compatibility with non-php based storage
 	$privfile=str_replace('${INDEX_DIRECTORY}', $INDEX_DIRECTORY, $privfile);
 
-	if (!file_exists($privfile) || version_compare(get_privacy_file_version($privfile), PGV_REQUIRED_PRIVACY_VERSION)<0) {
+	if (!file_exists($privfile) || version_compare(get_privacy_file_version($privfile), WT_REQUIRED_PRIVACY_VERSION)<0) {
 		return 'privacy.php';
 	} else {
 		return $privfile;
 	}
 }
 
-function load_privacy_file($ged_id=PGV_GED_ID) {
+function load_privacy_file($ged_id=WT_GED_ID) {
 	global $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
 
 	// Load the privacy settings into global scope
@@ -299,14 +299,14 @@ function load_privacy_file($ged_id=PGV_GED_ID) {
 	global $person_privacy, $user_privacy, $global_facts, $person_facts;
 
 	// Load default settings
-	require PGV_ROOT.'privacy.php';
+	require WT_ROOT.'privacy.php';
 
 	// Load settings for the specified gedcom
 	$privacy_file=get_privacy_file($ged_id);
 	if (
 		$privacy_file &&
 		file_exists($privacy_file) &&
-		version_compare(get_privacy_file_version($privacy_file), PGV_REQUIRED_PRIVACY_VERSION)>=0
+		version_compare(get_privacy_file_version($privacy_file), WT_REQUIRED_PRIVACY_VERSION)>=0
 	) {
 		require $privacy_file;
 	}
@@ -391,7 +391,7 @@ function file_is_writeable($file) {
  */
 function pgv_error_handler($errno, $errstr, $errfile, $errline) {
 	if ((error_reporting() > 0)&&($errno<2048)) {
-		if (PGV_ERROR_LEVEL==0) {
+		if (WT_ERROR_LEVEL==0) {
 			return;
 		}
 		if (stristr($errstr, "by reference")==true) {
@@ -404,7 +404,7 @@ function pgv_error_handler($errno, $errstr, $errfile, $errline) {
 		if ($errno<16 && function_exists("debug_backtrace") && strstr($errstr, "headers already sent by")===false) {
 			$backtrace=debug_backtrace();
 			$num=count($backtrace);
-			if (PGV_ERROR_LEVEL==1) {
+			if (WT_ERROR_LEVEL==1) {
 				$num=1;
 			}
 			for ($i=0; $i<$num; $i++) {
@@ -505,7 +505,7 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 		$pos2 = strpos($gedrec, "\n1", $pos1+1);
 	}
 	if (!$pos2) {
-		$pos2 = strpos($gedrec, "\nPGV_", $pos1+1); // PGV_SPOUSE, PGV_FAMILY_ID ...
+		$pos2 = strpos($gedrec, "\nWT_", $pos1+1); // WT_SPOUSE, WT_FAMILY_ID ...
 	}
 	if (!$pos2) {
 		return ltrim(substr($gedrec, $pos1));
@@ -530,14 +530,14 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 	$repeats = array();
 
 	$id = "";
-	$gt = preg_match('/0 @('.PGV_REGEX_XREF.')@/', $gedrec, $gmatch);
+	$gt = preg_match('/0 @('.WT_REGEX_XREF.')@/', $gedrec, $gmatch);
 	if ($gt > 0) {
 		$id = $gmatch[1];
 	}
 
 	$hasResn = strstr($gedrec, " RESN ");
 	$prev_tags = array();
-	$ct = preg_match_all('/\n1 ('.PGV_REGEX_TAG.')(.*)/', $gedrec, $match, PREG_SET_ORDER|PREG_OFFSET_CAPTURE);
+	$ct = preg_match_all('/\n1 ('.WT_REGEX_TAG.')(.*)/', $gedrec, $match, PREG_SET_ORDER|PREG_OFFSET_CAPTURE);
 	for ($i=0; $i<$ct; $i++) {
 		$fact = trim($match[$i][1][0]);
 		$pos1 = $match[$i][0][1];
@@ -574,7 +574,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 
 	//-- look for any records in FAMS records
 	if ($families) {
-		$ft = preg_match_all('/\n1 FAMS @('.PGV_REGEX_XREF.')@/', $gedrec, $fmatch, PREG_SET_ORDER);
+		$ft = preg_match_all('/\n1 FAMS @('.WT_REGEX_XREF.')@/', $gedrec, $fmatch, PREG_SET_ORDER);
 		for ($f=0; $f<$ft; $f++) {
 			$famid = $fmatch[$f][1];
 			$famrec = find_family_record($fmatch[$f][1], $ged_id);
@@ -585,7 +585,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 				$spid = $parents["HUSB"];
 			}
 			$prev_tags = array();
-			$ct = preg_match_all('/\n1 ('.PGV_REGEX_TAG.')(.*)/', $famrec, $match, PREG_SET_ORDER);
+			$ct = preg_match_all('/\n1 ('.WT_REGEX_TAG.')(.*)/', $famrec, $match, PREG_SET_ORDER);
 			for ($i=0; $i<$ct; $i++) {
 				$fact = trim($match[$i][1]);
 				if (empty($ignore) || strpos($ignore, $fact)===false) {
@@ -915,10 +915,10 @@ function get_cont($nlevel, $nrec, $tobr=true) {
  * @return array returns a two element array with indexes HUSB and WIFE for the parent ids
  */
 function find_parents($famid) {
-	$famrec = find_family_record($famid, PGV_GED_ID);
+	$famrec = find_family_record($famid, WT_GED_ID);
 	if (empty($famrec)) {
-		if (PGV_USER_CAN_EDIT) {
-			$famrec = find_updated_record($famid, PGV_GED_ID);
+		if (WT_USER_CAN_EDIT) {
+			$famrec = find_updated_record($famid, WT_GED_ID);
 			if (empty($famrec)) {
 				return false;
 			}
@@ -942,13 +942,13 @@ function find_parents_in_record($famrec) {
 		return false;
 	}
 	$parents = array();
-	$ct = preg_match('/1 HUSB @('.PGV_REGEX_XREF.')@/', $famrec, $match);
+	$ct = preg_match('/1 HUSB @('.WT_REGEX_XREF.')@/', $famrec, $match);
 	if ($ct>0) {
 		$parents["HUSB"]=$match[1];
 	} else {
 		$parents["HUSB"]="";
 	}
-	$ct = preg_match('/1 WIFE @('.PGV_REGEX_XREF.')@/', $famrec, $match);
+	$ct = preg_match('/1 WIFE @('.WT_REGEX_XREF.')@/', $famrec, $match);
 	if ($ct>0) {
 		$parents["WIFE"]=$match[1];
 	} else {
@@ -968,10 +968,10 @@ function find_parents_in_record($famrec) {
  * @return array
  */
 function find_children($famid, $me='') {
-	$famrec = find_family_record($famid, PGV_GED_ID);
+	$famrec = find_family_record($famid, WT_GED_ID);
 	if (empty($famrec)) {
-		if (PGV_USER_CAN_EDIT) {
-			$famrec = find_updated_record($famid, PGV_GED_ID);
+		if (WT_USER_CAN_EDIT) {
+			$famrec = find_updated_record($famid, WT_GED_ID);
 			if (empty($famrec)) {
 				return false;
 			}
@@ -998,7 +998,7 @@ function find_children_in_record($famrec, $me='') {
 		return $children;
 	}
 
-	$num = preg_match_all('/\n1 CHIL @('.PGV_REGEX_XREF.')@/', $famrec, $match, PREG_SET_ORDER);
+	$num = preg_match_all('/\n1 CHIL @('.WT_REGEX_XREF.')@/', $famrec, $match, PREG_SET_ORDER);
 	for ($i=0; $i<$num; $i++) {
 		$child = trim($match[$i][1]);
 		if ($child!=$me) {
@@ -1017,7 +1017,7 @@ function find_children_in_record($famrec, $me='') {
  * @return array array of family ids
  */
 function find_family_ids($pid) {
-	$indirec=find_person_record($pid, PGV_GED_ID);
+	$indirec=find_person_record($pid, WT_GED_ID);
 	return find_visible_families_in_record($indirec, "FAMC");
 }
 
@@ -1030,7 +1030,7 @@ function find_family_ids($pid) {
  * @return array array of family ids
  */
 function find_sfamily_ids($pid) {
-	$indirec=find_person_record($pid, PGV_GED_ID);
+	$indirec=find_person_record($pid, WT_GED_ID);
 	return find_visible_families_in_record($indirec, "FAMS");
 }
 
@@ -1043,7 +1043,7 @@ function find_sfamily_ids($pid) {
  * @return array array of family ids
  */
 function find_families_in_record($indirec, $tag) {
-	preg_match_all("/\n1 {$tag} @(".PGV_REGEX_XREF.')@/', $indirec, $match);
+	preg_match_all("/\n1 {$tag} @(".WT_REGEX_XREF.')@/', $indirec, $match);
 	return $match[1];
 }
 
@@ -1087,7 +1087,7 @@ function find_updated_record($gid, $ged_id) {
 }
 
 // Find out if there are any pending changes that a given user may accept
-function exists_pending_change($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
+function exists_pending_change($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
 	global $pgv_changes;
 
 	if (empty($pgv_changes) || !userCanAccept($user_id, $ged_id)) {
@@ -1118,7 +1118,7 @@ function exists_pending_change($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
  * @return array an object array with indexes "thumb" and "file" for thumbnail and filename
  */
 function find_highlighted_object($pid, $ged_id, $indirec) {
-	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_EXTERNAL, $TBLPREFIX;
+	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS, $WT_IMAGE_DIR, $WT_IMAGES, $MEDIA_EXTERNAL, $TBLPREFIX;
 
 	if (!showFactDetails("OBJE", $pid)) {
 		return false;
@@ -1129,10 +1129,10 @@ function find_highlighted_object($pid, $ged_id, $indirec) {
 	//-- handle finding the media of remote objects
 	$ct = preg_match("/(.*):(.*)/", $pid, $match);
 	if ($ct>0) {
-		require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
+		require_once WT_ROOT.'includes/classes/class_serviceclient.php';
 		$client = ServiceClient::getInstance($match[1]);
 		if (!is_null($client)) {
-			$mt = preg_match_all('/\n\d OBJE @('.PGV_REGEX_XREF.')@/', $indirec, $matches, PREG_SET_ORDER);
+			$mt = preg_match_all('/\n\d OBJE @('.WT_REGEX_XREF.')@/', $indirec, $matches, PREG_SET_ORDER);
 			for ($i=0; $i<$mt; $i++) {
 				$mediaObj = Media::getInstance($matches[$i][1]);
 				$mrec = $mediaObj->getGedcomRecord();
@@ -1147,7 +1147,7 @@ function find_highlighted_object($pid, $ged_id, $indirec) {
 
 	//-- find all of the media items for a person
 	$media=
-		PGV_DB::prepare("SELECT m_media, m_file, m_gedrec, mm_gedrec FROM {$TBLPREFIX}media, {$TBLPREFIX}media_mapping WHERE m_media=mm_media AND m_gedfile=mm_gedfile AND m_gedfile=? AND mm_gid=? ORDER BY mm_order")
+		WT_DB::prepare("SELECT m_media, m_file, m_gedrec, mm_gedrec FROM {$TBLPREFIX}media, {$TBLPREFIX}media_mapping WHERE m_media=mm_media AND m_gedfile=mm_gedfile AND m_gedfile=? AND mm_gid=? ORDER BY mm_order")
 		->execute(array($ged_id, $pid))
 		->fetchAll(PDO::FETCH_NUM);
 
@@ -1541,10 +1541,10 @@ function gedcomsort($a, $b) {
 function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignore_cache=false, $path_to_find=0) {
 	global $TIME_LIMIT, $start_time, $NODE_CACHE, $NODE_CACHE_LENGTH, $USE_RELATIONSHIP_PRIVACY, $pgv_changes;
 
-	if (isset($pgv_changes[$pid2."_".PGV_GEDCOM]) && PGV_USER_CAN_EDIT)
-		$indirec = find_updated_record($pid2, PGV_GED_ID);
+	if (isset($pgv_changes[$pid2."_".WT_GEDCOM]) && WT_USER_CAN_EDIT)
+		$indirec = find_updated_record($pid2, WT_GED_ID);
 	else
-		$indirec = find_person_record($pid2, PGV_GED_ID);
+		$indirec = find_person_record($pid2, WT_GED_ID);
 	//-- check the cache
 	if ($USE_RELATIONSHIP_PRIVACY && !$ignore_cache) {
 		if (isset($NODE_CACHE["$pid1-$pid2"])) {
@@ -1561,10 +1561,10 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 			$famids[$i]=$match[$i][1];
 		}
 		foreach ($famids as $indexval => $fam) {
-			if (isset($pgv_changes[$fam."_".PGV_GEDCOM]) && PGV_USER_CAN_EDIT)
-				$famrec = find_updated_record($fam, PGV_GED_ID);
+			if (isset($pgv_changes[$fam."_".WT_GEDCOM]) && WT_USER_CAN_EDIT)
+				$famrec = find_updated_record($fam, WT_GED_ID);
 			else
-				$famrec = find_family_record($fam, PGV_GED_ID);
+				$famrec = find_family_record($fam, WT_GED_ID);
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
 			for ($i=0; $i<$ct; $i++) {
 				$child = $match[$i][1];
@@ -1610,19 +1610,19 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		$numfams = preg_match_all("/1 FAMS @(.*)@/", $indirec, $fmatch, PREG_SET_ORDER);
 		for ($j=0; $j<$numfams; $j++) {
 			// Get the family record
-			if (isset($pgv_changes[$fmatch[$j][1]."_".PGV_GEDCOM]) && PGV_USER_CAN_EDIT)
-				$famrec = find_updated_record($fmatch[$j][1], PGV_GED_ID);
+			if (isset($pgv_changes[$fmatch[$j][1]."_".WT_GEDCOM]) && WT_USER_CAN_EDIT)
+				$famrec = find_updated_record($fmatch[$j][1], WT_GED_ID);
 			else
-				$famrec = find_family_record($fmatch[$j][1], PGV_GED_ID);
+				$famrec = find_family_record($fmatch[$j][1], WT_GED_ID);
 
 			// Get the set of children
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $cmatch, PREG_SET_ORDER);
 			for ($i=0; $i<$ct; $i++) {
 				// Get each child's record
-				if (isset($pgv_changes[$cmatch[$i][1]."_".PGV_GEDCOM]) && PGV_USER_CAN_EDIT)
-					$childrec = find_updated_record($cmatch[$i][1], PGV_GED_ID);
+				if (isset($pgv_changes[$cmatch[$i][1]."_".WT_GEDCOM]) && WT_USER_CAN_EDIT)
+					$childrec = find_updated_record($cmatch[$i][1], WT_GED_ID);
 				else
-					$childrec = find_person_record($cmatch[$i][1], PGV_GED_ID);
+					$childrec = find_person_record($cmatch[$i][1], WT_GED_ID);
 				$birthrec = get_sub_record(1, "1 BIRT", $childrec);
 				if ($birthrec!==false) {
 					$dct = preg_match("/2 DATE .*(\d\d\d\d)/", $birthrec, $bmatch);
@@ -1712,10 +1712,10 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				$childh = 3;
 
 				//-- generate heuristic values based of the birthdates of the current node and p2
-				if (isset($pgv_changes[$node["pid"]."_".PGV_GEDCOM]) && PGV_USER_CAN_EDIT)
-					$indirec = find_updated_record($node["pid"], PGV_GED_ID);
+				if (isset($pgv_changes[$node["pid"]."_".WT_GEDCOM]) && WT_USER_CAN_EDIT)
+					$indirec = find_updated_record($node["pid"], WT_GED_ID);
 				else
-					$indirec = find_person_record($node["pid"], PGV_GED_ID);
+					$indirec = find_person_record($node["pid"], WT_GED_ID);
 				$byear1 = -1;
 				$birthrec = get_sub_record(1, "1 BIRT", $indirec);
 				if ($birthrec!==false) {
@@ -1791,10 +1791,10 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				}
 				foreach ($famids as $indexval => $fam) {
 					$visited[$fam] = true;
-					if (isset($pgv_changes[$fam."_".PGV_GEDCOM]) && PGV_USER_CAN_EDIT)
-						$famrec = find_updated_record($fam, PGV_GED_ID);
+					if (isset($pgv_changes[$fam."_".WT_GEDCOM]) && WT_USER_CAN_EDIT)
+						$famrec = find_updated_record($fam, WT_GED_ID);
 					else
-						$famrec = find_family_record($fam, PGV_GED_ID);
+						$famrec = find_family_record($fam, WT_GED_ID);
 					$parents = find_parents_in_record($famrec);
 					if ((!empty($parents["HUSB"]))&&(!isset($visited[$parents["HUSB"]]))) {
 						$node1 = $node;
@@ -1869,10 +1869,10 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				}
 				foreach ($famids as $indexval => $fam) {
 					$visited[$fam] = true;
-					if (isset($pgv_changes[$fam."_".PGV_GEDCOM]) && PGV_USER_CAN_EDIT)
-						$famrec = find_updated_record($fam, PGV_GED_ID);
+					if (isset($pgv_changes[$fam."_".WT_GEDCOM]) && WT_USER_CAN_EDIT)
+						$famrec = find_updated_record($fam, WT_GED_ID);
 					else
-						$famrec = find_family_record($fam, PGV_GED_ID);
+						$famrec = find_family_record($fam, WT_GED_ID);
 					if ($followspouse) {
 						$parents = find_parents_in_record($famrec);
 						if ((!empty($parents["HUSB"]))&&((!in_arrayr($parents["HUSB"], $node1))||(!isset($visited[$parents["HUSB"]])))) {
@@ -2635,8 +2635,8 @@ function get_theme_names() {
 	$themes = array();
 	$d = dir("themes");
 	while (false !== ($entry = $d->read())) {
-		if ($entry{0}!="." && $entry!="CVS" && !stristr($entry, "svn") && is_dir(PGV_ROOT.'themes/'.$entry) && file_exists(PGV_ROOT.'themes/'.$entry.'/theme.php')) {
-			$themefile = implode("", file(PGV_ROOT.'themes/'.$entry.'/theme.php'));
+		if ($entry{0}!="." && $entry!="CVS" && !stristr($entry, "svn") && is_dir(WT_ROOT.'themes/'.$entry) && file_exists(WT_ROOT.'themes/'.$entry.'/theme.php')) {
+			$themefile = implode("", file(WT_ROOT.'themes/'.$entry.'/theme.php'));
 			$tt = preg_match("/theme_name\s*=\s*\"(.*)\";/", $themefile, $match);
 			if ($tt>0)
 				$themename = trim($match[1]);
@@ -2754,7 +2754,7 @@ function get_report_list($force=false) {
 	}
 	$d->close();
 
-	require_once PGV_ROOT.'includes/reportheader.php';
+	require_once WT_ROOT.'includes/reportheader.php';
 	$report_array = array();
 	if (!function_exists("xml_parser_create"))
 		return $report_array;
@@ -3030,7 +3030,7 @@ function CheckPageViews() {
 		return;
 
 	// The media firewall should not be throttled
-	if (PGV_SCRIPT_NAME=='mediafirewall.php')
+	if (WT_SCRIPT_NAME=='mediafirewall.php')
 		return;
 
 	if (!empty($_SESSION["pageviews"]["time"]) && !empty($_SESSION["pageviews"]["number"])) {
@@ -3055,7 +3055,7 @@ function CheckPageViews() {
  * @param string $type	the type of record, defaults to 'INDI'
  * @return string
  */
-function get_new_xref($type='INDI', $ged_id=PGV_GED_ID, $use_cache=false) {
+function get_new_xref($type='INDI', $ged_id=WT_GED_ID, $use_cache=false) {
 	global $fcontents, $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $pgv_changes, $TBLPREFIX;
 	global $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX, $MAX_IDS;
 
@@ -3069,7 +3069,7 @@ function get_new_xref($type='INDI', $ged_id=PGV_GED_ID, $use_cache=false) {
 	} else {
 		//-- check for the id in the nextid table
 		$num=
-			PGV_DB::prepare("SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type=? AND ni_gedfile=?")
+			WT_DB::prepare("SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type=? AND ni_gedfile=?")
 			->execute(array($type, $ged_id))
 			->fetchOne();
 
@@ -3091,7 +3091,7 @@ function get_new_xref($type='INDI', $ged_id=PGV_GED_ID, $use_cache=false) {
 		//-- type wasn't found in database or in file so make a new one
 		if (is_null($num)) {
 			$num = 1;
-			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}nextid VALUES(?, ?, ?)")
+			WT_DB::prepare("INSERT INTO {$TBLPREFIX}nextid VALUES(?, ?, ?)")
 				->execute(array($num+1, $type, $ged_id));
 		}
 	}
@@ -3136,7 +3136,7 @@ function get_new_xref($type='INDI', $ged_id=PGV_GED_ID, $use_cache=false) {
 		return $key;
 	}
 	//-- update the next id number in the DB table
-	PGV_DB::prepare("UPDATE {$TBLPREFIX}nextid SET ni_id=? WHERE ni_type=? AND ni_gedfile=?")
+	WT_DB::prepare("UPDATE {$TBLPREFIX}nextid SET ni_id=? WHERE ni_type=? AND ni_gedfile=?")
 		->execute(array($num+1, $type, $ged_id));
 	return $key;
 }
@@ -3254,7 +3254,7 @@ function decrypt($string, $key='') {
  * Get useful information on how to handle this media file
  */
 function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyViewerOption=true) {
-	global $THUMBNAIL_WIDTH, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $THUMBNAIL_WIDTH, $WT_IMAGE_DIR, $WT_IMAGES;
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 	global $SERVER_URL, $GEDCOM, $USE_MEDIA_VIEWER, $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_THUMBS;
 
@@ -3263,7 +3263,7 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 	// -- Classify the incoming media file
 	if (preg_match('~^https?://~i', $fileName)) $type = 'url_';
 	else $type = 'local_';
-	if ((preg_match('/\.flv$/i', $fileName) || preg_match('~^https?://.*\.youtube\..*/watch\?~i', $fileName)) && is_dir(PGV_ROOT.'modules/JWplayer')) {
+	if ((preg_match('/\.flv$/i', $fileName) || preg_match('~^https?://.*\.youtube\..*/watch\?~i', $fileName)) && is_dir(WT_ROOT.'modules/JWplayer')) {
 		$type .= 'flv';
 	} else if (preg_match('~^https?://picasaweb*\.google\..*/.*/~i', $fileName)) {
 		$type .= 'picasa';
@@ -3281,9 +3281,9 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 
 	// -- Determine the correct URL to open this media file
  	while (true) {
-		if (PGV_USE_LIGHTBOX) {
+		if (WT_USE_LIGHTBOX) {
 			// Lightbox is installed
-			require_once PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+			require_once WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
 			switch ($type) {
 			case 'url_flv':
 				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
@@ -3360,30 +3360,30 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 	$width = '';
 	switch ($type) {
 		case 'url_flv':
-			$thumb = isset($PGV_IMAGES["media"]["flashrem"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["flashrem"] : 'images/media/flashrem.png';
+			$thumb = isset($WT_IMAGES["media"]["flashrem"]) ? $WT_IMAGE_DIR.'/'.$WT_IMAGES["media"]["flashrem"] : 'images/media/flashrem.png';
 			break;
 		case 'local_flv':
-			$thumb = isset($PGV_IMAGES["media"]["flash"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["flash"] : 'images/media/flash.png';
+			$thumb = isset($WT_IMAGES["media"]["flash"]) ? $WT_IMAGE_DIR.'/'.$WT_IMAGES["media"]["flash"] : 'images/media/flash.png';
 			break;
 		case 'url_wmv':
-			$thumb = isset($PGV_IMAGES["media"]["wmvrem"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["wmvrem"] : 'images/media/wmvrem.png';
+			$thumb = isset($WT_IMAGES["media"]["wmvrem"]) ? $WT_IMAGE_DIR.'/'.$WT_IMAGES["media"]["wmvrem"] : 'images/media/wmvrem.png';
 			break;
 		case 'local_wmv':
-			$thumb = isset($PGV_IMAGES["media"]["wmv"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["wmv"] : 'images/media/wmv.png';
+			$thumb = isset($WT_IMAGES["media"]["wmv"]) ? $WT_IMAGE_DIR.'/'.$WT_IMAGES["media"]["wmv"] : 'images/media/wmv.png';
 			break;
 		case 'url_picasa':
-			$thumb = isset($PGV_IMAGES["media"]["picasa"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["picasa"] : 'images/media/picasa.png';
+			$thumb = isset($WT_IMAGES["media"]["picasa"]) ? $WT_IMAGE_DIR.'/'.$WT_IMAGES["media"]["picasa"] : 'images/media/picasa.png';
 			break;
 		case 'url_page':
 		case 'url_other':
-			$thumb = isset($PGV_IMAGES["media"]["globe"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["globe"] : 'images/media/globe.png';
+			$thumb = isset($WT_IMAGES["media"]["globe"]) ? $WT_IMAGE_DIR.'/'.$WT_IMAGES["media"]["globe"] : 'images/media/globe.png';
 			break;
 		case 'local_page':
-			$thumb = ($PGV_IMAGES["media"]["doc"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["doc"] : 'images/media/doc.gif';
+			$thumb = ($WT_IMAGES["media"]["doc"]) ? $WT_IMAGE_DIR.'/'.$WT_IMAGES["media"]["doc"] : 'images/media/doc.gif';
 			break;
 		case 'url_audio':
 		case 'local_audio':
-			$thumb = isset($PGV_IMAGES["media"]["audio"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["audio"] : 'images/media/audio.png';
+			$thumb = isset($WT_IMAGES["media"]["audio"]) ? $WT_IMAGE_DIR.'/'.$WT_IMAGES["media"]["audio"] : 'images/media/audio.png';
 			break;
 		default:
 			$thumb = $thumbName;
@@ -3409,12 +3409,12 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 	$realThumb = $thumb;
 	if (substr($type, 0, 6)=='local_' && !file_exists($thumb)) {
 		if (!$USE_MEDIA_FIREWALL || !$MEDIA_FIREWALL_THUMBS) {
-			$thumb = $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['media']['large'];
+			$thumb = $WT_IMAGE_DIR.'/'.$WT_IMAGES['media']['large'];
 			$realThumb = $thumb;
 		} else {
 			$realThumb = get_media_firewall_path($thumb);
 			if (!file_exists($realThumb)) {
-				$thumb = $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['media']['large'];
+				$thumb = $WT_IMAGE_DIR.'/'.$WT_IMAGES['media']['large'];
 				$realThumb = $thumb;
 			}
 		}
@@ -3461,8 +3461,8 @@ function pathinfo_utf($path) {
 }
 
 // optional extra file
-if (file_exists(PGV_ROOT.'includes/functions.extra.php')) {
-	require PGV_ROOT.'includes/functions.extra.php';
+if (file_exists(WT_ROOT.'includes/functions.extra.php')) {
+	require WT_ROOT.'includes/functions.extra.php';
 }
 
 ?>

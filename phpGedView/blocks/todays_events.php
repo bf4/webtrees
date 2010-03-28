@@ -29,21 +29,21 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_TODAYS_EVENTS_PHP', '');
+define('WT_TODAYS_EVENTS_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+require_once WT_ROOT.'includes/functions/functions_print_lists.php';
 
-$PGV_BLOCKS["print_todays_events"]["name"]		= i18n::translate('On This Day');
-$PGV_BLOCKS["print_todays_events"]["descr"]		= i18n::translate('The On This Day, in Your History... block shows anniversaries of events for today.  You can configure the amount of detail shown.');
-$PGV_BLOCKS["print_todays_events"]["infoStyle"]	= "style2";
-$PGV_BLOCKS["print_todays_events"]["sortStyle"]	= "alpha";
-$PGV_BLOCKS["print_todays_events"]["canconfig"]	= true;
-$PGV_BLOCKS["print_todays_events"]["config"]	= array(
+$WT_BLOCKS["print_todays_events"]["name"]		= i18n::translate('On This Day');
+$WT_BLOCKS["print_todays_events"]["descr"]		= i18n::translate('The On This Day, in Your History... block shows anniversaries of events for today.  You can configure the amount of detail shown.');
+$WT_BLOCKS["print_todays_events"]["infoStyle"]	= "style2";
+$WT_BLOCKS["print_todays_events"]["sortStyle"]	= "alpha";
+$WT_BLOCKS["print_todays_events"]["canconfig"]	= true;
+$WT_BLOCKS["print_todays_events"]["config"]	= array(
 	"cache"=>1,
 	"filter"=>"all",
 	"onlyBDM"=>"no",
@@ -56,13 +56,13 @@ $PGV_BLOCKS["print_todays_events"]["config"]	= array(
 //-- this block prints a list of today's upcoming events of living people in your gedcom
 function print_todays_events($block=true, $config="", $side, $index) {
   global $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
-  global $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
+  global $WT_IMAGE_DIR, $WT_IMAGES, $WT_BLOCKS;
 
   $block = true;		// Always restrict this block's height
 
 	$todayjd=client_jd();
 
-  if (empty($config)) $config = $PGV_BLOCKS["print_todays_events"]["config"];
+  if (empty($config)) $config = $WT_BLOCKS["print_todays_events"]["config"];
   if (isset($config["filter"])) $filter = $config["filter"];  // "living" or "all"
   else $filter = "all";
   if (isset($config["onlyBDM"])) $onlyBDM = $config["onlyBDM"];  // "yes" or "no"
@@ -75,20 +75,20 @@ function print_todays_events($block=true, $config="", $side, $index) {
   else $allowDownload = "yes";
 
   // Don't permit calendar download if not logged in
-  if (!PGV_USER_ID) $allowDownload = "no";
+  if (!WT_USER_ID) $allowDownload = "no";
 
   //-- Start output
   $id ="on_this_day_events";
 	$title='';
-  if ($PGV_BLOCKS["print_todays_events"]["canconfig"]) {
-	if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+  if ($WT_BLOCKS["print_todays_events"]["canconfig"]) {
+	if ($ctype=="gedcom" && WT_USER_GEDCOM_ADMIN || $ctype=="user" && WT_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = PGV_GEDCOM;
+				$name = WT_GEDCOM;
 			} else {
-				$name = PGV_USER_NAME;
+				$name = WT_USER_NAME;
 			}
 	  $title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-	  $title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
+	  $title .= "<img class=\"adminicon\" src=\"$WT_IMAGE_DIR/".$WT_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 	}
   }
   $title .= i18n::translate('On This Day ...');
@@ -117,8 +117,8 @@ function print_todays_events($block=true, $config="", $side, $index) {
 }
 
 function print_todays_events_config($config) {
-	global $PGV_BLOCKS;
-	if (empty($config)) $config = $PGV_BLOCKS["print_todays_events"]["config"];
+	global $WT_BLOCKS;
+	if (empty($config)) $config = $WT_BLOCKS["print_todays_events"]["config"];
 	if (!isset($config["filter"])) $config["filter"] = "all";
 	if (!isset($config["onlyBDM"])) $config["onlyBDM"] = "no";
 	if (!isset($config["infoStyle"])) $config["infoStyle"] = "style2";

@@ -27,10 +27,10 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'pgvinfo.php');
+define('WT_SCRIPT_NAME', 'pgvinfo.php');
 require './config.php';
 
-if (!PGV_USER_GEDCOM_ADMIN) {
+if (!WT_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=pgvinfo.php?action=".$action);
 exit;
 }

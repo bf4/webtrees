@@ -1,3 +1,3 @@
 ;<?php exit; ?>
 [Module]
-type = PGV_MOD_SIMPLE
+type = WT_MOD_SIMPLE

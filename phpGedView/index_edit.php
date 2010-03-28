@@ -30,9 +30,9 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'index_edit.php');
+define('WT_SCRIPT_NAME', 'index_edit.php');
 require './config.php';
-require_once PGV_ROOT.'includes/index_cache.php';
+require_once WT_ROOT.'includes/index_cache.php';
 
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 if (isset($_REQUEST['ctype'])) $ctype = $_REQUEST['ctype'];
@@ -45,14 +45,14 @@ if (isset($_REQUEST['name'])) $name = $_REQUEST['name'];
 
 //-- make sure that they have user status before they can use this page
 //-- otherwise have them login again
-if (!PGV_USER_ID) {
+if (!WT_USER_ID) {
 	print_simple_header("");
 	print i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
 	print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"self.close();\">".i18n::translate('Close Window')."</a></div>\n";
 	print_simple_footer();
 	exit;
 }
-if (!PGV_USER_IS_ADMIN) $setdefault=false;
+if (!WT_USER_IS_ADMIN) $setdefault=false;
 
 if (!isset($action)) $action="";
 if (!isset($ctype)) $ctype="user";
@@ -63,21 +63,21 @@ if (!isset($side)) $side="main";
 if (!isset($index)) $index=1;
 
 // Define all the icons we're going to use
-$IconUarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
-$IconDarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
-$IconRarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
-$IconLarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
-$IconRDarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rdarrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
-$IconLDarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["ldarrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
+$IconUarrow = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["uarrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
+$IconDarrow = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["darrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
+$IconRarrow = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["rarrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
+$IconLarrow = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["larrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
+$IconRDarrow = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["rdarrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
+$IconLDarrow = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["ldarrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
 
 /**
  * Load List of Blocks in blocks directory (unchanged)
  */
-$PGV_BLOCKS = array();
+$WT_BLOCKS = array();
 $d = dir("blocks");
 while (false !== ($entry = $d->read())) {
 	if (($entry!=".") && ($entry!="..") && ($entry!="CVS") && (preg_match("/\.php$/", $entry)>0)) {
-		require_once PGV_ROOT.'blocks/'.$entry;
+		require_once WT_ROOT.'blocks/'.$entry;
 	}
 }
 $d->close();
@@ -86,11 +86,11 @@ $d->close();
  *
  * Load List of Blocks in modules/XX/blocks directories
  */
-if (file_exists(PGV_ROOT.'modules')) {
-	$dir=dir(PGV_ROOT.'modules');
+if (file_exists(WT_ROOT.'modules')) {
+	$dir=dir(WT_ROOT.'modules');
 	while (false !== ($entry = $dir->read())) {
 		if (!strstr($entry,".") && ($entry!="..") && ($entry!="CVS")&& !strstr($entry, "svn")) {
-			$path = PGV_ROOT.'modules/' . $entry.'/blocks';
+			$path = WT_ROOT.'modules/' . $entry.'/blocks';
 			if (is_readable($path)) {
 				$d=dir($path);
 				while (false !== ($entry = $d->read())) {
@@ -113,7 +113,7 @@ if (file_exists(PGV_ROOT.'modules')) {
 //					"user", include in My Page only
 //					"gedcom", include in Index page only
 $SortedBlocks = array();
-foreach($PGV_BLOCKS as $key => $BLOCK) {
+foreach($WT_BLOCKS as $key => $BLOCK) {
 	if (empty($BLOCK["type"])) $BLOCK["type"] = "both";
 	if (($BLOCK["type"]=="both") or ($BLOCK["type"]==$ctype)) {
 		$SortedBlocks[$key] = $BLOCK["name"];
@@ -123,7 +123,7 @@ asort($SortedBlocks);
 
 //-- get the blocks list
 if ($ctype=="user") {
-	$ublocks = getBlocks(PGV_USER_NAME);
+	$ublocks = getBlocks(WT_USER_NAME);
 	if (($action=="reset") || ((count($ublocks["main"])==0) && (count($ublocks["right"])==0))) {
 		$ublocks["main"] = array();
 		$ublocks["main"][] = array("print_todays_events", "");
@@ -157,10 +157,10 @@ else {
 if ($ctype=="user") {
 	print_simple_header(i18n::translate('My Page'));
 } else {
-	print_simple_header(get_gedcom_setting(PGV_GED_ID, 'title'));
+	print_simple_header(get_gedcom_setting(WT_GED_ID, 'title'));
 }
 
-$GEDCOM_TITLE=PrintReady(get_gedcom_setting(PGV_GED_ID, 'title'));
+$GEDCOM_TITLE=PrintReady(get_gedcom_setting(WT_GED_ID, 'title'));
 
 ?>
 <script language="JavaScript" type="text/javascript">
@@ -174,9 +174,9 @@ function parentrefresh() {
 <?php
 if ($action=="updateconfig") {
 	$block = $ublocks[$side][$index];
-	if (isset($PGV_BLOCKS[$block[0]]["canconfig"]) && $PGV_BLOCKS[$block[0]]["canconfig"] && isset($PGV_BLOCKS[$block[0]]["config"]) && is_array($PGV_BLOCKS[$block[0]]["config"])) {
+	if (isset($WT_BLOCKS[$block[0]]["canconfig"]) && $WT_BLOCKS[$block[0]]["canconfig"] && isset($WT_BLOCKS[$block[0]]["config"]) && is_array($WT_BLOCKS[$block[0]]["config"])) {
 		$config = $block[1];
-		foreach($PGV_BLOCKS[$block[0]]["config"] as $config_name=>$config_value) {
+		foreach($WT_BLOCKS[$block[0]]["config"] as $config_name=>$config_value) {
 			if (isset($_POST[$config_name])) {
 				$config[$config_name] = $_POST[$config_name];
 			}
@@ -244,7 +244,7 @@ if ($action=="configure" && isset($ublocks[$side][$index])) {
 	print "<h2>".i18n::translate('Configure')."</h2>";
 	print "</td></tr>";
 	print "<tr><td class=\"facts_label03\">";
-	print "<b>".$PGV_BLOCKS[$block[0]]["name"]."</b>";
+	print "<b>".$WT_BLOCKS[$block[0]]["name"]."</b>";
 	print "</td></tr>";
 	print "</table>";
 ?>
@@ -265,7 +265,7 @@ if ($action=="configure" && isset($ublocks[$side][$index])) {
 	print "<input type=\"hidden\" name=\"side\" value=\"$side\" />\n";
 	print "<input type=\"hidden\" name=\"index\" value=\"$index\" />\n";
 	print "<table border=\"0\" class=\"facts_table ".$TEXT_DIRECTION."\" width=\"99%\">";
-	if ($PGV_BLOCKS[$block[0]]["canconfig"]) {
+	if ($WT_BLOCKS[$block[0]]["canconfig"]) {
 		eval($block[0]."_config(\$block[1]);");
 		print "<tr><td colspan=\"2\" class=\"topbottombar\">";
 		print "<input type=\"button\" value=\"".i18n::translate('Click here to continue')."\" onclick=\"document.block.submit();\" />";
@@ -374,7 +374,7 @@ else {
  */
 	<?php
 	print "var block_descr = new Array();\n";
-	foreach($PGV_BLOCKS as $b=>$block) {
+	foreach($WT_BLOCKS as $b=>$block) {
 		print "block_descr['$b'] = '".str_replace("'", "\\'", embed_globals($block["descr"]))."';\n";
 	}
 	print "block_descr['advice1'] = '".str_replace("'", "\\'", i18n::translate('Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction.'))."';\n";
@@ -458,7 +458,7 @@ else {
 		print "<select multiple=\"multiple\" id=\"main_select\" name=\"main[]\" size=\"10\" onchange=\"show_description('main_select');\">\n";
 		foreach($ublocks["main"] as $indexval => $block) {
 			if (function_exists($block[0])) {
-				print "<option value=\"$block[0]\">".$PGV_BLOCKS[$block[0]]["name"]."</option>\n";
+				print "<option value=\"$block[0]\">".$WT_BLOCKS[$block[0]]["name"]."</option>\n";
 			}
 		}
 		print "</select>\n";
@@ -478,7 +478,7 @@ else {
 	print "<td class=\"optionbox\" dir=\"".$TEXT_DIRECTION."\">";
 		print "<select id=\"available_select\" name=\"available[]\" size=\"10\" onchange=\"show_description('available_select');\">\n";
 		foreach($SortedBlocks as $key => $value) {
-			if (!isset($PGV_BLOCKS[$key]["type"])) $PGV_BLOCKS[$key]["type"]=$ctype;
+			if (!isset($WT_BLOCKS[$key]["type"])) $WT_BLOCKS[$key]["type"]=$ctype;
 			print "<option value=\"$key\">".$SortedBlocks[$key]."</option>\n";
 		}
 		print "</select>\n";
@@ -498,7 +498,7 @@ else {
 		print "<select multiple=\"multiple\" id=\"right_select\" name=\"right[]\" size=\"10\" onchange=\"show_description('right_select');\">\n";
 		foreach($ublocks["right"] as $indexval => $block) {
 			if (function_exists($block[0])) {
-				print "<option value=\"$block[0]\">".$PGV_BLOCKS[$block[0]]["name"]."</option>\n";
+				print "<option value=\"$block[0]\">".$WT_BLOCKS[$block[0]]["name"]."</option>\n";
 			}
 		}
 		print "</select>\n";
@@ -518,7 +518,7 @@ else {
 	print "</div></td></tr>";
 	print "<tr><td class=\"topbottombar\" colspan=\"7\">";
 
-	if (PGV_USER_IS_ADMIN && $ctype=='user') {
+	if (WT_USER_IS_ADMIN && $ctype=='user') {
 		print i18n::translate('Use these blocks as the default block configuration for all users?')."<input type=\"checkbox\" name=\"setdefault\" value=\"1\" /><br /><br />\n";
 	}
 
@@ -533,7 +533,7 @@ else {
 	print help_link('click_here');
 	print "&nbsp;&nbsp;";
 	print "<input type =\"button\" value=\"".i18n::translate('Cancel')."\" onclick=\"window.close()\" />";
-	if (PGV_USER_GEDCOM_ADMIN && $ctype!="user") {
+	if (WT_USER_GEDCOM_ADMIN && $ctype!="user") {
 		print "<br />";
 		print "<input type =\"button\" value=\"".i18n::translate('Clear cache files')."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=clearcache&amp;name=".str_replace("'", "\'", $name)."';\" />";
 		print help_link('clear_cache');

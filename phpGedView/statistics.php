@@ -32,9 +32,9 @@
  * @subpackage Lists
  */
 
-define('PGV_SCRIPT_NAME', 'statistics.php');
+define('WT_SCRIPT_NAME', 'statistics.php');
 require './config.php';
-require_once PGV_ROOT.'includes/classes/class_stats.php';
+require_once WT_ROOT.'includes/classes/class_stats.php';
 
 // check for on demand content loading
 if (isset($_REQUEST['tab'])) {
@@ -140,7 +140,7 @@ if (isset($content) && $content==1) {
 				</table>
 				<br />
 				<?php
-				if (PGV_USER_ID) {
+				if (WT_USER_ID) {
 				?>
 				<div align="<?php echo $align;?>"><b><?php echo i18n::translate('Oldest living people');?></b></div>
 				<table class="facts_table">
@@ -417,9 +417,9 @@ if (isset($content) && $content==1) {
 		<fieldset>
 		<legend><?php echo i18n::translate('Create your own chart'); ?></legend>
 		<?php 
-		require_once PGV_ROOT.'includes/functions/functions_places.php';
+		require_once WT_ROOT.'includes/functions/functions_places.php';
 
-		if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+		if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 		?>
 		<script language="JavaScript" type="text/javascript">
 		<!--
@@ -753,9 +753,9 @@ if (isset($content) && $content==1) {
 	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
 	<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
 	<?php if ($TEXT_DIRECTION=='rtl') {?>
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
 	<?php }?>
 	<script type="text/javascript">
 	//<![CDATA[
@@ -787,7 +787,7 @@ if (isset($content) && $content==1) {
 
 	jQuery(document).ready(function(){
 		// TODO: change images directory when the common images will be deleted.
-		// jQuery('#tabs').tabs({ spinner: '<img src=\"<?php echo $PGV_IMAGE_DIR; ?>/loading.gif\" height=\"18\" border=\"0\" />' });
+		// jQuery('#tabs').tabs({ spinner: '<img src=\"<?php echo $WT_IMAGE_DIR; ?>/loading.gif\" height=\"18\" border=\"0\" />' });
 		jQuery('#tabs').tabs({ spinner: '<img src=\"images/loading.gif\" height=\"18\" border=\"0\" />' });
 		jQuery("#tabs").tabs({ cache: true, selected: selectedTab });
 		var $tabs = jQuery('#tabs');

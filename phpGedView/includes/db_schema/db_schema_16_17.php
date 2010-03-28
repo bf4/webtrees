@@ -54,12 +54,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_SCHEMA_16_17', '');
+define('WT_SCHEMA_16_17', '');
 
 // Without this index, MySQL 5.0 databases grind to a halt.  (4.1 and 5.1 seem OK.)
 self::exec("ALTER TABLE {$TBLPREFIX}name ADD INDEX {$TBLPREFIX}name_ix2 (n_file, n_surn)");

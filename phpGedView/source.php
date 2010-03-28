@@ -27,10 +27,10 @@
 * @version $Id$
 */
 
-define('PGV_SCRIPT_NAME', 'source.php');
+define('WT_SCRIPT_NAME', 'source.php');
 require './config.php';
-require PGV_ROOT.'includes/controllers/source_ctrl.php';
-require PGV_ROOT.'includes/functions/functions_print_lists.php';
+require WT_ROOT.'includes/controllers/source_ctrl.php';
+require WT_ROOT.'includes/functions/functions_print_lists.php';
 
 // We have finished writing to $_SESSION, so release the lock
 session_write_close();
@@ -44,9 +44,9 @@ $linkToID=$controller->sid;
 print_header($controller->getPageTitle());
 
 // LightBox
-if (PGV_USE_LIGHTBOX) {
-	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
+if (WT_USE_LIGHTBOX) {
+	require WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	require WT_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 
 if (!$controller->source){
@@ -58,14 +58,14 @@ else if ($controller->source->isMarkedDeleted()) {
 	echo '<span class="error">', i18n::translate('This record has been marked for deletion upon admin approval.'), '</span>';
 }
 
-echo PGV_JS_START;
+echo WT_JS_START;
 echo 'function show_gedcom_record() {';
 echo ' var recwin=window.open("gedrecord.php?pid=', $controller->sid, '", "_blank", "top=0, left=0, width=600, height=400, scrollbars=1, scrollable=1, resizable=1");';
 echo '}';
 echo 'function showchanges() {';
 echo ' window.location="source.php?sid=', $controller->sid, '&show_changes=yes"';
 echo '}';
-echo PGV_JS_END;
+echo WT_JS_END;
 
 echo '<table class="list_table"><tr><td>';
 if ($controller->accept_success) {

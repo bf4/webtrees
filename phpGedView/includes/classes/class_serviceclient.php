@@ -27,16 +27,16 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_SERVICECLIENT_PHP', '');
+define('WT_CLASS_SERVICECLIENT_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
-require_once PGV_ROOT.'includes/classes/class_family.php';
-require_once PGV_ROOT.'includes/functions/functions_import.php';
+require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
+require_once WT_ROOT.'includes/classes/class_family.php';
+require_once WT_ROOT.'includes/functions/functions_import.php';
 
 class ServiceClient extends GedcomRecord {
 	var $url = "";
@@ -378,7 +378,7 @@ class ServiceClient extends GedcomRecord {
 	*/
 	function MergeForUpdateFamily($Family1,$Family2,$Familylist,&$FamilyListReturn){
 		global $pgv_changes, $GEDCOM;
-		require_once PGV_ROOT.'includes/functions/functions_edit.php';
+		require_once WT_ROOT.'includes/functions/functions_edit.php';
 
 		//print "<br />In MergeForUpdateFamily ".$Family1." ".$Family2;
 		//print_r($Familylist);
@@ -630,7 +630,7 @@ class ServiceClient extends GedcomRecord {
 		//-- check if the link already exists
 		$gid=get_remote_id($remote);
 		if (empty($gid)) {
-			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}remotelinks (r_gid, r_linkid, r_file) VALUES (? ,? ,?)")
+			WT_DB::prepare("INSERT INTO {$TBLPREFIX}remotelinks (r_gid, r_linkid, r_file) VALUES (? ,? ,?)")
 				->execute(array($local, $remote, get_id_from_gedcom($GEDCOM)));
 		}
 	}
@@ -746,7 +746,7 @@ class ServiceClient extends GedcomRecord {
 			$gedrec = preg_replace("/@([^#@\s]+)@/", "@".$this->xref.":$1@", $gedrec);
 			$gedrec = $this->checkIds($gedrec);
 			$localrec = $this->_merge($localrec, $gedrec);
-			require_once PGV_ROOT.'includes/functions/functions_edit.php';
+			require_once WT_ROOT.'includes/functions/functions_edit.php';
 			$localrec = $this->UpdateFamily($localrec,$gedrec);
 			$ct=preg_match("/0 @(.*)@/", $localrec, $match);
 			if ($ct>0) {
@@ -777,7 +777,7 @@ class ServiceClient extends GedcomRecord {
 			if ($ct>0) {
 				$pid = trim($match[1]);
 				if ($isStub) {
-					require_once PGV_ROOT.'includes/functions/functions_edit.php';
+					require_once WT_ROOT.'includes/functions/functions_edit.php';
 					$localrec = $this->UpdateFamily($localrec,$gedrec);
 					replace_gedrec($pid,$localrec);
 				} else {
@@ -834,7 +834,7 @@ class ServiceClient extends GedcomRecord {
 						if (isset($pgv_changes[$pid."_".$GEDCOM])) $localrec = find_updated_record($pid, get_id_from_gedcom($GEDCOM));
 						$localrec = $this->_merge($localrec, $gedrec);
 						if ($isStub) {
-							require_once PGV_ROOT.'includes/functions/functions_edit.php';
+							require_once WT_ROOT.'includes/functions/functions_edit.php';
 							$localrec = $this->UpdateFamily($localrec,$gedrec);
 							replace_gedrec($pid,$localrec);
 						} else {
@@ -886,10 +886,10 @@ class ServiceClient extends GedcomRecord {
 	* @return ServiceClient
 	*/
 	static function &getInstance($id) {
-		global $PGV_SERVERS, $SERVER_URL, $GEDCOM;
+		global $WT_SERVERS, $SERVER_URL, $GEDCOM;
 		$ged_id=get_id_from_gedcom($GEDCOM);
 
-		if (isset($PGV_SERVERS[$id])) return $PGV_SERVERS[$id];
+		if (isset($WT_SERVERS[$id])) return $WT_SERVERS[$id];
 		$gedrec = find_gedcom_record($id, $ged_id);
 		if (empty($gedrec)) $gedrec = find_updated_record($id, $ged_id);
 		if (!empty($gedrec)) {
@@ -900,10 +900,10 @@ class ServiceClient extends GedcomRecord {
 			if (!empty($url) && (strtolower($url)!=strtolower($SERVER_URL))) {
 				$server = new ServiceClient($gedrec);
 			} else {
-				require_once PGV_ROOT.'includes/classes/class_localclient.php';
+				require_once WT_ROOT.'includes/classes/class_localclient.php';
 				$server = new LocalClient($gedrec);
 			}
-			$PGV_SERVERS[$id] = $server;
+			$WT_SERVERS[$id] = $server;
 			return $server;
 		}
 		return null;

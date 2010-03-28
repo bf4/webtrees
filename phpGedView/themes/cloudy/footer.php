@@ -28,7 +28,7 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -46,12 +46,12 @@ function hidebar()
 }
 JSCRIPT;
         $onload ="hidebar();";
-        if (PGV_SCRIPT_NAME!='individual.php')
+        if (WT_SCRIPT_NAME!='individual.php')
         {
-                if (PGV_SCRIPT_NAME=='pedigree.php' ||
-                PGV_SCRIPT_NAME=='descendancy.php' ||
-                PGV_SCRIPT_NAME=='timeline.php' ||
-                PGV_SCRIPT_NAME=='relationship.php')
+                if (WT_SCRIPT_NAME=='pedigree.php' ||
+                WT_SCRIPT_NAME=='descendancy.php' ||
+                WT_SCRIPT_NAME=='timeline.php' ||
+                WT_SCRIPT_NAME=='relationship.php')
                 {
                 echo "\n", <<<JSCRIPT
 function resize_content_div()
@@ -65,7 +65,7 @@ function resize_content_div()
                 var browserWidth = Math.max(document.body.clientWidth, 200);
 JSCRIPT;
                 $onload .="\n\tresize_content_div();";
-                if (PGV_SCRIPT_NAME=='pedigree.php' || PGV_SCRIPT_NAME=='descendancy.php')
+                if (WT_SCRIPT_NAME=='pedigree.php' || WT_SCRIPT_NAME=='descendancy.php')
                 { // pedigree and descendancy height
                         echo "\t\ty = foot.offsetTop;\n";
                         //echo "\t\tz = parseInt(y);\n";
@@ -73,13 +73,13 @@ JSCRIPT;
                         //echo "\t\talert(y);\n";
                         echo "\t\tcont.style.height=(z.toString()+'px');\n";
 
-                } else if (PGV_SCRIPT_NAME=='timeline.php')
+                } else if (WT_SCRIPT_NAME=='timeline.php')
                 { // timeline height
                         global $endoffset;
                         if (!$endoffset) $endoffset=270;
                         echo "\t\ty='", $endoffset, "px';\n";
                         echo "\t\tcont.style.height=(y);\n";
-                } else if (PGV_SCRIPT_NAME=='relationship.php')
+                } else if (WT_SCRIPT_NAME=='relationship.php')
                 { // relationship height and width
                         global $maxyoffset, $xoffset, $Dbwidth, $xs;
                         $xoffset += $Dbwidth+$xs;
@@ -92,7 +92,7 @@ JSCRIPT;
                         echo "\t\tcont.style.width=x.toString()+'px';\n";
                         echo "\t\thead.style.width=x.toString()+'px';\n";
                 }
-                if (PGV_SCRIPT_NAME=='pedigree.php')
+                if (WT_SCRIPT_NAME=='pedigree.php')
                 { // pedigree width
                         global $bwidth, $bxspacing, $PEDIGREE_GENERATIONS, $talloffset, $Darrowwidth;
                         $xoffset = ($PEDIGREE_GENERATIONS * ($bwidth+(2*$bxspacing))) + (2*$Darrowwidth);
@@ -105,7 +105,7 @@ JSCRIPT;
                         echo "\t\thead.style.width=(x).toString()+'px';\n";
 
                 } // descendancy width
-                if (PGV_SCRIPT_NAME=='descendancy.php')
+                if (WT_SCRIPT_NAME=='descendancy.php')
                 {
                         global $maxxoffset;
                         $xoffset = ($maxxoffset+60);
@@ -116,7 +116,7 @@ JSCRIPT;
                         echo "\t\thead.style.width=x.toString()+'px';\n";
                 } //
                 echo "\n\t}\n}\n";
-        }  else if (PGV_SCRIPT_NAME=='index.php')
+        }  else if (WT_SCRIPT_NAME=='index.php')
         {
                 echo "\n";
                 echo "function resize_content_div()\n";
@@ -165,12 +165,12 @@ echo "</td></tr></table>"; // Close table started in toplinks.html
 echo "<div id=\"footer\" class=\"$TEXT_DIRECTION\">";
 echo "\n\t<br /><div align=\"center\" style=\"width:99%;\">";
 echo contact_links();
-echo '<br /><a href="', PGV_PHPGEDVIEW_URL, '" target="_blank"><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['gedview']['other'], '" width="100" border="0" alt="', PGV_PHPGEDVIEW, PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "" , '" title="', PGV_PHPGEDVIEW , PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "" , '" /></a><br />';
+echo '<br /><a href="', WT_WEBTREES_URL, '" target="_blank"><img src="', $WT_IMAGE_DIR, '/', $WT_IMAGES['gedview']['other'], '" width="100" border="0" alt="', WT_WEBTREES, WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): "" , '" title="', WT_WEBTREES , WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): "" , '" /></a><br />';
 echo "\n\t<br />";
-echo '<a href="', PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(), '">', i18n::translate('Printer-friendly Version'), '</a>';
+echo '<a href="', WT_SCRIPT_NAME, '?view=preview&amp;', get_query_string(), '">', i18n::translate('Printer-friendly Version'), '</a>';
 echo help_link('preview');
 echo "<br />";
-if ($SHOW_STATS || PGV_DEBUG) {
+if ($SHOW_STATS || WT_DEBUG) {
 	echo execution_stats();
 }
 if (exists_pending_change()) {

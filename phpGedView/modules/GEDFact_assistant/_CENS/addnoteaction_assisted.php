@@ -32,7 +32,7 @@
 //------------------------------------------------------------------------------
 //-- create a shared note record from the incoming variables
 
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
 	$newgedrec  = "0 @XREF@ NOTE\n";
@@ -96,7 +96,7 @@
 		//$newgedrec .= "1 NOTE @$NOTE@\n";
 		if (!empty($CALN)) $newgedrec .= "2 CALN $CALN\n";
 	}
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		echo "<pre>$newgedrec</pre>";
 	}
 	// $xref = "Test";

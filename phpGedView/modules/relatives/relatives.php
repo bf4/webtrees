@@ -27,12 +27,12 @@
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once PGV_ROOT.'includes/classes/class_tab.php';
+require_once WT_ROOT.'includes/classes/class_tab.php';
 
 class relatives_Tab extends Tab {
 	
@@ -44,11 +44,11 @@ class relatives_Tab extends Tab {
 	* @return html table
 	*/
 	function printFamilyHeader($famid, $label) {
-		global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_ID_NUMBERS, $SEARCH_SPIDER;
+		global $WT_IMAGE_DIR, $WT_IMAGES, $SHOW_ID_NUMBERS, $SEARCH_SPIDER;
 	?>
 		<table>
 			<tr>
-				<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
+				<td><img src="<?php print $WT_IMAGE_DIR."/".$WT_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
 				<td><span class="subheaders"><?php print PrintReady($label); ?></span>
 				<?php if ((!$this->controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					- <a href="family.php?famid=<?php print $famid; ?>">[<?php print i18n::translate('View Family'); ?><?php if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM(); ?>]</a>
@@ -68,7 +68,7 @@ class relatives_Tab extends Tab {
 	*/
 	function printParentsRows(&$family, &$people, $type) {
 		global $personcount, $pgv_changes;
-		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $WT_IMAGE_DIR, $WT_IMAGES;
 		global $lang_short_cut, $LANGUAGE;
 		$elderdate = "";
 		//-- new father/husband
@@ -166,7 +166,7 @@ class relatives_Tab extends Tab {
 			}
 		}
 		//-- marriage row
-		if ($family->getMarriageRecord()!="" || PGV_USER_CAN_EDIT) {
+		if ($family->getMarriageRecord()!="" || WT_USER_CAN_EDIT) {
 			$styleadd = "";
 			$date = $family->getMarriageDate();
 			$place = $family->getMarriagePlace();
@@ -196,7 +196,7 @@ class relatives_Tab extends Tab {
 						}
 						if (!empty($place)) echo $place;
 					}
-					else if (get_sub_record(1, "1 _NMR", find_family_record($famid, PGV_GED_ID))) {
+					else if (get_sub_record(1, "1 _NMR", find_family_record($famid, WT_GED_ID))) {
 						// Allow special processing for different languages
 						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 						if (function_exists($func)) {
@@ -206,7 +206,7 @@ class relatives_Tab extends Tab {
 							echo i18n::translate('_NMR');
 						}
 					}
-					else if (get_sub_record(1, "1 _NMAR", find_family_record($famid, PGV_GED_ID))) {
+					else if (get_sub_record(1, "1 _NMAR", find_family_record($famid, WT_GED_ID))) {
 						// Allow special processing for different languages
 						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 						if (function_exists($func)) {
@@ -251,7 +251,7 @@ class relatives_Tab extends Tab {
 	*/
 	function printChildrenRows(&$family, &$people, $type) {
 		global $personcount;
-		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $WT_IMAGE_DIR, $WT_IMAGES;
 		$elderdate = $family->getMarriageDate();
 		foreach($people["children"] as $key=>$child) {
 			$label = $child->getLabel();
@@ -289,7 +289,7 @@ class relatives_Tab extends Tab {
 		?>
 			<tr>
 				<td class="facts_label">
-					<?php if (PGV_USER_CAN_EDIT && isset($people["children"][1])) {?>
+					<?php if (WT_USER_CAN_EDIT && isset($people["children"][1])) {?>
 					<a href="javascript:;" onclick="reorder_children('<?php print $family->getXref(); ?>');tabswitch(5);"><img src="images/topdown.gif" alt="" border="0" /> <?php print i18n::translate('Re-order children'); ?></a>
 					<?php }?>
 				</td>
@@ -307,7 +307,7 @@ class relatives_Tab extends Tab {
 	}
 	
 	public function getContent() {
-		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
+		global $SHOW_ID_NUMBERS, $WT_IMAGE_DIR, $WT_IMAGES, $SHOW_AGE_DIFF;
 		global $pgv_changes, $GEDCOM, $ABBREVIATE_CHART_LABELS;
 		global $show_full, $personcount;
 
@@ -450,7 +450,7 @@ class relatives_Tab extends Tab {
 				</td>
 			</tr>
 			<?php } ?>
-<?php if (PGV_USER_CAN_ACCEPT) { // NOTE this function is restricted to ACCEPTORS because another bug prevents pending changes being shown on the close relatives tab of the indi page. Once that bug is fixed, this function can be opened up to all! ?>
+<?php if (WT_USER_CAN_ACCEPT) { // NOTE this function is restricted to ACCEPTORS because another bug prevents pending changes being shown on the close relatives tab of the indi page. Once that bug is fixed, this function can be opened up to all! ?>
 			<tr>
 				<td class="facts_value">
 				<a href="javascript:;" onclick="return addopfchild('<?php print $this->controller->pid; ?>','U');"><?php print i18n::translate('Add a child to create a one-parent family'); ?></a>
@@ -458,7 +458,7 @@ class relatives_Tab extends Tab {
 				</td>
 			</tr>
 <?php } ?>
-			<?php if (PGV_USER_GEDCOM_ADMIN) { ?>
+			<?php if (WT_USER_GEDCOM_ADMIN) { ?>
 			<tr>
 				<td class="facts_value">
 				<a href="javascript:;" onclick="return open_link_remote('<?php print $this->controller->pid; ?>');"><?php print i18n::translate('Link remote person'); ?></a>

@@ -27,20 +27,20 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_INDIVIDUAL_CTRL_PHP', '');
+define('WT_INDIVIDUAL_CTRL_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
-require_once PGV_ROOT.'includes/controllers/basecontrol.php';
-require_once PGV_ROOT.'includes/classes/class_menu.php';
-require_once PGV_ROOT.'includes/classes/class_person.php';
-require_once PGV_ROOT.'includes/classes/class_family.php';
-require_once PGV_ROOT.'includes/functions/functions_import.php';
-require_once PGV_ROOT.'includes/classes/class_module.php';
+require_once WT_ROOT.'includes/functions/functions_print_facts.php';
+require_once WT_ROOT.'includes/controllers/basecontrol.php';
+require_once WT_ROOT.'includes/classes/class_menu.php';
+require_once WT_ROOT.'includes/classes/class_person.php';
+require_once WT_ROOT.'includes/classes/class_family.php';
+require_once WT_ROOT.'includes/functions/functions_import.php';
+require_once WT_ROOT.'includes/classes/class_module.php';
 
 // -- array of GEDCOM elements that will be found but should not be displayed
 $nonfacts[] = "FAMS";
@@ -51,7 +51,7 @@ $nonfacts[] = "CHIL";
 $nonfacts[] = "HUSB";
 $nonfacts[] = "WIFE";
 $nonfacts[] = "RFN";
-$nonfacts[] = "_PGV_OBJS";
+$nonfacts[] = "_WT_OBJS";
 $nonfacts[] = "";
 
 //$nonfamfacts[] = "NCHI"; // Turning back on NCHI display for the indi page.
@@ -116,18 +116,18 @@ class IndividualControllerRoot extends BaseController {
 		$pid = $this->pid;
 
 		$this->default_tab = $GEDCOM_DEFAULT_TAB;
-		$indirec = find_person_record($this->pid, PGV_GED_ID);
+		$indirec = find_person_record($this->pid, WT_GED_ID);
 
 		if ($USE_RIN && $indirec==false) {
 			$this->pid = find_rin_id($this->pid);
-			$indirec = find_person_record($this->pid, PGV_GED_ID);
+			$indirec = find_person_record($this->pid, WT_GED_ID);
 		}
 		if (empty($indirec)) {
 			$ct = preg_match('/(\w+):(.+)/', $this->pid, $match);
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
-				require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
+				require_once WT_ROOT.'includes/classes/class_serviceclient.php';
 				$service = ServiceClient::getInstance($servid);
 				if ($service != null) {
 					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->pid."@ INDI\n1 RFN ".$this->pid, false);
@@ -138,8 +138,8 @@ class IndividualControllerRoot extends BaseController {
 			}
 		}
 		//-- check for the user
-		if (PGV_USER_ID) {
-			$this->default_tab=get_user_setting(PGV_USER_ID, 'defaulttab');
+		if (WT_USER_ID) {
+			$this->default_tab=get_user_setting(WT_USER_ID, 'defaulttab');
 		}
 
 		//-- check for a cookie telling what the last tab was when they were last
@@ -160,7 +160,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 
 		$this->indi = new Person($indirec, false);
-		$this->indi->ged_id=PGV_GED_ID; // This record is from a file
+		$this->indi->ged_id=WT_GED_ID; // This record is from a file
 
 		//-- if the person is from another gedcom then forward to the correct site
 		/*
@@ -188,10 +188,10 @@ class IndividualControllerRoot extends BaseController {
 		}
 
 		//-- if the user can edit and there are changes then get the new changes
-		if ($this->show_changes && PGV_USER_CAN_EDIT) {
+		if ($this->show_changes && WT_USER_CAN_EDIT) {
 			if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
 				//-- get the changed record from the file
-				$newrec = find_updated_record($this->pid, PGV_GED_ID);
+				$newrec = find_updated_record($this->pid, WT_GED_ID);
 				//print("jkdsakjhdkjsadkjsakjdhsakd".$newrec);
 				$remoterfn = get_gedcom_value("RFN", 1, $newrec);
 			} else {
@@ -205,7 +205,7 @@ class IndividualControllerRoot extends BaseController {
 					$servid = $parts[0];
 					$aliaid = $parts[1];
 					if (!empty($servid)&&!empty($aliaid)) {
-						require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
+						require_once WT_ROOT.'includes/classes/class_serviceclient.php';
 						$serviceClient = ServiceClient::getInstance($servid);
 						if (!is_null($serviceClient)) {
 							if (!empty($newrec)) $mergerec = $serviceClient->mergeGedcomRecord($aliaid, $newrec, true);
@@ -233,10 +233,10 @@ class IndividualControllerRoot extends BaseController {
 
 		//-- only allow editors or users who are editing their own individual or their immediate relatives
 		if ($this->indi->canDisplayDetails()) {
-			$this->canedit = PGV_USER_CAN_EDIT;
+			$this->canedit = WT_USER_CAN_EDIT;
 /* Disable self-editing completely until we have a GEDCOM config option to control this
 			if (!$this->canedit && $USE_QUICK_UPDATE) {
-				$my_id=PGV_USER_GEDCOM_ID;
+				$my_id=WT_USER_GEDCOM_ID;
 				if ($my_id) {
 					if ($this->pid==$my_id) $this->canedit=true;
 					else {
@@ -252,8 +252,8 @@ class IndividualControllerRoot extends BaseController {
 */
 		}
 		
-		$this->modules = PGVModule::getActiveList('T');
-		uasort($this->modules, "PGVModule::compare_tab_order");
+		$this->modules = WTModule::getActiveList('T');
+		uasort($this->modules, "WTModule::compare_tab_order");
 		$count = 0;
 		if (empty($this->default_tab)) $this->default_tab=0;
 		foreach($this->modules as $mod) {
@@ -261,7 +261,7 @@ class IndividualControllerRoot extends BaseController {
 				$tab = $mod->getTab();
 				if ($tab!=null) {
 					$tab->setController($this);
-					if ($tab->hasContent() || PGV_USER_CAN_EDIT) {		
+					if ($tab->hasContent() || WT_USER_CAN_EDIT) {		
 						//-- convert default tab as name to number
 						if ($mod->getName()===$this->default_tab) $this->default_tab = $count;
 						if ($this->static_tab==null) $this->static_tab = $mod;
@@ -272,8 +272,8 @@ class IndividualControllerRoot extends BaseController {
 		}
 		if ($this->default_tab<0 || $this->default_tab > count($this->modules)-1) $this->default_tab=0;
 		
-		if (!isset($_SESSION['PGV_pin']) && $DEFAULT_PIN_STATE)
-			 $_SESSION['PGV_pin'] = true;
+		if (!isset($_SESSION['WT_pin']) && $DEFAULT_PIN_STATE)
+			 $_SESSION['WT_pin'] = true;
 			 
 		//-- handle ajax calls
 		if ($this->action=="ajax") {
@@ -288,18 +288,18 @@ class IndividualControllerRoot extends BaseController {
 			}
 			
 			if (isset($_REQUEST['pin'])) {
-				if ($_REQUEST['pin']=='true') $_SESSION['PGV_pin'] = true;
-				else $_SESSION['PGV_pin'] = false;
+				if ($_REQUEST['pin']=='true') $_SESSION['WT_pin'] = true;
+				else $_SESSION['WT_pin'] = false;
 			}
 			
 			//-- only get the requested tab and then exit
-			if (PGV_DEBUG_SQL) {
-				echo PGV_DB::getQueryLog();
+			if (WT_DEBUG_SQL) {
+				echo WT_DB::getQueryLog();
 			}
 			exit;
 		}
 		
-		if (PGV_USER_CAN_EDIT) {
+		if (WT_USER_CAN_EDIT) {
 			
 		}
 	}
@@ -309,12 +309,12 @@ class IndividualControllerRoot extends BaseController {
 	*/
 	function addFavorite() {
 		global $GEDCOM;
-		if (PGV_USER_ID && !empty($_REQUEST["gid"])) {
+		if (WT_USER_ID && !empty($_REQUEST["gid"])) {
 			$gid = strtoupper($_REQUEST["gid"]);
-			$indirec = find_person_record($gid, PGV_GED_ID);
+			$indirec = find_person_record($gid, WT_GED_ID);
 			if ($indirec) {
 				$favorite = array();
-				$favorite["username"] = PGV_USER_NAME;
+				$favorite["username"] = WT_USER_NAME;
 				$favorite["gid"] = $gid;
 				$favorite["type"] = "INDI";
 				$favorite["file"] = $GEDCOM;
@@ -331,12 +331,12 @@ class IndividualControllerRoot extends BaseController {
 	*/
 	function acceptChanges() {
 		global $GEDCOM;
-		if (!PGV_USER_CAN_ACCEPT) return;
+		if (!WT_USER_CAN_ACCEPT) return;
 		if (accept_changes($this->pid."_".$GEDCOM)) {
 			$this->show_changes=false;
 			$this->accept_success=true;
 			//-- delete the record from the cache and refresh it
-			$indirec = find_person_record($this->pid, PGV_GED_ID);
+			$indirec = find_person_record($this->pid, WT_GED_ID);
 			//-- check if we just deleted the record and redirect to index
 			if (empty($indirec)) {
 				header("Location: index.php?ctype=gedcom");
@@ -380,13 +380,13 @@ class IndividualControllerRoot extends BaseController {
 	* @return boolean
 	*/
 	function canShowHighlightedObject() {
-		global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $USE_SILHOUETTE, $PGV_IMAGES;
+		global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $USE_SILHOUETTE, $WT_IMAGES;
 
 		if (($this->indi->canDisplayDetails()) && ($MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES)) {
 			$firstmediarec = $this->indi->findHighlightedMedia();
 			if ($firstmediarec) return true;
 		}
-		if ($USE_SILHOUETTE && isset($PGV_IMAGES["default_image_U"]["other"])) { return true; }
+		if ($USE_SILHOUETTE && isset($WT_IMAGES["default_image_U"]["other"])) { return true; }
 		return false;
 	}
 	/**
@@ -395,7 +395,7 @@ class IndividualControllerRoot extends BaseController {
 	*/
 	function canShowGedcomRecord() {
 		global $SHOW_GEDCOM_RECORD;
-		if (PGV_USER_CAN_EDIT && $SHOW_GEDCOM_RECORD && $this->indi->canDisplayDetails())
+		if (WT_USER_CAN_EDIT && $SHOW_GEDCOM_RECORD && $this->indi->canDisplayDetails())
 			return true;
 	}
 	/**
@@ -410,7 +410,7 @@ class IndividualControllerRoot extends BaseController {
 	* @return string HTML string for the <img> tag
 	*/
 	function getHighlightedObject() {
-		global $USE_THUMBS_MAIN, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $GEDCOM, $PGV_IMAGE_DIR, $PGV_IMAGES, $USE_SILHOUETTE, $sex;
+		global $USE_THUMBS_MAIN, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $GEDCOM, $WT_IMAGE_DIR, $WT_IMAGES, $USE_SILHOUETTE, $sex;
 		if ($this->canShowHighlightedObject()) {
 			$firstmediarec = $this->indi->findHighlightedMedia();
 			if (!empty($firstmediarec)) {
@@ -431,7 +431,7 @@ class IndividualControllerRoot extends BaseController {
 					$mid = $firstmediarec['mid'];
 
 					$name = $this->indi->getFullName();
-					if (PGV_USE_LIGHTBOX) {
+					if (WT_USE_LIGHTBOX) {
 						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_QUOTES, 'UTF-8')) . "\">" . "\n";
 					} else if (!$USE_MEDIA_VIEWER && $imgsize) {
 						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".encode_url(encrypt($firstmediarec["file"]))."', $imgwidth, $imgheight);\">";
@@ -444,18 +444,18 @@ class IndividualControllerRoot extends BaseController {
 				}
 			}
 		}
-		if ($USE_SILHOUETTE && isset($PGV_IMAGES["default_image_U"]["other"])) {
+		if ($USE_SILHOUETTE && isset($WT_IMAGES["default_image_U"]["other"])) {
 			$class = "\" width=\"".$THUMBNAIL_WIDTH;
 			$sex = $this->indi->getSex();
 			$result = "<img src=\"";
 			if ($sex == 'F') {
-				$result .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_F"]["other"];
+				$result .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_F"]["other"];
 			} 
 			else if ($sex == 'M') {
-				$result .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_M"]["other"];
+				$result .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_M"]["other"];
 			}
 			else {
-				$result .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_U"]["other"];
+				$result .= $WT_IMAGE_DIR."/".$WT_IMAGES["default_image_U"]["other"];
 			} 
 			$result .="\" class=\"".$class."\" border=\"none\" alt=\"\" />";
 			return $result;
@@ -481,10 +481,10 @@ class IndividualControllerRoot extends BaseController {
 
 		$this->name_count++;
 		echo "\n<div id=\"nameparts", $this->name_count, '"';
-		if (strpos($factrec, "PGV_OLD")!==false) {
+		if (strpos($factrec, "WT_OLD")!==false) {
 			echo " class=\"namered\"";
 		}
-		if (strpos($factrec, "PGV_NEW")!==false) {
+		if (strpos($factrec, "WT_NEW")!==false) {
 			echo " class=\"nameblue\"";
 		}
 		echo ">";
@@ -524,7 +524,7 @@ class IndividualControllerRoot extends BaseController {
 			}
 		}
 		echo "\n\t\t</dl>";
-		if ($this->total_names>1 && !$this->isPrintPreview() && $this->userCanEdit() && !strpos($factrec, 'PGV_OLD')) {
+		if ($this->total_names>1 && !$this->isPrintPreview() && $this->userCanEdit() && !strpos($factrec, 'WT_OLD')) {
 			echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" class=\"font9\" onclick=\"edit_name('".$this->pid."', ".$linenum."); return false;\">", i18n::translate('Edit Name'), "</a> | ";
 			echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$linenum."); return false;\">", i18n::translate('Delete Name'), "</a>";
 			if ($this->name_count==2) {
@@ -559,10 +559,10 @@ class IndividualControllerRoot extends BaseController {
 		$sex = $event->getDetail();
 		if (empty($sex)) $sex = "U";
 		echo "<div id=\"sex\"";
-		if (strpos($factrec, "PGV_OLD")!==false) {
+		if (strpos($factrec, "WT_OLD")!==false) {
 			echo " class=\"namered\"";
 		}
-		if (strpos($factrec, "PGV_NEW")!==false) {
+		if (strpos($factrec, "WT_NEW")!==false) {
 			echo " class=\"nameblue\"";
 		}
 		echo "><dl>";
@@ -575,7 +575,7 @@ class IndividualControllerRoot extends BaseController {
 			echo Person::sexImage('U', 'small', '', i18n::translate('unknown'));
 		}
 		if ($this->SEX_COUNT>1) {
-			if ((!$this->isPrintPreview()) && ($this->userCanEdit()) && (strpos($factrec, "PGV_OLD")===false)) {
+			if ((!$this->isPrintPreview()) && ($this->userCanEdit()) && (strpos($factrec, "WT_OLD")===false)) {
 				if ($event->getLineNumber()=="new") {
 					print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"add_new_record('".$this->pid."', 'SEX'); return false;\">".i18n::translate('Edit')."</a>";
 				} else {
@@ -598,7 +598,7 @@ class IndividualControllerRoot extends BaseController {
 	* @return Menu
 	*/
 	function &getEditMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
 		global $pgv_changes, $USE_QUICK_UPDATE;
 		if ($TEXT_DIRECTION=="rtl") {
 			$ff="_rtl";
@@ -607,15 +607,15 @@ class IndividualControllerRoot extends BaseController {
 		}
 		//-- main edit menu
 		$menu = new Menu(i18n::translate('Edit'));
-		if (!empty($PGV_IMAGES["edit_indi"]["large"])) {
-			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["large"]);
+		if (!empty($WT_IMAGES["edit_indi"]["large"])) {
+			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_indi"]["large"]);
 		}
-		else if (!empty($PGV_IMAGES["edit_indi"]["small"])) {
-			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]);
+		else if (!empty($WT_IMAGES["edit_indi"]["small"])) {
+			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_indi"]["small"]);
 		}
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 
-		if (PGV_USER_CAN_EDIT) {
+		if (WT_USER_CAN_EDIT) {
 			if (count($this->indi->getSpouseFamilyIds())>1) {
 				$submenu = new Menu(i18n::translate('Reorder Families'));
 				$submenu->addOnclick("return reorder_families('".$this->pid."');");
@@ -660,7 +660,7 @@ class IndividualControllerRoot extends BaseController {
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 
-			if (PGV_USER_CAN_ACCEPT) {
+			if (WT_USER_CAN_ACCEPT) {
 				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url($this->indi->getLinkUrl()."&action=undo"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
@@ -672,7 +672,7 @@ class IndividualControllerRoot extends BaseController {
 			$menu->addSeparator();
 		}
 
-		if (PGV_USER_IS_ADMIN || $this->canShowGedcomRecord()) {
+		if (WT_USER_IS_ADMIN || $this->canShowGedcomRecord()) {
 			$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 			$submenu->addOnclick("return edit_raw('".$this->pid."');");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
@@ -697,7 +697,7 @@ class IndividualControllerRoot extends BaseController {
 	*/
 	function canShowOtherMenu() {
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
-		if ($this->indi->canDisplayDetails() && ($SHOW_GEDCOM_RECORD || $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL))
+		if ($this->indi->canDisplayDetails() && ($SHOW_GEDCOM_RECORD || $ENABLE_CLIPPINGS_CART>=WT_USER_ACCESS_LEVEL))
 			return true;
 		return false;
 	}
@@ -706,38 +706,38 @@ class IndividualControllerRoot extends BaseController {
 	* @return Menu
 	*/
 	function &getOtherMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 		//-- main other menu item
 		$menu = new Menu(i18n::translate('Other'));
 		if ($SHOW_GEDCOM_RECORD) {
-			if (!empty($PGV_IMAGES["gedcom"]["small"])) $menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["large"]);
-			if ($this->show_changes && PGV_USER_CAN_EDIT) $menu->addOnclick("return show_gedcom_record('new');");
+			if (!empty($WT_IMAGES["gedcom"]["small"])) $menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["gedcom"]["large"]);
+			if ($this->show_changes && WT_USER_CAN_EDIT) $menu->addOnclick("return show_gedcom_record('new');");
 			else $menu->addOnclick("return show_gedcom_record('');");
 		} else {
-			if (!empty($PGV_IMAGES["clippings"]["small"])) $menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
+			if (!empty($WT_IMAGES["clippings"]["small"])) $menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["clippings"]["small"]);
 			$menu->addLink(encode_url("module.php?mod=clippings&action=add&id={$this->pid}&type=indi"));
 		}
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 		if ($SHOW_GEDCOM_RECORD) {
 			$submenu = new Menu(i18n::translate('View GEDCOM Record'));
-			if (!empty($PGV_IMAGES["gedcom"]["small"])) $submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes && PGV_USER_CAN_EDIT) $submenu->addOnclick("return show_gedcom_record('new');");
+			if (!empty($WT_IMAGES["gedcom"]["small"])) $submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["gedcom"]["small"]);
+			if ($this->show_changes && WT_USER_CAN_EDIT) $submenu->addOnclick("return show_gedcom_record('new');");
 			else $submenu->addOnclick("return show_gedcom_record();");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
-		if ($this->indi->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL) {
+		if ($this->indi->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=WT_USER_ACCESS_LEVEL) {
 			$submenu = new Menu(i18n::translate('Add to Clippings Cart'), encode_url("module.php?mod=clippings&action=add&id={$this->pid}&type=indi"));
-			if (!empty($PGV_IMAGES["clippings"]["small"])) $submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
+			if (!empty($WT_IMAGES["clippings"]["small"])) $submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["clippings"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
-		if ($this->indi->canDisplayDetails() && PGV_USER_NAME) {
+		if ($this->indi->canDisplayDetails() && WT_USER_NAME) {
 			$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url($this->indi->getLinkUrl()."&action=addfav&gid={$this->pid}"));
-			if (!empty($PGV_IMAGES["gedcom"]["small"])) $submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
+			if (!empty($WT_IMAGES["gedcom"]["small"])) $submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["gedcom"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
@@ -1049,10 +1049,10 @@ class IndividualControllerRoot extends BaseController {
 	* include GedFact controller
 	*/
 	function census_assistant() {
-		require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php';
+		require WT_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php';
 	}
 	function medialink_assistant() {
-		require PGV_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php';
+		require WT_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php';
 	}
 // -----------------------------------------------------------------------------
 // End GedFact Assistant Functions
@@ -1064,9 +1064,9 @@ class IndividualControllerRoot extends BaseController {
 // -- end of class
 
 //-- load a user extended class if one exists
-if (file_exists(PGV_ROOT.'includes/controllers/individual_ctrl_user.php'))
+if (file_exists(WT_ROOT.'includes/controllers/individual_ctrl_user.php'))
 {
-	require_once PGV_ROOT.'includes/controllers/individual_ctrl_user.php';
+	require_once WT_ROOT.'includes/controllers/individual_ctrl_user.php';
 }
 else
 {

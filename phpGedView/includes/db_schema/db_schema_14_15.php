@@ -52,12 +52,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_SCHEMA_14_15', '');
+define('WT_SCHEMA_14_15', '');
 
 // This data will only exist if we are upgrading an old version of PGV
 self::exec("DELETE FROM {$TBLPREFIX}user_setting WHERE setting_name='sync_gedcom'");

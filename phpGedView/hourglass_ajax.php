@@ -31,9 +31,9 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'hourglass_ajax.php');
+define('WT_SCRIPT_NAME', 'hourglass_ajax.php');
 require './config.php';
-require_once PGV_ROOT.'includes/controllers/hourglass_ctrl.php';
+require_once WT_ROOT.'includes/controllers/hourglass_ctrl.php';
 
 /*
  * The purpose of this page is to build the left half of the Hourglass chart via Ajax.

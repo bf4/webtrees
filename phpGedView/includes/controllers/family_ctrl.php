@@ -29,19 +29,19 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FAMILY_CTRL_PHP', '');
+define('WT_FAMILY_CTRL_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
-require_once PGV_ROOT.'includes/controllers/basecontrol.php';
-require_once PGV_ROOT.'includes/functions/functions_charts.php';
-require_once PGV_ROOT.'includes/classes/class_family.php';
-require_once PGV_ROOT.'includes/classes/class_menu.php';
-require_once PGV_ROOT.'includes/functions/functions_import.php';
+require_once WT_ROOT.'includes/functions/functions_print_facts.php';
+require_once WT_ROOT.'includes/controllers/basecontrol.php';
+require_once WT_ROOT.'includes/functions/functions_charts.php';
+require_once WT_ROOT.'includes/classes/class_family.php';
+require_once WT_ROOT.'includes/classes/class_menu.php';
+require_once WT_ROOT.'includes/functions/functions_import.php';
 
 class FamilyRoot extends BaseController {
 	var $user = null;
@@ -92,7 +92,7 @@ class FamilyRoot extends BaseController {
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
-				require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
+				require_once WT_ROOT.'includes/classes/class_serviceclient.php';
 				$service = ServiceClient::getInstance($servid);
 				if (!is_null($service)) {
 					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->famid."@ FAM\n1 RFN ".$this->famid, false);
@@ -112,9 +112,9 @@ class FamilyRoot extends BaseController {
 		$this->display = displayDetailsById($this->famid, 'FAM');
 
 		//-- if the user can edit and there are changes then get the new changes
-		if ($this->show_changes && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->famid."_".$GEDCOM])) {
-			$newrec = find_updated_record($this->famid, PGV_GED_ID);
-			if (empty($newrec)) $newrec = find_family_record($this->famid, PGV_GED_ID);
+		if ($this->show_changes && WT_USER_CAN_EDIT && isset($pgv_changes[$this->famid."_".$GEDCOM])) {
+			$newrec = find_updated_record($this->famid, WT_GED_ID);
+			if (empty($newrec)) $newrec = find_family_record($this->famid, WT_GED_ID);
 			$this->difffam = new Family($newrec);
 			$this->difffam->setChanged(true);
 			$this->family->diffMerge($this->difffam);
@@ -130,12 +130,12 @@ class FamilyRoot extends BaseController {
 		}
 
 		//-- add favorites action
-		if ($this->action=='addfav' && !empty($_REQUEST['gid']) && PGV_USER_NAME) {
+		if ($this->action=='addfav' && !empty($_REQUEST['gid']) && WT_USER_NAME) {
 			$_REQUEST['gid'] = strtoupper($_REQUEST['gid']);
-			$indirec = find_family_record($_REQUEST['gid'], PGV_GED_ID);
+			$indirec = find_family_record($_REQUEST['gid'], WT_GED_ID);
 			if ($indirec) {
 				$favorite = array(
-					'username' => PGV_USER_NAME,
+					'username' => WT_USER_NAME,
 					'gid' => $_REQUEST['gid'],
 					'type' => 'FAM',
 					'file' => $GEDCOM,
@@ -147,13 +147,13 @@ class FamilyRoot extends BaseController {
 			}
 		}
 
-		if (PGV_USER_CAN_ACCEPT) {
+		if (WT_USER_CAN_ACCEPT) {
 			if ($this->action=='accept') {
 				if (accept_changes($_REQUEST['famid'].'_'.$GEDCOM)) {
 					$this->show_changes = false;
 					$this->accept_success = true;
 					//-- check if we just deleted the record and redirect to index
-					$famrec = find_family_record($_REQUEST['famid'], PGV_GED_ID);
+					$famrec = find_family_record($_REQUEST['famid'], WT_GED_ID);
 					if (empty($famrec)) {
 						header("Location: index.php?ctype=gedcom");
 						exit;
@@ -235,7 +235,7 @@ class FamilyRoot extends BaseController {
 	* @return Menu
 	*/
 	function &getChartsMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 
@@ -257,8 +257,8 @@ class FamilyRoot extends BaseController {
 
 		// charts menu
 		$menu = new Menu(i18n::translate('Charts'), encode_url('timeline.php?'.$link));
-		if (!empty($PGV_IMAGES["timeline"]["small"])) {
-			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
+		if (!empty($WT_IMAGES["timeline"]["small"])) {
+			$menu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['timeline']['small']}");
 		}
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		// Build a sortable list of submenu items and then sort it in localized name order
@@ -275,8 +275,8 @@ class FamilyRoot extends BaseController {
 			case "parentTimeLine":
 				// charts / parents_timeline
 				$submenu = new Menu(i18n::translate('Show couple on timeline chart'), encode_url('timeline.php?'.$link));
-				if (!empty($PGV_IMAGES["timeline"]["small"])) {
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
+				if (!empty($WT_IMAGES["timeline"]["small"])) {
+					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['timeline']['small']}");
 				}
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
@@ -285,8 +285,8 @@ class FamilyRoot extends BaseController {
 			case "childTimeLine":
 				// charts / children_timeline
 				$submenu = new Menu(i18n::translate('Show children on timeline chart'), encode_url('timeline.php?'.$this->getChildrenUrlTimeline()));
-				if (!empty($PGV_IMAGES["timeline"]["small"])) {
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
+				if (!empty($WT_IMAGES["timeline"]["small"])) {
+					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['timeline']['small']}");
 				}
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
@@ -295,8 +295,8 @@ class FamilyRoot extends BaseController {
 			case "familyTimeLine":
 				// charts / family_timeline
 				$submenu = new Menu(i18n::translate('Show family on timeline chart'), encode_url('timeline.php?'.$link.'&'.$this->getChildrenUrlTimeline($c)));
-				if (!empty($PGV_IMAGES["timeline"]["small"])) {
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
+				if (!empty($WT_IMAGES["timeline"]["small"])) {
+					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['timeline']['small']}");
 				}
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
@@ -315,20 +315,20 @@ class FamilyRoot extends BaseController {
 	*/
 	function &getReportsMenu() {
 	/**
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 
 		$menu = new Menu(i18n::translate('Reports'), encode_url('reportengine.php?action=setup&report=reports/familygroup.xml&famid='.$this->getFamilyID()));
-		if (!empty($PGV_IMAGES["reports"]["small"])) {
-			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['reports']['small']}");
+		if (!empty($WT_IMAGES["reports"]["small"])) {
+			$menu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['reports']['small']}");
 		}
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 
 		// reports / family_group_report
 		$submenu = new Menu(i18n::translate('Family Group Report'), encode_url('reportengine.php?action=setup&report=reports/familygroup.xml&famid='.$this->getFamilyID()));
-		if (!empty($PGV_IMAGES["reports"]["small"])) {
-			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['reports']['small']}");
+		if (!empty($WT_IMAGES["reports"]["small"])) {
+			$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['reports']['small']}");
 		}
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 		$menu->addSubmenu($submenu);
@@ -341,7 +341,7 @@ class FamilyRoot extends BaseController {
 	* get the family page edit menu
 	*/
 	function &getEditMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_changes;
+		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $pgv_changes;
 		global $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
@@ -349,19 +349,19 @@ class FamilyRoot extends BaseController {
 		// edit_fam menu
 		$menu = new Menu(i18n::translate('Edit Family'));
 		$menu->addOnclick("return edit_family('".$this->getFamilyID()."');");
-		if (!empty($PGV_IMAGES["edit_fam"]["large"])) {
-			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_fam"]["large"]);
+		if (!empty($WT_IMAGES["edit_fam"]["large"])) {
+			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["large"]);
 		}
-		else if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
-			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_fam"]["small"]);
+		else if (!empty($WT_IMAGES["edit_fam"]["small"])) {
+			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
 		}
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 
 		// edit_fam / edit_fam
 		$submenu = new Menu(i18n::translate('Edit Family'));
 		$submenu->addOnclick("return edit_family('".$this->getFamilyID()."');");
-		if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
-			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
+		if (!empty($WT_IMAGES["edit_fam"]["small"])) {
+			$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
 		}
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 		$menu->addSubmenu($submenu);
@@ -369,8 +369,8 @@ class FamilyRoot extends BaseController {
 		// edit_fam / members
 		$submenu = new Menu(i18n::translate('Change Family Members'));
 		$submenu->addOnclick("return change_family_members('".$this->getFamilyID()."');");
-		if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
-			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
+		if (!empty($WT_IMAGES["edit_fam"]["small"])) {
+			$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
 		}
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 		$menu->addSubmenu($submenu);
@@ -378,8 +378,8 @@ class FamilyRoot extends BaseController {
 		// edit_fam / add child
 		$submenu = new Menu(i18n::translate('Add a child to this family'));
 		$submenu->addOnclick("return addnewchild('".$this->getFamilyID()."');");
-		if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
-			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
+		if (!empty($WT_IMAGES["edit_fam"]["small"])) {
+			$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
 		}
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 		$menu->addSubmenu($submenu);
@@ -388,8 +388,8 @@ class FamilyRoot extends BaseController {
 		if ($this->family->getNumberOfChildren() > 1) {
 			$submenu = new Menu(i18n::translate('Re-order children'));
 			$submenu->addOnclick("return reorder_children('".$this->getFamilyID()."');");
-			if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
-				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
+			if (!empty($WT_IMAGES["edit_fam"]["small"])) {
+				$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
 			}
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 			$menu->addSubmenu($submenu);
@@ -402,31 +402,31 @@ class FamilyRoot extends BaseController {
 			// edit_fam / show/hide changes
 			if (!$this->show_changes) {
 				$submenu = new Menu(i18n::translate('This record has been updated.  Click here to show changes.'), encode_url('family.php?famid='.$this->getFamilyID().'&show_changes=yes'));
-				if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
+				if (!empty($WT_IMAGES["edit_fam"]["small"])) {
+					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
 				}
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 			} else {
 				$submenu = new Menu(i18n::translate('Click here to hide changes.'), encode_url('family.php?famid='.$this->getFamilyID().'&show_changes=no'));
-				if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
+				if (!empty($WT_IMAGES["edit_fam"]["small"])) {
+					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
 				}
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 			}
 
-			if (PGV_USER_CAN_ACCEPT) {
+			if (WT_USER_CAN_ACCEPT) {
 				// edit_fam / accept_all
 				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url("family.php?famid={$this->famid}&action=undo"));
-				if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
+				if (!empty($WT_IMAGES["edit_fam"]["small"])) {
+					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
 				}
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 				$submenu = new Menu(i18n::translate('Accept all changes'), encode_url("family.php?famid={$this->famid}&action=accept"));
-				if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
+				if (!empty($WT_IMAGES["edit_fam"]["small"])) {
+					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
 				}
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
@@ -437,11 +437,11 @@ class FamilyRoot extends BaseController {
 		$menu->addSeparator();
 
 		// edit_fam / edit_raw
-		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) {
+		if ($SHOW_GEDCOM_RECORD || WT_USER_IS_ADMIN) {
 			$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 			$submenu->addOnclick("return edit_raw('".$this->getFamilyID()."');");
-			if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
-				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
+			if (!empty($WT_IMAGES["edit_fam"]["small"])) {
+				$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
 			}
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 			$menu->addSubmenu($submenu);
@@ -450,8 +450,8 @@ class FamilyRoot extends BaseController {
 		// edit_fam / delete_family
 		$submenu = new Menu(i18n::translate('Delete family'));
 		$submenu->addOnclick("if (confirm('".i18n::translate('Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?')."')) return delete_family('".$this->getFamilyID()."'); else return false;");
-		if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
-			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
+		if (!empty($WT_IMAGES["edit_fam"]["small"])) {
+			$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
 		}
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 		$menu->addSubmenu($submenu);
@@ -470,7 +470,7 @@ class FamilyRoot extends BaseController {
 	* @return Menu
 	*/
 	function &getOtherMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
@@ -480,43 +480,43 @@ class FamilyRoot extends BaseController {
 		$menu = new Menu(i18n::translate('Other'));
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		if ($SHOW_GEDCOM_RECORD) {
-			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
-			if ($this->show_changes && PGV_USER_CAN_EDIT) {
+			$menu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['gedcom']['small']}");
+			if ($this->show_changes && WT_USER_CAN_EDIT) {
 				$menu->addLink("javascript:show_gedcom_record('new');");
 			} else {
 				$menu->addLink("javascript:show_gedcom_record();");
 			}
 		} else {
-			if (!empty($PGV_IMAGES["clippings"]["small"])) {
-				$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['clippings']['small']}");
+			if (!empty($WT_IMAGES["clippings"]["small"])) {
+				$menu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['clippings']['small']}");
 			}
 			$menu->addLink(encode_url('clippings.php?action=add&id='.$this->getFamilyID().'&type=fam'));
 		}
 		if ($SHOW_GEDCOM_RECORD) {
 				// other / view_gedcom
 				$submenu = new Menu(i18n::translate('View GEDCOM Record'));
-				if ($this->show_changes && PGV_USER_CAN_EDIT) {
+				if ($this->show_changes && WT_USER_CAN_EDIT) {
 					$submenu->addLink("javascript:show_gedcom_record('new');");
 				} else {
 					$submenu->addLink("javascript:show_gedcom_record();");
 				}
-				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
+				$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['gedcom']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 		}
-		if ($ENABLE_CLIPPINGS_CART >= PGV_USER_ACCESS_LEVEL) {
+		if ($ENABLE_CLIPPINGS_CART >= WT_USER_ACCESS_LEVEL) {
 				// other / add_to_cart
 				$submenu = new Menu(i18n::translate('Add to Clippings Cart'), encode_url('clippings.php?action=add&id='.$this->getFamilyID().'&type=fam'));
-				if (!empty($PGV_IMAGES["clippings"]["small"])) {
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['clippings']['small']}");
+				if (!empty($WT_IMAGES["clippings"]["small"])) {
+					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['clippings']['small']}");
 				}
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 		}
-		if ($this->display && PGV_USER_ID) {
+		if ($this->display && WT_USER_ID) {
 			// other / add_to_my_favorites
 			$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url('family.php?action=addfav&famid='.$this->getFamilyID().'&gid='.$this->getFamilyID()));
-			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
+			$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['gedcom']['small']}");
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 			$menu->addSubmenu($submenu);
 		}
@@ -524,8 +524,8 @@ class FamilyRoot extends BaseController {
 	}
 }
 
-if (file_exists(PGV_ROOT.'includes/controllers/family_ctrl_user.php')) {
-	require_once PGV_ROOT.'includes/controllers/family_ctrl_user.php';
+if (file_exists(WT_ROOT.'includes/controllers/family_ctrl_user.php')) {
+	require_once WT_ROOT.'includes/controllers/family_ctrl_user.php';
 } else {
 	class FamilyController extends FamilyRoot {
 	}

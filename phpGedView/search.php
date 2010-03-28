@@ -28,10 +28,10 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'search.php');
+define('WT_SCRIPT_NAME', 'search.php');
 require './config.php';
-require_once PGV_ROOT.'includes/controllers/search_ctrl.php';
-require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+require_once WT_ROOT.'includes/controllers/search_ctrl.php';
+require_once WT_ROOT.'includes/functions/functions_print_lists.php';
 
 $controller = new SearchController();
 $controller->init();
@@ -39,7 +39,7 @@ $controller->init();
 // Print the top header
 print_header(i18n::translate('Search'));
 
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -123,7 +123,7 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 					message = false;
 				if(message)
 				{
-					<?php if ($SHOW_MULTISITE_SEARCH >= PGV_USER_ACCESS_LEVEL) { ?>
+					<?php if ($SHOW_MULTISITE_SEARCH >= WT_USER_ACCESS_LEVEL) { ?>
 					if(gender.length < 1)
 					{
 						alert("<?php print i18n::translate('Please enter one of the following:  Name, Birth Date, Birth Place, Death Date, Death Place, and Gender ')?>");
@@ -255,7 +255,7 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 /**************************************************** Search and Replace Search Form ****************************************************/
 if ($controller->action == "replace")
 {
-	if (PGV_USER_CAN_EDIT) {
+	if (WT_USER_CAN_EDIT) {
 ?>
 				<td colspan="3" class="facts_label03" style="text-align: center;">
 					<?php echo i18n::translate('Search and Replace'), help_link('search_replace'); ?>
@@ -571,10 +571,10 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 if ($controller->action == "general") {
 	print "<a href='?action=soundex'>".i18n::translate('Soundex Search')."</a>";
 	print " | <a href='search_advanced.php'>".i18n::translate('Advanced Search')."</a>";
-	if(PGV_USER_CAN_EDIT) {
+	if(WT_USER_CAN_EDIT) {
 		print " | <a href='?action=replace'>".i18n::translate('Search and Replace')."</a>";
 	}
-	if ($SHOW_MULTISITE_SEARCH >= PGV_USER_ACCESS_LEVEL) {
+	if ($SHOW_MULTISITE_SEARCH >= WT_USER_ACCESS_LEVEL) {
 		if (count($controller->Sites) > 0) {
 
 
@@ -587,7 +587,7 @@ else if ($controller->action == "replace")
 	print "<a href='?action=general'>".i18n::translate('General Search')."</a> | ";
 	print "<a href='?action=soundex'>".i18n::translate('Soundex Search')."</a>";
 	print " | <a href='search_advanced.php'>".i18n::translate('Advanced Search')."</a>";
-		if ($SHOW_MULTISITE_SEARCH >= PGV_USER_ACCESS_LEVEL) {
+		if ($SHOW_MULTISITE_SEARCH >= WT_USER_ACCESS_LEVEL) {
 			if (count($controller->Sites) > 0) {
 
 				print " | <a href='?action=multisite'>".i18n::translate('Multi Site Search')."</a></td></tr>";
@@ -598,11 +598,11 @@ else
 	if ($controller->action == "soundex") {
 		print "<a href='?action=general'>".i18n::translate('General Search')."</a>";
 		print " | <a href='search_advanced.php'>".i18n::translate('Advanced Search')."</a>";
-		if(PGV_USER_CAN_EDIT)
+		if(WT_USER_CAN_EDIT)
 		{
 			print " | <a href='?action=replace'>".i18n::translate('Search and Replace')."</a>";
 		}
-		if ($SHOW_MULTISITE_SEARCH >= PGV_USER_ACCESS_LEVEL) {
+		if ($SHOW_MULTISITE_SEARCH >= WT_USER_ACCESS_LEVEL) {
 			if (count($controller->Sites) > 0) {
 				print " | <a href='?action=multisite'>".i18n::translate('Multi Site Search')."</a></td></tr>";
 			}
@@ -611,7 +611,7 @@ else
 	else
 		if ($controller->action == "multisite")
 		{
-			if(PGV_USER_CAN_EDIT)
+			if(WT_USER_CAN_EDIT)
 			{
 				print "<a href='?action=replace'>".i18n::translate('Search and Replace')."</a> | ";
 			}

@@ -27,19 +27,19 @@
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once PGV_ROOT.'includes/classes/class_sidebar.php';
+require_once WT_ROOT.'includes/classes/class_sidebar.php';
 
-if (!defined('PGV_AUTOCOMPLETE_LIMIT')) define('PGV_AUTOCOMPLETE_LIMIT', 500);
+if (!defined('WT_AUTOCOMPLETE_LIMIT')) define('WT_AUTOCOMPLETE_LIMIT', 500);
 
 class descendancy_Sidebar extends Sidebar {
 
 	public function getContent() {
-		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $WT_IMAGE_DIR, $WT_IMAGES;
 
 		$out = '<script type="text/javascript">
 		<!--
@@ -66,18 +66,18 @@ class descendancy_Sidebar extends Sidebar {
 				if (!dloadedNames[pid]) {
 					jQuery("#sb_desc_"+pid+" div").load(this.href);
 					jQuery("#sb_desc_"+pid+" div").show();
-					jQuery("#sb_desc_"+pid+" .plusminus").attr("src", "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES['minus']['other'].'");
+					jQuery("#sb_desc_"+pid+" .plusminus").attr("src", "'.$WT_IMAGE_DIR."/".$WT_IMAGES['minus']['other'].'");
 					dloadedNames[pid]=2;
 				}
 				else if (dloadedNames[pid]==1) {
 					dloadedNames[pid]=2;
 					jQuery("#sb_desc_"+pid+" div").show();
-					jQuery("#sb_desc_"+pid+" .plusminus").attr("src", "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES['minus']['other'].'");
+					jQuery("#sb_desc_"+pid+" .plusminus").attr("src", "'.$WT_IMAGE_DIR."/".$WT_IMAGES['minus']['other'].'");
 				}
 				else {
 					dloadedNames[pid]=1;
 					jQuery("#sb_desc_"+pid+" div").hide();
-					jQuery("#sb_desc_"+pid+" .plusminus").attr("src", "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES['plus']['other'].'");
+					jQuery("#sb_desc_"+pid+" .plusminus").attr("src", "'.$WT_IMAGE_DIR."/".$WT_IMAGES['plus']['other'].'");
 				}
 				return false;
 			});
@@ -109,17 +109,17 @@ class descendancy_Sidebar extends Sidebar {
 	}
 	
 	public function getPersonLi(&$person, $generations=0) {
-		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $WT_IMAGE_DIR, $WT_IMAGES;
 		$out = '';
 		$out .= '<li id="sb_desc_'.$person->getXref().'" class="sb_desc_indi_li"><a href="sidebar.php?sb_action=descendancy&amp;pid='.$person->getXref().'" title="'.$person->getXref().'" class="sb_desc_indi">';
-		if ($generations>0) $out .= '<img src="'.$PGV_IMAGE_DIR."/".$PGV_IMAGES['minus']['other'].'" border="0" class="plusminus" />';
-		else $out .= '<img src="'.$PGV_IMAGE_DIR."/".$PGV_IMAGES['plus']['other'].'" border="0" class="plusminus" />';
+		if ($generations>0) $out .= '<img src="'.$WT_IMAGE_DIR."/".$WT_IMAGES['minus']['other'].'" border="0" class="plusminus" />';
+		else $out .= '<img src="'.$WT_IMAGE_DIR."/".$WT_IMAGES['plus']['other'].'" border="0" class="plusminus" />';
 		$out .= $person->getSexImage().' '.$person->getListName().' ';
 		if ($person->canDisplayDetails()) {
 			$bd = $person->getBirthDeathYears(false,'');
 			if (!empty($bd)) $out .= PrintReady(' ('.$bd.')');
 		}
-		$out .= '</a> <a href="'.encode_url($person->getLinkUrl()).'"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['indi']['button'].'" border="0" alt="indi" /></a>';
+		$out .= '</a> <a href="'.encode_url($person->getLinkUrl()).'"><img src="'.$WT_IMAGE_DIR.'/'.$WT_IMAGES['indi']['button'].'" border="0" alt="indi" /></a>';
 		if ($generations>0) {
 			$out .= '<div class="desc_tree_div_visible">';
 			$out .= $this->loadSpouses($person->getXref());
@@ -133,18 +133,18 @@ class descendancy_Sidebar extends Sidebar {
 	}
 	
 	public function getFamilyLi(&$family, &$person, $generations=0) {
-		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $WT_IMAGE_DIR, $WT_IMAGES;
 		$out = '';
 		$out .= '<li id="sb_desc_'.$family->getXref().'" class="sb_desc_indi_li"><a href="sidebar.php?sb_action=descendancy&amp;famid='.$family->getXref().'" title="'.$family->getXref().'" class="sb_desc_indi">';
-		$out .= '<img src="'.$PGV_IMAGE_DIR."/".$PGV_IMAGES['minus']['other'].'" border="0" class="plusminus" />';
+		$out .= '<img src="'.$WT_IMAGE_DIR."/".$WT_IMAGES['minus']['other'].'" border="0" class="plusminus" />';
 		$out .= $person->getSexImage().$person->getListName();
 		
 		$marryear = $family->getMarriageYear();
 		if (!empty($marryear)) {
 			$out .= ' ('.i18n::translate('MARR').' '.$marryear.')';
 		}
-		$out .= '</a> <a href="'.encode_url($person->getLinkUrl()).'"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['indi']['button'].'" border="0" alt="indi" /></a>';
-		$out .= '<a href="'.encode_url($family->getLinkUrl()).'"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['family']['button'].'" border="0" alt="family" /></a>';
+		$out .= '</a> <a href="'.encode_url($person->getLinkUrl()).'"><img src="'.$WT_IMAGE_DIR.'/'.$WT_IMAGES['indi']['button'].'" border="0" alt="indi" /></a>';
+		$out .= '<a href="'.encode_url($family->getLinkUrl()).'"><img src="'.$WT_IMAGE_DIR.'/'.$WT_IMAGES['family']['button'].'" border="0" alt="family" /></a>';
 		$out .= '<div class="desc_tree_div_visible">';
 		$out .= $this->loadChildren($family->getXref(), $generations);
 		$out .= '</div><script type="text/javascript">dloadedNames["'.$family->getXref().'"]=2;</script>';
@@ -153,17 +153,17 @@ class descendancy_Sidebar extends Sidebar {
 	}
 
 	public function search($query) {
-		global $TBLPREFIX, $PGV_IMAGES, $PGV_IMAGE_DIR;
+		global $TBLPREFIX, $WT_IMAGES, $WT_IMAGE_DIR;
 		if (strlen($query)<2) return '';
 		$sql=
 		"SELECT ? AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
 		" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
-		" WHERE (i_id ".PGV_DB::$LIKE." ? OR n_sort ".PGV_DB::$LIKE." ?)".
+		" WHERE (i_id ".WT_DB::$LIKE." ? OR n_sort ".WT_DB::$LIKE." ?)".
 		" AND i_id=n_id AND i_file=n_file AND i_file=?".
 		" ORDER BY n_sort";
 		$rows=
-		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
-		->execute(array('INDI', "%{$query}%", "%{$query}%", PGV_GED_ID))
+		WT_DB::prepareLimit($sql, WT_AUTOCOMPLETE_LIMIT)
+		->execute(array('INDI', "%{$query}%", "%{$query}%", WT_GED_ID))
 		->fetchAll(PDO::FETCH_ASSOC);
 
 		$out = '<ul>';
@@ -219,8 +219,8 @@ class descendancy_Sidebar extends Sidebar {
 
 	public function getAjaxContent() {
 		$search   =safe_GET('search');
-		$pid   =safe_GET('pid', PGV_REGEX_XREF);
-		$famid   =safe_GET('famid', PGV_REGEX_XREF);
+		$pid   =safe_GET('pid', WT_REGEX_XREF);
+		$famid   =safe_GET('famid', WT_REGEX_XREF);
 
 		$last = array('search'=>$search);
 		$_SESSION['sb_descendancy_last'] = $last;

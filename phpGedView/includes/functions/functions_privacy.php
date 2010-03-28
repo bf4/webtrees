@@ -29,12 +29,12 @@
 * @subpackage Privacy
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FUNCTIONS_PRIVACY_PHP', '');
+define('WT_FUNCTIONS_PRIVACY_PHP', '');
 
 if ($USE_RELATIONSHIP_PRIVACY) {
 	/**
@@ -76,7 +76,7 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 	global $CHECK_CHILD_DATES, $MAX_ALIVE_AGE, $GEDCOM;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 
-	if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ INDI/', $indirec, $match)) {
+	if (preg_match('/^0 @('.WT_REGEX_XREF.')@ INDI/', $indirec, $match)) {
 		$pid=$match[1];
 	} else {
 		return false;
@@ -86,9 +86,9 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 	// public until a certain time period has elapsed.
 	if (empty($current_year)) {
 		// If we're not redefining this, then we can do a quick check for undated deaths
-		if (preg_match('/\n1 (?:'.PGV_EVENTS_DEAT.')(?: Y|(?:\n[2-9].+)*\n2 PLAC )/', $indirec)) {
+		if (preg_match('/\n1 (?:'.WT_EVENTS_DEAT.')(?: Y|(?:\n[2-9].+)*\n2 PLAC )/', $indirec)) {
 			if (!$sitemap) {
-				return update_isdead($pid, PGV_GED_ID, true);
+				return update_isdead($pid, WT_GED_ID, true);
 			} else {
 				return true;
 			}
@@ -98,13 +98,13 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 	}
 
 	// Check for a death record occuring on/before the current year.
-	preg_match_all('/\n1 (?:'.PGV_EVENTS_DEAT.')(?:\n[2-9].+)*\n2 DATE (.+)/', $indirec, $date_matches);
+	preg_match_all('/\n1 (?:'.WT_EVENTS_DEAT.')(?:\n[2-9].+)*\n2 DATE (.+)/', $indirec, $date_matches);
 	foreach ($date_matches[1] as $date_match) {
 		$date=new GedcomDate($date_match);
 		if ($date->isOK()) {
 			$death_year=$date->gregorianYear();
 			if (!$sitemap) {
-				return update_isdead($pid, PGV_GED_ID, $death_year<=$current_year);
+				return update_isdead($pid, WT_GED_ID, $death_year<=$current_year);
 			} else {
 				return $death_year<=$current_year;
 			}
@@ -119,7 +119,7 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 			$event_year=$date->gregorianYear();
 			if ($current_year-$event_year >= $MAX_ALIVE_AGE) {
 				if (!$sitemap) {
-					return update_isdead($pid, PGV_GED_ID, true);
+					return update_isdead($pid, WT_GED_ID, true);
 				} else {
 					return true;
 				}
@@ -135,7 +135,7 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 	// If we found no dates then check the dates of close relatives.
 	if ($CHECK_CHILD_DATES ) {
 		// Check parents (birth and adopted)
-		preg_match_all('/\n1 FAMC @('.PGV_REGEX_XREF.')@/', $indirec, $famc_matches);
+		preg_match_all('/\n1 FAMC @('.WT_REGEX_XREF.')@/', $indirec, $famc_matches);
 		foreach ($famc_matches[1] as $famc_match) {
 			$parents=find_parents($famc_match);
 			if ($parents) {
@@ -148,7 +148,7 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 							// Assume fathers are no more than 40 years older than their children
 							if ($current_year-$event_year >= $MAX_ALIVE_AGE+40) {
 								if (!$sitemap) {
-									return update_isdead($pid, PGV_GED_ID, true);
+									return update_isdead($pid, WT_GED_ID, true);
 								} else {
 									return true;
 								}
@@ -165,7 +165,7 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 							// Assume fathers are no more than 40 years older than their children
 							if ($current_year-$event_year >= $MAX_ALIVE_AGE+40) {
 								if (!$sitemap) {
-									return update_isdead($pid, PGV_GED_ID, true);
+									return update_isdead($pid, WT_GED_ID, true);
 								} else {
 									return true;
 								}
@@ -177,11 +177,11 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 		}
 		$children = array();
 		// Check spouses
-		preg_match_all('/\n1 FAMS @('.PGV_REGEX_XREF.')@/', $indirec, $fams_matches);
+		preg_match_all('/\n1 FAMS @('.WT_REGEX_XREF.')@/', $indirec, $fams_matches);
 		foreach ($fams_matches[1] as $fams_match) {
 			$famrec=find_family_record($fams_match, $ged_id);
 			// Check all marriage events
-			preg_match_all('/\n1 (?:'.PGV_EVENTS_MARR.')(?:\n[2-9].+)*\n2 DATE (.+)/', $indirec, $date_matches);
+			preg_match_all('/\n1 (?:'.WT_EVENTS_MARR.')(?:\n[2-9].+)*\n2 DATE (.+)/', $indirec, $date_matches);
 			foreach ($date_matches[1] as $date_match) {
 				$date=new GedcomDate($date_match);
 				if ($date->isOK()) {
@@ -189,7 +189,7 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 					// Assume marriage occurs after age of 10
 					if ($current_year-$event_year >= $MAX_ALIVE_AGE-10) {
 						if (!$sitemap) {
-							return update_isdead($pid, PGV_GED_ID, true);
+							return update_isdead($pid, WT_GED_ID, true);
 						} else {
 							return true;
 						}
@@ -212,7 +212,7 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 						// Assume max age difference between spouses of 40 years
 						if ($current_year-$event_year >= $MAX_ALIVE_AGE+40) {
 							if (!$sitemap) {
-								return update_isdead($pid, PGV_GED_ID, true);
+								return update_isdead($pid, WT_GED_ID, true);
 							} else {
 								return true;
 							}
@@ -221,7 +221,7 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 				}
 			}
 			// Check child dates
-			preg_match_all('/\n1 CHIL @('.PGV_REGEX_XREF.')@/', $famrec, $chil_matches);
+			preg_match_all('/\n1 CHIL @('.WT_REGEX_XREF.')@/', $famrec, $chil_matches);
 			foreach ($chil_matches[1] as $chil_match) {
 				$childrec=find_person_record($chil_match, $ged_id);
 				preg_match_all('/\n2 DATE (.+)/', $childrec, $date_matches);
@@ -232,7 +232,7 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 						$event_year=$date->gregorianYear();
 						if ($current_year-$event_year >= $MAX_ALIVE_AGE-15) {
 							if (!$sitemap) {
-								return update_isdead($pid, PGV_GED_ID, true);
+								return update_isdead($pid, WT_GED_ID, true);
 							} else {
 								return true;
 							}
@@ -240,9 +240,9 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 					}
 				}
 				// Check grandchildren
-				preg_match_all('/\n1 FAMS @('.PGV_REGEX_XREF.')@/', $childrec, $fams2_matches);
+				preg_match_all('/\n1 FAMS @('.WT_REGEX_XREF.')@/', $childrec, $fams2_matches);
 				foreach ($fams2_matches[1] as $fams2_match) {
-					preg_match_all('/\n1 CHIL @('.PGV_REGEX_XREF.')@/', find_family_record($fams2_match, $ged_id), $chil2_matches);
+					preg_match_all('/\n1 CHIL @('.WT_REGEX_XREF.')@/', find_family_record($fams2_match, $ged_id), $chil2_matches);
 					foreach ($chil2_matches[1] as $chil2_match) {
 						$grandchildrec=find_person_record($chil2_match, $ged_id);
 						preg_match_all('/\n2 DATE (.+)/', $grandchildrec, $date_matches);
@@ -253,7 +253,7 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 								$event_year=$date->gregorianYear();
 								if ($current_year-$event_year >= $MAX_ALIVE_AGE-30) {
 									if (!$sitemap) {
-										return update_isdead($pid, PGV_GED_ID, true);
+										return update_isdead($pid, WT_GED_ID, true);
 									} else {
 										return true;
 									}
@@ -266,7 +266,7 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 		}
 	}
 	if (!$sitemap) {
-		return update_isdead($pid, PGV_GED_ID, false);
+		return update_isdead($pid, WT_GED_ID, false);
 	} else {
 		return false;
 	}
@@ -351,16 +351,16 @@ function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 	global $GEDCOM;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 
-	if ($_SESSION["pgv_user"]==PGV_USER_ID) {
+	if ($_SESSION["pgv_user"]==WT_USER_ID) {
 		// Normal operation
-		$pgv_GEDCOM            = PGV_GEDCOM;
-		$pgv_GED_ID            = PGV_GED_ID;
-		$pgv_USER_ID           = PGV_USER_ID;
-		$pgv_USER_NAME         = PGV_USER_NAME;
-		$pgv_USER_GEDCOM_ADMIN = PGV_USER_GEDCOM_ADMIN;
-		$pgv_USER_CAN_ACCESS   = PGV_USER_CAN_ACCESS;
-		$pgv_USER_ACCESS_LEVEL = PGV_USER_ACCESS_LEVEL;
-		$pgv_USER_GEDCOM_ID    = PGV_USER_GEDCOM_ID;
+		$pgv_GEDCOM            = WT_GEDCOM;
+		$pgv_GED_ID            = WT_GED_ID;
+		$pgv_USER_ID           = WT_USER_ID;
+		$pgv_USER_NAME         = WT_USER_NAME;
+		$pgv_USER_GEDCOM_ADMIN = WT_USER_GEDCOM_ADMIN;
+		$pgv_USER_CAN_ACCESS   = WT_USER_CAN_ACCESS;
+		$pgv_USER_ACCESS_LEVEL = WT_USER_ACCESS_LEVEL;
+		$pgv_USER_GEDCOM_ID    = WT_USER_GEDCOM_ID;
 	} else {
 		// We're in the middle of a Download -- get overriding information from cache
 		$pgv_GEDCOM            = $_SESSION["pgv_GEDCOM"];
@@ -388,14 +388,14 @@ function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 	if (!isset($PRIVACY_CHECKS)) $PRIVACY_CHECKS = 1;
 	else $PRIVACY_CHECKS++;
 
-	if (PGV_DEBUG_PRIV) {
+	if (WT_DEBUG_PRIV) {
 		$fp = fopen($INDEX_DIRECTORY."/priv_log.txt", "a");
 		$backtrace = debug_backtrace();
 		$temp = "";
 		if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
 		if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
 		$temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
-		fwrite($fp, date("Y-m-d H:i:s")."\t".PGV_SCRIPT_NAME."\t".$temp."\t".$PRIVACY_CHECKS."- checking privacy for ".$type." ".$pid.PGV_EOL);
+		fwrite($fp, date("Y-m-d H:i:s")."\t".WT_SCRIPT_NAME."\t".$temp."\t".$PRIVACY_CHECKS."- checking privacy for ".$type." ".$pid.WT_EOL);
 		fclose($fp);
 	}
 
@@ -667,10 +667,10 @@ function showLivingNameById($pid) {
 	global $GEDCOM;
 	global $SHOW_LIVING_NAMES, $person_privacy, $user_privacy;
 
-	if ($_SESSION["pgv_user"]==PGV_USER_ID) {
+	if ($_SESSION["pgv_user"]==WT_USER_ID) {
 		// Normal operation
-		$pgv_USER_NAME			= PGV_USER_NAME;
-		$pgv_USER_ACCESS_LEVEL	= PGV_USER_ACCESS_LEVEL;
+		$pgv_USER_NAME			= WT_USER_NAME;
+		$pgv_USER_ACCESS_LEVEL	= WT_USER_ACCESS_LEVEL;
 	} else {
 		// We're in the middle of a Download -- get overriding information from cache
 		$pgv_USER_NAME			= $_SESSION["pgv_USER_NAME"];
@@ -717,9 +717,9 @@ function showFact($fact, $pid, $type='INDI') {
 	global $GEDCOM;
 	global $global_facts, $person_facts, $SHOW_SOURCES;
 
-	if ($_SESSION["pgv_user"]==PGV_USER_ID) {
+	if ($_SESSION["pgv_user"]==WT_USER_ID) {
 		// Normal operation
-		$pgv_USER_ACCESS_LEVEL	= PGV_USER_ACCESS_LEVEL;
+		$pgv_USER_ACCESS_LEVEL	= WT_USER_ACCESS_LEVEL;
 	} else {
 		// We're in the middle of a Download -- get overriding information from cache
 		$pgv_USER_ACCESS_LEVEL	= $_SESSION["pgv_USER_ACCESS_LEVEL"];
@@ -768,9 +768,9 @@ function showFactDetails($fact, $pid) {
 	global $GEDCOM;
 	global $global_facts, $person_facts;
 
-	if ($_SESSION["pgv_user"]==PGV_USER_ID) {
+	if ($_SESSION["pgv_user"]==WT_USER_ID) {
 		// Normal operation
-		$pgv_USER_ACCESS_LEVEL	= PGV_USER_ACCESS_LEVEL;
+		$pgv_USER_ACCESS_LEVEL	= WT_USER_ACCESS_LEVEL;
 	} else {
 		// We're in the middle of a Download -- get overriding information from cache
 		$pgv_USER_ACCESS_LEVEL	= $_SESSION["pgv_USER_ACCESS_LEVEL"];
@@ -801,7 +801,7 @@ function privatize_gedcom($gedrec) {
 	global $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
 	global $global_facts, $person_facts;
 
-	if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')(.*)/', $gedrec, $match)) {
+	if (preg_match('/^0 @('.WT_REGEX_XREF.')@ ('.WT_REGEX_TAG.')(.*)/', $gedrec, $match)) {
 		$gid = $match[1];
 		$type = $match[2];
 		$data = $match[3];
@@ -820,7 +820,7 @@ function privatize_gedcom($gedrec) {
 			$newrec="0 @{$gid}@ {$type}{$data}";
 			$private_record='';
 			// Check each of the sub facts for access
-			if (preg_match_all('/\n1 ('.PGV_REGEX_TAG.').*(?:\n[2-9].*)*/', $gedrec, $matches, PREG_SET_ORDER)) {
+			if (preg_match_all('/\n1 ('.WT_REGEX_TAG.').*(?:\n[2-9].*)*/', $gedrec, $matches, PREG_SET_ORDER)) {
 				foreach ($matches as $match) {
 					if (($match[1]=='FACT' || $match[1]=='EVEN') && preg_match('/\n2 TYPE ([A-Z]{3,5})/', $match[0], $tmatch)) {
 						$tag=$tmatch[1];
@@ -853,7 +853,7 @@ function privatize_gedcom($gedrec) {
 					$newrec.="\n1 NAME ".i18n::translate('Private');
 				}
 				// Just show the 1 FAMC/FAMS tag, not any subtags, which may contain private data
-				if (preg_match_all('/\n1 FAM[CS] @('.PGV_REGEX_XREF.')@/', $gedrec, $matches, PREG_SET_ORDER)) {
+				if (preg_match_all('/\n1 FAM[CS] @('.WT_REGEX_XREF.')@/', $gedrec, $matches, PREG_SET_ORDER)) {
 					foreach ($matches as $match) {
 						if ($SHOW_PRIVATE_RELATIONSHIPS || displayDetailsById($match[1], 'FAM')) {
 							$newrec.=$match[0];
@@ -869,7 +869,7 @@ function privatize_gedcom($gedrec) {
 			case 'FAM':
 				$newrec="0 @{$gid}@ FAM";
 				// Just show the 1 CHIL/HUSB/WIFE tag, not any subtags, which may contain private data
-				if (preg_match_all('/\n1 (CHIL|HUSB|WIFE) @('.PGV_REGEX_XREF.')@/', $gedrec, $matches, PREG_SET_ORDER)) {
+				if (preg_match_all('/\n1 (CHIL|HUSB|WIFE) @('.WT_REGEX_XREF.')@/', $gedrec, $matches, PREG_SET_ORDER)) {
 					foreach ($matches as $match) {
 						if ($SHOW_PRIVATE_RELATIONSHIPS || displayDetailsById($match[1], 'INDI')) {
 							$newrec.=$match[0];
@@ -908,7 +908,7 @@ function get_last_private_data($gid) {
 * checks the current user and returns their privacy access level
 * @return int their access level
 */
-function getUserAccessLevel($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
+function getUserAccessLevel($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
 	global $PRIV_PUBLIC, $PRIV_NONE, $PRIV_USER;
 
 	if ($user_id) {
@@ -935,19 +935,19 @@ function getUserAccessLevel($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 * @return int Allowed or not allowed
 */
 function FactEditRestricted($pid, $factrec) {
-	if (PGV_USER_GEDCOM_ADMIN) {
+	if (WT_USER_GEDCOM_ADMIN) {
 		return false;
 	}
 
 	if (preg_match("/2 RESN (.*)/", $factrec, $match)) {
 		$match[1] = strtolower(trim($match[1]));
 		if ($match[1] == "privacy" || $match[1]=="locked") {
-			$myindi=PGV_USER_GEDCOM_ID;
+			$myindi=WT_USER_GEDCOM_ID;
 			if ($myindi == $pid) {
 				return false;
 			}
-			if (gedcom_record_type($pid, PGV_GED_ID)=='FAM') {
-				$famrec = find_family_record($pid, PGV_GED_ID);
+			if (gedcom_record_type($pid, WT_GED_ID)=='FAM') {
+				$famrec = find_family_record($pid, WT_GED_ID);
 				$parents = find_parents_in_record($famrec);
 				if ($myindi == $parents["HUSB"] || $myindi == $parents["WIFE"]) {
 					return false;
@@ -968,11 +968,11 @@ function FactEditRestricted($pid, $factrec) {
 * @return int Allowed or not allowed
 */
 function FactViewRestricted($pid, $factrec) {
-	if ($_SESSION['pgv_user']==PGV_USER_ID) {
+	if ($_SESSION['pgv_user']==WT_USER_ID) {
 		// Normal operation
-		$pgv_GED_ID				= PGV_GED_ID;
-		$pgv_USER_GEDCOM_ADMIN	= PGV_USER_GEDCOM_ADMIN;
-		$pgv_USER_GEDCOM_ID		= PGV_USER_GEDCOM_ID;
+		$pgv_GED_ID				= WT_GED_ID;
+		$pgv_USER_GEDCOM_ADMIN	= WT_USER_GEDCOM_ADMIN;
+		$pgv_USER_GEDCOM_ID		= WT_USER_GEDCOM_ID;
 	} else {
 		// We're in the middle of a Download -- get overriding information from cache
 		$pgv_GED_ID           =$_SESSION['pgv_GED_ID'];

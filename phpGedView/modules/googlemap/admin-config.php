@@ -31,7 +31,7 @@
  * $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -44,7 +44,7 @@ if (file_exists('modules/googlemap/config.php')) {
 
 print_header(i18n::translate('GoogleMap Configuration'));
 
-if (PGV_USER_IS_ADMIN) { ?>
+if (WT_USER_IS_ADMIN) { ?>
 <table class="center <?php print $TEXT_DIRECTION ?>">
    <tr>
 	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo i18n::translate('GoogleMap Configuration'); ?></td>

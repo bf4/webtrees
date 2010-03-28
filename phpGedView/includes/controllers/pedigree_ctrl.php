@@ -26,16 +26,16 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_PEDIGREE_CTRL_PHP', '');
+define('WT_PEDIGREE_CTRL_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_charts.php';
-require_once PGV_ROOT.'includes/controllers/basecontrol.php';
-require_once PGV_ROOT.'includes/classes/class_person.php';
+require_once WT_ROOT.'includes/functions/functions_charts.php';
+require_once WT_ROOT.'includes/controllers/basecontrol.php';
+require_once WT_ROOT.'includes/classes/class_person.php';
 
 /**
  * Main controller class for the Ancestry page.
@@ -341,8 +341,8 @@ class PedigreeControllerRoot extends BaseController {
 
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists(PGV_ROOT.'includes/controllers/pedigree_ctrl_user.php')) {
-	require_once PGV_ROOT.'includes/controllers/pedigree_ctrl_user.php';
+if (file_exists(WT_ROOT.'includes/controllers/pedigree_ctrl_user.php')) {
+	require_once WT_ROOT.'includes/controllers/pedigree_ctrl_user.php';
 } else {
 	class PedigreeController extends PedigreeControllerRoot
 	{

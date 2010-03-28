@@ -27,9 +27,9 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'uploadmedia.php');
+define('WT_SCRIPT_NAME', 'uploadmedia.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_mediadb.php';
+require_once WT_ROOT.'includes/functions/functions_mediadb.php';
 
 /**
  * This functions checks if an existing directory is physically writeable
@@ -47,7 +47,7 @@ function dir_is_writable($dir) {
 	return($err_write);
 }
 
-if (!PGV_USER_CAN_EDIT) {
+if (!WT_USER_CAN_EDIT) {
 	header("Location: login.php?url=uploadmedia.php");
 	exit;
 }

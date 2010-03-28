@@ -30,19 +30,19 @@
  * @subpackage Blocks
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_TOP10_GIVNNAMES_PHP', '');
+define('WT_TOP10_GIVNNAMES_PHP', '');
 
-$PGV_BLOCKS["print_block_givn_top10"]["name"]		= i18n::translate('Top 10 Given Names');
-$PGV_BLOCKS["print_block_givn_top10"]["descr"]		= i18n::translate('This block shows a table of the 10 most frequently occurring given names in the database.  The actual number of given names shown in this block is configurable.');
-$PGV_BLOCKS["print_block_givn_top10"]["type"]		= "both";
-$PGV_BLOCKS["print_block_givn_top10"]["infoStyle"]	= "style2";
-$PGV_BLOCKS["print_block_givn_top10"]["canconfig"]	= true;
-$PGV_BLOCKS["print_block_givn_top10"]["config"]		= array(
+$WT_BLOCKS["print_block_givn_top10"]["name"]		= i18n::translate('Top 10 Given Names');
+$WT_BLOCKS["print_block_givn_top10"]["descr"]		= i18n::translate('This block shows a table of the 10 most frequently occurring given names in the database.  The actual number of given names shown in this block is configurable.');
+$WT_BLOCKS["print_block_givn_top10"]["type"]		= "both";
+$WT_BLOCKS["print_block_givn_top10"]["infoStyle"]	= "style2";
+$WT_BLOCKS["print_block_givn_top10"]["canconfig"]	= true;
+$WT_BLOCKS["print_block_givn_top10"]["config"]		= array(
 	"cache"=>7,
 	"num"=>10,
 	"infoStyle"=>"style2",
@@ -53,29 +53,29 @@ $PGV_BLOCKS["print_block_givn_top10"]["config"]		= array(
  * Print First Names Block
  */
 function print_block_givn_top10($block=true, $config="", $side, $index) {
-	global $TEXT_DIRECTION, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
+	global $TEXT_DIRECTION, $WT_BLOCKS, $ctype, $WT_IMAGES, $WT_IMAGE_DIR;
 
-	if (empty($config)) $config = $PGV_BLOCKS["print_block_givn_top10"]["config"];
+	if (empty($config)) $config = $WT_BLOCKS["print_block_givn_top10"]["config"];
 	if (isset($config["infoStyle"])) $infoStyle = $config["infoStyle"];  // "style1" or "style2"
 	else $infoStyle = "style2";
 	if (isset($config["showUnknown"])) $showUnknown = $config["showUnknown"];
 	else $showUnknown = true;
 
-	$stats=new Stats(PGV_GEDCOM);
+	$stats=new Stats(WT_GEDCOM);
 
 	//Print block header
 
 	$id="top10givennames";
 	$title='';
-	if ($PGV_BLOCKS["print_block_givn_top10"]["canconfig"]) {
-		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+	if ($WT_BLOCKS["print_block_givn_top10"]["canconfig"]) {
+		if ($ctype=="gedcom" && WT_USER_GEDCOM_ADMIN || $ctype=="user" && WT_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = PGV_GEDCOM;
+				$name = WT_GEDCOM;
 			} else {
-				$name = PGV_USER_NAME;
+				$name = WT_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"$WT_IMAGE_DIR/".$WT_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
 	// I18N: There are separate lists of male/female names, containing %d names each
@@ -126,9 +126,9 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 }
 
 function print_block_givn_top10_config($config) {
-	global $ctype, $PGV_BLOCKS, $TEXT_DIRECTION;
-	if (empty($config)) $config = $PGV_BLOCKS["print_block_givn_top10"]["config"];
-	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_block_givn_top10"]["config"]["cache"];
+	global $ctype, $WT_BLOCKS, $TEXT_DIRECTION;
+	if (empty($config)) $config = $WT_BLOCKS["print_block_givn_top10"]["config"];
+	if (!isset($config["cache"])) $config["cache"] = $WT_BLOCKS["print_block_givn_top10"]["config"]["cache"];
 	if (!isset($config["infoStyle"])) $config["infoStyle"] = "style2";
 	if (!isset($config["showUnknown"])) $config["showUnknown"] = true;
 

@@ -27,15 +27,15 @@
 * @subpackage Admin
 */
 
-define('PGV_SCRIPT_NAME', 'config_download.php');
+define('WT_SCRIPT_NAME', 'config_download.php');
 require './config.php';
 
-if (PGV_ADMIN_USER_EXISTS && !PGV_USER_IS_ADMIN && $CONFIGURED) {
+if (WT_ADMIN_USER_EXISTS && !WT_USER_IS_ADMIN && $CONFIGURED) {
 	header('Location: admin.php');
 	exit;
 }
 
-$file=safe_GET('file', PGV_REGEX_NOSCRIPT, 'config.php');
+$file=safe_GET('file', WT_REGEX_NOSCRIPT, 'config.php');
 
 header('Content-Type: text/plain');
 header('Content-Disposition: attachment; filename="'.$file.'"');

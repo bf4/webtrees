@@ -39,20 +39,20 @@
  * @subpackage Blocks
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_GETTING_STARTED_BLOCK_PHP', '');
+define('WT_GETTING_STARTED_BLOCK_PHP', '');
 
 
 
-$PGV_BLOCKS["getting_started_block"]["name"]		= i18n::translate('Get Started');
-$PGV_BLOCKS["getting_started_block"]["descr"]		= i18n::translate('The GEDCOM Welcome block works the same as the User Welcome block.  It welcomes the visitor to the site and displays the title of the currently active database as well as the current date and time.');
-$PGV_BLOCKS["getting_started_block"]["type"]		= "none";
-$PGV_BLOCKS["getting_started_block"]["canconfig"]	= false;
-$PGV_BLOCKS["getting_started_block"]["config"]		= array("cache"=>5);
+$WT_BLOCKS["getting_started_block"]["name"]		= i18n::translate('Get Started');
+$WT_BLOCKS["getting_started_block"]["descr"]		= i18n::translate('The GEDCOM Welcome block works the same as the User Welcome block.  It welcomes the visitor to the site and displays the title of the currently active database as well as the current date and time.');
+$WT_BLOCKS["getting_started_block"]["type"]		= "none";
+$WT_BLOCKS["getting_started_block"]["canconfig"]	= false;
+$WT_BLOCKS["getting_started_block"]["config"]		= array("cache"=>5);
 
 //-- function to print the gedcom block
 function getting_started_block($block = true, $config="", $side, $index) {

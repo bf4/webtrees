@@ -29,27 +29,27 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_TOP10_PAGEVIEWS_PHP', '');
+define('WT_TOP10_PAGEVIEWS_PHP', '');
 
-$PGV_BLOCKS["top10_pageviews"]["name"]		= i18n::translate('Most Viewed Items');
-$PGV_BLOCKS["top10_pageviews"]["descr"]		= i18n::translate('This block will show the 10 records that have been viewed the most.  This block requires that Hit Counters be enabled in the GEDCOM configuration settings.');
-$PGV_BLOCKS["top10_pageviews"]["canconfig"]	= true;
-$PGV_BLOCKS["top10_pageviews"]["config"]	= array(
+$WT_BLOCKS["top10_pageviews"]["name"]		= i18n::translate('Most Viewed Items');
+$WT_BLOCKS["top10_pageviews"]["descr"]		= i18n::translate('This block will show the 10 records that have been viewed the most.  This block requires that Hit Counters be enabled in the GEDCOM configuration settings.');
+$WT_BLOCKS["top10_pageviews"]["canconfig"]	= true;
+$WT_BLOCKS["top10_pageviews"]["config"]	= array(
 	"cache"=>1,
 	"num"=>10,
 	"count_placement"=>"left"
 	);
 
 function top10_pageviews($block=true, $config="", $side, $index) {
-	global $TBLPREFIX, $INDEX_DIRECTORY, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SHOW_COUNTER, $SHOW_SOURCES, $TEXT_DIRECTION;
+	global $TBLPREFIX, $INDEX_DIRECTORY, $WT_BLOCKS, $ctype, $WT_IMAGES, $WT_IMAGE_DIR, $SHOW_COUNTER, $SHOW_SOURCES, $TEXT_DIRECTION;
 
 	if (empty($config)) {
-		$config = $PGV_BLOCKS["top10_pageviews"]["config"];
+		$config = $WT_BLOCKS["top10_pageviews"]["config"];
 	}
 
 	if (isset($config["count_placement"])) {
@@ -60,15 +60,15 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 
 	$id = "top10hits";
 	$title='';
-	if ($PGV_BLOCKS["top10_pageviews"]["canconfig"]) {
-		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+	if ($WT_BLOCKS["top10_pageviews"]["canconfig"]) {
+		if ($ctype=="gedcom" && WT_USER_GEDCOM_ADMIN || $ctype=="user" && WT_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = PGV_GEDCOM;
+				$name = WT_GEDCOM;
 			} else {
-				$name = PGV_USER_NAME;
+				$name = WT_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"$WT_IMAGE_DIR/".$WT_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
 	$title .= i18n::translate('Most Viewed Items');
@@ -77,18 +77,18 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 
 	// if the counter file does not exist then don't do anything
 	if (!$SHOW_COUNTER) {
-		if (PGV_USER_IS_ADMIN) {
+		if (WT_USER_IS_ADMIN) {
 			$content .= "<span class=\"error\">".i18n::translate('Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group.')."</span>";
 		}
 	} else {
 		// load the lines from the file
-		$top10=PGV_DB::prepareLimit(
+		$top10=WT_DB::prepareLimit(
 			"SELECT page_parameter, page_count".
 			" FROM {$TBLPREFIX}hit_counter".
 			" WHERE gedcom_id=? AND page_name IN ('individual.php','family.php','source.php','repo.php','note.php','mediaviewer.php')".
 			" ORDER BY page_count DESC",
 			$config['num']
-		)->execute(array(PGV_GED_ID))->FetchAssoc();
+		)->execute(array(WT_GED_ID))->FetchAssoc();
 
 
 		if ($top10) {
@@ -126,9 +126,9 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 }
 
 function top10_pageviews_config($config) {
-	global $ctype, $PGV_BLOCKS;
-	if (empty($config)) $config = $PGV_BLOCKS["top10_pageviews"]["config"];
-	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["top10_pageviews"]["config"]["cache"];
+	global $ctype, $WT_BLOCKS;
+	if (empty($config)) $config = $WT_BLOCKS["top10_pageviews"]["config"];
+	if (!isset($config["cache"])) $config["cache"] = $WT_BLOCKS["top10_pageviews"]["config"]["cache"];
 
 	// Number of items to show
 	print "<tr><td class=\"descriptionbox wrap width33\">";

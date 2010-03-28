@@ -29,22 +29,22 @@
 * @version $Id$
 */
 
-define('PGV_SCRIPT_NAME', 'ancestry.php');
+define('WT_SCRIPT_NAME', 'ancestry.php');
 require './config.php';
-require PGV_ROOT.'includes/controllers/ancestry_ctrl.php';
-require PGV_ROOT.'includes/functions/functions_print_lists.php';
+require WT_ROOT.'includes/controllers/ancestry_ctrl.php';
+require WT_ROOT.'includes/functions/functions_print_lists.php';
 
 $controller=new AncestryController();
 $controller->init();
 
 print_header($controller->name . " " . i18n::translate('Ancestry Chart'));
 
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 
 // LightBox
-if (PGV_USE_LIGHTBOX) {
-	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
+if (WT_USE_LIGHTBOX) {
+	require WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	require WT_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 
 echo '<table><tr><td valign="middle">';
@@ -61,7 +61,7 @@ echo '</h2>';
 // -- print the form to change the number of displayed generations
 if ($view!="preview") {
 	$show_famlink=true;
-	echo PGV_JS_START, 'var pastefield; function paste_id(value) {pastefield.value=value;}', PGV_JS_END;
+	echo WT_JS_START, 'var pastefield; function paste_id(value) {pastefield.value=value;}', WT_JS_END;
 	?>
 	</td><td width="50px">&nbsp;</td><td><form name="people" id="people" method="get" action="?">
 	<input type="hidden" name="show_full" value="<?php echo $controller->show_full; ?>" />
@@ -200,7 +200,7 @@ case 1:
 	// first page : show indi facts
 	print_pedigree_person($controller->rootid, 2, false, 1);
 	// expand the layer
-	echo PGV_JS_START, 'expandbox("', $controller->rootid, '.1", 2);', PGV_JS_END;
+	echo WT_JS_START, 'expandbox("', $controller->rootid, '.1", 2);', WT_JS_END;
 	// process the tree
 	$treeid=ancestry_array($controller->rootid, $PEDIGREE_GENERATIONS-1);
 	foreach ($treeid as $i=>$pid) {

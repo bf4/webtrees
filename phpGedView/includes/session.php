@@ -29,103 +29,103 @@
  * @version $Id$
  */
 
-// PGV_SCRIPT_NAME is defined in each script that the user is permitted to load.
-if (!defined('PGV_SCRIPT_NAME')) {
+// WT_SCRIPT_NAME is defined in each script that the user is permitted to load.
+if (!defined('WT_SCRIPT_NAME')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
 // Identify ourself
-define('PGV_PHPGEDVIEW',      'webtrees');
-define('PGV_VERSION',         '1.0.0');
-define('PGV_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
-define('PGV_VERSION_TEXT',    trim(PGV_VERSION.' '.PGV_VERSION_RELEASE));
-define('PGV_PHPGEDVIEW_URL',  'http://www.webtrees.net');
-define('PGV_PHPGEDVIEW_WIKI', 'http://www.webtrees.net/wiki');
-define('PGV_TRANSLATORS_URL', 'https://launchpad.net/webtrees');
+define('WT_WEBTREES',      'webtrees');
+define('WT_VERSION',         '1.0.0');
+define('WT_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
+define('WT_VERSION_TEXT',    trim(WT_VERSION.' '.WT_VERSION_RELEASE));
+define('WT_WEBTREES_URL',  'http://www.webtrees.net');
+define('WT_WEBTREES_WIKI', 'http://www.webtrees.net/wiki');
+define('WT_TRANSLATORS_URL', 'https://launchpad.net/webtrees');
 
 // Enable debugging output?
-define('PGV_DEBUG',      false);
-define('PGV_DEBUG_SQL',  false);
-define('PGV_DEBUG_PRIV', false);
+define('WT_DEBUG',      false);
+define('WT_DEBUG_SQL',  false);
+define('WT_DEBUG_PRIV', false);
 
 // Error reporting
-define('PGV_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
+define('WT_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
 
 // Required version of database tables/columns/indexes/etc.
-define('PGV_SCHEMA_VERSION', 17);
+define('WT_SCHEMA_VERSION', 17);
 
 // Environmental requirements
-define('PGV_REQUIRED_PHP_VERSION',     '5.2.0');  // 5.2.3 is recommended
-define('PGV_REQUIRED_MYSQL_VERSION',   '5.0.13'); // For: prepared statements within stored procedures
-define('PGV_REQUIRED_PRIVACY_VERSION', '3.1');
+define('WT_REQUIRED_PHP_VERSION',     '5.2.0');  // 5.2.3 is recommended
+define('WT_REQUIRED_MYSQL_VERSION',   '5.0.13'); // For: prepared statements within stored procedures
+define('WT_REQUIRED_PRIVACY_VERSION', '3.1');
 
 // Regular expressions for validating user input, etc.
-define('PGV_REGEX_XREF',     '[A-Za-z0-9:_-]+');
-define('PGV_REGEX_TAG',      '[_A-Z][_A-Z0-9]*');
-define('PGV_REGEX_INTEGER',  '-?\d+');
-define('PGV_REGEX_ALPHA',    '[a-zA-Z]+');
-define('PGV_REGEX_ALPHANUM', '[a-zA-Z0-9]+');
-define('PGV_REGEX_BYTES',    '[0-9]+[bBkKmMgG]?');
-define('PGV_REGEX_USERNAME', '[^<>"%{};]+');
-define('PGV_REGEX_PASSWORD', '.{6,}');
-define('PGV_REGEX_NOSCRIPT', '[^<>"&%{};]+');
-define('PGV_REGEX_URL',      '[\/0-9A-Za-z_!~*\'().;?:@&=+$,%#-]+'); // Simple list of valid chars
-define('PGV_REGEX_EMAIL',    '[^\s<>"&%{};@]+@[^\s<>"&%{};@]+');
-define('PGV_REGEX_UNSAFE',   '[\x00-\xFF]*'); // Use with care and apply additional validation!
+define('WT_REGEX_XREF',     '[A-Za-z0-9:_-]+');
+define('WT_REGEX_TAG',      '[_A-Z][_A-Z0-9]*');
+define('WT_REGEX_INTEGER',  '-?\d+');
+define('WT_REGEX_ALPHA',    '[a-zA-Z]+');
+define('WT_REGEX_ALPHANUM', '[a-zA-Z0-9]+');
+define('WT_REGEX_BYTES',    '[0-9]+[bBkKmMgG]?');
+define('WT_REGEX_USERNAME', '[^<>"%{};]+');
+define('WT_REGEX_PASSWORD', '.{6,}');
+define('WT_REGEX_NOSCRIPT', '[^<>"&%{};]+');
+define('WT_REGEX_URL',      '[\/0-9A-Za-z_!~*\'().;?:@&=+$,%#-]+'); // Simple list of valid chars
+define('WT_REGEX_EMAIL',    '[^\s<>"&%{};@]+@[^\s<>"&%{};@]+');
+define('WT_REGEX_UNSAFE',   '[\x00-\xFF]*'); // Use with care and apply additional validation!
 
 // UTF8 representation of various characters
-define('PGV_UTF8_BOM',    "\xEF\xBB\xBF"); // U+FEFF
-define('PGV_UTF8_MALE',   "\xE2\x99\x82"); // U+2642
-define('PGV_UTF8_FEMALE', "\xE2\x99\x80"); // U+2640
+define('WT_UTF8_BOM',    "\xEF\xBB\xBF"); // U+FEFF
+define('WT_UTF8_MALE',   "\xE2\x99\x82"); // U+2642
+define('WT_UTF8_FEMALE', "\xE2\x99\x80"); // U+2640
 
 // UTF8 control codes affecting the BiDirectional algorithm (see http://www.unicode.org/reports/tr9/)
-define('PGV_UTF8_LRM',    "\xE2\x80\x8E"); // U+200E  (Left to Right mark:  zero-width character with LTR directionality)
-define('PGV_UTF8_RLM',    "\xE2\x80\x8F"); // U+200F  (Right to Left mark:  zero-width character with RTL directionality)
-define('PGV_UTF8_LRO',    "\xE2\x80\xAD"); // U+202D  (Left to Right override: force everything following to LTR mode)
-define('PGV_UTF8_RLO',    "\xE2\x80\xAE"); // U+202E  (Right to Left override: force everything following to RTL mode)
-define('PGV_UTF8_LRE',    "\xE2\x80\xAA"); // U+202A  (Left to Right embedding: treat everything following as LTR text)
-define('PGV_UTF8_RLE',    "\xE2\x80\xAB"); // U+202B  (Right to Left embedding: treat everything following as RTL text)
-define('PGV_UTF8_PDF',    "\xE2\x80\xAC"); // U+202C  (Pop directional formatting: restore state prior to last LRO, RLO, LRE, RLE)
+define('WT_UTF8_LRM',    "\xE2\x80\x8E"); // U+200E  (Left to Right mark:  zero-width character with LTR directionality)
+define('WT_UTF8_RLM',    "\xE2\x80\x8F"); // U+200F  (Right to Left mark:  zero-width character with RTL directionality)
+define('WT_UTF8_LRO',    "\xE2\x80\xAD"); // U+202D  (Left to Right override: force everything following to LTR mode)
+define('WT_UTF8_RLO',    "\xE2\x80\xAE"); // U+202E  (Right to Left override: force everything following to RTL mode)
+define('WT_UTF8_LRE',    "\xE2\x80\xAA"); // U+202A  (Left to Right embedding: treat everything following as LTR text)
+define('WT_UTF8_RLE',    "\xE2\x80\xAB"); // U+202B  (Right to Left embedding: treat everything following as RTL text)
+define('WT_UTF8_PDF',    "\xE2\x80\xAC"); // U+202C  (Pop directional formatting: restore state prior to last LRO, RLO, LRE, RLE)
 
 // Alternatives to BMD events for lists, charts, etc.
-define('PGV_EVENTS_BIRT', 'BIRT|CHR|BAPM|_BRTM|ADOP');
-define('PGV_EVENTS_DEAT', 'DEAT|BURI|CREM');
-define('PGV_EVENTS_MARR', 'MARR|MARB');
-define('PGV_EVENTS_DIV',  'DIV|ANUL|_SEPR');
+define('WT_EVENTS_BIRT', 'BIRT|CHR|BAPM|_BRTM|ADOP');
+define('WT_EVENTS_DEAT', 'DEAT|BURI|CREM');
+define('WT_EVENTS_MARR', 'MARR|MARB');
+define('WT_EVENTS_DIV',  'DIV|ANUL|_SEPR');
 
 // Use these line endings when writing files on the server
-define('PGV_EOL', "\r\n");
+define('WT_EOL', "\r\n");
 
 // Gedcom specification/definitions
-define ('PGV_GEDCOM_LINE_LENGTH', 255-strlen(PGV_EOL)); // Characters, not bytes
+define ('WT_GEDCOM_LINE_LENGTH', 255-strlen(WT_EOL)); // Characters, not bytes
 
 // Use these tags to wrap embedded javascript consistently
-define('PGV_JS_START', "\n<script type=\"text/javascript\">\n//<![CDATA[\n");
-define('PGV_JS_END',   "\n//]]>\n</script>\n");
+define('WT_JS_START', "\n<script type=\"text/javascript\">\n//<![CDATA[\n");
+define('WT_JS_END',   "\n//]]>\n</script>\n");
 
 // Used in Google charts
-define ('PGV_GOOGLE_CHART_ENCODING', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.');
+define ('WT_GOOGLE_CHART_ENCODING', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.');
 
 // Maximum number of results in auto-complete fields
-define('PGV_AUTOCOMPLETE_LIMIT', 500);
+define('WT_AUTOCOMPLETE_LIMIT', 500);
 
 // Privacy constants
-define('PGV_PRIV_PUBLIC',  2); // Allows non-authenticated public visitors to view the marked information
-define('PGV_PRIV_USER',    1); // Allows authenticated users to access the marked information
-define('PGV_PRIV_NONE',    0); // Allows admin users to access the marked information
-define('PGV_PRIV_HIDE',   -1); // Hide the item to all users including the admin
+define('WT_PRIV_PUBLIC',  2); // Allows non-authenticated public visitors to view the marked information
+define('WT_PRIV_USER',    1); // Allows authenticated users to access the marked information
+define('WT_PRIV_NONE',    0); // Allows admin users to access the marked information
+define('WT_PRIV_HIDE',   -1); // Hide the item to all users including the admin
 // Older config files use variables instead of constants
-$PRIV_PUBLIC = PGV_PRIV_PUBLIC;
-$PRIV_USER   = PGV_PRIV_USER;
-$PRIV_NONE   = PGV_PRIV_NONE;
-$PRIV_HIDE   = PGV_PRIV_HIDE;
+$PRIV_PUBLIC = WT_PRIV_PUBLIC;
+$PRIV_USER   = WT_PRIV_USER;
+$PRIV_NONE   = WT_PRIV_NONE;
+$PRIV_HIDE   = WT_PRIV_HIDE;
 
 // For performance, it is quicker to refer to files using absolute paths
-define ('PGV_ROOT', realpath(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR);
+define ('WT_ROOT', realpath(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR);
 
 // Invoke the Zend Framework Autoloader, so we can use Zend_XXXXX classes
-set_include_path(PGV_ROOT.'library'.PATH_SEPARATOR.get_include_path());
+set_include_path(WT_ROOT.'library'.PATH_SEPARATOR.get_include_path());
 require_once 'Zend/Loader/Autoloader.php';
 Zend_Loader_Autoloader::getInstance();
 
@@ -148,8 +148,8 @@ if (!isset($DBPORT)) {
 // We can't use any PHP5 functions until after this point.
 if (version_compare(PHP_VERSION, '6.0.0', '<')) {
 	// PHP too old?
-	if (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0) {
-		die ('<html><body><p style="color: red;">webtrees requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.PHP_VERSION.'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
+	if (version_compare(PHP_VERSION, WT_REQUIRED_PHP_VERSION)<0) {
+		die ('<html><body><p style="color: red;">webtrees requires PHP version '.WT_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.PHP_VERSION.'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
 	}
 
 	// register_globals was deprecated in PHP5.3.0 and removed in PHP6.0.0
@@ -158,14 +158,14 @@ if (version_compare(PHP_VERSION, '6.0.0', '<')) {
 		'DBTYPE', 'DBHOST', 'DBUSER', 'DBPASS', 'DBNAME', 'TBLPREFIX',
 		'INDEX_DIRECTORY', 'AUTHENTICATION_MODULE', 'USE_REGISTRATION_MODULE',
 		'ALLOW_USER_THEMES', 'ALLOW_CHANGE_GEDCOM', 'LOGFILE_CREATE',
-		'PGV_SESSION_SAVE_PATH', 'PGV_SESSION_TIME', 'SERVER_URL', 'LOGIN_URL',
-		'PGV_MEMORY_LIMIT', 'PGV_STORE_MESSAGES', 'PGV_SIMPLE_MAIL',
+		'WT_SESSION_SAVE_PATH', 'WT_SESSION_TIME', 'SERVER_URL', 'LOGIN_URL',
+		'WT_MEMORY_LIMIT', 'WT_STORE_MESSAGES', 'WT_SIMPLE_MAIL',
 		'CONFIGURED', 'MANUAL_SESSON_START', 'REQUIRE_ADMIN_AUTH_REGISTRATION',
 		'COMMIT_COMMAND'
 	) as $var) {
 		if (isset($_REQUEST[$var])) {
 			if (!ini_get('register_globals') || strtolower(ini_get('register_globals'))=='off') {
-				require_once PGV_ROOT.'includes/authentication.php';
+				require_once WT_ROOT.'includes/authentication.php';
 				AddToLog('MSG>Configuration override detected; script terminated.');
 				AddToLog("UA>{$_SERVER['HTTP_USER_AGENT']}<");
 				AddToLog("URI>{$_SERVER['REQUEST_URI']}<");
@@ -201,12 +201,12 @@ if (version_compare(PHP_VERSION, '6.0.0', '<')) {
 $start_time=microtime(true);
 
 // Split the request "protocol://host:port/path/to/script.php?var=value" into parts
-// PGV_SERVER_NAME  = protocol://host:port
-// PGV_SCRIPT_PATH  = /path/to/   (begins and ends with /)
-// PGV_SCRIPT_NAME  = script.php  (already defined in the calling script)
-// PGV_QUERY_STRING = ?var=value (still TODO - need to refactor REQUEST_URI and QUERY_STRING)
+// WT_SERVER_NAME  = protocol://host:port
+// WT_SCRIPT_PATH  = /path/to/   (begins and ends with /)
+// WT_SCRIPT_NAME  = script.php  (already defined in the calling script)
+// WT_QUERY_STRING = ?var=value (still TODO - need to refactor REQUEST_URI and QUERY_STRING)
 
-define('PGV_SERVER_NAME',
+define('WT_SERVER_NAME',
 	(empty($_SERVER['HTTPS']) || !in_array($_SERVER['HTTPS'], array('1', 'on', 'On', 'ON')) ?  'http://' : 'https://').
 	(empty($_SERVER['SERVER_NAME']) ? '' : $_SERVER['SERVER_NAME']).
 	(empty($_SERVER['SERVER_PORT']) || $_SERVER['SERVER_PORT']==80 ? '' : ':'.$_SERVER['SERVER_PORT'])
@@ -216,20 +216,20 @@ define('PGV_SERVER_NAME',
 // PHP_SELF should always be present, but may have trailing path: /path/to/script.php/FOO/BAR
 if (!empty($_SERVER['SCRIPT_NAME'])) {
 	// PHP 5.3 only
-	//define('PGV_SCRIPT_PATH', stristr($_SERVER['SCRIPT_NAME'], PGV_SCRIPT_NAME, true));
-	define('PGV_SCRIPT_PATH', substr($_SERVER['SCRIPT_NAME'], 0, stripos($_SERVER['SCRIPT_NAME'], PGV_SCRIPT_NAME)));
+	//define('WT_SCRIPT_PATH', stristr($_SERVER['SCRIPT_NAME'], WT_SCRIPT_NAME, true));
+	define('WT_SCRIPT_PATH', substr($_SERVER['SCRIPT_NAME'], 0, stripos($_SERVER['SCRIPT_NAME'], WT_SCRIPT_NAME)));
 } elseif (!empty($_SERVER['PHP_SELF'])) {
 	// PHP 5.3 only
-	//define('PGV_SCRIPT_PATH', stristr($_SERVER['PHP_SELF'], PGV_SCRIPT_NAME, true));
-	define('PGV_SCRIPT_PATH', substr($_SERVER['PHP_SELF'], 0, stripos($_SERVER['PHP_SELF'], PGV_SCRIPT_NAME)));
+	//define('WT_SCRIPT_PATH', stristr($_SERVER['PHP_SELF'], WT_SCRIPT_NAME, true));
+	define('WT_SCRIPT_PATH', substr($_SERVER['PHP_SELF'], 0, stripos($_SERVER['PHP_SELF'], WT_SCRIPT_NAME)));
 } else {
 	// No server settings - probably running as a command line script
-	define('PGV_SCRIPT_PATH', '/');
+	define('WT_SCRIPT_PATH', '/');
 }
 
 // If we have a preferred URL (e.g. https instead of http, or www.example.com instead of
 // www.isp.com/~example), then redirect to it.
-if (!empty($SERVER_URL) && $SERVER_URL != PGV_SERVER_NAME.PGV_SCRIPT_PATH) {
+if (!empty($SERVER_URL) && $SERVER_URL != WT_SERVER_NAME.WT_SCRIPT_PATH) {
 	header('Location: '.$SERVER_URL);
 	exit;
 }
@@ -258,10 +258,10 @@ if (empty($_SERVER['QUERY_STRING'])) {
 
 //-- if not configured then redirect to the configuration script
 if (!$CONFIGURED) {
-	if (PGV_SCRIPT_NAME!='admin.php'
-	&& PGV_SCRIPT_NAME!='login.php'
-	&& PGV_SCRIPT_NAME!='install.php'
-	&& PGV_SCRIPT_NAME!='help_text.php') {
+	if (WT_SCRIPT_NAME!='admin.php'
+	&& WT_SCRIPT_NAME!='login.php'
+	&& WT_SCRIPT_NAME!='install.php'
+	&& WT_SCRIPT_NAME!='help_text.php') {
 		header('Location: install.php');
 		exit;
 	}
@@ -270,26 +270,26 @@ if (!$CONFIGURED) {
 ignore_user_abort(false);
 
 // try and set the memory limit
-if (empty($PGV_MEMORY_LIMIT)) $PGV_MEMORY_LIMIT = '32M';
-@ini_set('memory_limit', $PGV_MEMORY_LIMIT);
+if (empty($WT_MEMORY_LIMIT)) $WT_MEMORY_LIMIT = '32M';
+@ini_set('memory_limit', $WT_MEMORY_LIMIT);
 
 //--load common functions
-require  PGV_ROOT.'includes/functions/functions.php';
-require  PGV_ROOT.'includes/functions/functions_name.php';
+require  WT_ROOT.'includes/functions/functions.php';
+require  WT_ROOT.'includes/functions/functions_name.php';
 //-- set the error handler
 set_error_handler('pgv_error_handler');
 
 
 // Connect to the database
-require PGV_ROOT.'includes/functions/functions_db.php';
-require PGV_ROOT.'includes/classes/class_pgv_db.php';
+require WT_ROOT.'includes/functions/functions_db.php';
+require WT_ROOT.'includes/classes/class_pgv_db.php';
 try {
 	// remove escape codes before using PW
 	$DBPASS=str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS);
-	PGV_DB::createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DB_UTF8_COLLATION);
+	WT_DB::createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DB_UTF8_COLLATION);
 	unset($DBUSER, $DBPASS);
 	try {
-		PGV_DB::updateSchema(PGV_ROOT.'includes/db_schema/', 'PGV_SCHEMA_VERSION', PGV_SCHEMA_VERSION);
+		WT_DB::updateSchema(WT_ROOT.'includes/db_schema/', 'WT_SCHEMA_VERSION', WT_SCHEMA_VERSION);
 	} catch (PDOException $ex) {
 		// The schema update scripts should never fail.  If they do, there is no clean recovery.
 		die($ex);
@@ -299,7 +299,7 @@ try {
 }
 
 // The authentication interface includes logging - which may be to the database
-require PGV_ROOT.'includes/authentication.php';
+require WT_ROOT.'includes/authentication.php';
  
 // Determine browser type
 $BROWSERTYPE = 'other';
@@ -316,16 +316,16 @@ if (!empty($_SERVER['HTTP_USER_AGENT'])) {
 }
 
 //-- load up the code to check for spiders
-require PGV_ROOT.'includes/session_spider.php';
+require WT_ROOT.'includes/session_spider.php';
 
 // Start the php session
-session_set_cookie_params(date('D M j H:i:s T Y', time()+$PGV_SESSION_TIME), PGV_SCRIPT_PATH);
+session_set_cookie_params(date('D M j H:i:s T Y', time()+$WT_SESSION_TIME), WT_SCRIPT_PATH);
 
-if ($PGV_SESSION_TIME>0) {
-	session_cache_expire($PGV_SESSION_TIME/60);
+if ($WT_SESSION_TIME>0) {
+	session_cache_expire($WT_SESSION_TIME/60);
 }
-if (!empty($PGV_SESSION_SAVE_PATH)) {
-	session_save_path($PGV_SESSION_SAVE_PATH);
+if (!empty($WT_SESSION_SAVE_PATH)) {
+	session_save_path($WT_SESSION_SAVE_PATH);
 }
 if (isset($MANUAL_SESSION_START) && !empty($SID)) {
 	session_id($SID);
@@ -356,7 +356,7 @@ if (isset($_REQUEST['ged'])) {
 	$GEDCOM='';
 }
 
-require PGV_ROOT.'config_gedcom.php'; // Load default gedcom settings
+require WT_ROOT.'config_gedcom.php'; // Load default gedcom settings
 
 // Missing/invalid gedcom - pick any one!
 try {
@@ -375,78 +375,78 @@ try {
 			}
 		}
 	}
-	define('PGV_GEDCOM', $GEDCOM);
-	define('PGV_GED_ID', $ged_id);
-	load_privacy_file(PGV_GED_ID);
-	require get_config_file(PGV_GED_ID); // Load current gedcom settings
+	define('WT_GEDCOM', $GEDCOM);
+	define('WT_GED_ID', $ged_id);
+	load_privacy_file(WT_GED_ID);
+	require get_config_file(WT_GED_ID); // Load current gedcom settings
 } catch (PDOException $ex) {
 	// No DB available?
 	require 'privacy.php';
-	define('PGV_GEDCOM', '');
-	define('PGV_GED_ID', 0);
+	define('WT_GEDCOM', '');
+	define('WT_GED_ID', 0);
 }
 
 // Set our gedcom selection as a default for the next page
-$_SESSION['GEDCOM']=PGV_GEDCOM;
+$_SESSION['GEDCOM']=WT_GEDCOM;
 
-if (empty($PHPGEDVIEW_EMAIL)) {
-	$PHPGEDVIEW_EMAIL='phpgedview-noreply@'.preg_replace('/^www\./i', '', $_SERVER['SERVER_NAME']);
+if (empty($WEBTREES_EMAIL)) {
+	$WEBTREES_EMAIL='phpgedview-noreply@'.preg_replace('/^www\./i', '', $_SERVER['SERVER_NAME']);
 }
 
-require PGV_ROOT.'includes/functions/functions_print.php';
-require PGV_ROOT.'includes/functions/functions_rtl.php';
+require WT_ROOT.'includes/functions/functions_print.php';
+require WT_ROOT.'includes/functions/functions_rtl.php';
 
 if ($MULTI_MEDIA) {
-	require PGV_ROOT.'includes/functions/functions_mediadb.php';
+	require WT_ROOT.'includes/functions/functions_mediadb.php';
 }
-require PGV_ROOT.'includes/functions/functions_date.php';
+require WT_ROOT.'includes/functions/functions_date.php';
 
 if (empty($PEDIGREE_GENERATIONS)) {
 	$PEDIGREE_GENERATIONS=$DEFAULT_PEDIGREE_GENERATIONS;
 }
 
 // With no parameters, init() looks to the environment to choose a language
-require PGV_ROOT.'includes/classes/class_i18n.php';
+require WT_ROOT.'includes/classes/class_i18n.php';
 define('WT_LOCALE', i18n::init());
 
 // Application configuration data - things that aren't (yet?) user-editable
-require PGV_ROOT.'includes/config_data.php';
+require WT_ROOT.'includes/config_data.php';
 
 // Tell the database to sort/compare using the language's preferred collatation settings
 try {
 	// I18N: This is the name of the MySQL collation that applies to your language.  A list is available at http://dev.mysql.com/doc/refman/5.0/en/charset-unicode-sets.html
-	PGV_DB::exec("SET NAMES utf8 COLLATE '".i18n::translate('utf8_unicode_ci')."'");
+	WT_DB::exec("SET NAMES utf8 COLLATE '".i18n::translate('utf8_unicode_ci')."'");
 } catch (PDOException $ex) {
 	// Always set a unicode collation
-	PGV_DB::exec("SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'");
+	WT_DB::exec("SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'");
 }
 
 //-- load the privacy functions
-require PGV_ROOT.'includes/functions/functions_privacy.php';
+require WT_ROOT.'includes/functions/functions_privacy.php';
 
 // The current user's profile - from functions in authentication.php
-define('PGV_USER_ID', getUserId());
-if (PGV_DB::isConnected()) {
-	define('PGV_USER_NAME',         getUserName   ());
-	define('PGV_USER_IS_ADMIN',     userIsAdmin   (PGV_USER_ID));
-	define('PGV_USER_AUTO_ACCEPT',  userAutoAccept(PGV_USER_ID));
-	define('PGV_ADMIN_USER_EXISTS', PGV_USER_IS_ADMIN     || adminUserExists());
-	define('PGV_USER_GEDCOM_ADMIN', PGV_USER_IS_ADMIN     || userGedcomAdmin(PGV_USER_ID, PGV_GED_ID));
-	define('PGV_USER_CAN_ACCEPT',   PGV_USER_GEDCOM_ADMIN || userCanAccept  (PGV_USER_ID, PGV_GED_ID));
-	define('PGV_USER_CAN_EDIT',     PGV_USER_CAN_ACCEPT   || userCanEdit    (PGV_USER_ID, PGV_GED_ID));
-	define('PGV_USER_CAN_ACCESS',   PGV_USER_CAN_EDIT     || userCanAccess  (PGV_USER_ID, PGV_GED_ID));
-	define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID, PGV_GED_ID));
-	define('PGV_USER_GEDCOM_ID',    getUserGedcomId   (PGV_USER_ID, PGV_GED_ID));
-	define('PGV_USER_ROOT_ID',      getUserRootId     (PGV_USER_ID, PGV_GED_ID));
+define('WT_USER_ID', getUserId());
+if (WT_DB::isConnected()) {
+	define('WT_USER_NAME',         getUserName   ());
+	define('WT_USER_IS_ADMIN',     userIsAdmin   (WT_USER_ID));
+	define('WT_USER_AUTO_ACCEPT',  userAutoAccept(WT_USER_ID));
+	define('WT_ADMIN_USER_EXISTS', WT_USER_IS_ADMIN     || adminUserExists());
+	define('WT_USER_GEDCOM_ADMIN', WT_USER_IS_ADMIN     || userGedcomAdmin(WT_USER_ID, WT_GED_ID));
+	define('WT_USER_CAN_ACCEPT',   WT_USER_GEDCOM_ADMIN || userCanAccept  (WT_USER_ID, WT_GED_ID));
+	define('WT_USER_CAN_EDIT',     WT_USER_CAN_ACCEPT   || userCanEdit    (WT_USER_ID, WT_GED_ID));
+	define('WT_USER_CAN_ACCESS',   WT_USER_CAN_EDIT     || userCanAccess  (WT_USER_ID, WT_GED_ID));
+	define('WT_USER_ACCESS_LEVEL', getUserAccessLevel(WT_USER_ID, WT_GED_ID));
+	define('WT_USER_GEDCOM_ID',    getUserGedcomId   (WT_USER_ID, WT_GED_ID));
+	define('WT_USER_ROOT_ID',      getUserRootId     (WT_USER_ID, WT_GED_ID));
 } else {
 	// No DB?  Just set the basics, for install.php
-	define('PGV_ADMIN_USER_EXISTS', false);
+	define('WT_ADMIN_USER_EXISTS', false);
 }
 
 // If we are logged in, and logout=1 has been added to the URL, log out
-if (PGV_USER_ID && safe_GET_bool('logout')) {
-	userLogout(PGV_USER_ID);
-	header("Location: ".PGV_SERVER_NAME.PGV_SCRIPT_PATH);
+if (WT_USER_ID && safe_GET_bool('logout')) {
+	userLogout(WT_USER_ID);
+	header("Location: ".WT_SERVER_NAME.WT_SCRIPT_PATH);
 	exit;
 }
 
@@ -460,31 +460,31 @@ if (!isset($_SESSION['pgv_user'])) $_SESSION['pgv_user'] = '';
 if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='yes') $_SESSION['show_context_help'] = true;
 if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='no') $_SESSION['show_context_help'] = false;
 if (!isset($USE_THUMBS_MAIN)) $USE_THUMBS_MAIN = false;
-if (PGV_SCRIPT_NAME!='install.php' && PGV_SCRIPT_NAME!='help_text.php') {
-	if (!PGV_DB::isConnected() || !PGV_ADMIN_USER_EXISTS) {
+if (WT_SCRIPT_NAME!='install.php' && WT_SCRIPT_NAME!='help_text.php') {
+	if (!WT_DB::isConnected() || !WT_ADMIN_USER_EXISTS) {
 		header('Location: install.php');
 		exit;
 	}
 
-	if (!get_gedcom_setting(PGV_GED_ID, 'imported') && !in_array(PGV_SCRIPT_NAME, array('editconfig_gedcom.php', 'help_text.php', 'editgedcoms.php', 'downloadgedcom.php', 'uploadgedcom.php', 'login.php', 'admin.php', 'config_download.php', 'addnewgedcom.php', 'validategedcom.php', 'addmedia.php', 'importgedcom.php', 'client.php', 'edit_privacy.php', 'gedcheck.php', 'printlog.php', 'useradmin.php', 'export_gedcom.php', 'edit_changes.php'))) {
+	if (!get_gedcom_setting(WT_GED_ID, 'imported') && !in_array(WT_SCRIPT_NAME, array('editconfig_gedcom.php', 'help_text.php', 'editgedcoms.php', 'downloadgedcom.php', 'uploadgedcom.php', 'login.php', 'admin.php', 'config_download.php', 'addnewgedcom.php', 'validategedcom.php', 'addmedia.php', 'importgedcom.php', 'client.php', 'edit_privacy.php', 'gedcheck.php', 'printlog.php', 'useradmin.php', 'export_gedcom.php', 'edit_changes.php'))) {
 		header('Location: editgedcoms.php');
 		exit;
 	}
 
-	if ($REQUIRE_AUTHENTICATION && !PGV_USER_ID && !in_array(PGV_SCRIPT_NAME, array('login.php', 'login_register.php', 'client.php', 'genservice.php', 'help_text.php', 'message.php'))) {
+	if ($REQUIRE_AUTHENTICATION && !WT_USER_ID && !in_array(WT_SCRIPT_NAME, array('login.php', 'login_register.php', 'client.php', 'genservice.php', 'help_text.php', 'message.php'))) {
 		if (!empty($_REQUEST['auth']) && $_REQUEST['auth']=='basic') {
 			// if user is attempting basic authentication
 			// TODO: Update if digest auth is ever implemented
 			basicHTTPAuthenticateUser();
 		} else {
-			if (PGV_SCRIPT_NAME=='index.php') {
-				$url='index.php?ctype=gedcom&ged='.PGV_GEDCOM;
+			if (WT_SCRIPT_NAME=='index.php') {
+				$url='index.php?ctype=gedcom&ged='.WT_GEDCOM;
 			} else {
-				$url=PGV_SCRIPT_NAME.'?'.$QUERY_STRING;
+				$url=WT_SCRIPT_NAME.'?'.$QUERY_STRING;
 			}
 			if ($LOGIN_URL) {
 				// Specify an absolute URL, as $LOGIN_URL could be anywhere
-				header('Location: '.$LOGIN_URL.'?url='.urlencode(PGV_SERVER_NAME.PGV_SCRIPT_PATH.$url));
+				header('Location: '.$LOGIN_URL.'?url='.urlencode(WT_SERVER_NAME.WT_SCRIPT_PATH.$url));
 			} else {
 				header('Location: login.php?url='.urlencode($url));
 			}
@@ -503,7 +503,7 @@ if (PGV_SCRIPT_NAME!='install.php' && PGV_SCRIPT_NAME!='help_text.php') {
 	}
 
 	//-- load any editing changes
-	if (PGV_USER_CAN_EDIT && file_exists("{$INDEX_DIRECTORY}pgv_changes.php")) {
+	if (WT_USER_CAN_EDIT && file_exists("{$INDEX_DIRECTORY}pgv_changes.php")) {
 		require $INDEX_DIRECTORY.'pgv_changes.php';
 	} else {
 		$pgv_changes = array();
@@ -515,15 +515,15 @@ if (PGV_SCRIPT_NAME!='install.php' && PGV_SCRIPT_NAME!='help_text.php') {
 }
 
 //-- load the user specific theme
-if (PGV_USER_ID) {
+if (WT_USER_ID) {
 	//-- update the login time every 5 minutes
 	if (!isset($_SESSION['activity_time']) || (time()-$_SESSION['activity_time'])>300) {
-		userUpdateLogin(PGV_USER_ID);
+		userUpdateLogin(WT_USER_ID);
 		$_SESSION['activity_time'] = time();
 	}
 
-	$usertheme = get_user_setting(PGV_USER_ID, 'theme');
-	if ((!empty($_POST['user_theme']))&&(!empty($_POST['oldusername']))&&($_POST['oldusername']==PGV_USER_ID)) $usertheme = $_POST['user_theme'];
+	$usertheme = get_user_setting(WT_USER_ID, 'theme');
+	if ((!empty($_POST['user_theme']))&&(!empty($_POST['oldusername']))&&($_POST['oldusername']==WT_USER_ID)) $usertheme = $_POST['user_theme'];
 	if ((!empty($usertheme)) && (file_exists($usertheme.'theme.php')))  {
 		$THEME_DIR = $usertheme;
 	}
@@ -531,8 +531,8 @@ if (PGV_USER_ID) {
 
 if (isset($_SESSION['theme_dir'])) {
 	$THEME_DIR = $_SESSION['theme_dir'];
-	if (PGV_USER_ID) {
-		if (get_user_setting(PGV_USER_ID, 'editaccount')=='Y') unset($_SESSION['theme_dir']);
+	if (WT_USER_ID) {
+		if (get_user_setting(WT_USER_ID, 'editaccount')=='Y') unset($_SESSION['theme_dir']);
 	}
 }
 
@@ -540,13 +540,13 @@ if (empty($THEME_DIR) || !file_exists("{$THEME_DIR}theme.php")) {
 	$THEME_DIR = 'themes/webtrees/';
 }
 
-define('PGV_THEME_DIR', $THEME_DIR);
+define('WT_THEME_DIR', $THEME_DIR);
 
-require PGV_THEME_DIR.'theme.php';
+require WT_THEME_DIR.'theme.php';
 
 // Page hit counter - load after theme, as we need theme formatting
 if ($SHOW_COUNTER && !$SEARCH_SPIDER) {
-	require PGV_ROOT.'includes/hitcount.php';
+	require WT_ROOT.'includes/hitcount.php';
 } else {
 	$hitCount='';
 }
@@ -555,23 +555,23 @@ if ($SHOW_COUNTER && !$SEARCH_SPIDER) {
 // Make sure that they follow the directionality of the page, not that of the
 // enclosed text.
 if ($TEXT_DIRECTION=='ltr') {
-	define ('PGV_LPARENS', '&lrm;(');
-	define ('PGV_RPARENS', ')&lrm;');
+	define ('WT_LPARENS', '&lrm;(');
+	define ('WT_RPARENS', ')&lrm;');
 } else {
-	define ('PGV_LPARENS', '&rlm;(');
-	define ('PGV_RPARENS', ')&rlm;');
+	define ('WT_LPARENS', '&rlm;(');
+	define ('WT_RPARENS', ')&rlm;');
 }
 
 // define constants to be used when setting permissions after creating files/directories
 if (substr(PHP_SAPI, 0, 3) == 'cgi') {  // cgi-mode, should only be writable by owner
-	define('PGV_PERM_EXE',  0755);  // to be used on directories, php files and htaccess files
-	define('PGV_PERM_FILE', 0644);  // to be used on images, text files, etc
+	define('WT_PERM_EXE',  0755);  // to be used on directories, php files and htaccess files
+	define('WT_PERM_FILE', 0644);  // to be used on images, text files, etc
 } else { // mod_php mode, should be writable by everyone
-	define('PGV_PERM_EXE',  0777);
-	define('PGV_PERM_FILE', 0666);
+	define('WT_PERM_EXE',  0777);
+	define('WT_PERM_FILE', 0666);
 }
 
 // Lightbox needs custom integration in many places.  Only check for the module once.
-define('PGV_USE_LIGHTBOX', !$SEARCH_SPIDER && $MULTI_MEDIA && file_exists(PGV_ROOT.'modules/lightbox.php') && is_dir(PGV_ROOT.'modules/lightbox'));
+define('WT_USE_LIGHTBOX', !$SEARCH_SPIDER && $MULTI_MEDIA && file_exists(WT_ROOT.'modules/lightbox.php') && is_dir(WT_ROOT.'modules/lightbox'));
 
 ?>

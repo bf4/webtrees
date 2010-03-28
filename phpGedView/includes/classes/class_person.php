@@ -27,15 +27,15 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_PERSON_PHP', '');
+define('WT_CLASS_PERSON_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
-require_once PGV_ROOT.'includes/classes/class_event.php';
+require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
+require_once WT_ROOT.'includes/classes/class_event.php';
 
 class Person extends GedcomRecord {
 	var $indifacts = array();
@@ -280,7 +280,7 @@ class Person extends GedcomRecord {
 	function getAllBirthDates() {
 		if (is_null($this->_getAllBirthDates)) {
 			if ($this->canDisplayDetails()) {
-				foreach (explode('|', PGV_EVENTS_BIRT) as $event) {
+				foreach (explode('|', WT_EVENTS_BIRT) as $event) {
 					if ($this->_getAllBirthDates=$this->getAllEventDates($event)) {
 						break;
 					}
@@ -294,7 +294,7 @@ class Person extends GedcomRecord {
 	function getAllBirthPlaces() {
 		if (is_null($this->_getAllBirthPlaces)) {
 			if ($this->canDisplayDetails()) {
-				foreach (explode('|', PGV_EVENTS_BIRT) as $event) {
+				foreach (explode('|', WT_EVENTS_BIRT) as $event) {
 					if ($this->_getAllBirthPlaces=$this->getAllEventPlaces($event)) {
 						break;
 					}
@@ -308,7 +308,7 @@ class Person extends GedcomRecord {
 	function getAllDeathDates() {
 		if (is_null($this->_getAllDeathDates)) {
 			if ($this->canDisplayDetails()) {
-				foreach (explode('|', PGV_EVENTS_DEAT) as $event) {
+				foreach (explode('|', WT_EVENTS_DEAT) as $event) {
 					if ($this->_getAllDeathDates=$this->getAllEventDates($event)) {
 						break;
 					}
@@ -322,7 +322,7 @@ class Person extends GedcomRecord {
 	function getAllDeathPlaces() {
 		if (is_null($this->_getAllDeathPlaces)) {
 			if ($this->canDisplayDetails()) {
-				foreach (explode('|', PGV_EVENTS_DEAT) as $event) {
+				foreach (explode('|', WT_EVENTS_DEAT) as $event) {
 					if ($this->_getAllDeathPlaces=$this->getAllEventPlaces($event)) {
 						break;
 					}
@@ -462,23 +462,23 @@ class Person extends GedcomRecord {
 	}
 
 	static function sexImage($sex, $size='small', $style='', $title='') {
-		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $WT_IMAGE_DIR, $WT_IMAGES;
 		switch ($sex) {
 		case 'M':
-			if (isset($PGV_IMAGES['sex'][$size])) {
-				return "<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['sex'][$size]}\" class=\"gender_image\" style=\"{$style}\" alt=\"{$title}\" title=\"{$title}\" />";
+			if (isset($WT_IMAGES['sex'][$size])) {
+				return "<img src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['sex'][$size]}\" class=\"gender_image\" style=\"{$style}\" alt=\"{$title}\" title=\"{$title}\" />";
 			} else {
-				return '<span style="size:'.$size.'">'.PGV_UTF8_MALE.'</span>';
+				return '<span style="size:'.$size.'">'.WT_UTF8_MALE.'</span>';
 			}
 		case 'F':
-			if (isset($PGV_IMAGES['sex'][$size])) {
-				return "<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['sexf'][$size]}\" class=\"gender_image\" style=\"{$style}\" alt=\"{$title}\" title=\"{$title}\" />";
+			if (isset($WT_IMAGES['sex'][$size])) {
+				return "<img src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['sexf'][$size]}\" class=\"gender_image\" style=\"{$style}\" alt=\"{$title}\" title=\"{$title}\" />";
 			} else {
-				return '<span style="size:'.$size.'">'.PGV_UTF8_FEMALE.'</span>';
+				return '<span style="size:'.$size.'">'.WT_UTF8_FEMALE.'</span>';
 			}
 		default:
-			if (isset($PGV_IMAGES['sex'][$size])) {
-				return "<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['sexn'][$size]}\" class=\"gender_image\" style=\"{$style}\" alt=\"{$title}\" title=\"{$title}\" />";
+			if (isset($WT_IMAGES['sex'][$size])) {
+				return "<img src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['sexn'][$size]}\" class=\"gender_image\" style=\"{$style}\" alt=\"{$title}\" title=\"{$title}\" />";
 			} else {
 				return '<span style="size:'.$size.'">?</span>';
 			}
@@ -552,7 +552,7 @@ class Person extends GedcomRecord {
 	*/
 	function getSpouseFamilyIds() {
 		if (is_null($this->fams)) {
-			preg_match_all('/\n1 FAMS @('.PGV_REGEX_XREF.')@/', $this->gedrec, $match);
+			preg_match_all('/\n1 FAMS @('.WT_REGEX_XREF.')@/', $this->gedrec, $match);
 			$this->fams=$match[1];
 		}
 		return $this->fams;
@@ -608,7 +608,7 @@ class Person extends GedcomRecord {
 	*/
 	function getChildFamilyIds() {
 		if (is_null($this->famc)) {
-			preg_match_all('/\n1 FAMC @('.PGV_REGEX_XREF.')@/', $this->gedrec, $match);
+			preg_match_all('/\n1 FAMC @('.WT_REGEX_XREF.')@/', $this->gedrec, $match);
 			$this->famc=$match[1];
 		}
 		return $this->famc;
@@ -820,7 +820,7 @@ class Person extends GedcomRecord {
 		if ($this->getChanged()) {
 			return null;
 		}
-		if (PGV_USER_CAN_EDIT && $this->canDisplayDetails()) {
+		if (WT_USER_CAN_EDIT && $this->canDisplayDetails()) {
 			if (isset($pgv_changes[$this->xref.'_'.$GEDCOM])) {
 				$newrec = find_updated_record($this->xref, $this->ged_id);
 				if (!empty($newrec)) {
@@ -972,7 +972,7 @@ class Person extends GedcomRecord {
 						$fact='_DEAT_GGPA';
 					}
 					if (strstr($SHOW_RELATIVES_EVENTS, $fact)) {
-						foreach ($parent->getAllFactsByType(explode('|', PGV_EVENTS_DEAT)) as $sEvent) {
+						foreach ($parent->getAllFactsByType(explode('|', WT_EVENTS_DEAT)) as $sEvent) {
 							$srec = $sEvent->getGedcomRecord();
 							if (GedcomDate::Compare($bDate, $sEvent->getDate())<0 && GedcomDate::Compare($sEvent->getDate(), $dDate)<=0) {
 								$fact=str_replace('DEAT', $sEvent->getTag(), $fact); // BURI, CREM, etc.
@@ -1131,7 +1131,7 @@ class Person extends GedcomRecord {
 				if (strstr($SHOW_RELATIVES_EVENTS, '_BIRT'.$option)) {
 					/* @var $child Person */
 					/* @var $sEvent Event */
-					foreach ($child->getAllFactsByType(explode('|', PGV_EVENTS_BIRT)) as $sEvent) {
+					foreach ($child->getAllFactsByType(explode('|', WT_EVENTS_BIRT)) as $sEvent) {
 						$srec = $sEvent->getGedcomRecord();
 						$sgdate=$sEvent->getDate();
 						if ($option=='_CHIL' || $sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
@@ -1151,7 +1151,7 @@ class Person extends GedcomRecord {
 				// add child death
 				if (strstr($SHOW_RELATIVES_EVENTS, '_DEAT'.$option)) {
 					/* @var $sEvent Event */
-					foreach ($child->getAllFactsByType(explode('|', PGV_EVENTS_DEAT)) as $sEvent) {
+					foreach ($child->getAllFactsByType(explode('|', WT_EVENTS_DEAT)) as $sEvent) {
 						$sgdate=$sEvent->getDate();
 						$srec = $sEvent->getGedcomRecord();
 						if ($sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
@@ -1234,7 +1234,7 @@ class Person extends GedcomRecord {
 		global $SHOW_RELATIVES_EVENTS;
 
 		// do not show if divorced
-		if (preg_match('/\n1 (?:'.PGV_EVENTS_DIV.')\b/', $famrec)) {
+		if (preg_match('/\n1 (?:'.WT_EVENTS_DIV.')\b/', $famrec)) {
 			return;
 		}
 		// Only include events between birth and death
@@ -1243,7 +1243,7 @@ class Person extends GedcomRecord {
 
 		// add spouse death
 		if ($spouse && strstr($SHOW_RELATIVES_EVENTS, '_DEAT_SPOU')) {
-			foreach ($spouse->getAllFactsByType(explode('|', PGV_EVENTS_DEAT)) as $sEvent) {
+			foreach ($spouse->getAllFactsByType(explode('|', WT_EVENTS_DEAT)) as $sEvent) {
 				$sdate=$sEvent->getDate();
 				$srec = $sEvent->getGedcomRecord();
 				if ($sdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sdate)<=0 && GedcomDate::Compare($sdate, $this->getEstimatedDeathDate())<=0) {
@@ -1299,8 +1299,8 @@ class Person extends GedcomRecord {
 		$dDate=$this->getEstimatedDeathDate();
 		if (!$bDate->isOK()) return;
 
-		if ($SHOW_RELATIVES_EVENTS && file_exists(PGV_ROOT.'languages/histo.'.$lang_short_cut[$LANGUAGE].'.php')) {
-			require PGV_ROOT.'languages/histo.'.$lang_short_cut[$LANGUAGE].'.php';
+		if ($SHOW_RELATIVES_EVENTS && file_exists(WT_ROOT.'languages/histo.'.$lang_short_cut[$LANGUAGE].'.php')) {
+			require WT_ROOT.'languages/histo.'.$lang_short_cut[$LANGUAGE].'.php';
 			foreach ($histo as $indexval=>$hrec) {
 				$sdate=new GedcomDate(get_gedcom_value('DATE', 2, $hrec, '', false));
 				if ($sdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sdate)<=0 && GedcomDate::Compare($sdate, $this->getEstimatedDeathDate())<=0) {
@@ -1419,7 +1419,7 @@ class Person extends GedcomRecord {
 			}
 			//-- fact was deleted?
 			if (!$found) {
-				$this->indifacts[$i]->gedcomRecord.="\nPGV_OLD\n";
+				$this->indifacts[$i]->gedcomRecord.="\nWT_OLD\n";
 			}
 		}
 		//-- check for any new facts being added
@@ -1434,7 +1434,7 @@ class Person extends GedcomRecord {
 				}
 			}
 			if (!$found) {
-				$newfact->gedcomRecord.="\nPGV_NEW\n";
+				$newfact->gedcomRecord.="\nWT_NEW\n";
 				$this->indifacts[]=$newfact;
 			}
 		}
@@ -1449,7 +1449,7 @@ class Person extends GedcomRecord {
 				}
 			}
 			if (!$found) {
-				$this->otherfacts[$i]->gedcomRecord.="\nPGV_OLD\n";
+				$this->otherfacts[$i]->gedcomRecord.="\nWT_OLD\n";
 			}
 		}
 		foreach ($diff->otherfacts as $indexval => $newfact) {
@@ -1461,7 +1461,7 @@ class Person extends GedcomRecord {
 				}
 			}
 			if (!$found) {
-				$newfact->gedcomRecord.="\nPGV_NEW\n";
+				$newfact->gedcomRecord.="\nWT_NEW\n";
 				$this->otherfacts[]=$newfact;
 			}
 		}
@@ -1477,7 +1477,7 @@ class Person extends GedcomRecord {
 				}
 			}
 			if (!$found) {
-				$this->globalfacts[$i]->gedcomRecord.="\nPGV_OLD\n";
+				$this->globalfacts[$i]->gedcomRecord.="\nWT_OLD\n";
 			}
 		}
 		foreach ($diff->globalfacts as $indexval => $newfact) {
@@ -1489,7 +1489,7 @@ class Person extends GedcomRecord {
 				}
 			}
 			if (!$found) {
-				$newfact->gedcomRecord.="\nPGV_NEW\n";
+				$newfact->gedcomRecord.="\nWT_NEW\n";
 				$this->globalfacts[]=$newfact;
 			}
 		}
@@ -1770,8 +1770,8 @@ class Person extends GedcomRecord {
 	// selection items or favorites.
 	function format_list_details() {
 		return
-		$this->format_first_major_fact(PGV_EVENTS_BIRT, 1).
-		$this->format_first_major_fact(PGV_EVENTS_DEAT, 1);
+		$this->format_first_major_fact(WT_EVENTS_BIRT, 1).
+		$this->format_first_major_fact(WT_EVENTS_DEAT, 1);
 	}
 
 }

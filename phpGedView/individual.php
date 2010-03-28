@@ -29,9 +29,9 @@
 * @version $Id$
 */
 
-define('PGV_SCRIPT_NAME', 'individual.php');
+define('WT_SCRIPT_NAME', 'individual.php');
 require './config.php';
-require PGV_ROOT.'includes/controllers/individual_ctrl.php';
+require WT_ROOT.'includes/controllers/individual_ctrl.php';
 
 $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 
@@ -39,7 +39,7 @@ $controller=new IndividualController();
 $controller->init();
 
 // tell tabs that use jquery that it is already loaded
-define('PGV_JQUERY_LOADED', 1);
+define('WT_JQUERY_LOADED', 1);
 
 // We have finished writing to $_SESSION, so release the lock
 session_write_close();
@@ -69,7 +69,7 @@ function show_gedcom_record(shownew) {
 	if (shownew=="yes") fromfile='&fromfile=1';
 	var recwin = window.open("gedrecord.php?pid=<?php echo $controller->pid; ?>"+fromfile, "_blank", "top=50,left=50,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");
 }
-<?php if (PGV_USER_CAN_EDIT) { ?>
+<?php if (WT_USER_CAN_EDIT) { ?>
 function open_link_remote(pid){
 	window.open("addremotelink.php?pid="+pid, "_blank", "top=50,left=50,width=600,height=500,scrollbars=1,scrollable=1,resizable=1");
 	return false;
@@ -121,7 +121,7 @@ function enable_static_tab() {
 
 jQuery(document).ready(function(){
 	// TODO: change images directory when the common images will be deleted.
-	// jQuery('#tabs').tabs({ spinner: '<img src=\"<?php echo $PGV_IMAGE_DIR; ?>/loading.gif\" height=\"18\" border=\"0\" />' });
+	// jQuery('#tabs').tabs({ spinner: '<img src=\"<?php echo $WT_IMAGE_DIR; ?>/loading.gif\" height=\"18\" border=\"0\" />' });
 	jQuery('#tabs').tabs({ spinner: '<img src=\"images/loading.gif\" height=\"18\" border=\"0\" alt=\"\" />' });
 	jQuery("#tabs").tabs({ cache: true, selected: <?php echo $controller->default_tab?> });
 	var $tabs = jQuery('#tabs');
@@ -165,7 +165,7 @@ jQuery(document).ready(function(){
 
 	jQuery('#pin').toggle(
 			function() {
-				jQuery('#pin img').attr('src', '<?php echo $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['pin-in']['other'];?>');
+				jQuery('#pin img').attr('src', '<?php echo $WT_IMAGE_DIR.'/'.$WT_IMAGES['pin-in']['other'];?>');
 				var newwidth = jQuery('.static_tab').position().left-40;
 				<?php if ($TEXT_DIRECTION=='rtl') {?>
 				newwidth = jQuery('.static_tab').width() + 40;
@@ -182,13 +182,13 @@ jQuery(document).ready(function(){
 				jQuery.get('individual.php?pid=<?php echo $controller->pid;?>&action=ajax&pin=true');
 			},
 			function() {
-				jQuery('#pin img').attr('src', '<?php echo $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['pin-out']['other'];?>');
+				jQuery('#pin img').attr('src', '<?php echo $WT_IMAGE_DIR.'/'.$WT_IMAGES['pin-out']['other'];?>');
 				jQuery('#tabs div').css('width', '');
 				jQuery('.static_tab_content').hide();
 				pinned = false;
 				jQuery.get('individual.php?pid=<?php echo $controller->pid;?>&action=ajax&pin=false');
 			});
-		<?php  if (isset($_SESSION['PGV_pin']) && $_SESSION['PGV_pin']) { ?>
+		<?php  if (isset($_SESSION['WT_pin']) && $_SESSION['WT_pin']) { ?>
 			jQuery('#pin').click();
 		<?php }
 	}
@@ -230,8 +230,8 @@ jQuery(document).ready(function(){
 			echo PrintReady($controller->indi->getFullName());
 			echo "&nbsp;&nbsp;";
 			echo PrintReady("(".$controller->pid.")");
-			if (PGV_USER_IS_ADMIN) {
-				$user_id=get_user_from_gedcom_xref(PGV_GED_ID, $controller->pid);
+			if (WT_USER_IS_ADMIN) {
+				$user_id=get_user_from_gedcom_xref(WT_GED_ID, $controller->pid);
 				if ($user_id) {
 					$pgvuser=get_user_name($user_id);
 					echo "&nbsp;";
@@ -263,7 +263,7 @@ jQuery(document).ready(function(){
 					}
 			}
 			// Display summary birth/death info.
-			$summary=$controller->indi->format_first_major_fact(PGV_EVENTS_BIRT, 2);
+			$summary=$controller->indi->format_first_major_fact(WT_EVENTS_BIRT, 2);
 			if (!($controller->indi->isDead())) {
 				// If alive display age
 				$bdate=$controller->indi->getBirthDate();
@@ -271,7 +271,7 @@ jQuery(document).ready(function(){
 				if ($age!="")
 					$summary.= "<dt class=\"label\">".i18n::translate('Age')."</dt><dd class=\"field\">".get_age_at_event($age, true)."</dd>";
 			}
-			$summary.=$controller->indi->format_first_major_fact(PGV_EVENTS_DEAT, 2);
+			$summary.=$controller->indi->format_first_major_fact(WT_EVENTS_DEAT, 2);
 			if ($SHOW_LDS_AT_GLANCE) {
 				$summary.='<b>'.get_lds_glance($controller->indi->getGedcomRecord()).'</b>';
 			}
@@ -286,7 +286,7 @@ jQuery(document).ready(function(){
 		<?php
 		if($SHOW_COUNTER && (empty($SEARCH_SPIDER))) {
 			//print indi counter only if displaying a non-private person
-			require PGV_ROOT.'includes/hitcount.php';
+			require WT_ROOT.'includes/hitcount.php';
 			echo i18n::translate('Hit Count:'), " ", $hitCount;
 		}
 		// if individual is a remote individual
@@ -334,7 +334,7 @@ if (!$controller->indi->canDisplayDetails()) {
 			if ($mod!=$controller->static_tab && $mod->hasTab()) {
 				if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
 					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $mod->getTitle(); ?></span></a></li>
-				<?php } else if ($mod->hasTab() && $mod->getTab() && ($mod->getTab()->hasContent() || PGV_USER_CAN_EDIT)) { ?>
+				<?php } else if ($mod->hasTab() && $mod->getTab() && ($mod->getTab()->hasContent() || WT_USER_CAN_EDIT)) { ?>
 					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" href="individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
 						<span><?php echo $mod->getTitle()?></span>
 						</a></li>
@@ -347,7 +347,7 @@ if (!$controller->indi->canDisplayDetails()) {
 				<a name="<?php echo $controller->static_tab->getName(); ?>" href="#<?php echo $controller->static_tab->getName()?>">
 					<span><?php echo $controller->static_tab->getTitle(); ?></span>
 				</a>
-				<a id="pin" href="#pin"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['pin-out']['other'];?>" border="0" alt=""/></a>
+				<a id="pin" href="#pin"><img src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES['pin-out']['other'];?>" border="0" alt=""/></a>
 			</li><?php 
 		} 
 		 ?>
@@ -362,7 +362,7 @@ if (!$controller->indi->canDisplayDetails()) {
 			<?php echo $mod->getTab()->getContent(); ?>
 		</div>	
 		<?php }
-		if ($mod->getTab()->hasContent() || PGV_USER_CAN_EDIT) $tabcount++;
+		if ($mod->getTab()->hasContent() || WT_USER_CAN_EDIT) $tabcount++;
 		}
 	} ?>
 	</div> <!-- tabs -->
@@ -375,12 +375,12 @@ if (!$controller->indi->canDisplayDetails()) {
 }?>
 </div> <!--  end column 1 -->
 <?php
-echo PGV_JS_START;
+echo WT_JS_START;
 echo 'var catch_and_ignore; function paste_id(value) {catch_and_ignore = value;}';
 echo 'if (typeof toggleByClassName == "undefined") {';
 echo 'alert("phpgedview.js: A javascript function is missing.  Please clear your Web browser cache");';
 echo '}';
-echo PGV_JS_END;
+echo WT_JS_END;
 
 if ($SEARCH_SPIDER) {
 	if($SHOW_SPIDER_TAGLINE)

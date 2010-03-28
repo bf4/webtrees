@@ -30,20 +30,20 @@
  * @subpackage Blocks
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CHARTS_PHP', '');
+define('WT_CHARTS_PHP', '');
 
-require_once PGV_ROOT.'includes/controllers/hourglass_ctrl.php';
-require_once PGV_ROOT.'includes/classes/class_treenav.php';
+require_once WT_ROOT.'includes/controllers/hourglass_ctrl.php';
+require_once WT_ROOT.'includes/classes/class_treenav.php';
 
-$PGV_BLOCKS["print_charts_block"]["name"]		= i18n::translate('Charts Block');
-$PGV_BLOCKS["print_charts_block"]["descr"]		= i18n::translate('The Charts block allows you to place a chart on the Home or My Page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart.');
-$PGV_BLOCKS["print_charts_block"]["canconfig"]	= true;
-$PGV_BLOCKS["print_charts_block"]["config"]		= array(
+$WT_BLOCKS["print_charts_block"]["name"]		= i18n::translate('Charts Block');
+$WT_BLOCKS["print_charts_block"]["descr"]		= i18n::translate('The Charts block allows you to place a chart on the Home or My Page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart.');
+$WT_BLOCKS["print_charts_block"]["canconfig"]	= true;
+$WT_BLOCKS["print_charts_block"]["config"]		= array(
 	"cache"=>1,
 	"pid"=>'',
 	"type"=>'pedigree',
@@ -51,17 +51,17 @@ $PGV_BLOCKS["print_charts_block"]["config"]		= array(
 	);
 
 function print_charts_block($block = true, $config="", $side, $index) {
-	global $PGV_BLOCKS, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PEDIGREE_ROOT_ID, $PEDIGREE_FULL_DETAILS;
+	global $WT_BLOCKS, $ctype, $WT_IMAGE_DIR, $WT_IMAGES, $PEDIGREE_ROOT_ID, $PEDIGREE_FULL_DETAILS;
 	global $show_full, $bwidth, $bheight;
 
-	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
+	if (empty($config)) $config = $WT_BLOCKS["print_charts_block"]["config"];
 	if (empty($config['details'])) $config['details'] = 'no';
 	if (empty($config["pid"])) {
-		if (!PGV_USER_ID) {
+		if (!WT_USER_ID) {
 			$config["pid"] = $PEDIGREE_ROOT_ID;
 		} else {
-			if (PGV_USER_GEDCOM_ID) {
-				$config["pid"] = PGV_USER_GEDCOM_ID;
+			if (WT_USER_GEDCOM_ID) {
+				$config["pid"] = WT_USER_GEDCOM_ID;
 			} else {
 				$config["pid"] = $PEDIGREE_ROOT_ID;
 			}
@@ -98,15 +98,15 @@ function print_charts_block($block = true, $config="", $side, $index) {
 
 	$id = "charts_block";
 	$title='';
-	if ($PGV_BLOCKS["print_charts_block"]["canconfig"]) {
-		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+	if ($WT_BLOCKS["print_charts_block"]["canconfig"]) {
+		if ($ctype=="gedcom" && WT_USER_GEDCOM_ADMIN || $ctype=="user" && WT_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = PGV_GEDCOM;
+				$name = WT_GEDCOM;
 			} else {
-				$name = PGV_USER_NAME;
+				$name = WT_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=700,height=400,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"$WT_IMAGE_DIR/".$WT_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
 	if ($person) {
@@ -180,12 +180,12 @@ function print_charts_block($block = true, $config="", $side, $index) {
 }
 
 function print_charts_block_config($config) {
-	global $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $PEDIGREE_ROOT_ID, $ENABLE_AUTOCOMPLETE;
-	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
+	global $ctype, $WT_BLOCKS, $TEXT_DIRECTION, $PEDIGREE_ROOT_ID, $ENABLE_AUTOCOMPLETE;
+	if (empty($config)) $config = $WT_BLOCKS["print_charts_block"]["config"];
 	if (empty($config["rootId"])) $config["rootId"] = $PEDIGREE_ROOT_ID;
 	if (empty($config['details'])) $config['details'] = 'no';
 
-	if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+	if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 ?>
 	<tr><td class="descriptionbox wrap width33"><?php print i18n::translate('Chart Type'); ?></td>
 	<td class="optionbox">
@@ -193,7 +193,7 @@ function print_charts_block_config($config) {
 			<option value="pedigree"<?php if ($config["type"]=="pedigree") print " selected=\"selected\""; ?>><?php print i18n::translate('Pedigree Tree'); ?></option>
 			<option value="descendants"<?php if ($config["type"]=="descendants") print " selected=\"selected\""; ?>><?php print i18n::translate('Descendancy Chart'); ?></option>
 			<option value="hourglass"<?php if ($config["type"]=="hourglass") print " selected=\"selected\""; ?>><?php print i18n::translate('Hourglass Chart'); ?></option>
-			<?php if (file_exists(PGV_ROOT.'includes/classes/class_treenav.php')) { ?>
+			<?php if (file_exists(WT_ROOT.'includes/classes/class_treenav.php')) { ?>
 			<option value="treenav"<?php if ($config["type"]=="treenav") print " selected=\"selected\""; ?>><?php print i18n::translate('Interactive Tree'); ?></option>
 			<?php } ?>
 		</select>
@@ -215,7 +215,7 @@ function print_charts_block_config($config) {
 			print_findindi_link('pid','');
 			$root=Person::getInstance($config['pid']);
 			if ($root) {
-				echo ' <span class="list_item">', $root->getFullName(), $root->format_first_major_fact(PGV_EVENTS_BIRT, 1), '</span>';
+				echo ' <span class="list_item">', $root->getFullName(), $root->format_first_major_fact(WT_EVENTS_BIRT, 1), '</span>';
 			}
 			?>
 		</td>

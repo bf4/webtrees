@@ -33,14 +33,14 @@
 * @subpackage Lists
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_STATS_PHP', '');
+define('WT_CLASS_STATS_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+require_once WT_ROOT.'includes/functions/functions_print_lists.php';
 
 // Methods not allowed to be used in a statistic
 define('STATS_NOT_ALLOWED', 'stats,getAllTags,getTags');
@@ -53,7 +53,7 @@ class stats {
 	static $_not_allowed = false;
 	static $_media_types = array('audio', 'book', 'card', 'certificate', 'coat', 'document', 'electronic', 'magazine', 'manuscript', 'map', 'fiche', 'film', 'newspaper', 'painting', 'photo', 'tombstone', 'video', 'other');
 
-	static $_xencoding = PGV_GOOGLE_CHART_ENCODING;
+	static $_xencoding = WT_GOOGLE_CHART_ENCODING;
 
 	function __construct($gedcom, $server_url='') {
 		self::$_not_allowed = explode(',', STATS_NOT_ALLOWED);
@@ -279,7 +279,7 @@ class stats {
 		global $TBLPREFIX;
 
 		$row=
-			PGV_DB::prepareLimit("SELECT d_year, d_month, d_day FROM {$TBLPREFIX}dates WHERE d_file=? AND d_fact=? ORDER BY d_julianday1 DESC, d_type", 1)
+			WT_DB::prepareLimit("SELECT d_year, d_month, d_day FROM {$TBLPREFIX}dates WHERE d_file=? AND d_fact=? ORDER BY d_julianday1 DESC, d_type", 1)
 			->execute(array($this->_ged_id, 'CHAN'))
 			->fetchOneRow();
 		if ($row) {
@@ -378,7 +378,7 @@ class stats {
 		global $TBLPREFIX;
 
 		return
-			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=?")
+			WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=?")
 			->execute(array($this->_ged_id))
 			->fetchOne();
 	}
@@ -390,11 +390,11 @@ class stats {
 	}
 
 	function chartIndisWithSources($params=null) {
-		global $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $WT_STATS_CHART_COLOR1, $WT_STATS_CHART_COLOR2, $WT_STATS_S_CHART_X, $WT_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
-		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
-		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $WT_STATS_S_CHART_X."x".$WT_STATS_S_CHART_Y;}
+		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $WT_STATS_CHART_COLOR1;}
+		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $WT_STATS_CHART_COLOR2;}
 		$sizes = explode('x', $size);
 		$tot_indi = $this->totalIndividuals();
 		if ($tot_indi==0) {
@@ -419,7 +419,7 @@ class stats {
 	function totalFamilies() {
 		global $TBLPREFIX;
 		return
-			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}families WHERE f_file=?")
+			WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}families WHERE f_file=?")
 			->execute(array($this->_ged_id))
 			->fetchOne();
 	}
@@ -431,11 +431,11 @@ class stats {
 	}
 
 	function chartFamsWithSources($params=null) {
-		global $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $WT_STATS_CHART_COLOR1, $WT_STATS_CHART_COLOR2, $WT_STATS_S_CHART_X, $WT_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
-		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
-		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $WT_STATS_S_CHART_X."x".$WT_STATS_S_CHART_Y;}
+		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $WT_STATS_CHART_COLOR1;}
+		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $WT_STATS_CHART_COLOR2;}
 		$sizes = explode('x', $size);
 		$tot_fam = $this->totalFamilies();
 		$tot_sfam = $this->totalFamsWithSources();
@@ -460,7 +460,7 @@ class stats {
 	function totalSources() {
 		global $TBLPREFIX;
 		return
-			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}sources WHERE s_file=?")
+			WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}sources WHERE s_file=?")
 			->execute(array($this->_ged_id))
 			->fetchOne();
 	}
@@ -472,7 +472,7 @@ class stats {
 	function totalNotes() {
 		global $TBLPREFIX;
 		return
-			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}other WHERE o_type=? AND o_file=?")
+			WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}other WHERE o_type=? AND o_file=?")
 			->execute(array('NOTE', $this->_ged_id))
 			->fetchOne();
 	}
@@ -484,7 +484,7 @@ class stats {
 	function totalOtherRecords() {
 		global $TBLPREFIX;
 		return
-			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}other WHERE o_type<>? AND o_file=?")
+			WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}other WHERE o_type<>? AND o_file=?")
 			->execute(array('NOTE', $this->_ged_id))
 			->fetchOne();
 	}
@@ -507,7 +507,7 @@ class stats {
 		}
 		$vars[]=$this->_ged_id;
 		return (int)
-			PGV_DB::prepare("SELECT COUNT({$distinct} n_surn) FROM {$TBLPREFIX}name WHERE n_surn {$opt} AND n_file=?")
+			WT_DB::prepare("SELECT COUNT({$distinct} n_surn) FROM {$TBLPREFIX}name WHERE n_surn {$opt} AND n_file=?")
 			->execute($vars)
 			->fetchOne();
 	}
@@ -526,7 +526,7 @@ class stats {
 		}
 		$vars[]=$this->_ged_id;
 		return (int)
-			PGV_DB::prepare("SELECT COUNT({$distinct} n_givn) FROM {$TBLPREFIX}name WHERE n_givn {$opt} AND n_file=?")
+			WT_DB::prepare("SELECT COUNT({$distinct} n_givn) FROM {$TBLPREFIX}name WHERE n_givn {$opt} AND n_file=?")
 			->execute($vars)
 			->fetchOne();
 	}
@@ -554,11 +554,11 @@ class stats {
 		}
 		$sql.=' AND d_fact NOT IN ('.implode(', ', array_fill(0, count($no_types), '?')).')';
 		$vars=array_merge($vars, $no_types);
-		return PGV_DB::prepare($sql)->execute($vars)->fetchOne();
+		return WT_DB::prepare($sql)->execute($vars)->fetchOne();
 	}
 
 	function totalEventsBirth() {
-		return $this->totalEvents(explode('|',PGV_EVENTS_BIRT));
+		return $this->totalEvents(explode('|',WT_EVENTS_BIRT));
 	}
 
 	function totalBirths() {
@@ -566,7 +566,7 @@ class stats {
 	}
 
 	function totalEventsDeath() {
-		return $this->totalEvents(explode('|',PGV_EVENTS_DEAT));
+		return $this->totalEvents(explode('|',WT_EVENTS_DEAT));
 	}
 
 	function totalDeaths() {
@@ -574,7 +574,7 @@ class stats {
 	}
 
 	function totalEventsMarriage() {
-		return $this->totalEvents(explode('|',PGV_EVENTS_MARR));
+		return $this->totalEvents(explode('|',WT_EVENTS_MARR));
 	}
 
 	function totalMarriages() {
@@ -582,7 +582,7 @@ class stats {
 	}
 
 	function totalEventsDivorce() {
-		return $this->totalEvents(explode('|',PGV_EVENTS_DIV));
+		return $this->totalEvents(explode('|',WT_EVENTS_DIV));
 	}
 
 	function totalDivorces() {
@@ -590,7 +590,7 @@ class stats {
 	}
 
 	function totalEventsOther() {
-		$facts = array_merge(explode('|', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DIV.'|'.PGV_EVENTS_DEAT));
+		$facts = array_merge(explode('|', WT_EVENTS_BIRT.'|'.WT_EVENTS_MARR.'|'.WT_EVENTS_DIV.'|'.WT_EVENTS_DEAT));
 		$no_facts = array();
 		foreach ($facts as $fact) {
 			$fact = '!'.str_replace('\'', '', $fact);
@@ -602,7 +602,7 @@ class stats {
 	function totalSexMales() {
 		global $TBLPREFIX;
 		return
-			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_sex=?")
+			WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_sex=?")
 			->execute(array($this->_ged_id, 'M'))
 			->fetchOne();
 	}
@@ -614,7 +614,7 @@ class stats {
 	function totalSexFemales() {
 		global $TBLPREFIX;
 		return
-			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_sex=?")
+			WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_sex=?")
 			->execute(array($this->_ged_id, 'F'))
 			->fetchOne();
 	}
@@ -626,7 +626,7 @@ class stats {
 	function totalSexUnknown() {
 		global $TBLPREFIX;
 		return
-			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_sex=?")
+			WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_sex=?")
 			->execute(array($this->_ged_id, 'U'))
 			->fetchOne();
 	}
@@ -636,9 +636,9 @@ class stats {
 	}
 
 	function chartSex($params=null) {
-		global $TEXT_DIRECTION, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TEXT_DIRECTION, $WT_STATS_S_CHART_X, $WT_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $WT_STATS_S_CHART_X."x".$WT_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_female = strtolower($params[1]);}else{$color_female = 'ffd1dc';}
 		if (isset($params[2]) && $params[2] != '') {$color_male = strtolower($params[2]);}else{$color_male = '84beff';}
 		if (isset($params[3]) && $params[3] != '') {$color_unknown = strtolower($params[3]);}else{$color_unknown = '777777';}
@@ -673,7 +673,7 @@ class stats {
 	function totalLiving() {
 		global $TBLPREFIX;
 		return
-			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_isdead=?")
+			WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_isdead=?")
 			->execute(array($this->_ged_id, 0))
 			->fetchOne();
 	}
@@ -685,7 +685,7 @@ class stats {
 	function totalDeceased() {
 		global $TBLPREFIX;
 		return
-			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_isdead=?")
+			WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_isdead=?")
 			->execute(array($this->_ged_id, 1))
 			->fetchOne();
 	}
@@ -697,7 +697,7 @@ class stats {
 	function totalMortalityUnknown() {
 		global $TBLPREFIX;
 		return
-			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_isdead=?")
+			WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_isdead=?")
 			->execute(array($this->_ged_id, -1))
 			->fetchOne();
 	}
@@ -714,9 +714,9 @@ class stats {
 	}
 
 	function chartMortality($params=null) {
-		global $TEXT_DIRECTION, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TEXT_DIRECTION, $WT_STATS_S_CHART_X, $WT_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $WT_STATS_S_CHART_X."x".$WT_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_living = strtolower($params[1]);}else{$color_living = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_dead = strtolower($params[2]);}else{$color_dead = 'cccccc';}
 		if (isset($params[3]) && $params[3] != '') {$color_unknown = strtolower($params[3]);}else{$color_unknown = '777777';}
@@ -787,7 +787,7 @@ class stats {
 				$vars[]="%1 _TYPE {$type}%";
 			}
 		}
-		return PGV_DB::prepare($sql)->execute($vars)->fetchOne();
+		return WT_DB::prepare($sql)->execute($vars)->fetchOne();
 	}
 
 	function totalMedia() {return $this->_totalMediaType('all');}
@@ -812,11 +812,11 @@ class stats {
 	function totalMediaUnknown() {return $this->_totalMediaType('unknown');}
 
 	function chartMedia($params=null) {
-		global $TEXT_DIRECTION, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y, $MEDIA_TYPES;
+		global $TEXT_DIRECTION, $WT_STATS_CHART_COLOR1, $WT_STATS_CHART_COLOR2, $WT_STATS_S_CHART_X, $WT_STATS_S_CHART_Y, $MEDIA_TYPES;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
-		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
-		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $WT_STATS_S_CHART_X."x".$WT_STATS_S_CHART_Y;}
+		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $WT_STATS_CHART_COLOR1;}
+		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $WT_STATS_CHART_COLOR2;}
 		$sizes = explode('x', $size);
 		$tot = $this->_totalMediaType('all');
 		// Beware divide by zero
@@ -881,14 +881,14 @@ class stats {
 	function _mortalityQuery($type='full', $life_dir='ASC', $birth_death='BIRT') {
 		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir, $DBTYPE, $TEXT_DIRECTION;
 		if ($birth_death == 'MARR') {
-			$query_field = "'".str_replace('|', "','", PGV_EVENTS_MARR)."'";
+			$query_field = "'".str_replace('|', "','", WT_EVENTS_MARR)."'";
 		} else if ($birth_death == 'DIV') {
-			$query_field = "'".str_replace('|', "','", PGV_EVENTS_DIV)."'";
+			$query_field = "'".str_replace('|', "','", WT_EVENTS_DIV)."'";
 		} else if ($birth_death == 'BIRT') {
-			$query_field = "'".str_replace('|', "','", PGV_EVENTS_BIRT)."'";
+			$query_field = "'".str_replace('|', "','", WT_EVENTS_BIRT)."'";
 		} else {
 			$birth_death = 'DEAT';
-			$query_field = "'".str_replace('|', "','", PGV_EVENTS_DEAT)."'";
+			$query_field = "'".str_replace('|', "','", WT_EVENTS_DEAT)."'";
 		}
 		if ($life_dir == 'ASC') {
 			$dmod = 'MIN';
@@ -981,13 +981,13 @@ class stats {
 		if ($fact) {
 			if ($what=='INDI') {
 				$rows=
-					PGV_DB::prepare("SELECT i_gedcom AS ged FROM ${TBLPREFIX}individuals WHERE i_file=?")
+					WT_DB::prepare("SELECT i_gedcom AS ged FROM ${TBLPREFIX}individuals WHERE i_file=?")
 					->execute(array($this->_ged_id))
 					->fetchAll();
 			}
 			else if ($what=='FAM') {
 				$rows=
-					PGV_DB::prepare("SELECT f_gedcom AS ged FROM ${TBLPREFIX}families WHERE f_file=?")
+					WT_DB::prepare("SELECT f_gedcom AS ged FROM ${TBLPREFIX}families WHERE f_file=?")
 					->execute(array($this->_ged_id))
 					->fetchAll();
 			}
@@ -1070,14 +1070,14 @@ class stats {
 		global $TBLPREFIX;
 
 		return
-			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}places WHERE p_file=?")
+			WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}places WHERE p_file=?")
 			->execute(array($this->_ged_id))
 			->fetchOne();
 	}
 
 	function chartDistribution($chart_shows='world', $chart_type='', $surname='') {
 		global $iso3166;
-		global $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_CHART_COLOR3, $PGV_STATS_MAP_X, $PGV_STATS_MAP_Y;
+		global $WT_STATS_CHART_COLOR1, $WT_STATS_CHART_COLOR2, $WT_STATS_CHART_COLOR3, $WT_STATS_MAP_X, $WT_STATS_MAP_Y;
 
 		if ($this->totalPlaces()==0) return '';
 
@@ -1095,7 +1095,7 @@ class stats {
 			$chart_title=i18n::translate('Surname distribution chart').': '.$surname;
 			// Count how many people are events in each country
 			$surn_countries=array();
-			$indis = get_indilist_indis(utf8_strtoupper($surname), '', '', false, false, PGV_GED_ID);
+			$indis = get_indilist_indis(utf8_strtoupper($surname), '', '', false, false, WT_GED_ID);
 			foreach ($indis as $person) {
 				if (preg_match_all('/^2 PLAC (?:.*, *)*(.*)/m', $person->gedrec, $matches)) {
 					// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
@@ -1177,20 +1177,20 @@ class stats {
 			break;
 		}
 		$chart_url ="http://chart.apis.google.com/chart?cht=t&amp;chtm=".$chart_shows;
-		$chart_url.="&amp;chco=".$PGV_STATS_CHART_COLOR1.",".$PGV_STATS_CHART_COLOR3.",".$PGV_STATS_CHART_COLOR2; // country colours
+		$chart_url.="&amp;chco=".$WT_STATS_CHART_COLOR1.",".$WT_STATS_CHART_COLOR3.",".$WT_STATS_CHART_COLOR2; // country colours
 		$chart_url.="&amp;chf=bg,s,ECF5FF"; // sea colour
-		$chart_url.="&amp;chs=".$PGV_STATS_MAP_X."x".$PGV_STATS_MAP_Y;
+		$chart_url.="&amp;chs=".$WT_STATS_MAP_X."x".$WT_STATS_MAP_Y;
 		$chart_url.="&amp;chld=".implode('', array_keys($surn_countries))."&amp;chd=s:";
 		foreach ($surn_countries as $count) {
-			$chart_url.=substr(PGV_GOOGLE_CHART_ENCODING, floor($count/max($surn_countries)*61), 1);
+			$chart_url.=substr(WT_GOOGLE_CHART_ENCODING, floor($count/max($surn_countries)*61), 1);
 		}
 		$chart = '<div id="google_charts" class="center">';
 		$chart .= '<b>'.$chart_title.'</b><br /><br />';
 		$chart .= '<div align="center"><img src="'.$chart_url.'" alt="'.$chart_title.'" title="'.$chart_title.'" class="gchart" /><br />';
 		$chart .= '<table align="center" border="0" cellpadding="1" cellspacing="1"><tr>';
-		$chart .= '<td bgcolor="#'.$PGV_STATS_CHART_COLOR2.'" width="12"></td><td>'.i18n::translate('Highest population').'&nbsp;&nbsp;</td>';
-		$chart .= '<td bgcolor="#'.$PGV_STATS_CHART_COLOR3.'" width="12"></td><td>'.i18n::translate('Lowest population').'&nbsp;&nbsp;</td>';
-		$chart .= '<td bgcolor="#'.$PGV_STATS_CHART_COLOR1.'" width="12"></td><td>'.i18n::translate('Nobody at all').'&nbsp;&nbsp;</td>';
+		$chart .= '<td bgcolor="#'.$WT_STATS_CHART_COLOR2.'" width="12"></td><td>'.i18n::translate('Highest population').'&nbsp;&nbsp;</td>';
+		$chart .= '<td bgcolor="#'.$WT_STATS_CHART_COLOR3.'" width="12"></td><td>'.i18n::translate('Lowest population').'&nbsp;&nbsp;</td>';
+		$chart .= '<td bgcolor="#'.$WT_STATS_CHART_COLOR1.'" width="12"></td><td>'.i18n::translate('Nobody at all').'&nbsp;&nbsp;</td>';
 		$chart .= '</tr></table></div></div>';
 		return $chart;
 	}
@@ -1256,7 +1256,7 @@ class stats {
 	}
 
 	function statsBirth($simple=true, $sex=false, $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TBLPREFIX, $lang_short_cut, $LANGUAGE, $WT_STATS_CHART_COLOR1, $WT_STATS_CHART_COLOR2, $WT_STATS_S_CHART_X, $WT_STATS_S_CHART_Y;
 
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
@@ -1290,9 +1290,9 @@ class stats {
 		}
 		$rows=self::_runSQL($sql);
 		if ($simple) {
-			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
-			if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
-			if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
+			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $WT_STATS_S_CHART_X."x".$WT_STATS_S_CHART_Y;}
+			if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $WT_STATS_CHART_COLOR1;}
+			if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $WT_STATS_CHART_COLOR2;}
 			$sizes = explode('x', $size);
 			$tot = 0;
 			foreach ($rows as $values) {
@@ -1321,7 +1321,7 @@ class stats {
 	}
 
 	function statsDeath($simple=true, $sex=false, $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TBLPREFIX, $lang_short_cut, $LANGUAGE, $WT_STATS_CHART_COLOR1, $WT_STATS_CHART_COLOR2, $WT_STATS_S_CHART_X, $WT_STATS_S_CHART_Y;
 
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
@@ -1355,9 +1355,9 @@ class stats {
 		}
 		$rows=self::_runSQL($sql);
 		if ($simple) {
-			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
-			if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
-			if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
+			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $WT_STATS_S_CHART_X."x".$WT_STATS_S_CHART_Y;}
+			if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $WT_STATS_CHART_COLOR1;}
+			if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $WT_STATS_CHART_COLOR2;}
 			$sizes = explode('x', $size);
 			$tot = 0;
 			foreach ($rows as $values) {
@@ -1584,7 +1584,7 @@ class stats {
 	function _topTenOldestAlive($type='list', $sex='BOTH', $params=null) {
 		global $TBLPREFIX, $TEXT_DIRECTION, $lang_short_cut, $LANGUAGE;
 
-		if (!PGV_USER_CAN_ACCESS) return i18n::translate('This information is private and cannot be shown.');
+		if (!WT_USER_CAN_ACCESS) return i18n::translate('This information is private and cannot be shown.');
 		if ($sex == 'F') {
 			$sex_search = " AND i_sex='F'";
 		} elseif ($sex == 'M') {
@@ -1947,34 +1947,34 @@ class stats {
 	}
 
 	function firstEvent() {
-		return $this->_eventQuery('full', 'ASC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DIV.'|'.PGV_EVENTS_DEAT);
+		return $this->_eventQuery('full', 'ASC', WT_EVENTS_BIRT.'|'.WT_EVENTS_MARR.'|'.WT_EVENTS_DIV.'|'.WT_EVENTS_DEAT);
 	}
 	function firstEventYear() {
-		return $this->_eventQuery('year', 'ASC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DIV.'|'.PGV_EVENTS_DEAT);
+		return $this->_eventQuery('year', 'ASC', WT_EVENTS_BIRT.'|'.WT_EVENTS_MARR.'|'.WT_EVENTS_DIV.'|'.WT_EVENTS_DEAT);
 	}
 	function firstEventType() {
-		return $this->_eventQuery('type', 'ASC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DIV.'|'.PGV_EVENTS_DEAT);
+		return $this->_eventQuery('type', 'ASC', WT_EVENTS_BIRT.'|'.WT_EVENTS_MARR.'|'.WT_EVENTS_DIV.'|'.WT_EVENTS_DEAT);
 	}
 	function firstEventName() {
-		return $this->_eventQuery('name', 'ASC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DIV.'|'.PGV_EVENTS_DEAT);
+		return $this->_eventQuery('name', 'ASC', WT_EVENTS_BIRT.'|'.WT_EVENTS_MARR.'|'.WT_EVENTS_DIV.'|'.WT_EVENTS_DEAT);
 	}
 	function firstEventPlace() {
-		return $this->_eventQuery('place', 'ASC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DIV.'|'.PGV_EVENTS_DEAT);
+		return $this->_eventQuery('place', 'ASC', WT_EVENTS_BIRT.'|'.WT_EVENTS_MARR.'|'.WT_EVENTS_DIV.'|'.WT_EVENTS_DEAT);
 	}
 	function lastEvent() {
-		return $this->_eventQuery('full', 'DESC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DIV.'|'.PGV_EVENTS_DEAT);
+		return $this->_eventQuery('full', 'DESC', WT_EVENTS_BIRT.'|'.WT_EVENTS_MARR.'|'.WT_EVENTS_DIV.'|'.WT_EVENTS_DEAT);
 	}
 	function lastEventYear() {
-		return $this->_eventQuery('year', 'DESC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DIV.'|'.PGV_EVENTS_DEAT);
+		return $this->_eventQuery('year', 'DESC', WT_EVENTS_BIRT.'|'.WT_EVENTS_MARR.'|'.WT_EVENTS_DIV.'|'.WT_EVENTS_DEAT);
 	}
 	function lastEventType() {
-		return $this->_eventQuery('type', 'DESC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DIV.'|'.PGV_EVENTS_DEAT);
+		return $this->_eventQuery('type', 'DESC', WT_EVENTS_BIRT.'|'.WT_EVENTS_MARR.'|'.WT_EVENTS_DIV.'|'.WT_EVENTS_DEAT);
 	}
 	function lastEventName() {
-		return $this->_eventQuery('name', 'DESC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DIV.'|'.PGV_EVENTS_DEAT);
+		return $this->_eventQuery('name', 'DESC', WT_EVENTS_BIRT.'|'.WT_EVENTS_MARR.'|'.WT_EVENTS_DIV.'|'.WT_EVENTS_DEAT);
 	}
 	function lastEventPlace() {
-		return $this->_eventQuery('place', 'DESC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DIV.'|'.PGV_EVENTS_DEAT);
+		return $this->_eventQuery('place', 'DESC', WT_EVENTS_BIRT.'|'.WT_EVENTS_MARR.'|'.WT_EVENTS_DIV.'|'.WT_EVENTS_DEAT);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2367,7 +2367,7 @@ class stats {
 	}
 
 	function statsMarr($simple=true, $first=false, $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TBLPREFIX, $lang_short_cut, $LANGUAGE, $WT_STATS_CHART_COLOR1, $WT_STATS_CHART_COLOR2, $WT_STATS_S_CHART_X, $WT_STATS_S_CHART_Y;
 
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
@@ -2419,9 +2419,9 @@ class stats {
 		$rows=self::_runSQL($sql);
 		if (!isset($rows)) {return 0;}
 		if ($simple) {
-			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
-			if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
-			if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
+			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $WT_STATS_S_CHART_X."x".$WT_STATS_S_CHART_Y;}
+			if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $WT_STATS_CHART_COLOR1;}
+			if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $WT_STATS_CHART_COLOR2;}
 			$sizes = explode('x', $size);
 			$tot = 0;
 			foreach ($rows as $values) {
@@ -2450,7 +2450,7 @@ class stats {
 	}
 
 	function statsDiv($simple=true, $first=false, $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TBLPREFIX, $lang_short_cut, $LANGUAGE, $WT_STATS_CHART_COLOR1, $WT_STATS_CHART_COLOR2, $WT_STATS_S_CHART_X, $WT_STATS_S_CHART_Y;
 
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
@@ -2502,9 +2502,9 @@ class stats {
 		$rows=self::_runSQL($sql);
 		if (!isset($rows)) {return 0;}
 		if ($simple) {
-			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
-			if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
-			if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
+			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $WT_STATS_S_CHART_X."x".$WT_STATS_S_CHART_Y;}
+			if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $WT_STATS_CHART_COLOR1;}
+			if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $WT_STATS_CHART_COLOR2;}
 			$sizes = explode('x', $size);
 			$tot = 0;
 			foreach ($rows as $values) {
@@ -2780,7 +2780,7 @@ class stats {
 	function totalMarriedMales() {
 		global $TBLPREFIX;
 
-		$rows = PGV_DB::prepare("SELECT f_gedcom AS ged, f_husb AS husb FROM ${TBLPREFIX}families WHERE f_file=?")
+		$rows = WT_DB::prepare("SELECT f_gedcom AS ged, f_husb AS husb FROM ${TBLPREFIX}families WHERE f_file=?")
 				->execute(array($this->_ged_id))
 				->fetchAll();
 		$husb = array();
@@ -2796,7 +2796,7 @@ class stats {
 	function totalMarriedFemales() {
 		global $TBLPREFIX;
 
-		$rows = PGV_DB::prepare("SELECT f_gedcom AS ged, f_wife AS wife FROM ${TBLPREFIX}families WHERE f_file=?")
+		$rows = WT_DB::prepare("SELECT f_gedcom AS ged, f_wife AS wife FROM ${TBLPREFIX}families WHERE f_file=?")
 				->execute(array($this->_ged_id))
 				->fetchAll();
 		$wife = array();
@@ -3013,11 +3013,11 @@ class stats {
 	function topTenLargestFamilyList($params=null) {return $this->_topTenFamilyQuery('list', $params);}
 
 	function chartLargestFamilies($params=null) {
-		global $TBLPREFIX, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_L_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TBLPREFIX, $WT_STATS_CHART_COLOR1, $WT_STATS_CHART_COLOR2, $WT_STATS_L_CHART_X, $WT_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_L_CHART_X."x".$PGV_STATS_S_CHART_Y;}
-		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
-		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $WT_STATS_L_CHART_X."x".$WT_STATS_S_CHART_Y;}
+		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $WT_STATS_CHART_COLOR1;}
+		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $WT_STATS_CHART_COLOR2;}
 		if (isset($params[3]) && $params[3] != '') {$total = strtolower($params[3]);}else{$total = 10;}
 		$sizes = explode('x', $size);
 		$rows=self::_runSQL(''
@@ -3380,7 +3380,7 @@ class stats {
 		// Note that we count/display SPFX SURN, but sort/group under just SURN
 		$surnames=array();
 		foreach (array_keys($surname_list) as $surname) {
-			$surnames=array_merge($surnames, get_indilist_surns($surname, '', false, false, PGV_GED_ID));
+			$surnames=array_merge($surnames, get_indilist_surns($surname, '', false, false, WT_GED_ID));
 		}
 
 		return format_surname_list($surnames, ($type=='list' ? 1 : 2), $show_tot);
@@ -3397,11 +3397,11 @@ class stats {
 	static function commonSurnamesListTotals($params=array('','','rcount')) {return self::_commonSurnamesQuery('list', true, $params);}
 
 	function chartCommonSurnames($params=null) {
-		global $COMMON_NAMES_THRESHOLD, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $COMMON_NAMES_THRESHOLD, $WT_STATS_CHART_COLOR1, $WT_STATS_CHART_COLOR2, $WT_STATS_S_CHART_X, $WT_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
-		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
-		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $WT_STATS_S_CHART_X."x".$WT_STATS_S_CHART_Y;}
+		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $WT_STATS_CHART_COLOR1;}
+		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $WT_STATS_CHART_COLOR2;}
 		if (isset($params[3]) && $params[3] != '') {$threshold = strtolower($params[3]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}
 		if (isset($params[4]) && $params[4] != '') {$maxtoshow = strtolower($params[4]);}else{$maxtoshow = 7;}
 		$sizes = explode('x', $size);
@@ -3415,7 +3415,7 @@ class stats {
 			if ($n>=$maxtoshow) {
 				break;
 			}
-			$all_surnames = array_merge($all_surnames, get_indilist_surns(utf8_strtoupper($surname), '', false, false, PGV_GED_ID));
+			$all_surnames = array_merge($all_surnames, get_indilist_surns(utf8_strtoupper($surname), '', false, false, WT_GED_ID));
 		}
 		$tot = 0;
 		$per = 0;
@@ -3485,7 +3485,7 @@ class stats {
 		}
 		$ged_id=get_id_from_gedcom($GEDCOM);
 
-		$rows=PGV_DB::prepare("SELECT n_givn, COUNT(*) AS num FROM {$TBLPREFIX}name JOIN {$TBLPREFIX}individuals ON (n_id=i_id AND n_file=i_file) WHERE n_file={$ged_id} AND n_type<>'_MARNM' AND n_givn NOT IN ('@P.N.', '') AND LENGTH(n_givn)>1 AND {$sex_sql} GROUP BY n_id, n_givn")
+		$rows=WT_DB::prepare("SELECT n_givn, COUNT(*) AS num FROM {$TBLPREFIX}name JOIN {$TBLPREFIX}individuals ON (n_id=i_id AND n_file=i_file) WHERE n_file={$ged_id} AND n_type<>'_MARNM' AND n_givn NOT IN ('@P.N.', '') AND LENGTH(n_givn)>1 AND {$sex_sql} GROUP BY n_id, n_givn")
 			->fetchAll();
 		$nameList=array();
 		foreach ($rows as $row) {
@@ -3575,11 +3575,11 @@ class stats {
 	static function commonGivenUnknownTable($params=array(1,10,'rcount')){return self::_commonGivenQuery('U', 'table', false, $params);}
 
 	function chartCommonGiven($params=null) {
-		global $COMMON_NAMES_THRESHOLD, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $COMMON_NAMES_THRESHOLD, $WT_STATS_CHART_COLOR1, $WT_STATS_CHART_COLOR2, $WT_STATS_S_CHART_X, $WT_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
-		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
-		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $WT_STATS_S_CHART_X."x".$WT_STATS_S_CHART_Y;}
+		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $WT_STATS_CHART_COLOR1;}
+		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $WT_STATS_CHART_COLOR2;}
 		if (isset($params[3]) && $params[3] != '') {$threshold = strtolower($params[3]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}
 		if (isset($params[4]) && $params[4] != '') {$maxtoshow = strtolower($params[4]);}else{$maxtoshow = 7;}
 		$sizes = explode('x', $size);
@@ -3619,10 +3619,10 @@ class stats {
 ///////////////////////////////////////////////////////////////////////////////
 
 	static function _usersLoggedIn($type='nolist') {
-		global $PGV_SESSION_TIME;
+		global $WT_SESSION_TIME;
 		// Log out inactive users
-		foreach (get_idle_users(time() - $PGV_SESSION_TIME) as $user_id=>$user_name) {
-			if ($user_id != PGV_USER_ID) {
+		foreach (get_idle_users(time() - $WT_SESSION_TIME) as $user_id=>$user_name) {
+			if ($user_id != WT_USER_ID) {
 				userLogout($user_id);
 			}
 		}
@@ -3633,7 +3633,7 @@ class stats {
 		$loggedusers = array ();
 		$x = get_logged_in_users();
 		foreach ($x as $user_id=>$user_name) {
-			if (PGV_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline') == 'Y') {
+			if (WT_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline') == 'Y') {
 				$loggedusers[$user_id] = $user_name;
 			} else {
 				$NumAnonymous++;
@@ -3661,14 +3661,14 @@ class stats {
 				$content .= ': ';
 			}
 		}
-		if (PGV_USER_ID) {
+		if (WT_USER_ID) {
 			foreach ($loggedusers as $user_id=>$user_name) {
 				if ($type == 'list') {
 					$content .= "\t<li>".PrintReady(getUserFullName($user_id))." - {$user_name}";
 				} else {
 					$content .= PrintReady(getUserFullName($user_id))." - {$user_name}";
 				}
-				if (PGV_USER_ID != $user_id && get_user_setting($user_id, 'contactmethod') != 'none') {
+				if (WT_USER_ID != $user_id && get_user_setting($user_id, 'contactmethod') != 'none') {
 					if ($type == 'list') {
 						$content .= "<br /><a href=\"javascript:;\" onclick=\"return message('{$user_id}');\">".i18n::translate('Send Message')."</a>";
 					} else {
@@ -3687,10 +3687,10 @@ class stats {
 	}
 
 	static function _usersLoggedInTotal($type='all') {
-		global $PGV_SESSION_TIME;
+		global $WT_SESSION_TIME;
 
-		foreach (get_idle_users(time() - $PGV_SESSION_TIME) as $user_id=>$user_name) {
-			if ($user_id != PGV_USER_ID) {
+		foreach (get_idle_users(time() - $WT_SESSION_TIME) as $user_id=>$user_name) {
+			if ($user_id != WT_USER_ID) {
 				userLogout($user_id);
 			}
 		}
@@ -3698,7 +3698,7 @@ class stats {
 		$visible = 0;
 		$x = get_logged_in_users();
 		foreach ($x as $user_id=>$user_name) {
-			if (PGV_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline') == 'Y') {$visible++;}else{$anon++;}
+			if (WT_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline') == 'Y') {$visible++;}else{$anon++;}
 		}
 		if ($type == 'anon') {return $anon;}
 		elseif ($type == 'visible') {return $visible;}
@@ -3844,7 +3844,7 @@ class stats {
 		if (isset($cache[$id])) {
 			return $cache[$id];
 		}
-		$rows=PGV_DB::prepareLimit($sql, $count)->fetchAll(PDO::FETCH_ASSOC);
+		$rows=WT_DB::prepareLimit($sql, $count)->fetchAll(PDO::FETCH_ASSOC);
 		$cache[$id]=$rows;
 		return $rows;
 	}

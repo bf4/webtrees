@@ -32,10 +32,10 @@
 // GEDFact Media assistant replacement code for inverselink.php: ===========================
 
 //-- extra page parameters and checking
-$more_links		= safe_REQUEST($_REQUEST, 'more_links', PGV_REGEX_UNSAFE);
-$exist_links	= safe_REQUEST($_REQUEST, 'exist_links', PGV_REGEX_UNSAFE);
+$more_links		= safe_REQUEST($_REQUEST, 'more_links', WT_REGEX_UNSAFE);
+$exist_links	= safe_REQUEST($_REQUEST, 'exist_links', WT_REGEX_UNSAFE);
 $gid			= safe_GET_xref('gid');
-$update_CHAN	= safe_REQUEST($_REQUEST, 'preserve_last_changed', PGV_REGEX_UNSAFE);
+$update_CHAN	= safe_REQUEST($_REQUEST, 'preserve_last_changed', WT_REGEX_UNSAFE);
 
 
 if (empty($linktoid) || empty($linkto)) {
@@ -54,19 +54,19 @@ if (empty($linktoid) || empty($linkto)) {
 		break;
 	}
 }
-if (PGV_USER_IS_ADMIN) {
+if (WT_USER_IS_ADMIN) {
 	print_simple_header(i18n::translate('Link Media')." ".$toitems);
 }else{
 	print_simple_header(i18n::translate('Admin'));
 	echo i18n::translate('Unable to authenticate user.');
 }
 
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 
 
 //-- check for admin
-//$paramok =  PGV_USER_CAN_EDIT;
-$paramok =  PGV_USER_GEDCOM_ADMIN;
+//$paramok =  WT_USER_CAN_EDIT;
+$paramok =  WT_USER_GEDCOM_ADMIN;
 if (!empty($linktoid)) $paramok = displayDetailsById($linktoid);
 
 if ($action == "choose" && $paramok) {
@@ -132,8 +132,8 @@ if ($action == "choose" && $paramok) {
 	if (!empty($mediaid)) {
 		//-- Get the title of this existing Media item
 		$title=
-			PGV_DB::prepare("SELECT m_titl FROM {$TBLPREFIX}media where m_media=? AND m_gedfile=?")
-			->execute(array($mediaid, PGV_GED_ID))
+			WT_DB::prepare("SELECT m_titl FROM {$TBLPREFIX}media where m_media=? AND m_gedfile=?")
+			->execute(array($mediaid, WT_GED_ID))
 			->fetchOne();
 		if ($title) {
 			echo '<b>', PrintReady($title), '</b>&nbsp;&nbsp;&nbsp;';
@@ -146,8 +146,8 @@ if ($action == "choose" && $paramok) {
 		echo '<table><tr><td>';
 		//-- Get the filename of this existing Media item
 		$filename=
-			PGV_DB::prepare("SELECT m_file FROM {$TBLPREFIX}media where m_media=? AND m_gedfile=?")
-			->execute(array($mediaid, PGV_GED_ID))
+			WT_DB::prepare("SELECT m_file FROM {$TBLPREFIX}media where m_media=? AND m_gedfile=?")
+			->execute(array($mediaid, WT_GED_ID))
 			->fetchOne();
 		$filename = str_replace(" ", "%20", $filename);
 		$thumbnail = thumbnail_file($filename, false, false);
@@ -179,8 +179,8 @@ if ($action == "choose" && $paramok) {
 		// echo ' Enter Name or ID &nbsp; &nbsp; &nbsp; <b>OR</b> &nbsp; &nbsp; &nbsp;Search for ID ';
 	echo '</td><td style=" padding-bottom:2px; vertical-align:middle">';
 		echo '&nbsp;';
-		if (isset($PGV_IMAGES["add"]["other"])) { 
-			echo '<a href="#"><img style="border-style:none;" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["add"]["other"], '" alt="', i18n::translate('Add'), ' "title="', i18n::translate('Add'), '" align="middle" name="addLink" value="" onClick="javascript:blankwin(); return false;" />';
+		if (isset($WT_IMAGES["add"]["other"])) { 
+			echo '<a href="#"><img style="border-style:none;" src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["add"]["other"], '" alt="', i18n::translate('Add'), ' "title="', i18n::translate('Add'), '" align="middle" name="addLink" value="" onClick="javascript:blankwin(); return false;" />';
 			} else {
 			echo '<button name="addLink" value="" type="button" onClick="javascript:blankwin(); return false;">', i18n::translate('Add'), '</button>';
 		}
@@ -199,7 +199,7 @@ if ($action == "choose" && $paramok) {
 	require 'modules/GEDFact_assistant/_MEDIA/media_query_2a.php';
 	echo '</td></tr>';
 	// Admin Option CHAN log update override =======================
-	if (PGV_USER_IS_ADMIN) {
+	if (WT_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 		echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
 		echo "<input type=\"checkbox\" name=\"preserve_last_changed\" value=\"no_change\"/ >\n";

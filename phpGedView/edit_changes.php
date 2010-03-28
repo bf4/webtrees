@@ -27,11 +27,11 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'edit_changes.php');
+define('WT_SCRIPT_NAME', 'edit_changes.php');
 require './config.php';
-require PGV_ROOT.'includes/functions/functions_edit.php';
+require WT_ROOT.'includes/functions/functions_edit.php';
 
-if (!PGV_USER_CAN_ACCEPT) {
+if (!WT_USER_CAN_ACCEPT) {
 	header('Location: login.php?url=edit_changes.php');
 	exit;
 }
@@ -51,7 +51,7 @@ print_simple_header(i18n::translate('Review GEDCOM Changes'));
 		var recwin = window.open("gedrecord.php?fromfile=1&pid="+xref, "_blank", "top=50, left=50, width=600, height=400, scrollbars=1, scrollable=1, resizable=1");
 	}
 	function showchanges() {
-		window.location = '<?php echo PGV_SCRIPT_NAME; ?>';
+		window.location = '<?php echo WT_SCRIPT_NAME; ?>';
 	}
 
 	function show_diff(diffurl) {

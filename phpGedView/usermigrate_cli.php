@@ -28,9 +28,9 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'usermigrate_cli.php');
+define('WT_SCRIPT_NAME', 'usermigrate_cli.php');
 require './config.php';
-require_once PGV_ROOT.'includes/controllers/usermigrate_ctrl.php';
+require_once WT_ROOT.'includes/controllers/usermigrate_ctrl.php';
 
 $controller = new UserMigrateController();
 $controller->init();

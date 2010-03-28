@@ -30,17 +30,17 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_YAHRZEIT_PHP', '');
+define('WT_YAHRZEIT_PHP', '');
 
-$PGV_BLOCKS['print_yahrzeit']['name']     =i18n::translate('Upcoming Yahrzeiten');
-$PGV_BLOCKS['print_yahrzeit']['descr']    =i18n::translate('The Upcoming Yahrzeiten block shows anniversaries of death dates that will occur in the near future.  You can configure the period shown, and the Administrator can configure how far into the future this block will look.');
-$PGV_BLOCKS['print_yahrzeit']['canconfig']=true;
-$PGV_BLOCKS['print_yahrzeit']['config']   =array(
+$WT_BLOCKS['print_yahrzeit']['name']     =i18n::translate('Upcoming Yahrzeiten');
+$WT_BLOCKS['print_yahrzeit']['descr']    =i18n::translate('The Upcoming Yahrzeiten block shows anniversaries of death dates that will occur in the near future.  You can configure the period shown, and the Administrator can configure how far into the future this block will look.');
+$WT_BLOCKS['print_yahrzeit']['canconfig']=true;
+$WT_BLOCKS['print_yahrzeit']['config']   =array(
 	'cache'        =>1,
 	'days'         =>30,
 	'infoStyle'    =>'style2',
@@ -50,13 +50,13 @@ $PGV_BLOCKS['print_yahrzeit']['config']   =array(
 // this block prints a list of upcoming yahrzeit events of people in your gedcom
 function print_yahrzeit($block=true, $config='', $side, $index) {
 	global $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $WT_BLOCKS;
 	global $DAYS_TO_SHOW_LIMIT, $SHOW_MARRIED_NAMES, $SERVER_URL;
 
 	$block=true; // Always restrict this block's height
 
 	if (empty($config))
-		$config=$PGV_BLOCKS['print_yahrzeit']['config'];
+		$config=$WT_BLOCKS['print_yahrzeit']['config'];
 
 	if (empty($config['infoStyle'    ])) $config['infoStyle'    ]='style2';
 	if (empty($config['allowDownload'])) $config['allowDownload']='yes';
@@ -68,21 +68,21 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 	$startjd=server_jd();
 	$endjd  =$startjd+max(min($config['days'], 1), $DAYS_TO_SHOW_LIMIT)-1;
 
-	if (!PGV_USER_ID) {
+	if (!WT_USER_ID) {
 		$allowDownload = "no";
 	}
 
 	$id="yahrzeit";
 	$title='';
-	if ($PGV_BLOCKS['print_yahrzeit']['canconfig']) {
-		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+	if ($WT_BLOCKS['print_yahrzeit']['canconfig']) {
+		if ($ctype=="gedcom" && WT_USER_GEDCOM_ADMIN || $ctype=="user" && WT_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = PGV_GEDCOM;
+				$name = WT_GEDCOM;
 			} else {
-				$name = PGV_USER_NAME;
+				$name = WT_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
 	$title .= i18n::translate('Upcoming Yahrzeiten');
@@ -147,8 +147,8 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 			}
 		break;
 	case "style2": // Table style
-		require_once PGV_ROOT.'js/sorttable.js.htm';
-		require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
+		require_once WT_ROOT.'js/sorttable.js.htm';
+		require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
 		$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 		$content .= "<table id=\"{$table_id}\" class=\"sortable list_table center\">";
 		$content .= "<tr>";
@@ -247,9 +247,9 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 }
 
 function print_yahrzeit_config($config) {
-	global $PGV_BLOCKS, $DAYS_TO_SHOW_LIMIT;
+	global $WT_BLOCKS, $DAYS_TO_SHOW_LIMIT;
 
-	if (empty($config)) $config=$PGV_BLOCKS["print_yahrzeit"]["config"];
+	if (empty($config)) $config=$WT_BLOCKS["print_yahrzeit"]["config"];
 
 	if (empty($config['infoStyle'    ])) $config['infoStyle'    ]='style2';
 	if (empty($config['allowDownload'])) $config['allowDownload']='yes';

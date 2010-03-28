@@ -30,32 +30,32 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_BLOCK_HTMLPLUS_PHP', '');
+define('WT_BLOCK_HTMLPLUS_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
-require_once PGV_ROOT.'includes/classes/class_stats.php';
+require_once WT_ROOT.'includes/functions/functions_print_lists.php';
+require_once WT_ROOT.'includes/classes/class_stats.php';
 
-$PGV_BLOCKS['print_htmlplus_block']['name']			= i18n::translate('Advanced HTML');
-$PGV_BLOCKS['print_htmlplus_block']['descr']		= i18n::translate('This is an HTML block that you can place on your page to add any sort of message you may want.  You can insert references to information from your GEDCOM into the HTML text.');
-$PGV_BLOCKS['print_htmlplus_block']['canconfig']	= true;
-$PGV_BLOCKS['print_htmlplus_block']['config']		= array(
+$WT_BLOCKS['print_htmlplus_block']['name']			= i18n::translate('Advanced HTML');
+$WT_BLOCKS['print_htmlplus_block']['descr']		= i18n::translate('This is an HTML block that you can place on your page to add any sort of message you may want.  You can insert references to information from your GEDCOM into the HTML text.');
+$WT_BLOCKS['print_htmlplus_block']['canconfig']	= true;
+$WT_BLOCKS['print_htmlplus_block']['config']		= array(
 	'cache'=>0,
 	'title'=>'',
-	'html'=>i18n::translate('<p class="blockhc"><b>Put your title here</b></p><br /><p>Click the configure button')." <img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" alt=\"".i18n::translate('Configure')."\" /> ".i18n::translate('to change what is printed here.</p>'),
+	'html'=>i18n::translate('<p class="blockhc"><b>Put your title here</b></p><br /><p>Click the configure button')." <img src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['admin']['small']}\" alt=\"".i18n::translate('Configure')."\" /> ".i18n::translate('to change what is printed here.</p>'),
 	'gedcom'=>'__current__',
 	'compat'=>0,
 	'ui'=>0
 );
 
 function print_htmlplus_block($block=true, $config='', $side, $index) {
-	global $ctype, $GEDCOM, $HTML_BLOCK_COUNT, $PGV_BLOCKS, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $MULTI_MEDIA, $SHOW_ID_NUMBERS;
+	global $ctype, $GEDCOM, $HTML_BLOCK_COUNT, $WT_BLOCKS, $WT_IMAGE_DIR, $WT_IMAGES, $TEXT_DIRECTION, $MULTI_MEDIA, $SHOW_ID_NUMBERS;
 	// config sanity check
-	if (empty($config)){$config = $PGV_BLOCKS['print_htmlplus_block']['config'];}else{foreach($PGV_BLOCKS['print_htmlplus_block']['config'] as $k=>$v){if (!isset($config[$k])){$config[$k] = $v;}}}
+	if (empty($config)){$config = $WT_BLOCKS['print_htmlplus_block']['config'];}else{foreach($WT_BLOCKS['print_htmlplus_block']['config'] as $k=>$v){if (!isset($config[$k])){$config[$k] = $v;}}}
 
 	if (!isset($HTML_BLOCK_COUNT)){$HTML_BLOCK_COUNT = 0;}$HTML_BLOCK_COUNT++;
 
@@ -88,12 +88,12 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 	 */
 	if($config['compat'] == 1)
 	{
-		require_once PGV_ROOT.'includes/classes/class_stats_compat.php';
+		require_once WT_ROOT.'includes/classes/class_stats_compat.php';
 		$stats = new stats_compat($GEDCOM);
 	}
 	elseif($config['ui'] == 1)
 	{
-		require_once PGV_ROOT.'includes/classes/class_stats_ui.php';
+		require_once WT_ROOT.'includes/classes/class_stats_ui.php';
 		$stats = new stats_ui($GEDCOM);
 	}
 	else
@@ -130,7 +130,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 	/*
 	 * Restore Current GEDCOM
 	 */
-	$GEDCOM = PGV_GEDCOM;
+	$GEDCOM = WT_GEDCOM;
 
 	/*
 	 * Start Of Output
@@ -138,37 +138,37 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 	$id = "html_block{$HTML_BLOCK_COUNT}";
 	$title = "";
 	if ($config['title'] != '') {
-		if ($PGV_BLOCKS['print_htmlplus_block']['canconfig']) {
-			if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+		if ($WT_BLOCKS['print_htmlplus_block']['canconfig']) {
+			if ($ctype=="gedcom" && WT_USER_GEDCOM_ADMIN || $ctype=="user" && WT_USER_ID) {
 				if ($ctype=="gedcom") {
-					$name = PGV_GEDCOM;
+					$name = WT_GEDCOM;
 				} else {
-					$name = PGV_USER_NAME;
+					$name = WT_USER_NAME;
 				}
 				$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">"
-				."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure').'" /></a>'
+				."<img class=\"adminicon\" src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure').'" /></a>'
 				;
 			}
 		}
 		$title .= $config['title'];
 	}
-	if (PGV_USER_GEDCOM_ADMIN) {
+	if (WT_USER_GEDCOM_ADMIN) {
 		$title .= help_link('index_htmlplus_a');
 	} else {
 		$title .= help_link('index_htmlplus');
 	}
 
 	$content = $config['html'];
-	if ($config['title'] == '' && $PGV_BLOCKS['print_htmlplus_block']['canconfig']) {
-		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+	if ($config['title'] == '' && $WT_BLOCKS['print_htmlplus_block']['canconfig']) {
+		if ($ctype=="gedcom" && WT_USER_GEDCOM_ADMIN || $ctype=="user" && WT_USER_ID) {
 			if ($ctype=="gedcom") {
 				$name = str_replace("'", "\'", $GEDCOM);
 			} else {
-				$name = PGV_USER_NAME;
+				$name = WT_USER_NAME;
 			}
 			$content .= "<br />"
 			."<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=500,scrollbars=1,resizable=1'); return false;\">"
-			."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" title=\"".i18n::translate('Configure')."\" /></a>"
+			."<img class=\"adminicon\" src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" title=\"".i18n::translate('Configure')."\" /></a>"
 			.help_link('index_htmlplus_ahelp');
 		}
 	}
@@ -183,8 +183,8 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 
 function print_htmlplus_block_config($config)
 {
-	global $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings, $GEDCOM;
-	$useFCK = file_exists(PGV_ROOT.'modules/FCKeditor/fckeditor.php');
+	global $ctype, $WT_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings, $GEDCOM;
+	$useFCK = file_exists(WT_ROOT.'modules/FCKeditor/fckeditor.php');
 	$templates = array();
 	$d = dir('blocks/');
 	while(false !== ($entry = $d->read()))
@@ -209,7 +209,7 @@ function print_htmlplus_block_config($config)
 	$d->close();
 
 	// config sanity check
-	if(empty($config)){$config = $PGV_BLOCKS['print_htmlplus_block']['config'];}else{foreach($PGV_BLOCKS['print_htmlplus_block']['config'] as $k=>$v){if (!isset($config[$k])){$config[$k] = $v;}}}
+	if(empty($config)){$config = $WT_BLOCKS['print_htmlplus_block']['config'];}else{foreach($WT_BLOCKS['print_htmlplus_block']['config'] as $k=>$v){if (!isset($config[$k])){$config[$k] = $v;}}}
 
 	// title
 	$config['title'] = htmlentities($config['title'], ENT_COMPAT, 'UTF-8');
@@ -286,7 +286,7 @@ function print_htmlplus_block_config($config)
 	if($useFCK)
 	{
 		// use FCKeditor module
-		require_once PGV_ROOT.'modules/FCKeditor/fckeditor.php';
+		require_once WT_ROOT.'modules/FCKeditor/fckeditor.php';
 		$oFCKeditor = new FCKeditor('html') ;
 		$oFCKeditor->BasePath = './modules/FCKeditor/';
 		$oFCKeditor->Value = $config['html'];

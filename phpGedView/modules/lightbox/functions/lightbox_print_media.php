@@ -33,7 +33,7 @@
  *
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -54,7 +54,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 	global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 	global $pgv_changes;
 	global $GEDCOM, $MEDIATYPE;
-	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
+	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $WT_IMAGE_DIR, $WT_IMAGES, $TEXT_DIRECTION;
 
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
 	global $res, $typ2b, $edit, $tabno, $n, $item, $items, $p, $note, $rowm, $note_text, $reorder;
@@ -76,10 +76,10 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		}
 	}
 
-	//LBox -- if  exists, get a list of the sorted current objects in the indi gedcom record  -  (1 _PGV_OBJS @xxx@ .... etc) ----------
+	//LBox -- if  exists, get a list of the sorted current objects in the indi gedcom record  -  (1 _WT_OBJS @xxx@ .... etc) ----------
 	$sort_current_objes = array();
-	if ($level>0) $sort_regexp = "/".$level." _PGV_OBJS @(.*)@/";
-	else $sort_regexp = "/_PGV_OBJS @(.*)@/";
+	if ($level>0) $sort_regexp = "/".$level." _WT_OBJS @(.*)@/";
+	else $sort_regexp = "/_WT_OBJS @(.*)@/";
 	$sort_ct = preg_match_all($sort_regexp, $gedrec, $sort_match, PREG_SET_ORDER);
 	for ($i=0; $i<$sort_ct; $i++) {
 		if (!isset($sort_current_objes[$sort_match[$i][1]])) $sort_current_objes[$sort_match[$i][1]] = 1;
@@ -122,7 +122,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 	}
 	$sqlmm = rtrim($sqlmm, ', ');
 	$sqlmm .= ") AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile ";
-	$vars[]=PGV_GED_ID;
+	$vars[]=WT_GED_ID;
 	//-- for family and source page only show level 1 obje references
 	if ($level>0) {
 		$sqlmm .= "AND mm_gedrec LIKE ?";
@@ -178,7 +178,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		$sqlmm .= " ORDER BY mm_gid DESC ";
 	}
 
-	$rows=PGV_DB::prepare($sqlmm)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
+	$rows=WT_DB::prepare($sqlmm)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
 	$foundObjs = array();
 	$numm = count($rows);
 
@@ -286,8 +286,8 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		$indiobjs .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM {$TBLPREFIX}media, {$TBLPREFIX}media_mapping where ";
 		$indiobjs .= "mm_gid=? ";
 		$indiobjs .= "AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile ";
-		$vars2=array($pid, PGV_GED_ID);
-		$rows=PGV_DB::prepare($indiobjs)->execute($vars2)->fetchAll(PDO::FETCH_ASSOC);
+		$vars2=array($pid, WT_GED_ID);
+		$rows=WT_DB::prepare($indiobjs)->execute($vars2)->fetchAll(PDO::FETCH_ASSOC);
 		$foundObjs = array();
 		$numindiobjs = count($rows);
 
@@ -309,7 +309,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 					//-- check if we need to get the object from a remote location
 					$ct = preg_match("/(.*):(.*)/", $media_id, $match);
 					if ($ct>0) {
-						require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
+						require_once WT_ROOT.'includes/classes/class_serviceclient.php';
 						$client = ServiceClient::getInstance($match[1]);
 						if (!is_null($client)) {
 							$newrec = $client->getRemoteRecord($match[2]);

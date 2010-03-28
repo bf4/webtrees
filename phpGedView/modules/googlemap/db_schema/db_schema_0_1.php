@@ -35,16 +35,16 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 header('HTTP/1.0 403 Forbidden');
 exit;
 }
 
-define('PGV_GM_DB_SCHEMA_0_1', '');
+define('WT_GM_DB_SCHEMA_0_1', '');
 
 // Create all of the tables needed for this module
-if (!PGV_DB::table_exists("{$TBLPREFIX}placelocation")) {
-	PGV_DB::exec(
+if (!WT_DB::table_exists("{$TBLPREFIX}placelocation")) {
+	WT_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}placelocation (".
 		" pl_id        ".self::$INT4_TYPE."         NOT NULL,".
 		" pl_parent_id ".self::$INT4_TYPE."             NULL,".

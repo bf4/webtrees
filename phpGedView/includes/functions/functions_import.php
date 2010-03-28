@@ -30,25 +30,25 @@
 * @subpackage DB
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FUNCTIONS_IMPORT_PHP', '');
+define('WT_FUNCTIONS_IMPORT_PHP', '');
 
-require_once PGV_ROOT.'includes/index_cache.php';
-require_once PGV_ROOT.'includes/classes/class_media.php';
-require_once PGV_ROOT.'includes/classes/class_mutex.php';
-require_once PGV_ROOT.'includes/functions/functions_lang.php';
-require_once PGV_ROOT.'includes/functions/functions_export.php';
+require_once WT_ROOT.'includes/index_cache.php';
+require_once WT_ROOT.'includes/classes/class_media.php';
+require_once WT_ROOT.'includes/classes/class_mutex.php';
+require_once WT_ROOT.'includes/functions/functions_lang.php';
+require_once WT_ROOT.'includes/functions/functions_export.php';
 
 // Tidy up a gedcom record on import, so that we can access it consistently/efficiently.
 function reformat_record_import($rec) {
 	global $WORD_WRAPPED_NOTES;
 
 	// Strip out UTF8 formatting characters
-	$rec=str_replace(array(PGV_UTF8_BOM, PGV_UTF8_LRM, PGV_UTF8_RLM), '', $rec);
+	$rec=str_replace(array(WT_UTF8_BOM, WT_UTF8_LRM, WT_UTF8_RLM), '', $rec);
 
 	// Strip out control characters and mac/msdos line endings
 	static $control1="\r\x01\x02\x03\x04\x05\x06\x07\x08\x0B\x0C\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F\x7F";
@@ -582,16 +582,16 @@ function import_record($gedrec, $ged_id, $update) {
 	static $sql_insert_sour=null;
 	static $sql_insert_other=null;
 	if (!$sql_insert_indi) {
-		$sql_insert_indi=PGV_DB::prepare(
+		$sql_insert_indi=WT_DB::prepare(
 			"INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_isdead, i_sex, i_gedcom) VALUES (?,?,?,?,?,?)"
 		);
-		$sql_insert_fam=PGV_DB::prepare(
+		$sql_insert_fam=WT_DB::prepare(
 			"INSERT INTO {$TBLPREFIX}families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES (?,?,?,?,?,?,?)"
 		);
-		$sql_insert_sour=PGV_DB::prepare(
+		$sql_insert_sour=WT_DB::prepare(
 			"INSERT INTO {$TBLPREFIX}sources (s_id, s_file, s_name, s_gedcom, s_dbid) VALUES (?,?,?,?,?)"
 		);
-		$sql_insert_other=PGV_DB::prepare(
+		$sql_insert_other=WT_DB::prepare(
 			"INSERT INTO {$TBLPREFIX}other (o_id, o_file, o_type, o_gedcom) VALUES (?,?,?,?)"
 		);
 	}
@@ -605,13 +605,13 @@ function import_record($gedrec, $ged_id, $update) {
 	$gedrec=reformat_record_import($gedrec);
 
 	// import different types of records
-	if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')/', $gedrec, $match) > 0) {
+	if (preg_match('/^0 @('.WT_REGEX_XREF.')@ ('.WT_REGEX_TAG.')/', $gedrec, $match) > 0) {
 		list(,$xref, $type)=$match;
 		// check for a _UID, if the record doesn't have one, add one
 		if ($GENERATE_UIDS && !strpos($gedrec, "\n1 _UID ")) {
 			$gedrec.="\n1 _UID ".uuid();
 		}
-	} elseif (preg_match('/0 ('.PGV_REGEX_TAG.')/', $gedrec, $match)) {
+	} elseif (preg_match('/0 ('.WT_REGEX_TAG.')/', $gedrec, $match)) {
 		$xref=$match[1];
 		$type=$match[1];
 	} else {
@@ -638,7 +638,7 @@ function import_record($gedrec, $ged_id, $update) {
 	if ($newrec!=$gedrec) {
 		$gedrec=$newrec;
 		// make sure we have the correct media id
-		if (preg_match('/0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')/', $gedrec, $match)) {
+		if (preg_match('/0 @('.WT_REGEX_XREF.')@ ('.WT_REGEX_TAG.')/', $gedrec, $match)) {
 			list(,$xref, $type)=$match;
 		} else {
 			echo i18n::translate('Invalid GEDCOM format'), '<br /><pre>', $gedrec, '</pre>';
@@ -689,17 +689,17 @@ function import_record($gedrec, $ged_id, $update) {
 		$sql_insert_indi->execute(array($xref, $ged_id, $rin, is_dead($gedrec, '', true), $record->getSex(), $gedrec));
 		break;
 	case 'FAM':
-		if (preg_match('/\n1 HUSB @('.PGV_REGEX_XREF.')@/', $gedrec, $match)) {
+		if (preg_match('/\n1 HUSB @('.WT_REGEX_XREF.')@/', $gedrec, $match)) {
 			$husb=$match[1];
 		} else {
 			$husb='';
 		}
-		if (preg_match('/\n1 WIFE @('.PGV_REGEX_XREF.')@/', $gedrec, $match)) {
+		if (preg_match('/\n1 WIFE @('.WT_REGEX_XREF.')@/', $gedrec, $match)) {
 			$wife=$match[1];
 		} else {
 			$wife='';
 		}
-		if ($nchi=preg_match_all('/\n1 CHIL @('.PGV_REGEX_XREF.')@/', $gedrec, $match)) {
+		if ($nchi=preg_match_all('/\n1 CHIL @('.WT_REGEX_XREF.')@/', $gedrec, $match)) {
 			$chil=implode(';', $match[1]).';';
 		} else {
 			$chil='';
@@ -759,13 +759,13 @@ function update_places($gid, $ged_id, $gedrec) {
 	static $sql_insert_places=null;
 	static $sql_select_places=null;
 	if (!$sql_insert_placelinks) {
-		$sql_insert_placelinks=PGV_DB::prepare(
+		$sql_insert_placelinks=WT_DB::prepare(
 			"INSERT INTO {$TBLPREFIX}placelinks (pl_p_id, pl_gid, pl_file) VALUES (?,?,?)"
 		);
-		$sql_insert_places=PGV_DB::prepare(
+		$sql_insert_places=WT_DB::prepare(
 			"INSERT INTO {$TBLPREFIX}places (p_id, p_place, p_level, p_parent_id, p_file, p_std_soundex, p_dm_soundex) VALUES (?,?,?,?,?,?,?)"
 		);
-		$sql_select_places=PGV_DB::prepare(
+		$sql_select_places=WT_DB::prepare(
 			"SELECT p_id FROM {$TBLPREFIX}places WHERE p_level=? AND p_file=? AND p_parent_id=? AND p_place LIKE ?"
 		);
 	}
@@ -843,7 +843,7 @@ function update_dates($xref, $ged_id, $gedrec) {
 
 	static $sql_insert_date=null;
 	if (!$sql_insert_date) {
-		$sql_insert_date=PGV_DB::prepare(
+		$sql_insert_date=WT_DB::prepare(
 			"INSERT INTO {$TBLPREFIX}dates (d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type) VALUES (?,?,?,?,?,?,?,?,?,?)"
 		);
 	}
@@ -870,10 +870,10 @@ function update_rlinks($xref, $ged_id, $gedrec) {
 
 	static $sql_insert_rlink=null;
 	if (!$sql_insert_rlink) {
-		$sql_insert_rlink=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}remotelinks (r_gid,r_linkid,r_file) VALUES (?,?,?)");
+		$sql_insert_rlink=WT_DB::prepare("INSERT INTO {$TBLPREFIX}remotelinks (r_gid,r_linkid,r_file) VALUES (?,?,?)");
 	}
 
-	if (preg_match_all("/\n1 RFN (".PGV_REGEX_XREF.')/', $gedrec, $matches, PREG_SET_ORDER)) {
+	if (preg_match_all("/\n1 RFN (".WT_REGEX_XREF.')/', $gedrec, $matches, PREG_SET_ORDER)) {
 		foreach ($matches as $match) {
 			// Ignore any errors, which may be caused by "duplicates" that differ on case/collation, e.g. "S1" and "s1"
 			try {
@@ -891,10 +891,10 @@ function update_links($xref, $ged_id, $gedrec) {
 
 	static $sql_insert_link=null;
 	if (!$sql_insert_link) {
-		$sql_insert_link=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}link (l_from,l_to,l_type,l_file) VALUES (?,?,?,?)");
+		$sql_insert_link=WT_DB::prepare("INSERT INTO {$TBLPREFIX}link (l_from,l_to,l_type,l_file) VALUES (?,?,?,?)");
 	}
 
-	if (preg_match_all('/^\d+ ('.PGV_REGEX_TAG.') @('.PGV_REGEX_XREF.')@/m', $gedrec, $matches, PREG_SET_ORDER)) {
+	if (preg_match_all('/^\d+ ('.WT_REGEX_TAG.') @('.WT_REGEX_XREF.')@/m', $gedrec, $matches, PREG_SET_ORDER)) {
 		$data=array();
 		foreach ($matches as $match) {
 			// Include each link once only.
@@ -918,8 +918,8 @@ function update_names($xref, $ged_id, $record) {
 	static $sql_insert_name_indi=null;
 	static $sql_insert_name_other=null;
 	if (!$sql_insert_name_indi) {
-		$sql_insert_name_indi=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list,n_surname,n_surn,n_givn,n_soundex_givn_std,n_soundex_surn_std,n_soundex_givn_dm,n_soundex_surn_dm) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-		$sql_insert_name_other=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list) VALUES (?,?,?,?,?,?,?)");
+		$sql_insert_name_indi=WT_DB::prepare("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list,n_surname,n_surn,n_givn,n_soundex_givn_std,n_soundex_surn_std,n_soundex_givn_dm,n_soundex_surn_dm) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		$sql_insert_name_other=WT_DB::prepare("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list) VALUES (?,?,?,?,?,?,?)");
 	}
 
 	if ($record->getType()!='FAM' && $record->getXref()) {
@@ -961,10 +961,10 @@ function insert_media($objrec, $objlevel, $update, $gid, $ged_id, $count) {
 	static $sql_insert_media=null;
 	static $sql_insert_media_mapping=null;
 	if (!$sql_insert_media) {
-		$sql_insert_media=PGV_DB::prepare(
+		$sql_insert_media=WT_DB::prepare(
 			"INSERT INTO {$TBLPREFIX}media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec) VALUES (?, ?, ?, ?, ?, ?, ?)"
 		);
-		$sql_insert_media_mapping=PGV_DB::prepare(
+		$sql_insert_media_mapping=WT_DB::prepare(
 			"INSERT INTO {$TBLPREFIX}media_mapping (mm_id, mm_media, mm_gid, mm_order, mm_gedfile, mm_gedrec) VALUES (?, ?, ?, ?, ?, ?)"
 		);
 	}
@@ -1028,7 +1028,7 @@ function update_media($gid, $ged_id, $gedrec, $update = false) {
 
 	static $sql_insert_media=null;
 	if (!$sql_insert_media) {
-		$sql_insert_media=PGV_DB::prepare(
+		$sql_insert_media=WT_DB::prepare(
 			"INSERT INTO {$TBLPREFIX}media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec) VALUES (?, ?, ?, ?, ?, ?, ?)"
 		);
 	}
@@ -1047,7 +1047,7 @@ function update_media($gid, $ged_id, $gedrec, $update = false) {
 			$MAX_IDS["OBJE"] = 1;
 		} else {
 			$MAX_IDS["OBJE"]=
-				PGV_DB::prepare("SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type=? AND ni_gedfile=?")
+				WT_DB::prepare("SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type=? AND ni_gedfile=?")
 				->execute(array('OBJE', $ged_id))
 				->fetchOne();
 		}
@@ -1098,7 +1098,7 @@ function update_media($gid, $ged_id, $gedrec, $update = false) {
 
 	if ($keepmedia) {
 		$old_linked_media=
-			PGV_DB::prepare("SELECT mm_media, mm_gedrec FROM {$TBLPREFIX}media_mapping WHERE mm_gid=? AND mm_gedfile=?")
+			WT_DB::prepare("SELECT mm_media, mm_gedrec FROM {$TBLPREFIX}media_mapping WHERE mm_gid=? AND mm_gedfile=?")
 			->execute(array($gid, $ged_id))
 			->fetchAll(PDO::FETCH_NUM);
 	}
@@ -1192,24 +1192,24 @@ function update_media($gid, $ged_id, $gedrec, $update = false) {
 function empty_database($ged_id, $keepmedia) {
 	global $TBLPREFIX;
 
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}individuals WHERE i_file =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}families    WHERE f_file =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}sources     WHERE s_file =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}other       WHERE o_file =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}places      WHERE p_file =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks  WHERE pl_file=?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}remotelinks WHERE r_file =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}name        WHERE n_file =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}dates       WHERE d_file =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}individuals WHERE i_file =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}families    WHERE f_file =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}sources     WHERE s_file =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}other       WHERE o_file =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}places      WHERE p_file =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks  WHERE pl_file=?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}remotelinks WHERE r_file =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}name        WHERE n_file =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}dates       WHERE d_file =?")->execute(array($ged_id));
 
 	if ($keepmedia) {
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link   WHERE l_file    =? AND l_type<> ?")->execute(array($ged_id, 'OBJE'));
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}nextid WHERE ni_gedfile=? AND ni_type<>?")->execute(array($ged_id, 'OBJE'));
+		WT_DB::prepare("DELETE FROM {$TBLPREFIX}link   WHERE l_file    =? AND l_type<> ?")->execute(array($ged_id, 'OBJE'));
+		WT_DB::prepare("DELETE FROM {$TBLPREFIX}nextid WHERE ni_gedfile=? AND ni_type<>?")->execute(array($ged_id, 'OBJE'));
 	} else {
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link          WHERE l_file    =?")->execute(array($ged_id));
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}nextid        WHERE ni_gedfile=?")->execute(array($ged_id));
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media         WHERE m_gedfile =?")->execute(array($ged_id));
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile=?")->execute(array($ged_id));
+		WT_DB::prepare("DELETE FROM {$TBLPREFIX}link          WHERE l_file    =?")->execute(array($ged_id));
+		WT_DB::prepare("DELETE FROM {$TBLPREFIX}nextid        WHERE ni_gedfile=?")->execute(array($ged_id));
+		WT_DB::prepare("DELETE FROM {$TBLPREFIX}media         WHERE m_gedfile =?")->execute(array($ged_id));
+		WT_DB::prepare("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile=?")->execute(array($ged_id));
 	}
 
 	//-- clear all of the cache files for this gedcom
@@ -1223,9 +1223,9 @@ function empty_database($ged_id, $keepmedia) {
 function import_max_ids($ged_id, $MAX_IDS) {
 	global $TBLPREFIX;
 
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}nextid WHERE ni_gedfile=?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}nextid WHERE ni_gedfile=?")->execute(array($ged_id));
 
-	$statement=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}nextid (ni_id, ni_type, ni_gedfile) VALUES (?, ?, ?)");
+	$statement=WT_DB::prepare("INSERT INTO {$TBLPREFIX}nextid (ni_id, ni_type, ni_gedfile) VALUES (?, ?, ?)");
 	foreach ($MAX_IDS as $type => $id) {
 		$statement->execute(array($id+1, $type, $ged_id));
 	}
@@ -1239,10 +1239,10 @@ function import_max_ids($ged_id, $MAX_IDS) {
 function read_gedcom_file() {
 	global $fcontents;
 
-	if (PGV_GED_ID) {
-		$path=get_gedcom_setting(PGV_GED_ID, 'path');
+	if (WT_GED_ID) {
+		$path=get_gedcom_setting(WT_GED_ID, 'path');
 		//-- only allow one thread to write the file at a time
-		$mutex = new Mutex(PGV_GEDCOM);
+		$mutex = new Mutex(WT_GEDCOM);
 		$mutex->Wait();
 		$fp = fopen($path, "r");
 		$fcontents = fread($fp, filesize($path));
@@ -1266,31 +1266,31 @@ function write_file() {
 		$fcontents.="0 TRLR\n";
 	}
 	//-- write the gedcom file
-	$path=get_gedcom_setting(PGV_GED_ID, 'path');
+	$path=get_gedcom_setting(WT_GED_ID, 'path');
 	if (!is_writable($path)) {
 		print "ERROR 5: GEDCOM file is not writable.  Unable to complete request.\n";
-		AddToChangeLog("ERROR 5: GEDCOM file is not writable.  Unable to complete request. ->" . PGV_USER_NAME ."<-");
+		AddToChangeLog("ERROR 5: GEDCOM file is not writable.  Unable to complete request. ->" . WT_USER_NAME ."<-");
 		return false;
 	}
 	//-- only allow one thread to write the file at a time
-	$mutex = new Mutex(PGV_GEDCOM);
+	$mutex = new Mutex(WT_GEDCOM);
 	$mutex->Wait();
 	//-- what to do if file changed while waiting
 
 	$fp = fopen($path, "wb");
 	if ($fp===false) {
 		print "ERROR 6: Unable to open GEDCOM file resource.  Unable to complete request.\n";
-		AddToChangeLog("ERROR 6: Unable to open GEDCOM file resource.  Unable to complete request. ->" . PGV_USER_NAME ."<-");
+		AddToChangeLog("ERROR 6: Unable to open GEDCOM file resource.  Unable to complete request. ->" . WT_USER_NAME ."<-");
 		return false;
 	}
 	$fl = @flock($fp, LOCK_EX);
 	if (!$fl) {
-		AddToChangeLog("ERROR 7: Unable to obtain file lock. ->" . PGV_USER_NAME ."<-");
+		AddToChangeLog("ERROR 7: Unable to obtain file lock. ->" . WT_USER_NAME ."<-");
 	}
 	$fw = fwrite($fp, $fcontents);
 	if ($fw===false) {
 		print "ERROR 7: Unable to write to GEDCOM file.\n";
-		AddToChangeLog("ERROR 7: Unable to write to GEDCOM file. ->" . PGV_USER_NAME ."<-");
+		AddToChangeLog("ERROR 7: Unable to write to GEDCOM file. ->" . WT_USER_NAME ."<-");
 		$fl = @flock($fp, LOCK_UN);
 		fclose($fp);
 		return false;
@@ -1346,7 +1346,7 @@ function accept_changes($cid) {
 				if ($pos1!==false) {
 					$pos2=find_newline_string($fcontents, "0", $pos1+5);
 					if ($pos2===false) {
-						$fcontents=substr($fcontents, 0, $pos1).'0 TRLR'.PGV_EOL;
+						$fcontents=substr($fcontents, 0, $pos1).'0 TRLR'.WT_EOL;
 						AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct");
 					} else {
 						$fcontents=substr($fcontents, 0, $pos1).substr($fcontents, $pos2);
@@ -1356,13 +1356,13 @@ function accept_changes($cid) {
 				}
 			} elseif ($change["type"]=="append") {
 				$pos1=find_newline_string($fcontents, "0 TRLR");
-				$fcontents=substr($fcontents, 0, $pos1).reformat_record_export($gedrec).'0 TRLR'.PGV_EOL;
+				$fcontents=substr($fcontents, 0, $pos1).reformat_record_export($gedrec).'0 TRLR'.WT_EOL;
 			} elseif ($change["type"]=="replace") {
 				$pos1=find_newline_string($fcontents, "0 @{$gid}@");
 				if ($pos1!==false) {
 					$pos2=find_newline_string($fcontents, "0", $pos1+5);
 					if ($pos2===false) {
-						$fcontents=substr($fcontents, 0, $pos1).'0 TRLR'.PGV_EOL;
+						$fcontents=substr($fcontents, 0, $pos1).'0 TRLR'.WT_EOL;
 						AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct");
 					} else {
 						$fcontents=substr($fcontents, 0, $pos1).reformat_record_export($gedrec).substr($fcontents, $pos2);
@@ -1371,7 +1371,7 @@ function accept_changes($cid) {
 					//-- attempted to replace a record that doesn't exist
 					AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct.  Replaced gedcom record $gid was not found in the gedcom file.");
 					$pos1=find_newline_string($fcontents, "0 TRLR");
-					$fcontents=substr($fcontents, 0, $pos1).reformat_record_export($gedrec).'0 TRLR'.PGV_EOL;
+					$fcontents=substr($fcontents, 0, $pos1).reformat_record_export($gedrec).'0 TRLR'.WT_EOL;
 					AddToLog("Gedcom record $gid was appended back to the GEDCOM file.");
 				}
 			}
@@ -1396,7 +1396,7 @@ function accept_changes($cid) {
 }
 
 // Find a string in a file, preceded by a any form of line-ending.
-// Although PGV always writes them as PGV_EOL, it is possible that the file was
+// Although PGV always writes them as WT_EOL, it is possible that the file was
 // edited externally by an editor that uses different endings.
 function find_newline_string($haystack, $needle, $offset=0) {
 	if ($pos=strpos($haystack, "\r\n{$needle}", $offset)) {
@@ -1417,7 +1417,7 @@ function find_newline_string($haystack, $needle, $offset=0) {
 function update_record($gedrec, $ged_id, $delete) {
 	global $TBLPREFIX, $GEDCOM;
 
-	if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')/', $gedrec, $match)) {
+	if (preg_match('/^0 @('.WT_REGEX_XREF.')@ ('.WT_REGEX_TAG.')/', $gedrec, $match)) {
 		list(,$gid, $type)=$match;
 	} else {
 		print "ERROR: Invalid gedcom record.";
@@ -1426,44 +1426,44 @@ function update_record($gedrec, $ged_id, $delete) {
 
 	// TODO deleting unlinked places can be done more efficiently in a single query
 	$placeids=
-		PGV_DB::prepare("SELECT pl_p_id FROM {$TBLPREFIX}placelinks WHERE pl_gid=? AND pl_file=?")
+		WT_DB::prepare("SELECT pl_p_id FROM {$TBLPREFIX}placelinks WHERE pl_gid=? AND pl_file=?")
 		->execute(array($gid, $ged_id))
 		->fetchOneColumn();
 
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks WHERE pl_gid=? AND pl_file=?")->execute(array($gid, $ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}dates      WHERE d_gid =? AND d_file =?")->execute(array($gid, $ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks WHERE pl_gid=? AND pl_file=?")->execute(array($gid, $ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}dates      WHERE d_gid =? AND d_file =?")->execute(array($gid, $ged_id));
 
 	//-- delete any unlinked places
 	foreach ($placeids as $p_id) {
 		$num=
-			PGV_DB::prepare("SELECT count(pl_p_id) FROM {$TBLPREFIX}placelinks WHERE pl_p_id=? AND pl_file=?")
+			WT_DB::prepare("SELECT count(pl_p_id) FROM {$TBLPREFIX}placelinks WHERE pl_p_id=? AND pl_file=?")
 			->execute(array($p_id, $ged_id))
 			->fetchOne();
 		if ($num==0) {
-			PGV_DB::prepare("DELETE FROM {$TBLPREFIX}places WHERE p_id=? AND p_file=?")->execute(array($p_id, $ged_id));
+			WT_DB::prepare("DELETE FROM {$TBLPREFIX}places WHERE p_id=? AND p_file=?")->execute(array($p_id, $ged_id));
 		}
 	}
 
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gid=? AND mm_gedfile=?")->execute(array($gid, $ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}remotelinks WHERE r_gid=? AND r_file=?")->execute(array($gid, $ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}name WHERE n_id=? AND n_file=?")->execute(array($gid, $ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link WHERE l_from=? AND l_file=?")->execute(array($gid, $ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gid=? AND mm_gedfile=?")->execute(array($gid, $ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}remotelinks WHERE r_gid=? AND r_file=?")->execute(array($gid, $ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}name WHERE n_id=? AND n_file=?")->execute(array($gid, $ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}link WHERE l_from=? AND l_file=?")->execute(array($gid, $ged_id));
 
 	switch ($type) {
 	case 'INDI':
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}individuals WHERE i_id=? AND i_file=?")->execute(array($gid, $ged_id));
+		WT_DB::prepare("DELETE FROM {$TBLPREFIX}individuals WHERE i_id=? AND i_file=?")->execute(array($gid, $ged_id));
 		break;
 	case 'FAM':
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}families WHERE f_id=? AND f_file=?")->execute(array($gid, $ged_id));
+		WT_DB::prepare("DELETE FROM {$TBLPREFIX}families WHERE f_id=? AND f_file=?")->execute(array($gid, $ged_id));
 		break;
 	case 'SOUR':
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}sources WHERE s_id=? AND s_file=?")->execute(array($gid, $ged_id));
+		WT_DB::prepare("DELETE FROM {$TBLPREFIX}sources WHERE s_id=? AND s_file=?")->execute(array($gid, $ged_id));
 		break;
 	case 'OBJE':
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?")->execute(array($gid, $ged_id));
+		WT_DB::prepare("DELETE FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?")->execute(array($gid, $ged_id));
 		break;
 	default:
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}other WHERE o_id=? AND o_file=?")->execute(array($gid, $ged_id));
+		WT_DB::prepare("DELETE FROM {$TBLPREFIX}other WHERE o_id=? AND o_file=?")->execute(array($gid, $ged_id));
 		break;
 	}
 
@@ -1474,7 +1474,7 @@ function update_record($gedrec, $ged_id, $delete) {
 
 // Create a pseudo-random UUID
 function uuid() {
-	if (defined('PGV_USE_RFC4122')) {
+	if (defined('WT_USE_RFC4122')) {
 		// Standards purists want this format (RFC4122)
 		$fmt='%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X';
 	} else {

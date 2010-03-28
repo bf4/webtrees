@@ -27,15 +27,15 @@
 * @subpackage RSS
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FUNCTIONS_RSS_PHP', '');
+define('WT_FUNCTIONS_RSS_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
-require_once PGV_ROOT.'includes/classes/class_stats.php';
+require_once WT_ROOT.'includes/functions/functions_print_lists.php';
+require_once WT_ROOT.'includes/classes/class_stats.php';
 
 $time = client_time();
 $day = date("j", $time);
@@ -65,13 +65,13 @@ function iso8601_date($time) {
 */
 function getUpcomingEvents() {
 	global $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $WT_BLOCKS;
 	global $DAYS_TO_SHOW_LIMIT, $SERVER_URL;
 
 	$dataArray[0] = i18n::translate('Upcoming Events');
 	$dataArray[1] = time();
 
-	if (empty($config)) $config = $PGV_BLOCKS["print_upcoming_events"]["config"];
+	if (empty($config)) $config = $WT_BLOCKS["print_upcoming_events"]["config"];
 	if (!isset($DAYS_TO_SHOW_LIMIT)) $DAYS_TO_SHOW_LIMIT = 30;
 	if (isset($config["days"])) $daysprint = $config["days"];
 	else $daysprint = 30;
@@ -102,14 +102,14 @@ function getUpcomingEvents() {
 */
 function getTodaysEvents() {
 	global $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $WT_BLOCKS;
 	global $SERVER_URL;
 	global $DAYS_TO_SHOW_LIMIT;
 
 	$dataArray[0] = i18n::translate('On This Day ...');
 	$dataArray[1] = time();
 
-	if (empty($config)) $config = $PGV_BLOCKS["print_todays_events"]["config"];
+	if (empty($config)) $config = $WT_BLOCKS["print_todays_events"]["config"];
 	if (isset($config["filter"])) $filter = $config["filter"];  // "living" or "all"
 	else $filter = "all";
 	if (isset($config["onlyBDM"])) $onlyBDM = $config["onlyBDM"];  // "yes" or "no"
@@ -130,15 +130,15 @@ function getTodaysEvents() {
 * @TODO does not print the family with most children due to the embedded html in that function.
 */
 function getGedcomStats() {
-	global $day, $month, $year, $PGV_BLOCKS, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $SERVER_URL, $RTLOrd;
+	global $day, $month, $year, $WT_BLOCKS, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $SERVER_URL, $RTLOrd;
 
-	if (empty($config)) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
-	if (!isset($config['stat_indi'])) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
+	if (empty($config)) $config = $WT_BLOCKS["print_gedcom_stats"]["config"];
+	if (!isset($config['stat_indi'])) $config = $WT_BLOCKS["print_gedcom_stats"]["config"];
 
 	$data = "";
-	$dataArray[0] = i18n::translate('GEDCOM Statistics') . " - " . get_gedcom_setting(PGV_GED_ID, 'title');
+	$dataArray[0] = i18n::translate('GEDCOM Statistics') . " - " . get_gedcom_setting(WT_GED_ID, 'title');
 
-	$head = find_gedcom_record("HEAD", PGV_GED_ID);
+	$head = find_gedcom_record("HEAD", WT_GED_ID);
 	$ct=preg_match("/1 SOUR (.*)/", $head, $match);
 	if ($ct>0) {
 		$softrec = get_sub_record(1, "1 SOUR", $head);
@@ -165,7 +165,7 @@ function getGedcomStats() {
 		}
 	}
 
-	$stats=new stats(PGV_GEDCOM, $SERVER_URL);
+	$stats=new stats(WT_GEDCOM, $SERVER_URL);
 
 	$data .= " <br />";
 	if (!isset($config["stat_indi"]) || $config["stat_indi"]=="yes"){
@@ -215,9 +215,9 @@ function getGedcomStats() {
 * @TODO prepend relative URL's in news items with $SERVER_URL
 */
 function getGedcomNews() {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype, $SERVER_URL;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $TEXT_DIRECTION, $ctype, $SERVER_URL;
 
-	$usernews = getUserNews(PGV_GEDCOM);
+	$usernews = getUserNews(WT_GEDCOM);
 
 	$dataArray = array();
 	foreach($usernews as $key=>$news) {
@@ -257,7 +257,7 @@ function getGedcomNews() {
 */
 function getTop10Surnames() {
 	global $SERVER_URL, $TEXT_DIRECTION;
-	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
+	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $WT_BLOCKS, $ctype, $WT_IMAGES, $WT_IMAGE_DIR;
 
 	$data = "";
 	$dataArray = array();
@@ -267,7 +267,7 @@ function getTop10Surnames() {
 		return $b["match"] - $a["match"];
 	}
 
-	if (empty($config)) $config = $PGV_BLOCKS["print_block_name_top10"]["config"];
+	if (empty($config)) $config = $WT_BLOCKS["print_block_name_top10"]["config"];
 
 	if (isset($config["num"])) $numName = $config["num"];
 	else $numName = 10;
@@ -304,13 +304,13 @@ function getTop10Surnames() {
 */
 function getRecentChanges() {
 	global $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $ASC, $IGNORE_FACTS, $IGNORE_YEAR, $LAST_QUERY, $PGV_BLOCKS, $SHOW_SOURCES;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $ASC, $IGNORE_FACTS, $IGNORE_YEAR, $LAST_QUERY, $WT_BLOCKS, $SHOW_SOURCES;
 	global $objectlist, $SERVER_URL;
 
 	if ($ctype=="user") $filter = "living";
 	else $filter = "all";
 
-	if (empty($config)) $config = $PGV_BLOCKS["print_recent_changes"]["config"];
+	if (empty($config)) $config = $WT_BLOCKS["print_recent_changes"]["config"];
 	$configDays = 30;
 	if(isset($config["days"]) && $config["days"] > 0) $configDays = $config["days"];
 	if (isset($config["hide_empty"])) $HideEmpty = $config["hide_empty"];
@@ -328,13 +328,13 @@ function getRecentChanges() {
 	if (count($changes)>0) {
 		$found_facts = array();
 		foreach($changes as $gid) {
-			$gedrec = find_gedcom_record($gid, PGV_GED_ID);
-			if (empty($gedrec)) $gedrec = find_updated_record($gid, PGV_GED_ID);
+			$gedrec = find_gedcom_record($gid, WT_GED_ID);
+			if (empty($gedrec)) $gedrec = find_updated_record($gid, WT_GED_ID);
 
 			if (!empty($gedrec)) {
 				$type = "INDI";
 				$match = array();
-				$ct = preg_match('/0 @'.PGV_REGEX_XREF.'@ ('.PGV_REGEX_TAG.')/', $gedrec, $match);
+				$ct = preg_match('/0 @'.WT_REGEX_XREF.'@ ('.WT_REGEX_TAG.')/', $gedrec, $match);
 				if ($ct>0) $type = $match[1];
 				$disp = true;
 				switch($type) {
@@ -391,7 +391,7 @@ function getRecentChanges() {
 				$recentText.='<li>';
 				$recentText.='<a href="'.encode_url($record->getAbsoluteLinkUrl()).'"><b>'.PrintReady($record->getFullName()).'</b>';
 				if ($SHOW_ID_NUMBERS) {
-					$recentText .= ' '.PGV_LPARENS.$gid.PGV_RPARENS;
+					$recentText .= ' '.WT_LPARENS.$gid.WT_RPARENS;
 				}
 				$recentText.='</a> '.i18n::translate('CHAN').' - '.$record->LastChangeTimestamp(false).'</li>';
 			}
@@ -411,12 +411,12 @@ function getRecentChanges() {
 * $dataArray[5] = file size, $dataArray[5] = media title
 */
 function getRandomMedia() {
-	global $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES;
 	global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES;
 	global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
-	global $PGV_BLOCKS, $ctype, $action;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES;
-	if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
+	global $WT_BLOCKS, $ctype, $action;
+	global $WT_IMAGE_DIR, $WT_IMAGES;
+	if (empty($config)) $config = $WT_BLOCKS["print_random_media"]["config"];
 	if (isset($config["filter"])) $filter = $config["filter"];  // indi, event, or all
 	else $filter = "all";
 
@@ -454,7 +454,7 @@ function getRandomMedia() {
 
 			if ($disp && count($links) != 0){
 				foreach($links as $key=>$type) {
-					$gedrec = find_gedcom_record($key, PGV_GED_ID);
+					$gedrec = find_gedcom_record($key, WT_GED_ID);
 					$disp &= !empty($gedrec);
 					//-- source privacy is now available through the display details by id method
 					// $disp &= $type!="SOUR";

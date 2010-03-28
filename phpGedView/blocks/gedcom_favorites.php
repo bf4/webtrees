@@ -29,21 +29,21 @@
  * @subpackage Blocks
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_GEDCOM_FAVORITES_PHP', '');
+define('WT_GEDCOM_FAVORITES_PHP', '');
 
-$PGV_BLOCKS["print_gedcom_favorites"]["name"]     = i18n::translate('GEDCOM Favorites');
-$PGV_BLOCKS["print_gedcom_favorites"]["descr"]    = i18n::translate('The GEDCOM Favorites block gives the administrator the ability to designate individuals from the database so that their information is easily accessible to all.  This is a way to highlight people who are important in your family history.');
-$PGV_BLOCKS["print_gedcom_favorites"]["canconfig"]= false;
-$PGV_BLOCKS["print_gedcom_favorites"]["config"]   = array("cache"=>7);
+$WT_BLOCKS["print_gedcom_favorites"]["name"]     = i18n::translate('GEDCOM Favorites');
+$WT_BLOCKS["print_gedcom_favorites"]["descr"]    = i18n::translate('The GEDCOM Favorites block gives the administrator the ability to designate individuals from the database so that their information is easily accessible to all.  This is a way to highlight people who are important in your family history.');
+$WT_BLOCKS["print_gedcom_favorites"]["canconfig"]= false;
+$WT_BLOCKS["print_gedcom_favorites"]["config"]   = array("cache"=>7);
 
 //-- print gedcom favorites
 function print_gedcom_favorites($block = true, $config="", $side, $index) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $ctype, $TEXT_DIRECTION;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $ctype, $TEXT_DIRECTION;
 	global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE, $ENABLE_AUTOCOMPLETE;
 
 	// Override GEDCOM configuration temporarily
@@ -52,7 +52,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	$show_full = 1;
 	$PEDIGREE_FULL_DETAILS = 1;
 
-	$userfavs = getUserFavorites(PGV_GEDCOM);
+	$userfavs = getUserFavorites(WT_GEDCOM);
 	if (!is_array($userfavs)) $userfavs = array();
 
 	$id = "gedcom_favorites";
@@ -61,7 +61,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	$title .= "(".count($userfavs).")";
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
 
-	if (PGV_USER_IS_ADMIN && $ENABLE_AUTOCOMPLETE) {
+	if (WT_USER_IS_ADMIN && $ENABLE_AUTOCOMPLETE) {
 		$content = '<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 		<script type="text/javascript" src="js/jquery/jquery.autocomplete.js"></script>
 		<script type="text/javascript" src="js/jquery/jquery.ajaxQueue.js"></script>
@@ -93,7 +93,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		$cellSpacing = "3px";
 	}
 	if (count($userfavs)==0) {
-		if (PGV_USER_GEDCOM_ADMIN) {
+		if (WT_USER_GEDCOM_ADMIN) {
 			$content .= i18n::translate('You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title.');
 		} else {
 			$content .= i18n::translate('At this moment there are no selected Favorites.	The admin can add Favorites to display at startup.');
@@ -106,20 +106,20 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 			$content .= "<tr><td>";
 			if ($favorite["type"]=="URL") {
 				$content .= "<div id=\"boxurl".$key.".0\" class=\"person_box\">\n";
-				if ($ctype=="user" || PGV_USER_GEDCOM_ADMIN) $content .= $removeFavourite;
+				if ($ctype=="user" || WT_USER_GEDCOM_ADMIN) $content .= $removeFavourite;
 				$content .= "<a href=\"".$favorite["url"]."\"><b>".PrintReady($favorite["title"])."</b></a>";
 				$content .= "<br />".PrintReady($favorite["note"]);
 				$content .= "</div>\n";
 			} else {
 				if (displayDetailsById($favorite["gid"], $favorite["type"])) {
 					if ($favorite["type"]=="INDI") {
-						$indirec = find_person_record($favorite["gid"], PGV_GED_ID);
+						$indirec = find_person_record($favorite["gid"], WT_GED_ID);
 						$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box";
 						if (strpos($indirec, "\n1 SEX F")!==false) $content .= "F";
 						elseif (strpos($indirec, "\n1 SEX M")!==false) $content .= "";
 						else $content .= "NN";
 						$content .= "\">\n";
-						if ($ctype=="user" || PGV_USER_GEDCOM_ADMIN) $content .= $removeFavourite;
+						if ($ctype=="user" || WT_USER_GEDCOM_ADMIN) $content .= $removeFavourite;
 						ob_start();
 						print_pedigree_person($favorite["gid"], $style, 1, $key);
 						$content .= ob_get_clean();
@@ -128,7 +128,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 					} else {
 						$record=GedcomRecord::getInstance($favorite['gid']);
 						$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">";
-						if ($ctype=="user" || PGV_USER_GEDCOM_ADMIN) $content .= $removeFavourite;
+						if ($ctype=="user" || WT_USER_GEDCOM_ADMIN) $content .= $removeFavourite;
 						if ($record) {
 							$content.=$record->format_list('span');
 						} else {
@@ -143,7 +143,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		}
 		$content .= "</table>\n";
 	}
-	if (PGV_USER_GEDCOM_ADMIN) {
+	if (WT_USER_GEDCOM_ADMIN) {
 	$content .= '
 		<script language="JavaScript" type="text/javascript">
 		<!--
@@ -156,14 +156,14 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		<br />
 		';
 		$uniqueID = floor(microtime() * 1000000);
-		$content .= "<b><a href=\"javascript://".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>";
+		$content .= "<b><a href=\"javascript://".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>";
 		$content .= help_link('index_add_favorites');
 		$content .= "<br /><div id=\"add_ged_fav\" style=\"display: none;\">\n";
 		$content .= "<form name=\"addgfavform\" method=\"post\" action=\"index.php\">\n";
 		$content .= "<input type=\"hidden\" name=\"action\" value=\"addfav\" />\n";
 		$content .= "<input type=\"hidden\" name=\"ctype\" value=\"$ctype\" />\n";
 		$content .= "<input type=\"hidden\" name=\"favtype\" value=\"gedcom\" />\n";
-		$content .= "<input type=\"hidden\" name=\"ged\" value=\"".PGV_GEDCOM."\" />\n";
+		$content .= "<input type=\"hidden\" name=\"ged\" value=\"".WT_GEDCOM."\" />\n";
 		$content .= "<table width=\"{$tableWidth}\" style=\"border:none\" cellspacing=\"{$cellSpacing}\" class=\"center {$TEXT_DIRECTION}\">";
 		$content .= "<tr><td>".i18n::translate('Enter a Person, Family, or Source ID')." <br />";
 		$content .= "<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid{$uniqueID}\" size=\"5\" value=\"\" />";

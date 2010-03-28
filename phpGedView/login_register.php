@@ -31,26 +31,26 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'login_register.php');
+define('WT_SCRIPT_NAME', 'login_register.php');
 require './config.php';
-require PGV_ROOT.'includes/functions/functions_edit.php';
+require WT_ROOT.'includes/functions/functions_edit.php';
 
 $action         =safe_POST('action');
 $user_firstname =safe_POST('user_firstname');
 $user_lastname  =safe_POST('user_lastname');
-$url            =safe_POST('url',             PGV_REGEX_URL, 'index.php');
+$url            =safe_POST('url',             WT_REGEX_URL, 'index.php');
 $time           =safe_POST('time');
-$user_name      =safe_POST('user_name',       PGV_REGEX_USERNAME);
-$user_email     =safe_POST('user_email',      PGV_REGEX_EMAIL);
-$user_password01=safe_POST('user_password01', PGV_REGEX_PASSWORD);
-$user_password02=safe_POST('user_password02', PGV_REGEX_PASSWORD);
+$user_name      =safe_POST('user_name',       WT_REGEX_USERNAME);
+$user_email     =safe_POST('user_email',      WT_REGEX_EMAIL);
+$user_password01=safe_POST('user_password01', WT_REGEX_PASSWORD);
+$user_password02=safe_POST('user_password02', WT_REGEX_PASSWORD);
 $user_language  =safe_POST('user_language', array_keys(i18n::installed_languages()), WT_LOCALE);
 $user_gedcomid  =safe_POST('user_gedcomid');
 $user_comments  =safe_POST('user_comments');
 $user_password  =safe_POST('user_password');
 $user_hashcode  =safe_POST('user_hashcode');
 if (empty($action)) $action = safe_GET('action');
-if (empty($user_name)) $user_name = safe_GET('user_name', PGV_REGEX_USERNAME);
+if (empty($user_name)) $user_name = safe_GET('user_name', WT_REGEX_USERNAME);
 if (empty($user_hashcode)) $user_hashcode = safe_GET('user_hashcode');
 
 $message="";
@@ -133,11 +133,11 @@ switch ($action) {
 				$mail_body .= i18n::translate('Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure.') . "\r\n\r\n";
 				$mail_body .= i18n::translate('After you have logged in, select the «My Account» link under the «My Page» menu and fill in the password fields to change your password.') . "\r\n\r\n";
 
-				if ($TEXT_DIRECTION=="rtl") $mail_body .= "<a href=\"".PGV_SERVER_NAME.PGV_SCRIPT_PATH."\">".PGV_SERVER_NAME.PGV_SCRIPT_PATH."</a>";
-				else $mail_body .= PGV_SERVER_NAME.PGV_SCRIPT_PATH;
+				if ($TEXT_DIRECTION=="rtl") $mail_body .= "<a href=\"".WT_SERVER_NAME.WT_SCRIPT_PATH."\">".WT_SERVER_NAME.WT_SCRIPT_PATH."</a>";
+				else $mail_body .= WT_SERVER_NAME.WT_SCRIPT_PATH;
 
-				require_once PGV_ROOT.'includes/functions/functions_mail.php';
-				pgvMail(get_user_setting($user_id, 'email'), $PHPGEDVIEW_EMAIL, i18n::translate('Data request at %s', PGV_SERVER_NAME.PGV_SCRIPT_PATH), $mail_body);
+				require_once WT_ROOT.'includes/functions/functions_mail.php';
+				pgvMail(get_user_setting($user_id, 'email'), $WEBTREES_EMAIL, i18n::translate('Data request at %s', WT_SERVER_NAME.WT_SCRIPT_PATH), $mail_body);
 
 				?>
 				<table class="center facts_table">
@@ -401,14 +401,14 @@ switch ($action) {
 
 					$mail_body = "";
 					$mail_body .= i18n::translate('Hello %s ...', $fullName) . "\r\n\r\n";
-					$mail_body .= i18n::translate('A request was received at %s to create a webtrees account with your email address %s.', PGV_SERVER_NAME.PGV_SCRIPT_PATH, $user_email) . "  ";
+					$mail_body .= i18n::translate('A request was received at %s to create a webtrees account with your email address %s.', WT_SERVER_NAME.WT_SCRIPT_PATH, $user_email) . "  ";
 					$mail_body .= i18n::translate('Information about the request is shown under the link below.') . "\r\n\r\n";
 					$mail_body .= i18n::translate('Please click on the following link and fill in the requested data to confirm your request and email address.') . "\r\n\r\n";
 					if ($TEXT_DIRECTION=="rtl") {
 						$mail_body .= "<a href=\"";
-						$mail_body .= PGV_SERVER_NAME.PGV_SCRIPT_PATH . "login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_id, 'reg_hashcode'))."&action=userverify\">";
+						$mail_body .= WT_SERVER_NAME.WT_SCRIPT_PATH . "login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_id, 'reg_hashcode'))."&action=userverify\">";
 					}
-					$mail_body .= PGV_SERVER_NAME.PGV_SCRIPT_PATH . "login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_id, 'reg_hashcode'))."&action=userverify";
+					$mail_body .= WT_SERVER_NAME.WT_SCRIPT_PATH . "login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_id, 'reg_hashcode'))."&action=userverify";
 					if ($TEXT_DIRECTION=="rtl") $mail_body .= "</a>";
 					$mail_body .= "\r\n";
 					$mail_body .= i18n::translate('User name') . " " . $user_name . "\r\n";
@@ -416,15 +416,15 @@ switch ($action) {
 					$mail_body .= i18n::translate('Comments').": " . $user_comments . "\r\n\r\n";
 					$mail_body .= i18n::translate('If you didn\'t request an account, you can just delete this message.') . "  ";
 					$mail_body .= i18n::translate('You won\'t get any more email from this site, because the account request will be deleted automatically after seven days.') . "\r\n";
-					require_once PGV_ROOT.'includes/functions/functions_mail.php';
-					pgvMail($user_email, $PHPGEDVIEW_EMAIL, i18n::translate('Your registration at %s', PGV_SERVER_NAME.PGV_SCRIPT_PATH), $mail_body);
+					require_once WT_ROOT.'includes/functions/functions_mail.php';
+					pgvMail($user_email, $WEBTREES_EMAIL, i18n::translate('Your registration at %s', WT_SERVER_NAME.WT_SCRIPT_PATH), $mail_body);
 
 					// switch language to webmaster settings
 					i18n::init(get_user_setting($WEBMASTER_EMAIL, 'language'));
 
 					$mail_body = "";
 					$mail_body .= i18n::translate('Hello Administrator ...') . "\r\n\r\n";
-					$mail_body .= i18n::translate('A prospective user registered himself with webtrees at %s.', PGV_SERVER_NAME.PGV_SCRIPT_PATH) . "\r\n\r\n";
+					$mail_body .= i18n::translate('A prospective user registered himself with webtrees at %s.', WT_SERVER_NAME.WT_SCRIPT_PATH) . "\r\n\r\n";
 					$mail_body .= i18n::translate('User name') . " " . $user_name . "\r\n";
 					if ($NAME_REVERSE) {
 						$mail_body .= i18n::translate('Last Name') . " " . $user_lastname . "\r\n\r\n";
@@ -441,7 +441,7 @@ switch ($action) {
 					$message = array();
 					$message["to"]=$WEBMASTER_EMAIL;
 					$message["from"]=$user_email;
-					$message["subject"] = i18n::translate('New registration at %s', PGV_SERVER_NAME.PGV_SCRIPT_PATH);
+					$message["subject"] = i18n::translate('New registration at %s', WT_SERVER_NAME.WT_SCRIPT_PATH);
 					$message["body"] = $mail_body;
 					$message["created"] = $time;
 					$message["method"] = $SUPPORT_METHOD;
@@ -547,16 +547,16 @@ switch ($action) {
 
 				if ($TEXT_DIRECTION=="rtl") {
 					$mail_body .= "<a href=\"";
-					$mail_body .= PGV_SERVER_NAME.PGV_SCRIPT_PATH."useradmin.php?action=edituser&username=" . urlencode($user_name) . "\">";
+					$mail_body .= WT_SERVER_NAME.WT_SCRIPT_PATH."useradmin.php?action=edituser&username=" . urlencode($user_name) . "\">";
 				}
-				$mail_body .= PGV_SERVER_NAME.PGV_SCRIPT_PATH."useradmin.php?action=edituser&username=" . urlencode($user_name);
+				$mail_body .= WT_SERVER_NAME.WT_SCRIPT_PATH."useradmin.php?action=edituser&username=" . urlencode($user_name);
 				if ($TEXT_DIRECTION=="rtl") $mail_body .= "</a>";
 				$mail_body .= "\r\n";
 
 				$message = array();
 				$message["to"]=$WEBMASTER_EMAIL;
-				$message["from"]=$PHPGEDVIEW_EMAIL;
-				$message["subject"] = i18n::translate('New user at %s', PGV_SERVER_NAME.PGV_SCRIPT_PATH);
+				$message["from"]=$WEBTREES_EMAIL;
+				$message["subject"] = i18n::translate('New user at %s', WT_SERVER_NAME.WT_SCRIPT_PATH);
 				$message["body"] = $mail_body;
 				$message["created"] = $time;
 				$message["method"] = $SUPPORT_METHOD;

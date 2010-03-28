@@ -28,16 +28,16 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_LIFESPAN_CTRL_PHP', '');
+define('WT_LIFESPAN_CTRL_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_charts.php';
-require_once PGV_ROOT.'includes/controllers/basecontrol.php';
-require_once PGV_ROOT.'includes/classes/class_person.php';
+require_once WT_ROOT.'includes/functions/functions_charts.php';
+require_once WT_ROOT.'includes/controllers/basecontrol.php';
+require_once WT_ROOT.'includes/classes/class_person.php';
 
 function compare_people($a, $b) {
 	return GedcomDate::Compare($a->getEstimatedBirthDate(), $b->getEstimatedBirthDate());
@@ -45,7 +45,7 @@ function compare_people($a, $b) {
 
 
 // GEDCOM elements that will be found but should not be displayed
-$nonfacts = array("FAMS", "FAMC", "MAY", "BLOB", "OBJE", "SEX", "NAME", "SOUR", "NOTE", "BAPL", "ENDL", "SLGC", "SLGS", "_TODO", "_PGV_OBJS", "CHAN", "HUSB", "WIFE", "CHIL", "BIRT", "DEAT", "BURI");// DEATH OF SIBLING:  DEATH OF HALF SIBLING DEATH OF MOTHER DEATH OF FATHER DEATH OF CHILD
+$nonfacts = array("FAMS", "FAMC", "MAY", "BLOB", "OBJE", "SEX", "NAME", "SOUR", "NOTE", "BAPL", "ENDL", "SLGC", "SLGS", "_TODO", "_WT_OBJS", "CHAN", "HUSB", "WIFE", "CHIL", "BIRT", "DEAT", "BURI");// DEATH OF SIBLING:  DEATH OF HALF SIBLING DEATH OF MOTHER DEATH OF FATHER DEATH OF CHILD
 $nonfamfacts = array("CHAN", "HUSB", "WIFE", "CHIL");
 
 /**
@@ -589,8 +589,8 @@ class LifespanControllerRoot extends BaseController {
 }
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists(PGV_ROOT.'includes/controllers/timeline_ctrl_user.php')) {
-	require_once PGV_ROOT.'includes/controllers/timeline_ctrl_user.php';
+if (file_exists(WT_ROOT.'includes/controllers/timeline_ctrl_user.php')) {
+	require_once WT_ROOT.'includes/controllers/timeline_ctrl_user.php';
 } else {
 	class LifespanController extends LifespanControllerRoot {
 	}

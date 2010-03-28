@@ -36,12 +36,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_AUTHENTICATION_PHP', '');
+define('WT_AUTHENTICATION_PHP', '');
 
 /**
  * authenticate a username and password
@@ -157,7 +157,7 @@ function getUserName() {
 /**
  * check if given username is an admin
  */
-function userIsAdmin($user_id=PGV_USER_ID) {
+function userIsAdmin($user_id=WT_USER_ID) {
 	if ($user_id) {
 		return get_user_setting($user_id, 'canadmin')=='Y';
 	} else {
@@ -168,7 +168,7 @@ function userIsAdmin($user_id=PGV_USER_ID) {
 /**
  * check if given username is an admin for the given gedcom
  */
-function userGedcomAdmin($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
+function userGedcomAdmin($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
 	if ($user_id) {
 		return get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin' || userIsAdmin($user_id);
 	} else {
@@ -179,7 +179,7 @@ function userGedcomAdmin($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 /**
  * check if the given user has access privileges on this gedcom
  */
-function userCanAccess($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
+function userCanAccess($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
 	if ($user_id) {
 		if (userIsAdmin($user_id)) {
 			return true;
@@ -195,7 +195,7 @@ function userCanAccess($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 /**
  * check if the given user has write privileges for the given gedcom
  */
-function userCanEdit($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
+function userCanEdit($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
 	global $ALLOW_EDIT_GEDCOM;
 
 	if ($ALLOW_EDIT_GEDCOM && $user_id) {
@@ -218,7 +218,7 @@ function userCanEdit($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
  * @param string $username	the username of the user check privileges
  * @return boolean true if user can accept false if user cannot accept
  */
-function userCanAccept($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
+function userCanAccept($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
 	global $ALLOW_EDIT_GEDCOM;
 
 	// An admin can always accept changes, even if editing is disabled
@@ -236,7 +236,7 @@ function userCanAccept($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 /**
  * Should user's changed automatically be accepted
  */
-function userAutoAccept($user_id=PGV_USER_ID) {
+function userAutoAccept($user_id=WT_USER_ID) {
 	return get_user_setting($user_id, 'auto_accept')=='Y';
 }
 
@@ -257,13 +257,13 @@ function getUserFullName($user_id) {
 		"	WHERE user_id=? AND setting_name IN (?,?)".
 		" ORDER BY setting_name ".($NAME_REVERSE ? 'DESC' : 'ASC');
 
-	return implode(' ', PGV_DB::prepare($sql)->execute(array($user_id, 'firstname', 'lastname'))->fetchOneColumn());
+	return implode(' ', WT_DB::prepare($sql)->execute(array($user_id, 'firstname', 'lastname'))->fetchOneColumn());
 }
 
 // Get the root person for this gedcom
 function getUserRootId($user_id, $ged_id) {
 	if ($user_id) {
-		return get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'rootid');
+		return get_user_gedcom_setting(WT_USER_ID, WT_GED_ID, 'rootid');
 	} else {
 		return getUserGedcomId($user_id, $ged_id);
 	}
@@ -272,7 +272,7 @@ function getUserRootId($user_id, $ged_id) {
 // Get the user's ID in the given gedcom
 function getUserGedcomId($user_id, $ged_id) {
 	if ($user_id) {
-		return get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'gedcomid');
+		return get_user_gedcom_setting(WT_USER_ID, WT_GED_ID, 'gedcomid');
 	} else {
 		return null;
 	}
@@ -310,7 +310,7 @@ function AddToLog($LogString, $savelangerror=false) {
 		if ($LOGFILE_CREATE=='yearly')
 			$logfile = $INDEX_DIRECTORY.'pgv-' . date('Y') . '.log';
 		if (is_writable($INDEX_DIRECTORY)) {
-			$logline=date('d.m.Y H:i:s').' - '.$REMOTE_ADDR.' - '.(getUserId() ? getUserName() : 'Anonymous').' - '.$LogString.PGV_EOL;
+			$logline=date('d.m.Y H:i:s').' - '.$REMOTE_ADDR.' - '.(getUserId() ? getUserName() : 'Anonymous').' - '.$LogString.WT_EOL;
 			$fp = fopen($logfile, 'a');
 			flock($fp, 2);
 			fputs($fp, $logline);
@@ -361,13 +361,13 @@ function AddToSearchLog($LogString, $allgeds) {
 			break;
 		}
 		if (is_writable($INDEX_DIRECTORY)) {
-			$logline='Date / Time: '.date('d.m.Y H:i:s').' - IP: '.$_SERVER['REMOTE_ADDR'].' - User: '.PGV_USER_NAME.'<br />';
+			$logline='Date / Time: '.date('d.m.Y H:i:s').' - IP: '.$_SERVER['REMOTE_ADDR'].' - User: '.WT_USER_NAME.'<br />';
 			if (count($allgeds)==count($all_geds)) {
 				$logline.='Searchtype: Global<br />';
 			} else {
 				$logline.='Searchtype: Gedcom<br />';
 			}
-			$logline.=$LogString.'<br /><br />'.PGV_EOL;
+			$logline.=$LogString.'<br /><br />'.WT_EOL;
 			$fp=fopen($logfile, 'a');
 			flock($fp, 2);
 			fputs($fp, $logline);
@@ -421,9 +421,9 @@ function AddToChangeLog($LogString, $ged="") {
 //----------------------------------- addMessage
 //-- stores a new message in the database
 function addMessage($message) {
-	global $TBLPREFIX, $CONTACT_METHOD, $LANGUAGE, $PGV_STORE_MESSAGES, $SERVER_URL, $PGV_SIMPLE_MAIL, $WEBMASTER_EMAIL;
+	global $TBLPREFIX, $CONTACT_METHOD, $LANGUAGE, $WT_STORE_MESSAGES, $SERVER_URL, $WT_SIMPLE_MAIL, $WEBMASTER_EMAIL;
 	global $TEXT_DIRECTION;
-	global $PHPGEDVIEW_EMAIL;
+	global $WEBTREES_EMAIL;
 
 	//-- do not allow users to send a message to themselves
 	if ($message["from"]==$message["to"]) {
@@ -433,7 +433,7 @@ function addMessage($message) {
 	$user_id_from=get_user_id($message['from']);
 	$user_id_to  =get_user_id($message['to']);
 
-	require_once PGV_ROOT.'includes/functions/functions_mail.php';
+	require_once WT_ROOT.'includes/functions/functions_mail.php';
 
 	if (!$user_id_to) {
 		//-- the to user must be a valid user in the system before it will send any mails
@@ -460,7 +460,7 @@ function addMessage($message) {
 		$fromFullName = $message["from"];
 	} else {
 		$fromFullName = getUserFullName($user_id_from);
-		if (!$PGV_SIMPLE_MAIL)
+		if (!$WT_SIMPLE_MAIL)
 			$from = hex4email($fromFullName, 'UTF-8'). " <".get_user_setting($user_id_from, 'email').">";
 		else
 			$from = get_user_setting($user_id_from, 'email');
@@ -481,11 +481,11 @@ function addMessage($message) {
 			$email1 .= $fromFullName."\r\n\r\n".$message["body"];
 		}
 		if (!isset($message["no_from"])) {
-			if (stristr($from, $PHPGEDVIEW_EMAIL)){
+			if (stristr($from, $WEBTREES_EMAIL)){
 				$from = get_user_setting(get_user_id($WEBMASTER_EMAIL), 'email');
 			}
 			if (!$user_id_from) {
-				$header2 = $PHPGEDVIEW_EMAIL;
+				$header2 = $WEBTREES_EMAIL;
 			} elseif (isset($to)) {
 				$header2 = $to;
 			}
@@ -509,8 +509,8 @@ function addMessage($message) {
 	}
 	if (empty($message["created"]))
 		$message["created"] = gmdate ("D, d M Y H:i:s T");
-	if ($PGV_STORE_MESSAGES && ($message["method"]!="messaging3" && $message["method"]!="mailto" && $message["method"]!="none")) {
-		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}messages (m_id, m_from, m_to, m_subject, m_body, m_created) VALUES (?, ? ,? ,? ,? ,?)")
+	if ($WT_STORE_MESSAGES && ($message["method"]!="messaging3" && $message["method"]!="mailto" && $message["method"]!="none")) {
+		WT_DB::prepare("INSERT INTO {$TBLPREFIX}messages (m_id, m_from, m_to, m_subject, m_body, m_created) VALUES (?, ? ,? ,? ,? ,?)")
 			->execute(array(get_next_id("messages", "m_id"), $message["from"], $message["to"], $message["subject"], $message["body"], $message["created"]));
 	}
 	if ($message["method"]!="messaging") {
@@ -530,7 +530,7 @@ function addMessage($message) {
 			return false;
 		} else {
 			$toFullName=getUserFullName($user_id_to);
-			if (!$PGV_SIMPLE_MAIL)
+			if (!$WT_SIMPLE_MAIL)
 				$to = hex4email($toFullName, 'UTF-8'). " <".get_user_setting($user_id_to, 'email').">";
 			else
 				$to = get_user_setting($user_id_to, 'email');
@@ -549,7 +549,7 @@ function addMessage($message) {
 function deleteMessage($message_id) {
 	global $TBLPREFIX;
 
-	return (bool)PGV_DB::prepare("DELETE FROM {$TBLPREFIX}messages WHERE m_id=?")->execute(array($message_id));
+	return (bool)WT_DB::prepare("DELETE FROM {$TBLPREFIX}messages WHERE m_id=?")->execute(array($message_id));
 }
 
 //----------------------------------- getUserMessages
@@ -558,7 +558,7 @@ function getUserMessages($username) {
 	global $TBLPREFIX;
 
 	$rows=
-		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}messages WHERE m_to=? ORDER BY m_id DESC")
+		WT_DB::prepare("SELECT * FROM {$TBLPREFIX}messages WHERE m_to=? ORDER BY m_id DESC")
 		->execute(array($username))
 		->fetchAll();
 
@@ -600,13 +600,13 @@ function addFavorite($favorite) {
 	$vars[]=$favorite["file"];
 	$vars[]=$favorite["username"];
 
-	if (PGV_DB::prepare($sql)->execute($vars)->fetchOne()) {
+	if (WT_DB::prepare($sql)->execute($vars)->fetchOne()) {
 		return false;
 	}
 
 	//-- add the favorite to the database
 	return (bool)
-		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}favorites (fv_id, fv_username, fv_gid, fv_type, fv_file, fv_url, fv_title, fv_note) VALUES (?, ? ,? ,? ,? ,? ,? ,?)")
+		WT_DB::prepare("INSERT INTO {$TBLPREFIX}favorites (fv_id, fv_username, fv_gid, fv_type, fv_file, fv_url, fv_title, fv_note) VALUES (?, ? ,? ,? ,? ,? ,? ,?)")
 			->execute(array(get_next_id("favorites", "fv_id"), $favorite["username"], $favorite["gid"], $favorite["type"], $favorite["file"], $favorite["url"], $favorite["title"], $favorite["note"]));
 }
 
@@ -619,7 +619,7 @@ function deleteFavorite($fv_id) {
 	global $TBLPREFIX;
 
 	return (bool)
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}favorites WHERE fv_id=?")
+		WT_DB::prepare("DELETE FROM {$TBLPREFIX}favorites WHERE fv_id=?")
 		->execute(array($fv_id));
 }
 
@@ -632,7 +632,7 @@ function getUserFavorites($username) {
 	global $TBLPREFIX;
 
 	$rows=
-		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}favorites WHERE fv_username=?")
+		WT_DB::prepare("SELECT * FROM {$TBLPREFIX}favorites WHERE fv_username=?")
 		->execute(array($username))
 		->fetchAll();
 
@@ -671,7 +671,7 @@ function getBlocks($username) {
 	$blocks["right"] = array();
 
 	$rows=
-		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}blocks WHERE b_username=? ORDER BY b_location, b_order")
+		WT_DB::prepare("SELECT * FROM {$TBLPREFIX}blocks WHERE b_username=? ORDER BY b_location, b_order")
 		->execute(array($username))
 		->fetchAll();
 
@@ -688,7 +688,7 @@ function getBlocks($username) {
 		if (get_user_id($username)) {
 			//-- if no blocks found, check for a default block setting
 			//$rows=
-				PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}blocks WHERE b_username=? ORDER BY b_location, b_order")
+				WT_DB::prepare("SELECT * FROM {$TBLPREFIX}blocks WHERE b_username=? ORDER BY b_location, b_order")
 				->execute(array('defaultuser'))
 				->fetchAll();
 
@@ -717,15 +717,15 @@ function getBlocks($username) {
 function setBlocks($username, $ublocks, $setdefault=false) {
 	global $TBLPREFIX;
 
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks WHERE b_username=? AND b_name!=?")
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}blocks WHERE b_username=? AND b_name!=?")
 		->execute(array($username, 'faq'));
 
 	if ($setdefault) {
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks WHERE b_username=?")
+		WT_DB::prepare("DELETE FROM {$TBLPREFIX}blocks WHERE b_username=?")
 			->execute(array('defaultuser'));
 	}
 
-	$statement=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}blocks (b_id, b_username, b_location, b_order, b_name, b_config) VALUES (?, ?, ?, ?, ?, ?)");
+	$statement=WT_DB::prepare("INSERT INTO {$TBLPREFIX}blocks (b_id, b_username, b_location, b_order, b_name, b_config) VALUES (?, ?, ?, ?, ?, ?)");
 
 	foreach($ublocks["main"] as $order=>$block) {
 		$statement->execute(array(get_next_id("blocks", "b_id"), $username, 'main', $order, $block[0], serialize($block[1])));
@@ -762,22 +762,22 @@ function addNews($news) {
 		// In case news items are added from usermigrate, it will also contain an ID.
 		// So we check first if the ID exists in the database. If not, insert instead of update.
 		$exists=
-			PGV_DB::prepare("SELECT 1 FROM {$TBLPREFIX}news where n_id=?")
+			WT_DB::prepare("SELECT 1 FROM {$TBLPREFIX}news where n_id=?")
 			->execute(array($news["id"]))
 			->fetchOne();
 
 		if (!$exists) {
 			return (bool)
-				PGV_DB::prepare("INSERT INTO {$TBLPREFIX}news (n_id, n_username, n_date, n_title, n_text) VALUES (?, ? ,? ,? ,?)")
+				WT_DB::prepare("INSERT INTO {$TBLPREFIX}news (n_id, n_username, n_date, n_title, n_text) VALUES (?, ? ,? ,? ,?)")
 				->execute(array($news["id"], $news["username"], $news["date"], $news["title"], $news["text"]));
 		} else {
 			return (bool)
-				PGV_DB::prepare("UPDATE {$TBLPREFIX}news SET n_date=?, n_title=? , n_text=? WHERE n_id=?")
+				WT_DB::prepare("UPDATE {$TBLPREFIX}news SET n_date=?, n_title=? , n_text=? WHERE n_id=?")
 				->execute(array($news["date"], $news["title"], $news["text"], $news["id"]));
 		}
 	} else {
 		return (bool)
-			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}news (n_id, n_username, n_date, n_title, n_text) VALUES (?, ? ,? ,? ,?)")
+			WT_DB::prepare("INSERT INTO {$TBLPREFIX}news (n_id, n_username, n_date, n_title, n_text) VALUES (?, ? ,? ,? ,?)")
 			->execute(array(get_next_id("news", "n_id"), $news["username"], $news["date"], $news["title"], $news["text"]));
 	}
 }
@@ -791,7 +791,7 @@ function addNews($news) {
 function deleteNews($news_id) {
 	global $TBLPREFIX;
 
-	return (bool)PGV_DB::prepare("DELETE FROM {$TBLPREFIX}news WHERE n_id=?")->execute(array($news_id));
+	return (bool)WT_DB::prepare("DELETE FROM {$TBLPREFIX}news WHERE n_id=?")->execute(array($news_id));
 }
 
 /**
@@ -803,7 +803,7 @@ function getUserNews($username) {
 	global $TBLPREFIX;
 
 	$rows=
-		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}news WHERE n_username=? ORDER BY n_date DESC")
+		WT_DB::prepare("SELECT * FROM {$TBLPREFIX}news WHERE n_username=? ORDER BY n_date DESC")
 		->execute(array($username))
 		->fetchAll();
 
@@ -830,7 +830,7 @@ function getNewsItem($news_id) {
 	global $TBLPREFIX;
 
 	$row=
-		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}news WHERE n_id=?")
+		WT_DB::prepare("SELECT * FROM {$TBLPREFIX}news WHERE n_id=?")
 		->execute(array($news_id))
 		->fetchOneRow();
 

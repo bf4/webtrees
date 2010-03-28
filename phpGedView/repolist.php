@@ -27,13 +27,13 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'repolist.php');
+define('WT_SCRIPT_NAME', 'repolist.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+require_once WT_ROOT.'includes/functions/functions_print_lists.php';
 
 print_header(i18n::translate('Repositories'));
 echo '<div class="center"><h2>', i18n::translate('Repositories'), '</h2>';
-print_repo_table(get_repo_list(PGV_GED_ID));
+print_repo_table(get_repo_list(WT_GED_ID));
 echo '</div>';
 print_footer();
 ?>

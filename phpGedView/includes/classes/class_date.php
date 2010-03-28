@@ -38,12 +38,12 @@
  * are all for internal use only.
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_DATE_PHP', '');
+define('WT_CLASS_DATE_PHP', '');
 
 ////////////////////////////////////////////////////////////////////////////////
 //

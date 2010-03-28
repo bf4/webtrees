@@ -26,12 +26,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_DMSOUNDS_UTF8_PHP', '');
+define('WT_DMSOUNDS_UTF8_PHP', '');
 
 // Hebrew alphabet
 define('ALEF', 'א');

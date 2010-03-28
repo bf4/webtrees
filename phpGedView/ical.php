@@ -33,10 +33,10 @@
  * @TODO use language files
  */
 
-define('PGV_SCRIPT_NAME', 'ical.php');
+define('WT_SCRIPT_NAME', 'ical.php');
 require './config.php';
-require_once PGV_ROOT.'includes/classes/class_person.php';
-require_once PGV_ROOT.'includes/classes/class_family.php';
+require_once WT_ROOT.'includes/classes/class_person.php';
+require_once WT_ROOT.'includes/classes/class_family.php';
 
 //Basic http auth needed for non browser authentication. If the user is not logged in and fails basic auth, nothing will be returned
 basicHTTPAuthenticateUser();
@@ -99,7 +99,7 @@ function generateChildDescendancyIcal(&$person, $depth) {
  * @param int $depth the descendancy depth to show
  */
 function generateFamilyDescendancyIcal(&$person, &$family, $depth) {
-	global $GEDCOM, $PGV_IMAGE_DIR, $PGV_IMAGES, $Dindent, $personcount;
+	global $GEDCOM, $WT_IMAGE_DIR, $WT_IMAGES, $Dindent, $personcount;
 	global $icalEvents;
 	if (is_null($family)) return;
 
@@ -218,8 +218,8 @@ function getIcalRecord($date, $summary, $description, $URL=""){
 						. "\r\nRRULE:FREQ=YEARLY"
 						. "\r\nCLASS:CONFIDENTIAL" //CLASS:PRIVATE together with TRANSP:TRANSPARENT can be used as well
 						. "\r\nTRANSP:TRANSPARENT" //Not needed if CLASS:CONFIDENTIAL is used, but will not hurt
-						. "\r\nUID:".PGV_PHPGEDVIEW.'-'.generate_guid() //unique ID
-						. "\r\nCATEGORIES:".PGV_PHPGEDVIEW." Events"
+						. "\r\nUID:".WT_WEBTREES.'-'.generate_guid() //unique ID
+						. "\r\nCATEGORIES:".WT_WEBTREES." Events"
 					. "\r\n" . formatIcalData("URL:$URL")
 					. "\r\nEND:VEVENT";
 	return $iCalString;
@@ -263,12 +263,12 @@ function getIcalTS($time=""){
 function getIcalHeader(){
 	//header('Content-type: text/plain');
 	header('Content-type: text/calendar; method=PUBLISH');
- 	header('Content-Disposition: attachment; filename="'.PGV_PHPGEDVIEW.'.ics"');
+ 	header('Content-Disposition: attachment; filename="'.WT_WEBTREES.'.ics"');
 	return "BEGIN:VCALENDAR"
 			."\r\nVERSION:2.0"
 			."\r\nCALSCALE:GREGORIAN"
-			."\r\nPRODID:-//".PGV_PHPGEDVIEW."//".PGV_PHPGEDVIEW."//EN"
-			."\r\nX-WR-CALNAME:".PGV_PHPGEDVIEW
+			."\r\nPRODID:-//".WT_WEBTREES."//".WT_WEBTREES."//EN"
+			."\r\nX-WR-CALNAME:".WT_WEBTREES
 			."\r\nMETHOD:PUBLISH";
 }
 

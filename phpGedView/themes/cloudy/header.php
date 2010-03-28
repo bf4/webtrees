@@ -28,7 +28,7 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -51,10 +51,10 @@ $menubar = new MenuBar();
 		<link rel="stylesheet" href="<?php echo $stylesheet; ?>" type="text/css" media="all" />
 		<?php if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) { ?> <link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" /> <?php } ?>
 		<?php if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
-			<link rel="stylesheet" href="<?php echo PGV_THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
+			<link rel="stylesheet" href="<?php echo WT_THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 		<?php }
 		// Additional css files required
-		if (PGV_USE_LIGHTBOX) {
+		if (WT_USE_LIGHTBOX) {
 			if ($TEXT_DIRECTION=='rtl') {
 				echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />';
 				echo '<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';
@@ -81,18 +81,18 @@ $menubar = new MenuBar();
 		<?php if (!empty($META_PAGE_TYPE)) { ?><meta name="page-type" content="<?php echo htmlspecialchars($META_PAGE_TYPE); ?>" /><?php } ?>
 		<?php if (!empty($META_ROBOTS)) { ?><meta name="robots" content="<?php echo htmlspecialchars($META_ROBOTS); ?>" /><?php } ?>
 		<?php if (!empty($META_REVISIT)) { ?><meta name="revisit-after" content="<?php echo htmlspecialchars($META_REVISIT); ?>" /><?php } ?>
-		<meta name="generator" content="<?php echo PGV_PHPGEDVIEW, ' - ', PGV_PHPGEDVIEW_URL; ?>" />
+		<meta name="generator" content="<?php echo WT_WEBTREES, ' - ', WT_WEBTREES_URL; ?>" />
 	<?php } ?>
 	<?php echo $javascript; ?>
 	<?php echo $head; //-- additional header information ?>
 	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
 	<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
 	<?php if ($TEXT_DIRECTION=='rtl') {?>
-		<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
+		<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
 	<?php }?>
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>modules.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo WT_THEME_DIR?>modules.css" rel="Stylesheet" />
 </head>
 <body id="body" <?php echo $bodyOnLoad; ?>>
 <!-- begin header section -->
@@ -102,15 +102,15 @@ if ($view=='preview') include($print_headerfile);
 else { ?>
 <div id="header" class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php if (empty($SEARCH_SPIDER)) { ?>
-	<img src="<?php echo $PGV_IMAGE_DIR; ?>/loading.gif" width="70" height="25" id="ProgBar" name="ProgBar" style="position:absolute;margin-left:auto;margin-right:auto;left:47%;top:48%;margin-bottom:auto;margin-top:auto;" alt="loading..." />
+	<img src="<?php echo $WT_IMAGE_DIR; ?>/loading.gif" width="70" height="25" id="ProgBar" name="ProgBar" style="position:absolute;margin-left:auto;margin-right:auto;left:47%;top:48%;margin-bottom:auto;margin-top:auto;" alt="loading..." />
 	<?php } ?>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-left:1px solid #003399;border-top:1px solid #003399;border-right:1px solid #003399;" >
 		<tr>
 			<td>
-				<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background:url('<?php echo $PGV_IMAGE_DIR; ?>/clouds.gif');height:38px;white-space: nowrap;" >
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background:url('<?php echo $WT_IMAGE_DIR; ?>/clouds.gif');height:38px;white-space: nowrap;" >
 					<tr>
 						<td width="10" >
-							<img src="<?php echo $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" />
+							<img src="<?php echo $WT_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" />
 						</td>
 						<td align="<?php echo $TEXT_DIRECTION=="ltr"?"left":"right"; ?>" valign="middle" >
 							<div class="title" style="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right"; ?>">
@@ -136,7 +136,7 @@ else { ?>
 											<input type="text" class="formbut" name="query" size="15" value="<?php echo i18n::translate('Search'); ?>"
 												onfocus="if (this.value == '<?php echo i18n::translate('Search'); ?>') this.value=''; focusHandler();"
 												onblur="if (this.value == '') this.value='<?php echo i18n::translate('Search'); ?>';" />
-											<input type="image" src="<?php echo $PGV_IMAGE_DIR; ?>/go.gif" align="top" title="<?php echo i18n::translate('Search'); ?>
+											<input type="image" src="<?php echo $WT_IMAGE_DIR; ?>/go.gif" align="top" title="<?php echo i18n::translate('Search'); ?>
 											" />
 										</form>
 									</td>
@@ -150,7 +150,7 @@ else { ?>
 						</td>
 						<?php } ?>
 						<td width="10">
-							<img src="<?php echo $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" />
+							<img src="<?php echo $WT_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" />
 						</td>
 					</tr>
 				</table>
@@ -162,7 +162,7 @@ else { ?>
 							<table cellspacing="0" cellpadding="0" border="0" style="min-width:200px;height:26px;" align="<?php echo $TEXT_DIRECTION=="ltr"?"left":"right"; ?>">
 								<tr>
 									<td>
-										<img src="<?php echo $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" />
+										<img src="<?php echo $WT_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" />
 									</td>
 
 								<?php
@@ -260,7 +260,7 @@ else { ?>
 						</td>
 						<?php } ?>
 						<td width="10">
-							<img src="<?php echo $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" />
+							<img src="<?php echo $WT_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" />
 						</td>
 					</tr>
 				</table>

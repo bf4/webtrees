@@ -30,12 +30,12 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FUNCTIONS_MEDIADB_PHP', '');
+define('WT_FUNCTIONS_MEDIADB_PHP', '');
 
 //-- Setup array of media types
 $MEDIATYPE = array("a11", "acb", "adc", "adf", "afm", "ai", "aiff", "aif", "amg", "anm", "ans", "apd", "asf", "au", "avi", "awm", "bga", "bmp", "bob", "bpt", "bw", "cal", "cel", "cdr", "cgm", "cmp", "cmv", "cmx", "cpi", "cur", "cut", "cvs", "cwk", "dcs", "dib", "dmf", "dng", "doc", "dsm", "dxf", "dwg", "emf", "enc", "eps", "fac", "fax", "fit", "fla", "flc", "fli", "fpx", "ftk", "ged", "gif", "gmf", "hdf", "iax", "ica", "icb", "ico", "idw", "iff", "img", "jbg", "jbig", "jfif", "jpe", "jpeg", "jp2", "jpg", "jtf", "jtp", "lwf", "mac", "mid", "midi", "miff", "mki", "mmm", ".mod", "mov", "mp2", "mp3", "mpg", "mpt", "msk", "msp", "mus", "mvi", "nap", "ogg", "pal", "pbm", "pcc", "pcd", "pcf", "pct", "pcx", "pdd", "pdf", "pfr", "pgm", "pic", "pict", "pk", "pm3", "pm4", "pm5", "png", "ppm", "ppt", "ps", "psd", "psp", "pxr", "qt", "qxd", "ras", "rgb", "rgba", "rif", "rip", "rla", "rle", "rpf", "rtf", "scr", "sdc", "sdd", "sdw", "sgi", "sid", "sng", "swf", "tga", "tiff", "tif", "txt", "text", "tub", "ul", "vda", "vis", "vob", "vpg", "vst", "wav", "wdb", "win", "wk1", "wks", "wmf", "wmv", "wpd", "wxf", "wp4", "wp5", "wp6", "wpg", "wpp", "xbm", "xls", "xpm", "xwd", "yuv", "zgm");
@@ -190,13 +190,13 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
 	if ($random) {
 		$rows=
-			PGV_DB::prepare("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? ORDER BY RAND() LIMIT 5")
-			->execute(array(PGV_GED_ID))
+			WT_DB::prepare("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? ORDER BY RAND() LIMIT 5")
+			->execute(array(WT_GED_ID))
 			->fetchAll();
 	} else {
 		$rows=
-			PGV_DB::prepare("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? AND (m_file LIKE ? OR m_file LIKE ?) ORDER BY m_id desc")
-			->execute(array(PGV_GED_ID, "%{$myDir}%", "%://%"))
+			WT_DB::prepare("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? AND (m_file LIKE ? OR m_file LIKE ?) ORDER BY m_id desc")
+			->execute(array(WT_GED_ID, "%{$myDir}%", "%://%"))
 			->fetchAll();
 	}
 	$mediaObjects = array ();
@@ -253,7 +253,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	foreach ($pgv_changes as $changes) {
 		foreach ($changes as $change) {
 			while (true) {
-				if ($change["gedcom"] != PGV_GEDCOM || $change["status"] != "submitted")
+				if ($change["gedcom"] != WT_GEDCOM || $change["status"] != "submitted")
 					break;
 
 				$gedrec = $change['undo'];
@@ -274,7 +274,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 					$firstChar = "";
 					$restChar = $change["gid"];
 				}
-				$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . PGV_GED_ID;
+				$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . WT_GED_ID;
 				if (isset ($medialist[$keyMediaList])) {
 					$medialist[$keyMediaList]["CHANGE"] = $change["type"];
 					break;
@@ -284,7 +284,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				$media = array ();
 				$media["ID"] = $change["gid"];
 				$media["XREF"] = $change["gid"];
-				$media["GEDFILE"] = PGV_GED_ID;
+				$media["GEDFILE"] = WT_GED_ID;
 				$media["FILE"] = "";
 				$media["THUMB"] = "";
 				$media["THUMBEXISTS"] = false;
@@ -351,15 +351,15 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	}
 
 	foreach ($medialist as $key=>$media) {
-		foreach (fetch_linked_indi($media["XREF"], 'OBJE', PGV_GED_ID) as $indi) {
+		foreach (fetch_linked_indi($media["XREF"], 'OBJE', WT_GED_ID) as $indi) {
 			$medialist[$key]["LINKS"][$indi->getXref()]='INDI';
 			$medialist[$key]["LINKED"]=true;
 		}
-		foreach (fetch_linked_fam($media["XREF"], 'OBJE', PGV_GED_ID) as $fam) {
+		foreach (fetch_linked_fam($media["XREF"], 'OBJE', WT_GED_ID) as $fam) {
 			$medialist[$key]["LINKS"][$fam->getXref()]='FAM';
 			$medialist[$key]["LINKED"]=true;
 		}
-		foreach (fetch_linked_sour($media["XREF"], 'OBJE', PGV_GED_ID) as $sour) {
+		foreach (fetch_linked_sour($media["XREF"], 'OBJE', WT_GED_ID) as $sour) {
 			$medialist[$key]["LINKS"][$sour->getXref()]='SOUR';
 			$medialist[$key]["LINKED"]=true;
 		}
@@ -378,7 +378,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	$mediaObjects = array_unique($mediaObjects);
 	$changedRecords = array_unique($changedRecords);
 	foreach ($changedRecords as $pid) {
-		$gedrec = find_updated_record($pid, PGV_GED_ID);
+		$gedrec = find_updated_record($pid, WT_GED_ID);
 		if ($gedrec) {
 			foreach ($mediaObjects as $mediaId) {
 				if (strpos($gedrec, "@" . $mediaId . "@")) {
@@ -389,11 +389,11 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 						$firstChar = "";
 						$restChar = $mediaId;
 					}
-					$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . PGV_GED_ID;
+					$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . WT_GED_ID;
 
 					// Add this GEDCOM ID to the link list of the media object
 					if (isset ($medialist[$keyMediaList])) {
-						$medialist[$keyMediaList]["LINKS"][$pid] = gedcom_record_type($pid, PGV_GED_ID);
+						$medialist[$keyMediaList]["LINKS"][$pid] = gedcom_record_type($pid, WT_GED_ID);
 						$medialist[$keyMediaList]["LINKED"] = true;
 					}
 				}
@@ -549,7 +549,7 @@ function filterMedia($media, $filter, $acceptExt) {
 	$filter=utf8_strtoupper($filter);
 
 	//-- Accept when filter string contained in file name (but only for editing users)
-	if (PGV_USER_CAN_EDIT && strstr(utf8_strtoupper(basename($media["FILE"])), $filter))
+	if (WT_USER_CAN_EDIT && strstr(utf8_strtoupper(basename($media["FILE"])), $filter))
 		return true;
 
 	//-- Accept when filter string contained in Media item's title
@@ -590,7 +590,7 @@ function filterMedia($media, $filter, $acceptExt) {
 * @return string the location of the thumbnail
 */
 function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
-	global $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $AUTO_GENERATE_THUMBS, $MEDIA_DIRECTORY_LEVELS;
+	global $MEDIA_DIRECTORY, $WT_IMAGE_DIR, $WT_IMAGES, $AUTO_GENERATE_THUMBS, $MEDIA_DIRECTORY_LEVELS;
 	global $MEDIA_EXTERNAL;
 
 	if (strlen($filename) == 0)
@@ -651,7 +651,7 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 		default :
 			$which = "large";
 	}
-	return $PGV_IMAGE_DIR . "/" . $PGV_IMAGES["media"][$which];
+	return $WT_IMAGE_DIR . "/" . $WT_IMAGES["media"][$which];
 }
 
 /**
@@ -693,7 +693,7 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 	if ($truncate == "NOTRUNC")
 		$truncate = "FRONT"; // **** temporary over-ride *****
 
-	if (PGV_SCRIPT_NAME=='mediafirewall.php') {
+	if (WT_SCRIPT_NAME=='mediafirewall.php') {
 		// no extraneous output while displaying images
 		$noise = "QUIET";
 	}
@@ -876,7 +876,7 @@ function process_uploadMedia_form() {
 	print "<tr><td class=\"messagebox wrap\">";
 	for($i=1; $i<6; $i++) {
 		if (!empty($_FILES['mediafile'.$i]["name"]) || !empty($_FILES['thumbnail'.$i]["name"])) {
-			$folderName = trim(trim(safe_POST('folder'.$i, PGV_REGEX_NOSCRIPT)), '/');
+			$folderName = trim(trim(safe_POST('folder'.$i, WT_REGEX_NOSCRIPT)), '/');
 			// Validate and correct folder names
 			$folderName = check_media_depth($folderName."/y.z", "BACK");
 			$folderName = dirname($folderName)."/";
@@ -901,7 +901,7 @@ function process_uploadMedia_form() {
 			$error = "";
 
 			// Determine file name on server
-			$fileName = trim(trim(safe_POST('filename'.$i, PGV_REGEX_NOSCRIPT)), '/');
+			$fileName = trim(trim(safe_POST('filename'.$i, WT_REGEX_NOSCRIPT)), '/');
 			$parts = pathinfo_utf($fileName);
 			if (!empty($parts["basename"])) {
 				// User supplied a name to be used on the server
@@ -928,7 +928,7 @@ function process_uploadMedia_form() {
 					// the file cannot be copied
 					$error .= i18n::translate('There was an error uploading your file.')."<br />".file_upload_error_text($_FILES["mediafile".$i]["error"])."<br />";
 				} else {
-					@chmod(filename_decode($destFolder.$mediaFile), PGV_PERM_FILE);
+					@chmod(filename_decode($destFolder.$mediaFile), WT_PERM_FILE);
 					AddToLog("Media file {$folderName}{$mediaFile} uploaded");
 				}
 			}
@@ -938,7 +938,7 @@ function process_uploadMedia_form() {
 					// the file cannot be copied
 					$error .= i18n::translate('There was an error uploading your file.')."<br />".file_upload_error_text($_FILES["thumbnail".$i]["error"])."<br />";
 				} else {
-					@chmod(filename_decode($destThumbFolder.$mediaFile), PGV_PERM_FILE);
+					@chmod(filename_decode($destThumbFolder.$mediaFile), WT_PERM_FILE);
 					AddToLog("Media file {$thumbFolderName}{$mediaFile} uploaded");
 				}
 			}
@@ -948,7 +948,7 @@ function process_uploadMedia_form() {
 					// the file cannot be copied
 					$error .= i18n::translate('There was an error uploading your file.')."<br />".file_upload_error_text($_FILES["thumbnail".$i]["error"])."<br />";
 				} else {
-					@chmod(filename_decode($folderName.$mediaFile), PGV_PERM_FILE);
+					@chmod(filename_decode($folderName.$mediaFile), WT_PERM_FILE);
 					AddToLog("Media file {$folderName}{$mediaFile} copied from {$thumbFolderName}{$mediaFile}");
 				}
 			}
@@ -1056,7 +1056,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 			if ($i==1) echo '<br /><sub>', i18n::translate('Use the &laquo;Browse&raquo; button to search your local computer for the desired file.'), '</sub>';
 		echo '</td></tr>';
 
-		if (PGV_USER_GEDCOM_ADMIN) {
+		if (WT_USER_GEDCOM_ADMIN) {
 			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
 				echo i18n::translate('File name on server'), help_link('upload_server_file');
 				echo '</td>';
@@ -1068,7 +1068,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 			echo '<input type="hidden" name="filename', $i, '" value="" />';
 		}
 
-		if (PGV_USER_GEDCOM_ADMIN && $MEDIA_DIRECTORY_LEVELS>0) {
+		if (WT_USER_GEDCOM_ADMIN && $MEDIA_DIRECTORY_LEVELS>0) {
 			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
 				echo i18n::translate('Folder name on server'), help_link('upload_server_folder');
 				echo '</td>';
@@ -1077,7 +1077,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 				echo '<span dir="ltr"><select name="folder_list', $i, '" onchange="document.uploadmedia.folder', $i, '.value=this.options[this.selectedIndex].value;">', "\n";
 				echo '<option';
 				echo ' value="/"> ', i18n::translate('Choose: '), ' </option>';
-				if (PGV_USER_IS_ADMIN) echo '<option value="other" disabled>', i18n::translate('Other folder... please type in'), "</option>\n";
+				if (WT_USER_IS_ADMIN) echo '<option value="other" disabled>', i18n::translate('Other folder... please type in'), "</option>\n";
 				foreach ($mediaFolders as $f) {
 					if (!strpos($f, ".svn")) {    //Do not print subversion directories
 						// Strip $MEDIA_DIRECTORY from the folder name
@@ -1088,7 +1088,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 					}
 				}
 				print "</select></span>\n";
-				if (PGV_USER_IS_ADMIN) {
+				if (WT_USER_IS_ADMIN) {
 					echo '<br /><span dir="ltr"><input name="folder', $i, '" type="text" size="40" value="" tabindex="', $tab++, '" onblur="checkpath(this)" /></span>';
 					if ($i==1) echo '<br /><sub>', i18n::translate('You can enter up to %s folder names to follow the default &laquo%sraquo;.<br />Do not enter the &laquo;%s&raquo; part of the destination folder name.', $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY, $MEDIA_DIRECTORY), '</sub>';
 				} else echo '<input name="folder', $i, '" type="hidden" value="" />';
@@ -1128,7 +1128,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	// NOTE: add a table and form to easily add new values to the table
 	echo "<form method=\"post\" name=\"newmedia\" action=\"addmedia.php\" enctype=\"multipart/form-data\">\n";
 	echo "<input type=\"hidden\" name=\"action\" value=\"", $action, "\" />\n";
-	echo "<input type=\"hidden\" name=\"ged\" value=\"", PGV_GEDCOM, "\" />\n";
+	echo "<input type=\"hidden\" name=\"ged\" value=\"", WT_GEDCOM, "\" />\n";
 	echo "<input type=\"hidden\" name=\"pid\" value=\"", $pid, "\" />\n";
 	if (!empty($linktoid)) {
 		echo "<input type=\"hidden\" name=\"linktoid\" value=\"", $linktoid, "\" />\n";
@@ -1152,11 +1152,11 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print_findsource_link("gid");
 		echo "<br /><sub>", i18n::translate('Enter or search for the ID of the person, family, or source to which this media item should be linked.'), "</sub></td></tr>\n";
 	}
-	if (isset ($pgv_changes[$pid . "_" . PGV_GEDCOM])) {
-		$gedrec = find_updated_record($pid, PGV_GED_ID);
+	if (isset ($pgv_changes[$pid . "_" . WT_GEDCOM])) {
+		$gedrec = find_updated_record($pid, WT_GED_ID);
 	} else {
-		if (gedcom_record_type($pid, get_id_from_gedcom(PGV_GEDCOM)) == "OBJE") {
-			$gedrec = find_media_record($pid, PGV_GED_ID);
+		if (gedcom_record_type($pid, get_id_from_gedcom(WT_GEDCOM)) == "OBJE") {
+			$gedrec = find_media_record($pid, WT_GED_ID);
 		} else {
 			$gedrec = "";
 		}
@@ -1187,7 +1187,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print " onchange=\"updateFormat(this.value);\"";
 		print " size=\"40\" /><br /><sub>" . i18n::translate('Use the &laquo;Browse&raquo; button to search your local computer for the desired file.') . "</sub></td></tr>";
 		// Check for thumbnail generation support
-		if (PGV_USER_GEDCOM_ADMIN) {
+		if (WT_USER_GEDCOM_ADMIN) {
 			$ThumbSupport = "";
 		// Check for thumbnail generation support
 			$thumbSupport = "";
@@ -1217,7 +1217,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	// File name on server
 	$isExternal = isFileExternal($gedfile);
 	if ($gedfile == "FILE") {
-		if (PGV_USER_GEDCOM_ADMIN) {
+		if (WT_USER_GEDCOM_ADMIN) {
 			add_simple_tag("1 $gedfile", "", i18n::translate('File name on server'), "", "NOCLOSE");
 			print "<br /><sub>" . i18n::translate('Do not change to keep original file name.');
 			print "<br />" . i18n::translate('You may enter a URL, beginning with &laquo;http://&raquo;.') . "</sub></td></tr>";
@@ -1240,7 +1240,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		echo i18n::translate('File name on server'), help_link('upload_server_file');
 		echo "</td>\n";
 		echo "<td class=\"optionbox wrap $TEXT_DIRECTION wrap\">";
-		if (PGV_USER_GEDCOM_ADMIN) {
+		if (WT_USER_GEDCOM_ADMIN) {
 			echo "<input name=\"filename\" type=\"text\" value=\"" . htmlentities($fileName, ENT_COMPAT, 'UTF-8') . "\" size=\"40\"";
 			if ($isExternal)
 				echo " />";
@@ -1272,13 +1272,13 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		if (substr($folder, 0, strlen($MEDIA_DIRECTORY)) == $MEDIA_DIRECTORY) $folder = substr($folder, strlen($MEDIA_DIRECTORY));
 		echo i18n::translate('Folder name on server'), help_link('upload_server_folder'), '</td><td class="optionbox wrap">';
 		//-- don't let regular users change the location of media items
-		if ($action!='update' || PGV_USER_GEDCOM_ADMIN) {
+		if ($action!='update' || WT_USER_GEDCOM_ADMIN) {
 			$mediaFolders = get_media_folders();
 			echo '<span dir="ltr"><select name="folder_list" onchange="document.newmedia.folder.value=this.options[this.selectedIndex].value;">', "\n";
 			echo '<option';
 			if ($folder == '/') echo ' selected="selected"';
 			echo ' value="/"> ', i18n::translate('Choose: '), ' </option>';
-			if (PGV_USER_IS_ADMIN) echo '<option value="other" disabled>', i18n::translate('Other folder... please type in'), "</option>\n";
+			if (WT_USER_IS_ADMIN) echo '<option value="other" disabled>', i18n::translate('Other folder... please type in'), "</option>\n";
 			foreach ($mediaFolders as $f) {
 				if (!strpos($f, ".svn")) {    //Do not print subversion directories
 					// Strip $MEDIA_DIRECTORY from the folder name
@@ -1294,7 +1294,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		}
 		else echo $folder;
 		echo '<input name="oldFolder" type="hidden" value="', addslashes($folder), '" />';
-		if (PGV_USER_IS_ADMIN) {
+		if (WT_USER_IS_ADMIN) {
 			echo '<br /><span dir="ltr"><input type="text" name="folder" size="40" value="', $folder, '" onblur="checkpath(this)" /></span>';
 			if ($MEDIA_DIRECTORY_LEVELS>0) {
 				echo '<br /><sub>', i18n::translate('You can enter up to %s folder names to follow the default &laquo;%s&raquo;.<br />Do not enter the &laquo;%s&raquo; part of the destination folder name.', $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY, $MEDIA_DIRECTORY), '</sub>';
@@ -1368,7 +1368,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	}
 
 	//-- don't show _PRIM option to regular users
-//	if (PGV_USER_GEDCOM_ADMIN) {
+//	if (WT_USER_GEDCOM_ADMIN) {
 		// 2 _PRIM
 		if ($gedrec == "")
 			$gedprim = "_PRIM";
@@ -1382,7 +1382,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 //	}
 
 	//-- don't show _THUM option to regular users
-//	if (PGV_USER_GEDCOM_ADMIN) {
+//	if (WT_USER_GEDCOM_ADMIN) {
 		// 2 _THUM
 		if ($gedrec == "")
 			$gedthum = "_THUM N";
@@ -1467,7 +1467,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			add_simple_tag(($sourceLevel+1) ." QUAY ". $sourceQUAY);
 		}
 	}
-	if (PGV_USER_IS_ADMIN) {
+	if (WT_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
@@ -1629,7 +1629,7 @@ function PrintMediaLinks($links, $size = "small") {
 function get_media_id_from_file($filename){
 	global $TBLPREFIX;
 	return
-		PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file LIKE ?")
+		WT_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file LIKE ?")
 		->execute(array("%{$filename}"))
 		->fetchOne();
 }
@@ -1644,23 +1644,23 @@ function get_media_relations($mid){
 		$firstChar = "";
 		$restChar = $mid;
 	}
-	$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . PGV_GED_ID;
+	$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . WT_GED_ID;
 	if (isset ($medialist[$keyMediaList]['LINKS'])) {
 		return $medialist[$keyMediaList]['LINKS'];
 	}
 
 	$media = array();
-		foreach (fetch_linked_indi($mid, 'OBJE', PGV_GED_ID) as $indi) {
+		foreach (fetch_linked_indi($mid, 'OBJE', WT_GED_ID) as $indi) {
 			if ($mid!=$indi->getXref()) {
 				$media[$indi->getXref()]='INDI';
 			}
 		}
-		foreach (fetch_linked_fam($mid, 'OBJE', PGV_GED_ID) as $fam) {
+		foreach (fetch_linked_fam($mid, 'OBJE', WT_GED_ID) as $fam) {
 			if ($mid!=$fam->getXref()) {
 				$media[$fam->getXref()]='FAM';
 			}
 		}
-		foreach (fetch_linked_sour($mid, 'OBJE', PGV_GED_ID) as $sour) {
+		foreach (fetch_linked_sour($mid, 'OBJE', WT_GED_ID) as $sour) {
 			if ($mid!=$sour->getXref()) {
 				$media[$sour->getXref()]='SOUR';
 			}
@@ -1675,8 +1675,8 @@ function picture_clip($person_id, $image_id, $filename, $thumbDir)
 	global $TBLPREFIX;
 	// This gets the gedrec
 	$gedrec=
-		PGV_DB::prepare("SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?")
-		->execute(array($image_id, PGV_GED_ID))
+		WT_DB::prepare("SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?")
+		->execute(array($image_id, WT_GED_ID))
 		->fetchOne();
 
 	//Get the location of the file, and then make a location for the clipped image
@@ -1804,7 +1804,7 @@ function get_media_standard_path($path) {
 
 // recursively make directories
 // taken from http://us3.php.net/manual/en/function.mkdir.php#60861
-function mkdirs($dir, $mode = PGV_PERM_EXE, $recursive = true) {
+function mkdirs($dir, $mode = WT_PERM_EXE, $recursive = true) {
 	if( is_null($dir) || $dir === "" ){
 		return FALSE;
 	}

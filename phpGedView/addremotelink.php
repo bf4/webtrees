@@ -29,22 +29,22 @@
 * @version $Id$
 */
 
-define('PGV_SCRIPT_NAME', 'addremotelink.php');
+define('WT_SCRIPT_NAME', 'addremotelink.php');
 require './config.php';
-require PGV_ROOT.'includes/controllers/remotelink_ctrl.php';
+require WT_ROOT.'includes/controllers/remotelink_ctrl.php';
 
 $controller=new RemoteLinkController();
 $controller->init();
 
 print_simple_header(i18n::translate('Add Remote Link'));
 
-$pid=safe_REQUEST($_REQUEST, 'pid', PGV_REGEX_XREF);
+$pid=safe_REQUEST($_REQUEST, 'pid', WT_REGEX_XREF);
 $action=safe_POST('action', array('addlink'));
 
 //-- only allow gedcom admins to create remote links
 if (!$controller->canAccess()) {
 	echo '<span class="error">', i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.'), '<br />';
-	if (!PGV_USER_GEDCOM_ADMIN) {
+	if (!WT_USER_GEDCOM_ADMIN) {
 		echo i18n::translate('This user name cannot edit this GEDCOM.');
 	} else if (!$ALLOW_EDIT_GEDCOM) {
 		echo i18n::translate('Editing this GEDCOM has been disabled by the administrator.');
@@ -61,7 +61,7 @@ if (!$controller->canAccess()) {
 
 $success=$controller->runAction($action);
 
-echo PGV_JS_START;
+echo WT_JS_START;
 ?>
 function sameServer() {
 	alert('<?php echo i18n::translate('You have selected the same site.'); ?>');
@@ -103,7 +103,7 @@ function checkform(frm) {
 	return true;
 }
 <?php
-echo PGV_JS_END;
+echo WT_JS_END;
 
 if (!$success) {
 ?>
@@ -251,7 +251,7 @@ if (!$success) {
 		</td>
 	</tr>
 	<?php
-	if (PGV_USER_IS_ADMIN) {
+	if (WT_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), '</td><td class="optionbox wrap">';
 		if ($NO_UPDATE_CHAN) {
@@ -270,12 +270,12 @@ if (!$success) {
 <input type="submit" value="<?php echo i18n::translate('Add Link'); ?>" id="btnSubmit" name="btnSubmit" />
 </form>
 <?php
-	echo PGV_JS_START, 'swapComponents("', $controller->form_location, '");', PGV_JS_END;
+	echo WT_JS_START, 'swapComponents("', $controller->form_location, '");', WT_JS_END;
 }
 
 // autoclose window when update successful
 if ($success && $EDIT_AUTOCLOSE) {
-	echo PGV_JS_START, 'edit_close();', PGV_JS_END;
+	echo WT_JS_START, 'edit_close();', WT_JS_END;
 } else {
 	echo '<div class="center"><a href="javascript://', i18n::translate('Close Window'), '" onclick="edit_close();">', i18n::translate('Close Window'), '</a></div>';
 	print_simple_footer();

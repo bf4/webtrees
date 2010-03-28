@@ -32,7 +32,7 @@
  * @version $Id: block_small_temp.php 4703 2009-01-07 19:46:30Z canajun2eh $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }

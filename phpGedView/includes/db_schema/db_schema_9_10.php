@@ -47,12 +47,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_SCHEMA_9_10', '');
+define('WT_SCHEMA_9_10', '');
 
 global $DEFAULT_GEDCOM;
 if ($DEFAULT_GEDCOM) {

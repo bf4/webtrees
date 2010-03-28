@@ -27,7 +27,7 @@
  * $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -76,7 +76,7 @@ class married_names_bu_plugin extends base_plugin {
 		preg_match_all('/^1 FAMS @(.+)@/m', $gedrec, $fmatch);
 		foreach ($fmatch[1] as $famid) {
 			$famrec=batch_update::getLatestRecord($famid, 'FAM');
-			if (preg_match('/^1 '.PGV_EVENTS_MARR.'/m', $famrec) && preg_match('/^1 HUSB @(.+)@/m', $famrec, $hmatch)) {
+			if (preg_match('/^1 '.WT_EVENTS_MARR.'/m', $famrec) && preg_match('/^1 HUSB @(.+)@/m', $famrec, $hmatch)) {
 				$husbrec=batch_update::getLatestRecord($hmatch[1], 'INDI');
 				$husb_surnames=array_unique(array_merge($husb_surnames, self::_surnames($hmatch[1], $husbrec)));
 			}

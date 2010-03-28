@@ -37,12 +37,12 @@ global $USE_THUMBS_MAIN, $mediacnt, $tabno;
 global $linkToID;
 global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 
-		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
+		global $SHOW_ID_NUMBERS, $WT_IMAGE_DIR, $WT_IMAGES, $SHOW_AGE_DIFF;
 		global $pgv_changes, $GEDCOM, $ABBREVIATE_CHART_LABELS;
 		global $show_full; 
 		global $famid;
 
-		$summary=$controller->indi->format_first_major_fact(PGV_EVENTS_BIRT, 2);
+		$summary=$controller->indi->format_first_major_fact(WT_EVENTS_BIRT, 2);
 		if (!($controller->indi->isDead())) {
 			// If alive display age
 			$bdate=$controller->indi->getBirthDate();
@@ -50,7 +50,7 @@ global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 			if ($age!="")
 				$summary.= "<span class=\"label\">".i18n::translate('Age').":</span><span class=\"field\"> ".get_age_at_event($age, true)."</span>";
 		}
-		$summary.=$controller->indi->format_first_major_fact(PGV_EVENTS_DEAT, 2);
+		$summary.=$controller->indi->format_first_major_fact(WT_EVENTS_DEAT, 2);
 
 		$controller->census_assistant();
 

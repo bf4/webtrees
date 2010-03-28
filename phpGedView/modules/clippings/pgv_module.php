@@ -27,14 +27,14 @@
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-require_once(PGV_ROOT."includes/classes/class_module.php");
-require_once(PGV_ROOT."modules/clippings/clippings.php");
+require_once(WT_ROOT."includes/classes/class_module.php");
+require_once(WT_ROOT."modules/clippings/clippings.php");
 
-class clippings_PGVModule extends PGVModule {
+class clippings_WTModule extends WTModule {
 	protected $name = 'clippings';
 	protected $description = 'Clippings Cart PGV Module';
 	protected $version = '4.2.2';
@@ -77,7 +77,7 @@ class clippings_PGVModule extends PGVModule {
 	 */
 	public function &getMenu() { 
 		global $ENABLE_CLIPPINGS_CART;
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SEARCH_SPIDER;
+		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
 			$menu = new Menu("", "", "");
@@ -85,8 +85,8 @@ class clippings_PGVModule extends PGVModule {
 		}
 		//-- main clippings menu item
 		$menu = new Menu(i18n::translate('Family Tree Clippings Cart'), encode_url('module.php?mod=clippings&amp;ged='.$GEDCOM), "down");
-		if (!empty($PGV_IMAGES["clippings"]["large"]))
-			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["large"]);
+		if (!empty($WT_IMAGES["clippings"]["large"]))
+			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["clippings"]["large"]);
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_clippings");
 
 		return $menu;

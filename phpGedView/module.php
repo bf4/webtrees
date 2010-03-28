@@ -28,19 +28,19 @@
  * @author Patrick Kellum
  */
 
-define('PGV_SCRIPT_NAME', 'module.php');
+define('WT_SCRIPT_NAME', 'module.php');
 require './config.php';
 
 // Simple mod system, based on the older phpnuke/postnuke
-define('PGV_MOD_SIMPLE', 1);
+define('WT_MOD_SIMPLE', 1);
 // More advanced OO module system
-define('PGV_MOD_OO', 2);
+define('WT_MOD_OO', 2);
 // Module system version 2, enhanced security and better output control
-define('PGV_MOD_V2', 3);
+define('WT_MOD_V2', 3);
 
 if(!isset($_REQUEST['mod']))
 {
-	// PGV_MOD_NUKE
+	// WT_MOD_NUKE
 	if (isset ($_REQUEST['name']))
 	{
 		$_REQUEST['mod'] = $_REQUEST['name'];
@@ -63,20 +63,20 @@ else
 }
 switch($modinfo['Module']['type'])
 {
-	case PGV_MOD_SIMPLE:
+	case WT_MOD_SIMPLE:
 	{
 		if (!isset ($_REQUEST['pgvaction']))
 		{
 			$_REQUEST['pgvaction'] = 'index';
 		}
-		if (!file_exists(PGV_ROOT.'modules/'.$_REQUEST['mod'].'/'.$_REQUEST['pgvaction'].'.php'))
+		if (!file_exists(WT_ROOT.'modules/'.$_REQUEST['mod'].'/'.$_REQUEST['pgvaction'].'.php'))
 		{
 			$_REQUEST['pgvaction'] = 'index';
 		}
-		require_once PGV_ROOT.'modules/'.$_REQUEST['mod'].'/'.$_REQUEST['pgvaction'].'.php';
+		require_once WT_ROOT.'modules/'.$_REQUEST['mod'].'/'.$_REQUEST['pgvaction'].'.php';
 		break;
 	}
-	case PGV_MOD_OO:
+	case WT_MOD_OO:
 	{
 		if (!isset ($_REQUEST['method']))
 		{
@@ -86,7 +86,7 @@ switch($modinfo['Module']['type'])
 		{
 			$_REQUEST['class'] = $_REQUEST['mod'];
 		}
-		require_once PGV_ROOT.'modules/'.$_REQUEST['mod'].'/'.$_REQUEST['class'].'.php';
+		require_once WT_ROOT.'modules/'.$_REQUEST['mod'].'/'.$_REQUEST['class'].'.php';
 		$mod = new $_REQUEST['class']();
 		if (!method_exists($mod, $_REQUEST['method']))
 		{
@@ -99,14 +99,14 @@ switch($modinfo['Module']['type'])
 		}
 		break;
 	}
-	case PGV_MOD_V2:
+	case WT_MOD_V2:
 	{
 /*
  * Module Security
  *	1. Test if module is active.
  *	2. Only Admins can view an inactive module.
  */
-		if((!isset($modinfo['Config']['active']) || $modinfo['Config']['active'] === false) && !PGV_USER_IS_ADMIN)
+		if((!isset($modinfo['Config']['active']) || $modinfo['Config']['active'] === false) && !WT_USER_IS_ADMIN)
 		{
 			header("Location: {$SERVER_URL}index.php");print ' ';exit;
 		}
@@ -127,11 +127,11 @@ switch($modinfo['Module']['type'])
  *	1. Load english language if exists.
  *	2. Load current language if exists.
  */
-		if (file_exists(PGV_ROOT.'modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$modinfo['Module']['default_language'].'.php')) {
-			require_once PGV_ROOT.'modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$modinfo['Module']['default_language'].'.php';
+		if (file_exists(WT_ROOT.'modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$modinfo['Module']['default_language'].'.php')) {
+			require_once WT_ROOT.'modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$modinfo['Module']['default_language'].'.php';
 		}
 		if ($LANGUAGE != $modinfo['Module']['default_language'] && file_exists('./modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$LANGUAGE.'.php')) {
-			require_once PGV_ROOT.'modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$LANGUAGE.'.php';
+			require_once WT_ROOT.'modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$LANGUAGE.'.php';
 		}
 
 /*
@@ -140,7 +140,7 @@ switch($modinfo['Module']['type'])
  *	2. Create a module object.
  *	3. Initialize the module if needed.
  */
-		require_once PGV_ROOT.'modules/'.$_REQUEST['mod'].'/'.$_REQUEST['class'].'.php';
+		require_once WT_ROOT.'modules/'.$_REQUEST['mod'].'/'.$_REQUEST['class'].'.php';
 		$mod = new $_REQUEST['class']();
 		if(method_exists($mod, 'init')){$mod->init();}
 /*
@@ -181,7 +181,7 @@ switch($modinfo['Module']['type'])
 				if(!isset($results['title']))
 				{
 					if(isset($modinfo['Config']['title'])){$results['title'] = $modinfo['Config']['title'];}
-					else{$results['title'] = get_gedcom_setting(PGV_GED_ID, 'title');}
+					else{$results['title'] = get_gedcom_setting(WT_GED_ID, 'title');}
 				}
 				if(!isset($results['head'])){$results['head'] = '';}
 				print_header($results['title'], $results['head']);
@@ -223,7 +223,7 @@ switch($modinfo['Module']['type'])
 	}
 	default:
 	{
-		print_header(get_gedcom_setting(PGV_GED_ID, 'title'));
+		print_header(get_gedcom_setting(WT_GED_ID, 'title'));
 		print i18n::translate('Unknown module type.');
 		print_footer();
 		break;

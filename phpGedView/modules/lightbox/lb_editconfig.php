@@ -31,7 +31,7 @@
  * $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
@@ -43,12 +43,12 @@ $action = safe_POST("action");
 
 print_header(i18n::translate('Lightbox-Album Configuration'));
 
-require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+require WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
 
 print "<span class=\"subheaders\">".i18n::translate('Lightbox-Album Configuration')."</span>";
 print "<br /><br />";
 
-if (!PGV_USER_IS_ADMIN) {
+if (!WT_USER_IS_ADMIN) {
 	print "<table class=\"facts_table\">\n";
 	print "<tr><td colspan=\"2\" class=\"facts_value\">".i18n::translate('Page only for Administrators');
 	print "</td></tr></table>\n";
@@ -71,7 +71,7 @@ if ($action=='update' && !isset($security_user)) {
 
 	AddToLog('Lightbox config updated');
 	// read the config file again, to set the vars
-	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	require WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
 }
 
 $i = 0;

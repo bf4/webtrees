@@ -29,12 +29,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_MUTEX_PHP', '');
+define('WT_CLASS_MUTEX_PHP', '');
 
 class Mutex {
 	var $name; 	//-- the name of the mutex
@@ -43,7 +43,7 @@ class Mutex {
 	function checkDBCONN() {
 		global $CONFIGURED;
 
-		if (!PGV_DB::isConnected()) {
+		if (!WT_DB::isConnected()) {
 			if ($CONFIGURED) {
 				//-- fix bad configuration prevents edit config page from loading
 				//die("Cannot use mutex without database");
@@ -68,7 +68,7 @@ class Mutex {
 		//-- check if this mutex already exists
 		try {
 			$one=
-				PGV_DB::prepare("SELECT 1 FROM {$TBLPREFIX}mutex WHERE mx_name=?")
+				WT_DB::prepare("SELECT 1 FROM {$TBLPREFIX}mutex WHERE mx_name=?")
 				->execute(array($name))
 				->fetchOne();
 		} catch (PDOException $ex) {
@@ -76,7 +76,7 @@ class Mutex {
 		}
 		//-- mutex doesn't exist so create it
 		if ($one!=1) {
-			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}mutex (mx_id, mx_name, mx_thread) VALUES (?, ?, ?)")
+			WT_DB::prepare("INSERT INTO {$TBLPREFIX}mutex (mx_id, mx_name, mx_thread) VALUES (?, ?, ?)")
 				->execute(array(get_next_id("mutex", "mx_id"), $this->name, 0));
 		}
 		$this->waitCount = 0;
@@ -100,7 +100,7 @@ class Mutex {
 			//--- this will allow another thread to access the mutex if another thread that held it crashed
 			//-- allow the same session to get the mutex more than once
 			$one=
-				PGV_DB::prepare("SELECT 1 FROM {$TBLPREFIX}mutex WHERE mx_name=? AND (mx_thread=? OR mx_thread=? OR mx_time < ?)")
+				WT_DB::prepare("SELECT 1 FROM {$TBLPREFIX}mutex WHERE mx_name=? AND (mx_thread=? OR mx_thread=? OR mx_time < ?)")
 				->execute(array($this->name, '0', session_id(), time()-300))
 				->fetchOne();
 			if ($one==1) {
@@ -115,7 +115,7 @@ class Mutex {
 			}
 		}
 
-		PGV_DB::prepare("UPDATE {$TBLPREFIX}mutex SET mx_time=?, mx_thread=? WHERE mx_name=?")
+		WT_DB::prepare("UPDATE {$TBLPREFIX}mutex SET mx_time=?, mx_thread=? WHERE mx_name=?")
 			->execute(array(time(), session_id(), $this->name));
 		return true;
 	}
@@ -129,7 +129,7 @@ class Mutex {
 
 		if (!Mutex::checkDBCONN()) return false;
 
-		PGV_DB::prepare("UPDATE {$TBLPREFIX}mutex SET mx_time=?, mx_thread=? WHERE mx_name=? AND mx_thread=?")
+		WT_DB::prepare("UPDATE {$TBLPREFIX}mutex SET mx_time=?, mx_thread=? WHERE mx_name=? AND mx_thread=?")
 			->execute(array(0, '0', $this->name, session_id()));
 		$this->waitCount = 0;
 	}

@@ -27,14 +27,14 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_SOURCE_PHP', '');
+define('WT_CLASS_SOURCE_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
+require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
 
 class Source extends GedcomRecord {
 	/**

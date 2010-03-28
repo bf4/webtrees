@@ -26,7 +26,7 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'expand_view.php');
+define('WT_SCRIPT_NAME', 'expand_view.php');
 require './config.php';
 
 header('Content-Type: text/html; charset=UTF-8');
@@ -34,7 +34,7 @@ $pid = safe_GET_xref('pid');
 $person = Person::getInstance($pid);
 if (!$person->canDisplayDetails()) return i18n::translate('Private');
 
-$nonfacts = array("SEX","FAMS","FAMC","NAME","TITL","NOTE","SOUR","SSN","OBJE","HUSB","WIFE","CHIL","ALIA","ADDR","PHON","SUBM","_EMAIL","CHAN","URL","EMAIL","WWW","RESI","_UID","_TODO","_PGV_OBJS");
+$nonfacts = array("SEX","FAMS","FAMC","NAME","TITL","NOTE","SOUR","SSN","OBJE","HUSB","WIFE","CHIL","ALIA","ADDR","PHON","SUBM","_EMAIL","CHAN","URL","EMAIL","WWW","RESI","_UID","_TODO","_WT_OBJS");
 $person->add_family_facts(false);
 $subfacts = $person->getIndiFacts();
 

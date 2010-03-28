@@ -31,9 +31,9 @@
  * @subpackage Calendar
  */
 
-define('PGV_SCRIPT_NAME', 'calendar.php');
+define('WT_SCRIPT_NAME', 'calendar.php');
 require './config.php';
-require PGV_ROOT.'includes/functions/functions_print_lists.php';
+require WT_ROOT.'includes/functions/functions_print_lists.php';
 
 if (isset($_REQUEST['cal'])) $cal = $_REQUEST['cal'];
 if (isset($_REQUEST['day'])) $day = $_REQUEST['day'];
@@ -178,7 +178,7 @@ if ($view!='preview') {
 	echo "<option value=\"all\"";
 	if ($filterof == "all") echo " selected=\"selected\"";
 	echo ">".i18n::translate('All People')."</option>";
-	if (!$HIDE_LIVE_PEOPLE || PGV_USER_ID) {
+	if (!$HIDE_LIVE_PEOPLE || WT_USER_ID) {
 		echo "<option value=\"living\"";
 		if ($filterof == "living") echo " selected=\"selected\"";
 		echo ">".i18n::translate('Living People')."</option>";
@@ -401,8 +401,8 @@ case 'year':
 case 'today':
 	echo "<table class=\"center {$TEXT_DIRECTION} width100\"><tr>";
 	// Table headings
-	echo "<td class=\"descriptionbox center width50\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['indis']['small']}\" border=\"0\" title=\"", i18n::translate('Individuals'), "\" alt=\"", i18n::translate('Individuals'), "\" />&nbsp;&nbsp;&nbsp;", i18n::translate('Individuals'), "</td>";
-	echo "<td class=\"descriptionbox center width50\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['cfamily']['small']}\" border=\"0\" title=\"", i18n::translate('Families'), "\" alt=\"", i18n::translate('Families'), "\" />&nbsp;&nbsp;&nbsp;", i18n::translate('Families'), "</td>";
+	echo "<td class=\"descriptionbox center width50\"><img src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['indis']['small']}\" border=\"0\" title=\"", i18n::translate('Individuals'), "\" alt=\"", i18n::translate('Individuals'), "\" />&nbsp;&nbsp;&nbsp;", i18n::translate('Individuals'), "</td>";
+	echo "<td class=\"descriptionbox center width50\"><img src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['cfamily']['small']}\" border=\"0\" title=\"", i18n::translate('Families'), "\" alt=\"", i18n::translate('Families'), "\" />&nbsp;&nbsp;&nbsp;", i18n::translate('Families'), "</td>";
 	echo "</tr><tr>";
 	// Table rows
 	$males=0;
@@ -533,7 +533,7 @@ if ($view=="preview") {
 	if (!empty($filters)) {
 		$filtertext="(".i18n::translate('Filter').": {$filtertext})";
 	}
-	echo '<br />', get_gedcom_setting(PGV_GED_ID, 'title'), ' ', $filtertext;
+	echo '<br />', get_gedcom_setting(WT_GED_ID, 'title'), ' ', $filtertext;
 }
 echo "</div><br />";
 print_footer();
@@ -593,7 +593,7 @@ function calendar_fact_text($fact, $show_places) {
 // Format a list of facts for display
 ////////////////////////////////////////////////////////////////////////////////
 function calendar_list_text($list, $tag1, $tag2, $show_sex_symbols) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $WT_IMAGE_DIR, $WT_IMAGES;
 	global $males, $females;
 	foreach ($list as $id=>$facts) {
 		$tmp=GedcomRecord::GetInstance($id);

@@ -28,12 +28,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FUNCTIONS_MAIL_PHP', '');
+define('WT_FUNCTIONS_MAIL_PHP', '');
 
 /**
  * this function is a wrapper to the php mail() function so that we can change settings globally
@@ -41,8 +41,8 @@ define('PGV_FUNCTIONS_MAIL_PHP', '');
  * for deatiled info on MIME (RFC 1521) email see: http://www.freesoft.org/CIE/RFC/1521/index.htm
  */
 function pgvMail($to, $from, $subject, $message) {
-	global $PGV_SMTP_ACTIVE, $PGV_SMTP_HOST, $PGV_SMTP_HELO, $PGV_SMTP_FROM_NAME, $PGV_SMTP_PORT, $PGV_SMTP_AUTH, $PGV_SMTP_AUTH_USER, $PGV_SMTP_AUTH_PASS, $PGV_SMTP_SSL;
-	global $LANGUAGE, $PGV_STORE_MESSAGES, $TEXT_DIRECTION;
+	global $WT_SMTP_ACTIVE, $WT_SMTP_HOST, $WT_SMTP_HELO, $WT_SMTP_FROM_NAME, $WT_SMTP_PORT, $WT_SMTP_AUTH, $WT_SMTP_AUTH_USER, $WT_SMTP_AUTH_PASS, $WT_SMTP_SSL;
+	global $LANGUAGE, $WT_STORE_MESSAGES, $TEXT_DIRECTION;
 	$mailFormat = "plain";
 	//$mailFormat = "html";
 	//$mailFormat = "multipart";
@@ -117,27 +117,27 @@ function pgvMail($to, $from, $subject, $message) {
 		$message = $htmlMessage;
 	}
 	// if SMTP mail is set active AND we have SMTP settings available, use the PHPMailer classes
-	if ($PGV_SMTP_ACTIVE  && ( $PGV_SMTP_HOST && $PGV_SMTP_PORT ) ) {
-		require_once PGV_ROOT.'library/phpmailer/class.phpmailer.php';
+	if ($WT_SMTP_ACTIVE  && ( $WT_SMTP_HOST && $WT_SMTP_PORT ) ) {
+		require_once WT_ROOT.'library/phpmailer/class.phpmailer.php';
 		$mail_object = new PHPMailer();
 		$mail_object->IsSMTP();
 		$mail_object->SetLanguage('en','languages/');
-		if ( $PGV_SMTP_AUTH && ( $PGV_SMTP_AUTH_USER && $PGV_SMTP_AUTH_PASS ) ) {
-			$mail_object->SMTPAuth = $PGV_SMTP_AUTH;
-			$mail_object->Username = $PGV_SMTP_AUTH_USER;
-			$mail_object->Password = $PGV_SMTP_AUTH_PASS;
+		if ( $WT_SMTP_AUTH && ( $WT_SMTP_AUTH_USER && $WT_SMTP_AUTH_PASS ) ) {
+			$mail_object->SMTPAuth = $WT_SMTP_AUTH;
+			$mail_object->Username = $WT_SMTP_AUTH_USER;
+			$mail_object->Password = $WT_SMTP_AUTH_PASS;
 		}
-		if ($PGV_SMTP_SSL=='ssl') {
+		if ($WT_SMTP_SSL=='ssl') {
 			$mail_object->SMTPSecure = 'ssl';
-		} else if ($PGV_SMTP_SSL=='tls') {
+		} else if ($WT_SMTP_SSL=='tls') {
 			$mail_object->SMTPSecure = 'tls';
 		}
-		$mail_object->Host = $PGV_SMTP_HOST;
-		$mail_object->Port = $PGV_SMTP_PORT;
-		$mail_object->Hostname = $PGV_SMTP_HELO;
+		$mail_object->Host = $WT_SMTP_HOST;
+		$mail_object->Port = $WT_SMTP_PORT;
+		$mail_object->Hostname = $WT_SMTP_HELO;
 		$mail_object->From = $from;
-		if (!empty($PGV_SMTP_FROM_NAME) && $from!=$PGV_SMTP_AUTH_USER) {
-			$mail_object->FromName = $PGV_SMTP_FROM_NAME;
+		if (!empty($WT_SMTP_FROM_NAME) && $from!=$WT_SMTP_AUTH_USER) {
+			$mail_object->FromName = $WT_SMTP_FROM_NAME;
 			$mail_object->AddAddress($to);
 		}
 		else {

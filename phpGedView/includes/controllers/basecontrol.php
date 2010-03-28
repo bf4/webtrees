@@ -27,12 +27,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_BASECONTROL_PHP', '');
+define('WT_BASECONTROL_PHP', '');
 
 class BaseController {
 	var $view        =null;

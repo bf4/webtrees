@@ -30,12 +30,12 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CONFIG_DATA_PHP', '');
+define('WT_CONFIG_DATA_PHP', '');
 
 // Unknown surname in various scripts
 // TODO: This is extremely poor I18N - there is not a 1:1 correlation between script and language

@@ -27,7 +27,7 @@
  * @version $Id: print_footer.php 4194 2008-10-30 10:45:46Z fisharebest $
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }

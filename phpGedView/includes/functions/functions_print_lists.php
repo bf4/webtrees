@@ -30,16 +30,16 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FUNCTIONS_PRINT_LISTS_PHP', '');
+define('WT_FUNCTIONS_PRINT_LISTS_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_person.php';
-require_once PGV_ROOT.'includes/functions/functions_places.php';
-require_once PGV_ROOT.'includes/cssparser.inc.php';
+require_once WT_ROOT.'includes/classes/class_person.php';
+require_once WT_ROOT.'includes/functions/functions_places.php';
+require_once WT_ROOT.'includes/cssparser.inc.php';
 
 /**
  * print a sortable table of individuals
@@ -49,13 +49,13 @@ require_once PGV_ROOT.'includes/cssparser.inc.php';
  */
 function print_indi_table($datalist, $legend="", $option="") {
 	global $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $SHOW_EST_LIST_DATES, $MAX_ALIVE_AGE;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $SEARCH_SPIDER, $SHOW_EST_LIST_DATES, $MAX_ALIVE_AGE;
 
 	if ($option=="MARR_PLAC") return;
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
-	require_once PGV_ROOT.'js/sorttable.js.htm';
-	require_once PGV_ROOT.'includes/classes/class_stats.php';
+	require_once WT_ROOT.'js/sorttable.js.htm';
+	require_once WT_ROOT.'includes/classes/class_stats.php';
 	$stats = new stats($GEDCOM);
 
 	// Bad data can cause "longest life" to be huge, blowing memory limits
@@ -71,7 +71,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		$legend=i18n::translate(substr($option, 0, 4))." @ ".$legend;
 	}
 	if ($legend == "") $legend = i18n::translate('Individuals');
-	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
+	$legend = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["indis"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>", $legend, "</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	echo '<div id="', $table_id, '-table" class="center">';
@@ -442,14 +442,14 @@ function print_indi_table($datalist, $legend="", $option="") {
  */
 function print_fam_table($datalist, $legend="", $option="") {
 	global $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $lang_short_cut, $LANGUAGE;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $SEARCH_SPIDER, $lang_short_cut, $LANGUAGE;
 
 	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") return;
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
-	require_once PGV_ROOT.'js/sorttable.js.htm';
-	require_once PGV_ROOT.'includes/classes/class_family.php';
-	require_once PGV_ROOT.'includes/classes/class_stats.php';
+	require_once WT_ROOT.'js/sorttable.js.htm';
+	require_once WT_ROOT.'includes/classes/class_family.php';
+	require_once WT_ROOT.'includes/classes/class_stats.php';
 	$stats = new stats($GEDCOM);
 	$max_age = max($stats->oldestMarriageMaleAge(), $stats->oldestMarriageFemaleAge())+1;
 	//-- init chart data
@@ -462,7 +462,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 		$legend=i18n::translate('MARR')." @ ".$legend;
 	}
 	if ($legend == "") $legend = i18n::translate('Families');
-	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
+	$legend = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["sfamily"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>", $legend, "</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	echo '<div id="', $table_id, '-table" class="center">';
@@ -823,15 +823,15 @@ function print_fam_table($datalist, $legend="", $option="") {
  */
 function print_sour_table($datalist, $legend=null) {
 	global $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $WT_IMAGE_DIR, $WT_IMAGES;
 
 	if (count($datalist)<1) {
 		return;
 	}
-	require_once PGV_ROOT.'js/sorttable.js.htm';
-	require_once PGV_ROOT.'includes/classes/class_source.php';
+	require_once WT_ROOT.'js/sorttable.js.htm';
+	require_once WT_ROOT.'includes/classes/class_source.php';
 
-	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['source']['small'], '" align="middle" alt="" /> ';
+	echo '<fieldset><legend><img src="', $WT_IMAGE_DIR, '/', $WT_IMAGES['source']['small'], '" align="middle" alt="" /> ';
 	if ($legend) {
 		echo $legend;
 	} else {
@@ -960,18 +960,18 @@ T2;
  */
 function print_note_table($datalist, $legend=null) {
 	global $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $WT_IMAGE_DIR, $WT_IMAGES;
 
 	if (count($datalist)<1) {
 		return;
 	}
-	require_once PGV_ROOT.'js/sorttable.js.htm';
-	require_once PGV_ROOT.'includes/classes/class_note.php';
+	require_once WT_ROOT.'js/sorttable.js.htm';
+	require_once WT_ROOT.'includes/classes/class_note.php';
 
-	if (!empty($PGV_IMAGES["menu_note"]["small"])) {
-		echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["menu_note"]["small"], '" align="middle" alt="" /> ';
+	if (!empty($WT_IMAGES["menu_note"]["small"])) {
+		echo '<fieldset><legend><img src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["menu_note"]["small"], '" align="middle" alt="" /> ';
 	} else {
-		echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['notes']['small'], '" align="middle" alt="" /> ';
+		echo '<fieldset><legend><img src="', $WT_IMAGE_DIR, '/', $WT_IMAGES['notes']['small'], '" align="middle" alt="" /> ';
 	}
 	if ($legend) {
 		echo $legend;
@@ -1048,15 +1048,15 @@ function print_note_table($datalist, $legend=null) {
  */
 function print_repo_table($repos, $legend='') {
 	global $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $SEARCH_SPIDER;
 
 	if (!$repos) {
 		return;
 	}
-	require_once PGV_ROOT.'js/sorttable.js.htm';
-	require_once PGV_ROOT.'includes/classes/class_repository.php';
+	require_once WT_ROOT.'js/sorttable.js.htm';
+	require_once WT_ROOT.'includes/classes/class_repository.php';
 
-	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['repository']['small'], '" align="middle" alt="" />';
+	echo '<fieldset><legend><img src="', $WT_IMAGE_DIR, '/', $WT_IMAGES['repository']['small'], '" align="middle" alt="" />';
 	if ($legend) {
 		echo htmlspecialchars($legend);
 	} else {
@@ -1111,14 +1111,14 @@ function print_repo_table($repos, $legend='') {
  */
 function print_media_table($datalist, $legend="") {
 	global $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_MEDIA_FILENAME;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $SHOW_MEDIA_FILENAME;
 
 	if (count($datalist)<1) return;
-	require_once PGV_ROOT.'js/sorttable.js.htm';
-	require_once PGV_ROOT.'includes/classes/class_media.php';
+	require_once WT_ROOT.'js/sorttable.js.htm';
+	require_once WT_ROOT.'includes/classes/class_media.php';
 
 	if ($legend == "") $legend = i18n::translate('Media');
-	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
+	$legend = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["media"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>", $legend, "</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
@@ -1152,7 +1152,7 @@ function print_media_table($datalist, $legend="") {
 		$name = $media->getFullName();
 		echo "<td class=\"list_value_wrap\" align=\"", get_align($name), "\">";
 		echo "<a href=\"", encode_url($media->getLinkUrl()), "\" class=\"list_item name2\">", PrintReady($name), "</a>";
-		if ($SHOW_MEDIA_FILENAME || PGV_USER_IS_ADMIN)
+		if ($SHOW_MEDIA_FILENAME || WT_USER_IS_ADMIN)
 			echo "<br /><a href=\"", encode_url($media->getLinkUrl()), "\">", basename($media->file), "</a>";
 		//echo "<br />", $media->getFiletype();
 		//echo "&nbsp;&nbsp;", $media->width, "x", $media->height;
@@ -1256,7 +1256,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 	}
 
 	// Requested style isn't "cloud".  In this case, we'll produce a sortable list.
-	require_once PGV_ROOT.'js/sorttable.js.htm';
+	require_once WT_ROOT.'js/sorttable.js.htm';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"", $table_id, "\" class=\"sortable list_table center\">";
@@ -1307,7 +1307,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 function format_surname_table($surnames, $type) {
 	global $GEDCOM;
 
-	require_once PGV_ROOT.'js/sorttable.js.htm';
+	require_once WT_ROOT.'js/sorttable.js.htm';
 	$table_id ='ID'.floor(microtime()*1000000); // sorttable requires a unique ID
 	$html='<table id="'.$table_id.'" class="sortable list_table center">';
 	$html.='<tr><th></th>';
@@ -1521,8 +1521,8 @@ function format_surname_list($surnames, $style, $totals) {
 function print_changes_table($datalist, $showChange=true, $total='', $show_pgvu=true) {
 	global $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
-	require_once PGV_ROOT.'js/sorttable.js.htm';
-	require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
+	require_once WT_ROOT.'js/sorttable.js.htm';
+	require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
 	if (empty($total)) $total = i18n::translate('Total changes');
 	$indi = false;
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
@@ -1634,8 +1634,8 @@ function print_changes_table($datalist, $showChange=true, $total='', $show_pgvu=
  */
 function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $allow_download=false, $sort_by_event=false) {
 	global $TEXT_DIRECTION, $SERVER_URL;
-	require_once PGV_ROOT.'js/sorttable.js.htm';
-	require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
+	require_once WT_ROOT.'js/sorttable.js.htm';
+	require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 
 	// Did we have any output?  Did we skip anything?
@@ -2142,9 +2142,9 @@ function get_align($txt) {
  * @param none
  */
 function load_behaviour() {
-	require_once PGV_ROOT.'js/prototype.js.htm';
-	require_once PGV_ROOT.'js/behaviour.js.htm';
-	require_once PGV_ROOT.'js/overlib.js.htm';
+	require_once WT_ROOT.'js/prototype.js.htm';
+	require_once WT_ROOT.'js/behaviour.js.htm';
+	require_once WT_ROOT.'js/overlib.js.htm';
 ?>
 	<script type="text/javascript">
 	// <![CDATA[

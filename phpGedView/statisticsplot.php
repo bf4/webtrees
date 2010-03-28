@@ -30,9 +30,9 @@
  * @subpackage Lists
  */
 
-define('PGV_SCRIPT_NAME', 'statisticsplot.php');
+define('WT_SCRIPT_NAME', 'statisticsplot.php');
 require './config.php';
-require_once PGV_ROOT.'includes/classes/class_stats.php';
+require_once WT_ROOT.'includes/classes/class_stats.php';
 /*
  * Initiate the stats object.
  */
@@ -851,7 +851,7 @@ function print_sources_stats_chart($type){
 }
 
 //--	========= start of main program =========
-$action	= safe_REQUEST($_REQUEST, 'action', PGV_REGEX_XREF);
+$action	= safe_REQUEST($_REQUEST, 'action', WT_REGEX_XREF);
 
 if ($action=="update") {
 	$x_as = $_POST["x-as"];

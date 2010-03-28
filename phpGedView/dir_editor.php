@@ -28,18 +28,18 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'dir_editor.php');
+define('WT_SCRIPT_NAME', 'dir_editor.php');
 require './config.php';
-require PGV_ROOT.'includes/functions/functions_edit.php';
+require WT_ROOT.'includes/functions/functions_edit.php';
 
-if (!PGV_USER_IS_ADMIN) {
+if (!WT_USER_IS_ADMIN) {
 	header("Location: login.php?url=dir_editor.php");
 	exit;
 }
 
 function full_rmdir($dir) {
 	if (!is_writable($dir)) {
-		if (!@chmod($dir, PGV_PERM_EXE)) {
+		if (!@chmod($dir, WT_PERM_EXE)) {
 			return FALSE;
 		}
 	}
@@ -103,8 +103,8 @@ if(isset($_REQUEST["to_delete"])) {
 
 }
 
-require_once PGV_ROOT.'js/prototype.js.htm';
-require_once PGV_ROOT.'js/scriptaculous.js.htm';
+require_once WT_ROOT.'js/prototype.js.htm';
+require_once WT_ROOT.'js/scriptaculous.js.htm';
 
 ?>
 <script type="text/javascript">
@@ -182,7 +182,7 @@ function warnuser(cbox) {
 
 		print "<div style=\"margin-bottom:2px;\">";
 		print "<table><tr><td>";
-		if (isset($PGV_IMAGES["trashcan"]["medium"])) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["trashcan"]["medium"]."\" align=\"left\" alt=\"\" />";
+		if (isset($WT_IMAGES["trashcan"]["medium"])) print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["trashcan"]["medium"]."\" align=\"left\" alt=\"\" />";
 		else print "<img src=\"images/trashcan.gif\" align=\"left\" alt=\"\" />";
 		print "</td>";
 		print "<td valign=\"top\"><ul id=\"trashlist\">";

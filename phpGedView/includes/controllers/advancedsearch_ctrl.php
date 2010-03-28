@@ -31,14 +31,14 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_ADVANCED_SEARCH_PHP', '');
+define('WT_ADVANCED_SEARCH_PHP', '');
 
-require_once PGV_ROOT.'includes/controllers/search_ctrl.php';
+require_once WT_ROOT.'includes/controllers/search_ctrl.php';
 
 /**
  * Main controller class for the search page.
@@ -206,7 +206,7 @@ class AdvancedSearchController extends SearchController {
 		if ($justSql) $sqlfields = "SELECT DISTINCT {$prefix}_id, {$prefix}_file";
 		else $sqlfields = "SELECT i_id, i_gedcom, i_isdead, i_file, i_sex";
 		$sqltables = " FROM ".$TBLPREFIX.$table;
-		$sqlwhere = " WHERE ".$prefix."_file=".PGV_GED_ID;
+		$sqlwhere = " WHERE ".$prefix."_file=".WT_GED_ID;
 		$keepfields = $this->fields;
 		for($i=0; $i<$fct; $i++) {
 			$field = $this->fields[$i];
@@ -252,13 +252,13 @@ class AdvancedSearchController extends SearchController {
 					switch ($parts[1]) {
 					case 'GIVN':
 						// Allow for exact match on multiple given names.
-						$sqlwhere.=" AND (n_givn LIKE ".PGV_DB::quote($value)." OR n_givn LIKE ".PGV_DB::quote("{$value} %")." OR n_givn LIKE ".PGV_DB::quote("% {$value}")." OR n_givn LIKE ".PGV_DB::quote("% {$value} %").")";
+						$sqlwhere.=" AND (n_givn LIKE ".WT_DB::quote($value)." OR n_givn LIKE ".WT_DB::quote("{$value} %")." OR n_givn LIKE ".WT_DB::quote("% {$value}")." OR n_givn LIKE ".WT_DB::quote("% {$value} %").")";
 						break;
 					case 'SURN':
-						$sqlwhere.=" AND n_surname LIKE ".PGV_DB::quote($value);
+						$sqlwhere.=" AND n_surname LIKE ".WT_DB::quote($value);
 						break;
 					default:
-						$sqlwhere.=" AND n_full LIKE ".PGV_DB::quote($value);
+						$sqlwhere.=" AND n_full LIKE ".WT_DB::quote($value);
 						break;
 					}
 					break;
@@ -267,13 +267,13 @@ class AdvancedSearchController extends SearchController {
 					switch ($parts[1]) {
 					case 'GIVN':
 						// Allow for match on start of multiple given names
-						$sqlwhere.=" AND (n_givn LIKE ".PGV_DB::quote("{$value}%")." OR n_givn LIKE ".PGV_DB::quote("% {$value}%").")";
+						$sqlwhere.=" AND (n_givn LIKE ".WT_DB::quote("{$value}%")." OR n_givn LIKE ".WT_DB::quote("% {$value}%").")";
 						break;
 					case 'SURN':
-						$sqlwhere.=" AND n_surname LIKE ".PGV_DB::quote("{$value}%");
+						$sqlwhere.=" AND n_surname LIKE ".WT_DB::quote("{$value}%");
 						break;
 					default:
-						$sqlwhere.=" AND n_full LIKE ".PGV_DB::quote("{$value}%");
+						$sqlwhere.=" AND n_full LIKE ".WT_DB::quote("{$value}%");
 						break;
 					}
 					break;
@@ -282,13 +282,13 @@ class AdvancedSearchController extends SearchController {
 					// Partial match.
 					switch ($parts[1]) {
 					case 'GIVN':
-						$sqlwhere.=" AND n_givn LIKE ".PGV_DB::quote("%{$value}%");
+						$sqlwhere.=" AND n_givn LIKE ".WT_DB::quote("%{$value}%");
 						break;
 					case 'SURN':
-						$sqlwhere.=" AND n_surname LIKE ".PGV_DB::quote("%{$value}%");
+						$sqlwhere.=" AND n_surname LIKE ".WT_DB::quote("%{$value}%");
 						break;
 					default:
-						$sqlwhere.=" AND n_full LIKE ".PGV_DB::quote("%{$value}%");
+						$sqlwhere.=" AND n_full LIKE ".WT_DB::quote("%{$value}%");
 						break;
 					}
 					break;
@@ -339,7 +339,7 @@ class AdvancedSearchController extends SearchController {
 							if ($fnc>0)
 								$sqlwhere .= " OR ";
 							$fnc++;
-							$sqlwhere .= $field." LIKE ".PGV_DB::quote("%{$name1}%");
+							$sqlwhere .= $field." LIKE ".WT_DB::quote("%{$name1}%");
 						}
 					}
 					$sqlwhere .= ") ";
@@ -441,13 +441,13 @@ class AdvancedSearchController extends SearchController {
 					 	$liketmp .= "%{$value}%";
 //					 }
 				}
-				$sqlwhere .= PGV_DB::quote($liketmp);
+				$sqlwhere .= WT_DB::quote($liketmp);
 			}
 		}
 		$sql = $sqlfields.$sqltables.$sqlwhere;
 //		print $sql;
 		if ($justSql) return $sql;
-		$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
+		$rows=WT_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 		foreach ($rows as $row){
 			$row['xref']=$row['i_id'];
 			$row['ged_id']=$row['i_file'];
@@ -460,12 +460,12 @@ class AdvancedSearchController extends SearchController {
 	}
 
 	function PrintResults() {
-		require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+		require_once WT_ROOT.'includes/functions/functions_print_lists.php';
 		$ret = true;
 		if (count($this->myindilist)>0) {
 			echo '<br /><div class="center">';
 			uasort($this->myindilist, array('GedcomRecord', 'Compare'));
-			print_indi_table($this->myindilist, i18n::translate('Individuals')." @ ".PrintReady(get_gedcom_setting(PGV_GEDCOM, 'title'), true));
+			print_indi_table($this->myindilist, i18n::translate('Individuals')." @ ".PrintReady(get_gedcom_setting(WT_GEDCOM, 'title'), true));
 			print "</div>";
 		}
 		else {
@@ -480,7 +480,7 @@ class AdvancedSearchController extends SearchController {
 // -- end of class
 
 //-- load a user extended class if one exists
-if (file_exists(PGV_ROOT.'includes/controllers/advancedsearch_ctrl_user.php')) {
-	require_once PGV_ROOT.'includes/controllers/advancedsearch_ctrl_user.php';
+if (file_exists(WT_ROOT.'includes/controllers/advancedsearch_ctrl_user.php')) {
+	require_once WT_ROOT.'includes/controllers/advancedsearch_ctrl_user.php';
 }
 ?>

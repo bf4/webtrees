@@ -29,31 +29,31 @@
 * @version $Id$
 */
 
-define('PGV_SCRIPT_NAME', 'edit_interface.php');
+define('WT_SCRIPT_NAME', 'edit_interface.php');
 require './config.php';
-require PGV_ROOT.'includes/functions/functions_edit.php';
+require WT_ROOT.'includes/functions/functions_edit.php';
 
 // TODO work out whether to use GET/POST for these
 // TODO decide what (if any) validation is required on these parameters
-$action =safe_REQUEST($_REQUEST, 'action',  PGV_REGEX_UNSAFE);
-$linenum=safe_REQUEST($_REQUEST, 'linenum', PGV_REGEX_UNSAFE);
-$pid    =safe_REQUEST($_REQUEST, 'pid',     PGV_REGEX_XREF);
-$famid  =safe_REQUEST($_REQUEST, 'famid',   PGV_REGEX_XREF);
-$text   =safe_REQUEST($_REQUEST, 'text',    PGV_REGEX_UNSAFE);
-$tag    =safe_REQUEST($_REQUEST, 'tag',     PGV_REGEX_UNSAFE);
-$famtag =safe_REQUEST($_REQUEST, 'famtag',  PGV_REGEX_UNSAFE);
-$glevels=safe_REQUEST($_REQUEST, 'glevels', PGV_REGEX_UNSAFE);
-$islink =safe_REQUEST($_REQUEST, 'islink',  PGV_REGEX_UNSAFE);
-$type   =safe_REQUEST($_REQUEST, 'type',    PGV_REGEX_UNSAFE);
-$fact   =safe_REQUEST($_REQUEST, 'fact',    PGV_REGEX_UNSAFE);
-$option =safe_REQUEST($_REQUEST, 'option',  PGV_REGEX_UNSAFE);
+$action =safe_REQUEST($_REQUEST, 'action',  WT_REGEX_UNSAFE);
+$linenum=safe_REQUEST($_REQUEST, 'linenum', WT_REGEX_UNSAFE);
+$pid    =safe_REQUEST($_REQUEST, 'pid',     WT_REGEX_XREF);
+$famid  =safe_REQUEST($_REQUEST, 'famid',   WT_REGEX_XREF);
+$text   =safe_REQUEST($_REQUEST, 'text',    WT_REGEX_UNSAFE);
+$tag    =safe_REQUEST($_REQUEST, 'tag',     WT_REGEX_UNSAFE);
+$famtag =safe_REQUEST($_REQUEST, 'famtag',  WT_REGEX_UNSAFE);
+$glevels=safe_REQUEST($_REQUEST, 'glevels', WT_REGEX_UNSAFE);
+$islink =safe_REQUEST($_REQUEST, 'islink',  WT_REGEX_UNSAFE);
+$type   =safe_REQUEST($_REQUEST, 'type',    WT_REGEX_UNSAFE);
+$fact   =safe_REQUEST($_REQUEST, 'fact',    WT_REGEX_UNSAFE);
+$option =safe_REQUEST($_REQUEST, 'option',  WT_REGEX_UNSAFE);
 
-$assist =safe_REQUEST($_REQUEST, 'assist',  PGV_REGEX_UNSAFE);
-$noteid =safe_REQUEST($_REQUEST, 'noteid',  PGV_REGEX_UNSAFE);
+$assist =safe_REQUEST($_REQUEST, 'assist',  WT_REGEX_UNSAFE);
+$noteid =safe_REQUEST($_REQUEST, 'noteid',  WT_REGEX_UNSAFE);
 
-$pid_array  =safe_REQUEST($_REQUEST, 'pid_array', PGV_REGEX_XREF);
-$pids_array_add =safe_REQUEST($_REQUEST, 'pids_array_add', PGV_REGEX_XREF);
-$pids_array_edit =safe_REQUEST($_REQUEST, 'pids_array_edit', PGV_REGEX_XREF);
+$pid_array  =safe_REQUEST($_REQUEST, 'pid_array', WT_REGEX_XREF);
+$pids_array_add =safe_REQUEST($_REQUEST, 'pids_array_add', WT_REGEX_XREF);
+$pids_array_edit =safe_REQUEST($_REQUEST, 'pids_array_edit', WT_REGEX_XREF);
 
 $update_CHAN=!safe_POST_bool('preserve_last_changed');
 
@@ -62,9 +62,9 @@ $uploaded_files = array();
 print_simple_header('Edit Interface');
 
 if ($ENABLE_AUTOCOMPLETE) {
-	require PGV_ROOT.'js/autocomplete.js.htm';
+	require WT_ROOT.'js/autocomplete.js.htm';
 }
-echo PGV_JS_START;
+echo WT_JS_START;
 ?>
 	var locale_date_format='<?php echo preg_replace('/[^DMY]/', '', str_replace(array('J', 'F'), array('D', 'M'), strtoupper($DATE_FORMAT))); ?>';
 
@@ -140,7 +140,7 @@ echo PGV_JS_START;
 		window.close();
 	}
 <?php
-echo PGV_JS_END;
+echo WT_JS_END;
 //-- check if user has access to the gedcom record
 $disp = false;
 $success = false;
@@ -152,7 +152,7 @@ $success = false;
 * @return boolean
 */
 function checkFactEdit($gedrec) {
-	if (PGV_USER_GEDCOM_ADMIN) {
+	if (WT_USER_GEDCOM_ADMIN) {
 		return true;
 	}
 
@@ -164,12 +164,12 @@ function checkFactEdit($gedrec) {
 		if ($gt > 0) {
 			$gid = trim($gmatch[1]);
 			$type = trim($gmatch[2]);
-			if (PGV_USER_GEDCOM_ID == $gid) {
+			if (WT_USER_GEDCOM_ID == $gid) {
 				return true;
 			}
 			if ($type=='FAM') {
 				$parents = find_parents_in_record($gedrec);
-				if (PGV_USER_GEDCOM_ID == $parents["HUSB"] || PGV_USER_GEDCOM_ID == $parents["WIFE"]) {
+				if (WT_USER_GEDCOM_ID == $parents["HUSB"] || WT_USER_GEDCOM_ID == $parents["WIFE"]) {
 					return true;
 				}
 			}
@@ -183,10 +183,10 @@ function checkFactEdit($gedrec) {
 
 if (!empty($pid)) {
 	if (($pid!="newsour") && ($pid!="newrepo") && ($noteid!="newnote")) {
-		if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) {
-			$gedrec = find_gedcom_record($pid, PGV_GED_ID);
+		if (!isset($pgv_changes[$pid."_".WT_GEDCOM])) {
+			$gedrec = find_gedcom_record($pid, WT_GED_ID);
 		} else {
-			$gedrec = find_updated_record($pid, PGV_GED_ID);
+			$gedrec = find_updated_record($pid, WT_GED_ID);
 		}
 		$ct = preg_match("/0 @$pid@ (.*)/", $gedrec, $match);
 		if ($ct>0) {
@@ -194,7 +194,7 @@ if (!empty($pid)) {
 			$disp = displayDetailsById($pid, $type);
 		}
 		// Don't allow edits if the record has changed since the edit-link was created
-		checkChangeTime($pid, $gedrec, safe_GET('accesstime', PGV_REGEX_INTEGER));
+		checkChangeTime($pid, $gedrec, safe_GET('accesstime', WT_REGEX_INTEGER));
 	}
 	else {
 		$disp = true;
@@ -202,10 +202,10 @@ if (!empty($pid)) {
 }
 else if (!empty($famid)) {
 	if ($famid != "new") {
-		if (!isset($pgv_changes[$famid."_".PGV_GEDCOM])) {
-			$gedrec = find_gedcom_record($famid, PGV_GED_ID);
+		if (!isset($pgv_changes[$famid."_".WT_GEDCOM])) {
+			$gedrec = find_gedcom_record($famid, WT_GED_ID);
 		} else {
-			$gedrec = find_updated_record($famid, PGV_GED_ID);
+			$gedrec = find_updated_record($famid, WT_GED_ID);
 		}
 		$ct = preg_match("/0 @$famid@ (.*)/", $gedrec, $match);
 		if ($ct>0) {
@@ -213,7 +213,7 @@ else if (!empty($famid)) {
 			$disp = displayDetailsById($famid, $type);
 		}
 		// Don't allow edits if the record has changed since the edit-link was created
-		checkChangeTime($famid, $gedrec, safe_GET('accesstime', PGV_REGEX_INTEGER));
+		checkChangeTime($famid, $gedrec, safe_GET('accesstime', WT_REGEX_INTEGER));
 	}
 }
 else if (($action!="addchild")&&($action!="addchildaction")&&($action!="addnewsource")&&($action!="mod_edit_fact")&&($action!="addnewnote")&&($action!="addmedia_links")&&($action!="addnoteaction")&&($action!="addnoteaction_assisted")) {
@@ -225,12 +225,12 @@ else {
 	$disp = true;
 }
 
-if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
+if (!WT_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 	//echo "pid: $pid<br />";
 	//echo "gedrec: $gedrec<br />";
 	echo i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
 	//-- display messages as to why the editing access was denied
-	if (!PGV_USER_CAN_EDIT) {
+	if (!WT_USER_CAN_EDIT) {
 		echo "<br />", i18n::translate('This user name cannot edit this GEDCOM.');
 	}
 	if (!$ALLOW_EDIT_GEDCOM) {
@@ -317,7 +317,7 @@ if (strstr($action, "addchild")) {
 //------------------------------------------------------------------------------
 switch ($action) {
 case 'delete':
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
 	if (!empty($linenum)) {
@@ -368,7 +368,7 @@ case 'editraw':
 		print_specialchar_link("newgedrec", true);
 		echo "<br />\n";
 		echo "<textarea name=\"newgedrec\" id=\"newgedrec\" rows=\"20\" cols=\"80\" dir=\"ltr\">", $gedrec, "</textarea>\n<br />";
-		if (PGV_USER_IS_ADMIN) {
+		if (WT_USER_IS_ADMIN) {
 			echo "<table class=\"facts_table\">\n";
 			echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 			echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
@@ -386,13 +386,13 @@ case 'editraw':
 
 		echo "<input id=\"savebutton\" type=\"submit\" value=\"", i18n::translate('Save'), "\" /><br />";
 		echo "</form>";
-		echo PGV_JS_START;
+		echo WT_JS_START;
 		echo "textbox = document.getElementById('newgedrec');";
 		echo "savebutton = document.getElementById('savebutton');";
 		echo "if (textbox && savebutton) {";
 		echo " window.resizeTo(textbox.offsetLeft+textbox.offsetWidth+100, savebutton.offsetTop+savebutton.offsetHeight+150);";
 		echo "}";
-		echo PGV_JS_END;
+		echo WT_JS_END;
 	}
 	break;
 //------------------------------------------------------------------------------
@@ -408,7 +408,7 @@ case 'edit':
 
 	echo "<table class=\"facts_table\">";
 	$level1type = create_edit_form($gedrec, $linenum, $level0type);
-	if (PGV_USER_IS_ADMIN) {
+	if (WT_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
@@ -459,7 +459,7 @@ case 'add':
 
 	create_add_form($fact);
 
-	if (PGV_USER_IS_ADMIN) {
+	if (WT_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
@@ -529,7 +529,7 @@ case 'addfamlink':
 			'<td class="facts_value">', edit_field_pedi('pedigree'), '</td>',
 			'</tr>';
 	}
-	if (PGV_USER_IS_ADMIN) {
+	if (WT_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
@@ -568,7 +568,7 @@ case 'linkspouse':
 	add_simple_tag("0 MARR");
 	add_simple_tag("0 DATE", "MARR");
 	add_simple_tag("0 PLAC", "MARR");
-	if (PGV_USER_IS_ADMIN) {
+	if (WT_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
@@ -597,11 +597,11 @@ case 'linkspouse':
 case 'linkfamaction':
 	// Make sure we have the right ID (f123 vs. F123)
 	$famid=Family::getInstance($famid)->getXref();
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
-	if (!isset($pgv_changes[$famid."_".PGV_GEDCOM])) $famrec = find_gedcom_record($famid, PGV_GED_ID);
-	else $famrec = find_updated_record($famid, PGV_GED_ID);
+	if (!isset($pgv_changes[$famid."_".WT_GEDCOM])) $famrec = find_gedcom_record($famid, WT_GED_ID);
+	else $famrec = find_updated_record($famid, WT_GED_ID);
 	$famrec = trim($famrec);
 	if (!empty($famrec)) {
 		$itag = "FAMC";
@@ -654,17 +654,17 @@ case 'linkfamaction':
 				if ($spid!=$pid) {
 					//-- change a of the old ids to the new id
 					$famrec = str_replace("1 $famtag @$spid@", "1 $famtag @$pid@", $famrec);
-					if (PGV_DEBUG) {
+					if (WT_DEBUG) {
 						echo "<pre>$famrec</pre>";
 					}
 					replace_gedrec($famid, $famrec, $update_CHAN);
 					//-- remove the FAMS reference from the old husb/wife
 					if (!empty($spid)) {
-						if (!isset($pgv_changes[$spid."_".PGV_GEDCOM])) $srec = find_gedcom_record($spid, PGV_GED_ID);
-						else $srec = find_updated_record($spid, PGV_GED_ID);
+						if (!isset($pgv_changes[$spid."_".WT_GEDCOM])) $srec = find_gedcom_record($spid, WT_GED_ID);
+						else $srec = find_updated_record($spid, WT_GED_ID);
 						if ($srec) {
 							$srec = str_replace("1 $itag @$famid@", "", $srec);
-							if (PGV_DEBUG) {
+							if (WT_DEBUG) {
 								echo "<pre>$srec</pre>";
 							}
 							replace_gedrec($spid, $srec, $update_CHAN);
@@ -673,7 +673,7 @@ case 'linkfamaction':
 				}
 			} else {
 				$famrec .= "\n1 $famtag @$pid@\n";
-				if (PGV_DEBUG) {
+				if (WT_DEBUG) {
 					echo "<pre>$famrec</pre>";
 				}
 				replace_gedrec($famid, $famrec, $update_CHAN);
@@ -685,7 +685,7 @@ case 'linkfamaction':
 //------------------------------------------------------------------------------
 //-- add new source
 case 'addnewsource':
-	echo PGV_JS_START;
+	echo WT_JS_START;
 	?>
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
@@ -696,7 +696,7 @@ case 'addnewsource':
 			return true;
 		}
 	<?php
-	echo PGV_JS_END;
+	echo WT_JS_END;
 	?>
 	<b><?php echo i18n::translate('Create a new source'); $tabkey = 1; ?></b>
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
@@ -731,7 +731,7 @@ case 'addnewsource':
 			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('CALN'), help_link('CALN'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="CALN" id="CALN" value="" /></td></tr>
 		<?php
-			if (PGV_USER_IS_ADMIN) {
+			if (WT_USER_IS_ADMIN) {
 				echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 				echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">";
 				if ($NO_UPDATE_CHAN) {
@@ -746,7 +746,7 @@ case 'addnewsource':
 			}
 		?>
 		</table>
-			<a href="#"  onclick="return expand_layer('events');"><img id="events_img" src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"]; ?>" border="0" width="11" height="11" alt="" title="" />
+			<a href="#"  onclick="return expand_layer('events');"><img id="events_img" src="<?php echo $WT_IMAGE_DIR, "/", $WT_IMAGES["plus"]["other"]; ?>" border="0" width="11" height="11" alt="" title="" />
 			<?php echo i18n::translate('Associate events with this source'); ?></a><?php echo help_link('edit_SOUR_EVEN'); ?>
 			<div id="events" style="display: none;">
 			<table class="facts_table">
@@ -782,7 +782,7 @@ case 'addnewsource':
 //------------------------------------------------------------------------------
 //-- create a source record from the incoming variables
 case 'addsourceaction':
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
 	$newgedrec = "0 @XREF@ SOUR\n";
@@ -822,7 +822,7 @@ case 'addsourceaction':
 		$newgedrec .= "1 REPO @$REPO@\n";
 		if (!empty($CALN)) $newgedrec .= "2 CALN $CALN\n";
 	}
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		echo "<pre>$newgedrec</pre>";
 	}
 	$xref = append_gedrec($newgedrec, $update_CHAN);
@@ -835,7 +835,7 @@ case 'addsourceaction':
 //------------------------------------------------------------------------------
 //-- add new Shared Note
 case 'addnewnote':
-	echo PGV_JS_START;
+	echo WT_JS_START;
 	?>
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
@@ -846,7 +846,7 @@ case 'addnewnote':
 			return true;
 		}
 	<?php
-	echo PGV_JS_END;
+	echo WT_JS_END;
 	?>
 	<b><?php echo i18n::translate('Create a new Shared Note'); $tabkey = 1; ?></b>
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
@@ -863,7 +863,7 @@ case 'addnewnote':
 						print_specialchar_link("NOTE", true);
 					echo "</td>";
 				echo "</tr>";
-			if (PGV_USER_IS_ADMIN) {
+			if (WT_USER_IS_ADMIN) {
 				echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 				echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 				if ($NO_UPDATE_CHAN) {
@@ -887,7 +887,7 @@ case 'addnewnote':
 //------------------------------------------------------------------------------
 //-- create a shared note record from the incoming variables
 case 'addnoteaction':
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
 	$newgedrec  = "0 @XREF@ NOTE\n";
@@ -942,7 +942,7 @@ case 'addnoteaction':
 		//$newgedrec .= "1 NOTE @$NOTE@\n";
 		if (!empty($CALN)) $newgedrec .= "2 CALN $CALN\n";
 	}
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		echo "<pre>$newgedrec</pre>";
 	}
 	// $xref = "Test";
@@ -965,7 +965,7 @@ case 'addnewnote_assisted':
 	if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
 	global $pid;
 	
-	echo PGV_JS_START;
+	echo WT_JS_START;
 	?>
 		function check_form(frm) {
 			/*
@@ -978,7 +978,7 @@ case 'addnewnote_assisted':
 			return true;
 		}
 	<?php
-	echo PGV_JS_END;
+	echo WT_JS_END;
 	?>
 	
 	<div class="center font11" style="width:100%;">
@@ -989,7 +989,7 @@ case 'addnewnote_assisted':
 			<input id="pid_array" type="hidden" name="pid_array" value="none" />
 			<input id="pid" type="hidden" name="pid" value=<?php echo $pid; ?> />
 			<?php
-				require PGV_ROOT.'modules/GEDFact_assistant/CENS_ctrl.php';
+				require WT_ROOT.'modules/GEDFact_assistant/CENS_ctrl.php';
 			?>
 		</form>
 	</div>
@@ -999,13 +999,13 @@ case 'addnewnote_assisted':
 //------------------------------------------------------------------------------
 //-- create a shared note assisted record from the incoming variables
 case 'addnoteaction_assisted':
-	require PGV_ROOT.'modules/GEDFact_assistant/_CENS/addnoteaction_assisted.php';
+	require WT_ROOT.'modules/GEDFact_assistant/_CENS/addnoteaction_assisted.php';
 	break;
 	
 //-- add new Media Links
 case 'addmedia_links':
 	global $pid;
-	echo PGV_JS_START;
+	echo WT_JS_START;
 	?>
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
@@ -1016,7 +1016,7 @@ case 'addmedia_links':
 			return true;
 		}
 	<?php
-	echo PGV_JS_END;
+	echo WT_JS_END;
 	?>
 	<!-- <form method="post" action="edit_interface.php" onsubmit="return check_form(this);"> -->
 	<form method="post" action="edit_interface.php?pid=<?php echo $pid; ?>" onsubmit="findindi()">
@@ -1024,7 +1024,7 @@ case 'addmedia_links':
 		<input type="hidden" name="noteid" value="newnote" />			
 	<!--	<input type="hidden" name="pid" value="<?php // echo $pid; ?>" />		--> 
 		<?php
-		require PGV_ROOT.'modules/GEDFact_assistant/MEDIA_ctrl.php';
+		require WT_ROOT.'modules/GEDFact_assistant/MEDIA_ctrl.php';
 		?>
 	</form>
 	<?php
@@ -1066,7 +1066,7 @@ case 'editsource':
 		echo "<input type=\"hidden\" name=\"linenum[]\" value=\"$i\" />\n";
 	}
 	
-	if (PGV_USER_IS_ADMIN) {
+	if (WT_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
@@ -1091,7 +1091,7 @@ case 'editsource':
 //------------------------------------------------------------------------------
 //-- edit a Shared Note
 case 'editnote':
-	echo PGV_JS_START;
+	echo WT_JS_START;
 	?>
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
@@ -1102,7 +1102,7 @@ case 'editnote':
 			return true;
 		}
 	<?php
-	echo PGV_JS_END;
+	echo WT_JS_END;
 	?>
 	<b><?php echo i18n::translate('Edit Shared Note'); $tabkey = 1; echo "&nbsp;&nbsp;(" . $pid . ")";?></b><br /><br />
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
@@ -1110,10 +1110,10 @@ case 'editnote':
 		<input type="hidden" name="pid" value="<?php echo $pid; ?>" />
 
 		<?php
-		if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) {
-			$gedrec = find_gedcom_record($pid, PGV_GED_ID);
+		if (!isset($pgv_changes[$pid."_".WT_GEDCOM])) {
+			$gedrec = find_gedcom_record($pid, WT_GED_ID);
 		} else {
-			$gedrec = find_updated_record($pid, PGV_GED_ID);
+			$gedrec = find_updated_record($pid, WT_GED_ID);
 		}
 		if (preg_match("/^0 @$pid@ NOTE ?(.*)/", $gedrec, $n1match)) {
 			$note_content=$n1match[1].get_cont(1, $gedrec, false);
@@ -1131,7 +1131,7 @@ case 'editnote':
 				</td>
 			</tr>
 			<?php $tabkey++; 
-			if (PGV_USER_IS_ADMIN) {
+			if (WT_USER_IS_ADMIN) {
 			echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 			echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 			if ($NO_UPDATE_CHAN) {
@@ -1153,7 +1153,7 @@ case 'editnote':
 //------------------------------------------------------------------------------
 //-- add new repository
 case 'addnewrepository':
-	echo PGV_JS_START;
+	echo WT_JS_START;
 	?>
 		function check_form(frm) {
 			if (frm.NAME.value=="") {
@@ -1164,7 +1164,7 @@ case 'addnewrepository':
 			return true;
 		}
 	<?php
-	echo PGV_JS_END;
+	echo WT_JS_END;
 	?>
 	<b><?php echo i18n::translate('Create Repository');
 	$tabkey = 1;
@@ -1201,7 +1201,7 @@ case 'addnewrepository':
 			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('WWW'), help_link('URL'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="WWW" id="WWW" value="" size="40" maxlength="255" /> </td></tr>
 		<?php
-			if (PGV_USER_IS_ADMIN) {
+			if (WT_USER_IS_ADMIN) {
 				echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 				echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 				if ($NO_UPDATE_CHAN) {
@@ -1223,7 +1223,7 @@ case 'addnewrepository':
 //------------------------------------------------------------------------------
 //-- create a repository record from the incoming variables
 case 'addrepoaction':
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
 	$newgedrec = "0 @XREF@ REPO\n";
@@ -1255,7 +1255,7 @@ case 'addrepoaction':
 	if (!empty($EMAIL)) $newgedrec .= "1 EMAIL $EMAIL\n";
 	if (!empty($WWW)) $newgedrec .= "1 WWW $WWW\n";
 
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		echo "<pre>$newgedrec</pre>";
 	}
 	$xref = append_gedrec($newgedrec, $update_CHAN);
@@ -1269,7 +1269,7 @@ case 'addrepoaction':
 //-- get the new incoming raw gedcom record and store it in the file
 case 'updateraw':
 	if (isset($_REQUEST['newgedrec'])) $newgedrec = $_REQUEST['newgedrec'];
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 		echo "<pre>$newgedrec</pre>";
 	}
@@ -1309,14 +1309,14 @@ case 'update':
 	// Cycle through each individual concerned defined by $cens_pids array.
 	foreach ($cens_pids as $pid) {
 		if (isset($pid)) {
-			$gedrec = find_updated_record($pid, PGV_GED_ID);
-			if (empty($gedrec)) $gedrec = find_gedcom_record($pid, PGV_GED_ID);			
+			$gedrec = find_updated_record($pid, WT_GED_ID);
+			if (empty($gedrec)) $gedrec = find_gedcom_record($pid, WT_GED_ID);			
 		} else if (isset($famid)) {
-			$gedrec = find_updated_record($famid, PGV_GED_ID);
-			if (empty($gedrec)) $gedrec = find_gedcom_record($famid, PGV_GED_ID);			
+			$gedrec = find_updated_record($famid, WT_GED_ID);
+			if (empty($gedrec)) $gedrec = find_gedcom_record($famid, WT_GED_ID);			
 		}
 		
-		if (PGV_DEBUG) {
+		if (WT_DEBUG) {
 			phpinfo(INFO_VARIABLES);
 			echo "<pre>$gedrec</pre>";
 			echo "<br /><br />";
@@ -1484,7 +1484,7 @@ case 'update':
 			}
 			
 		}
-		if (PGV_DEBUG) {
+		if (WT_DEBUG) {
 			echo "<br /><br />";
 			echo "<pre>$newged</pre>";
 		}
@@ -1499,7 +1499,7 @@ case 'update':
 
 //------------------------------------------------------------------------------
 case 'addchildaction':
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
 
@@ -1544,7 +1544,7 @@ case 'addchildaction':
 		$gedrec = updateRest($gedrec);
 	}
 
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		echo "<pre>$gedrec</pre>";
 	}
 	$xref = append_gedrec($gedrec, $update_CHAN);
@@ -1577,7 +1577,7 @@ case 'addchildaction':
 															"1 CHIL @".$child->getXref()."@\n1 CHIL @$xref@",
 															$gedrec);
 			}
-			if (PGV_DEBUG) {
+			if (WT_DEBUG) {
 				echo "<pre>$gedrec</pre>";
 			}
 			replace_gedrec($famid, $gedrec, $update_CHAN);
@@ -1587,7 +1587,7 @@ case 'addchildaction':
 	break;
 //------------------------------------------------------------------------------
 case 'addspouseaction':
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
 
@@ -1608,7 +1608,7 @@ case 'addspouseaction':
 		$gedrec = updateRest($gedrec);
 	}
 
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		echo "<pre>$gedrec</pre>";
 	}
 	$xref = append_gedrec($gedrec, $update_CHAN);
@@ -1643,15 +1643,15 @@ case 'addspouseaction':
 			$famrec = updateRest($famrec);
 		}
 
-		if (PGV_DEBUG) {
+		if (WT_DEBUG) {
 			echo "<pre>$famrec</pre>";
 		}
 		$famid = append_gedrec($famrec, $update_CHAN);
 	}
 	else if (!empty($famid)) {
 		$famrec = "";
-		if (isset($pgv_changes[$famid."_".PGV_GEDCOM])) $famrec = find_updated_record($famid, PGV_GED_ID);
-		else $famrec = find_family_record($famid, PGV_GED_ID);
+		if (isset($pgv_changes[$famid."_".WT_GEDCOM])) $famrec = find_updated_record($famid, WT_GED_ID);
+		else $famrec = find_family_record($famid, WT_GED_ID);
 		if (!empty($famrec)) {
 			$famrec = trim($famrec) . "\n1 $famtag @$xref@\n";
 
@@ -1667,7 +1667,7 @@ case 'addspouseaction':
 				$famrec = updateRest($famrec);
 			}
 
-			if (PGV_DEBUG) {
+			if (WT_DEBUG) {
 				echo "<pre>$famrec</pre>";
 			}
 			replace_gedrec($famid, $famrec, $update_CHAN);
@@ -1676,18 +1676,18 @@ case 'addspouseaction':
 	if ((!empty($famid))&&($famid!="new")) {
 		$gedrec = $spouserec;
 		$gedrec = trim($gedrec) . "\n1 FAMS @$famid@\n";
-		if (PGV_DEBUG) {
+		if (WT_DEBUG) {
 			echo "<pre>$gedrec</pre>";
 		}
 		replace_gedrec($xref, $gedrec, $update_CHAN);
 	}
 	if (!empty($pid)) {
 		$indirec="";
-		if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) $indirec = find_gedcom_record($pid, PGV_GED_ID);
-		else $indirec = find_updated_record($pid, PGV_GED_ID);
+		if (!isset($pgv_changes[$pid."_".WT_GEDCOM])) $indirec = find_gedcom_record($pid, WT_GED_ID);
+		else $indirec = find_updated_record($pid, WT_GED_ID);
 		if ($indirec) {
 			$indirec = trim($indirec) . "\n1 FAMS @$famid@\n";
-			if (PGV_DEBUG) {
+			if (WT_DEBUG) {
 				echo "<pre>$indirec</pre>";
 			}
 			replace_gedrec($pid, $indirec, $update_CHAN);
@@ -1696,7 +1696,7 @@ case 'addspouseaction':
 	break;
 //------------------------------------------------------------------------------
 case 'linkspouseaction':
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
 
@@ -1704,8 +1704,8 @@ case 'linkspouseaction':
 
 	if (isset($_REQUEST['spid'])) $spid = $_REQUEST['spid'];
 	if (!empty($spid)) {
-		if (isset($pgv_changes[$spid.'_'.PGV_GEDCOM])) $gedrec = find_updated_record($spid, PGV_GED_ID);
-		else $gedrec = find_person_record($spid, PGV_GED_ID);
+		if (isset($pgv_changes[$spid.'_'.WT_GEDCOM])) $gedrec = find_updated_record($spid, WT_GED_ID);
+		else $gedrec = find_person_record($spid, WT_GED_ID);
 		$gedrec = trim($gedrec);
 		if (!empty($gedrec)) {
 			if ($famid=="new") {
@@ -1737,25 +1737,25 @@ case 'linkspouseaction':
 					$famrec = updateRest($famrec);
 				}
 
-				if (PGV_DEBUG) {
+				if (WT_DEBUG) {
 					echo "<pre>$famrec</pre>";
 				}
 				$famid = append_gedrec($famrec, $update_CHAN);
 			}
 			if ((!empty($famid))&&($famid!="new")) {
 				$gedrec .= "\n1 FAMS @$famid@\n";
-				if (PGV_DEBUG) {
+				if (WT_DEBUG) {
 					echo "<pre>$gedrec</pre>";
 				}
 				replace_gedrec($spid, $gedrec, $update_CHAN);
 			}
 			if (!empty($pid)) {
 				$indirec="";
-				if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) $indirec = find_gedcom_record($pid, PGV_GED_ID);
-				else $indirec = find_updated_record($pid, PGV_GED_ID);
+				if (!isset($pgv_changes[$pid."_".WT_GEDCOM])) $indirec = find_gedcom_record($pid, WT_GED_ID);
+				else $indirec = find_updated_record($pid, WT_GED_ID);
 				if (!empty($indirec)) {
 					$indirec = trim($indirec) . "\n1 FAMS @$famid@\n";
-					if (PGV_DEBUG) {
+					if (WT_DEBUG) {
 						echo "<pre>$indirec</pre>";
 					}
 					replace_gedrec($pid, $indirec, $update_CHAN);
@@ -1766,7 +1766,7 @@ case 'linkspouseaction':
 	break;
 //------------------------------------------------------------------------------
 case 'addnewparentaction':
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
 
@@ -1787,7 +1787,7 @@ case 'addnewparentaction':
 		$gedrec = updateRest($gedrec);
 	}
 
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		echo "<pre>$gedrec</pre>";
 	}
 	$xref = append_gedrec($gedrec, $update_CHAN);
@@ -1819,15 +1819,15 @@ case 'addnewparentaction':
 			$famrec = updateRest($famrec);
 		}
 
-		if (PGV_DEBUG) {
+		if (WT_DEBUG) {
 			echo "<pre>$famrec</pre>";
 		}
 		$famid = append_gedrec($famrec, $update_CHAN);
 	}
 	else if (!empty($famid)) {
 		$famrec = "";
-		if (isset($pgv_changes[$famid."_".PGV_GEDCOM])) $famrec = find_updated_record($famid, PGV_GED_ID);
-		else $famrec = find_family_record($famid, PGV_GED_ID);
+		if (isset($pgv_changes[$famid."_".WT_GEDCOM])) $famrec = find_updated_record($famid, WT_GED_ID);
+		else $famrec = find_family_record($famid, WT_GED_ID);
 		if (!empty($famrec)) {
 			$famrec = trim($famrec) . "\n1 $famtag @$xref@\n";
 
@@ -1843,7 +1843,7 @@ case 'addnewparentaction':
 				$famrec = updateRest($famrec);
 			}
 
-			if (PGV_DEBUG) {
+			if (WT_DEBUG) {
 				echo "<pre>$famrec</pre>";
 			}
 			replace_gedrec($famid, $famrec, $update_CHAN);
@@ -1852,20 +1852,20 @@ case 'addnewparentaction':
 	if ((!empty($famid))&&($famid!="new")) {
 			$gedrec = $spouserec;
 			$gedrec = trim($gedrec) . "\n1 FAMS @$famid@\n";
-			if (PGV_DEBUG) {
+			if (WT_DEBUG) {
 				echo "<pre>$gedrec</pre>";
 			}
 			replace_gedrec($xref, $gedrec, $update_CHAN);
 	}
 	if (!empty($pid)) {
 		$indirec="";
-		if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) $indirec = find_gedcom_record($pid, PGV_GED_ID);
-		else $indirec = find_updated_record($pid, PGV_GED_ID);
+		if (!isset($pgv_changes[$pid."_".WT_GEDCOM])) $indirec = find_gedcom_record($pid, WT_GED_ID);
+		else $indirec = find_updated_record($pid, WT_GED_ID);
 		$indirec = trim($indirec);
 		if ($indirec) {
 			if (strpos($indirec, "1 FAMC @$famid@")===false) {
 				$indirec = trim($indirec) . "\n1 FAMC @$famid@\n";
-				if (PGV_DEBUG) {
+				if (WT_DEBUG) {
 					echo "<pre>$indirec</pre>";
 				}
 				replace_gedrec($pid, $indirec, $update_CHAN);
@@ -1875,7 +1875,7 @@ case 'addnewparentaction':
 	break;
 //------------------------------------------------------------------------------
 case 'addopfchildaction':
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
 
@@ -1905,14 +1905,14 @@ case 'addopfchildaction':
 		$famrec.="\n1 HUSB @{$pid}@";
 	}
 
-	if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) {
-		$indirec=find_gedcom_record($pid, PGV_GED_ID);
+	if (!isset($pgv_changes[$pid."_".WT_GEDCOM])) {
+		$indirec=find_gedcom_record($pid, WT_GED_ID);
 	} else {
-		$indirec=find_updated_record($pid, PGV_GED_ID);
+		$indirec=find_updated_record($pid, WT_GED_ID);
 	}
 	if ($indirec) {
 		$indirec.="\n1 FAMS @{$newfamxref}@";
-		if (PGV_DEBUG) {
+		if (WT_DEBUG) {
 			echo "<pre>$gedrec</pre>";
 			echo "<pre>$famrec</pre>";
 			echo "<pre>$indirec</pre>";
@@ -1925,7 +1925,7 @@ case 'addopfchildaction':
 	break;
 //------------------------------------------------------------------------------
 case 'deleteperson':
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 		echo "<pre>$gedrec</pre>";
 	}
@@ -1940,7 +1940,7 @@ case 'deleteperson':
 	break;
 //------------------------------------------------------------------------------
 case 'deletefamily':
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 		echo "<pre>$gedrec</pre>";
 	}
@@ -1966,25 +1966,25 @@ case 'deleterepo':
 
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 		echo "<pre>$gedrec</pre>";
 	}
 	if (!empty($gedrec)) {
 		$success = true;
 		// Delete links to this record
-		foreach (fetch_all_links($pid, PGV_GED_ID) as $xref) {
-			if (isset($pgv_changes[$xref.'_'.PGV_GEDCOM])) {
-				$gedrec=find_updated_record($xref, PGV_GED_ID);
+		foreach (fetch_all_links($pid, WT_GED_ID) as $xref) {
+			if (isset($pgv_changes[$xref.'_'.WT_GEDCOM])) {
+				$gedrec=find_updated_record($xref, WT_GED_ID);
 			} else {
-				$gedrec=find_gedcom_record($xref, PGV_GED_ID);
+				$gedrec=find_gedcom_record($xref, WT_GED_ID);
 			}
 			$lines = explode("\n", $gedrec);
 			$newrec = "";
 			$skipline = false;
 			$glevel = 0;
 			foreach ($lines as $indexval => $line) {
-				if ((preg_match("/^\d ".PGV_REGEX_TAG." @$pid@/", $line)==0)&&(!$skipline)) $newrec .= $line."\n";
+				if ((preg_match("/^\d ".WT_REGEX_TAG." @$pid@/", $line)==0)&&(!$skipline)) $newrec .= $line."\n";
 				else {
 					if (!$skipline) {
 						$glevel = $line{0};
@@ -1998,7 +1998,7 @@ if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 					}
 				}
 			}
-			if (PGV_DEBUG) {
+			if (WT_DEBUG) {
 				echo "<pre>$newrec</pre>";
 			}
 			$success = $success && replace_gedrec($xref, $newrec, $update_CHAN);
@@ -2065,7 +2065,7 @@ case 'copy':
 //------------------------------------------------------------------------------
 case 'paste':
 	$gedrec .= "\n".$_SESSION["clipboard"][$fact]["factrec"]."\n";
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 		echo "<pre>$gedrec</pre>";
 	}
@@ -2078,9 +2078,9 @@ case 'paste':
 
 //------------------------------------------------------------------------------
 case 'reorder_media': // Sort page using Popup
-	require_once PGV_ROOT.'js/prototype.js.htm';
-	require_once PGV_ROOT.'js/scriptaculous.js.htm';
-	require_once PGV_ROOT.'includes/media_reorder.php';
+	require_once WT_ROOT.'js/prototype.js.htm';
+	require_once WT_ROOT.'js/scriptaculous.js.htm';
+	require_once WT_ROOT.'includes/media_reorder.php';
 	break;
 
 //------------------------------------------------------------------------------
@@ -2088,7 +2088,7 @@ case 'reset_media_update': // Reset sort using popup
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	foreach ($lines as $line) {
-		if (strpos($line, "1 _PGV_OBJS")===false) {
+		if (strpos($line, "1 _WT_OBJS")===false) {
 			$newgedrec .= $line."\n";
 		}
 	}
@@ -2100,21 +2100,21 @@ case 'reset_media_update': // Reset sort using popup
 
 //------------------------------------------------------------------------------
 case 'reorder_media_update': // Update sort using popup
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
 	if (isset($_REQUEST['order1'])) $order1 = $_REQUEST['order1'];
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	foreach ($lines as $line) {
-		if (strpos($line, "1 _PGV_OBJS")===false) {
+		if (strpos($line, "1 _WT_OBJS")===false) {
 			$newgedrec .= $line."\n";
 		}
 	}
 	foreach ($order1 as $m_media=>$num) {
-		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\n";
+		$newgedrec .= "1 _WT_OBJS @".$m_media."@\n";
 	}
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		echo "<pre>$newgedrec</pre>";
 	}
 	$success = (replace_gedrec($pid, $newgedrec, $update_CHAN));
@@ -2127,9 +2127,9 @@ case 'reorder_media_update': // Update sort using popup
 		}else{
 			$link = "individual.php?pid=$pid&tab=3&show_changes=yes";
 		}
-		echo PGV_JS_START;
+		echo WT_JS_START;
 		echo "edit_close('{$link}');";
-		echo PGV_JS_END;
+		echo WT_JS_END;
 	break;
 
 //------------------------------------------------------------------------------
@@ -2137,25 +2137,25 @@ case 'al_reset_media_update': // Reset sort using Album Page
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	foreach ($lines as $line) {
-		if (strpos($line, "1 _PGV_OBJS")===false) {
+		if (strpos($line, "1 _WT_OBJS")===false) {
 			$newgedrec .= $line."\n";
 		}
 	}
 	$success = (replace_gedrec($pid, $newgedrec, $update_CHAN));
 	if ($success) echo "<br />", i18n::translate('Update successful'), "<br /><br />";
-		if (!file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
+		if (!file_exists(WT_ROOT.'modules/googlemap/defaultconfig.php')) {
 			$tabno = "7";
 		}else{
 			$tabno = "8";
 		}
-		echo PGV_JS_START;
+		echo WT_JS_START;
 		echo "location.href='individual.php?pid={$pid}&tab={$tabno}'";
-		echo PGV_JS_END;
+		echo WT_JS_END;
 	break;
 
 //------------------------------------------------------------------------------
 case 'al_reorder_media_update': // Update sort using Album Page
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
 	if (isset($_REQUEST['order1'])) $order1 = $_REQUEST['order1'];
@@ -2172,26 +2172,26 @@ case 'al_reorder_media_update': // Update sort using Album Page
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	foreach ($lines as $line) {
-		if (strpos($line, "1 _PGV_OBJS")===false) {
+		if (strpos($line, "1 _WT_OBJS")===false) {
 			$newgedrec .= $line."\n";
 		}
 	}
 	foreach ($order2 as $m_media=>$num) {
-		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\n";
+		$newgedrec .= "1 _WT_OBJS @".$m_media."@\n";
 	}
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		echo "<pre>$newgedrec</pre>";
 	}
 	$success = (replace_gedrec($pid, $newgedrec, $update_CHAN));
 	if ($success) {
-		if (!file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
+		if (!file_exists(WT_ROOT.'modules/googlemap/defaultconfig.php')) {
 			$tabno = "7";
 		}else{
 			$tabno = "8";
 		}
-		echo PGV_JS_START;
+		echo WT_JS_START;
 		echo "location.href='individual.php?pid={$pid}&tab={$tabno}'";
-		echo PGV_JS_END;
+		echo WT_JS_END;
 	}
 	break;
 
@@ -2200,8 +2200,8 @@ case 'al_reorder_media_update': // Update sort using Album Page
 
 //------------------------------------------------------------------------------
 case 'reorder_children':
-	require_once PGV_ROOT.'js/prototype.js.htm';
-	require_once PGV_ROOT.'js/scriptaculous.js.htm';
+	require_once WT_ROOT.'js/prototype.js.htm';
+	require_once WT_ROOT.'js/scriptaculous.js.htm';
 	echo "<br /><b>", i18n::translate('Re-order children'), "</b>", help_link('reorder_children');
 	?>
 	<form name="reorder_form" method="post" action="edit_interface.php">
@@ -2240,7 +2240,7 @@ case 'reorder_children':
 			}
 		?>
 		</ul>
-		<?php echo PGV_JS_START; ?>
+		<?php echo WT_JS_START; ?>
 			new Effect.BlindDown('reorder_list', {duration: 1});
 			Sortable.create('reorder_list',
 				{
@@ -2251,7 +2251,7 @@ case 'reorder_children':
 					}
 				}
 			);
-		<?php echo PGV_JS_END; ?>
+		<?php echo WT_JS_END; ?>
 		<button type="submit"><?php echo i18n::translate('Save'); ?></button>
 		<button type="submit" onclick="document.reorder_form.action.value='reorder_children'; document.reorder_form.submit();"><?php echo i18n::translate('Sort by birth dates'); ?></button>
 		<button type="submit" onclick="window.close();"><?php echo i18n::translate('Cancel'); ?></button>
@@ -2260,7 +2260,7 @@ case 'reorder_children':
 	break;
 //------------------------------------------------------------------------------
 case 'changefamily':
-	require_once PGV_ROOT.'includes/classes/class_family.php';
+	require_once WT_ROOT.'includes/classes/class_family.php';
 	$family = new Family($gedrec);
 	$father = $family->getHusband();
 	$mother = $family->getWife();
@@ -2306,7 +2306,7 @@ case 'changefamily':
 			}
 		}
 	}
-	echo PGV_JS_START;
+	echo WT_JS_START;
 	?>
 		var nameElement = null;
 		var remElement = null;
@@ -2318,7 +2318,7 @@ case 'changefamily':
 				remElement.style.display = 'block';
 			}
 		}
-	<?php echo PGV_JS_END; ?>
+	<?php echo WT_JS_END; ?>
 	<br /><br />
 	<?php echo i18n::translate('Use this page to change or remove family members.<br /><br />For each member in the family, you can use the Change link to choose a different person to fill that role in the family.  You can also use the Remove link to remove that person from the family.<br /><br />When you have finished changing the family members, click the Save button to save the changes.'); ?>
 	<form name="changefamform" method="post" action="edit_interface.php">
@@ -2401,7 +2401,7 @@ case 'changefamily':
 	break;
 //------------------------------------------------------------------------------
 case 'changefamily_update':
-	require_once PGV_ROOT.'includes/classes/class_family.php';
+	require_once WT_ROOT.'includes/classes/class_family.php';
 	$family = new Family($gedrec);
 	$father = $family->getHusband();
 	$mother = $family->getWife();
@@ -2413,8 +2413,8 @@ case 'changefamily_update':
 		if (strstr($gedrec, "1 HUSB")!==false)
 			$gedrec = preg_replace("/1 HUSB @.*@/", "1 HUSB @$HUSB@", $gedrec);
 		else $gedrec .= "\n1 HUSB @$HUSB@\n";
-		if (isset($pgv_changes[$HUSB."_".PGV_GEDCOM])) $indirec = find_updated_record($HUSB, PGV_GED_ID);
-		else $indirec = find_person_record($HUSB, PGV_GED_ID);
+		if (isset($pgv_changes[$HUSB."_".WT_GEDCOM])) $indirec = find_updated_record($HUSB, WT_GED_ID);
+		else $indirec = find_person_record($HUSB, WT_GED_ID);
 		if (!empty($indirec) && (strpos($indirec, "1 FAMS @$famid@")===false)) {
 			$indirec .= "\n1 FAMS @$famid@\n";
 			replace_gedrec($HUSB, $indirec, $update_CHAN);
@@ -2434,8 +2434,8 @@ case 'changefamily_update':
 	}
 	//-- remove the FAMS link from the old father
 	if (!is_null($father) && $father->getXref()!=$HUSB) {
-		if (isset($pgv_changes[$father->getXref()."_".PGV_GEDCOM])) $indirec = find_updated_record($father->getXref(), PGV_GED_ID);
-		else $indirec = find_person_record($father->getXref(), PGV_GED_ID);
+		if (isset($pgv_changes[$father->getXref()."_".WT_GEDCOM])) $indirec = find_updated_record($father->getXref(), WT_GED_ID);
+		else $indirec = find_person_record($father->getXref(), WT_GED_ID);
 		$pos1 = strpos($indirec, "1 FAMS @$famid@");
 		if ($pos1!==false) {
 			$pos2 = strpos($indirec, "\n1", $pos1+5);
@@ -2451,8 +2451,8 @@ case 'changefamily_update':
 		if (strstr($gedrec, "1 WIFE")!==false)
 			$gedrec = preg_replace("/1 WIFE @.*@/", "1 WIFE @$WIFE@", $gedrec);
 		else $gedrec .= "\n1 WIFE @$WIFE@\n";
-		if (isset($pgv_changes[$WIFE."_".PGV_GEDCOM])) $indirec = find_updated_record($WIFE, PGV_GED_ID);
-		else $indirec = find_person_record($WIFE, PGV_GED_ID);
+		if (isset($pgv_changes[$WIFE."_".WT_GEDCOM])) $indirec = find_updated_record($WIFE, WT_GED_ID);
+		else $indirec = find_person_record($WIFE, WT_GED_ID);
 		if (!empty($indirec) && (strpos($indirec, "1 FAMS @$famid@")===false)) {
 			$indirec .= "\n1 FAMS @$famid@\n";
 			replace_gedrec($WIFE, $indirec, $update_CHAN);
@@ -2472,8 +2472,8 @@ case 'changefamily_update':
 	}
 	//-- remove the FAMS link from the old father
 	if (!is_null($mother) && $mother->getXref()!=$WIFE) {
-		if (isset($pgv_changes[$mother->getXref()."_".PGV_GEDCOM])) $indirec = find_updated_record($mother->getXref(), PGV_GED_ID);
-		else $indirec = find_person_record($mother->getXref(), PGV_GED_ID);
+		if (isset($pgv_changes[$mother->getXref()."_".WT_GEDCOM])) $indirec = find_updated_record($mother->getXref(), WT_GED_ID);
+		else $indirec = find_person_record($mother->getXref(), WT_GED_ID);
 		$pos1 = strpos($indirec, "1 FAMS @$famid@");
 		if ($pos1!==false) {
 			$pos2 = strpos($indirec, "\n1", $pos1+5);
@@ -2495,8 +2495,8 @@ case 'changefamily_update':
 			if (strpos($gedrec, "1 CHIL @$CHIL@")===false) {
 				$gedrec .= "\n1 CHIL @$CHIL@\n";
 				$updated = true;
-				if (isset($pgv_changes[$CHIL."_".PGV_GEDCOM])) $indirec = find_updated_record($CHIL, PGV_GED_ID);
-				else $indirec = find_person_record($CHIL, PGV_GED_ID);
+				if (isset($pgv_changes[$CHIL."_".WT_GEDCOM])) $indirec = find_updated_record($CHIL, WT_GED_ID);
+				else $indirec = find_person_record($CHIL, WT_GED_ID);
 				if (!empty($indirec) && (strpos($indirec, "1 FAMC @$famid@")===false)) {
 					$indirec .= "\n1 FAMC @$famid@\n";
 					replace_gedrec($CHIL, $indirec, $update_CHAN);
@@ -2521,8 +2521,8 @@ case 'changefamily_update':
 					$updated = true;
 				}
 				//-- remove the FAMC link from the child record
-				if (isset($pgv_changes[$child->getXref()."_".PGV_GEDCOM])) $indirec = find_updated_record($child->getXref(), PGV_GED_ID);
-				else $indirec = find_person_record($child->getXref(), PGV_GED_ID);
+				if (isset($pgv_changes[$child->getXref()."_".WT_GEDCOM])) $indirec = find_updated_record($child->getXref(), WT_GED_ID);
+				else $indirec = find_person_record($child->getXref(), WT_GED_ID);
 				$pos1 = strpos($indirec, "1 FAMC @$famid@");
 				if ($pos1!==false) {
 					$pos2 = strpos($indirec, "\n1", $pos1+5);
@@ -2565,7 +2565,7 @@ case 'edit_family':
 		create_add_form("MARR");
 		echo "<input type=\"hidden\" name=\"linenum[]\" value=\"$i\" />\n";
 	}
-	if (PGV_USER_IS_ADMIN) {
+	if (WT_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
@@ -2589,7 +2589,7 @@ case 'edit_family':
 	break;
 //------------------------------------------------------------------------------
 case 'reorder_update':
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
 	if (isset($_REQUEST['order'])) $order = $_REQUEST['order'];
@@ -2600,13 +2600,13 @@ case 'reorder_update':
 		// move each child subrecord to the bottom, in the order specified
 		$subrec = get_sub_record(1, "1 CHIL @".$child."@", $gedrec);
 		$subrec = trim($subrec, "\n");
-		if (PGV_DEBUG) {
+		if (WT_DEBUG) {
 			echo "<pre>[", $subrec, "]</pre>";
 		}
 		$newgedrec = str_replace($subrec, "", $newgedrec);
 		$newgedrec .= "\n".$subrec."\n";
 	}
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		echo "<pre>$newgedrec</pre>";
 	}
 	$success = (replace_gedrec($pid, $newgedrec, $update_CHAN));
@@ -2614,8 +2614,8 @@ case 'reorder_update':
 	break;
 //------------------------------------------------------------------------------
 case 'reorder_fams':
-	require_once PGV_ROOT.'js/prototype.js.htm';
-	require_once PGV_ROOT.'js/scriptaculous.js.htm';
+	require_once WT_ROOT.'js/prototype.js.htm';
+	require_once WT_ROOT.'js/scriptaculous.js.htm';
 	echo "<br /><b>", i18n::translate('Reorder Families'), "</b>", help_link('reorder_families');
 	?>
 	<form name="reorder_form" method="post" action="edit_interface.php">
@@ -2633,14 +2633,14 @@ case 'reorder_fams':
 			foreach ($fams as $famid=>$family) {
 				echo "<li class=\"facts_value\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$famid\" >";
 				echo "<span class=\"name2\">", PrintReady($family->getFullName()), "</span><br />";
-				echo $family->format_first_major_fact(PGV_EVENTS_MARR, 2);
+				echo $family->format_first_major_fact(WT_EVENTS_MARR, 2);
 				echo "<input type=\"hidden\" name=\"order[$famid]\" value=\"$i\"/>";
 				echo "</li>";
 				$i++;
 			}
 		?>
 		</ul>
-		<?php echo PGV_JS_START; ?>
+		<?php echo WT_JS_START; ?>
 			new Effect.BlindDown('reorder_list', {duration: 1});
 			Sortable.create('reorder_list',
 				{
@@ -2651,7 +2651,7 @@ case 'reorder_fams':
 					}
 				}
 			);
-		<?php echo PGV_JS_END; ?>
+		<?php echo WT_JS_END; ?>
 		<button type="submit"><?php echo i18n::translate('Save'); ?></button>
 		<button type="submit" onclick="document.reorder_form.action.value='reorder_fams'; document.reorder_form.submit();"><?php echo i18n::translate('Sort by marriage date'); ?></button>
 		<button type="submit" onclick="window.close();"><?php echo i18n::translate('Cancel'); ?></button>
@@ -2660,7 +2660,7 @@ case 'reorder_fams':
 	break;
 //------------------------------------------------------------------------------
 case 'reorder_fams_update':
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
 	if (isset($_REQUEST['order'])) $order = $_REQUEST['order'];
@@ -2676,7 +2676,7 @@ case 'reorder_fams_update':
 	foreach ($order as $famid=>$num) {
 		$newgedrec .= "1 FAMS @".$famid."@\n";
 	}
-	if (PGV_DEBUG) {
+	if (WT_DEBUG) {
 		echo "<pre>$newgedrec</pre>";
 	}
 	$success = (replace_gedrec($pid, $newgedrec, $update_CHAN));
@@ -2689,7 +2689,7 @@ case 'reorder_fams_update':
 //-- for reuse of editing functions from forms
 case 'mod_edit_fact':
 	if (isset($_REQUEST['mod'])) $mod = $_REQUEST['mod'];
-	require_once PGV_ROOT.'modules/'.$mod.'/'.$mod.'.php';
+	require_once WT_ROOT.'modules/'.$mod.'/'.$mod.'.php';
 	$module = new $mod();
 	if (method_exists($module, "edit_fact")) {
 		$module->edit_fact();
@@ -2710,8 +2710,8 @@ if (empty($goto) || empty($link)) {
 }
 
 // autoclose window when update successful  ==== 
-if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG ) {
-	echo PGV_JS_START;
+if ($success && $EDIT_AUTOCLOSE && !WT_DEBUG ) {
+	echo WT_JS_START;
 	if ($action=="copy") {
 		echo "window.close();";
 	} else if (isset($closeparent) && $closeparent=="yes" ) {
@@ -2720,7 +2720,7 @@ if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG ) {
 	} else {
 		echo "edit_close('{$link}');";
 	}
-	echo PGV_JS_END;
+	echo WT_JS_END;
 }
 
 // Decide whether to print footer or not ================================================

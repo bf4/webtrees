@@ -11,12 +11,12 @@
  * @subpackage Charts
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CSS_PARSER_PHP', '');
+define('WT_CSS_PARSER_PHP', '');
 
 class cssparser {
   var $css;

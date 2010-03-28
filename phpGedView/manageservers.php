@@ -32,19 +32,19 @@
 * @author rbennett
 */
 
-define('PGV_SCRIPT_NAME', 'manageservers.php');
+define('WT_SCRIPT_NAME', 'manageservers.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions.php';
-require_once PGV_ROOT.'includes/functions/functions_edit.php';
-require_once PGV_ROOT.'includes/functions/functions_import.php';
-require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
+require_once WT_ROOT.'includes/functions/functions.php';
+require_once WT_ROOT.'includes/functions/functions_edit.php';
+require_once WT_ROOT.'includes/functions/functions_import.php';
+require_once WT_ROOT.'includes/classes/class_serviceclient.php';
 
 print_header(i18n::translate('Manage Sites'));
 //-- only allow gedcom admins here
-if (!PGV_USER_GEDCOM_ADMIN) {
+if (!WT_USER_GEDCOM_ADMIN) {
 	print i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
 	//-- display messages as to why the editing access was denied
-	if (!PGV_USER_GEDCOM_ADMIN) print "<br />".i18n::translate('This user name cannot edit this GEDCOM.');
+	if (!WT_USER_GEDCOM_ADMIN) print "<br />".i18n::translate('This user name cannot edit this GEDCOM.');
 	print "<br /><br /><div class=\"center\"><a href=\"javascript: ".i18n::translate('Close Window')."\" onclick=\"window.close();\">".i18n::translate('Close Window')."</a></div>\n";
 	print_footer();
 	exit;
@@ -103,16 +103,16 @@ function validIP($address) {
 if ($action=='addBanned' || $action=='addSearch' || $action=='deleteBanned' || $action=='deleteSearch') {
 	if (validIP($address)) {
 		// Even if we are adding a new record, we must delete the existing one first.
-		PGV_DB::prepare(
+		WT_DB::prepare(
 			"DELETE FROM {$TBLPREFIX}ip_address WHERE ip_address=?"
 		)->execute(array($address));
 		if ($action=='addBanned') {
-			PGV_DB::prepare(
+			WT_DB::prepare(
 				"INSERT INTO {$TBLPREFIX}ip_address (ip_address, category, comment) VALUES (?, ?, ?)"
 			)->execute(array($address, 'banned', $comment));
 		}
 		if ($action=='addSearch') {
-			PGV_DB::prepare(
+			WT_DB::prepare(
 				"INSERT INTO {$TBLPREFIX}ip_address (ip_address, category, comment) VALUES (?, ?, ?)"
 			)->execute(array($address, 'search-engine', $comment));
 		}
@@ -131,11 +131,11 @@ if ($action=='addBanned' || $action=='addSearch' || $action=='deleteBanned' || $
 * Adds a server to the outbound remote linking list
 */
 if ($action=='addServer') {
-	$serverTitle = safe_POST('serverTitle', '[^<>"%{};]+'); // same as PGV_REGEX_NOSCRIPT, but allow ampersand in title
-	$serverURL = safe_POST('serverURL', PGV_REGEX_URL);
+	$serverTitle = safe_POST('serverTitle', '[^<>"%{};]+'); // same as WT_REGEX_NOSCRIPT, but allow ampersand in title
+	$serverURL = safe_POST('serverURL', WT_REGEX_URL);
 	$gedcom_id = safe_POST('gedcom_id');
-	$username  = safe_POST('username', PGV_REGEX_USERNAME);
-	$password  = safe_POST('password', PGV_REGEX_PASSWORD);
+	$username  = safe_POST('username', WT_REGEX_USERNAME);
+	$password  = safe_POST('password', WT_REGEX_PASSWORD);
 
 	if (!$serverTitle=="" || !$serverURL=="") {
 		$errorServer = '';
@@ -182,7 +182,7 @@ if ($action=='deleteServer') {
 	if (!empty($address)) {
 		$sid = $address;
 
-		if (count_linked_indi($sid, 'SOUR', PGV_GED_ID) || count_linked_fam($sid, 'SOUR', PGV_GED_ID)) {
+		if (count_linked_indi($sid, 'SOUR', WT_GED_ID) || count_linked_fam($sid, 'SOUR', WT_GED_ID)) {
 			$errorDelete = i18n::translate('The remote server could not be removed because its Connections list is not empty.');
 		} else {
 			// No references exist:  it's OK to delete this source
@@ -240,11 +240,11 @@ function showSite(siteID) {
 <?php
 	$sql="SELECT ip_address, comment FROM {$TBLPREFIX}ip_address WHERE category='search-engine' ORDER BY INET_ATON(ip_address)";
 	$index=0;
-	$search_engines=PGV_DB::prepare($sql)->fetchAssoc();
+	$search_engines=WT_DB::prepare($sql)->fetchAssoc();
 	foreach ($search_engines as $ip_address=>$ip_comment) {
 		echo '<tr><td>';
-		if (isset($PGV_IMAGES["remove"]["other"])) {
-			echo '<input type="image" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["remove"]["other"], '" alt="', i18n::translate('Delete'), '" name="deleteSearch" value="', $ip_address, '">';
+		if (isset($WT_IMAGES["remove"]["other"])) {
+			echo '<input type="image" src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["remove"]["other"], '" alt="', i18n::translate('Delete'), '" name="deleteSearch" value="', $ip_address, '">';
 		} else {
 			echo '<button name="deleteSearch" value="', $ip_address, '" type="submit">', i18n::translate('Remove'), '</button>';
 		}
@@ -252,8 +252,8 @@ function showSite(siteID) {
 		echo '<td><input type="text" name="comment', ++$index, '" size="60" value="', $ip_comment, '" readonly /></td></tr>';
 	}
 	echo '<tr><td valign="top"><input name="action" type="hidden" value="addSearch"/>';
-	if (isset($PGV_IMAGES["add"]["other"])) {
-		echo '<input type="image" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["add"]["other"], '" alt="', i18n::translate('Add'), '">';
+	if (isset($WT_IMAGES["add"]["other"])) {
+		echo '<input type="image" src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["add"]["other"], '" alt="', i18n::translate('Add'), '">';
 	} else {
 		echo '<input type="submit" value="', i18n::translate('Add'), '" />';
 	}
@@ -287,11 +287,11 @@ function showSite(siteID) {
 			<table align="center">
 <?php
 	$sql="SELECT ip_address, comment FROM {$TBLPREFIX}ip_address WHERE category='banned' ORDER BY INET_ATON(ip_address)";
-	$banned=PGV_DB::prepare($sql)->fetchAssoc();
+	$banned=WT_DB::prepare($sql)->fetchAssoc();
 	foreach ($banned as $ip_address=>$ip_comment) {
 		echo '<tr><td>';
-		if (isset($PGV_IMAGES["remove"]["other"])) {
-			echo '<input type="image" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["remove"]["other"], '" alt="', i18n::translate('Delete'), '" name="deleteBanned" value="', $ip_address, '">';
+		if (isset($WT_IMAGES["remove"]["other"])) {
+			echo '<input type="image" src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["remove"]["other"], '" alt="', i18n::translate('Delete'), '" name="deleteBanned" value="', $ip_address, '">';
 		} else {
 			echo '<button name="deleteBanned" value="', $ip_address, '" type="submit">', i18n::translate('Remove'), '</button>';
 		}
@@ -299,8 +299,8 @@ function showSite(siteID) {
 		echo '<td><input type="text" name="comment', ++$index, '" size="60" value="', $ip_comment, '" readonly /></td></tr>';
 	}
 	echo '<tr><td valign="top"><input name="action" type="hidden" value="addBanned"/>';
-	if (isset($PGV_IMAGES["add"]["other"])) {
-		echo '<input type="image" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["add"]["other"], '" alt="', i18n::translate('Add'), '">';
+	if (isset($WT_IMAGES["add"]["other"])) {
+		echo '<input type="image" src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["add"]["other"], '" alt="', i18n::translate('Add'), '">';
 	} else {
 		echo '<input type="submit" value="', i18n::translate('Add'), '" />';
 	}

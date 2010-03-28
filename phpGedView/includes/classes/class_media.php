@@ -29,14 +29,14 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_MEDIA_PHP', '');
+define('WT_CLASS_MEDIA_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
+require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
 
 class Media extends GedcomRecord {
 	var $title         =null;
@@ -264,8 +264,8 @@ class Media extends GedcomRecord {
 		global $TBLPREFIX;
 
 		return
-			PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file=? AND m_titl LIKE ? AND m_gedfile=?")
-			->execute(array($obje->file, $obje->title, PGV_GED_ID))
+			WT_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file=? AND m_titl LIKE ? AND m_gedfile=?")
+			->execute(array($obje->file, $obje->title, WT_GED_ID))
 			->fetchOne();
 	}
 

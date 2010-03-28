@@ -27,18 +27,18 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_SOURCE_CTRL_PHP', '');
+define('WT_SOURCE_CTRL_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
-require_once PGV_ROOT.'includes/controllers/basecontrol.php';
-require_once PGV_ROOT.'includes/classes/class_source.php';
-require_once PGV_ROOT.'includes/classes/class_menu.php';
-require_once PGV_ROOT.'includes/functions/functions_import.php';
+require_once WT_ROOT.'includes/functions/functions_print_facts.php';
+require_once WT_ROOT.'includes/controllers/basecontrol.php';
+require_once WT_ROOT.'includes/classes/class_source.php';
+require_once WT_ROOT.'includes/classes/class_menu.php';
+require_once WT_ROOT.'includes/functions/functions_import.php';
 
 $nonfacts = array();
 /**
@@ -68,7 +68,7 @@ class SourceControllerRoot extends BaseController {
 
 		$this->sid = safe_GET_xref('sid');
 
-		$sourcerec = find_source_record($this->sid, PGV_GED_ID);
+		$sourcerec = find_source_record($this->sid, WT_GED_ID);
 
 		if (isset($pgv_changes[$this->sid."_".$GEDCOM])){
 			$sourcerec = "0 @".$this->sid."@ SOUR\n";
@@ -77,7 +77,7 @@ class SourceControllerRoot extends BaseController {
 		}
 
 		$this->source = new Source($sourcerec);
-		$this->source->ged_id=PGV_GED_ID; // This record is from a file
+		$this->source->ged_id=WT_GED_ID; // This record is from a file
 
 		if (!$this->source->canDisplayDetails()) {
 			print_header(i18n::translate('Private')." ".i18n::translate('Source Information'));
@@ -86,7 +86,7 @@ class SourceControllerRoot extends BaseController {
 			exit;
 		}
 
-		$this->uname = PGV_USER_NAME;
+		$this->uname = WT_USER_NAME;
 
 		//-- perform the desired action
 		switch($this->action) {
@@ -103,15 +103,15 @@ class SourceControllerRoot extends BaseController {
 
 		//-- check for the user
 		//-- if the user can edit and there are changes then get the new changes
-		if ($this->show_changes && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->sid."_".$GEDCOM])) {
-			$newrec = find_updated_record($this->sid, PGV_GED_ID);
+		if ($this->show_changes && WT_USER_CAN_EDIT && isset($pgv_changes[$this->sid."_".$GEDCOM])) {
+			$newrec = find_updated_record($this->sid, WT_GED_ID);
 			$this->diffsource = new Source($newrec);
 			$this->diffsource->setChanged(true);
 			$sourcerec = $newrec;
 		}
 
 		if ($this->source->canDisplayDetails()) {
-			$this->canedit = PGV_USER_CAN_EDIT;
+			$this->canedit = WT_USER_CAN_EDIT;
 		}
 
 		if ($this->show_changes && $this->canedit) {
@@ -127,7 +127,7 @@ class SourceControllerRoot extends BaseController {
 		if (empty($this->uname)) return;
 		if (!empty($_REQUEST["gid"])) {
 			$gid = strtoupper($_REQUEST["gid"]);
-			$indirec = find_source_record($gid, PGV_GED_ID);
+			$indirec = find_source_record($gid, WT_GED_ID);
 			if ($indirec) {
 				$favorite = array();
 				$favorite["username"] = $this->uname;
@@ -148,11 +148,11 @@ class SourceControllerRoot extends BaseController {
 	function acceptChanges() {
 		global $GEDCOM;
 
-		if (!PGV_USER_CAN_ACCEPT) return;
+		if (!WT_USER_CAN_ACCEPT) return;
 		if (accept_changes($this->sid."_".$GEDCOM)) {
 			$this->show_changes=false;
 			$this->accept_success=true;
-			$indirec = find_source_record($this->sid, PGV_GED_ID);
+			$indirec = find_source_record($this->sid, WT_GED_ID);
 			//-- check if we just deleted the record and redirect to index
 			if (empty($indirec)) {
 				header("Location: index.php?ctype=gedcom");
@@ -186,7 +186,7 @@ class SourceControllerRoot extends BaseController {
 	* @return Menu
 	*/
 	function &getEditMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_changes;
+		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $pgv_changes;
 		global $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
@@ -199,24 +199,24 @@ class SourceControllerRoot extends BaseController {
 		// edit source menu
 		$menu = new Menu(i18n::translate('Edit Source'));
 		$menu->addOnclick('return edit_source(\''.$this->sid.'\');');
-		if (!empty($PGV_IMAGES["edit_sour"]["small"]))
-			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
+		if (!empty($WT_IMAGES["edit_sour"]["small"]))
+			$menu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_sour']['small']}");
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 
 		// edit source / edit_source
 		$submenu = new Menu(i18n::translate('Edit Source'));
 		$submenu->addOnclick('return edit_source(\''.$this->sid.'\');');
-		if (!empty($PGV_IMAGES["edit_sour"]["small"]))
-			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
+		if (!empty($WT_IMAGES["edit_sour"]["small"]))
+			$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_sour']['small']}");
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		$menu->addSubmenu($submenu);
 
 		// edit source / edit_raw
-		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) {
+		if ($SHOW_GEDCOM_RECORD || WT_USER_IS_ADMIN) {
 			$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 			$submenu->addOnclick("return edit_raw('".$this->sid."');");
-			if (!empty($PGV_IMAGES["edit_sour"]["small"]))
-				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
+			if (!empty($WT_IMAGES["edit_sour"]["small"]))
+				$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_sour']['small']}");
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 			$menu->addSubmenu($submenu);
 		}
@@ -224,8 +224,8 @@ class SourceControllerRoot extends BaseController {
 		// edit source / delete_source
 		$submenu = new Menu(i18n::translate('Delete this Source'));
 		$submenu->addOnclick("if (confirm('".i18n::translate('Are you sure you want to delete this Source?')."')) return deletesource('".$this->sid."'); else return false;");
-		if (!empty($PGV_IMAGES["edit_sour"]["small"]))
-			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
+		if (!empty($WT_IMAGES["edit_sour"]["small"]))
+			$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_sour']['small']}");
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 		$menu->addSubmenu($submenu);
 
@@ -240,31 +240,31 @@ class SourceControllerRoot extends BaseController {
 			if (!$this->show_changes)
 			{
 				$submenu = new Menu(i18n::translate('This record has been updated.  Click here to show changes.'), encode_url("source.php?sid={$this->sid}&show_changes=yes"));
-				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
+				if (!empty($WT_IMAGES["edit_sour"]["small"]))
+					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_sour']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 			}
 			else
 			{
 				$submenu = new Menu(i18n::translate('Click here to hide changes.'), encode_url("source.php?sid={$this->sid}&show_changes=no"));
-				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
+				if (!empty($WT_IMAGES["edit_sour"]["small"]))
+					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_sour']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 			}
 
-			if (PGV_USER_CAN_ACCEPT)
+			if (WT_USER_CAN_ACCEPT)
 			{
 				// edit_source / accept_all
 				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url("source.php?sid={$this->sid}&action=undo"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
+				if (!empty($WT_IMAGES["edit_sour"]["small"]))
+					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_sour']['small']}");
 				$menu->addSubmenu($submenu);
 				$submenu = new Menu(i18n::translate('Accept all changes'), encode_url("source.php?sid={$this->sid}&action=accept"));
-				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
+				if (!empty($WT_IMAGES["edit_sour"]["small"]))
+					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_sour']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 			}
@@ -277,13 +277,13 @@ class SourceControllerRoot extends BaseController {
 	* @return Menu
 	*/
 	function &getOtherMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 
-		if (!$this->source->canDisplayDetails() || (!$SHOW_GEDCOM_RECORD && $ENABLE_CLIPPINGS_CART < PGV_USER_ACCESS_LEVEL)) {
+		if (!$this->source->canDisplayDetails() || (!$SHOW_GEDCOM_RECORD && $ENABLE_CLIPPINGS_CART < WT_USER_ACCESS_LEVEL)) {
 			$tempvar = false;
 			return $tempvar;
 		}
@@ -293,7 +293,7 @@ class SourceControllerRoot extends BaseController {
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		if ($SHOW_GEDCOM_RECORD)
 		{
-			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
+			$menu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['gedcom']['small']}");
 			if ($this->show_changes && $this->userCanEdit())
 			{
 				$menu->addLink("javascript:show_gedcom_record('new');");
@@ -305,8 +305,8 @@ class SourceControllerRoot extends BaseController {
 		}
 		else
 		{
-			if (!empty($PGV_IMAGES["clippings"]["small"]))
-				$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['clippings']['small']}");
+			if (!empty($WT_IMAGES["clippings"]["small"]))
+				$menu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['clippings']['small']}");
 			$menu->addLink(encode_url("clippings.php?action=add&id={$this->sid}&type=sour"));
 		}
 		if ($SHOW_GEDCOM_RECORD)
@@ -321,16 +321,16 @@ class SourceControllerRoot extends BaseController {
 				{
 					$submenu->addLink("javascript:show_gedcom_record();");
 				}
-				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
+				$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['gedcom']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 		}
-		if ($ENABLE_CLIPPINGS_CART >= PGV_USER_ACCESS_LEVEL)
+		if ($ENABLE_CLIPPINGS_CART >= WT_USER_ACCESS_LEVEL)
 		{
 				// other / add_to_cart
 				$submenu = new Menu(i18n::translate('Add to Clippings Cart'), encode_url("clippings.php?action=add&id={$this->sid}&type=sour"));
-				if (!empty($PGV_IMAGES["clippings"]["small"]))
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['clippings']['small']}");
+				if (!empty($WT_IMAGES["clippings"]["small"]))
+					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['clippings']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 		}
@@ -338,7 +338,7 @@ class SourceControllerRoot extends BaseController {
 		{
 				// other / add_to_my_favorites
 				$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url("source.php?action=addfav&sid={$this->sid}&gid={$this->sid}"));
-				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
+				$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['gedcom']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 		}
@@ -347,8 +347,8 @@ class SourceControllerRoot extends BaseController {
 }
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists(PGV_ROOT.'includes/controllers/source_ctrl_user.php')) {
-	require_once PGV_ROOT.'includes/controllers/source_ctrl_user.php';
+if (file_exists(WT_ROOT.'includes/controllers/source_ctrl_user.php')) {
+	require_once WT_ROOT.'includes/controllers/source_ctrl_user.php';
 } else {
 	class SourceController extends SourceControllerRoot
 	{

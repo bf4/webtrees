@@ -27,13 +27,13 @@
 * @version $Id$
 */
 
-define('PGV_SCRIPT_NAME', 'branches.php');
+define('WT_SCRIPT_NAME', 'branches.php');
 require './config.php';
 
 //-- const
 $fact='MARR';
-define('PGV_ICON_RINGS', '<img src="images/small/rings.gif" alt="'.i18n::translate('MARR').'" title="'.i18n::translate('MARR').'" />');
-define('PGV_ICON_BRANCHES', "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["patriarch"]["small"]."\" alt=\"\" align=\"middle\" />");
+define('WT_ICON_RINGS', '<img src="images/small/rings.gif" alt="'.i18n::translate('MARR').'" title="'.i18n::translate('MARR').'" />');
+define('WT_ICON_BRANCHES', "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["patriarch"]["small"]."\" alt=\"\" align=\"middle\" />");
 
 //-- args
 $surn = safe_GET('surn', '[^<>&%{};]*');
@@ -47,8 +47,8 @@ if (empty($ged)) {
 
 //-- rootid
 $rootid = "";
-if (PGV_USER_ID) {
-	$rootid = PGV_USER_ROOT_ID;
+if (WT_USER_ID) {
+	$rootid = WT_USER_ROOT_ID;
 	if (empty($_SESSION['user_ancestors'])	|| $_SESSION['user_ancestors'][1]!==$rootid) {
 		unset($_SESSION['user_ancestors']);
 		load_ancestors_array($rootid);
@@ -57,13 +57,13 @@ if (PGV_USER_ID) {
 
 //-- random surname
 if ($surn=='*') {
-	$surn = array_rand(get_indilist_surns("", "", false, true, PGV_GED_ID));
+	$surn = array_rand(get_indilist_surns("", "", false, true, WT_GED_ID));
 }
 
 //-- form
 print_header(i18n::translate('Branches')." - ".$surn);
 if ($ENABLE_AUTOCOMPLETE) {
-	require PGV_ROOT.'/js/autocomplete.js.htm';
+	require WT_ROOT.'/js/autocomplete.js.htm';
 }
 ?>
 <form name="surnlist" id="surnlist" action="?">
@@ -91,7 +91,7 @@ if ($ENABLE_AUTOCOMPLETE) {
 //-- results
 if ($surn) {
 	$surn_script = utf8_script($surn);
-	echo "<fieldset><legend>", PGV_ICON_BRANCHES, " ", PrintReady($surn), "</legend>";
+	echo "<fieldset><legend>", WT_ICON_BRANCHES, " ", PrintReady($surn), "</legend>";
 	$indis = indis_array($surn, $soundex_std, $soundex_dm);
 	echo "<ol>";
 	foreach ($indis as $k=>$person) {
@@ -140,7 +140,7 @@ function print_fams($person, $famid=null) {
 	$sosa = @array_search($person->getXref(), $_SESSION['user_ancestors']);
 	if ($sosa) {
 		$class = "search_hit";
-		$sosa = "<a dir=$TEXT_DIRECTION target=\"_blank\" class=\"details1 {$person->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".PGV_USER_ROOT_ID."&pid1=".$person->getXref()."\">&nbsp;{$sosa}&nbsp;</a>".sosa_gen($sosa);
+		$sosa = "<a dir=$TEXT_DIRECTION target=\"_blank\" class=\"details1 {$person->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".WT_USER_ROOT_ID."&pid1=".$person->getXref()."\">&nbsp;{$sosa}&nbsp;</a>".sosa_gen($sosa);
 	}
 	$current = $person->getSexImage().
 		"<a target=\"_blank\" class=\"{$class}\" title=\"".$person->getXref()."\" href=\"{$person->getLinkUrl()}\">".PrintReady($person_name)."</a> ".
@@ -160,13 +160,13 @@ function print_fams($person, $famid=null) {
 			$sosa2 = @array_search($spouse->getXref(), $_SESSION['user_ancestors']);
 			if ($sosa2) {
 				$class = "search_hit";
-				$sosa2 = "<a dir=$TEXT_DIRECTION target=\"_blank\" class=\"details1 {$spouse->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".PGV_USER_ROOT_ID."&pid1=".$spouse->getXref()."\">&nbsp;{$sosa2}&nbsp;</a>".sosa_gen($sosa2);
+				$sosa2 = "<a dir=$TEXT_DIRECTION target=\"_blank\" class=\"details1 {$spouse->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".WT_USER_ROOT_ID."&pid1=".$spouse->getXref()."\">&nbsp;{$sosa2}&nbsp;</a>".sosa_gen($sosa2);
 			}
 			if ($family->getMarriageYear()) {
-				$txt .= "&nbsp;<span dir=$TEXT_DIRECTION class='details1' title=\"".strip_tags($family->getMarriageDate()->Display())."\">".PGV_ICON_RINGS.$family->getMarriageYear()."</span>&nbsp;";
+				$txt .= "&nbsp;<span dir=$TEXT_DIRECTION class='details1' title=\"".strip_tags($family->getMarriageDate()->Display())."\">".WT_ICON_RINGS.$family->getMarriageYear()."</span>&nbsp;";
 			}
 			else if ($family->getMarriage()) {
-				$txt .= "&nbsp;<span dir=$TEXT_DIRECTION class='details1' title=\"".i18n::translate('Yes')."\">".PGV_ICON_RINGS."</span>&nbsp;";
+				$txt .= "&nbsp;<span dir=$TEXT_DIRECTION class='details1' title=\"".i18n::translate('Yes')."\">".WT_ICON_RINGS."</span>&nbsp;";
 			}
 			$spouse_name = $spouse->getListName();
 			foreach ($spouse->getAllNames() as $n=>$name) {
@@ -216,7 +216,7 @@ function indis_array($surn, $soundex_std, $soundex_dm) {
 		" WHERE n_file=?".
 		" AND n_type!=?".
 		" AND (n_surn=? OR n_surname=?";
-	$args=array(PGV_GED_ID, '_MARNM', $surn, $surn);
+	$args=array(WT_GED_ID, '_MARNM', $surn, $surn);
 	if ($soundex_std) {
 		$sql .= " OR n_soundex_surn_std=?";
 		$args[]=soundex_std($surn);
@@ -227,7 +227,7 @@ function indis_array($surn, $soundex_std, $soundex_dm) {
 	}
 	$sql .= ") ORDER BY n_sort";
 	$rows=
-		PGV_DB::prepare($sql)
+		WT_DB::prepare($sql)
 		->execute($args)
 		->fetchAll();
 //	var_dump($sql); var_dump($rows);

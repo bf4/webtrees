@@ -27,7 +27,7 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'genservice.php');
+define('WT_SCRIPT_NAME', 'genservice.php');
 require './config.php';
 
 /**
@@ -50,7 +50,7 @@ if(!isset($_SERVER['QUERY_STRING']) || strstr($_SERVER['QUERY_STRING'],'wsdl')==
 		if ($ct>0) $_REQUEST['ged'] = trim($match[1]);
 
 		//AddToLog("Setting SID to ".$SID." ".$HTTP_RAW_POST_DATA);
-		require_once PGV_ROOT.'includes/functions/functions_edit.php';
+		require_once WT_ROOT.'includes/functions/functions_edit.php';
 	}
 }
 

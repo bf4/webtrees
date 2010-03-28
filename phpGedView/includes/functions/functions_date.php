@@ -26,14 +26,14 @@
 * @version $Id$
 */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_FUNCTIONS_DATE_PHP', '');
+define('WT_FUNCTIONS_DATE_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_date.php';
+require_once WT_ROOT.'includes/classes/class_date.php';
 
 /**
 * translate gedcom age string

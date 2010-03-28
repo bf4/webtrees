@@ -29,18 +29,18 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_THEME_SELECT_PHP', '');
+define('WT_THEME_SELECT_PHP', '');
 
-$PGV_BLOCKS["print_block_theme_select"]["name"]			= i18n::translate('Theme Select');
-$PGV_BLOCKS["print_block_theme_select"]["descr"]		= i18n::translate('The Theme Select block displays the Theme selector even when the Change Theme feature is disabled.');
-$PGV_BLOCKS["print_block_theme_select"]["type"]			= "gedcom";
-$PGV_BLOCKS["print_block_theme_select"]["canconfig"]	= false;
-$PGV_BLOCKS["print_block_theme_select"]["config"]		= array("cache"=>-1);
+$WT_BLOCKS["print_block_theme_select"]["name"]			= i18n::translate('Theme Select');
+$WT_BLOCKS["print_block_theme_select"]["descr"]		= i18n::translate('The Theme Select block displays the Theme selector even when the Change Theme feature is disabled.');
+$WT_BLOCKS["print_block_theme_select"]["type"]			= "gedcom";
+$WT_BLOCKS["print_block_theme_select"]["canconfig"]	= false;
+$WT_BLOCKS["print_block_theme_select"]["config"]		= array("cache"=>-1);
 
 function print_block_theme_select($style=0, $config="", $side, $index) {
 	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $themeformcount;

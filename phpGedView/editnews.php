@@ -26,17 +26,17 @@
  * @package webtrees
  */
 
-define('PGV_SCRIPT_NAME', 'editnews.php');
+define('WT_SCRIPT_NAME', 'editnews.php');
 require './config.php';
 
-$useFCK = file_exists(PGV_ROOT.'modules/FCKeditor/fckeditor.php');
+$useFCK = file_exists(WT_ROOT.'modules/FCKeditor/fckeditor.php');
 if($useFCK){
-	require PGV_ROOT.'modules/FCKeditor/fckeditor.php';
+	require WT_ROOT.'modules/FCKeditor/fckeditor.php';
 }
 
 print_simple_header(i18n::translate('Add/Edit Journal/News entry'));
 
-if (!PGV_USER_ID) {
+if (!WT_USER_ID) {
 	print i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
 	print_simple_footer();
 	exit;
@@ -45,9 +45,9 @@ if (!PGV_USER_ID) {
 $action  =safe_GET('action', array('compose', 'save', 'delete'), 'compose');
 $news_id =safe_GET('news_id');
 $username=safe_REQUEST($_REQUEST, 'username');
-$date    =safe_POST('date', PGV_REGEX_UNSAFE);
-$title   =safe_POST('title', PGV_REGEX_UNSAFE);
-$text    =safe_POST('text', PGV_REGEX_UNSAFE);
+$date    =safe_POST('date', WT_REGEX_UNSAFE);
+$title   =safe_POST('title', WT_REGEX_UNSAFE);
+$text    =safe_POST('text', WT_REGEX_UNSAFE);
 
 if (empty($username)) $username=$GEDCOM;
 

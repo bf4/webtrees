@@ -26,14 +26,14 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_GEWEBSERVICE_PHP', '');
+define('WT_CLASS_GEWEBSERVICE_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_grampsexport.php';
+require_once WT_ROOT.'includes/classes/class_grampsexport.php';
 
 class GEWebService extends GrampsExport
 {
@@ -197,7 +197,7 @@ if (($nameRec = get_sub_record(1, "1 NAME", $personRec)) != null) {
 	*/
 	function create_lds_event($indirec, $eventName, $eventABV, $eParent) {
 		global $ePerson, $TEMPLE_CODES, $clipping, $eRoot;
-		require_once PGV_ROOT.'includes/classes/class_person.php';
+		require_once WT_ROOT.'includes/classes/class_person.php';
 		if (($hasldsevent = get_sub_record(1, "1 " . $eventABV, $indirec)) != null) {
 
 			// Create <lds_ord> and attaches the type attribute
@@ -238,7 +238,7 @@ if (($nameRec = get_sub_record(1, "1 NAME", $personRec)) != null) {
 				// Create an instance of person and look for their family record
 				$person = Person :: getInstance($clipping["id"]);
 				$famId = $person->getChildFamilyIds();
-				$famrec = find_family_record($famId[0], PGV_GED_ID);
+				$famrec = find_family_record($famId[0], WT_GED_ID);
 				$fid = $famId[0];
 				$handle = $this->query_dom("./families/family[@id=\"$fid\"]/@handle");
 				if ($handle == null && id_in_cart($fid)) {
@@ -419,7 +419,7 @@ function create_family($frec, $fid) {
  */
 function create_record($fid)
 {
-	$gedrec = find_gedcom_record($fid, PGV_GED_ID);
+	$gedrec = find_gedcom_record($fid, WT_GED_ID);
 	//0 @I1@ INDI - person
 	//0 @F1@ FAM - family
 	//0 @S1@ SOUR - source

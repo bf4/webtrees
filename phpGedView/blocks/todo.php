@@ -30,20 +30,20 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_TODO_PHP', '');
+define('WT_TODO_PHP', '');
 
-require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
-require_once PGV_ROOT.'includes/functions/functions_edit.php';
+require_once WT_ROOT.'includes/functions/functions_print_lists.php';
+require_once WT_ROOT.'includes/functions/functions_edit.php';
 
-$PGV_BLOCKS['print_todo']['name']     =i18n::translate('&quot;To Do&quot; tasks');
-$PGV_BLOCKS['print_todo']['descr']    =i18n::translate('The To Do block lists all outstanding _TODO facts in the database.');
-$PGV_BLOCKS['print_todo']['canconfig']=true;
-$PGV_BLOCKS['print_todo']['config']   =array(
+$WT_BLOCKS['print_todo']['name']     =i18n::translate('&quot;To Do&quot; tasks');
+$WT_BLOCKS['print_todo']['descr']    =i18n::translate('The To Do block lists all outstanding _TODO facts in the database.');
+$WT_BLOCKS['print_todo']['canconfig']=true;
+$WT_BLOCKS['print_todo']['config']   =array(
 	'cache'          =>0,
 	'show_unassigned'=>true,  // show unassigned items
 	'show_other'     =>false, // show items assigned to other users
@@ -52,32 +52,32 @@ $PGV_BLOCKS['print_todo']['config']   =array(
 
 // this block prints a list of _TODO events in your gedcom
 function print_todo($block=true, $config='', $side, $index) {
-	global $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
+	global $ctype, $WT_IMAGE_DIR, $WT_IMAGES, $WT_BLOCKS;
 
 	$block=true; // Always restrict this block's height
 
 	if (empty($config)) {
-		$config=$PGV_BLOCKS['print_todo']['config'];
+		$config=$WT_BLOCKS['print_todo']['config'];
 	}
 
 	$id='todo';
 	$title='';
-	if ($PGV_BLOCKS['print_todo']['canconfig']) {
-		if ($ctype=='gedcom' && PGV_USER_GEDCOM_ADMIN || $ctype=='user' && PGV_USER_ID) {
+	if ($WT_BLOCKS['print_todo']['canconfig']) {
+		if ($ctype=='gedcom' && WT_USER_GEDCOM_ADMIN || $ctype=='user' && WT_USER_ID) {
 			if ($ctype=='gedcom') {
-				$name = PGV_GEDCOM;
+				$name = WT_GEDCOM;
 			} else {
-				$name = PGV_USER_NAME;
+				$name = WT_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
 	$title.=i18n::translate('&quot;To Do&quot; tasks').help_link('todo');
 	$content='';
 
-	require_once PGV_ROOT.'js/sorttable.js.htm';
-	require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
+	require_once WT_ROOT.'js/sorttable.js.htm';
+	require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
 
 	$table_id = 'ID'.floor(microtime()*1000000); // sorttable requires a unique ID
 	$content .= '<table id="'.$table_id.'" class="sortable list_table center">';
@@ -92,15 +92,15 @@ function print_todo($block=true, $config='', $side, $index) {
 
 	$found=false;
 	$end_jd=$config['show_future']=='yes' ? 99999999 : client_jd();
-	foreach (get_calendar_events(0, $end_jd, '_TODO', PGV_GED_ID) as $todo) {
+	foreach (get_calendar_events(0, $end_jd, '_TODO', WT_GED_ID) as $todo) {
 		$record=GedcomRecord::getInstance($todo['id']);
 		if ($record && $record->canDisplayDetails()) {
 			$pgvu=get_gedcom_value('_PGVU', 2, $todo['factrec']);
-			if ($pgvu==PGV_USER_NAME || !$pgvu && $config['show_unassigned']=='yes' || $pgvu && $config['show_other']=='yes') {
+			if ($pgvu==WT_USER_NAME || !$pgvu && $config['show_unassigned']=='yes' || $pgvu && $config['show_other']=='yes') {
 				$content.='<tr valign="top">';
 				$content.='<td class="list_value_wrap">'.str_replace('<a', '<a name="'.$todo['date']->MinJD().'"', $todo['date']->Display(false)).'</td>';
 				$name=$record->getListName();
-				$content.='<td class="list_value_wrap" align="'.get_align(PGV_GEDCOM).'"><a href="'.encode_url($record->getLinkUrl()).'">'.PrintReady($name).'</a></td>';
+				$content.='<td class="list_value_wrap" align="'.get_align(WT_GEDCOM).'"><a href="'.encode_url($record->getLinkUrl()).'">'.PrintReady($name).'</a></td>';
 				if ($config['show_unassigned']=='yes' || $config['show_other']=='yes') {
 					$content.='<td class="list_value_wrap">'.$pgvu.'</td>';
 				}
@@ -126,10 +126,10 @@ function print_todo($block=true, $config='', $side, $index) {
 }
 
 function print_todo_config($config) {
-	global $PGV_BLOCKS, $DAYS_TO_SHOW_LIMIT;
+	global $WT_BLOCKS, $DAYS_TO_SHOW_LIMIT;
 
 	if (empty($config)) {
-		$config=$PGV_BLOCKS['print_todo']['config'];
+		$config=$WT_BLOCKS['print_todo']['config'];
 	}
 
 	echo '<tr><td class="descriptionbox wrap width33">';

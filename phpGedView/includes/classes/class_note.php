@@ -27,14 +27,14 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_NOTE_PHP', '');
+define('WT_CLASS_NOTE_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
+require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
 
 class Note extends GedcomRecord {
 	// Generate a URL that links to this record
@@ -56,7 +56,7 @@ class Note extends GedcomRecord {
 	public function getAllNames() {
 		// Uniquely, the NOTE objects have data in their level 0 record.
 		// Hence the REGEX passed in the second parameter
-		return parent::_getAllNames('NOTE', '0 @'.PGV_REGEX_XREF.'@');
+		return parent::_getAllNames('NOTE', '0 @'.WT_REGEX_XREF.'@');
 	}
 }
 ?>

@@ -32,7 +32,7 @@
 * @version $Id$
 */
 
-define('PGV_SCRIPT_NAME', 'search_engine.php');
+define('WT_SCRIPT_NAME', 'search_engine.php');
 require './config.php';
 
 header('Content-Type: text/html; charset=UTF-8');
@@ -45,7 +45,7 @@ if ($rtl_stylesheet && $TEXT_DIRECTION=='rtl') {
 	echo '<link rel="stylesheet" href="', $rtl_stylesheet, '" type="text/css" media="all" />';
 }
 echo '<meta name="robots" content="noindex,follow" />';
-echo '<meta name="generator" content="', PGV_PHPGEDVIEW, ' - ', PGV_PHPGEDVIEW_URL, '" />';
+echo '<meta name="generator" content="', WT_WEBTREES, ' - ', WT_WEBTREES_URL, '" />';
 echo '<title>', i18n::translate('Search Engine Spider Detected'), '</title>';
 echo '</head><body>';
 echo '<div class="helptext">', i18n::translate('webtrees automatically provides search engines with smaller data files with fewer links.  The data is limited to the individual and immediate family, without adding information about grand parents or grand children.  Many reports and server-intensive pages like the calendar are off limits to the spiders.<br /><br />Attempts by the spiders to go to those pages result in showing this page.  If you are seeing this text, the software believes you are a search engine spider.  Below is the list of pages that are allowed to be spidered and will provide the abbreviated data.<br /><br />Real users who follow search engine links into this site will see the full pages and data, and not this page.');

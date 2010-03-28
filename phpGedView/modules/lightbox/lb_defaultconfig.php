@@ -34,7 +34,7 @@
 // Configuration parameters for Lightbox Album
 // -------------------------------------------------------
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
  header('HTTP/1.0 403 Forbidden');
  exit;
 }
@@ -44,7 +44,7 @@ global $LB_MUSIC_FILE,$LB_TRANSITION,$LB_URL_WIDTH,$LB_URL_HEIGHT,$GEDCOM;
 
 // Create LB tables, if not already present
 try {
-	PGV_DB::updateSchema('./modules/lightbox/db_schema/', 'LB_SCHEMA_VERSION', 1);
+	WT_DB::updateSchema('./modules/lightbox/db_schema/', 'LB_SCHEMA_VERSION', 1);
 } catch (PDOException $ex) {
 	// The schema update scripts should never fail.  If they do, there is no clean recovery.
 	die($ex);

@@ -29,27 +29,27 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'faq.php');
+define('WT_SCRIPT_NAME', 'faq.php');
 require './config.php';
 
-global $PGV_IMAGES, $faqs;
+global $WT_IMAGES, $faqs;
 
 // -- print html header information
 print_header(i18n::translate('FAQ List'));
 
 // -- Get all of the _POST variables we're interested in
-$action     = safe_REQUEST($_REQUEST, 'action',      PGV_REGEX_UNSAFE, 'show');
-$adminedit  = safe_REQUEST($_REQUEST, 'adminedit',   PGV_REGEX_UNSAFE, PGV_USER_GEDCOM_ADMIN);
-$type       = safe_REQUEST($_REQUEST, 'type',        PGV_REGEX_UNSAFE);
-$oldGEDCOM  = safe_REQUEST($_REQUEST, 'oldGEDCOM',   PGV_REGEX_UNSAFE);
-$whichGEDCOM= safe_REQUEST($_REQUEST, 'whichGEDCOM', PGV_REGEX_UNSAFE);
-$oldOrder   = safe_REQUEST($_REQUEST, 'oldOrder',    PGV_REGEX_UNSAFE);
-$order      = safe_REQUEST($_REQUEST, 'order',       PGV_REGEX_UNSAFE);
-$header     = safe_REQUEST($_POST,    'header',      PGV_REGEX_UNSAFE);
-$body       = safe_REQUEST($_POST,    'body',        PGV_REGEX_UNSAFE);
-$pidh       = safe_REQUEST($_REQUEST, 'pidh',        PGV_REGEX_UNSAFE);
-$pidb       = safe_REQUEST($_REQUEST, 'pidb',        PGV_REGEX_UNSAFE);
-$id         = safe_REQUEST($_REQUEST, 'id',          PGV_REGEX_UNSAFE);
+$action     = safe_REQUEST($_REQUEST, 'action',      WT_REGEX_UNSAFE, 'show');
+$adminedit  = safe_REQUEST($_REQUEST, 'adminedit',   WT_REGEX_UNSAFE, WT_USER_GEDCOM_ADMIN);
+$type       = safe_REQUEST($_REQUEST, 'type',        WT_REGEX_UNSAFE);
+$oldGEDCOM  = safe_REQUEST($_REQUEST, 'oldGEDCOM',   WT_REGEX_UNSAFE);
+$whichGEDCOM= safe_REQUEST($_REQUEST, 'whichGEDCOM', WT_REGEX_UNSAFE);
+$oldOrder   = safe_REQUEST($_REQUEST, 'oldOrder',    WT_REGEX_UNSAFE);
+$order      = safe_REQUEST($_REQUEST, 'order',       WT_REGEX_UNSAFE);
+$header     = safe_REQUEST($_POST,    'header',      WT_REGEX_UNSAFE);
+$body       = safe_REQUEST($_POST,    'body',        WT_REGEX_UNSAFE);
+$pidh       = safe_REQUEST($_REQUEST, 'pidh',        WT_REGEX_UNSAFE);
+$pidb       = safe_REQUEST($_REQUEST, 'pidb',        WT_REGEX_UNSAFE);
+$id         = safe_REQUEST($_REQUEST, 'id',          WT_REGEX_UNSAFE);
 
 // NOTE: Commit the faq data to the DB
 if ($action=="commit") {
@@ -69,18 +69,18 @@ if ($action=="commit") {
 			}
 		}
 		$header = str_replace(array('&lt;', '&gt;'), array('<', '>'), $header);
-		PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=?, b_username=?, b_config=? WHERE b_id=? and b_username=? and b_location=?")
+		WT_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=?, b_username=?, b_config=? WHERE b_id=? and b_username=? and b_location=?")
 			->execute(array($order, $whichGEDCOM, serialize($header), $pidh, $oldGEDCOM, 'header'));
 
 		$body = str_replace(array('&lt;', '&gt;'), array('<', '>'), $body);
-		PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=?, b_username=?, b_config=? WHERE b_id=? and b_username=? and b_location=?")
+		WT_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=?, b_username=?, b_config=? WHERE b_id=? and b_username=? and b_location=?")
 			->execute(array($order, $whichGEDCOM, serialize($body), $pidb, $oldGEDCOM, 'body'));
 
 		AddToChangeLog("FAQ item has been edited.<br />Header ID: ".$pidh.".<br />Body ID: ".$pidb, $GEDCOM);
 		break;
 
 	case 'delete':
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks WHERE b_order=? AND b_name=? AND b_username=?")
+		WT_DB::prepare("DELETE FROM {$TBLPREFIX}blocks WHERE b_order=? AND b_name=? AND b_username=?")
 			->execute(array($id, 'faq', $oldGEDCOM));
 
 		AddToChangeLog("FAQ item has been deleted.<br />Header ID: ".$pidh.".<br />Body ID: ".$pidb, $oldGEDCOM);
@@ -97,11 +97,11 @@ if ($action=="commit") {
 		}
 		$newid = get_next_id("blocks", "b_id");
 		$header = str_replace(array('&lt;', '&gt;'), array('<', '>'), $header);
-		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}blocks (b_id, b_username, b_location, b_order, b_name, b_config) VALUES (?, ?, ?, ?, ?, ?)")
+		WT_DB::prepare("INSERT INTO {$TBLPREFIX}blocks (b_id, b_username, b_location, b_order, b_name, b_config) VALUES (?, ?, ?, ?, ?, ?)")
 			->execute(array($newid, $whichGEDCOM, 'header', $order, 'faq', serialize($header)));
 
 		$body = str_replace(array('&lt;', '&gt;'), array('<', '>'), $body);
-		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}blocks (b_id, b_username, b_location, b_order, b_name, b_config) VALUES (?, ?, ?, ?, ?, ?)")
+		WT_DB::prepare("INSERT INTO {$TBLPREFIX}blocks (b_id, b_username, b_location, b_order, b_name, b_config) VALUES (?, ?, ?, ?, ?, ?)")
 			->execute(array($newid+1, $whichGEDCOM, 'body', $order, 'faq', serialize($body)));
 
 		AddToChangeLog("FAQ item has been added.<br />Header ID: ".$newid.".<br />Body ID: ".($newid+1), $whichGEDCOM);
@@ -110,16 +110,16 @@ if ($action=="commit") {
 	case 'moveup':
 		$faqs = get_faq_data();
 		if (isset($faqs[$id-1])) {
-			PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
+			WT_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
 				->execute(array($id, $faqs[$id-1]["header"]["pid"], 'header'));
 
-			PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
+			WT_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
 				->execute(array($id, $faqs[$id-1]["body"]["pid"], 'body'));
 		}
-		PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
+		WT_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
 			->execute(array($id-1, $pidh, 'header'));
 
-		PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
+		WT_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
 			->execute(array($id-1, $pidb, 'body'));
 
 		AddToChangeLog("FAQ item has been moved up.<br />Header ID: ".$pidh.".<br />Body ID: ".$pidb, $oldGEDCOM);
@@ -128,16 +128,16 @@ if ($action=="commit") {
 	case 'movedown':
 		$faqs = get_faq_data();
 		if (isset($faqs[$id+1])) {
-			PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
+			WT_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
 				->execute(array($id, $faqs[$id+1]["header"]["pid"], 'header'));
 
-			PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
+			WT_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
 				->execute(array($id, $faqs[$id+1]["body"]["pid"], 'body'));
 		}
-		PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
+		WT_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
 			->execute(array($id+1, $pidh, 'header'));
 
-		PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
+		WT_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
 			->execute(array($id+1, $pidb, 'body'));
 
 		AddToChangeLog("FAQ item has been moved down.<br />Header ID: ".$pidh.".<br />Body ID: ".$pidb, $GEDCOM);
@@ -233,7 +233,7 @@ if ($action == "show") {
 	$faqs = get_faq_data();
 	echo '<table class="list_table width100">';
 	if (count($faqs) == 0) {
-		if (PGV_USER_GEDCOM_ADMIN) {
+		if (WT_USER_GEDCOM_ADMIN) {
 			echo '<tr><td class="width20 list_label">';
 			echo '<a href="faq.php?action=add">', i18n::translate('Add FAQ item'), '</a>';
 			echo help_link('add_faq_item');
@@ -243,7 +243,7 @@ if ($action == "show") {
 		}
 	} else {
 		// NOTE: Add a preview link
-		if (PGV_USER_GEDCOM_ADMIN) {
+		if (WT_USER_GEDCOM_ADMIN) {
 			echo '<tr>';
 			if ($adminedit) {
 				echo '<td class="descriptionbox center" colspan="2">';
@@ -286,12 +286,12 @@ if ($action == "show") {
 				$body = str_replace(array('&lt;', '&gt;'), array('<', '>'), embed_globals($data["body"]["text"]));
 				echo '<tr>';
 				// NOTE: Print the edit options of the current item
-				if (PGV_USER_GEDCOM_ADMIN && $adminedit) {
+				if (WT_USER_GEDCOM_ADMIN && $adminedit) {
 					echo '<td class="optionbox center">';
-					echo '<a href="', encode_url('faq.php?action=commit&type=moveup&id='.$id.'&pidh='.$data["header"]["pid"].'&pidb='.$data["body"]["pid"]), '"><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["uarrow"]["other"], '" border="0" alt="" /></a>';
+					echo '<a href="', encode_url('faq.php?action=commit&type=moveup&id='.$id.'&pidh='.$data["header"]["pid"].'&pidb='.$data["body"]["pid"]), '"><img src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["uarrow"]["other"], '" border="0" alt="" /></a>';
 					echo help_link('moveup_faq_item');
 					echo '</td><td class="optionbox center">';
-					echo '<a href="', encode_url('faq.php?action=commit&type=movedown&id='.$id.'&pidh='.$data["header"]["pid"].'&pidb='.$data["body"]["pid"]), '"><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["darrow"]["other"], '" border="0" alt="" /></a>';
+					echo '<a href="', encode_url('faq.php?action=commit&type=movedown&id='.$id.'&pidh='.$data["header"]["pid"].'&pidb='.$data["body"]["pid"]), '"><img src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["darrow"]["other"], '" border="0" alt="" /></a>';
 					echo help_link('movedown_faq_item');
 					echo '</td><td class="optionbox center">';
 					echo '<a href="', encode_url('faq.php?action=edit&id='.$id), '">', i18n::translate('Edit'), '</a>';

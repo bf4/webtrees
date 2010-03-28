@@ -30,12 +30,12 @@
  *
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
+if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('PGV_CLASS_GRAMPSEXPORT_PHP', '');
+define('WT_CLASS_GRAMPSEXPORT_PHP', '');
 
  /*
   * This is an abstract class and should only be used through its subclasses, all
@@ -89,7 +89,7 @@ class GrampsExport {
  * The methods adds all the root elements and appends them to a DOMDocument.
  */
 	function begin_xml() {
-		$user = PGV_USER_NAME;
+		$user = WT_USER_NAME;
 
 		$this->dom = new DomDocument("1.0", "UTF-8");
 		$this->dom->formatOutput = true;
@@ -429,7 +429,7 @@ class GrampsExport {
 		$eMediaRef = $eParent->appendChild($eMediaRef);
 
 		if (($sourceHlink = $this->query_dom("./objects/object[@id = \"$mediaId\"]/@handle")) == null)
-			$this->create_media($mediaId, find_media_record($mediaId), PGV_GED_ID);
+			$this->create_media($mediaId, find_media_record($mediaId), WT_GED_ID);
 		$eMediaRef->setAttribute("hlink", $this->query_dom("./objects/object[@id = \"$mediaId\"]/@handle"));
 
 		$eParent->appendChild($eMediaRef);

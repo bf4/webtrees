@@ -29,9 +29,9 @@
  * @version $Id$
  */
 
-define('PGV_SCRIPT_NAME', 'familybook.php');
+define('WT_SCRIPT_NAME', 'familybook.php');
 require './config.php';
-require_once PGV_ROOT.'includes/functions/functions_charts.php';
+require_once WT_ROOT.'includes/functions/functions_charts.php';
 
 // Extract form variables
 $pid        =safe_GET_xref('pid');
@@ -58,7 +58,7 @@ $name  =$person->getFullName();
 
 function print_descendency($pid, $count) {
 	global $show_spouse, $dgenerations, $bwidth, $bheight, $bhalfheight;
-	global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $generations, $box_width, $view, $show_full;
+	global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $generations, $box_width, $view, $show_full;
 	if ($count>=$dgenerations) return 0;
 	print "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n";
 	print "<tr>";
@@ -68,7 +68,7 @@ function print_descendency($pid, $count) {
 	if (count($famids)>0) {
 		$firstkids = 0;
 		foreach($famids as $indexval => $famid) {
-			$famrec = find_family_record($famid, PGV_GED_ID);
+			$famrec = find_family_record($famid, WT_GED_ID);
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
 			if ($ct>0) {
 			print "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n";
@@ -89,18 +89,18 @@ function print_descendency($pid, $count) {
 				print "</td>\n";
 				$twidth = 7;
 				if ($ct==1) $twidth+=3;
-				print "<td rowspan=\"$rowspan\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"$twidth\" height=\"3\" alt=\"\" /></td>\n";
+				print "<td rowspan=\"$rowspan\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["hline"]["other"]."\" width=\"$twidth\" height=\"3\" alt=\"\" /></td>\n";
 				if ($ct>1) {
 					if ($i==0) {
-						print "<td height=\"".($bhalfheight+3)."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
-						print "<tr><td height=\"".($bhalfheight+3)."\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
+						print "<td height=\"".($bhalfheight+3)."\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
+						print "<tr><td height=\"".($bhalfheight+3)."\" style=\"background: url('".$WT_IMAGE_DIR."/".$WT_IMAGES["vline"]["other"]."');\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
 					}
 					else if ($i==$ct-1) {
-						print "<td height=\"".($bhalfheight+4)."\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
-						print "<tr><td height=\"".($bhalfheight+4)."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
+						print "<td height=\"".($bhalfheight+4)."\" style=\"background: url('".$WT_IMAGE_DIR."/".$WT_IMAGES["vline"]["other"]."');\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
+						print "<tr><td height=\"".($bhalfheight+4)."\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
 					}
 					else {
-						print "<td style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
+						print "<td style=\"background: url('".$WT_IMAGE_DIR."/".$WT_IMAGES["vline"]["other"]."');\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
 					}
 				}
 				print "</tr>\n";
@@ -122,7 +122,7 @@ function print_descendency($pid, $count) {
 	//-- add offset divs to make things line up better
 	if ($show_spouse) {
 		foreach($famids as $indexval => $famid) {
-			$famrec = find_family_record($famid, PGV_GED_ID);
+			$famrec = find_family_record($famid, WT_GED_ID);
 			if (!empty($famrec)) {
 				$marrec = get_sub_record(1, "1 MARR", $famrec);
 				if (!empty($marrec)) {
@@ -136,7 +136,7 @@ function print_descendency($pid, $count) {
 	// NOTE: If statement OK
 	if ($show_spouse) {
 		foreach($famids as $indexval => $famid) {
-			$famrec = find_family_record($famid, PGV_GED_ID);
+			$famrec = find_family_record($famid, WT_GED_ID);
 			if (!empty($famrec)) {
 				$parents = find_parents_in_record($famrec);
 				$marrec = get_sub_record(1, "1 MARR", $famrec);
@@ -152,7 +152,7 @@ function print_descendency($pid, $count) {
 	}
 	// NOTE: If statement OK
 	if ($count==0) {
-		$indirec = find_person_record($pid, PGV_GED_ID);
+		$indirec = find_person_record($pid, WT_GED_ID);
 		// NOTE: If statement OK
 		if (displayDetailsById($pid, 'INDI') || showLivingNameById($pid)) {
 			// -- print left arrow for decendants so that we can move down the tree
@@ -162,7 +162,7 @@ function print_descendency($pid, $count) {
 			$num=0;
 			// NOTE: For statement OK
 			for($f=0; $f<count($cfamids); $f++) {
-				$famrec = find_family_record($cfamids[$f], PGV_GED_ID);
+				$famrec = find_family_record($cfamids[$f], WT_GED_ID);
 				if ($famrec) {
 					$num += preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 				}
@@ -173,13 +173,13 @@ function print_descendency($pid, $count) {
 				print " style=\"position:absolute; width:".$bwidth."px; \">";
 				if ($view!="preview") {
 					print "<a href=\"javascript: ".i18n::translate('Show')."\" onclick=\"return togglechildrenbox('$pid');\" onmouseover=\"swap_image('larrow.$pid',3);\" onmouseout=\"swap_image('larrow.$pid',3);\">";
-					print "<img id=\"larrow.$pid\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"]."\" border=\"0\" alt=\"\" />";
+					print "<img id=\"larrow.$pid\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["darrow"]["other"]."\" border=\"0\" alt=\"\" />";
 					print "</a>";
 				}
 				print "\n\t\t<div id=\"childbox.$pid\" dir=\"".$TEXT_DIRECTION."\" style=\"width:".$bwidth."px; height:".$bheight."px; visibility: hidden;\">";
 				print "\n\t\t\t<table class=\"person_box\"><tr><td>";
 				for($f=0; $f<count($famids); $f++) {
-					$famrec = find_family_record(trim($famids[$f]), PGV_GED_ID);
+					$famrec = find_family_record(trim($famids[$f]), WT_GED_ID);
 					if ($famrec) {
 						$parents = find_parents($famids[$f]);
 						if($parents) {
@@ -214,7 +214,7 @@ function print_descendency($pid, $count) {
 				}
 				//-- print the siblings
 				for($f=0; $f<count($cfamids); $f++) {
-					$famrec = find_family_record($cfamids[$f], PGV_GED_ID);
+					$famrec = find_family_record($cfamids[$f], WT_GED_ID);
 					if ($famrec) {
 						$parents = find_parents($cfamids[$f]);
 						if($parents) {
@@ -279,7 +279,7 @@ function max_descendency_generations($pid, $depth) {
 	$famids = find_sfamily_ids($pid);
 	$maxdc = $depth;
 	foreach($famids as $indexval => $famid) {
-		$famrec = find_family_record($famid, PGV_GED_ID);
+		$famrec = find_family_record($famid, WT_GED_ID);
 		$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
 		for($i=0; $i<$ct; $i++) {
 			$chil = trim($match[$i][1]);
@@ -293,7 +293,7 @@ function max_descendency_generations($pid, $depth) {
 }
 
 function print_person_pedigree($pid, $count) {
-	global $generations, $SHOW_EMPTY_BOXES, $PGV_IMAGE_DIR, $PGV_IMAGES, $bheight, $bhalfheight;
+	global $generations, $SHOW_EMPTY_BOXES, $WT_IMAGE_DIR, $WT_IMAGES, $bheight, $bhalfheight;
 	if ($count>=$generations) return;
 	$famids = find_family_ids($pid);
 	$hheight = ($bhalfheight+3) * pow(2,($generations-$count-1));
@@ -303,8 +303,8 @@ function print_person_pedigree($pid, $count) {
 		$height="100%";
 		print "<tr>";
 		if ($count<$generations-1) {
-			print "<td height=\"".$hheight."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
-			print "<td rowspan=\"2\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"7\" height=\"3\" alt=\"\" /></td>\n";
+			print "<td height=\"".$hheight."\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
+			print "<td rowspan=\"2\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["hline"]["other"]."\" width=\"7\" height=\"3\" alt=\"\" /></td>\n";
 		}
 		print "<td rowspan=\"2\">\n";
 		print_pedigree_person($parents["HUSB"]);
@@ -313,11 +313,11 @@ function print_person_pedigree($pid, $count) {
 		print_person_pedigree($parents["HUSB"], $count+1);
 		print "</td>\n";
 		print "</tr>\n<tr>\n<td height=\"".$hheight."\"";
-		if ($count<$generations-1) print " style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\" ";
-		print "><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n<tr>\n";
+		if ($count<$generations-1) print " style=\"background: url('".$WT_IMAGE_DIR."/".$WT_IMAGES["vline"]["other"]."');\" ";
+		print "><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n<tr>\n";
 		if ($count<$generations-1) {
-			print "<td height=\"".$hheight."\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
-			print "<td rowspan=\"2\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"7\" height=\"3\" alt=\"\" /></td>\n";
+			print "<td height=\"".$hheight."\" style=\"background: url('".$WT_IMAGE_DIR."/".$WT_IMAGES["vline"]["other"]."');\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
+			print "<td rowspan=\"2\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["hline"]["other"]."\" width=\"7\" height=\"3\" alt=\"\" /></td>\n";
 		}
 		print "<td rowspan=\"2\">\n";
 		print_pedigree_person($parents["WIFE"]);
@@ -326,7 +326,7 @@ function print_person_pedigree($pid, $count) {
 		print_person_pedigree($parents["WIFE"], $count+1);
 		print "</td>\n";
 		print "</tr>\n";
-		if ($count<$generations-1) print "<tr>\n<td height=\"".$hheight."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
+		if ($count<$generations-1) print "<tr>\n<td height=\"".$hheight."\"><img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
 		print "</table>\n";
 	}
 }
@@ -359,7 +359,7 @@ function print_family_book($pid, $descent)
 				print "<br /><br />\n";
 
 				foreach($famids as $indexval => $famid) {
-						$famrec = find_family_record($famid, PGV_GED_ID);
+						$famrec = find_family_record($famid, WT_GED_ID);
 						$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
 						for($i=0; $i<$ct; $i++) {
 							$chil = trim($match[$i][1]);
@@ -373,12 +373,12 @@ function print_family_book($pid, $descent)
 // -- print html header information
 print_header(PrintReady($name)." ".i18n::translate('Family Book Chart'));
 
-if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 
 // LBox =====================================================================================
-if (PGV_USE_LIGHTBOX) {
-	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
+if (WT_USE_LIGHTBOX) {
+	require WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	require WT_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // ==========================================================================================
 
