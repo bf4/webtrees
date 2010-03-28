@@ -100,7 +100,7 @@ if (WT_USER_IS_ADMIN && $linkto=='manage' && file_exists(WT_ROOT.'modules/GEDFac
 		}
 		//-->
 		</script>
-	<script src="js/phpgedview.js" language="JavaScript" type="text/javascript"></script>
+	<script src="js/webtrees.js" language="JavaScript" type="text/javascript"></script>
 
 		<?php
 		echo '<form name="link" method="get" action="inverselink.php">';

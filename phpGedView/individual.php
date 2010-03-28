@@ -378,7 +378,7 @@ if (!$controller->indi->canDisplayDetails()) {
 echo WT_JS_START;
 echo 'var catch_and_ignore; function paste_id(value) {catch_and_ignore = value;}';
 echo 'if (typeof toggleByClassName == "undefined") {';
-echo 'alert("phpgedview.js: A javascript function is missing.  Please clear your Web browser cache");';
+echo 'alert("webtrees.js: A javascript function is missing.  Please clear your Web browser cache");';
 echo '}';
 echo WT_JS_END;
 

@@ -71,7 +71,7 @@ class TreeNav {
 				global $stylesheet;
 				?>
 				document.writeln('<link rel="stylesheet" href="<?php print $SERVER_URL.$stylesheet; ?>" type="text/css" media="all" />');
-				document.writeln('<script type="text/javascript" src="<?php print $SERVER_URL; ?>/js/phpgedview.js"></script>');
+				document.writeln('<script type="text/javascript" src="<?php print $SERVER_URL; ?>/js/webtrees.js"></script>');
 				<?php
 				ob_start();
 				$w = safe_GET('width', WT_REGEX_INTEGER, '');

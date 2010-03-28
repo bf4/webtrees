@@ -589,7 +589,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 
 	var whichhelp = \'help_'.WT_SCRIPT_NAME.'&action='.$action.'\';
 	//-->
-	'.WT_JS_END.'<script src="js/phpgedview.js" language="JavaScript" type="text/javascript"></script>';
+	'.WT_JS_END.'<script src="js/webtrees.js" language="JavaScript" type="text/javascript"></script>';
 	$bodyOnLoad = '';
 	if ($view=="preview") $bodyOnLoad .= " onbeforeprint=\"hidePrint();\" onafterprint=\"showBack();\"";
 	$bodyOnLoad .= " onload=\"";

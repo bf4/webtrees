@@ -127,7 +127,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		}
 		$title .= help_link('index_charts');
 		$content = "";
-		$content .= "<script src=\"js/phpgedview.js\" language=\"JavaScript\" type=\"text/javascript\"></script>";
+		$content .= "<script src=\"js/webtrees.js\" language=\"JavaScript\" type=\"text/javascript\"></script>";
 		if ($show_full==0) {
 			$content .= '<center><span class="details2">'.i18n::translate('Click on any of the boxes to get more information about that person.').'</span></center><br />';
 		}

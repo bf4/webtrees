@@ -109,7 +109,7 @@ if ($action == "choose" && $paramok) {
 	var GEDFact_assist = "installed";
 //-->
 	</script>
-	<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
+	<script src="webtrees.js" language="JavaScript" type="text/javascript"></script>
 	<link href ="modules/GEDFact_assistant/css/media_0_inverselink.css" 	rel="stylesheet" type="text/css" media="screen" />
 
 	<?php

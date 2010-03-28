@@ -302,7 +302,7 @@ function showchanges() {
 
 //-->
 </script>
-<script src="js/phpgedview.js" language="JavaScript" type="text/javascript"></script>
+<script src="js/webtrees.js" language="JavaScript" type="text/javascript"></script>
 <?php
 if (check_media_structure()) {
 	print "<div id=\"uploadmedia\" style=\"display:none\">";
