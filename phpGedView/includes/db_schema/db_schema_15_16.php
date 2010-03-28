@@ -61,7 +61,11 @@ if (!defined('WT_WEBTREES')) {
 define('WT_SCHEMA_15_16', '');
 
 // Without this index, MySQL 5.0 databases grind to a halt.  (4.1 and 5.1 seem OK.)
-self::exec("ALTER TABLE {$TBLPREFIX}name ADD INDEX {$TBLPREFIX}name_ix1 (n_full, n_id, n_file)");
+try {
+	self::exec("ALTER TABLE {$TBLPREFIX}name ADD INDEX {$TBLPREFIX}name_ix1 (n_full, n_id, n_file)");
+} catch (PDOException $ex) {
+	// It probably already exists
+}
  
 // Update the version to indicate sucess
 set_site_setting($schema_name, $next_version);

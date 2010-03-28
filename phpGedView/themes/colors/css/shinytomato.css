@@ -1629,7 +1629,7 @@ dt {
 .ui-state-active {border: 1px solid #999999; }
 
 /* Override jquery-ui_theme.css                */
-/* Navigator and Flyout menu Styles ----------echo '<a href="', PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(), '">', i18n::translate('Printer-friendly Version'), '</a>';
+/* Navigator and Flyout menu Styles ----------echo '<a href="', WT_SCRIPT_NAME, '?view=preview&amp;', get_query_string(), '">', i18n::translate('Printer-friendly Version'), '</a>';
 echo "<br />";-*/
 
 .static_tab_content_ltr {
