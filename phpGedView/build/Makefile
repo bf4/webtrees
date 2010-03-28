@@ -8,20 +8,42 @@ MO=$(patsubst %.po,%.mo,$(PO))
 PHP=$(shell find .. -path ../library -prune -o -path ../build -prune -o -name '*.php' -print)
 
 default: $(PHP) $(POT) Makefile
+	@if [ ! -f launchpad-export.tar.gz ]; then \
+	 echo; \
+	 echo "------------------------------------------------------------------"; \
+	 echo "You must download the compiled language files (in .MO format) from"; \
+	 echo "https://translations.launchpad.net/webtrees/trunk/+export"; \
+	 echo "Save the file (launchpad.export.tar.gz) to the build directory."; \
+	 echo "Then run make again."; \
+	 echo "------------------------------------------------------------------"; \
+	 echo; \
+	 false; \
+	fi
 	rm -Rf $(LABEL)*
 	svn export .. $(LABEL)
 	rm -R $(LABEL)/library/Zend/{Acl,Amf,Application,Auth,Barcode,Captcha,CodeGenerator,Console,Controller,Config,Crypt,Currency,Date,Db,Debug,Dojo,Dom,Feed,File,Filter,Form,Gdata,Http,InfoCard,Json,Layout,Ldap,Log,Mail,Markup,Measure,Memory,Mime,Navigation,Oauth,OpenId,Paginator,Pdf,ProgressBar,Queue,Reflection,Rest,Search,Serializer,Service,Session,Soap,Tag,Test,Text,TimeSync,Tool,Uri,Validate,Version,View,Wildfire,XmlRpc}*
 	rm -R $(LABEL)/build
-	rm -R $(LABEL)/language/*.po
+	rm -R $(LABEL)/language/*
+	tar tf launchpad-export.tar.gz | grep /LC_MESSAGES/webtrees.mo | cut -d / -f 1 | while read LOCALE; do \
+	 tar xvfzO launchpad-export.tar.gz $$LOCALE/LC_MESSAGES/webtrees.mo > $(LABEL)/language/$$LOCALE.mo; \
+	done
 	zip -qr $(LABEL).zip $(LABEL)
-	tar cf $(LABEL).tar $(LABEL) && bzip2 -k $(LABEL).tar
-	tar cf $(LABEL).tar $(LABEL) && gzip $(LABEL).tar
+	tar cf $(LABEL).tar $(LABEL)
+	bzip2 -k $(LABEL).tar
+	gzip $(LABEL).tar
 	rm -Rf $(LABEL)
 	@echo
 	@echo Upload webtrees.pot to https://translations.launchpad.net/webtrees/trunk/+translations-upload
 	@echo
 	@echo Upload $(LABEL).zip/gz/.bz2 to https://
 	@echo
+
+################################################################################
+# This is a dummy target.  We cannot make this file - we download it from
+# the translation server at launchpad
+################################################################################
+launchpad.export.tar.gz:
+
 
 ################################################################################
 # Update the PO Template file from the sources.
