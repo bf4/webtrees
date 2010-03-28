@@ -23,13 +23,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package webtrees
- * @subpackage Themes/Colors
+ * @subpackage Themes
  * @version $Id$
  */
 
 if (!defined('WT_WEBTREES')) {
-        header('HTTP/1.0 403 Forbidden');
-        exit;
+	header('HTTP/1.0 403 Forbidden');
+	exit;
 }
 
 //-- print color theme sub type change dropdown box
@@ -101,13 +101,13 @@ $headerfile       = WT_THEME_DIR . "header.php";	    //-- Header information for
 $rtl_stylesheet   = WT_THEME_DIR . "style_rtl.css";    //-- CSS level 2 stylesheet to use
 $toplinks         = WT_THEME_DIR . "toplinks.php";     //-- File to display the icons and links to different sections    
 $footerfile       = WT_THEME_DIR . "footer.php";       //-- Footer information for the site     
-$WT_IMAGE_DIR    = WT_THEME_DIR . "images";           //-- directory to look for images
-$FAVICON          = $WT_IMAGE_DIR . "/favicon.ico";
-$WT_USE_HELPIMG = true;                                // set to true to use image for help questionmark, set to false to use $pgv_lang["qm"]
-
+$WT_IMAGE_DIR     = WT_THEME_DIR . "images";           //-- directory to look for images
+$FAVICON          = WT_THEME_DIR . "/favicon.ico";
+$WT_USE_HELPIMG   = true;                                // set to true to use image for help questionmark, set to false to use $wt_lang["qm"]
+$WT_MENU_LOCATION = "top";
 
 //-- variables for image names
-//- PGV main icons
+//- WT main icons
 $WT_IMAGES["calendar"]["large"] = "calendar.gif";
 $WT_IMAGES["clippings"]["large"] = "clippings.gif";
 $WT_IMAGES["favorite"]["large"] = "fav.gif";
@@ -132,12 +132,12 @@ $WT_IMAGES["sex"]["large"] = "male.gif";
 $WT_IMAGES["sexf"]["large"] = "female.gif";
 $WT_IMAGES["sexn"]["large"] = "fe_male.gif";
 
-//- PGV main icons for optional modules
+//- WT main icons for optional modules
 $WT_IMAGES["menu_gallery"]["large"] = "menu_gallery.gif";
 $WT_IMAGES["menu_punbb"]["large"] = "menu_punbb.gif";
 $WT_IMAGES["menu_research"]["large"] = "menu_research.gif";
 
-//- PGV small icons
+//- WT small icons
 $WT_IMAGES["admin"]["small"] = "small/admin.gif";
 $WT_IMAGES["ancestry"]["small"] = "small/ancestry.gif";
 $WT_IMAGES["calendar"]["small"] = "small/calendar.gif";
@@ -182,7 +182,7 @@ $WT_IMAGES["source"]["small"] = "small/source.gif";
 $WT_IMAGES["statistic"]["small"] = "small/statistic.gif";
 $WT_IMAGES["timeline"]["small"] = "small/timeline.gif";
 
-//- PGV buttons for data entry pages
+//- WT buttons for data entry pages
 $WT_IMAGES["addrepository"]["button"] = "buttons/addrepository.gif";
 $WT_IMAGES["addsource"]["button"] = "buttons/addsource.gif";
 $WT_IMAGES["addnote"]["button"] = "buttons/addnote.gif";
@@ -257,7 +257,7 @@ $WT_IMAGES["lsuparrow"]["other"] = "lsuparrow.gif";
 
 //-- Variables for the Fan chart
 $fanChart = array(
-	'font'		=> './includes/fonts/DejaVuSans.ttf',
+	'font'		=> WT_ROOT.'includes/fonts/DejaVuSans.ttf',
 	'size'		=> '7px',
 	'color'		=> '#000000',
 	'bgColor'	=> '#eeeeee',
@@ -297,8 +297,6 @@ $WT_STATS_MAP_Y = "220";
 $WT_STATS_CHART_COLOR1 = "ffffff";
 $WT_STATS_CHART_COLOR2 = "95b8e0";
 $WT_STATS_CHART_COLOR3 = "c8e7ff";
-
-$ONLOADFUNCTION = "loadHandler();";		//-- function that should be called in the <body onload="
 
 // Arrow symbol or icon for up-page links on Help pages
 // This icon is referred to in Help text by: #GLOBALS[UpArrow]#

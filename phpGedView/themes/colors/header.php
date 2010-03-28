@@ -40,15 +40,14 @@ if (!defined('WT_WEBTREES')) {
 		<?php if (isset($_GET["pgvaction"]) && $_GET["pgvaction"]=="places_edit") { ?>
 			<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> <?php } 
 		?>
-		<?php if ($FAVICON) { ?>
-		<link rel="shortcut icon" href="<?php echo $FAVICON; ?>" type="image/x-icon" /> <?php } ?>
+		<?php if ($FAVICON) { ?><link rel="shortcut icon" href="<?php echo $FAVICON; ?>" type="image/x-icon" /> <?php } ?>
 
 		<title><?php echo $title; ?></title>
-		<?php if ($ENABLE_RSS && !$REQUIRE_AUTHENTICATION) { ?>
-			<link href="<?php echo encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}"); ?>" rel="alternate" type="<?php echo $applicationType; ?>" title=" <?php echo htmlspecialchars($GEDCOM_TITLE); ?>" />
+		<?php if ($ENABLE_RSS && !$REQUIRE_AUTHENTICATION){ ?>
+			<link href="<?php echo encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}"); ?>" rel="alternate" type="<?php echo $applicationType; ?>" title="<?php echo htmlspecialchars($GEDCOM_TITLE); ?>" />
 		<?php } ?>
 		<?php if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
-			<link rel="stylesheet" href="<?php echo WT_THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
+			<link rel="stylesheet" href="<?php echo $THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 		<?php }
 		// Additional css files required
 		if (WT_USE_LIGHTBOX) {
@@ -60,7 +59,8 @@ if (!defined('WT_WEBTREES')) {
 				echo '<link rel="stylesheet" href="modules/lightbox/css/album_page.css" type="text/css" media="screen" />';
 			}
 		} ?>
-		<link rel="stylesheet" href="<?php echo $print_stylesheet; ?>" type="text/css" media="print" />
+
+	<link rel="stylesheet" href="<?php echo $print_stylesheet; ?>" type="text/css" media="print" />
 	<?php if ($BROWSERTYPE == "msie") { ?>
 	<style type="text/css">
 		FORM { margin-top: 0px; margin-bottom: 0px; }
@@ -86,8 +86,8 @@ if (!defined('WT_WEBTREES')) {
 	<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />
 	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
 	<?php if ($TEXT_DIRECTION=='rtl') {?>
-	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
-	<link type="text/css" href="<?php echo WT_THEME_DIR?>style_rtl.css" rel="Stylesheet"  media="all" />  
+		<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
+		<link type="text/css" href="<?php echo WT_THEME_DIR?>style_rtl.css" rel="Stylesheet"  media="all" />  
 	<?php }?>
 	<link type="text/css" href="<?php echo WT_THEME_DIR?>modules.css" rel="Stylesheet" />
 	<link type="text/css" href="<?php echo $stylesheet; ?>"  rel="stylesheet" media="all" />

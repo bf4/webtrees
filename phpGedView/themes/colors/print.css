@@ -23,11 +23,11 @@
  *
  * @package webtrees
  * @subpackage Themes
- * $Id$
+ * @version $Id$
  */
 
 /*-- colors style --*/
-#toplinks, #header select, #header input, #footer select, #footer input,  .title, .blockhc, #footer {
+#toplinks, #header select, #header input, #footer select {
 	display:none;
 }
 #backprint {
