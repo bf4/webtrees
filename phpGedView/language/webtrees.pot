@@ -755,7 +755,7 @@ msgstr ""
 
 #: ../message.php:33 ../includes/authentication.php:455
 #: ../includes/authentication.php:471 ../includes/authentication.php:517
-msgid "PhpGedView Message"
+msgid "webtrees Message"
 msgstr ""
 
 #: ../message.php:48 ../message.php:53
@@ -1375,7 +1375,7 @@ msgid "Search Engine Spider Detected"
 msgstr ""
 
 #: ../search_engine.php:51
-msgid "PhpGedView automatically provides search engines with smaller data files with fewer links.  The data is limited to the individual and immediate family, without adding information about grand parents or grand children.  Many reports and server-intensive pages like the calendar are off limits to the spiders.<br /><br />Attempts by the spiders to go to those pages result in showing this page.  If you are seeing this text, the software believes you are a search engine spider.  Below is the list of pages that are allowed to be spidered and will provide the abbreviated data.<br /><br />Real users who follow search engine links into this site will see the full pages and data, and not this page."
+msgid "webtrees automatically provides search engines with smaller data files with fewer links.  The data is limited to the individual and immediate family, without adding information about grand parents or grand children.  Many reports and server-intensive pages like the calendar are off limits to the spiders.<br /><br />Attempts by the spiders to go to those pages result in showing this page.  If you are seeing this text, the software believes you are a search engine spider.  Below is the list of pages that are allowed to be spidered and will provide the abbreviated data.<br /><br />Real users who follow search engine links into this site will see the full pages and data, and not this page."
 msgstr ""
 
 #: ../search_engine.php:61 ../search_engine.php:70 ../uploadgedcom.php:1102
@@ -1720,7 +1720,7 @@ msgstr ""
 
 #: ../install.php:496
 #, php-format
-msgid "PhpGedView requires PHP version %s or higher."
+msgid "webtrees requires PHP version %s or higher."
 msgstr ""
 
 #: ../install.php:497
@@ -1817,7 +1817,7 @@ msgid "All warning checks passed."
 msgstr ""
 
 #: ../install.php:611
-msgid "If any of the warnings do not pass you may still be able to run PhpGedView on this server, but some functionality may be disabled or you may experience poor performance."
+msgid "If any of the warnings do not pass you may still be able to run webtrees on this server, but some functionality may be disabled or you may experience poor performance."
 msgstr ""
 
 #: ../install.php:633 ../help_text.php:2575
@@ -1933,12 +1933,12 @@ msgid "Index file directory"
 msgstr ""
 
 #: ../install.php:760
-msgid "PhpGedView URL"
+msgid "webtrees URL"
 msgstr ""
 
 #: ../install.php:763
 #, php-format
-msgid "This should be the URL to your PhpGedView folder.  You should only change this setting if you are sure you know what you are doing.  PhpGedView has determined this value to be <b>%s</b>"
+msgid "This should be the URL to your webtrees folder.  You should only change this setting if you are sure you know what you are doing.  webtrees has determined this value to be <b>%s</b>"
 msgstr ""
 
 #: ../install.php:768 ../help_text.php:2460
@@ -2231,7 +2231,7 @@ msgid "My Page"
 msgstr ""
 
 #: ../index.php:373
-msgid "My Page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users."
+msgid "My Page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other webtrees users."
 msgstr ""
 
 #: ../index.php:446 ../index_edit.php:430 ../blocks/user_welcome.php:62
@@ -2372,7 +2372,7 @@ msgid "Welcome to Your Genealogy"
 msgstr ""
 
 #: ../editconfig_gedcom.php:592
-msgid "The genealogy information on this website is powered by <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a>.  This page provides an introduction and overview to this genealogy.<br /><br />To begin working with the data, choose one of the charts from the Charts menu, go to the Individual list, or search for a name or place.<br /><br />If you have trouble using the site, you can click on the Help icon to give you information on how to use the page that you are currently viewing.<br /><br />Thank you for visiting this site."
+msgid "The genealogy information on this website is powered by <a href=\"http://www.phpgedview.net/\" target=\"_blank\">webtrees</a>.  This page provides an introduction and overview to this genealogy.<br /><br />To begin working with the data, choose one of the charts from the Charts menu, go to the Individual list, or search for a name or place.<br /><br />If you have trouble using the site, you can click on the Help icon to give you information on how to use the page that you are currently viewing.<br /><br />Thank you for visiting this site."
 msgstr ""
 
 #: ../editconfig_gedcom.php:619 ../editconfig_gedcom.php:653
@@ -3135,7 +3135,7 @@ msgid "Contact Information"
 msgstr ""
 
 #: ../editconfig_gedcom.php:2107
-msgid "PhpGedView reply address"
+msgid "webtrees reply address"
 msgstr ""
 
 #: ../editconfig_gedcom.php:2113 ../includes/functions/functions_print.php:908
@@ -3149,7 +3149,7 @@ msgstr ""
 
 #: ../editconfig_gedcom.php:2135 ../editconfig_gedcom.php:2169
 #: ../includes/functions/functions_edit.php:92
-msgid "PhpGedView internal messaging"
+msgid "webtrees internal messaging"
 msgstr ""
 
 #: ../editconfig_gedcom.php:2136 ../editconfig_gedcom.php:2170
@@ -3160,7 +3160,7 @@ msgstr ""
 
 #: ../editconfig_gedcom.php:2138 ../editconfig_gedcom.php:2172
 #: ../includes/functions/functions_edit.php:94
-msgid "PhpGedView sends emails with no storage"
+msgid "webtrees sends emails with no storage"
 msgstr ""
 
 #: ../editconfig_gedcom.php:2140 ../editconfig_gedcom.php:2174
@@ -3399,7 +3399,7 @@ msgid "Add a new mother"
 msgstr ""
 
 #: ../timeline.php:41
-msgid "PhpGedView Timeline"
+msgid "webtrees Timeline"
 msgstr ""
 
 #: ../timeline.php:149 ../timeline.php:151 ../timeline.php:152
@@ -3579,7 +3579,7 @@ msgid "Module Administration"
 msgstr ""
 
 #: ../module_admin.php:182
-msgid "Below is the list of all the modules installed in this instance of PhpGedView.  Modules are installed by placing them in the <i>modules</i> directory.  Here you can set the access level per GEDCOM for each module.  If a module includes tabs for the individual page or menus for the menu bar, you can also set the access level and order of each of them."
+msgid "Below is the list of all the modules installed in this instance of webtrees.  Modules are installed by placing them in the <i>modules</i> directory.  Here you can set the access level per GEDCOM for each module.  If a module includes tabs for the individual page or menus for the menu bar, you can also set the access level and order of each of them."
 msgstr ""
 
 #: ../module_admin.php:183
@@ -3709,7 +3709,7 @@ msgstr ""
 
 #: ../useradmin.php:199
 #, php-format
-msgid "The administrator at the PhpGedView site %s has approved your application for an account.  You may now login by accessing the following link: %s#"
+msgid "The administrator at the webtrees site %s has approved your application for an account.  You may now login by accessing the following link: %s#"
 msgstr ""
 
 #: ../useradmin.php:252 ../useradmin.php:711 ../edituser.php:143
@@ -4566,7 +4566,7 @@ msgid "Example of invalid date from your GEDCOM:"
 msgstr ""
 
 #: ../uploadgedcom.php:661
-msgid "ANSI file encoding detected.\tPhpGedView works best with files encoded in UTF-8."
+msgid "ANSI file encoding detected.\twebtrees works best with files encoded in UTF-8."
 msgstr ""
 
 #: ../uploadgedcom.php:664
@@ -4974,7 +4974,7 @@ msgid "Unable to authenticate user."
 msgstr ""
 
 #: ../login.php:147 ../login.php:149
-msgid "PhpGedView User Login"
+msgid "webtrees User Login"
 msgstr ""
 
 #: ../login.php:156
@@ -9077,7 +9077,7 @@ msgid "Vietnamese"
 msgstr ""
 
 #: ../includes/authentication.php:95
-msgid "PhpGedView Authentication System"
+msgid "webtrees Authentication System"
 msgstr ""
 
 #: ../includes/authentication.php:97
@@ -16188,7 +16188,7 @@ msgid "The following Sitemap files have been generated and can be downloaded:"
 msgstr ""
 
 #: ../modules/sitemap/index.php:254
-msgid "Place all the files in the root of your PhpGedView installation."
+msgid "Place all the files in the root of your webtrees installation."
 msgstr ""
 
 #: ../modules/sitemap/index.php:289
@@ -16254,7 +16254,7 @@ msgid "Sitemap information"
 msgstr ""
 
 #: ../modules/sitemap/help_text.php:36
-msgid "This module generates Sitemap files for use by search engines. Currently, only the Google search engine supports Sitemap files.<br /><br />There is a Sitemap file for each GEDCOM on your site, and when your site has more than one GEDCOM there is also an index Sitemap file that points to each of the GEDCOMs.  The Sitemap files contain links to pages of your site that you want the search engine to index.<br /><br />After this module has generated the Sitemap files, you should inspect them and make whatever changes are necessary.  You should copy these files to the server directory where PhpGedView is installed, and then log into the <a href=\\\"https://www.google.com/webmasters/sitemaps/\\\" target=\\\"_blank\\\">Google webmaster tools</a> site to make Google aware of their presence.<br /><br />For more information on Google and Sitemap files, visit the <a href=\\\"https://www.google.com/webmasters/sitemaps/docs/en/about.html\\\" target=\\\"_blank\\\">Google webmaster tools</a> site."
+msgid "This module generates Sitemap files for use by search engines. Currently, only the Google search engine supports Sitemap files.<br /><br />There is a Sitemap file for each GEDCOM on your site, and when your site has more than one GEDCOM there is also an index Sitemap file that points to each of the GEDCOMs.  The Sitemap files contain links to pages of your site that you want the search engine to index.<br /><br />After this module has generated the Sitemap files, you should inspect them and make whatever changes are necessary.  You should copy these files to the server directory where webtrees is installed, and then log into the <a href=\\\"https://www.google.com/webmasters/sitemaps/\\\" target=\\\"_blank\\\">Google webmaster tools</a> site to make Google aware of their presence.<br /><br />For more information on Google and Sitemap files, visit the <a href=\\\"https://www.google.com/webmasters/sitemaps/docs/en/about.html\\\" target=\\\"_blank\\\">Google webmaster tools</a> site."
 msgstr ""
 
 #: ../modules/sitemap/help_text.php:40
@@ -16534,11 +16534,11 @@ msgid "Update all"
 msgstr ""
 
 #: ../usermigrate.php:54
-msgid "This tool can make a backup of several kinds of data in PhpGedView.<br /><br />The data you choose to back up will be gathered into a ZIP file, which you can download by clicking the link at the bottom of the page, after the backup has been successfully made.<br /><br />The ZIP file will remain in your Index directory until you remove it manually."
+msgid "This tool can make a backup of several kinds of data in webtrees.<br /><br />The data you choose to back up will be gathered into a ZIP file, which you can download by clicking the link at the bottom of the page, after the backup has been successfully made.<br /><br />The ZIP file will remain in your Index directory until you remove it manually."
 msgstr ""
 
 #: ../usermigrate.php:61
-msgid "PhpGedView Configuration File"
+msgid "webtrees Configuration File"
 msgstr ""
 
 #: ../usermigrate.php:62
@@ -16550,7 +16550,7 @@ msgid "GEDCOM Settings, Configuration and Privacy files"
 msgstr ""
 
 #: ../usermigrate.php:64
-msgid "GEDCOM SearchLogs and PhpGedView Logfiles"
+msgid "GEDCOM SearchLogs and webtrees Logfiles"
 msgstr ""
 
 #: ../usermigrate.php:65
@@ -16595,7 +16595,7 @@ msgid "This tool will import <i>authenticate.php</i> and other <i>.dat</i> files
 msgstr ""
 
 #: ../usermigrate.php:144
-msgid "This tool will either export user data from SQL to Index mode, or import user data from Index files into SQL tables.<br /><br />User data, favorites, block definitions, messages, and news will be available again after migration.<br /><br /><b>CAUTION</b><br />You cannot use this tool to migrate user data between different versions of PhpGedView. Be sure that the data originates from, or is imported into the same PhpGedView version.<br /><br /><b>IMPORT</b><br />If you choose to import the user data files from Index mode, all user data present in the database tables will be <u>overwritten</u>. This tool does <u>not</u> merge the information. Once you have run the Import, there is no way to retrieve the old information using PhpGedView.<br /><br /><b>EXPORT</b><br />If you export the user information from your SQL database to Index Mode files, this tool will create <i>authenticate.php</i> and several <i>.dat</i> files in your index directory. If identically named files are already present, you will be prompted if they must be overwritten. After switching to Index mode, all information will be available directly.<br /><br /><b>Note:</b> After switching to Index mode, you will need to import your GEDCOM files again."
+msgid "This tool will either export user data from SQL to Index mode, or import user data from Index files into SQL tables.<br /><br />User data, favorites, block definitions, messages, and news will be available again after migration.<br /><br /><b>CAUTION</b><br />You cannot use this tool to migrate user data between different versions of webtrees. Be sure that the data originates from, or is imported into the same webtrees version.<br /><br /><b>IMPORT</b><br />If you choose to import the user data files from Index mode, all user data present in the database tables will be <u>overwritten</u>. This tool does <u>not</u> merge the information. Once you have run the Import, there is no way to retrieve the old information using webtrees.<br /><br /><b>EXPORT</b><br />If you export the user information from your SQL database to Index Mode files, this tool will create <i>authenticate.php</i> and several <i>.dat</i> files in your index directory. If identically named files are already present, you will be prompted if they must be overwritten. After switching to Index mode, all information will be available directly.<br /><br /><b>Note:</b> After switching to Index mode, you will need to import your GEDCOM files again."
 msgstr ""
 
 #: ../usermigrate.php:144
@@ -16799,7 +16799,7 @@ msgid "News and links from the %s site"
 msgstr ""
 
 #: ../rss.php:112 ../rss.php:115
-msgid "Feed created by PhpGedView"
+msgid "Feed created by webtrees"
 msgstr ""
 
 #: ../rss.php:188 ../rss.php:205 ../rss.php:224 ../rss.php:243 ../rss.php:285
@@ -16812,7 +16812,7 @@ msgid "Feed not available"
 msgstr ""
 
 #: ../rss.php:319
-msgid "There is no RSS feed available for this PhpGedView site"
+msgid "There is no RSS feed available for this webtrees site"
 msgstr ""
 
 #: ../faq.php:159 ../faq.php:238
@@ -21230,7 +21230,7 @@ msgid "Show &quot;To Do&quot; tasks that are not assigned to any user"
 msgstr ""
 
 #: ../help_text.php:5388
-msgid "<b>PhpGedView</b> Translations Forum on SourceForge"
+msgid "<b>webtrees</b> Translations Forum on SourceForge"
 msgstr ""
 
 #: ../help_text.php:5389
@@ -21555,7 +21555,7 @@ msgstr ""
 
 #: ../login_register.php:404
 #, php-format
-msgid "A request was received at %s to create a PhpGedView account with your email address %s."
+msgid "A request was received at %s to create a webtrees account with your email address %s."
 msgstr ""
 
 #: ../login_register.php:405
@@ -21589,7 +21589,7 @@ msgstr ""
 
 #: ../login_register.php:427
 #, php-format
-msgid "A prospective user registered himself with PhpGedView at %s."
+msgid "A prospective user registered himself with webtrees at %s."
 msgstr ""
 
 #: ../login_register.php:437
@@ -21844,7 +21844,7 @@ msgid "The GEDCOM Welcome block works the same as the User Welcome block.  It we
 msgstr ""
 
 #: ../blocks/getting_started.php:61
-msgid "Choose one of these options to get started using PhpGedView"
+msgid "Choose one of these options to get started using webtrees"
 msgstr ""
 
 #: ../blocks/getting_started.php:63
@@ -22014,11 +22014,11 @@ msgid "The Pending Changes block will give users with Edit rights a list of the 
 msgstr ""
 
 #: ../blocks/review_changes.php:86
-msgid "PhpGedView - Review changes"
+msgid "webtrees - Review changes"
 msgstr ""
 
 #: ../blocks/review_changes.php:87
-msgid "Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that PhpGedView site and login to review the changes."
+msgid "Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that webtrees site and login to review the changes."
 msgstr ""
 
 #: ../blocks/review_changes.php:115
