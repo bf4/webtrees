@@ -38,7 +38,7 @@ require_once WT_ROOT.'webservice/genealogyService.php';
 require_once WT_ROOT.'includes/functions/functions_edit.php';
 require_once WT_ROOT.'includes/classes/class_gewebservice.php';
 
-class PGVServiceLogic extends GenealogyService {
+class wtServiceLogic extends GenealogyService {
 
 	/**
 	 * Check for the availability of compression libs

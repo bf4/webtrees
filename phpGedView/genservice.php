@@ -57,9 +57,9 @@ if(!isset($_SERVER['QUERY_STRING']) || strstr($_SERVER['QUERY_STRING'],'wsdl')==
 /**
  * load up the service implementation
  */
-require_once './webservice/PGVServiceLogic.class.php';
+require_once './webservice/ServiceLogic.class.php';
 
-$genealogyServer = new PGVServiceLogic();
+$genealogyServer = new ServiceLogic();
 //-- process the SOAP request
 $server = $genealogyServer->process();
 ?>

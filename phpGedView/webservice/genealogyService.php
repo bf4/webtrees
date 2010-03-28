@@ -20,8 +20,8 @@
  * - postGetAncestry($SID, $rootID, $generations, $returnGedcom)
  * - postGetDescendants($SID, $rootID, $generations, $returnGedcom)
  *
- * See the PGVServiceLogic.class.php file for details about how this was
- * done in PhpGedView.
+ * See the wtServiceLogic.class.php file for details about how this was
+ * done in webtrees.
  *
  * webtrees: Web based Family History software
  * Copyright (C) 2010 webtrees development team.
