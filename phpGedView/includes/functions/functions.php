@@ -2306,6 +2306,20 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 	case 'fatsishus': return i18n::translate_c('father\'s sister\'s husband', 'uncle');
 	case 'parbrowif': return i18n::translate_c('parent\'s brother\'s wife', 'aunt');
 	case 'parsishus': return i18n::translate_c('parent\'s sister\'s husband', 'uncle');
+
+	case 'motbroson': return i18n::translate_c('mother\'s brother\'s son', 'cousin');
+	case 'motbrodau': return i18n::translate_c('mother\'s brother\'s daughter', 'cousin');
+	case 'motbrochi': return i18n::translate_c('mother\'s brother\'s child', 'cousin');
+	case 'fatbroson': return i18n::translate_c('father\'s brother\'s son', 'cousin');
+	case 'fatbrodau': return i18n::translate_c('father\'s brother\'s daughter', 'cousin');
+	case 'fatbrochi': return i18n::translate_c('father\'s brother\'s child', 'cousin');
+	case 'motsisson': return i18n::translate_c('mother\'s sister\'s son', 'cousin');
+	case 'motsisdau': return i18n::translate_c('mother\'s sister\'s daughter', 'cousin');
+	case 'motsischi': return i18n::translate_c('mother\'s sister\'s child', 'cousin');
+	case 'fatsisson': return i18n::translate_c('father\'s sister\'s son', 'cousin');
+	case 'fatsisdau': return i18n::translate_c('father\'s sister\'s daughter', 'cousin');
+	case 'fatsischi': return i18n::translate_c('father\'s sister\'s child', 'cousin');
+
 	}
 
 	// Look for generic/pattern relationships.
