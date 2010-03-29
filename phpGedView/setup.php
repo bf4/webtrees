@@ -93,7 +93,7 @@ if (file_exists(WT_CONFIG_FILE)) {
 	exit;
 }
 
-echo '<form name="config" action="', WT_SCRIPT_NAME, '" method="post">';
+echo '<form name="config" action="', WT_SCRIPT_NAME, '" method="post" autocomplete="off">';
 echo '<input type="hidden" name="lang" value="', WT_LOCALE, '">';
 
 ////////////////////////////////////////////////////////////////////////////////
