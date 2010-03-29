@@ -27,6 +27,26 @@ define('WT_SCRIPT_NAME', 'setup.php');
 define('WT_CONFIG_FILE', 'config.ini.php');
 define('WT_REQUIRED_MYSQL_VERSION', '5.0.13'); // For: prepared statements within stored procedures
 
+// magic quotes were deprecated in PHP5.3.0 and removed in PHP6.0.0
+if (version_compare(PHP_VERSION, '5.3.0', '<')) {
+	set_magic_quotes_runtime(0);
+	// magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
+	if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
+		ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
+		$in = array(&$_GET, &$_POST, &$_REQUEST, &$_COOKIE);
+		while (list($k,$v) = each($in)) {
+			foreach ($v as $key => $val) {
+				if (!is_array($val)) {
+					$in[$k][$key] = stripslashes($val);
+					continue;
+				}
+				$in[] =& $in[$k][$key];
+			}
+		}
+		unset($in);
+	}
+}
+
 if (!empty($_POST['action']) && $_POST['action']=='download') {
 	header('Content-Type: text/plain');
 	header('Content-Disposition: attachment; filename="'.WT_CONFIG_FILE.'"');
@@ -87,6 +107,7 @@ echo '<h1>', i18n::translate('Setup wizard for <b>webtrees</b>'), '</h1>';
 if (file_exists(WT_CONFIG_FILE)) {
 	echo '<p class="good">', i18n::translate('The configuration file %s has been successfully uploaded to the server.', WT_CONFIG_FILE), '</p>';
 	echo '<p>', i18n::translate('Checking the file permissions...'), '</p>';
+	// TODO: check index dir and media dir are writable
 	if (is_readable(WT_CONFIG_FILE)) {
 		echo '<p class="good">', i18n::translate('The file has read permission.  Good.'), '</p>';
 		if (is_writable(WT_CONFIG_FILE)) {
@@ -333,15 +354,15 @@ if (empty($_POST['wtuser'    ])) $_POST['wtuser'    ]='';
 if (empty($_POST['wtpass'    ])) $_POST['wtpass'    ]='';
 if (empty($_POST['wtpass2'   ])) $_POST['wtpass2'   ]='';
 if (empty($_POST['wtemail'   ])) $_POST['wtemail'   ]='';
-if (empty($_POST['smtpuse'   ])) $_POST['smtpuse'   ]='yes';
+if (empty($_POST['smtpuse'   ])) $_POST['smtpuse'   ]=1;
 if (empty($_POST['smtpserv'  ])) $_POST['smtpserv'  ]='localhost';
 if (empty($_POST['smtpport'  ])) $_POST['smtpport'  ]='25';
-if (empty($_POST['smtpusepw' ])) $_POST['smtpusepw' ]='yes';
+if (empty($_POST['smtpusepw' ])) $_POST['smtpusepw' ]=1;
 if (empty($_POST['smtpuser'  ])) $_POST['smtpuser'  ]='';
 if (empty($_POST['smtppass'  ])) $_POST['smtppass'  ]='';
 if (empty($_POST['smtpsecure'])) $_POST['smtpsecure']='none';
-if (empty($_POST['smtpfrom'  ])) $_POST['smtpfrom'  ]='';
-if (empty($_POST['smtpsender'])) $_POST['smtpsender']='';
+if (empty($_POST['smtpfrom'  ])) $_POST['smtpfrom'  ]=empty($_SERVER['SERVER_NAME']) ? '' : $_SERVER['SERVER_NAME'];
+if (empty($_POST['smtpsender'])) $_POST['smtpsender']=$_POST['smtpfrom'];
 
 if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'])<6 || strlen($_POST['wtpass2'])<6 || empty($_POST['wtemail']) || $_POST['wtpass']<>$_POST['wtpass2']) {
 	if (strlen($_POST['wtpass'])>0 && strlen($_POST['wtpass'])<6) {
@@ -386,10 +407,10 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 		i18n::translate('Use SMTP'), '</td><td>',
 		'<select name="smtpuse">',
 		'<option value="yes" ',
-		$_POST['smtpuse']=='yes' ? 'selected="selected"' : '',
+		$_POST['smtpuse'] ? 'selected="selected"' : '',
 		'>', i18n::translate('yes'), '</option>',
 		'<option value="no" ',
-		$_POST['smtpuse']=='no' ? 'selected="selected"' : '',
+		$_POST['smtpuse'] ? 'selected="selected"' : '',
 		'>', i18n::translate('no'), '</option>',
 		'</select></td><td>',
 		i18n::translate('If you don\'t want to send mail, for example when running webtrees with a single user or on a standalone compter, you can disable this feature.'),
@@ -405,10 +426,10 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 		i18n::translate('Use password'), '</td><td>',
 		'<select name="smtpusepw">',
 		'<option value="yes" ',
-		$_POST['smtpusepw']=='yes' ? 'selected="selected"' : '',
+		$_POST['smtpusepw'] ? 'selected="selected"' : '',
 		'>', i18n::translate('yes'), '</option>',
 		'<option value="no" ',
-		$_POST['smtpusepw']=='no' ? 'selected="selected"' : '',
+		$_POST['smtpusepw'] ? 'selected="selected"' : '',
 		'>', i18n::translate('no'), '</option>',
 		'</select></td><td>',
 		i18n::translate('Most SMTP servers require a password.'),
@@ -472,9 +493,46 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 
 try {
 	// These shouldn't fail.
-	$TBLPFX=$_POST['tblpfx'];
-	//$dbh->exec("");
-	//$dbh->exec("");
+	$TBLPREFIX=$_POST['tblpfx'];
+	$dbh->exec(
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}site_setting (".
+		" site_setting_name  VARCHAR(32)  NOT NULL,".
+		" site_setting_value VARCHAR(255) NOT NULL,".
+		" PRIMARY KEY (site_setting_name)".
+		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
+	);
+	$dbh->exec(
+		"INSERT IGNORE INTO {$TBLPREFIX}site_setting (site_setting_name, site_setting_value) VALUES ".
+		"('WEBTREES_SCHEMA_VERSION',         '1'),".
+		"('DEFAULT_GEDCOM',                  'default.ged'),".
+		"('INDEX_DIRECTORY',                 'index/'),".
+		"('AUTHENTICATION_MODULE',           'includes/authentication.php'),".
+		"('STORE_MESSAGES',                  '1'),".
+		"('SIMPLE_MAIL',                     '1'),".
+		"('USE_REGISTRATION_MODULE',         '1'),".
+		"('REQUIRE_ADMIN_AUTH_REGISTRATION', '1'),".
+		"('ALLOW_USER_THEMES',               '1'),".
+		"('ALLOW_CHANGE_GEDCOM',             '1'),".
+		"('LOGFILE_CREATE',                  'monthly'),".
+		"('SESSION_SAVE_PATH',               ''),".
+		"('SESSION_TIME',                    '7200'),".
+		"('SERVER_URL',                      ''),".
+		"('LOGIN_URL',                       ''),".
+		"('MAX_VIEWS',                       '20'),".
+		"('MAX_VIEW_TIME',                   '1'),".
+		"('MEMORY_LIMIT',                    '".addcslashes($_POST['maxmem'], "'")."'),".
+		"('MAX_EXECUTION_TIME',              '".addcslashes($_POST['maxcpu'], "'")."'),".
+		"('COMMIT_COMMAND',                  ''),".
+		"('SMTP_ACTIVE',                     '".addcslashes($_POST['smtpuse'], "'")."'),".
+		"('SMTP_HOST',                       '".addcslashes($_POST['smtpserv'], "'")."'),".
+		"('SMTP_HELO',                       '".addcslashes($_POST['smtpsender'], "'")."'),".
+		"('SMTP_PORT',                       '".addcslashes($_POST['smtpport'], "'")."'),".
+		"('SMTP_AUTH',                       '".addcslashes($_POST['smtpusepw'], "'")."'),".
+		"('SMTP_AUTH_USER',                  '".addcslashes($_POST['smtpuser'], "'")."'),".
+		"('SMTP_AUTH_PASS',                  '".addcslashes($_POST['smtppass'], "'")."'),".
+		"('SMTP_SSL',                        '".addcslashes($_POST['smtpsecure'], "'")."'),".
+		"('SMTP_FROM_NAME',                  '".addcslashes($_POST['smtpfrom'], "'")."')"
+	);
 	echo
 		'<p>', i18n::translate('Your system is almost ready for use.  The final step is to download a configuration file (%s) and copy this to the webtrees directory on your webserver.  This is a security measure to ensure only the website\'s owner can configure it.', WT_CONFIG_FILE), '</p>',
 		'<input type="hidden" name="action" value="download">',
