@@ -17304,7 +17304,7 @@ msgstr "Ostatnie stulecie"
 
 #: ../calendar.php:217
 msgid "Show events of"
-msgstr ""
+msgstr "Pokaż wydarzenia"
 
 #: ../calendar.php:223
 #: ../calendar.php:528
@@ -18611,7 +18611,7 @@ msgstr "Wprowadź adres URL, zaczynając od http://.<br /><br />Przykładowy URL
 
 #: ../help_text.php:1150
 msgid "Version"
-msgstr ""
+msgstr "Wersja"
 
 #: ../help_text.php:1160
 msgid "Will"
@@ -19352,7 +19352,7 @@ msgstr ""
 
 #: ../help_text.php:2112
 msgid "Calendar"
-msgstr ""
+msgstr "Kalendarz"
 
 #: ../help_text.php:2114
 msgid ""
@@ -19545,7 +19545,7 @@ msgstr ""
 
 #: ../help_text.php:2373
 msgid "RSS feed"
-msgstr ""
+msgstr "Kanał RSS"
 
 #: ../help_text.php:2379
 msgid "Although this page looks very simple, there is a very powerful and complicated search engine behind the two forms.  Most genealogy web sites just let you search for a name.  webtrees lets you search for almost anything.<br /><br />The Search box on the left of the screen is the same as the Search box in each page header.<br /><br />If you are looking for people in connection to a certain year, just type the year. The program will find all connections for you.<br /><br />Looking for a name, or place?  Just type in the name or place, completely or just a part of it, and webtrees does the rest.<br /><br /><b>Soundex search method</b><br />With the search boxes on the right, you can search for names of persons and places, even if you don't know precisely how to write the name.<br /><br />When there are several genealogical databases on one site and the administrator has enabled switching between them, your search will return the results for all of them.<br /><br />You will find more help about these two boxes by clicking the <b>?</b> above the boxes."
@@ -20959,7 +20959,7 @@ msgstr "Dostępne są dwa style diagramów:<ul><li><b>Lista</b><br />Pionowe drz
 
 #: ../help_text.php:3792
 msgid "Chart type"
-msgstr ""
+msgstr "Typ diagramu"
 
 #: ../help_text.php:3793
 msgid "Select what you want to see on the map chart. You can choose:<p style=\"padding-left: 25px\"><b>Individual distribution chart</b>&nbsp;&nbsp;shows the countries in which persons from this database occur.<br /><b>Surname distribution chart</b>&nbsp;&nbsp;shows the countries in which the specified surname occurs.</p>"
@@ -21053,7 +21053,7 @@ msgstr "Aby dane w twoich plikach GEDCOM były poprawnie przetwarzane i wyświet
 
 #: ../help_text.php:3867
 msgid "Cookies"
-msgstr ""
+msgstr "Ciasteczka"
 
 #: ../help_text.php:3872
 msgid "Cookie login"
@@ -21193,7 +21193,7 @@ msgstr "Kliknięcie na tę opcję spowoduje zaznaczenie tego źródła jako elem
 
 #: ../help_text.php:3967
 msgid "Number of Generation"
-msgstr ""
+msgstr "Numer pokolenia"
 
 #: ../help_text.php:3972
 msgid "Root Individual"
@@ -21402,7 +21402,7 @@ msgstr "Edytuj komunikat z pliku językowego."
 
 #: ../help_text.php:4142
 msgid "Change language"
-msgstr ""
+msgstr "Zmień język"
 
 #: ../help_text.php:4143
 msgid "Here you can change the language in which PhpGedview will display all its pages and messages after you have logged in.<br /><br />When you first access the site, webtrees assumes that you want to see everything in the language configured as the Preferred Language in your browser.  If that assumption is incorrect, you would override it here.  For example, your browser might be set to English because that is the most prevalent language on the Internet.  However, for genealogical purposes, you would prefer to see everything in Finnish or Hebrew.  Here's where you do that.<br /><br />The administrator controls what language choices are available to you.  If your preference isn't listed, you need to contact the administrator.<br /><br />Please remember that webtrees is very much a project staffed by an international team of unpaid volunteers.  Experts come and go.  Consequently, support for languages other than English is sometimes not as good as it should be.<br /><br />If you see something that has not been translated, has been translated incorrectly, or could be phrased better, let your administrator know.  The administrator will know how to get in touch with the webtrees developer team to have your concerns addressed.  Better still, volunteer some of your time.  We can use the help."
@@ -21410,7 +21410,7 @@ msgstr "Tutaj możesz zmienić język, w jakim będą wyświetlane wszystkie str
 
 #: ../help_text.php:4147
 msgid "Confirm password"
-msgstr ""
+msgstr "Potwierdź hasło"
 
 #: ../help_text.php:4148
 msgid "If you have changed your password, you need to confirm it as well.  This is just to make sure that you did not make a typing error in the password field.<br /><br />If the password and its confirmation are not identical, you will get a suitable error message.  You will have to re-type both the original password and its confirmation."
@@ -21426,7 +21426,7 @@ msgstr "webtrees ma kilka sposobów kontaktowania się z użytkownikami. Adminis
 
 #: ../help_text.php:4157
 msgid "Email address"
-msgstr ""
+msgstr "Adres email"
 
 #: ../help_text.php:4158
 msgid "Your correct email address is important to us to keep in touch with you.<br /><br />If you get a new email address, as usually happens when you change your Internet provider, please do not forget to change the address here as well.  You won't get a confirmation message from this site when you change this address, but any future messages directed to you will go this new address."
@@ -21435,7 +21435,7 @@ msgstr ""
 #: ../help_text.php:4162
 #: ../help_text.php:4930
 msgid "First name"
-msgstr ""
+msgstr "Pierwsze imię"
 
 #: ../help_text.php:4163
 msgid "In this box you can change your first name.  This is the name that other users see when you are logged in.<br /><br />Although the choice of what to put into this field is yours, you should inform the administrator when you change it.  When others see an unknown person on-line, they might wonder and ask questions.  The admin can find out without having received your notice, but you should save him that unnecessary work."
@@ -21475,7 +21475,7 @@ msgstr "To ustawienie pozwala określić, która zakładka będzie automatycznie
 
 #: ../help_text.php:4197
 msgid "Theme"
-msgstr ""
+msgstr "Motyw"
 
 #: ../help_text.php:4198
 msgid "This site can have several different looks or appearances.  Other programs may call them \"skins\", but here they're \"themes\".<br /><br />Every theme will display the same data, but its presentation or even its location on the screen may vary.  This is like putting a picture into a different frame and hanging it in a different room as well. The picture does not change, but the way you look at it is completely different.<br /><br />Just give it a try. Set it to another theme. Look at it, try another. Change back to the one that suits you the best. Whenever you log in, you will see the theme you last used; you don't even have to get to this configuration page to change your preferred theme."
@@ -22237,7 +22237,7 @@ msgstr ""
 
 #: ../help_text.php:4800
 msgid "Menus"
-msgstr ""
+msgstr "Menu"
 
 #: ../help_text.php:4801
 msgid "The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href=\"#menu_fam\">Welcome page</a><br /></li><li><a href=\"#menu_myged\">My Page</a><br /></li><li><a href=\"#menu_charts\">Charts</a><br /></li><li><a href=\"#menu_lists\">Lists</a><br /></li><li><a href=\"#menu_annical\">Anniversary Calendar</a><br /></li><li><a href=\"#menu_clip\">Family Tree Clippings Cart</a><br /></li><li><a href=\"#menu_search\">Search</a><br /></li><li><a href=\"#menu_help\">Help</a></li></ul>"
@@ -22937,7 +22937,7 @@ msgstr "Kliknij na menu rozwijalne aby zmienić prędkość, z jaką przewija si
 
 #: ../help_text.php:5320
 msgid "\"To Do\" Block"
-msgstr ""
+msgstr "Zadania do zrobienia"
 
 #: ../help_text.php:5321
 msgid "This block helps you keep track of <b>_TODO</b> tasks in the database.<br /><br />To add &quot;To Do&quot; tasks to your records, you may first need amend the GEDCOM configuration so that the <b>_TODO</b> fact is in the list of facts that can be added to the records of individuals, families, sources, and repositories.  Each of these lists, which you will find in the Edit Options section of the GEDCOM configuration, is independent.  The order of the list entries is not important; you can add the new entries at the beginning of each list."
@@ -23274,7 +23274,7 @@ msgstr "Podaj swoje pokrewieństwo z danymi w komentarzu"
 
 #: ../login_register.php:273
 msgid "<div class=\"largeError\">Notice:</div><div class=\"error\">By completing and submitting this form, you agree:<ul><li>to protect the privacy of living people listed on our site;</li><li>and in the text box below, to explain to whom you are related, or to provide us with information on someone who should be listed on our site.</li></ul></div>"
-msgstr ""
+msgstr "<div class=\"largeError\">Uwaga:</div><div class=\"error\">Wypełniając i wysyłając do nas ten formularz zobowiązujesz się do:<ul><li>ochrony prywatności osób żyjących występujących na naszej stronie</li><li>wyjaśnienia w polu niżej, z kim jesteś spokrewniony, lub dostarczenia informacji na temat osoby, która powinna zostać dodana do naszej strony.</li></ul></div>"
 
 #: ../login_register.php:288
 msgid "Desired user name"
@@ -23468,9 +23468,9 @@ msgstr "Ten blok pokazuje tabelę z najczęściej występującymi imionami w baz
 #, php-format
 msgid "Top Given Names"
 msgid_plural "Top %d Given Names"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Najczęściej występujące imię"
+msgstr[1] "%d najczęściej występujące imiona"
+msgstr[2] "%d najczęściej występujących imion"
 
 #: ../blocks/top10_givnnames.php:135
 #: ../blocks/top10_pageviews.php:135
@@ -23489,7 +23489,7 @@ msgstr "To jest blok HTML, który możesz umieścić na swojej stronie aby doda�
 #: ../blocks/block_htmlplus.php:49
 #: ../blocks/html_block.php:44
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
-msgstr ""
+msgstr "<p class=\"blockhc\"><b>Tutaj umieść tytuł</b></p><br /><p>Wciśnij przycisk konfiguracji"
 
 #: ../blocks/block_htmlplus.php:49
 #: ../blocks/html_block.php:44
@@ -23530,7 +23530,7 @@ msgstr "Rozszerzony interfejs"
 
 #: ../blocks/charts.php:44
 msgid "The Charts block allows you to place a chart on the Home or My Page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart."
-msgstr ""
+msgstr "Blok diagramów pozwala umieścić na Stronie Głównej lub stronie Portalu diagram. Możesz zmieniać ustawienia bloku tak, aby pokazywać przodków, potomków lub układ klepsydrowy. Możesz także wybrać główną osobę dla diagramu."
 
 #: ../blocks/charts.php:190
 msgid "Chart Type"
@@ -23641,9 +23641,9 @@ msgstr "Ten blok wyświetla tabelkę z nazwiskami, które występują najczęśc
 #, php-format
 msgid "Top Surnames"
 msgid_plural "Top %d Surnames"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Najczęściej występujące nazwisko"
+msgstr[1] "%d najczęściej występujące nazwiska"
+msgstr[2] "%d najczęściej występujących nazwisk"
 
 #: ../blocks/logged_in.php:39
 msgid "Logged In Users"
@@ -23815,12 +23815,12 @@ msgstr "Blok ostatnich zmian wyświelna listę modyfikacji, którym uległa baza
 #: ../blocks/recent_changes.php:84
 #, php-format
 msgid "There have been no changes within the last %s days."
-msgstr ""
+msgstr "Brak zmian w ciągu ostatnich %s dni."
 
 #: ../blocks/recent_changes.php:86
 #, php-format
 msgid "Changes made within the last %s days"
-msgstr ""
+msgstr "Zmiany dokonane w ciągu ostatnich %s dni"
 
 #: ../blocks/recent_changes.php:113
 msgid "Should this block be hidden when it is empty?"
