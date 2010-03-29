@@ -45,12 +45,23 @@ echo
 	'<html xmlns="http://www.w3.org/1999/xhtml">',
 	'<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
 	'<title>Webtrees setup wizard</title>',
+	'<style type="text/css">
+		body { 	color: black; background-color: white; font: 14px tahoma, arial, helvetica, sans-serif;	padding:10px; }
+		a {	color: black; font-weight: normal; text-decoration: none;}
+		a:hover {color: #81A9CB;}
+		h1 {color: #81A9CB; font-weight:normal;}
+		legend {color:#81A9CB; font-style: italic; font-weight:bold; padding: 0 5px 5px; align: top;}
+		.good {color: green;}
+		.bad {color: red; font-weight: bold;}
+		.indifferent {color: blue;}
+	</style>',
 	'</head><body>';
 
 if (version_compare(PHP_VERSION, '5.2')<0) {
 	// Our translation system requires PHP 5.2, so we cannot translate this message :-(
+	echo '<p class="bad">Sorry, the setup process cannot start.</p>';
 	echo '<p>This server is running PHP version ', PHP_VERSION, '</p>';
-	echo '<p>Webtrees requires PHP 5.2 or later.  PHP 5.3 is recommended.</p>';
+	echo '<p><b>webtrees</b> requires PHP 5.2 or later.  PHP 5.3 is recommended.</p>';
 	if (version_compare(PHP_VERSION, '5.0')<0) {
 		echo '<p>Many servers offer both PHP4 and PHP5.  You may be able to change your default to PHP5 using a control panel or a configuration setting.</p>';
 	}
@@ -71,23 +82,23 @@ require 'includes/functions/functions_edit.php';
 require 'includes/classes/class_i18n.php';
 define('WT_LOCALE', i18n::init());
 
-echo '<h1>', i18n::translate('Webtrees setup wizard'), '</h1>';
+echo '<h1>', i18n::translate('Setup wizard for <b>webtrees</b>'), '</h1>';
 
 if (file_exists(WT_CONFIG_FILE)) {
-	echo '<p>', i18n::translate('The configuration file %s has been successfully uploaded to the server.', WT_CONFIG_FILE), '</p>';
+	echo '<p class="good">', i18n::translate('The configuration file %s has been successfully uploaded to the server.', WT_CONFIG_FILE), '</p>';
 	echo '<p>', i18n::translate('Checking the file permissions...'), '</p>';
 	if (is_readable(WT_CONFIG_FILE)) {
-		echo '<p>', i18n::translate('The file has read permission.  Good.'), '</p>';
+		echo '<p class="good">', i18n::translate('The file has read permission.  Good.'), '</p>';
 		if (is_writable(WT_CONFIG_FILE)) {
-			echo '<p>', i18n::translate('The file has write permission.  This is OK, but for better security, you should make it read only.'), '</p>';
+			echo '<p class="indifferent">', i18n::translate('The file has write permission.  This is OK, but for better security, you should make it read only.'), '</p>';
 		} else {
-			echo '<p>', i18n::translate('The file does not have write permission.  Good.'), '</p>';
+			echo '<p class="good">', i18n::translate('The file does not have write permission.  Good.'), '</p>';
 		}
 	} else {
-		echo '<p>', i18n::translate('The file does not have read permission.  Remember that the file needs to be readable by the webserver.'), '</p>';
+		echo '<p class="bad">', i18n::translate('The file does not have read permission.  Remember that the file needs to be readable by the webserver.'), '</p>';
 	}
-	echo '<p><a href="', WT_SCRIPT_NAME, '">', i18n::translate('Check the file\'s permissions again'), '</a></p>';
-	echo '<p><a href="index.php">', i18n::translate('Start using webtrees'), '</a></p>';
+	echo '<p><a href="', WT_SCRIPT_NAME, '">', i18n::translate('Change the permissions, then click here to re-check.'), '</a></p>';
+	echo '<a href="index.php"><button>', i18n::translate('Start using webtrees'), '</button></a>';
 	// The config file exists - do not go any further.
 	// This is an important security feature, to protect existing installations.
 	exit;
@@ -112,7 +123,7 @@ if (empty($_POST['maxcpu']) || empty($_POST['maxmem'])) {
 	// Mandatory extensions
 	foreach (array('pcre', 'pdo', 'pdo_mysql', 'session') as $extension) {
 		if (!extension_loaded($extension)) {
-			echo '<p>', i18n::translate('PHP extension "%s" is disabled.  You cannot install webtrees until this is enabled.  Please ask your server\'s administrator to enable it.', $extension), '</p>';
+			echo '<p class="bad">', i18n::translate('PHP extension "%s" is disabled.  You cannot install webtrees until this is enabled.  Please ask your server\'s administrator to enable it.', $extension), '</p>';
 			$errors=true;
 		}
 	}
@@ -124,7 +135,7 @@ if (empty($_POST['maxcpu']) || empty($_POST['maxmem'])) {
 		'xml'     =>i18n::translate('reporting'),
 	) as $extension=>$features) {
 		if (!extension_loaded($extension)) {
-			echo '<p>', i18n::translate('PHP extension "%s" is disabled.  Without it, the following features will not work: %s.  Please ask your server\'s administrator to enable it.', $extension, $features), '</p>';
+			echo '<p class="bad">', i18n::translate('PHP extension "%s" is disabled.  Without it, the following features will not work: %s.  Please ask your server\'s administrator to enable it.', $extension, $features), '</p>';
 			$warnings=true;
 		}
 	}
@@ -133,12 +144,12 @@ if (empty($_POST['maxcpu']) || empty($_POST['maxmem'])) {
 		'file_uploads'=>i18n::translate('upload files'),
 	) as $setting=>$features) {
 		if (ini_get($setting)==false) {
-			echo '<p>', i18n::translate('PHP setting "%s" is disabled. Without it, the following features will not work: %s.  Please ask your server\'s administrator to enable it.', $setting, $features), '</p>';
+			echo '<p class="bad">', i18n::translate('PHP setting "%s" is disabled. Without it, the following features will not work: %s.  Please ask your server\'s administrator to enable it.', $setting, $features), '</p>';
 			$warnings=true;
 		}
 	}
 	if (!$warnings && !$errors) {
-		echo '<p>', i18n::translate('The server configuration is OK.'), '</p>';
+		echo '<p class="good">', i18n::translate('The server configuration is OK.'), '</p>';
 	}
 	echo '<h2>', i18n::translate('Checking server capacity'), '</h2>';
 	// Memory
@@ -176,18 +187,18 @@ if (empty($_POST['maxcpu']) || empty($_POST['maxmem'])) {
 		i18n::translate('Medium systems (5000 individuals): 32-64MB, 20-40 seconds'),
 		'<br/>',
 		i18n::translate('Large systems (50000 individuals): 64-128MB, 40-80 seconds'),
-		'</p><p>',
+		'</p><p class="good">',
 		i18n::translate('This server\'s memory limit is %dMB and its CPU time limit is %d seconds.', $maxmem, $maxcpu),
 		'</p>';
 
 	if ($maxmem<32 || $maxcpu<20) {
-		echo '<p>', i18n::translate('If you try to exceed these limits, you may experience server time-outs and blank pages.'), '</p>';
+		echo '<p class="bad">', i18n::translate('If you try to exceed these limits, you may experience server time-outs and blank pages.'), '</p>';
 	}
 	echo '<p>', i18n::translate('To increase these limits, you should contact your server\'s administrator.'), '</p>';
 	if (!$errors) {
 		echo '<input type="hidden" name="maxcpu" value="'.$maxcpu.'">';
 		echo '<input type="hidden" name="maxmem" value="'.$maxmem.'">';
-		echo '<br/><hr/><input type="submit" value="'.i18n::translate('continue').'">';
+		echo '<br/><hr/><input type="submit" value="'.i18n::translate('Continue').'">';
 
 	}
 	echo '</form></body></html>';
@@ -215,7 +226,7 @@ try {
 	$dbh->exec("SET NAMES 'utf8'");
 	foreach ($dbh->query("SHOW VARIABLES LIKE 'VERSION'") as $row) {
 		if (version_compare($row->value, WT_REQUIRED_MYSQL_VERSION, '<')) {
-			echo '<p>', i18n::translate('This database is only running MySQL version %s.  You cannot install webtrees here.', $row->value), '</p>';
+			echo '<p class="bad">', i18n::translate('This database is only running MySQL version %s.  You cannot install webtrees here.', $row->value), '</p>';
 		} else {
 			$db_version_ok=true;
 		}
@@ -225,9 +236,9 @@ try {
 	if ($_POST['dbuser']) {
 		// If we've supplied a login, then show the error
 		echo
-			'<p>', i18n::translate('Unable to connect using these settings.  Your server gave the following error.'), '<p>',
+			'<p class="bad">', i18n::translate('Unable to connect using these settings.  Your server gave the following error.'), '</p>',
 			'<pre>', $ex->getMessage(), '</pre>',
-			'<p>', i18n::translate('Check the settings and try again.'), '</p>';
+			'<p class="bad">', i18n::translate('Check the settings and try again.'), '</p>';
 	}
 }
 
@@ -236,27 +247,27 @@ if (!$dbh || !$db_version_ok) {
 		'<h2>', i18n::translate('Connection to database server'), '</h2>',
 		'<p>', i18n::translate('Webtrees needs a MySQL database, version %s or later.', WT_REQUIRED_MYSQL_VERSION), '</p>',
 		'<p>', i18n::translate('Your server\'s administrator will provide you with the connection details.'), '</p>',
-		'<fieldset><legend>', i18n::translate('database connection'), '</legend>',
+		'<fieldset><legend>', i18n::translate('Database connection'), '</legend>',
 		'<table border="0"><tr><td>',
-		i18n::translate('server name'), '</td><td>',
+		i18n::translate('Server name'), '</td><td>',
 		'<input type="text" name="dbhost" value="', htmlspecialchars($_POST['dbhost']), '"></td><td>',
 		i18n::translate('Most sites are configured to use localhost.  This means that your database runs on the same computer as your web server.'),
 		'</td></tr><tr><td>',
-		i18n::translate('port number'), '</td><td>',
+		i18n::translate('Port number'), '</td><td>',
 		'<input type="text" name="dbport" value="', htmlspecialchars($_POST['dbport']), '"></td><td>',
 		i18n::translate('Most sites are configured to use the default value of 3306.'),
 		'</td></tr><tr><td>',
-		i18n::translate('database user account'), '</td><td>',
+		i18n::translate('Database user account'), '</td><td>',
 		'<input type="text" name="dbuser" value="', htmlspecialchars($_POST['dbuser']), '"></td><td>',
 		i18n::translate('This is case sensitive.'),
 		'</td></tr><tr><td>',
-		i18n::translate('database password'), '</td><td>',
+		i18n::translate('Database password'), '</td><td>',
 		'<input type="password" name="dbpass" value="', htmlspecialchars($_POST['dbpass']), '"></td><td>',
 		i18n::translate('This is case sensitive.'),
 		'</td></tr><tr><td>',
 		'</td></tr></table>',
 		'</fieldset>',
-		'<br/><hr/><input type="submit" value="'.i18n::translate('continue').'">',
+		'<br/><hr/><input type="submit" value="'.i18n::translate('Continue').'">',
 		'</form></body></html>';
 		exit;
 } else {
@@ -283,9 +294,9 @@ if ($_POST['dbname']) {
 		$dbname_ok=true;
 	} catch (PDOException $ex) {
 		echo
-			'<p>', i18n::translate('Unable to connect using these settings.  Your server gave the following error.'), '<p>',
+			'<p class="bad">', i18n::translate('Unable to connect using these settings.  Your server gave the following error.'), '<p>',
 			'<pre>', $ex->getMessage(), '</pre>',
-			'<p>', i18n::translate('Check the settings and try again.'), '</p>';
+			'<p class="bad">', i18n::translate('Check the settings and try again.'), '</p>';
 	}
 }
 
@@ -293,18 +304,18 @@ if (!$dbname_ok) {
 	echo
 		'<h2>', i18n::translate('Database and table names'), '</h2>',
 		'<p>', i18n::translate('A database server can store many separate databases.  You need to select an existing database (created by your server\'s administrator) or create a new one (if your database user account has sufficient privileges).'), '</p>',
-		'<fieldset><legend>', i18n::translate('database name'), '</legend>',
+		'<fieldset><legend>', i18n::translate('Database name'), '</legend>',
 		'<table border="0"><tr><td>',
-		i18n::translate('database name'), '</td><td>',
+		i18n::translate('Database name'), '</td><td>',
 		'<input type="text" name="dbname" value="', htmlspecialchars($_POST['dbname']), '"></td><td>',
 		 i18n::translate('This is case sensitive.'),
 		'</td></tr><tr><td>',
-		i18n::translate('table prefix'), '</td><td>',
+		i18n::translate('Table prefix'), '</td><td>',
 		'<input type="text" name="tblpfx" value="', htmlspecialchars($_POST['tblpfx']), '"></td><td>',
-		i18n::translate('The prefix is optional, but recommended.  By giving the table names a unique prefix, you can let several different applications share the same database.'),
+		i18n::translate('The prefix is optional, but recommended.  By giving the table names a unique prefix you can let several different applications share the same database. "wt_" is suggested, but can be anything you want.'),
 		'</td></tr></table>',
 		'</fieldset>',
-		'<br/><hr/><input type="submit" value="'.i18n::translate('continue').'">',
+		'<br/><hr/><input type="submit" value="'.i18n::translate('Continue').'">',
 		'</form></body></html>';
 		exit;
 } else {
@@ -336,43 +347,43 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 	if (strlen($_POST['wtpass'])>0 && strlen($_POST['wtpass'])<6) {
 		echo '<p>', i18n::translate('The password needs to be at least six characters long.'), '</p>';
 	} elseif ($_POST['wtpass']<>$_POST['wtpass2']) {
-		echo '<p>', i18n::translate('The passwords do not match.'), '</p>';
+		echo '<p class="bad">', i18n::translate('The passwords do not match.'), '</p>';
 	} elseif ((empty($_POST['wtname']) || empty($_POST['wtuser']) || empty($_POST['wtpass']) || empty($_POST['wtemail'])) && $_POST['wtname'].$_POST['wtuser'].$_POST['wtpass'].$_POST['wtemail']!='') {
-		echo '<p>', i18n::translate('You must enter all the administrator account fields.'), '</p>';
+		echo '<p class="bad">', i18n::translate('You must enter all the administrator account fields.'), '</p>';
 	}
 	echo
 		'<h2>', i18n::translate('System settings'), '</h2>',
-		'<p>', i18n::translate('You need to set up an administrator account.  This account can control all aspects of this webtrees installation.  Please choose a strong password.'), '</p>',
-		'<fieldset><legend>', i18n::translate('administrator account'), '</legend>',
+		'<p>', i18n::translate('You need to set up an administrator account.  This account can control all aspects of this <b>webtrees</b> installation.  Please choose a strong password.'), '</p>',
+		'<fieldset><legend>', i18n::translate('Administrator account'), '</legend>',
 		'<table border="0"><tr><td>',
-		i18n::translate('your name'), '</td><td>',
+		i18n::translate('Your name'), '</td><td>',
 		'<input type="text" name="wtname" value="', htmlspecialchars($_POST['wtname']), '"></td><td>',
 		i18n::translate('This is your real name, as you would like it displayed on screen.'),
 		'</td></tr><tr><td>',
-		i18n::translate('login id'), '</td><td>',
+		i18n::translate('Login ID'), '</td><td>',
 		'<input type="text" name="wtuser" value="', htmlspecialchars($_POST['wtuser']), '"></td><td>',
 		i18n::translate('You will use this to login to webtrees.'),
 		'</td></tr><tr><td>',
-		i18n::translate('password'), '</td><td>',
+		i18n::translate('Password'), '</td><td>',
 		'<input type="password" name="wtpass" value="', htmlspecialchars($_POST['wtpass']), '"></td><td>',
-		i18n::translate('This needs to be at least six characters.  It is case-sensitive.'),
+		i18n::translate('This must to be at least six characters.  It is case-sensitive.'),
 		'</td></tr><tr><td>',
 		'&nbsp;', '</td><td>',
 		'<input type="password" name="wtpass2" value="', htmlspecialchars($_POST['wtpass2']), '"></td><td>',
 		i18n::translate('Type your password again, to make sure you have typed it correctly.'),
 		'</td></tr><tr><td>',
-		i18n::translate('email address'), '</td><td>',
+		i18n::translate('Email address'), '</td><td>',
 		'<input type="text" name="wtemail" value="', htmlspecialchars($_POST['wtemail']), '"></td><td>',
 		i18n::translate('This will be used to send you password reminders, site notifications and messages from other family members who register on your site.'),
 		'</td></tr><tr><td>',
 		'</td></tr></table>',
 		'</fieldset>',
-		'<p>', i18n::translate('Webtrees needs to send emails, such as password reminders and site notifications.  To do this, it needs to connect to an SMTP (mail-relay) service.  If your server provides this server, enter the details here.  If it does not, most email providers will allow you to use their SMTP service.  Check with their support documentation for detail.'), '</p>',
+		'<p>', i18n::translate('Webtrees needs to send emails, such as password reminders and site notifications.  To do this, it needs to connect to an SMTP (mail-relay) service.  If your server provides this, enter the details here.  If it does not, most email providers will allow you to use their SMTP service.  Check with their support documentation for details.'), '</p>',
 		'<p>', i18n::translate('To use a Google mail account, use the following settings: server=smtp.gmail.com, port=587, security=tls, username=xxxxx@gmail.com'), '</p>',
 		'<p>', i18n::translate('If you do not know these settings, leave the default values.  They may work.  You can change them later.'), '</p>',
 		'<fieldset><legend>', i18n::translate('SMTP mail server'), '</legend>',
 		'<table border="0"><tr><td>',
-		i18n::translate('use SMTP'), '</td><td>',
+		i18n::translate('Use SMTP'), '</td><td>',
 		'<select name="smtpuse">',
 		'<option value="yes" ',
 		$_POST['smtpuse']=='yes' ? 'selected="selected"' : '',
@@ -383,15 +394,15 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 		'</select></td><td>',
 		i18n::translate('If you don\'t want to send mail, for example when running webtrees with a single user or on a standalone compter, you can disable this feature.'),
 		'</td></tr><tr><td>',
-		i18n::translate('server'), '</td><td>',
+		i18n::translate('Server'), '</td><td>',
 		'<input type="text" name="smtpserv" value="', htmlspecialchars($_POST['smtpserv']), '"></td><td>',
-		i18n::translate('This is the name of the SMTP server.  localhost means that the mail service is running on the same computer as your web server.'),
+		i18n::translate('This is the name of the SMTP server. \'localhost\' means that the mail service is running on the same computer as your web server.'),
 		'</td></tr><tr><td>',
-		i18n::translate('port'), '</td><td>',
+		i18n::translate('Port'), '</td><td>',
 		'<input type="text" name="smtpport" value="', htmlspecialchars($_POST['smtpport']), '"></td><td>',
 		i18n::translate('By default, SMTP works on port 25.'),
 		'</td></tr><tr><td>',
-		i18n::translate('use password'), '</td><td>',
+		i18n::translate('Use password'), '</td><td>',
 		'<select name="smtpusepw">',
 		'<option value="yes" ',
 		$_POST['smtpusepw']=='yes' ? 'selected="selected"' : '',
@@ -402,15 +413,15 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 		'</select></td><td>',
 		i18n::translate('Most SMTP servers require a password.'),
 		'</td></tr><tr><td>',
-		i18n::translate('username'), '</td><td>',
+		i18n::translate('Username'), '</td><td>',
 		'<input type="text" name="smtpuser" value="', htmlspecialchars($_POST['smtpuser']), '"></td><td>',
 		'&nbsp;',
 		'</td></tr><tr><td>',
-		i18n::translate('password'), '</td><td>',
+		i18n::translate('Password'), '</td><td>',
 		'<input type="text" name="smtppass" value="', htmlspecialchars($_POST['smtppass']), '"></td><td>',
 		'&nbsp;',
 		'</td></tr><tr><td>',
-		i18n::translate('security'), '</td><td>',
+		i18n::translate('Security'), '</td><td>',
 		'<select name="smtpsecure">',
 		'<option value="none" ',
 		$_POST['smtpusepw']=='none' ? 'selected="selected"' : '',
@@ -424,17 +435,17 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 		'</select></td><td>',
 		i18n::translate('Most servers do not use secure connections.'),
 		'</td></tr><tr><td>',
-		i18n::translate('from domain'), '</td><td>',
+		i18n::translate('From domain'), '</td><td>',
 		'<input type="text" name="smtpfrom" value="', htmlspecialchars($_POST['smtpfrom']), '"></td><td>',
 		i18n::translate('This is used in the "From:" header when sending mails.'),
 		'</td></tr><tr><td>',
-		i18n::translate('sender domain'), '</td><td>',
+		i18n::translate('Sender domain'), '</td><td>',
 		'<input type="text" name="smtpsender" value="', htmlspecialchars($_POST['smtpsender']), '"></td><td>',
 		i18n::translate('This is used in the "Sender:" header when sending mails.  It is often the same as the "From:" header.'),
 		'</td></tr><tr><td>',
 		'</td></tr></table>',
 		'</fieldset>',
-		'<br/><hr/><input type="submit" value="'.i18n::translate('continue').'">',
+		'<br/><hr/><input type="submit" value="'.i18n::translate('Continue').'">',
 		'</form></body></html>';
 		exit;
 } else {
@@ -467,17 +478,17 @@ try {
 	echo
 		'<p>', i18n::translate('Your system is almost ready for use.  The final step is to download a configuration file (%s) and copy this to the webtrees directory on your webserver.  This is a security measure to ensure only the website\'s owner can configure it.', WT_CONFIG_FILE), '</p>',
 		'<input type="hidden" name="action" value="download">',
-		'<input type="submit" value="'.i18n::translate('download configuration file').'">',
+		'<input type="submit" value="'.i18n::translate('Download configuration file').'">',
 		'</form>',
 		'<p>', i18n::translate('After you have copied this file to the webserver, click here to continue'), '</p>',
 		'<form name="config" action="', WT_SCRIPT_NAME, '" method="get">',
-		'<input type="submit" value="'.i18n::translate('continue').'">',
+		'<input type="submit" value="'.i18n::translate('Continue').'">',
 		'</form></body></html>';
 } catch (PDOException $ex) {
 	echo
-		'<p>', i18n::translate('An unexpected database error occured.'), '</p>',
+		'<p class="bad">', i18n::translate('An unexpected database error occured.'), '</p>',
 		'<pre>', $ex->getMessage(), '</pre>',
-		'<p>', i18n::translate('The webtrees developers would be very interested to learn about this error.  If you contact them, they will help you resolve the problem.'), '</p>';
+		'<p class="indifferent">', i18n::translate('The webtrees developers would be very interested to learn about this error.  If you contact them, they will help you resolve the problem.'), '</p>';
 }
 echo '</form>';
 echo '</body>';
