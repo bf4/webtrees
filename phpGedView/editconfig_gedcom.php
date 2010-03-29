@@ -1315,8 +1315,8 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Access and Privacy')."\" o
 			<?php echo i18n::translate('Page to show after Login'), help_link('PAGE_AFTER_LOGIN'); ?>
 		</td>
 		<td class="optionbox"><select name="NEW_PAGE_AFTER_LOGIN" tabindex="<?php echo ++$i; ?>>" onfocus="getHelp('PAGE_AFTER_LOGIN');">
-				<option value="welcome" <?php if ($PAGE_AFTER_LOGIN=='welcome') print " selected=\"selected\""; ?>><?php print i18n::translate('Welcome'); ?></option>
-				<option value="mygedview" <?php if ($PAGE_AFTER_LOGIN=='mygedview') print " selected=\"selected\""; ?>><?php print i18n::translate('MyGedView'); ?></option>
+				<option value="welcome" <?php if ($PAGE_AFTER_LOGIN=='welcome') print " selected=\"selected\""; ?>><?php print i18n::translate('Home'); ?></option>
+				<option value="mygedview" <?php if ($PAGE_AFTER_LOGIN=='mygedview') print " selected=\"selected\""; ?>><?php print i18n::translate('My Page'); ?></option>
 			</select>
 		</td>
 	</tr>
