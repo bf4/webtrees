@@ -1601,13 +1601,13 @@ foreach ($rel_events as $row) {
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
-			<?php echo i18n::translate('Maximum number of surnames'), help_link('SUBLIST_TRIGGER_I'); ?>
+			<?php echo i18n::translate('Maximum number of surnames on individual list'), help_link('SUBLIST_TRIGGER_I'); ?>
 		</td>
 		<td class="optionbox"><input type="text" name="NEW_SUBLIST_TRIGGER_I" value="<?php print $SUBLIST_TRIGGER_I; ?>" size="5" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SUBLIST_TRIGGER_I');" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
-			<?php echo i18n::translate('Maximum number of family names of surnames'), help_link('SUBLIST_TRIGGER_F'); ?>
+			<?php echo i18n::translate('Maximum number of surnames on family list'), help_link('SUBLIST_TRIGGER_F'); ?>
 		</td>
 		<td class="optionbox"><input type="text" name="NEW_SUBLIST_TRIGGER_F" value="<?php print $SUBLIST_TRIGGER_F; ?>" size="5" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('SUBLIST_TRIGGER_F');" /></td>
 	</tr>
