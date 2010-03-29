@@ -29,7 +29,7 @@ define('WT_REQUIRED_MYSQL_VERSION', '5.0.13'); // For: prepared statements withi
 
 if (!empty($_POST['action']) && $_POST['action']=='download') {
 	header('Content-Type: text/plain');
-	header('Content-Disposition: attachment; filename="config.inc.php"');
+	header('Content-Disposition: attachment; filename="'.WT_CONFIG_FILE.'"');
 	echo '; <?php exit; ?> DO NOT DELETE THIS LINE'."\r\n";
 	echo 'dbhost="', addcslashes($_POST['dbhost'], '"').'"'."\r\n";
 	echo 'dbport="', addcslashes($_POST['dbport'], '"').'"'."\r\n";
@@ -322,7 +322,7 @@ if (empty($_POST['wtuser'    ])) $_POST['wtuser'    ]='';
 if (empty($_POST['wtpass'    ])) $_POST['wtpass'    ]='';
 if (empty($_POST['wtpass2'   ])) $_POST['wtpass2'   ]='';
 if (empty($_POST['wtemail'   ])) $_POST['wtemail'   ]='';
-if (empty($_POST['smtpuse'   ])) $_POST['smtpuse'   ]='no';
+if (empty($_POST['smtpuse'   ])) $_POST['smtpuse'   ]='yes';
 if (empty($_POST['smtpserv'  ])) $_POST['smtpserv'  ]='localhost';
 if (empty($_POST['smtpport'  ])) $_POST['smtpport'  ]='25';
 if (empty($_POST['smtpusepw' ])) $_POST['smtpusepw' ]='yes';
