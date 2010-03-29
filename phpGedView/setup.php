@@ -24,7 +24,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'setup.php');
-define('WT_CONFIG_FILE', 'config.inc.php');
+define('WT_CONFIG_FILE', 'config.ini.php');
 define('WT_REQUIRED_MYSQL_VERSION', '5.0.13'); // For: prepared statements within stored procedures
 
 if (!empty($_POST['action']) && $_POST['action']=='download') {
