@@ -2217,7 +2217,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Web Site and META Tag Sett
 			<?php echo i18n::translate('Publisher META tag'), help_link('META_PUBLISHER'); ?>
 		</td>
 		<td class="optionbox"><input type="text" dir="ltr" name="NEW_META_PUBLISHER" value="<?php print $META_PUBLISHER; ?>" onfocus="getHelp('META_PUBLISHER');" tabindex="<?php echo ++$i; ?>" /><br />
-		<?php echo i18n::translate('Leave this field empty to use the full name of the  Genealogy contact.'); ?></td>
+		<?php echo i18n::translate('Leave this field empty to use the full name of the Genealogy contact.'); ?></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
