@@ -465,7 +465,7 @@ try {
 	//$dbh->exec("");
 	//$dbh->exec("");
 	echo
-		'<p>', i18n::translate('Your system is almost ready for use.  The final step is to download a configuration file (config.ini.php) and copy this to the webtrees directory on your webserver.  This is a security measure to ensure only the website\'s owner can configure it.'), '</p>',
+		'<p>', i18n::translate('Your system is almost ready for use.  The final step is to download a configuration file (%s) and copy this to the webtrees directory on your webserver.  This is a security measure to ensure only the website\'s owner can configure it.', WT_CONFIG_FILE), '</p>',
 		'<input type="hidden" name="action" value="download">',
 		'<input type="submit" value="'.i18n::translate('download configuration file').'">',
 		'</form>',
