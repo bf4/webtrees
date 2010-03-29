@@ -239,19 +239,19 @@ if (!$dbh || !$db_version_ok) {
 		'<fieldset><legend>', i18n::translate('database connection'), '</legend>',
 		'<table border="0"><tr><td>',
 		i18n::translate('server name'), '</td><td>',
-		'<input type="text" name="dbhost" value="', $_POST['dbhost'], '"></td><td>',
+		'<input type="text" name="dbhost" value="', htmlspecialchars($_POST['dbhost']), '"></td><td>',
 		i18n::translate('Most sites are configured to use localhost.  This means that your database runs on the same computer as your web server.'),
 		'</td></tr><tr><td>',
 		i18n::translate('port number'), '</td><td>',
-		'<input type="text" name="dbport" value="', $_POST['dbport'], '"></td><td>',
+		'<input type="text" name="dbport" value="', htmlspecialchars($_POST['dbport']), '"></td><td>',
 		i18n::translate('Most sites are configured to use the default value of 3306.'),
 		'</td></tr><tr><td>',
 		i18n::translate('database user account'), '</td><td>',
-		'<input type="text" name="dbuser" value="', $_POST['dbuser'], '"></td><td>',
+		'<input type="text" name="dbuser" value="', htmlspecialchars($_POST['dbuser']), '"></td><td>',
 		i18n::translate('This is case sensitive.'),
 		'</td></tr><tr><td>',
 		i18n::translate('database password'), '</td><td>',
-		'<input type="text" name="dbpass" value="', $_POST['dbpass'], '"></td><td>',
+		'<input type="password" name="dbpass" value="', htmlspecialchars($_POST['dbpass']), '"></td><td>',
 		i18n::translate('This is case sensitive.'),
 		'</td></tr><tr><td>',
 		'</td></tr></table>',
@@ -261,10 +261,10 @@ if (!$dbh || !$db_version_ok) {
 		exit;
 } else {
 	// Copy these values through to the next step
-	echo '<input type="hidden" name="dbhost" value="'.$_POST['dbhost'].'">';
-	echo '<input type="hidden" name="dbport" value="'.$_POST['dbport'].'">';
-	echo '<input type="hidden" name="dbuser" value="'.$_POST['dbuser'].'">';
-	echo '<input type="hidden" name="dbpass" value="'.$_POST['dbpass'].'">';
+	echo '<input type="hidden" name="dbhost" value="'.htmlspecialchars($_POST['dbhost']).'">';
+	echo '<input type="hidden" name="dbport" value="'.htmlspecialchars($_POST['dbport']).'">';
+	echo '<input type="hidden" name="dbuser" value="'.htmlspecialchars($_POST['dbuser']).'">';
+	echo '<input type="hidden" name="dbpass" value="'.htmlspecialchars($_POST['dbpass']).'">';
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -296,11 +296,11 @@ if (!$dbname_ok) {
 		'<fieldset><legend>', i18n::translate('database name'), '</legend>',
 		'<table border="0"><tr><td>',
 		i18n::translate('database name'), '</td><td>',
-		'<input type="text" name="dbname" value="', $_POST['dbname'], '"></td><td>',
+		'<input type="text" name="dbname" value="', htmlspecialchars($_POST['dbname']), '"></td><td>',
 		 i18n::translate('This is case sensitive.'),
 		'</td></tr><tr><td>',
 		i18n::translate('table prefix'), '</td><td>',
-		'<input type="text" name="tblpfx" value="', $_POST['tblpfx'], '"></td><td>',
+		'<input type="text" name="tblpfx" value="', htmlspecialchars($_POST['tblpfx']), '"></td><td>',
 		i18n::translate('The prefix is optional, but recommended.  By giving the table names a unique prefix, you can let several different applications share the same database.'),
 		'</td></tr></table>',
 		'</fieldset>',
@@ -309,8 +309,8 @@ if (!$dbname_ok) {
 		exit;
 } else {
 	// Copy these values through to the next step
-	echo '<input type="hidden" name="dbname" value="'.$_POST['dbname'].'">';
-	echo '<input type="hidden" name="tblpfx" value="'.$_POST['tblpfx'].'">';
+	echo '<input type="hidden" name="dbname" value="'.htmlspecialchars($_POST['dbname']).'">';
+	echo '<input type="hidden" name="tblpfx" value="'.htmlspecialchars($_POST['tblpfx']).'">';
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -346,23 +346,23 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 		'<fieldset><legend>', i18n::translate('administrator account'), '</legend>',
 		'<table border="0"><tr><td>',
 		i18n::translate('your name'), '</td><td>',
-		'<input type="text" name="wtname" value="', $_POST['wtname'], '"></td><td>',
+		'<input type="text" name="wtname" value="', htmlspecialchars($_POST['wtname']), '"></td><td>',
 		i18n::translate('This is your real name, as you would like it displayed on screen.'),
 		'</td></tr><tr><td>',
 		i18n::translate('login id'), '</td><td>',
-		'<input type="text" name="wtuser" value="', $_POST['wtuser'], '"></td><td>',
+		'<input type="text" name="wtuser" value="', htmlspecialchars($_POST['wtuser']), '"></td><td>',
 		i18n::translate('You will use this to login to webtrees.'),
 		'</td></tr><tr><td>',
 		i18n::translate('password'), '</td><td>',
-		'<input type="password" name="wtpass" value="', $_POST['wtpass'], '"></td><td>',
+		'<input type="password" name="wtpass" value="', htmlspecialchars($_POST['wtpass']), '"></td><td>',
 		i18n::translate('This needs to be at least six characters.  It is case-sensitive.'),
 		'</td></tr><tr><td>',
 		'&nbsp;', '</td><td>',
-		'<input type="password" name="wtpass2" value="', $_POST['wtpass2'], '"></td><td>',
+		'<input type="password" name="wtpass2" value="', htmlspecialchars($_POST['wtpass2']), '"></td><td>',
 		i18n::translate('Type your password again, to make sure you have typed it correctly.'),
 		'</td></tr><tr><td>',
 		i18n::translate('email address'), '</td><td>',
-		'<input type="text" name="wtemail" value="', $_POST['wtemail'], '"></td><td>',
+		'<input type="text" name="wtemail" value="', htmlspecialchars($_POST['wtemail']), '"></td><td>',
 		i18n::translate('This will be used to send you password reminders, site notifications and messages from other family members who register on your site.'),
 		'</td></tr><tr><td>',
 		'</td></tr></table>',
@@ -373,39 +373,39 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 		'<fieldset><legend>', i18n::translate('SMTP mail server'), '</legend>',
 		'<table border="0"><tr><td>',
 		i18n::translate('use SMTP'), '</td><td>',
-		'<input type="text" name="smtpuse" value="', $_POST['smtpuse'], '"></td><td>',
+		'<input type="text" name="smtpuse" value="', htmlspecialchars($_POST['smtpuse']), '"></td><td>',
 		i18n::translate('If you don\'t want to send mail, for example when running webtrees with a single user or on a standalone compter, you can disable this feature.'),
 		'</td></tr><tr><td>',
 		i18n::translate('server'), '</td><td>',
-		'<input type="text" name="smtpserv" value="', $_POST['smtpserv'], '"></td><td>',
+		'<input type="text" name="smtpserv" value="', htmlspecialchars($_POST['smtpserv']), '"></td><td>',
 		i18n::translate('This is the name of the SMTP server.  localhost means that the mail service is running on the same computer as your web server.'),
 		'</td></tr><tr><td>',
 		i18n::translate('port'), '</td><td>',
-		'<input type="text" name="smtpport" value="', $_POST['smtpport'], '"></td><td>',
+		'<input type="text" name="smtpport" value="', htmlspecialchars($_POST['smtpport']), '"></td><td>',
 		i18n::translate('By default, SMTP works on port 25.'),
 		'</td></tr><tr><td>',
 		i18n::translate('use password'), '</td><td>',
-		'<input type="text" name="smtpusepw" value="', $_POST['smtpusepw'], '"></td><td>',
+		'<input type="text" name="smtpusepw" value="', htmlspecialchars($_POST['smtpusepw']), '"></td><td>',
 		i18n::translate('Most SMTP servers require a password.'),
 		'</td></tr><tr><td>',
 		i18n::translate('username'), '</td><td>',
-		'<input type="text" name="smtpuser" value="', $_POST['smtpuser'], '"></td><td>',
+		'<input type="text" name="smtpuser" value="', htmlspecialchars($_POST['smtpuser']), '"></td><td>',
 		'&nbsp;',
 		'</td></tr><tr><td>',
 		i18n::translate('password'), '</td><td>',
-		'<input type="text" name="smtppass" value="', $_POST['smtppass'], '"></td><td>',
+		'<input type="text" name="smtppass" value="', htmlspecialchars($_POST['smtppass']), '"></td><td>',
 		'&nbsp;',
 		'</td></tr><tr><td>',
 		i18n::translate('security'), '</td><td>',
-		'<input type="text" name="smtpsecure" value="', $_POST['smtpsecure'], '"></td><td>',
+		'<input type="text" name="smtpsecure" value="', htmlspecialchars($_POST['smtpsecure']), '"></td><td>',
 		i18n::translate('Most servers do not use secure connections.'),
 		'</td></tr><tr><td>',
 		i18n::translate('from domain'), '</td><td>',
-		'<input type="text" name="smtpfrom" value="', $_POST['smtpfrom'], '"></td><td>',
+		'<input type="text" name="smtpfrom" value="', htmlspecialchars($_POST['smtpfrom']), '"></td><td>',
 		i18n::translate('This is used in the "From:" header when sending mails.'),
 		'</td></tr><tr><td>',
 		i18n::translate('sender domain'), '</td><td>',
-		'<input type="text" name="smtpsender" value="', $_POST['smtpsender'], '"></td><td>',
+		'<input type="text" name="smtpsender" value="', htmlspecialchars($_POST['smtpsender']), '"></td><td>',
 		i18n::translate('This is used in the "Sender:" header when sending mails.  It is often the same as the "From:" header.'),
 		'</td></tr><tr><td>',
 		'</td></tr></table>',
@@ -415,20 +415,20 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 		exit;
 } else {
 	// Copy these values through to the next step
-	echo '<input type="hidden" name="wtname"     value="'.$_POST['wtname'].'">';
-	echo '<input type="hidden" name="wtuser"     value="'.$_POST['wtuser'].'">';
-	echo '<input type="hidden" name="wtpass"     value="'.$_POST['wtpass'].'">';
-	echo '<input type="hidden" name="wtpass2"    value="'.$_POST['wtpass2'].'">';
-	echo '<input type="hidden" name="wtemail"    value="'.$_POST['wtemail'].'">';
-	echo '<input type="hidden" name="smtpuse"    value="'.$_POST['smtpuse'].'">';
-	echo '<input type="hidden" name="smtpserv"   value="'.$_POST['smtpserv'].'">';
-	echo '<input type="hidden" name="smtpport"   value="'.$_POST['smtpport'].'">';
-	echo '<input type="hidden" name="smtpusepw"  value="'.$_POST['smtpusepw'].'">';
-	echo '<input type="hidden" name="smtpuser"   value="'.$_POST['smtpuser'].'">';
-	echo '<input type="hidden" name="smtppass"   value="'.$_POST['smtppass'].'">';
-	echo '<input type="hidden" name="smtpsecure" value="'.$_POST['smtpsecure'].'">';
-	echo '<input type="hidden" name="smtpfrom"   value="'.$_POST['smtpfrom'].'">';
-	echo '<input type="hidden" name="smtpsender" value="'.$_POST['smtpsender'].'">';
+	echo '<input type="hidden" name="wtname"     value="'.htmlspecialchars($_POST['wtname']).'">';
+	echo '<input type="hidden" name="wtuser"     value="'.htmlspecialchars($_POST['wtuser']).'">';
+	echo '<input type="hidden" name="wtpass"     value="'.htmlspecialchars($_POST['wtpass']).'">';
+	echo '<input type="hidden" name="wtpass2"    value="'.htmlspecialchars($_POST['wtpass2']).'">';
+	echo '<input type="hidden" name="wtemail"    value="'.htmlspecialchars($_POST['wtemail']).'">';
+	echo '<input type="hidden" name="smtpuse"    value="'.htmlspecialchars($_POST['smtpuse']).'">';
+	echo '<input type="hidden" name="smtpserv"   value="'.htmlspecialchars($_POST['smtpserv']).'">';
+	echo '<input type="hidden" name="smtpport"   value="'.htmlspecialchars($_POST['smtpport']).'">';
+	echo '<input type="hidden" name="smtpusepw"  value="'.htmlspecialchars($_POST['smtpusepw']).'">';
+	echo '<input type="hidden" name="smtpuser"   value="'.htmlspecialchars($_POST['smtpuser']).'">';
+	echo '<input type="hidden" name="smtppass"   value="'.htmlspecialchars($_POST['smtppass']).'">';
+	echo '<input type="hidden" name="smtpsecure" value="'.htmlspecialchars($_POST['smtpsecure']).'">';
+	echo '<input type="hidden" name="smtpfrom"   value="'.htmlspecialchars($_POST['smtpfrom']).'">';
+	echo '<input type="hidden" name="smtpsender" value="'.htmlspecialchars($_POST['smtpsender']).'">';
 }
 
 ////////////////////////////////////////////////////////////////////////////////
