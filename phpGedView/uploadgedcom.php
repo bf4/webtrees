@@ -327,7 +327,7 @@ if ($action == "add_form") {
 	<td class="descriptionbox width20 wrap">
 	<?php echo i18n::translate('GEDCOM File:'), help_link('gedcom_path'); ?></td>
 	<td class="optionbox"><input type="text" name="GEDFILENAME" value="<?php if (isset($GEDFILENAME) && strlen($GEDFILENAME) > 4) echo get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path'); ?>"
-					size="60" dir ="ltr" tabindex="<?php $i++; echo $i?>"	<?php if ((!$no_upload && isset($GEDFILENAME)) && (empty($error))) echo "disabled "; ?> />
+					size="60" dir ="ltr" tabindex="<?php $i++; echo $i?>" <?php if ((!$no_upload && isset($GEDFILENAME)) && (empty($error))) echo "disabled "; ?> />
 	</td>
 	</tr>
 	</table>
@@ -521,7 +521,9 @@ if ($verify == "verify_gedcom") {
 		}
 		print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
 		print "</td></tr></table>";
-	} else	$verify = "validate_form";
+	} else {
+		$verify = "validate_form";
+	}
 }
 
 if ($verify == "validate_form") {
@@ -614,7 +616,7 @@ if ($verify == "validate_form") {
 			// NOTE: Check for line endings cleanup
 			if ($l_lineendingscleanup) {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
-				print "<span class=\"error\">".i18n::translate('Empty lines were detected in your GEDCOM file.	On cleanup, these empty lines will be removed.')."</span>\n";
+				print "<span class=\"error\">".i18n::translate('Empty lines were detected in your GEDCOM file.  On cleanup, these empty lines will be removed.')."</span>\n";
 				print help_link('empty_lines_detected');
 				print "</td></tr>";
 			}
@@ -658,7 +660,7 @@ if ($verify == "validate_form") {
 			// NOTE: Check for ansi encoding
 			if ($l_isansi) {
 				print "<tr><td class=\"optionbox\" colspan=\"2\">";
-				print "<span class=\"error\">".i18n::translate('ANSI file encoding detected.	webtrees works best with files encoded in UTF-8.')."</span>\n";
+				print "<span class=\"error\">".i18n::translate('ANSI file encoding detected.  webtrees works best with files encoded in UTF-8.')."</span>\n";
 				print "\n<table class=\"facts_table\">";
 				print "<tr><td class=\"descriptionbox wrap width20\">";
 				print i18n::translate('Convert this ANSI encoded GEDCOM to UTF-8?');
@@ -781,7 +783,7 @@ if ($startimport == "true") {
 
 	/**
 	 * function that sets up the html required to run the progress bar
-	 * @param long $FILE_SIZE	the size of the file
+	 * @param long $FILE_SIZE the size of the file
 	 */
 	function setup_progress_bar($FILE_SIZE) {
 		global $ged, $timelimit;
