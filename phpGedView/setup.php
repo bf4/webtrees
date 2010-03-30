@@ -64,7 +64,7 @@ echo
 	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
 	'<html xmlns="http://www.w3.org/1999/xhtml">',
 	'<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
-	'<title>Webtrees setup wizard</title>',
+	'<title>webtrees setup wizard</title>',
 	'<style type="text/css">
 		body { 	color: black; background-color: white; font: 14px tahoma, arial, helvetica, sans-serif;	padding:10px; }
 		a {	color: black; font-weight: normal; text-decoration: none;}
@@ -266,7 +266,7 @@ try {
 if (empty($_POST['dbuser']) || empty($_POST['dbpass']) || !$dbh || !$db_version_ok) {
 	echo
 		'<h2>', i18n::translate('Connection to database server'), '</h2>',
-		'<p>', i18n::translate('Webtrees needs a MySQL database, version %s or later.', WT_REQUIRED_MYSQL_VERSION), '</p>',
+		'<p>', i18n::translate('<b>webtrees</b> needs a MySQL database, version %s or later.', WT_REQUIRED_MYSQL_VERSION), '</p>',
 		'<p>', i18n::translate('Your server\'s administrator will provide you with the connection details.'), '</p>',
 		'<fieldset><legend>', i18n::translate('Database connection'), '</legend>',
 		'<table border="0"><tr><td>',
@@ -319,7 +319,7 @@ if ($_POST['dbname']) {
 		$dbname_ok=true;
 	} catch (PDOException $ex) {
 		echo
-			'<p class="bad">', i18n::translate('Unable to connect using these settings.  Your server gave the following error.'), '<p>',
+			'<p class="bad">', i18n::translate('Unable to connect using these settings.  Your server gave the following error.'), '</p>',
 			'<pre>', $ex->getMessage(), '</pre>',
 			'<p class="bad">', i18n::translate('Check the settings and try again.'), '</p>';
 	}
@@ -370,7 +370,7 @@ if (empty($_POST['smtpsender'])) $_POST['smtpsender']=$_POST['smtpfrom'];
 
 if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'])<6 || strlen($_POST['wtpass2'])<6 || empty($_POST['wtemail']) || $_POST['wtpass']<>$_POST['wtpass2']) {
 	if (strlen($_POST['wtpass'])>0 && strlen($_POST['wtpass'])<6) {
-		echo '<p>', i18n::translate('The password needs to be at least six characters long.'), '</p>';
+		echo '<p class="bad">', i18n::translate('The password needs to be at least six characters long.'), '</p>';
 	} elseif ($_POST['wtpass']<>$_POST['wtpass2']) {
 		echo '<p class="bad">', i18n::translate('The passwords do not match.'), '</p>';
 	} elseif ((empty($_POST['wtname']) || empty($_POST['wtuser']) || empty($_POST['wtpass']) || empty($_POST['wtemail'])) && $_POST['wtname'].$_POST['wtuser'].$_POST['wtpass'].$_POST['wtemail']!='') {
@@ -403,7 +403,7 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 		'</td></tr><tr><td>',
 		'</td></tr></table>',
 		'</fieldset>',
-		'<p>', i18n::translate('Webtrees needs to send emails, such as password reminders and site notifications.  To do this, it needs to connect to an SMTP (mail-relay) service.  If your server provides this, enter the details here.  If it does not, most email providers will allow you to use their SMTP service.  Check with their support documentation for details.'), '</p>',
+		'<p>', i18n::translate('<b>webtrees</b> needs to send emails, such as password reminders and site notifications.  To do this, it needs to connect to an SMTP (mail-relay) service.  If your server provides this, enter the details here.  If it does not, most email providers will allow you to use their SMTP service.  Check with their support documentation for details.'), '</p>',
 		'<p>', i18n::translate('To use a Google mail account, use the following settings: server=smtp.gmail.com, port=587, security=tls, username=xxxxx@gmail.com'), '</p>',
 		'<p>', i18n::translate('If you do not know these settings, leave the default values.  They may work.  You can change them later.'), '</p>',
 		'<fieldset><legend>', i18n::translate('SMTP mail server'), '</legend>',
