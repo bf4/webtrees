@@ -263,7 +263,7 @@ try {
 	}
 }
 
-if (!$dbh || !$db_version_ok) {
+if (empty($_POST['dbuser']) || empty($_POST['dbpass']) || !$dbh || !$db_version_ok) {
 	echo
 		'<h2>', i18n::translate('Connection to database server'), '</h2>',
 		'<p>', i18n::translate('Webtrees needs a MySQL database, version %s or later.', WT_REQUIRED_MYSQL_VERSION), '</p>',
@@ -311,6 +311,10 @@ if ($_POST['dbname']) {
 	try {
 		// Try to create the database, if it does not exist.
 		$dbh->exec('CREATE DATABASE IF NOT EXISTS `'.$_POST['dbname'].'` COLLATE utf8_unicode_ci');
+	} catch (PDOException $ex) {
+		// If we have no permission to do this, there's nothing helpful we can say.
+	}
+	try {
 		$dbh->exec('USE `'.$_POST['dbname'].'`');
 		$dbname_ok=true;
 	} catch (PDOException $ex) {
@@ -449,10 +453,10 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 		'>', i18n::translate('none'), '</option>',
 		'<option value="tls" ',
 		$_POST['smtpusepw']=='tls' ? 'selected="selected"' : '',
-		'>', i18n::translate('tls'), '</option>',
+		'>', /* I18n: Transport Layer Security - a secure communications protocol */ i18n::translate('tls'), '</option>',
 		'<option value="ssl" ',
 		$_POST['smtpusepw']=='ssl' ? 'selected="selected"' : '',
-		'>', i18n::translate('ssl'), '</option>',
+		'>', /* I18n: Secure Sockets Layer - a secure communications protocol*/ i18n::translate('ssl'), '</option>',
 		'</select></td><td>',
 		i18n::translate('Most servers do not use secure connections.'),
 		'</td></tr><tr><td>',
