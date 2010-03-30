@@ -1,52 +1,85 @@
-SHELL=bash
-PACKAGE=webtrees
-SVNVERSION=$(shell svnversion .. | tr -d 'M')
+COMPRESSION=.zip # Choose one of: .zip .tar.gz .tar.bz2
+L10NVERSION=$(shell date +%Y-%m-%d -r $(LANGUAGE_ARCHIVE))
 LABEL=$(PACKAGE)-$(SVNVERSION)
+LANGUAGE_ARCHIVE=launchpad-export.tar.gz
+LANGUAGES=$(shell tar tf $(LANGUAGE_ARCHIVE) | grep /LC_MESSAGES/webtrees.mo | cut -d / -f 1)
+MO=$(patsubst %,$(LABEL)/language/%.mo,$(LANGUAGES))
+PACKAGE=webtrees
 POT=$(PACKAGE).pot
-PO=$(wildcard *.po)
-MO=$(patsubst %.po,%.mo,$(PO))
 PHP=$(shell find .. -path ../library -prune -o -path ../build -prune -o -name '*.php' -print)
+SHELL=bash
+SVNVERSION=$(shell svnversion .. | tr -d 'M')
 
-default: $(PHP) $(POT) Makefile
-	@if [ ! -f launchpad-export.tar.gz ]; then \
-	 echo; \
-	 echo "------------------------------------------------------------------"; \
-	 echo "You must download the compiled language files (in .MO format) from"; \
-	 echo "https://translations.launchpad.net/webtrees/trunk/+export"; \
-	 echo "Save the file (launchpad.export.tar.gz) to the build directory."; \
-	 echo "Then run make again."; \
-	 echo "------------------------------------------------------------------"; \
-	 echo; \
-	 false; \
-	fi
-	rm -Rf $(LABEL)*
+################################################################################
+# Default action is to build everything
+################################################################################
+default: clean $(LABEL)$(COMPRESSION) webtrees.pot
+	@echo
+	@echo "Build successful. Now upload the files to launchpad.net:"
+	@echo
+	@echo "language-$(L10NVERSION)$(COMPRESSION) => https://launchpad.net/webtrees/....."
+	@echo "$(LABEL)$(COMPRESSION) => https://launchpad.net/webtrees/....."
+	@echo "webtrees.pot => https://translations.launchpad.net/webtrees/trunk/+translations-upload"
+	@echo
+
+clean:
+	rm -Rf webtrees* language*
+
+################################################################################
+# Create a ZIP archives
+################################################################################
+$(LABEL).zip: $(LABEL) $(MO)
+	zip -qr language-$(L10NVERSION).zip $(LABEL)/language
+	zip -qr $@ $(LABEL)
+	rm -R $(LABEL)
+
+################################################################################
+# Create a TAR.GZ archives
+################################################################################
+$(LABEL).tar.gz: $(LABEL) $(MO)
+	tar cfz language-$(L10NVERSION).tar $(LABEL)/language
+	tar cfz $(LABEL).tar $(LABEL)
+	rm -R $(LABEL)
+
+################################################################################
+# Create a TAR.BZ2 archives
+################################################################################
+$(LABEL).tar.bz2: $(LABEL) $(MO)
+	tar cfg language-$(L10NVERSION).tar $(LABEL)/language
+	tar cfg $(LABEL).tar $(LABEL)
+	rm -R $(LABEL)
+
+################################################################################
+# Extract code from the current SVN working copy and strip unused libraries
+################################################################################
+$(LABEL): $(PHP)
 	svn export .. $(LABEL)
 	rm -R $(LABEL)/library/Zend/{Acl,Amf,Application,Auth,Barcode,Captcha,CodeGenerator,Console,Controller,Config,Crypt,Currency,Date,Db,Debug,Dojo,Dom,Feed,File,Filter,Form,Gdata,Http,InfoCard,Json,Layout,Ldap,Log,Mail,Markup,Measure,Memory,Mime,Navigation,Oauth,OpenId,Paginator,Pdf,ProgressBar,Queue,Reflection,Rest,Search,Serializer,Service,Session,Soap,Tag,Test,Text,TimeSync,Tool,Uri,Validate,Version,View,Wildfire,XmlRpc}*
 	rm -R $(LABEL)/build
-	rm -R $(LABEL)/language/*
-	tar tf launchpad-export.tar.gz | grep /LC_MESSAGES/webtrees.mo | cut -d / -f 1 | while read LOCALE; do \
-	 tar xvfzO launchpad-export.tar.gz $$LOCALE/LC_MESSAGES/webtrees.mo > $(LABEL)/language/$$LOCALE.mo; \
-	done
-	zip -qr $(LABEL).zip $(LABEL)
-	tar cf $(LABEL).tar $(LABEL)
-	bzip2 -k $(LABEL).tar
-	gzip $(LABEL).tar
-	rm -Rf $(LABEL)
-	@echo
-	@echo Upload webtrees.pot to https://translations.launchpad.net/webtrees/trunk/+translations-upload
-	@echo
-	@echo Upload $(LABEL).zip/gz/.bz2 to https://
-	@echo
+	rm -Rf $(LABEL)/language/*
 
 ################################################################################
-# This is a dummy target.  We cannot make this file - we download it from
-# the translation server at launchpad
+# Extract a language file from the downloaded archive file, and rename it
 ################################################################################
-launchpad.export.tar.gz:
+%.mo: $(LANGUAGE_ARCHIVE)
+	tar xfzO $(LANGUAGE_ARCHIVE) $(*F)/LC_MESSAGES/webtrees.mo > $@
 
+################################################################################
+# We cannot make this file - we download it from launchpad.net
+################################################################################
+$(LANGUAGE_ARCHIVE):
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "You must download the compiled language files (in .MO format) from"
+	@echo "https://translations.launchpad.net/webtrees/trunk/+export"
+	@echo "Save the file ($(@)) to the build directory."
+	@echo "Then run make again."
+	@echo "------------------------------------------------------------------"
+	@echo
+	@false
 
 ################################################################################
 # Update the PO Template file from the sources.
 ################################################################################
-$(POT): $(PHP) Makefile
-	xgettext --package-name=$(PACKAGE) --package-version=1.0 --msgid-bugs-address=i18n@webtrees.net --output=$@ --no-wrap --language=PHP --add-comments=I18N --from-code=utf-8 --keyword --keyword=translate:1 --keyword=translate_c:1c,2 --keyword=plural:1,2 --keyword=noop:1 $(PHP)
+$(POT): $(PHP)
+	@xgettext --package-name=$(PACKAGE) --package-version=1.0 --msgid-bugs-address=i18n@webtrees.net --output=$@ --no-wrap --language=PHP --add-comments=I18N --from-code=utf-8 --keyword --keyword=translate:1 --keyword=translate_c:1c,2 --keyword=plural:1,2 --keyword=noop:1 $(PHP)
