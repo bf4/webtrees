@@ -275,9 +275,7 @@ jQuery(document).ready(function() {
 		<a id="sidebar_open" href="#open"><img src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES['ldarrow']['other'];?>" border="0" alt=""/></a>
 		<a id="sidebar_pin" href="#pin"><img src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES['pin-out']['other'];?>" border="0" alt=""/></a>
 	</div>
-	<div id="sidebarAccordion">
-		<img src="<?php echo $WT_IMAGE_DIR ?>/loading.gif" alt="" />
-	</div>
+	<div id="sidebarAccordion"></div>
 	<span class="ui-icon ui-icon-grip-dotted-horizontal" style="margin:2px auto;"></span>
 </div>
 <div id="debug">
