@@ -291,7 +291,7 @@ if (isset($content) && $content==1) {
 					</tr>
 					<tr>
 						<td class="facts_label"><?php echo i18n::translate('Largest families');?></td>
-						<td class="facts_label"><?php echo i18n::translate('Largest grandfamilies');?></td>
+						<td class="facts_label"><?php echo i18n::translate('Largest number of grandchildren');?></td>
 					</tr>
 					<tr>
 						<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->topTenLargestFamilyList();?></td>
