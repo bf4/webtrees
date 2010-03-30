@@ -1300,7 +1300,6 @@ function write_file() {
 	//-- always release the mutex
 	$mutex->Release();
 	$logline = AddToLog($path." updated");
-	check_in($logline, basename($path), dirname($path));
 
 	return true;
 }
@@ -1386,7 +1385,6 @@ function accept_changes($cid) {
 			write_changes();
 		}
 		$logline = AddToLog("Accepted change $cid " . $change["type"] . " into database");
-		check_in($logline, $GEDCOM, dirname(get_gedcom_setting($ged_id, 'path')));
 		if (isset ($change["linkpid"])) {
 			accept_changes($change["linkpid"] . "_" . $GEDCOM);
 		}

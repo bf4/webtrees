@@ -522,7 +522,6 @@ try {
 		"('MAX_VIEW_TIME',                   '1'),".
 		"('MEMORY_LIMIT',                    '".addcslashes($_POST['maxmem'], "'")."'),".
 		"('MAX_EXECUTION_TIME',              '".addcslashes($_POST['maxcpu'], "'")."'),".
-		"('COMMIT_COMMAND',                  ''),".
 		"('SMTP_ACTIVE',                     '".addcslashes($_POST['smtpuse'], "'")."'),".
 		"('SMTP_HOST',                       '".addcslashes($_POST['smtpserv'], "'")."'),".
 		"('SMTP_HELO',                       '".addcslashes($_POST['smtpsender'], "'")."'),".

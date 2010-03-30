@@ -2152,11 +2152,6 @@ case 'CHECK_MARRIAGE_RELATIONS':
 	$text=i18n::translate('Check relationships that are related by marriage.');
 	break;
 
-case 'COMMIT_COMMAND':
-	$title=i18n::translate('Version control commit command');
-	$text=i18n::translate('If you wish to use a version control system such as CVS to archive changes to your GEDCOM file and your configuration or privacy settings, enter the command here.  Leave the box blank if you do not wish to use a version control system.  Valid options are <b>cvs</b> and <b>svn</b>.');
-	break;
-
 case 'COMMON_NAMES_ADD':
 	$title=i18n::translate('Names to add to common surnames (comma separated)');
 	$text=i18n::translate('If the number of times that a certain surname occurs is lower than the threshold, it will not appear in the list.  It can be added here manually.  If more than one surname is entered, they must be separated by a comma.  <b>Surnames are case-sensitive.</b>');

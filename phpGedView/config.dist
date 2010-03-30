@@ -63,7 +63,6 @@ $LOGIN_URL = "";								//-- the URL to use to go to the login page, use this va
 $MAX_VIEWS = "20";								//-- the maximum number of page views per xx seconds per session
 $MAX_VIEW_TIME = "1";							//-- the number of seconds in which the maximum number of views must not be reached
 $WT_MEMORY_LIMIT = "32M";						//-- the maximum amount of memory that webtrees should be allowed to consume
-$COMMIT_COMMAND = "";							//-- Choices are empty string, cvs or svn
 $WT_SMTP_ACTIVE = false;						//-- Enable to use of SMTP to send external emails
 $WT_SMTP_HOST = "";								//-- The domain name of the SMTP smarthost
 $WT_SMTP_HELO = "";								//-- The local SMTP domain name

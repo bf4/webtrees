@@ -324,8 +324,6 @@ function load_privacy_file($ged_id=WT_GED_ID) {
  * @return mixed	returns true on success, or returns an array of error messages on failure
  */
 function update_site_config($newconfig, $return = false) {
-	global $COMMIT_COMMAND;
-
 	$errors = array();
 
 	//-- load the configuration file text
@@ -353,10 +351,6 @@ function update_site_config($newconfig, $return = false) {
 		} else {
 			fwrite($fp, $configtext);
 			fclose($fp);
-			$logline = AddToLog("config.php updated by >".getUserName()."<");
-			if (!empty($COMMIT_COMMAND)) {
-				check_in($logline, "config.php", "");
-			}
 		}
 	} else {
 		$error['msg'] = "There was an error in the generated config.php. ".htmlentities($configtext);
@@ -2633,7 +2627,6 @@ function write_changes() {
 	$mutex->Release();
 
 	$logline = AddToLog("pgv_changes.php updated");
-	check_in($logline, "pgv_changes.php", $INDEX_DIRECTORY);
 	return true;
 }
 
@@ -2808,8 +2801,6 @@ function get_report_list($force=false) {
 	@fwrite($fp, serialize($files));
 	@fclose($fp);
 	$logline = AddToLog("reports.dat updated");
- 	check_in($logline, "reports.dat", $INDEX_DIRECTORY);
-
 	return $files;
 }
 
@@ -3168,41 +3159,6 @@ function has_utf8($string) {
 			return true;
 	}
 	return false;
-}
-
-/**
- * check file in
- * @param  string  $logline  Log message
- * @param  string  $filename Filename
- * @param  string  $dirname  Directory
- * @param  boolean $bInsert  Insert Log message
- * @return boolean whether the file was checked in
- */
-function check_in($logline, $filename, $dirname, $bInsert = false) {
-	global $COMMIT_COMMAND;
-	$bRetSts = false;
-	if (!empty($COMMIT_COMMAND) && ($COMMIT_COMMAND=='svn' || $COMMIT_COMMAND=='cvs') && $logline && $filename) {
-		$cwd = getcwd();
-		if ($dirname) {
-			chdir($dirname);
-		}
-		$cmdline= $COMMIT_COMMAND.' commit -m '.escapeshellarg($logline).' '.escapeshellarg($filename);
-		$output = '';
-		$retval = '';
-		exec($cmdline, $output, $retval);
-		if (!empty($output)) {
-			if ($bInsert) {
-				AddToChangeLog($logline);
-			}
-			$outputstring = implode(' ', $output);
-			AddToChangeLog('System Output :'.$outputstring.', Return Value :'.$retval);
-			$bRetSts = true;
-		}
-		if ($dirname) {
-			chdir($cwd);
-		}
-	}
-	return $bRetSts;
 }
 
 /**

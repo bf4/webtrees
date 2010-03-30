@@ -219,7 +219,6 @@ switch($step) {
 		if (isset($_POST['NEW_LOGIN_URL'])) $_SESSION['install_config']['LOGIN_URL'] = $_POST['NEW_LOGIN_URL'];
 		if (isset($_POST['NEW_WT_SESSION_SAVE_PATH'])) $_SESSION['install_config']['WT_SESSION_SAVE_PATH'] = $_POST['NEW_WT_SESSION_SAVE_PATH'];
 		if (isset($_POST['NEW_WT_SESSION_TIME'])) $_SESSION['install_config']['WT_SESSION_TIME'] = $_POST['NEW_WT_SESSION_TIME'];
-		if (isset($_POST['NEW_COMMIT_COMMAND'])) $_SESSION['install_config']['COMMIT_COMMAND'] = $_POST['NEW_COMMIT_COMMAND'];
 		if (isset($_POST['NEW_WT_MEMORY_LIMIT'])) $_SESSION['install_config']['WT_MEMORY_LIMIT'] = $_POST['NEW_WT_MEMORY_LIMIT'];
 		if (isset($_POST['NEW_MAX_VIEWS'])) $_SESSION['install_config']['MAX_VIEWS'] = $_POST['NEW_MAX_VIEWS'];
 		if (isset($_POST['NEW_MAX_VIEW_TIME'])) $_SESSION['install_config']['MAX_VIEW_TIME'] = $_POST['NEW_MAX_VIEW_TIME'];
@@ -271,9 +270,6 @@ switch($step) {
 				//-- make sure we are using the user's preferred index directory
 				if (isset($_SESSION['install_config']['INDEX_DIRECTORY'])) {
 					$INDEX_DIRECTORY = $_SESSION['install_config']['INDEX_DIRECTORY'];
-				}
-				if (isset($_SESSION['install_config']['COMMIT_COMMAND'])) {
-					$COMMIT_COMMAND = $_SESSION['install_config']['COMMIT_COMMAND'];
 				}
 
 				// Save the languages the user has chosen to have active on the website
@@ -694,7 +690,7 @@ function printConfigForm(){
 	global $TEXT_DIRECTION, $WT_STORE_MESSAGES, $USE_REGISTRATION_MODULE, $REQUIRE_ADMIN_AUTH_REGISTRATION;
 	global $ALLOW_CHANGE_GEDCOM, $WT_SIMPLE_MAIL, $ALLOW_USER_THEMES, $LOGFILE_CREATE, $SERVER_URL;
 	global $WT_SMTP_ACTIVE, $WT_SMTP_HOST, $WT_SMTP_HELO, $WT_SMTP_PORT, $WT_SMTP_AUTH, $WT_SMTP_AUTH_USER, $WT_SMTP_AUTH_PASS, $WT_SMTP_SSL, $WT_SMTP_FROM_NAME;
-	global $LOGIN_URL, $WT_SESSION_SAVE_PATH, $WT_SESSION_TIME, $COMMIT_COMMAND, $WT_MEMORY_LIMIT, $MAX_VIEWS;
+	global $LOGIN_URL, $WT_SESSION_SAVE_PATH, $WT_SESSION_TIME, $WT_MEMORY_LIMIT, $MAX_VIEWS;
 	global $MAX_VIEW_TIME, $INDEX_DIRECTORY;
 
 	$i=1;
@@ -719,7 +715,6 @@ function printConfigForm(){
 	if (isset($_SESSION['install_config']['WT_SMTP_FROM_NAME'])) $WT_SMTP_FROM_NAME = $_SESSION['install_config']['WT_SMTP_FROM_NAME'];
 	if (isset($_SESSION['install_config']['WT_SESSION_SAVE_PATH'])) $WT_SESSION_SAVE_PATH = $_SESSION['install_config']['WT_SESSION_SAVE_PATH'];
 	if (isset($_SESSION['install_config']['WT_SESSION_TIME'])) $WT_SESSION_TIME = $_SESSION['install_config']['WT_SESSION_TIME'];
-	if (isset($_SESSION['install_config']['COMMIT_COMMAND'])) $COMMIT_COMMAND = $_SESSION['install_config']['COMMIT_COMMAND'];
 	if (isset($_SESSION['install_config']['WT_MEMORY_LIMIT'])) $WT_MEMORY_LIMIT = $_SESSION['install_config']['WT_MEMORY_LIMIT'];
 	if (isset($_SESSION['install_config']['MAX_VIEWS'])) $MAX_VIEWS = $_SESSION['install_config']['MAX_VIEWS'];
 	if (isset($_SESSION['install_config']['MAX_VIEW_TIME'])) $MAX_VIEW_TIME = $_SESSION['install_config']['MAX_VIEW_TIME'];
@@ -865,16 +860,6 @@ function printConfigForm(){
 					?>
 				</td>
 			</tr>
-			<tr>
-				<td class="descriptionbox wrap width30"><?php echo i18n::translate('Version Control Commit Command'), help_link('COMMIT_COMMAND'); ?></td>
-		 		<td class="optionbox">
-		 			<select name="NEW_COMMIT_COMMAND" tabindex="<?php $i++; print $i?>" onfocus="getHelp('COMMIT_COMMAND_help');">
-						<option value="" <?php if ($COMMIT_COMMAND=="") print "selected=\"selected\""; ?>><?php print i18n::translate('None');?></option>
-						<option value="cvs" <?php if ($COMMIT_COMMAND=="cvs") print "selected=\"selected\""; ?>>CVS</option>
-						<option value="svn" <?php if ($COMMIT_COMMAND=="svn") print "selected=\"selected\""; ?>>SVN</option>
-					</select>
-				</td>
-		 	</tr>
 		 	<tr>
 				<td class="descriptionbox wrap width30"><?php echo i18n::translate('Memory limit'), help_link('WT_MEMORY_LIMIT'); ?></td>
 				<td class="optionbox"><input type="text" name="NEW_WT_MEMORY_LIMIT" value="<?php print $WT_MEMORY_LIMIT?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WT_MEMORY_LIMIT_help');" /></td>

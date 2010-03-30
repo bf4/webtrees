@@ -160,8 +160,7 @@ if (version_compare(PHP_VERSION, '6.0.0', '<')) {
 		'ALLOW_USER_THEMES', 'ALLOW_CHANGE_GEDCOM', 'LOGFILE_CREATE',
 		'WT_SESSION_SAVE_PATH', 'WT_SESSION_TIME', 'SERVER_URL', 'LOGIN_URL',
 		'WT_MEMORY_LIMIT', 'WT_STORE_MESSAGES', 'WT_SIMPLE_MAIL',
-		'CONFIGURED', 'MANUAL_SESSON_START', 'REQUIRE_ADMIN_AUTH_REGISTRATION',
-		'COMMIT_COMMAND'
+		'CONFIGURED', 'MANUAL_SESSON_START', 'REQUIRE_ADMIN_AUTH_REGISTRATION'
 	) as $var) {
 		if (isset($_REQUEST[$var])) {
 			if (!ini_get('register_globals') || strtolower(ini_get('register_globals'))=='off') {

@@ -259,7 +259,6 @@ if ($action=="update") {
 	require $INDEX_DIRECTORY.$GEDCOM.'_priv.php';
 	$logline = AddToLog("Privacy file $PRIVACY_MODULE updated");
  	$gedcomprivname = $GEDCOM."_priv.php";
- 	check_in($logline, $gedcomprivname, $INDEX_DIRECTORY);
 
  	//-- delete the cache files for the Home Page blocks
 	require_once WT_ROOT.'includes/index_cache.php';

@@ -499,7 +499,6 @@ function um_export($proceed) {
 			fwrite($fp, $authtext);
 			fclose($fp);
 			$logline=AddToLog("authenticate.php updated");
-			check_in($logline, "authenticate.php", $INDEX_DIRECTORY);
 			if (($proceed=="export") || ($proceed=="exportovr")) {
 				print i18n::translate('Creation of new file successful:')." authenticate.php<br /><br />";
 			}
@@ -537,7 +536,6 @@ function um_export($proceed) {
 				fwrite($fp, $mstring);
 				fclose($fp);
 				$logline=AddToLog("messages.dat updated");
-				check_in($logline, "messages.dat", $INDEX_DIRECTORY);
 				if (($proceed=="export") || ($proceed=="exportovr")) {
 					print i18n::translate('Creation of new file successful:')." messages.dat<br /><br />";
 				}
@@ -582,7 +580,6 @@ function um_export($proceed) {
 				fwrite($fp, $mstring);
 				fclose($fp);
 				$logline=AddToLog("favorites.dat updated");
-				check_in($logline, "favorites.dat", $INDEX_DIRECTORY);
 				if (($proceed=="export") || ($proceed=="exportovr")) {
 					print i18n::translate('Creation of new file successful:')." favorites.dat<br /><br />";
 				}
@@ -622,7 +619,6 @@ function um_export($proceed) {
 				fwrite($fp, $mstring);
 				fclose($fp);
 				$logline=AddToLog("news.dat updated");
-				check_in($logline, "news.dat", $INDEX_DIRECTORY);
 				if (($proceed=="export") || ($proceed=="exportovr")) {
 					print i18n::translate('Creation of new file successful:')." news.dat<br /><br />";
 				}
@@ -664,7 +660,6 @@ function um_export($proceed) {
 				fwrite($fp, $mstring);
 				fclose($fp);
 				$logline=AddToLog("blocks.dat updated");
-				check_in($logline, "blocks.dat", $INDEX_DIRECTORY);
 				if (($proceed=="export") || ($proceed=="exportovr")) {
 					print i18n::translate('Creation of new file successful:')." blocks.dat<br /><br />";
 				}
