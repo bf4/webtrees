@@ -24,6 +24,8 @@
  */
 
 define('WT_SCRIPT_NAME', 'setup.php');
+define('WT_DATA_DIR',    'data/');
+define('WT_MEDIA_DIR',   'media/');
 define('WT_CONFIG_FILE', 'config.ini.php');
 define('WT_REQUIRED_MYSQL_VERSION', '5.0.13'); // For: prepared statements within stored procedures
 
@@ -33,7 +35,7 @@ if (version_compare(PHP_VERSION, '5.3.0', '<')) {
 	// magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
 	if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
 		ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
-		$in = array(&$_GET, &$_POST, &$_REQUEST, &$_COOKIE);
+		$in = array(&$_POST);
 		while (list($k,$v) = each($in)) {
 			foreach ($v as $key => $val) {
 				if (!is_array($val)) {
@@ -104,22 +106,44 @@ define('WT_LOCALE', i18n::init());
 
 echo '<h1>', i18n::translate('Setup wizard for <b>webtrees</b>'), '</h1>';
 
-if (file_exists(WT_CONFIG_FILE)) {
-	echo '<p class="good">', i18n::translate('The configuration file %s has been successfully uploaded to the server.', WT_CONFIG_FILE), '</p>';
-	echo '<p>', i18n::translate('Checking the file permissions...'), '</p>';
-	// TODO: check index dir and media dir are writable
-	if (is_readable(WT_CONFIG_FILE)) {
-		echo '<p class="good">', i18n::translate('The file has read permission.  Good.'), '</p>';
-		if (is_writable(WT_CONFIG_FILE)) {
-			echo '<p class="indifferent">', i18n::translate('The file has write permission.  This is OK, but for better security, you should make it read only.'), '</p>';
-		} else {
-			echo '<p class="good">', i18n::translate('The file does not have write permission.  Good.'), '</p>';
-		}
+if (file_exists(WT_DATA_DIR.WT_CONFIG_FILE)) {
+	$error=false;
+	$warning=false;
+	echo '<p class="good">', i18n::translate('The configuration file has been successfully uploaded to the server.'), '</p>';
+	echo '<p>', i18n::translate('Checking the access permissions...'), '</p>';
+	if (!is_readable(WT_DATA_DIR)) {
+	 	echo '<p class="bad">', i18n::translate('The directory <b>%s</b> does not have read permission.  You must change this.', WT_DATA_DIR), '</p>';
+		$error=true;
+	} elseif (!is_writable(WT_DATA_DIR)) {
+		echo '<p class="good">', i18n::translate('The directory <b>%s</b> does not have write permission.  You must change this.', WT_DATA_DIR), '</p>';
+		$error=true;
 	} else {
-		echo '<p class="bad">', i18n::translate('The file does not have read permission.  Remember that the file needs to be readable by the webserver.'), '</p>';
+		echo '<p class="good">', i18n::translate('The directory <b>%s</b> has read-write permission.  Good.', WT_DATA_DIR), '</p>';
 	}
-	echo '<p><a href="', WT_SCRIPT_NAME, '">', i18n::translate('Change the permissions, then click here to re-check.'), '</a></p>';
-	echo '<a href="index.php"><button>', i18n::translate('Start using webtrees'), '</button></a>';
+	if (!is_readable(WT_MEDIA_DIR)) {
+	 	echo '<p class="bad">', i18n::translate('The directory <b>%s</b> does not have read permission.  You must change this.', WT_MEDIA_DIR), '</p>';
+		$error=true;
+	} elseif (!is_writable(WT_MEDIA_DIR)) {
+		echo '<p class="good">', i18n::translate('The directory <b>%s</b> does not have write permission.  You must change this.', WT_MEDIA_DIR), '</p>';
+		$error=true;
+	} else {
+		echo '<p class="good">', i18n::translate('The directory <b>%s</b> has read-write permission.  Good.', WT_MEDIA_DIR), '</p>';
+	}
+	if (!is_readable(WT_DATA_DIR.WT_CONFIG_FILE)) {
+	 	echo '<p class="bad">', i18n::translate('The file <b>%s</b> does not have read permission.  You must change this.', WT_DATA_DIR.WT_CONFIG_FILE), '</p>';
+		$error=true;
+	} elseif (is_writable(WT_DATA_DIR.WT_CONFIG_FILE)) {
+		echo '<p class="indifferent">', i18n::translate('The file <b>%s</b> has write permission.  This will work, but for better security, you should make it read only.', WT_DATA_DIR.WT_CONFIG_FILE), '</p>';
+		$warning=true;
+	} else {
+		echo '<p class="good">', i18n::translate('The file <b>%s</b> has read-only permission.  Good.', WT_MEDIA_DIR), '</p>';
+	}
+	if ($error || $warning) {
+		echo '<p><a href="setup.php"><button>', i18n::translate('Test the permissions again'), '</button></a></p>';
+	}
+	if (!$error) {
+		echo '<p><a href="index.php"><button>', i18n::translate('Start using webtrees'), '</button></a></p>';
+	}
 	// The config file exists - do not go any further.
 	// This is an important security feature, to protect existing installations.
 	exit;
@@ -156,7 +180,7 @@ if (empty($_POST['maxcpu']) || empty($_POST['maxmem'])) {
 		'xml'     =>i18n::translate('reporting'),
 	) as $extension=>$features) {
 		if (!extension_loaded($extension)) {
-			echo '<p class="bad">', i18n::translate('PHP extension "%s" is disabled.  Without it, the following features will not work: %s.  Please ask your server\'s administrator to enable it.', $extension, $features), '</p>';
+			echo '<p class="bad">', i18n::translate('PHP extension "%1$s" is disabled.  Without it, the following features will not work: %2$s.  Please ask your server\'s administrator to enable it.', $extension, $features), '</p>';
 			$warnings=true;
 		}
 	}
@@ -165,7 +189,7 @@ if (empty($_POST['maxcpu']) || empty($_POST['maxmem'])) {
 		'file_uploads'=>i18n::translate('upload files'),
 	) as $setting=>$features) {
 		if (ini_get($setting)==false) {
-			echo '<p class="bad">', i18n::translate('PHP setting "%s" is disabled. Without it, the following features will not work: %s.  Please ask your server\'s administrator to enable it.', $setting, $features), '</p>';
+			echo '<p class="bad">', i18n::translate('PHP setting "%1$s" is disabled. Without it, the following features will not work: %2$s.  Please ask your server\'s administrator to enable it.', $setting, $features), '</p>';
 			$warnings=true;
 		}
 	}
@@ -874,11 +898,14 @@ try {
 		"('SMTP_FROM_NAME',                  '".addcslashes($_POST['smtpfrom'], "'")."')"
 	);
 	echo
-		'<p>', i18n::translate('Your system is almost ready for use.  The final step is to download a configuration file (%s) and copy this to the webtrees directory on your webserver.  This is a security measure to ensure only the website\'s owner can configure it.', WT_CONFIG_FILE), '</p>',
+		'<p>', i18n::translate('Your system is almost ready for use.  The final step is to download a configuration file <b>%1$s</b> and copy this to the <b>%2$s</b> directory on your webserver.  This is a security measure to ensure only the website\'s owner can configure it.', WT_CONFIG_FILE, WT_DATA_DIR), '</p>',
+		'<p>', i18n::translate('You should set the directory <b>%s</b> so that the webserver has read-write access.<br/>This normally means setting the permissions to "777" or "drwxrwxrwx".', WT_DATA_DIR), '</p>',
+		'<p>', i18n::translate('You should set the file <b>%s</b> so that the webserver has read-only access.<br/>This normally means setting the permissions to "444" or "-r--r--r--".', WT_DATA_DIR.WT_CONFIG_FILE), '</p>',
+		'<p>', i18n::translate('<b>webtrees</b> will check the permissions in the next step.'), '</p>',
 		'<input type="hidden" name="action" value="download">',
-		'<input type="submit" value="'.i18n::translate('Download configuration file').'">',
+		'<input type="submit" value="'.i18n::translate('Download %s', WT_CONFIG_FILE).'">',
 		'</form>',
-		'<p>', i18n::translate('After you have copied this file to the webserver, click here to continue'), '</p>',
+		'<p>', i18n::translate('After you have copied this file to the webserver and set the access permissions, click here to continue'), '</p>',
 		'<form name="config" action="', WT_SCRIPT_NAME, '" method="get">',
 		'<input type="submit" value="'.i18n::translate('Continue').'">',
 		'</form></body></html>';
