@@ -1575,7 +1575,7 @@ class Person extends GedcomRecord {
 	// 2 GIVN Carlos
 	// 2 SURN Vasquez,Sante
 	protected function _addName($type, $full, $gedrec) {
-		global $UNDERLINE_NAME_QUOTES, $NAME_REVERSE, $UNKNOWN_NN, $UNKNOWN_PN;
+		global $UNDERLINE_NAME_QUOTES, $UNKNOWN_NN, $UNKNOWN_PN;
 
 		// Look for GIVN/SURN at level n+1
 		$sublevel=1+(int)$gedrec[0];
@@ -1702,11 +1702,6 @@ class Person extends GedcomRecord {
 		$fullNN=$full;
 		$listNN=$list;
 		$surname=$surn;
-
-		// Hungarians want the 'full' name to be the surname first (i.e. 'list') variant
-		if ($NAME_REVERSE) {
-			$full=$list;
-		}
 
 		// Some people put preferred names in quotes
 		if ($UNDERLINE_NAME_QUOTES) {
