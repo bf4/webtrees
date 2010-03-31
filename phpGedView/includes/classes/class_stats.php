@@ -3715,8 +3715,6 @@ class stats {
 	static function userID() {return getUserId();}
 	static function userName() {return getUserName();}
 	static function userFullName() {return getUserFullName(getUserId());}
-	static function userFirstName() {return get_user_setting(getUserId(), 'firstname');}
-	static function userLastName() {return get_user_setting(getUserId(), 'lastname');}
 
 	static function _getLatestUserData($type='userid', $params=null) {
 		global $DATE_FORMAT, $TIME_FORMAT;
@@ -3734,10 +3732,6 @@ class stats {
 				return get_user_name($user_id);
 			case 'fullname':
 				return getUserFullName($user_id);
-			case 'firstname':
-				return get_user_setting($user_id, 'firstname');
-			case 'lastname':
-				return get_user_setting($user_id, 'lastname');
 			case 'regdate':
 				if(is_array($params) && isset($params[0]) && $params[0] != ''){$datestamp = $params[0];}else{$datestamp = $DATE_FORMAT;}
 				return date($datestamp, get_user_setting($user_id, 'reg_timestamp'));
@@ -3754,8 +3748,6 @@ class stats {
 	static function latestUserId(){return self::_getLatestUserData('userid');}
 	static function latestUserName(){return self::_getLatestUserData('username');}
 	static function latestUserFullName(){return self::_getLatestUserData('fullname');}
-	static function latestUserFirstName(){return self::_getLatestUserData('firstname');}
-	static function latestUserLastName(){return self::_getLatestUserData('lastname');}
 	static function latestUserRegDate($params=null){return self::_getLatestUserData('regdate', $params);}
 	static function latestUserRegTime($params=null){return self::_getLatestUserData('regtime', $params);}
 	static function latestUserLoggedin($params=null){return self::_getLatestUserData('loggedin', $params);}
