@@ -1383,7 +1383,7 @@ case '_BURI_GGPA':
 	break;
 
 case '_BURI_GPAR':	
-	$title=i18n::translate('Burial of a grand-paren');
+	$title=i18n::translate('Burial of a grand-parent');
 	$text='';
 	break;
 
