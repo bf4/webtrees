@@ -246,14 +246,12 @@ echo WT_JS_START, 'function showchanges() {window.location.reload();}', WT_JS_EN
 		<tr>
 			<td class="optionbox width50"><a
 				href="install.php?step=4"><?php echo i18n::translate('Configuration');?></a><?php echo help_link('help_editconfig.php'); ?></td>
-			<td class="optionbox width50"><a
-				href="usermigrate.php?proceed=migrate"><?php echo i18n::translate('User Information Migration tool');?></a><?php echo help_link('um_tool'); ?></td>
+			<td class="optionbox width50">&nbsp;</td>
 		</tr>
 		<tr>
 			<td class="optionbox width50"><a
 				href="useradmin.php"><?php echo i18n::translate('User administration');?></a><?php echo help_link('help_useradmin.php'); ?></td>
-			<td class="optionbox width50"><a
-				href="usermigrate.php?proceed=backup"><?php echo i18n::translate('Backup');?></a><?php echo help_link('um_bu'); ?></td>
+			<td class="optionbox width50">&nbsp;</td>
 		</tr>
 		<tr>
 			<td class="optionbox width50"><a
