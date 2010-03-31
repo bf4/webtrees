@@ -46,14 +46,14 @@ define('WT_GM_DB_SCHEMA_0_1', '');
 if (!WT_DB::table_exists("{$TBLPREFIX}placelocation")) {
 	WT_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}placelocation (".
-		" pl_id        ".self::$INT4_TYPE."         NOT NULL,".
-		" pl_parent_id ".self::$INT4_TYPE."             NULL,".
-		" pl_level     ".self::$INT4_TYPE."             NULL,".
-		" pl_place     ".self::$VARCHAR_TYPE."(255)     NULL,".
-		" pl_long      ".self::$VARCHAR_TYPE."(30)      NULL,".
-		" pl_lati      ".self::$VARCHAR_TYPE."(30)      NULL,".
-		" pl_zoom      ".self::$INT4_TYPE."             NULL,".
-		" pl_icon      ".self::$VARCHAR_TYPE."(255)     NULL,".
+		" pl_id        INTEGER         NOT NULL,".
+		" pl_parent_id INTEGER             NULL,".
+		" pl_level     INTEGER             NULL,".
+		" pl_place     VARCHAR(255)     NULL,".
+		" pl_long      VARCHAR(30)      NULL,".
+		" pl_lati      VARCHAR(30)      NULL,".
+		" pl_zoom      INTEGER             NULL,".
+		" pl_icon      VARCHAR(255)     NULL,".
 		" PRIMARY KEY (pl_id)".
 		") ".self::$UTF8_TABLE
 	);
