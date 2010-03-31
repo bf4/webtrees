@@ -446,15 +446,15 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	// To stop unrecognized spiders, see META_ROBOTS below.
 	if ($SEARCH_SPIDER) {
 		if (
-			!(WT_SCRIPT_NAME=='/individual.php' ||
-			WT_SCRIPT_NAME=='/indilist.php' ||
-			WT_SCRIPT_NAME=='/login.php' ||
-			WT_SCRIPT_NAME=='/family.php' ||
-			WT_SCRIPT_NAME=='/famlist.php' ||
-			WT_SCRIPT_NAME=='/help_text.php' ||
-			WT_SCRIPT_NAME=='/source.php' ||
-			WT_SCRIPT_NAME=='/search_engine.php' ||
-			WT_SCRIPT_NAME=='/index.php')
+			!(WT_SCRIPT_NAME=='individual.php' ||
+			WT_SCRIPT_NAME=='indilist.php' ||
+			WT_SCRIPT_NAME=='login.php' ||
+			WT_SCRIPT_NAME=='family.php' ||
+			WT_SCRIPT_NAME=='famlist.php' ||
+			WT_SCRIPT_NAME=='help_text.php' ||
+			WT_SCRIPT_NAME=='source.php' ||
+			WT_SCRIPT_NAME=='search_engine.php' ||
+			WT_SCRIPT_NAME=='index.php')
 		) {
 			header("Location: search_engine.php");
 			exit;
