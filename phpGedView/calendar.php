@@ -125,10 +125,10 @@ case 'today':
 	echo i18n::translate('On This Day ...').'<br/>'.$ged_date->Display(false);
 	break;
 case 'calendar':
-	echo i18n::translate('In This Month ...').'<br/>'.$ged_date->Display(false, 'F Y');
+	echo i18n::translate('In This Month ...').'<br/>'.$ged_date->Display(false, '%F %Y');
 	break;
 case 'year':
-	echo i18n::translate('In This Year ...').'<br/>'.$ged_date->Display(false, 'Y');
+	echo i18n::translate('In This Year ...').'<br/>'.$ged_date->Display(false, '%Y');
 	break;
 }
 echo '</h2></td></tr>';
