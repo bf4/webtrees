@@ -543,7 +543,7 @@ try {
 		" setting_name  VARCHAR(32)      NOT NULL,".
 		" setting_value VARCHAR(255)     NOT NULL,".
 		" PRIMARY KEY     (gedcom_id, setting_name),".
-		" FOREIGN KEY fk1 (gedcom_id) REFERENCES {$TBLPREFIX}gedcom (gedcom_id)".
+		" FOREIGN KEY fk1 (gedcom_id) REFERENCES {$TBLPREFIX}gedcom (gedcom_id) ON DELETE CASCADE".
 		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
 	);
 	$dbh->exec(
@@ -564,7 +564,7 @@ try {
 		" setting_name  VARCHAR(32)      NOT NULL,".
 		" setting_value VARCHAR(255)     NOT NULL,".
 		" PRIMARY KEY     (user_id, setting_name),".
-		" FOREIGN KEY fk1 (user_id) REFERENCES {$TBLPREFIX}user (user_id)".
+		" FOREIGN KEY fk1 (user_id) REFERENCES {$TBLPREFIX}user (user_id) ON DELETE CASCADE".
 		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
 	);
 	$dbh->exec(
@@ -574,8 +574,8 @@ try {
 		" setting_name  VARCHAR(32)      NOT NULL,".
 		" setting_value VARCHAR(255)     NOT NULL,".
 		" PRIMARY KEY     (user_id, gedcom_id, setting_name),".
-		" FOREIGN KEY fk1 (user_id)   REFERENCES {$TBLPREFIX}user   (user_id),".
-		" FOREIGN KEY fk2 (gedcom_id) REFERENCES {$TBLPREFIX}gedcom (gedcom_id)".
+		" FOREIGN KEY fk1 (user_id)   REFERENCES {$TBLPREFIX}user   (user_id) ON DELETE CASCADE,".
+		" FOREIGN KEY fk2 (gedcom_id) REFERENCES {$TBLPREFIX}gedcom (gedcom_id) ON DELETE CASCADE".
 		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
 	);
 	$dbh->exec(
@@ -776,7 +776,7 @@ try {
 		" s_file   INTEGER          NOT NULL,".
 		" s_name   VARCHAR(255)     NOT NULL,".
 		" s_gedcom LONGTEXT         NOT NULL,".
-		" s_dbid   ENUM('N', 'Y')   NOT NULL,".
+		" s_dbid   ENUM('N', 'Y')       NULL,".
 		" PRIMARY KEY (s_id, s_file),".
 		"         KEY ix1 (s_name),".
 		"         KEY ix2 (s_file),".
@@ -867,6 +867,30 @@ try {
 		" (1, 'canadmin', 'Y')"
 	);
 	$dbh->exec(
+		"INSERT IGNORE INTO {$TBLPREFIX}user_setting (user_id, setting_name, setting_value) VALUES ".
+		" (1, 'language', '", Zend_Registry::get('Zend_Locale'), "')"
+	);
+	$dbh->exec(
+		"INSERT IGNORE INTO {$TBLPREFIX}user_setting (user_id, setting_name, setting_value) VALUES ".
+		" (1, 'verified', 'yes')"
+	);
+	$dbh->exec(
+		"INSERT IGNORE INTO {$TBLPREFIX}user_setting (user_id, setting_name, setting_value) VALUES ".
+		" (1, 'verified_by_admin', 'yes')"
+	);
+	$dbh->exec(
+		"INSERT IGNORE INTO {$TBLPREFIX}user_setting (user_id, setting_name, setting_value) VALUES ".
+		" (1, 'editaccount', 'Y')"
+	);
+	$dbh->exec(
+		"INSERT IGNORE INTO {$TBLPREFIX}user_setting (user_id, setting_name, setting_value) VALUES ".
+		" (1, 'auto_accept', 'N')"
+	);
+	$dbh->exec(
+		"INSERT IGNORE INTO {$TBLPREFIX}user_setting (user_id, setting_name, setting_value) VALUES ".
+		" (1, 'visibleonline', 'Y')"
+	);
+	$dbh->exec(
 		"INSERT IGNORE INTO {$TBLPREFIX}site_setting (site_setting_name, site_setting_value) VALUES ".
 		"('WEBTREES_SCHEMA_VERSION',         '1'),".
 		"('DEFAULT_GEDCOM',                  'default.ged'),".
@@ -885,13 +909,13 @@ try {
 		"('LOGIN_URL',                       ''),".
 		"('MAX_VIEWS',                       '20'),".
 		"('MAX_VIEW_TIME',                   '1'),".
-		"('MEMORY_LIMIT',                    '".addcslashes($_POST['maxmem'], "'")."'),".
+		"('MEMORY_LIMIT',                    '".addcslashes($_POST['maxmem'], "M'")."'),".
 		"('MAX_EXECUTION_TIME',              '".addcslashes($_POST['maxcpu'], "'")."'),".
-		"('SMTP_ACTIVE',                     '".addcslashes($_POST['smtpuse'], "'")."'),".
+		"('SMTP_ACTIVE',                     '".($_POST['smtpuse']=='yes':1:0)."'),".
 		"('SMTP_HOST',                       '".addcslashes($_POST['smtpserv'], "'")."'),".
 		"('SMTP_HELO',                       '".addcslashes($_POST['smtpsender'], "'")."'),".
 		"('SMTP_PORT',                       '".addcslashes($_POST['smtpport'], "'")."'),".
-		"('SMTP_AUTH',                       '".addcslashes($_POST['smtpusepw'], "'")."'),".
+		"('SMTP_AUTH',                       '".($_POST['smtpusepw']=='yes'?1:0)."'),".
 		"('SMTP_AUTH_USER',                  '".addcslashes($_POST['smtpuser'], "'")."'),".
 		"('SMTP_AUTH_PASS',                  '".addcslashes($_POST['smtppass'], "'")."'),".
 		"('SMTP_SSL',                        '".addcslashes($_POST['smtpsecure'], "'")."'),".
