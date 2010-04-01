@@ -287,7 +287,7 @@ try {
 	}
 }
 
-if (empty($_POST['dbuser']) || empty($_POST['dbpass']) || !$dbh || !$db_version_ok) {
+if (empty($_POST['dbuser']) || !$dbh || !$db_version_ok) {
 	echo
 		'<h2>', i18n::translate('Connection to database server'), '</h2>',
 		'<p>', i18n::translate('<b>webtrees</b> needs a MySQL database, version %s or later.', WT_REQUIRED_MYSQL_VERSION), '</p>',
