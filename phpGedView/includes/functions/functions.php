@@ -289,8 +289,6 @@ function get_privacy_file($ged_id=WT_GED_ID) {
 }
 
 function load_privacy_file($ged_id=WT_GED_ID) {
-	global $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
-
 	// Load the privacy settings into global scope
 	global $SHOW_DEAD_PEOPLE, $SHOW_LIVING_NAMES, $SHOW_SOURCES, $MAX_ALIVE_AGE;
 	global $ENABLE_CLIPPINGS_CART, $SHOW_MULTISITE_SEARCH;

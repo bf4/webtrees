@@ -345,7 +345,7 @@ function checkPrivacyByYear($pid) {
 * @return boolean return true to show the persons details, return false to keep them private
 */
 function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
-	global $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE, $USE_RELATIONSHIP_PRIVACY, $CHECK_MARRIAGE_RELATIONS, $MAX_RELATION_PATH_LENGTH;
+	global $USE_RELATIONSHIP_PRIVACY, $CHECK_MARRIAGE_RELATIONS, $MAX_RELATION_PATH_LENGTH;
 	global $global_facts, $person_privacy, $user_privacy, $HIDE_LIVE_PEOPLE, $GEDCOM, $SHOW_DEAD_PEOPLE, $MAX_ALIVE_AGE, $PRIVACY_BY_YEAR;
 	global $PRIVACY_CHECKS, $PRIVACY_BY_RESN, $SHOW_SOURCES, $SHOW_LIVING_NAMES, $INDEX_DIRECTORY;
 	global $GEDCOM;
@@ -909,20 +909,18 @@ function get_last_private_data($gid) {
 * @return int their access level
 */
 function getUserAccessLevel($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
-	global $PRIV_PUBLIC, $PRIV_NONE, $PRIV_USER;
-
 	if ($user_id) {
 		if (userGedcomAdmin($user_id, $ged_id)) {
-			return $PRIV_NONE;
+			return WT_PRIV_NONE;
 		} else {
 			if (userCanAccess($user_id, $ged_id)) {
-				return $PRIV_USER;
+				return WT_PRIV_USER;
 			} else {
-				return $PRIV_PUBLIC;
+				return WT_PRIV_PUBLIC;
 			}
 		}
 	} else {
-		return $PRIV_PUBLIC;
+		return WT_PRIV_PUBLIC;
 	}
 }
 

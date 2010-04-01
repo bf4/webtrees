@@ -294,7 +294,7 @@ switch ($action) {
 						echo '</td><td class="optionbox ', $TEXT_DIRECTION, '">';
 						echo edit_field_language('user_language', WT_LOCALE, $extra='tabindex="'.(++$i).'"');
 						echo '</td></tr>';
-						if ($REQUIRE_AUTHENTICATION && $SHOW_LIVING_NAMES>=$PRIV_PUBLIC) { ?>
+						if ($REQUIRE_AUTHENTICATION && $SHOW_LIVING_NAMES>=WT_PRIV_PUBLIC) { ?>
 						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('GEDCOM INDI record ID'), help_link('register_gedcomid'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>" valign="top" ><input type="text" size="10" name="user_gedcomid" id="user_gedcomid" value="" tabindex="<?php echo $i++;?>" /><?php print_findindi_link("user_gedcomid",""); ?></td></tr>
 						<?php } ?>
 						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Comments'), help_link('register_comments'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>" valign="top" ><textarea cols="50" rows="5" name="user_comments" tabindex="<?php echo $i++;?>"><?php if (!$user_comments_false) echo $user_comments;?></textarea> *</td></tr>

@@ -46,8 +46,6 @@ if (!defined('WT_WEBTREES')) {
 	exit;
 }
 
-global $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
-
 /**
  * Privacy file version number
  *
@@ -62,34 +60,34 @@ $PRIVACY_VERSION = "3.2";
  * Set the access level for dead people
  *
  * Sets the access level required to view the information of dead people.
- * Can be one of the PRIV access levels: <var>$PRIV_HIDE</var>, <var>$PRIV_PUBLIC</var>, <var>$PRIV_USER</var>, <var>$PRIV_NONE</var>
- * The default value is <var>$PRIV_PUBLIC</var>.
+ * Can be one of the PRIV access levels: <var>WT_PRIV_HIDE</var>, <var>WT_PRIV_PUBLIC</var>, <var>WT_PRIV_USER</var>, <var>WT_PRIV_NONE</var>
+ * The default value is <var>WT_PRIV_PUBLIC</var>.
  * @global integer $SHOW_DEAD_PEOPLE
  */
-$SHOW_DEAD_PEOPLE = $PRIV_PUBLIC;
+$SHOW_DEAD_PEOPLE = WT_PRIV_PUBLIC;
 
 /**
  * Set the access level for the names of private people
  *
  * Sets the access level required to view the names of private people.
- * Can be one of the PRIV access levels: <var>$PRIV_HIDE</var>, <var>$PRIV_PUBLIC</var>, <var>$PRIV_USER</var>, <var>$PRIV_NONE</var>
- * The default value is <var>$PRIV_PUBLIC</var>.  Setting this to <var>$PRIV_USER</var> would mean that only
+ * Can be one of the PRIV access levels: <var>WT_PRIV_HIDE</var>, <var>WT_PRIV_PUBLIC</var>, <var>WT_PRIV_USER</var>, <var>WT_PRIV_NONE</var>
+ * The default value is <var>WT_PRIV_PUBLIC</var>.  Setting this to <var>WT_PRIV_USER</var> would mean that only
  * authenticated users can view names of private people and public visitors would only see the name
  * private.
  * @global integer $SHOW_LIVING_NAMES
  */
-$SHOW_LIVING_NAMES = $PRIV_PUBLIC;
+$SHOW_LIVING_NAMES = WT_PRIV_PUBLIC;
 
 /**
  * Set the access level for sources
  *
  * Sets the access level required to view sources.
- * Can be one of the PRIV access levels: <var>$PRIV_HIDE</var>, <var>$PRIV_PUBLIC</var>, <var>$PRIV_USER</var>, <var>$PRIV_NONE</var>
- * The default value is <var>$PRIV_PUBLIC</var>.  Setting this to <var>$PRIV_USER</var> would mean that only
+ * Can be one of the PRIV access levels: <var>WT_PRIV_HIDE</var>, <var>WT_PRIV_PUBLIC</var>, <var>WT_PRIV_USER</var>, <var>WT_PRIV_NONE</var>
+ * The default value is <var>WT_PRIV_PUBLIC</var>.  Setting this to <var>WT_PRIV_USER</var> would mean that only
  * authenticated users can view sources.
  * @global integer $SHOW_LIVING_NAMES
  */
-$SHOW_SOURCES = $PRIV_PUBLIC;
+$SHOW_SOURCES = WT_PRIV_PUBLIC;
 
 /**
  * how old a person must be before they are assumed to be dead
@@ -105,27 +103,27 @@ $MAX_ALIVE_AGE      = "120";
  *
  * Sets the access level required to view the clippings cart.
  * Can be one of the PRIV access levels:
- *		- <var>$PRIV_HIDE</var>
- *		- <var>$PRIV_PUBLIC</var>
- *		- <var>$PRIV_USER</var>
- *		- <var>$PRIV_NONE</var>
- * The default settings is set to <var>$PRIV_PUBLIC</var> allowing only authenticated users to have access.
+ *		- <var>WT_PRIV_HIDE</var>
+ *		- <var>WT_PRIV_PUBLIC</var>
+ *		- <var>WT_PRIV_USER</var>
+ *		- <var>WT_PRIV_NONE</var>
+ * The default settings is set to <var>WT_PRIV_PUBLIC</var> allowing only authenticated users to have access.
  * @global integer $ENABLE_CLIPPINGS_CART
  */
-$ENABLE_CLIPPINGS_CART = $PRIV_PUBLIC;
+$ENABLE_CLIPPINGS_CART = WT_PRIV_PUBLIC;
 /**
  * Set the access level for the multi-site search
  *
  * Sets the access level required to use the multi-site search feature.
  * Can be one of the PRIV access levels:
- *		- <var>$PRIV_HIDE</var>
- *		- <var>$PRIV_PUBLIC</var>
- *		- <var>$PRIV_USER</var>
- *		- <var>$PRIV_NONE</var>
- * The default settings is set to <var>$PRIV_PUBLIC</var> allowing only authenticated users to have access.
+ *		- <var>WT_PRIV_HIDE</var>
+ *		- <var>WT_PRIV_PUBLIC</var>
+ *		- <var>WT_PRIV_USER</var>
+ *		- <var>WT_PRIV_NONE</var>
+ * The default settings is set to <var>WT_PRIV_PUBLIC</var> allowing only authenticated users to have access.
  * @global integer $ENABLE_CLIPPINGS_CART
  */
-$SHOW_MULTISITE_SEARCH = $PRIV_NONE;
+$SHOW_MULTISITE_SEARCH = WT_PRIV_NONE;
 /**
  * Set the program to use relationship privacy
  *
@@ -191,7 +189,7 @@ $SHOW_PRIVATE_RELATIONSHIPS = false;
  * privacy settings for individuals, families, and sources in the gedcom.  Each index in the array
  * is a GEDCOM XRef ID and the value is a privacy level setting.
  *
- * For example, setting <samp>$person_privacy["I3"] = $PRIV_NONE;</samp> would mean that only
+ * For example, setting <samp>$person_privacy["I3"] = WT_PRIV_NONE;</samp> would mean that only
  * Admin users have access to the individual with ID "I3".
  * @global array $person_privacy
  */
@@ -206,7 +204,7 @@ $person_privacy = array();
  * of the person attempting to access the record.  The first index in the array is the username that
  * the settings should apply to.  The second index is the GEDCOM XRef ID to apply the setting to.
  *
- * For example, setting <code>$user_privacy["john"]["I100"] = $PRIV_NONE;</code> would prevent the
+ * For example, setting <code>$user_privacy["john"]["I100"] = WT_PRIV_NONE;</code> would prevent the
  * user with username "john" from accessing the gedcom record for "I100" unless "john" is an admin
  * user.
  * @global array $user_privacy
@@ -230,8 +228,8 @@ $user_privacy = array();
  */
 //-- start global facts privacy --//
 $global_facts = array();
-$global_facts["SSN"]["show"] = $PRIV_NONE;
-$global_facts["SSN"]["details"] = $PRIV_NONE;
+$global_facts["SSN"]["show"] = WT_PRIV_NONE;
+$global_facts["SSN"]["details"] = WT_PRIV_NONE;
 //-- end global facts privacy --//
 
 /**
@@ -246,8 +244,8 @@ $global_facts["SSN"]["details"] = $PRIV_NONE;
  * Setting the "details" element without setting the "show" element would mean that users can view
  * that the fact exists but cannot see the details of the fact.
  *
- * For example, setting <code>$person_facts["I6909"]["NOTE"]["show"] = $PRIV_USER;</code> and
- * <code>$person_facts["I6909"]["NOTE"]["details"] = $PRIV_USER;</code> would hide all of the NOTEs
+ * For example, setting <code>$person_facts["I6909"]["NOTE"]["show"] = WT_PRIV_USER;</code> and
+ * <code>$person_facts["I6909"]["NOTE"]["details"] = WT_PRIV_USER;</code> would hide all of the NOTEs
  * for individual I6909 that were attached to the individual record.
  *
  * NOTE: This setting only applies to LEVEL 1 GEDCOM facts such as 1 NOTE.  So in the example above

@@ -91,9 +91,9 @@ function characterData($parser, $data) {
 }
 
 function PGVReportSHandler($attrs) {
-	global $report_array, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE;
+	global $report_array;
 
-	$access = $PRIV_PUBLIC;
+	$access = WT_PRIV_PUBLIC;
 	if (isset($attrs["access"])) {
 		if (isset($$attrs["access"])) {
 			$access = $$attrs["access"];

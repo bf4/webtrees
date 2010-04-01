@@ -699,7 +699,7 @@ class MenuBar
 	*/
 	static function getReportsMenu($pid="", $famid="") {
 		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
-		global $LANGUAGE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE, $SEARCH_SPIDER;
+		global $LANGUAGE, $SEARCH_SPIDER;
 		global $controller;
 		
 		$style = "top";
@@ -754,7 +754,7 @@ class MenuBar
 		foreach($menuList as $file=>$label) {
 			$report = $reports[$file];
 			if (!isset($report["access"])) {
-				$report["access"] = $PRIV_PUBLIC;
+				$report["access"] = WT_PRIV_PUBLIC;
 			}
 			if ($report["access"]>=WT_USER_ACCESS_LEVEL) {
 				if (!empty($report["title"][$LANGUAGE])) {

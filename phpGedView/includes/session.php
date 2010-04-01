@@ -115,11 +115,6 @@ define('WT_PRIV_PUBLIC',  2); // Allows non-authenticated public visitors to vie
 define('WT_PRIV_USER',    1); // Allows authenticated users to access the marked information
 define('WT_PRIV_NONE',    0); // Allows admin users to access the marked information
 define('WT_PRIV_HIDE',   -1); // Hide the item to all users including the admin
-// Older config files use variables instead of constants
-$PRIV_PUBLIC = WT_PRIV_PUBLIC;
-$PRIV_USER   = WT_PRIV_USER;
-$PRIV_NONE   = WT_PRIV_NONE;
-$PRIV_HIDE   = WT_PRIV_HIDE;
 
 // For performance, it is quicker to refer to files using absolute paths
 define ('WT_ROOT', realpath(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR);
