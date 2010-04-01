@@ -248,9 +248,9 @@ function print_fact(&$eventObj, $noedit=false) {
 		if ($fact!="EVEN" && $fact!="FACT") {
 			if (preg_match("/2 TYPE (.*)/", $factrec, $match)) {
 				if ($fact=="MARR") {
-					echo i18n::translate("MARR_".strtoupper(trim($match[1])));
+					echo translate_fact("MARR_".strtoupper($match[1]));
 				} else {
-					echo i18n::translate(trim($match[1]));
+					echo translate_fact(strtoupper($match[1]));
 				}
 				echo "<br />";
 			}

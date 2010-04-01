@@ -939,13 +939,13 @@ class HebrewDate extends JewishDate {
 	static function LONG_DAYS_OF_WEEK($n) {
 		// Do not translate these - they are supposed to be hebrew, whatever language is shown.
 		switch ($n) {
-		case 0: return i18n::translate('שני');
-		case 1: return i18n::translate('שלישי');
-		case 2: return i18n::translate('רביעי');
-		case 3: return i18n::translate('חמישי');
-		case 4: return i18n::translate('ששי');
-		case 5: return i18n::translate('שבת');
-		case 6: return i18n::translate('ראשון');
+		case 0: return 'שני';
+		case 1: return 'שלישי';
+		case 2: return 'רביעי';
+		case 3: return 'חמישי';
+		case 4: return 'ששי';
+		case 5: return 'שבת';
+		case 6: return 'ראשון';
 		}
 	}
 	static function SHORT_DAYS_OF_WEEK($n) {
