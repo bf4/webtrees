@@ -27,7 +27,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'editnews.php');
-require './config.php';
+require './includes/session.php';
 
 $useFCK = file_exists(WT_ROOT.'modules/FCKeditor/fckeditor.php');
 if($useFCK){

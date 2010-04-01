@@ -28,7 +28,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'imageview.php');
-require './config.php';
+require './includes/session.php';
 
 $filename=decrypt(safe_GET('filename'));
 

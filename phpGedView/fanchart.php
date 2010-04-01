@@ -28,7 +28,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'fanchart.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/functions/functions_charts.php';
 
 /**

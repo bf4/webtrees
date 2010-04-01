@@ -2413,23 +2413,23 @@ function is_media_used_in_other_gedcom($file_name, $ged_id) {
 // functions after performing DDL statements, and these invalidate any
 // existing prepared statement handles in some databases.
 ////////////////////////////////////////////////////////////////////////////////
-function get_site_setting($site_setting_name, $default=null) {
+function get_site_setting($setting_name, $default=null) {
 	global $TBLPREFIX;
 
 	return WT_DB::prepare(
-		"SELECT site_setting_value FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?"
-	)->execute(array($site_setting_name))->fetchOne($default);
+		"SELECT setting_value FROM {$TBLPREFIX}site_setting WHERE setting_name=?"
+	)->execute(array($setting_name))->fetchOne($default);
 }
 
-function set_site_setting($site_setting_name, $site_setting_value) {
+function set_site_setting($setting_name, $setting_value) {
 	global $TBLPREFIX;
 
-	if (empty($site_setting_value)) {
-		WT_DB::prepare("DELETE FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?")
-			->execute(array($site_setting_name));
+	if (empty($setting_value)) {
+		WT_DB::prepare("DELETE FROM {$TBLPREFIX}site_setting WHERE setting_name=?")
+			->execute(array($setting_name));
 	} else {
-		WT_DB::prepare("REPLACE INTO {$TBLPREFIX}site_setting (site_setting_name, site_setting_value) VALUES (?, ?)")
-			->execute(array($site_setting_name, $site_setting_value));
+		WT_DB::prepare("REPLACE INTO {$TBLPREFIX}site_setting (setting_name, setting_value) VALUES (?, ?)")
+			->execute(array($setting_name, $setting_value));
 	}
 }
 
@@ -2528,12 +2528,12 @@ function set_gedcom_setting($ged_id, $setting_name, $setting_value) {
 // Functions to access the WT_USER table
 ////////////////////////////////////////////////////////////////////////////////
 
-function create_user($username, $password) {
+function create_user($username, $realname, $password) {
 	global $TBLPREFIX;
 
 	try {
-		WT_DB::prepare("INSERT INTO {$TBLPREFIX}user (user_name, password) VALUES (?, ?)")
-			->execute(array($username, $password));
+		WT_DB::prepare("INSERT INTO {$TBLPREFIX}user (user_name, real_name, password) VALUES (?, ?, ?)")
+			->execute(array($username, $realname, $password));
 	} catch (PDOException $ex) {
 		// User already exists?
 	}
@@ -2567,12 +2567,16 @@ function delete_user($user_id) {
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}news                WHERE n_username =?"     )->execute(array($user_name));
 }
 
-function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
+function get_all_users($order='ASC', $key='realname') {
 	global $TBLPREFIX;
 
-	if ($key1=='username') {
+	if ($key=='username') {
 		return
 			WT_DB::prepare("SELECT user_id, user_name FROM {$TBLPREFIX}user ORDER BY user_name")
+			->fetchAssoc();
+	} elseif ($key=='realname') {
+		return
+			WT_DB::prepare("SELECT user_id, user_name FROM {$TBLPREFIX}user ORDER BY real_name")
 			->fetchAssoc();
 	} else {
 		return
@@ -2580,9 +2584,8 @@ function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
 				"SELECT u.user_id, user_name".
 				" FROM {$TBLPREFIX}user u".
 				" LEFT JOIN {$TBLPREFIX}user_setting us1 ON (u.user_id=us1.user_id AND us1.setting_name=?)".
-				" LEFT JOIN {$TBLPREFIX}user_setting us2 ON (u.user_id=us2.user_id AND us2.setting_name=?)".
-				" ORDER BY us1.setting_value {$order}, us2.setting_value {$order}"
-			)->execute(array($key1, $key2))
+				" ORDER BY us1.setting_value {$order}"
+			)->execute(array($key))
 			->fetchAssoc();
 	}
 }

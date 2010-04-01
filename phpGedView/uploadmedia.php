@@ -28,7 +28,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'uploadmedia.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/functions/functions_mediadb.php';
 
 /**

@@ -28,7 +28,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'checklang.php');
-require './config.php';
+require './includes/session.php';
 
 print_header("checklang");
 

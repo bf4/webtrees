@@ -781,7 +781,7 @@ function user_contact_link($user_id, $method=null) {
 			$method='mailto';
 		}
 	} else {
-		$email=get_user_setting($user_id, 'email');
+		$email   =getUserEmail   ($user_id);
 		$fullname=getUserFullName($user_id);
 	}
 
@@ -810,7 +810,7 @@ function user_contact_menu($user_id, $method=null) {
 			$method='mailto';
 		}
 	} else {
-		$email=get_user_setting($user_id, 'email');
+		$email   =getUserEmail   ($user_id);
 		$fullname=getUserFullName($user_id);
 	}
 
@@ -1308,7 +1308,7 @@ function print_privacy_error($username) {
 			$email = $username;
 			$fullname = $username;
 		} else {
-			$email = get_user_setting($user_id, 'email');
+			$email   =getUserEmail   ($user_id);
 			$fullname=getUserFullName($user_id);
 		}
 		echo " <a href=\"mailto:$email\">", $fullname, "</a></span><br />";

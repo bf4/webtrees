@@ -32,7 +32,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'addmedia.php');
-require './config.php';
+require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_print_lists.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 

@@ -30,7 +30,7 @@
 //
 
 define('WT_SCRIPT_NAME', 'gedcheck.php');
-require './config.php';
+require './includes/session.php';
 
 // Must be an admin user to use this module
 if (!WT_USER_GEDCOM_ADMIN) {

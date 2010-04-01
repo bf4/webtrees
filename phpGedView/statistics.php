@@ -33,7 +33,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'statistics.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/classes/class_stats.php';
 
 // check for on demand content loading

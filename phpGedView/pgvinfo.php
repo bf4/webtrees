@@ -28,7 +28,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'pgvinfo.php');
-require './config.php';
+require './includes/session.php';
 
 if (!WT_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=pgvinfo.php?action=".$action);

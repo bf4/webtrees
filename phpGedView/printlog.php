@@ -27,7 +27,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'printlog.php');
-require './config.php';
+require './includes/session.php';
 
 //-- only allow admins
 if (!WT_USER_GEDCOM_ADMIN) {

@@ -32,7 +32,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'lifespan.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/controllers/lifespan_ctrl.php';
 
 $controller = new LifespanController();

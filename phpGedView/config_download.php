@@ -28,7 +28,7 @@
 */
 
 define('WT_SCRIPT_NAME', 'config_download.php');
-require './config.php';
+require './includes/session.php';
 
 if (WT_ADMIN_USER_EXISTS && !WT_USER_IS_ADMIN && $CONFIGURED) {
 	header('Location: admin.php');

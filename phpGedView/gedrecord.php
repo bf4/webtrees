@@ -28,7 +28,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'gedrecord.php');
-require './config.php';
+require './includes/session.php';
 
 require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
 header('Content-Type: text/html; charset=UTF-8');

@@ -32,12 +32,11 @@
  */
 
 define('WT_SCRIPT_NAME', 'login_register.php');
-require './config.php';
+require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 
 $action         =safe_POST('action');
-$user_firstname =safe_POST('user_firstname');
-$user_lastname  =safe_POST('user_lastname');
+$user_realname  =safe_POST('user_realname');
 $url            =safe_POST('url',             WT_REGEX_URL, 'index.php');
 $time           =safe_POST('time');
 $user_name      =safe_POST('user_name',       WT_REGEX_USERNAME);
@@ -102,7 +101,7 @@ switch ($action) {
 			echo i18n::translate('Could not verify the information you entered.  Please try again or contact the site administrator for more information.');
 			print "</span><br />";
 		} else {
-			if (get_user_setting($user_id, 'email')=='') {
+			if (getUserEmail($user_id)=='') {
 				AddToLog("Unable to send password to user ".$user_name." because they do not have an email address");
 				print "<span class=\"warning\">";
 				echo i18n::translate('Could not verify the information you entered.  Please try again or contact the site administrator for more information.');
@@ -137,7 +136,7 @@ switch ($action) {
 				else $mail_body .= WT_SERVER_NAME.WT_SCRIPT_PATH;
 
 				require_once WT_ROOT.'includes/functions/functions_mail.php';
-				pgvMail(get_user_setting($user_id, 'email'), $WEBTREES_EMAIL, i18n::translate('Data request at %s', WT_SERVER_NAME.WT_SCRIPT_PATH), $mail_body);
+				pgvMail(getUserEmail($user_id), $WEBTREES_EMAIL, i18n::translate('Data request at %s', WT_SERVER_NAME.WT_SCRIPT_PATH), $mail_body);
 
 				?>
 				<table class="center facts_table">
@@ -183,11 +182,8 @@ switch ($action) {
 		}
 		else $password_mismatch = false;
 
-		if (!$user_firstname) $user_firstname_false = true;
-		else $user_firstname_false = false;
-
-		if (!$user_lastname) $user_lastname_false = true;
-		else $user_lastname_false = false;
+		if (!$user_realname) $user_realname_false = true;
+		else $user_realname_false = false;
 
 		if (!$user_email) $user_email_false = true;
 		else $user_email_false = false;
@@ -198,7 +194,7 @@ switch ($action) {
 		if (!$user_comments) $user_comments_false = true;
 		else $user_comments_false = false;
 
-		if ($user_name_false == false && $user_password01_false == false && $user_password02_false == false && $user_firstname_false == false && $user_lastname_false == false && $user_email_false == false && $user_language_false == false && $user_comments_false == false && $password_mismatch == false) $action = "registernew";
+		if ($user_name_false == false && $user_password01_false == false && $user_password02_false == false && $user_realname_false == false && $user_email_false == false && $user_language_false == false && $user_comments_false == false && $password_mismatch == false) $action = "registernew";
 		else {
 			print_header(i18n::translate('Request new user account'));
 			// Empty user array in case any details might be left
@@ -238,14 +234,9 @@ switch ($action) {
 						frm.user_password01.focus();
 						return false;
 					}
-					if (frm.user_firstname.value == "") {
-						alert("<?php print i18n::translate('You must enter a first and last name.'); ?>");
-						frm.user_firstname.focus();
-						return false;
-					}
-					if (frm.user_lastname.value == "") {
-						alert("<?php print i18n::translate('You must enter a first and last name.'); ?>");
-						frm.user_lastname.focus();
+					if (frm.user_realname.value == "") {
+						alert("<?php print i18n::translate('You must enter your real name.'); ?>");
+						frm.user_realname.focus();
 						return false;
 					}
 					if ((frm.user_email.value == "")||(frm.user_email.value.indexOf('@')==-1)) {
@@ -282,8 +273,7 @@ switch ($action) {
 					<table class="center facts_table width50">
 					<?php $i = 1;?>
 						<tr><td class="topbottombar" colspan="2"><?php echo i18n::translate('Request new user account'), help_link('register_info_0'.$WELCOME_TEXT_AUTH_MODE); ?><br /><?php if (strlen($message) > 0) echo $message; ?></td></tr>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('First Name'), help_link('new_user_firstname'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_firstname" value="<?php if (!$user_firstname_false) echo $user_firstname;?>" tabindex="<?php echo $i++;?>" /> *</td></tr>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Last Name'), help_link('new_user_lastname'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_lastname" value="<?php if (!$user_lastname_false) echo $user_lastname;?>" tabindex="<?php echo $i++;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Real Name'), help_link('new_user_realname'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_realname" value="<?php if (!$user_realname_false) echo $user_realname;?>" tabindex="<?php echo $i++;?>" /> *</td></tr>
 						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Email Address'), help_link('edituser_email'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" size="30" name="user_email" value="<?php if (!$user_email_false) echo $user_email;?>" tabindex="<?php echo $i++;?>" /> *</td></tr>
 						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Desired user name'), help_link('username'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_name" value="<?php if (!$user_name_false) echo $user_name;?>" tabindex="<?php echo $i;?>" /> *</td></tr>
 						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Desired password'), help_link('edituser_password'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="password" name="user_password01" value="" tabindex="<?php echo $i++;?>" /> *</td></tr>
@@ -337,136 +327,107 @@ switch ($action) {
 
 		$QUERY_STRING = "";
 		if (isset($user_name)) {
-		print_header(i18n::translate('New Account confirmation'));
+			print_header(i18n::translate('New Account confirmation'));
 			print "<div class=\"center\">";
-			$alphabet = getAlphabet();
-			$alphabet .= "_-. ";
-			$i = 1;
-			$pass = TRUE;
-			while (strlen($user_name) > $i) {
-				if (stristr($alphabet, $user_name{$i}) != TRUE) {
-					$pass = FALSE;
-					break;
-				}
-				$i++;
-			}
-			if ($pass == TRUE) {
-				$user_created_ok = false;
+			$user_created_ok = false;
 
-				AddToLog("User registration requested for: ".$user_name);
+			AddToLog("User registration requested for: ".$user_name);
 
-				if (get_user_id($user_name)) {
-					print "<span class=\"warning\">".i18n::translate('Duplicate user name.  A user with that user name already exists.  Please choose another user name.')."</span><br /><br />";
-					print "<a href=\"javascript:history.back()\">".i18n::translate('Back')."</a><br />";
-				}
-				else if ($user_password01 == $user_password02) {
-					if ($user_id=create_user($user_name, crypt($user_password01))) {
-						set_user_setting($user_id, 'firstname',           $user_firstname);
-						set_user_setting($user_id, 'lastname',            $user_lastname);
-						set_user_setting($user_id, 'email',               $user_email);
-						set_user_setting($user_id, 'language',            $user_language);
-						set_user_setting($user_id, 'verified',            'no');
-						set_user_setting($user_id, 'verified_by_admin',    $REQUIRE_ADMIN_AUTH_REGISTRATION ? 'no' : 'yes');
-						set_user_setting($user_id, 'reg_timestamp',        date('U'));
-						set_user_setting($user_id, 'reg_hashcode',         md5(crypt($user_name)));
-						set_user_setting($user_id, 'contactmethod',        "messaging2");
-						set_user_setting($user_id, 'defaulttab',           $GEDCOM_DEFAULT_TAB);
-						set_user_setting($user_id, 'visibleonline',        'Y');
-						set_user_setting($user_id, 'editaccount',          'Y');
-						set_user_setting($user_id, 'relationship_privacy', $USE_RELATIONSHIP_PRIVACY ? 'Y' : 'N');
-						set_user_setting($user_id, 'max_relation_path',    $MAX_RELATION_PATH_LENGTH);
-						set_user_setting($user_id, 'auto_accept',          'N');
-						set_user_setting($user_id, 'canadmin',             'N');
-						set_user_setting($user_id, 'loggedin',             'N');
-						set_user_setting($user_id, 'sessiontime',          '0');
-						if (!empty($user_gedcomid)) {
-							set_user_gedcom_setting($user_id, $GEDCOM, 'gedcomid', $user_gedcomid);
-							set_user_gedcom_setting($user_id, $GEDCOM, 'rootid',   $user_gedcomid);
-						}
-						$user_created_ok = true;
-					} else {
-						print "<span class=\"warning\">".i18n::translate('Unable to add user.  Please try again.')."<br /></span>";
-						print "<a href=\"javascript:history.back()\">".i18n::translate('Back')."</a><br />";
-					}
-				} else {
-					print "<span class=\"warning\">".i18n::translate('Passwords do not match.')."</span><br />";
-					print "<a href=\"javascript:history.back()\">".i18n::translate('Back')."</a><br />";
-				}
-				if ($user_created_ok) {
-					// switch to the user's language
-					i18n::init($user_language);
-
- 					if ($NAME_REVERSE) $fullName = $user_lastname." ".$user_firstname;
-					else $fullName = $user_firstname." ".$user_lastname;
-
-					$mail_body = "";
-					$mail_body .= i18n::translate('Hello %s ...', $fullName) . "\r\n\r\n";
-					$mail_body .= i18n::translate('A request was received at %s to create a webtrees account with your email address %s.', WT_SERVER_NAME.WT_SCRIPT_PATH, $user_email) . "  ";
-					$mail_body .= i18n::translate('Information about the request is shown under the link below.') . "\r\n\r\n";
-					$mail_body .= i18n::translate('Please click on the following link and fill in the requested data to confirm your request and email address.') . "\r\n\r\n";
-					if ($TEXT_DIRECTION=="rtl") {
-						$mail_body .= "<a href=\"";
-						$mail_body .= WT_SERVER_NAME.WT_SCRIPT_PATH . "login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_id, 'reg_hashcode'))."&action=userverify\">";
-					}
-					$mail_body .= WT_SERVER_NAME.WT_SCRIPT_PATH . "login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_id, 'reg_hashcode'))."&action=userverify";
-					if ($TEXT_DIRECTION=="rtl") $mail_body .= "</a>";
-					$mail_body .= "\r\n";
-					$mail_body .= i18n::translate('User name') . " " . $user_name . "\r\n";
-					$mail_body .= i18n::translate('Verification code:') . " " . get_user_setting($user_id, 'reg_hashcode') . "\r\n\r\n";
-					$mail_body .= i18n::translate('Comments').": " . $user_comments . "\r\n\r\n";
-					$mail_body .= i18n::translate('If you didn\'t request an account, you can just delete this message.') . "  ";
-					$mail_body .= i18n::translate('You won\'t get any more email from this site, because the account request will be deleted automatically after seven days.') . "\r\n";
-					require_once WT_ROOT.'includes/functions/functions_mail.php';
-					pgvMail($user_email, $WEBTREES_EMAIL, i18n::translate('Your registration at %s', WT_SERVER_NAME.WT_SCRIPT_PATH), $mail_body);
-
-					// switch language to webmaster settings
-					i18n::init(get_user_setting($WEBMASTER_EMAIL, 'language'));
-
-					$mail_body = "";
-					$mail_body .= i18n::translate('Hello Administrator ...') . "\r\n\r\n";
-					$mail_body .= i18n::translate('A prospective user registered himself with webtrees at %s.', WT_SERVER_NAME.WT_SCRIPT_PATH) . "\r\n\r\n";
-					$mail_body .= i18n::translate('User name') . " " . $user_name . "\r\n";
-					if ($NAME_REVERSE) {
-						$mail_body .= i18n::translate('Last Name') . " " . $user_lastname . "\r\n\r\n";
-						$mail_body .= i18n::translate('First Name') . " " . $user_firstname . "\r\n";
-					} else {
-						$mail_body .= i18n::translate('First Name') . " " . $user_firstname . "\r\n";
-						$mail_body .= i18n::translate('Last Name') . " " . $user_lastname . "\r\n\r\n";
-					}
-					$mail_body .= i18n::translate('Comments').": " . $user_comments . "\r\n\r\n";
-					$mail_body .= i18n::translate('The user received an email with the information necessary to confirm his access request.') . "\r\n\r\n";
-					if ($REQUIRE_ADMIN_AUTH_REGISTRATION) $mail_body .= i18n::translate('You will be informed by email when this prospective user has confirmed his request.  You can then complete the process by activating the user name.  The new user will not be able to login until you activate the account.') . "\r\n";
-					else $mail_body .= i18n::translate('You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part.') . "\r\n";
-
-					$message = array();
-					$message["to"]=$WEBMASTER_EMAIL;
-					$message["from"]=$user_email;
-					$message["subject"] = i18n::translate('New registration at %s', WT_SERVER_NAME.WT_SCRIPT_PATH);
-					$message["body"] = $mail_body;
-					$message["created"] = $time;
-					$message["method"] = $SUPPORT_METHOD;
-					$message["no_from"] = true;
-					addMessage($message);
-
-					// switch language to user's settings
-					i18n::init($user_language);
-					?>
-					<table class="center facts_table">
-						<tr><td class="wrap <?php print $TEXT_DIRECTION; ?>"><?php print i18n::translate('Hello %s ...<br />Thank you for your registration.', $user_firstname." ".$user_lastname); ?><br /><br />
-						<?php
-						if ($REQUIRE_ADMIN_AUTH_REGISTRATION) print i18n::translate('We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, the administrator still has to approve your request before your account can be used.<br /><br />To login to this site, you will need to know your user name and password.', $user_email);
-						else print i18n::translate('We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, you can login.  To login to this site, you will need to know your user name and password.', $user_email);
-						?>
-						</td></tr>
-					</table>
-					<?php
-					i18n::init(WT_LOCALE); // Reset language
-				}
-				print "</div>";
-			} else {
-				print "<span class=\"error\">".i18n::translate('User name contains invalid characters')."</span><br />";
+			if (get_user_id($user_name)) {
+				print "<span class=\"warning\">".i18n::translate('Duplicate user name.  A user with that user name already exists.  Please choose another user name.')."</span><br /><br />";
 				print "<a href=\"javascript:history.back()\">".i18n::translate('Back')."</a><br />";
 			}
+			else if ($user_password01 == $user_password02) {
+				if ($user_id=create_user($user_name, $user_realname, $user_email, crypt($user_password01))) {
+					set_user_setting($user_id, 'language',            $user_language);
+					set_user_setting($user_id, 'verified',            'no');
+					set_user_setting($user_id, 'verified_by_admin',    $REQUIRE_ADMIN_AUTH_REGISTRATION ? 'no' : 'yes');
+					set_user_setting($user_id, 'reg_timestamp',        date('U'));
+					set_user_setting($user_id, 'reg_hashcode',         md5(crypt($user_name)));
+					set_user_setting($user_id, 'contactmethod',        "messaging2");
+					set_user_setting($user_id, 'defaulttab',           $GEDCOM_DEFAULT_TAB);
+					set_user_setting($user_id, 'visibleonline',        'Y');
+					set_user_setting($user_id, 'editaccount',          'Y');
+					set_user_setting($user_id, 'relationship_privacy', $USE_RELATIONSHIP_PRIVACY ? 'Y' : 'N');
+					set_user_setting($user_id, 'max_relation_path',    $MAX_RELATION_PATH_LENGTH);
+					set_user_setting($user_id, 'auto_accept',          'N');
+					set_user_setting($user_id, 'canadmin',             'N');
+					set_user_setting($user_id, 'loggedin',             'N');
+					set_user_setting($user_id, 'sessiontime',          '0');
+					if (!empty($user_gedcomid)) {
+						set_user_gedcom_setting($user_id, $GEDCOM, 'gedcomid', $user_gedcomid);
+						set_user_gedcom_setting($user_id, $GEDCOM, 'rootid',   $user_gedcomid);
+					}
+					$user_created_ok = true;
+				} else {
+					print "<span class=\"warning\">".i18n::translate('Unable to add user.  Please try again.')."<br /></span>";
+					print "<a href=\"javascript:history.back()\">".i18n::translate('Back')."</a><br />";
+				}
+			} else {
+				print "<span class=\"warning\">".i18n::translate('Passwords do not match.')."</span><br />";
+				print "<a href=\"javascript:history.back()\">".i18n::translate('Back')."</a><br />";
+			}
+			if ($user_created_ok) {
+				// switch to the user's language
+				i18n::init($user_language);
+				$mail_body = "";
+				$mail_body .= i18n::translate('Hello %s ...', $user_realname) . "\r\n\r\n";
+				$mail_body .= i18n::translate('A request was received at %s to create a webtrees account with your email address %s.', WT_SERVER_NAME.WT_SCRIPT_PATH, $user_email) . "  ";
+				$mail_body .= i18n::translate('Information about the request is shown under the link below.') . "\r\n\r\n";
+				$mail_body .= i18n::translate('Please click on the following link and fill in the requested data to confirm your request and email address.') . "\r\n\r\n";
+				if ($TEXT_DIRECTION=="rtl") {
+					$mail_body .= "<a href=\"";
+					$mail_body .= WT_SERVER_NAME.WT_SCRIPT_PATH . "login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_id, 'reg_hashcode'))."&action=userverify\">";
+				}
+				$mail_body .= WT_SERVER_NAME.WT_SCRIPT_PATH . "login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_id, 'reg_hashcode'))."&action=userverify";
+				if ($TEXT_DIRECTION=="rtl") $mail_body .= "</a>";
+				$mail_body .= "\r\n";
+				$mail_body .= i18n::translate('User name') . " " . $user_name . "\r\n";
+				$mail_body .= i18n::translate('Verification code:') . " " . get_user_setting($user_id, 'reg_hashcode') . "\r\n\r\n";
+				$mail_body .= i18n::translate('Comments').": " . $user_comments . "\r\n\r\n";
+				$mail_body .= i18n::translate('If you didn\'t request an account, you can just delete this message.') . "  ";
+				$mail_body .= i18n::translate('You won\'t get any more email from this site, because the account request will be deleted automatically after seven days.') . "\r\n";
+				require_once WT_ROOT.'includes/functions/functions_mail.php';
+				pgvMail($user_email, $WEBTREES_EMAIL, i18n::translate('Your registration at %s', WT_SERVER_NAME.WT_SCRIPT_PATH), $mail_body);
+
+				// switch language to webmaster settings
+				i18n::init(get_user_setting($WEBMASTER_EMAIL, 'language'));
+
+				$mail_body = "";
+				$mail_body .= i18n::translate('Hello Administrator ...') . "\r\n\r\n";
+				$mail_body .= i18n::translate('A prospective user registered himself with webtrees at %s.', WT_SERVER_NAME.WT_SCRIPT_PATH) . "\r\n\r\n";
+				$mail_body .= i18n::translate('User name') . " " . $user_name . "\r\n";
+				$mail_body .= i18n::translate('Real Name') . " " . $user_realname . "\r\n\r\n";
+				$mail_body .= i18n::translate('Comments').": " . $user_comments . "\r\n\r\n";
+				$mail_body .= i18n::translate('The user received an email with the information necessary to confirm his access request.') . "\r\n\r\n";
+				if ($REQUIRE_ADMIN_AUTH_REGISTRATION) $mail_body .= i18n::translate('You will be informed by email when this prospective user has confirmed his request.  You can then complete the process by activating the user name.  The new user will not be able to login until you activate the account.') . "\r\n";
+				else $mail_body .= i18n::translate('You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part.') . "\r\n";
+
+				$message = array();
+				$message["to"]=$WEBMASTER_EMAIL;
+				$message["from"]=$user_email;
+				$message["subject"] = i18n::translate('New registration at %s', WT_SERVER_NAME.WT_SCRIPT_PATH);
+				$message["body"] = $mail_body;
+				$message["created"] = $time;
+				$message["method"] = $SUPPORT_METHOD;
+				$message["no_from"] = true;
+				addMessage($message);
+
+				// switch language to user's settings
+				i18n::init($user_language);
+				?>
+				<table class="center facts_table">
+					<tr><td class="wrap <?php print $TEXT_DIRECTION; ?>"><?php print i18n::translate('Hello %s ...<br />Thank you for your registration.', $user_realname); ?><br /><br />
+					<?php
+					if ($REQUIRE_ADMIN_AUTH_REGISTRATION) print i18n::translate('We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, the administrator still has to approve your request before your account can be used.<br /><br />To login to this site, you will need to know your user name and password.', $user_email);
+					else print i18n::translate('We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, you can login.  To login to this site, you will need to know your user name and password.', $user_email);
+					?>
+					</td></tr>
+				</table>
+				<?php
+				i18n::init(WT_LOCALE); // Reset language
+			}
+			print "</div>";
 		} else {
 			header("Location: login.php");
 			exit;

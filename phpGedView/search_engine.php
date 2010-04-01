@@ -33,7 +33,7 @@
 */
 
 define('WT_SCRIPT_NAME', 'search_engine.php');
-require './config.php';
+require './includes/session.php';
 
 header('Content-Type: text/html; charset=UTF-8');
 

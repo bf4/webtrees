@@ -32,7 +32,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'calendar.php');
-require './config.php';
+require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_print_lists.php';
 
 if (isset($_REQUEST['cal'])) $cal = $_REQUEST['cal'];

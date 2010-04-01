@@ -25,7 +25,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'opensearch.php');
-require './config.php';
+require './includes/session.php';
 
 header('Content-Type: application/opensearchdescription+xml; charset=utf-8');
 

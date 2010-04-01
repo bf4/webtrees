@@ -29,7 +29,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'edit_privacy.php');
-require './config.php';
+require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_print_facts.php';
 
 if (empty($ged)) $ged = $GEDCOM;

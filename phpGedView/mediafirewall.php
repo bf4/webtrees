@@ -30,7 +30,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'mediafirewall.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/controllers/media_ctrl.php';
 
 // We have finished writing to $_SESSION, so release the lock

@@ -30,7 +30,7 @@
 */
 
 define('WT_SCRIPT_NAME', 'individual.php');
-require './config.php';
+require './includes/session.php';
 require WT_ROOT.'includes/controllers/individual_ctrl.php';
 
 $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;

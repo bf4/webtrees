@@ -8,8 +8,6 @@
  * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
- * Modifications Copyright (c) 2010 Greg Roach
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -24,8 +22,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package webtrees
- * @subpackage admin
  * @version $Id$
  */
 
@@ -36,12 +32,12 @@ if (!defined('WT_SCRIPT_NAME')) {
 }
 
 // Identify ourself
-define('WT_WEBTREES',      'webtrees');
+define('WT_WEBTREES',        'webtrees');
 define('WT_VERSION',         '1.0.0');
 define('WT_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
 define('WT_VERSION_TEXT',    trim(WT_VERSION.' '.WT_VERSION_RELEASE));
-define('WT_WEBTREES_URL',  'http://www.webtrees.net');
-define('WT_WEBTREES_WIKI', 'http://www.webtrees.net/wiki');
+define('WT_WEBTREES_URL',    'http://www.webtrees.net');
+define('WT_WEBTREES_WIKI',   'http://wiki.webtrees.net');
 define('WT_TRANSLATORS_URL', 'https://launchpad.net/webtrees');
 
 // Enable debugging output?
@@ -53,12 +49,7 @@ define('WT_DEBUG_PRIV', false);
 define('WT_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
 
 // Required version of database tables/columns/indexes/etc.
-define('WT_SCHEMA_VERSION', 17);
-
-// Environmental requirements
-define('WT_REQUIRED_PHP_VERSION',     '5.2.0');  // 5.2.3 is recommended
-define('WT_REQUIRED_MYSQL_VERSION',   '5.0.13'); // For: prepared statements within stored procedures
-define('WT_REQUIRED_PRIVACY_VERSION', '3.1');
+define('WT_SCHEMA_VERSION', 1);
 
 // Regular expressions for validating user input, etc.
 define('WT_REGEX_XREF',     '[A-Za-z0-9:_-]+');
@@ -119,86 +110,45 @@ define('WT_PRIV_HIDE',   -1); // Hide the item to all users including the admin
 // For performance, it is quicker to refer to files using absolute paths
 define ('WT_ROOT', realpath(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR);
 
-// Invoke the Zend Framework Autoloader, so we can use Zend_XXXXX classes
-set_include_path(WT_ROOT.'library'.PATH_SEPARATOR.get_include_path());
-require_once 'Zend/Loader/Autoloader.php';
-Zend_Loader_Autoloader::getInstance();
-
-// New setting, added to config.php in 4.2.0
-if (!isset($DB_UTF8_COLLATION)) {
-	$DB_UTF8_COLLATION=false;
-}
-
-// New setting, added to config.php in 4.1.4
-if (!isset($DBPORT)) {
-	$DBPORT='';
-}
+//-- setup execution timer
+$start_time=microtime(true);
 
 @ini_set('arg_separator.output', '&amp;');
 @ini_set('error_reporting', 0);
 @ini_set('display_errors', '1');
 @error_reporting(0);
 
+// Invoke the Zend Framework Autoloader, so we can use Zend_XXXXX classes
+set_include_path(WT_ROOT.'library'.PATH_SEPARATOR.get_include_path());
+require_once 'Zend/Loader/Autoloader.php';
+Zend_Loader_Autoloader::getInstance();
+
 // Check configuration issues that affect older versions of PHP
-// We can't use any PHP5 functions until after this point.
-if (version_compare(PHP_VERSION, '6.0.0', '<')) {
-	// PHP too old?
-	if (version_compare(PHP_VERSION, WT_REQUIRED_PHP_VERSION)<0) {
-		die ('<html><body><p style="color: red;">webtrees requires PHP version '.WT_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.PHP_VERSION.'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
-	}
-
-	// register_globals was deprecated in PHP5.3.0 and removed in PHP6.0.0
-	// For servers with this feature enabled in php.ini, check it is not being abused.
-	foreach (array(
-		'DBTYPE', 'DBHOST', 'DBUSER', 'DBPASS', 'DBNAME', 'TBLPREFIX',
-		'INDEX_DIRECTORY', 'AUTHENTICATION_MODULE', 'USE_REGISTRATION_MODULE',
-		'ALLOW_USER_THEMES', 'ALLOW_CHANGE_GEDCOM', 'LOGFILE_CREATE',
-		'WT_SESSION_SAVE_PATH', 'WT_SESSION_TIME', 'SERVER_URL', 'LOGIN_URL',
-		'WT_MEMORY_LIMIT', 'WT_STORE_MESSAGES', 'WT_SIMPLE_MAIL',
-		'CONFIGURED', 'MANUAL_SESSON_START', 'REQUIRE_ADMIN_AUTH_REGISTRATION'
-	) as $var) {
-		if (isset($_REQUEST[$var])) {
-			if (!ini_get('register_globals') || strtolower(ini_get('register_globals'))=='off') {
-				require_once WT_ROOT.'includes/authentication.php';
-				AddToLog('MSG>Configuration override detected; script terminated.');
-				AddToLog("UA>{$_SERVER['HTTP_USER_AGENT']}<");
-				AddToLog("URI>{$_SERVER['REQUEST_URI']}<");
-			}
-			header('HTTP/1.0 403 Forbidden');
-			die('Invalid request.');
-		}
-	}
-
+if (version_compare(PHP_VERSION, '5.3.0', '<')) {
 	// magic quotes were deprecated in PHP5.3.0 and removed in PHP6.0.0
-	if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-		set_magic_quotes_runtime(0);
-
-		// magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
-		if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
-			ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
-			$in = array(&$_GET, &$_POST, &$_REQUEST, &$_COOKIE);
-			while (list($k,$v) = each($in)) {
-				foreach ($v as $key => $val) {
-					if (!is_array($val)) {
-						$in[$k][$key] = stripslashes($val);
-						continue;
-					}
-					$in[] =& $in[$k][$key];
+	set_magic_quotes_runtime(0);
+	// magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
+	if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
+		ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
+		$in = array(&$_GET, &$_POST, &$_REQUEST, &$_COOKIE);
+		while (list($k,$v) = each($in)) {
+			foreach ($v as $key => $val) {
+				if (!is_array($val)) {
+					$in[$k][$key] = stripslashes($val);
+					continue;
 				}
+				$in[] =& $in[$k][$key];
 			}
-			unset($in);
 		}
+		unset($in);
 	}
 }
-
-//-- setup execution timer
-$start_time=microtime(true);
 
 // Split the request "protocol://host:port/path/to/script.php?var=value" into parts
 // WT_SERVER_NAME  = protocol://host:port
 // WT_SCRIPT_PATH  = /path/to/   (begins and ends with /)
 // WT_SCRIPT_NAME  = script.php  (already defined in the calling script)
-// WT_QUERY_STRING = ?var=value (still TODO - need to refactor REQUEST_URI and QUERY_STRING)
+// WT_QUERY_STRING = ?var=value  (generate as needed from $_GET.  lang=xx and theme=yy are removed as used.)
 
 define('WT_SERVER_NAME',
 	(empty($_SERVER['HTTPS']) || !in_array($_SERVER['HTTPS'], array('1', 'on', 'On', 'ON')) ?  'http://' : 'https://').
@@ -250,38 +200,32 @@ if (empty($_SERVER['QUERY_STRING'])) {
 	);
 }
 
-//-- if not configured then redirect to the configuration script
-if (!$CONFIGURED) {
-	if (WT_SCRIPT_NAME!='admin.php'
-	&& WT_SCRIPT_NAME!='login.php'
-	&& WT_SCRIPT_NAME!='install.php'
-	&& WT_SCRIPT_NAME!='help_text.php') {
-		header('Location: install.php');
-		exit;
-	}
-}
-//-- allow user to cancel
-ignore_user_abort(false);
-
-// try and set the memory limit
-if (empty($WT_MEMORY_LIMIT)) $WT_MEMORY_LIMIT = '32M';
-@ini_set('memory_limit', $WT_MEMORY_LIMIT);
-
-//--load common functions
-require  WT_ROOT.'includes/functions/functions.php';
-require  WT_ROOT.'includes/functions/functions_name.php';
-//-- set the error handler
-set_error_handler('pgv_error_handler');
-
-
-// Connect to the database
+// Common functions
+require WT_ROOT.'includes/functions/functions.php';
+require WT_ROOT.'includes/functions/functions_name.php';
 require WT_ROOT.'includes/functions/functions_db.php';
 require WT_ROOT.'includes/classes/class_wt_db.php';
+
+set_error_handler('pgv_error_handler');
+
+// Connect to the database
 try {
-	// remove escape codes before using PW
-	$DBPASS=str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS);
-	WT_DB::createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DB_UTF8_COLLATION);
-	unset($DBUSER, $DBPASS);
+	// Load our configuration file, so we can connect to the database
+	if (file_exists(WT_ROOT.'data/config.ini.php')) {
+		$dbconfig=@parse_ini_file(WT_ROOT.'data/config.ini.php');
+		// Invalid/unreadable config file?
+		if (!is_array($dbconfig)) {
+			header('Location: site-unavailable.php');
+			exit;
+		}
+	} else {
+		// No config file. Set one up.
+		header('Location: setup.php');
+		exit;
+	}
+	WT_DB::createInstance($dbconfig['dbhost'], $dbconfig['dbport'], $dbconfig['dbname'], $dbconfig['dbuser'], $dbconfig['dbpass']);
+	$TBLPREFIX=$dbconfig['tblpfx'];
+	unset($dbconfig);
 	try {
 		WT_DB::updateSchema(WT_ROOT.'includes/db_schema/', 'WT_SCHEMA_VERSION', WT_SCHEMA_VERSION);
 	} catch (PDOException $ex) {
@@ -289,12 +233,45 @@ try {
 		die($ex);
 	}
 } catch (PDOException $ex) {
-	// Can't connect to the DB?  We'll get redirected to install.php later.....
+	header('Location: site-unavailable.php');
+	exit;
 }
 
-// The authentication interface includes logging - which may be to the database
+// We'll tidy these up later.  Some of them are used infrequently.
+$INDEX_DIRECTORY                =get_site_setting('INDEX_DIRECTORY');
+$WT_STORE_MESSAGES              =get_site_setting('WT_STORE_MESSAGES');
+$WT_SIMPLE_MAIL                 =get_site_setting('WT_SIMPLE_MAIL');
+$USE_REGISTRATION_MODULE        =get_site_setting('USE_REGISTRATION_MODULE');
+$REQUIRE_ADMIN_AUTH_REGISTRATION=get_site_setting('REQUIRE_ADMIN_AUTH_REGISTRATION');
+$ALLOW_USER_THEMES              =get_site_setting('ALLOW_USER_THEMES');
+$ALLOW_CHANGE_GEDCOM            =get_site_setting('ALLOW_CHANGE_GEDCOM');
+$LOGFILE_CREATE                 =get_site_setting('LOGFILE_CREATE');
+$LOG_LANG_ERROR                 =get_site_setting('LOG_LANG_ERROR');
+$WT_SESSION_SAVE_PATH           =get_site_setting('WT_SESSION_SAVE_PATH');
+$WT_SESSION_TIME                =get_site_setting('WT_SESSION_TIME');
+$SERVER_URL                     =get_site_setting('SERVER_URL');
+$LOGIN_URL                      =get_site_setting('LOGIN_URLNDEX_DIRECTORY');
+$MAX_VIEWS                      =get_site_setting('MAX_VIEWS');
+$MAX_VIEW_TIME                  =get_site_setting('MAX_VIEW_TIME');
+$WT_SMTP_PORT                   =get_site_setting('WT_SMTP_PORT');
+$WT_SMTP_ACTIVE                 =get_site_setting('WT_SMTP_ACTIVE');
+$WT_SMTP_HOST                   =get_site_setting('WT_SMTP_HOST');
+$WT_SMTP_HELO                   =get_site_setting('WT_SMTP_HELO');
+$WT_SMTP_AUTH                   =get_site_setting('WT_SMTP_AUTH');
+$WT_SMTP_AUTH_USER              =get_site_setting('WT_SMTP_AUTH_USER');
+$WT_SMTP_AUTH_PASS              =get_site_setting('WT_SMTP_AUTH_PASS');
+$WT_SMTP_SSL                    =get_site_setting('WT_SMTP_SSL');
+$WT_SMTP_FROM_NAME              =get_site_setting('WT_SMTP_FROM_NAME');
+
+//-- allow user to cancel
+ignore_user_abort(false);
+
+@ini_set('memory_limit',       get_site_setting('MEMORY_LIMIT'));
+@ini_set('max_execution_time', get_site_setting('MAX_EXECUTION_TIME'));
+
 require WT_ROOT.'includes/authentication.php';
- 
+// require get_site_setting('AUTHENTICATION_MODULE');
+
 // Determine browser type
 $BROWSERTYPE = 'other';
 if (!empty($_SERVER['HTTP_USER_AGENT'])) {

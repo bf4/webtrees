@@ -28,7 +28,7 @@
 */
 
 define('WT_SCRIPT_NAME', 'source.php');
-require './config.php';
+require './includes/session.php';
 require WT_ROOT.'includes/controllers/source_ctrl.php';
 require WT_ROOT.'includes/functions/functions_print_lists.php';
 

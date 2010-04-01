@@ -29,7 +29,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'dir_editor.php');
-require './config.php';
+require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 
 if (!WT_USER_IS_ADMIN) {

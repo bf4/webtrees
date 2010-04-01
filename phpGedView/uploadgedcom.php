@@ -50,7 +50,7 @@
 // NOTE: $bakfile = Name and path of the backupfile, this file is created if a file with the same name exists
 
 define('WT_SCRIPT_NAME', 'uploadgedcom.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/functions/functions_import.php';
 require_once WT_ROOT.'includes/functions/functions_export.php';
 

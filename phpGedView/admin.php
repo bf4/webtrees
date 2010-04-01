@@ -30,7 +30,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'admin.php');
-require './config.php';
+require './includes/session.php';
 
 if (!WT_USER_GEDCOM_ADMIN) {
 	if (WT_USER_ID) {

@@ -31,7 +31,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'editconfig_gedcom.php');
-require './config.php';
+require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 
 // editconfig.php and uploadgedcom.php make extensive use of

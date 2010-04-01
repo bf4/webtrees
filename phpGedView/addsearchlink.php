@@ -29,7 +29,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'addsearchlink.php');
-require './config.php';
+require './includes/session.php';
 
 print_simple_header(i18n::translate('Add Local Link'));
 

@@ -28,7 +28,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'genservice.php');
-require './config.php';
+require './includes/session.php';
 
 /**
  * we have to manually pull the SID from the SOAP request

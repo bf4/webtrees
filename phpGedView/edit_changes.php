@@ -28,7 +28,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'edit_changes.php');
-require './config.php';
+require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 
 if (!WT_USER_CAN_ACCEPT) {

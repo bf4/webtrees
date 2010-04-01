@@ -32,7 +32,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'hourglass_ajax.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/controllers/hourglass_ctrl.php';
 
 /*

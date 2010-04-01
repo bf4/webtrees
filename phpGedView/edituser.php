@@ -30,7 +30,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'edituser.php');
-require './config.php';
+require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_print_lists.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 
@@ -51,8 +51,7 @@ foreach (get_theme_names() as $themename=>$themedir) {
 // Extract form variables
 $form_action        =safe_POST('form_action'   );
 $form_username      =safe_POST('form_username',       WT_REGEX_USERNAME);
-$form_firstname     =safe_POST('form_firstname');
-$form_lastname      =safe_POST('form_lastname' );
+$form_realname      =safe_POST('form_realname' );
 $form_pass1         =safe_POST('form_pass1',          WT_REGEX_PASSWORD);
 $form_pass2         =safe_POST('form_pass2',          WT_REGEX_PASSWORD);
 $form_email         =safe_POST('form_email',          WT_REGEX_EMAIL,                         'email@example.com');
@@ -69,49 +68,32 @@ if ($form_action=='update') {
 		print_header(i18n::translate('User administration'));
 		echo '<span class="error">', i18n::translate('Duplicate user name.  A user with that user name already exists.  Please choose another user name.'), '</span><br />';
 	} else {
-		$alphabet=getAlphabet().'_-. ';
-		$i=1;
-		$pass=true;
-		while (strlen($form_username) > $i) {
-			if (stristr($alphabet, $form_username{$i})===false) {
-				$pass=false;
-				break;
-			}
-			$i++;
+		// Change password
+		if (!empty($form_pass1)) {
+			AddToLog('User changed password');
+			set_user_password(WT_USER_ID, crypt($form_pass1));
 		}
-		if (!$pass) {
-			print_header(i18n::translate('User administration'));
-			echo '<span class="error">', i18n::translate('User name contains invalid characters'), '</span><br />';
-		} else {
-			// Change password
-			if (!empty($form_pass1)) {
-				AddToLog('User changed password');
-				set_user_password(WT_USER_ID, crypt($form_pass1));
-			}
-			$old_firstname=get_user_setting(WT_USER_ID, 'firstname');
-			$old_lastname =get_user_setting(WT_USER_ID, 'lastname');
-			$old_email    =get_user_setting(WT_USER_ID, 'email');
-			// Change other settings
-			set_user_setting(WT_USER_ID, 'firstname',     $form_firstname);
-			set_user_setting(WT_USER_ID, 'lastname',      $form_lastname);
-			set_user_setting(WT_USER_ID, 'email',         $form_email);
-			set_user_setting(WT_USER_ID, 'theme',         $form_theme);
-			set_user_setting(WT_USER_ID, 'language',      $form_language);
-			set_user_setting(WT_USER_ID, 'contactmethod', $form_contact_method);
-			set_user_setting(WT_USER_ID, 'visibleonline', $form_visible_online);
-			set_user_setting(WT_USER_ID, 'defaulttab',    $form_default_tab);
-			set_user_gedcom_setting(WT_USER_ID, WT_GED_ID, 'rootid', $form_rootid);
+		$old_realname =getUserFullName(WT_USER_ID);
+		$old_email    =getUserEmail(WT_USER_ID);
+		// Change other settings
+		setUserFullName(WT_USER_ID, $form_realname);
+		setUserEmail   (WT_USER_ID, $form_email);
+		set_user_setting(WT_USER_ID, 'theme',         $form_theme);
+		set_user_setting(WT_USER_ID, 'language',      $form_language);
+		set_user_setting(WT_USER_ID, 'contactmethod', $form_contact_method);
+		set_user_setting(WT_USER_ID, 'visibleonline', $form_visible_online);
+		set_user_setting(WT_USER_ID, 'defaulttab',    $form_default_tab);
+		set_user_gedcom_setting(WT_USER_ID, WT_GED_ID, 'rootid', $form_rootid);
 
-			// Change username
-			if ($form_username!=WT_USER_NAME) {
-				AddToLog('User renamed to ->'.$form_username.'<-');
-				rename_user(WT_USER_ID, $form_username);
-				$_SESSION['pgv_user']=$form_username;
-			}
-			// Reload page to pick up changes such as theme and user_id
-			header('Location: edituser.php');
-			exit;
+		// Change username
+		if ($form_username!=WT_USER_NAME) {
+			AddToLog('User renamed to ->'.$form_username.'<-');
+			rename_user(WT_USER_ID, $form_username);
+			$_SESSION['pgv_user']=$form_username;
 		}
+		// Reload page to pick up changes such as theme and user_id
+		header('Location: edituser.php');
+		exit;
 	}
 } else {
 	print_header(i18n::translate('User administration'));
@@ -129,14 +111,9 @@ function checkform(frm) {
 		frm.form_username.focus();
 		return false;
 	}
-	if (frm.form_firstname.value=="") {
-		alert("<?php print i18n::translate('You must enter a first and last name.');?>");
-		frm.form_firstname.focus();
-		return false;
-	}
-	if (frm.form_lastname.value=="") {
-		alert("<?php print i18n::translate('You must enter a first and last name.');?>");
-		frm.form_lastname.focus();
+	if (frm.form_realname.value=="") {
+		alert("<?php print i18n::translate('You must enter a real name.');?>");
+		frm.form_realname.focus();
 		return false;
 	}
 	if (frm.form_email.value.indexOf("@")==-1) {
@@ -180,13 +157,8 @@ echo '<input type="text" name="form_username" tabindex="', ++$tab, '" value="', 
 echo '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
-echo i18n::translate('First Name'), help_link('edituser_firstname'), '</td><td class="optionbox">';
-echo '<input type="text" name="form_firstname" tabindex="', ++$tab, '" value="', get_user_setting(WT_USER_ID, 'firstname'), '" />';
-echo '</td></tr>';
-
-echo '<tr><td class="descriptionbox wrap">';
-echo i18n::translate('Last Name'),  help_link('edituser_lastname'), '</td><td class="optionbox">';
-echo '<input type="text" name="form_lastname" tabindex="', ++$tab, '" value="', get_user_setting(WT_USER_ID, 'lastname'), '" />';
+echo i18n::translate('Real Name'), help_link('edituser_realname'), '</td><td class="optionbox">';
+echo '<input type="text" name="form_realname" tabindex="', ++$tab, '" value="', getUserFullName(WT_USER_ID), '" />';
 echo '</td></tr>';
 
 $person=Person::getInstance(WT_USER_GEDCOM_ID);
@@ -223,7 +195,7 @@ echo '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
 echo i18n::translate('Email Address'), help_link('edituser_email'), '</td><td class="optionbox" valign="top">';
-echo '<input type="text" name="form_email" tabindex="', ++$tab, '" value="', get_user_setting(WT_USER_ID, 'email'), '" size="50" /></td></tr>';
+echo '<input type="text" name="form_email" tabindex="', ++$tab, '" value="', getUserEmail(WT_USER_ID), '" size="50" /></td></tr>';
 
 if ($ALLOW_USER_THEMES) {
 	echo '<tr><td class="descriptionbox wrap">';

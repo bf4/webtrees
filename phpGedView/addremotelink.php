@@ -30,7 +30,7 @@
 */
 
 define('WT_SCRIPT_NAME', 'addremotelink.php');
-require './config.php';
+require './includes/session.php';
 require WT_ROOT.'includes/controllers/remotelink_ctrl.php';
 
 $controller=new RemoteLinkController();

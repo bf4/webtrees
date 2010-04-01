@@ -497,7 +497,7 @@ function undo_change($cid, $index) {
 */
 function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag="CHIL", $sextag='') {
 	global $pid, $WT_IMAGE_DIR, $WT_IMAGES, $WORD_WRAPPED_NOTES;
-	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $NAME_REVERSE;
+	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept;
 	global $bdm, $TEXT_DIRECTION, $STANDARD_NAME_FACTS, $REVERSED_NAME_FACTS, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $NO_UPDATE_CHAN;
 
@@ -523,14 +523,8 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 
 	// Populate the standard NAME field and subfields
 	$name_fields=array();
-	if (!$NAME_REVERSE) {
-		foreach ($STANDARD_NAME_FACTS as $tag) {
-			$name_fields[$tag]=get_gedcom_value($tag, 0, $namerec);
-		}
-	} else {
-		foreach ($REVERSED_NAME_FACTS as $tag) {
-			$name_fields[$tag]=get_gedcom_value($tag, 0, $namerec);
-		}
+	foreach ($STANDARD_NAME_FACTS as $tag) {
+		$name_fields[$tag]=get_gedcom_value($tag, 0, $namerec);
 	}
 
 	$new_marnm='';
@@ -679,14 +673,8 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 			$name_fields['SPFX']=trim($name_bits[7]);
 			$name_fields['SURN']=$name_bits[9];
 		}
-		if ($NAME_REVERSE) {
-			if (empty($name_fields['GIVN'])) {
-				$name_fields['GIVN']=$name_bits[10];
-			}
-		} else {
-			if (empty($name_fields['GIVN'])) {
-				$name_fields['GIVN']=$name_bits[4];
-			}
+		if (empty($name_fields['GIVN'])) {
+			$name_fields['GIVN']=$name_bits[4];
 		}
 		// Don't automatically create an empty NICK - it is an "advanced" field.
 		if (empty($name_fields['NICK']) && !empty($name_bits[6]) && !preg_match('/^2 NICK/m', $namerec)) {
@@ -2396,7 +2384,6 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	global $WORD_WRAPPED_NOTES;
 	global $pid, $tags, $ADVANCED_PLAC_FACTS, $date_and_time, $templefacts;
 	global $lang_short_cut, $LANGUAGE, $FULL_SOURCES, $TEXT_DIRECTION;
-	// global $TEXT_DIRECTION, $TBLPREFIX, $DBHOST, $DBUSER, $DBPASS, $DBNAME, $SERVER_URL;
 
 	$tags=array();
 	$gedlines = explode("\n", $gedrec); // -- find the number of lines in the record

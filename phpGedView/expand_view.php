@@ -27,7 +27,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'expand_view.php');
-require './config.php';
+require './includes/session.php';
 
 header('Content-Type: text/html; charset=UTF-8');
 $pid = safe_GET_xref('pid');

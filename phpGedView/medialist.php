@@ -28,7 +28,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'medialist.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/functions/functions_print_facts.php';
 
 // $LB_SS_SPEED = "5";

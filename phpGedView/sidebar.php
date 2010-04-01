@@ -1,6 +1,6 @@
 <?php
 if (!defined('WT_SCRIPT_NAME')) define('WT_SCRIPT_NAME', 'sidebar.php');
-require_once('config.php');
+require_once('includes/session.php');
 require_once(WT_ROOT.'includes/classes/class_module.php');
 
 $sb_action = safe_GET('sb_action', WT_REGEX_ALPHANUM, 'none');

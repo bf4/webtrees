@@ -470,7 +470,7 @@ class IndividualControllerRoot extends BaseController {
 	* @param Event $event the event object
 	*/
 	function print_name_record(&$event) {
-		global $UNDERLINE_NAME_QUOTES, $NAME_REVERSE;
+		global $UNDERLINE_NAME_QUOTES;
 		global $lang_short_cut, $LANGUAGE;
 
 		if (!$event->canShowDetails()) {

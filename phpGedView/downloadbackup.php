@@ -28,7 +28,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'downloadbackup.php');
-require './config.php';
+require './includes/session.php';
 
 $fname=safe_GET('fname');
 

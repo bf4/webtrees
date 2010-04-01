@@ -28,7 +28,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'placelist.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/functions/functions_print_lists.php';
 
 $use_googlemap = false;

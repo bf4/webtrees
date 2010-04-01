@@ -32,7 +32,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'timeline.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/controllers/timeline_ctrl.php';
 
 $controller = new TimelineController();

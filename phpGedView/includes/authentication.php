@@ -250,14 +250,30 @@ function adminUserExists() {
 
 // Get the full name for a user
 function getUserFullName($user_id) {
-	global $TBLPREFIX, $NAME_REVERSE;
+	global $TBLPREFIX;
 
-	$sql=
-		"SELECT setting_value FROM {$TBLPREFIX}user_setting".
-		"	WHERE user_id=? AND setting_name IN (?,?)".
-		" ORDER BY setting_name ".($NAME_REVERSE ? 'DESC' : 'ASC');
+	return WT_DB::prepare("SELECT real_name FROM {$TBLPREFIX}user WHERE user_id=?")->execute(array($user_id))->fetchOne();
+}
 
-	return implode(' ', WT_DB::prepare($sql)->execute(array($user_id, 'firstname', 'lastname'))->fetchOneColumn());
+// Set the full name for a user
+function setUserFullName($user_id, $real_name) {
+	global $TBLPREFIX;
+
+	return WT_DB::prepare("UPDATE {$TBLPREFIX}user SET real_name=? WHERE user_id=?")->execute(array($real_name, $user_id));
+}
+
+// Get the email for a user
+function getUserEmail($user_id) {
+	global $TBLPREFIX;
+
+	return WT_DB::prepare("SELECT email FROM {$TBLPREFIX}user WHERE user_id=?")->execute(array($user_id))->fetchOne();
+}
+
+// Set the email for a user
+function setUserEmail($user_id, $email) {
+	global $TBLPREFIX;
+
+	return WT_DB::prepare("UPDATE {$TBLPREFIX}user SET email=? WHERE user_id=?")->execute(array($email, $user_id));
 }
 
 // Get the root person for this gedcom
@@ -461,9 +477,9 @@ function addMessage($message) {
 	} else {
 		$fromFullName = getUserFullName($user_id_from);
 		if (!$WT_SIMPLE_MAIL)
-			$from = hex4email($fromFullName, 'UTF-8'). " <".get_user_setting($user_id_from, 'email').">";
+			$from = hex4email($fromFullName, 'UTF-8'). " <".getUserEmail($user_id_from).">";
 		else
-			$from = get_user_setting($user_id_from, 'email');
+			$from = getUserEmail($user_id_from);
 		$email2 = i18n::translate('You sent the following message to a webtrees user:')."\r\n\r\n".$email2;
 
 	}
@@ -482,7 +498,7 @@ function addMessage($message) {
 		}
 		if (!isset($message["no_from"])) {
 			if (stristr($from, $WEBTREES_EMAIL)){
-				$from = get_user_setting(get_user_id($WEBMASTER_EMAIL), 'email');
+				$from = getUserEmail(get_user_id($WEBMASTER_EMAIL));
 			}
 			if (!$user_id_from) {
 				$header2 = $WEBTREES_EMAIL;
@@ -531,11 +547,11 @@ function addMessage($message) {
 		} else {
 			$toFullName=getUserFullName($user_id_to);
 			if (!$WT_SIMPLE_MAIL)
-				$to = hex4email($toFullName, 'UTF-8'). " <".get_user_setting($user_id_to, 'email').">";
+				$to = hex4email($toFullName, 'UTF-8'). " <".getUserEmail($user_id_to).">";
 			else
-				$to = get_user_setting($user_id_to, 'email');
+				$to = getUserEmail($user_id_to);
 		}
-		if (get_user_setting($user_id_to, 'email'))
+		if (getUserEmail($user_id_to))
 			pgvMail($to, $from, $subject1, $email1);
 	}
 

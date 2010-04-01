@@ -247,28 +247,6 @@ function write_access_option($checkVar) {
 }
 
 /**
- * Get the version of the privacy file
- *
- * This function opens the given privacy file and returns the privacy version from the file
- * @param string $privfile the path to the privacy file
- * @return string the privacy file version number
- */
-function get_privacy_file_version($privfile) {
-	$privversion = "0";
-
-	//-- check to make sure that the privacy file is the current version
-	if (file_exists($privfile)) {
-		$privcontents = implode("", file($privfile));
-		$ct = preg_match("/PRIVACY_VERSION.*=.*\"(.+)\"/", $privcontents, $match);
-		if ($ct>0) {
-			$privversion = trim($match[1]);
-		}
-	}
-
-	return $privversion;
-}
-
-/**
  * Get the path to the privacy file
  *
  * Get the path to the privacy file for the currently active GEDCOM
@@ -281,7 +259,7 @@ function get_privacy_file($ged_id=WT_GED_ID) {
 	// Compatibility with non-php based storage
 	$privfile=str_replace('${INDEX_DIRECTORY}', $INDEX_DIRECTORY, $privfile);
 
-	if (!file_exists($privfile) || version_compare(get_privacy_file_version($privfile), WT_REQUIRED_PRIVACY_VERSION)<0) {
+	if (!file_exists($privfile)) {
 		return 'privacy.php';
 	} else {
 		return $privfile;
@@ -301,11 +279,7 @@ function load_privacy_file($ged_id=WT_GED_ID) {
 
 	// Load settings for the specified gedcom
 	$privacy_file=get_privacy_file($ged_id);
-	if (
-		$privacy_file &&
-		file_exists($privacy_file) &&
-		version_compare(get_privacy_file_version($privacy_file), WT_REQUIRED_PRIVACY_VERSION)>=0
-	) {
+	if ($privacy_file && file_exists($privacy_file)) {
 		require $privacy_file;
 	}
 }
@@ -2696,28 +2670,6 @@ function normalize_query_string($query) {
 		$new_query.=(empty($new_query)?'?':'&amp;').$key.'='.$data;
 
 	return $new_query;
-}
-
-function getAlphabet() {
-	global $ALPHABET_upper, $ALPHABET_lower, $LANGUAGE;
-	global $alphabet, $alphabet_lower, $alphabet_upper, $alphabet_lang;
-
-	//-- setup the language alphabet string
-	if (!isset($alphabet_lang) || $alphabet_lang!=$LANGUAGE) {
-		$alphabet = "0123456789".$ALPHABET_upper[$LANGUAGE].$ALPHABET_lower[$LANGUAGE];
-		$alphabet_lower = "0123456789".$ALPHABET_lower[$LANGUAGE];
-		$alphabet_upper = "0123456789".$ALPHABET_upper[$LANGUAGE];
-		foreach ($ALPHABET_upper as $l => $upper) {
-			if ($l <> $LANGUAGE) {
-				$alphabet .= $ALPHABET_upper[$l];
-				$alphabet_upper .= $ALPHABET_upper[$l];
-				$alphabet .= $ALPHABET_lower[$l];
-				$alphabet_lower .= $ALPHABET_lower[$l];
-			}
-		}
-		$alphabet_lang = $LANGUAGE;
-	}
-	return $alphabet;
 }
 
 /**

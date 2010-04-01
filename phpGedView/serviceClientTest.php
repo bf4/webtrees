@@ -2,7 +2,7 @@
 <?php
 
 define('WT_SCRIPT_NAME', 'serviceClientTest.php');
-require './config.php';
+require './includes/session.php';
 
 ob_start();
 require_once './library/Zend/Soap/Client.php';

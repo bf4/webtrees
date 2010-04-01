@@ -30,7 +30,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'faq.php');
-require './config.php';
+require './includes/session.php';
 
 global $WT_IMAGES, $faqs;
 

@@ -337,15 +337,40 @@ if ($_POST['dbname']) {
 		$dbh->exec('CREATE DATABASE IF NOT EXISTS `'.$_POST['dbname'].'` COLLATE utf8_unicode_ci');
 	} catch (PDOException $ex) {
 		// If we have no permission to do this, there's nothing helpful we can say.
+		// We'll get a more helpful error message from the next test.
 	}
 	try {
-		$dbh->exec('USE `'.$_POST['dbname'].'`');
+		$dbh->exec('USE `'.addcslashes($_POST['dbname'], '`').'`');
 		$dbname_ok=true;
 	} catch (PDOException $ex) {
 		echo
 			'<p class="bad">', i18n::translate('Unable to connect using these settings.  Your server gave the following error.'), '</p>',
 			'<pre>', $ex->getMessage(), '</pre>',
 			'<p class="bad">', i18n::translate('Check the settings and try again.'), '</p>';
+	}
+}
+
+// If the database exists, check whether it is already used by another application.
+if ($dbname_ok) {
+	try {
+		// PhpGedView (4.2.3 and earlier) and many other applications have a USERS table.
+		// webtrees has a USER table
+		$dummy=$dbh->query("SELECT COUNT(*) FROM `".addcslashes($_POST['tblpfx'], '`')."users`");
+		echo '<p class="bad">', i18n::translate('This database and table-prefix appear to be used by another application.  If you have an existing PhpGedView system, you should create a new webtrees system.  You can import your PhpGedView data and settings later.'), '</p>';
+		$dbname_ok=false;
+	} catch (PDOException $ex) {
+		// Table not found?  Good!
+	}
+}
+if ($dbname_ok) {
+	try {
+		// PhpGedView (4.2.4 and later) has a site_setting.site_setting_name column.
+		// [We changed the column name in webtrees, so we can tell the difference!]
+		$dummy=$dbh->query("SELECT site_setting_value FROM `".addcslashes($_POST['tblpfx'], '`')."site_setting` WHERE site_setting_name='PGV_SCHEMA_VERSION'");
+		echo '<p class="bad">', i18n::translate('This database and table-prefix appear to be used by another application.  If you have an existing PhpGedView system, you should create a new webtrees system.  You can import your PhpGedView data and settings later.'), '</p>';
+		$dbname_ok=false;
+	} catch (PDOException $ex) {
+		// Table/column not found?  Good!
 	}
 }
 
@@ -428,7 +453,7 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 		'</td></tr></table>',
 		'</fieldset>',
 		'<p>', i18n::translate('<b>webtrees</b> needs to send emails, such as password reminders and site notifications.  To do this, it needs to connect to an SMTP (mail-relay) service.  If your server provides this, enter the details here.  If it does not, most email providers will allow you to use their SMTP service.  Check with their support documentation for details.'), '</p>',
-		'<p>', i18n::translate('To use a Google mail account, use the following settings: server=smtp.gmail.com, port=587, security=tls, username=xxxxx@gmail.com'), '</p>',
+		'<p>', i18n::translate('To use a Google mail account, use the following settings: server=smtp.gmail.com, port=587, security=tls, username=xxxxx@gmail.com, password=[your gmail password]'), '</p>',
 		'<p>', i18n::translate('If you do not know these settings, leave the default values.  They may work.  You can change them later.'), '</p>',
 		'<fieldset><legend>', i18n::translate('SMTP mail server'), '</legend>',
 		'<table border="0"><tr><td>',
@@ -438,7 +463,7 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 		$_POST['smtpuse'] ? 'selected="selected"' : '',
 		'>', i18n::translate('yes'), '</option>',
 		'<option value="no" ',
-		$_POST['smtpuse'] ? 'selected="selected"' : '',
+		!$_POST['smtpuse'] ? 'selected="selected"' : '',
 		'>', i18n::translate('no'), '</option>',
 		'</select></td><td>',
 		i18n::translate('If you don\'t want to send mail, for example when running webtrees with a single user or on a standalone compter, you can disable this feature.'),
@@ -457,7 +482,7 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 		$_POST['smtpusepw'] ? 'selected="selected"' : '',
 		'>', i18n::translate('yes'), '</option>',
 		'<option value="no" ',
-		$_POST['smtpusepw'] ? 'selected="selected"' : '',
+		!$_POST['smtpusepw'] ? 'selected="selected"' : '',
 		'>', i18n::translate('no'), '</option>',
 		'</select></td><td>',
 		i18n::translate('Most SMTP servers require a password.'),
@@ -467,7 +492,7 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 		'&nbsp;',
 		'</td></tr><tr><td>',
 		i18n::translate('Password'), '</td><td>',
-		'<input type="text" name="smtppass" value="', htmlspecialchars($_POST['smtppass']), '"></td><td>',
+		'<input type="password" name="smtppass" value="', htmlspecialchars($_POST['smtppass']), '"></td><td>',
 		'&nbsp;',
 		'</td></tr><tr><td>',
 		i18n::translate('Security'), '</td><td>',
@@ -532,9 +557,9 @@ try {
 	);
 	$dbh->exec(
 		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}site_setting (".
-		" site_setting_name  VARCHAR(32)  NOT NULL,".
-		" site_setting_value VARCHAR(255) NOT NULL,".
-		" PRIMARY KEY (site_setting_name)".
+		" setting_name  VARCHAR(32)  NOT NULL,".
+		" setting_value VARCHAR(255) NOT NULL,".
+		" PRIMARY KEY (setting_name)".
 		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
 	);
 	$dbh->exec(
@@ -855,10 +880,6 @@ try {
 	);
 
 	$dbh->exec(
-		"INSERT IGNORE INTO {$TBLPREFIX}gedcom (gedcom_id, gedcom_name) VALUES ".
-		" (1, 'default.ged')"
-	);
-	$dbh->exec(
 		"INSERT IGNORE INTO {$TBLPREFIX}user (user_id, user_name, real_name, email, password) VALUES ".
 		" (1, '".addcslashes($_POST['wtuser'], "'")."', '".addcslashes($_POST['wtname'], "'")."', '".addcslashes($_POST['wtemail'], "'")."', '".crypt($_POST['wtpass'])."')"
 	);
@@ -868,7 +889,7 @@ try {
 	);
 	$dbh->exec(
 		"INSERT IGNORE INTO {$TBLPREFIX}user_setting (user_id, setting_name, setting_value) VALUES ".
-		" (1, 'language', '", Zend_Registry::get('Zend_Locale'), "')"
+		" (1, 'language', '".Zend_Registry::get('Zend_Locale')."')"
 	);
 	$dbh->exec(
 		"INSERT IGNORE INTO {$TBLPREFIX}user_setting (user_id, setting_name, setting_value) VALUES ".
@@ -891,8 +912,8 @@ try {
 		" (1, 'visibleonline', 'Y')"
 	);
 	$dbh->exec(
-		"INSERT IGNORE INTO {$TBLPREFIX}site_setting (site_setting_name, site_setting_value) VALUES ".
-		"('WEBTREES_SCHEMA_VERSION',         '1'),".
+		"INSERT IGNORE INTO {$TBLPREFIX}site_setting (setting_name, setting_value) VALUES ".
+		"('WT_SCHEMA_VERSION',               '1'),".
 		"('DEFAULT_GEDCOM',                  'default.ged'),".
 		"('INDEX_DIRECTORY',                 'index/'),".
 		"('AUTHENTICATION_MODULE',           'includes/authentication.php'),".
@@ -909,9 +930,9 @@ try {
 		"('LOGIN_URL',                       ''),".
 		"('MAX_VIEWS',                       '20'),".
 		"('MAX_VIEW_TIME',                   '1'),".
-		"('MEMORY_LIMIT',                    '".addcslashes($_POST['maxmem'], "M'")."'),".
+		"('MEMORY_LIMIT',                    '".addcslashes($_POST['maxmem'], "'")."M'),".
 		"('MAX_EXECUTION_TIME',              '".addcslashes($_POST['maxcpu'], "'")."'),".
-		"('SMTP_ACTIVE',                     '".($_POST['smtpuse']=='yes':1:0)."'),".
+		"('SMTP_ACTIVE',                     '".($_POST['smtpuse']=='yes'?1:0)."'),".
 		"('SMTP_HOST',                       '".addcslashes($_POST['smtpserv'], "'")."'),".
 		"('SMTP_HELO',                       '".addcslashes($_POST['smtpsender'], "'")."'),".
 		"('SMTP_PORT',                       '".addcslashes($_POST['smtpport'], "'")."'),".

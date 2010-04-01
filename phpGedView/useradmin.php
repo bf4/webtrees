@@ -30,7 +30,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'useradmin.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/functions/functions_edit.php';
 
 // Only admin users can access this page
@@ -72,8 +72,7 @@ $ged                     =safe_GET('ged',      WT_REGEX_NOSCRIPT,               
 
 // Extract form variables
 $oldusername             =safe_POST('oldusername',  WT_REGEX_USERNAME);
-$firstname               =safe_POST('firstname'  );
-$lastname                =safe_POST('lastname'   );
+$realname                =safe_POST('realname'   );
 $pass1                   =safe_POST('pass1',        WT_REGEX_PASSWORD);
 $pass2                   =safe_POST('pass2',        WT_REGEX_PASSWORD);
 $emailaddress            =safe_POST('emailaddress', WT_REGEX_EMAIL);
@@ -124,97 +123,81 @@ if ($action=='createuser' || $action=='edituser2') {
 			print_header(i18n::translate('User administration'));
 			echo "<span class=\"error\">", i18n::translate('Passwords do not match.'), "</span><br />";
 		} else {
-			$alphabet=getAlphabet()."_-. ";
-			$i=1;
-			$pass=true;
-			while (strlen($username) > $i) {
-				if (stristr($alphabet, $username{$i})===false) {
-					$pass=false;
-					break;
-				}
-				$i++;
-			}
-			if (!$pass) {
-				print_header(i18n::translate('User administration'));
-				echo "<span class=\"error\">", i18n::translate('User name contains invalid characters'), "</span><br />";
-			} else {
-				// New user
-				if ($action=='createuser') {
-					if ($user_id=create_user($username, crypt($pass1))) {
-						set_user_setting($user_id, 'reg_timestamp', date('U'));
-						set_user_setting($user_id, 'sessiontime', '0');
-						AddToLog("User ->{$username}<- created");
-					} else {
-						AddToLog("User ->{$username}<- was not created");
-						$user_id=get_user_id($username);
-					}
+			// New user
+			if ($action=='createuser') {
+				if ($user_id=create_user($username, $realname, $emailaddress, crypt($pass1))) {
+					set_user_setting($user_id, 'reg_timestamp', date('U'));
+					set_user_setting($user_id, 'sessiontime', '0');
+					AddToLog("User ->{$username}<- created");
 				} else {
+					AddToLog("User ->{$username}<- was not created");
 					$user_id=get_user_id($username);
 				}
-				// Change password
-				if ($action=='edituser2' && !empty($pass1)) {
-					set_user_password($user_id, crypt($pass1));
-					AddToLog("User ->{$oldusername}<- had password changed");
-				}
-				// Change username
-				if ($action=='edituser2' && $username!=$oldusername) {
-					rename_user($oldusername, $username);
-					AddToLog("User ->{$oldusername}<- renamed to ->{$username}<-");
-				}
-				// Create/change settings that can be updated in the user's gedcom record?
-				$email_changed=($emailaddress!=get_user_setting($user_id, 'email'));
-				$newly_verified=($verified_by_admin=='yes' && get_user_setting($user_id, 'verified_by_admin')!='yes');
-				// Create/change other settings
-				set_user_setting($user_id, 'firstname',            $firstname);
-				set_user_setting($user_id, 'lastname',             $lastname);
-				set_user_setting($user_id, 'email',                $emailaddress);
-				set_user_setting($user_id, 'theme',                $user_theme);
-				set_user_setting($user_id, 'language',             $user_language);
-				set_user_setting($user_id, 'contactmethod',        $new_contact_method);
-				set_user_setting($user_id, 'defaulttab',           $new_default_tab);
-				set_user_setting($user_id, 'comment',              $new_comment);
-				set_user_setting($user_id, 'comment_exp',          $new_comment_exp);
-				set_user_setting($user_id, 'max_relation_path',    $new_max_relation_path);
-				set_user_setting($user_id, 'relationship_privacy', $new_relationship_privacy);
-				set_user_setting($user_id, 'auto_accept',          $new_auto_accept);
-				set_user_setting($user_id, 'canadmin',             $canadmin);
-				set_user_setting($user_id, 'visibleonline',        $visibleonline);
-				set_user_setting($user_id, 'editaccount',          $editaccount);
-				set_user_setting($user_id, 'verified',             $verified);
-				set_user_setting($user_id, 'verified_by_admin',    $verified_by_admin);
-				foreach ($all_gedcoms as $ged_id=>$ged_name) {
-					set_user_gedcom_setting($user_id, $ged_id, 'gedcomid', safe_POST_xref('gedcomid'.$ged_id));
-					set_user_gedcom_setting($user_id, $ged_id, 'rootid',   safe_POST_xref('rootid'.$ged_id));
-					set_user_gedcom_setting($user_id, $ged_id, 'canedit',  safe_POST('canedit'.$ged_id, array_keys($ALL_EDIT_OPTIONS)));
-				}
-				// If we're verifying a new user, send them a message to let them know
-				if ($newly_verified && $action=='edituser2') {
-					i18n::init($user_language);
-					$serverURL = rtrim($SERVER_URL, '/');
-					$message=array();
-					$message["to"]=$username;
-					$headers="From: ".$WEBTREES_EMAIL;
-					$message["from"]=WT_USER_NAME;
-					$message["subject"]=i18n::translate('Approval of account at %s', $serverURL);
-					$message["body"]=i18n::translate('The administrator at the webtrees site %s has approved your application for an account.  You may now login by accessing the following link: %s', $serverURL, $serverURL);
-					$message["created"]="";
-					$message["method"]="messaging2";
-					addMessage($message);
-					// and send a copy to the admin
-/*					$message=array();
-					$message["to"]=WT_USER_NAME;
-					$headers="From: ".$WEBTREES_EMAIL;
-					$message["from"]=$username; // fake the from address - so the admin can "reply" to it.
-					$message["subject"]=i18n::translate('Approval of account at %s', $serverURL));
-					$message["body"]=i18n::translate('The administrator at the webtrees site %s has approved your application for an account.  You may now login by accessing the following link: %s', $serverURL, $serverURL));
-					$message["created"]="";
-					$message["method"]="messaging2";
-					addMessage($message); */
-				}
-				// Reload the form cleanly, to allow the user to verify their changes
-				header("Location: ".encode_url("useradmin.php?action=edituser&username={$username}&ged={$ged}", false));
-				exit;
+			} else {
+				$user_id=get_user_id($oldusername);
 			}
+			// Change password
+			if ($action=='edituser2' && !empty($pass1)) {
+				set_user_password($user_id, crypt($pass1));
+				AddToLog("User ->{$oldusername}<- had password changed");
+			}
+			// Change username
+			if ($action=='edituser2' && $username!=$oldusername) {
+				rename_user($oldusername, $username);
+				AddToLog("User ->{$oldusername}<- renamed to ->{$username}<-");
+			}
+				// Create/change settings that can be updated in the user's gedcom record?
+			$email_changed=($emailaddress!=getUserEmail($user_id));
+			$newly_verified=($verified_by_admin=='yes' && get_user_setting($user_id, 'verified_by_admin')!='yes');
+			// Create/change other settings
+			setUserFullName ($user_id, $realname);
+			setUserEmail    ($user_id, $emailaddress);
+			set_user_setting($user_id, 'theme',                $user_theme);
+			set_user_setting($user_id, 'language',             $user_language);
+			set_user_setting($user_id, 'contactmethod',        $new_contact_method);
+			set_user_setting($user_id, 'defaulttab',           $new_default_tab);
+			set_user_setting($user_id, 'comment',              $new_comment);
+			set_user_setting($user_id, 'comment_exp',          $new_comment_exp);
+			set_user_setting($user_id, 'max_relation_path',    $new_max_relation_path);
+			set_user_setting($user_id, 'relationship_privacy', $new_relationship_privacy);
+			set_user_setting($user_id, 'auto_accept',          $new_auto_accept);
+			set_user_setting($user_id, 'canadmin',             $canadmin);
+			set_user_setting($user_id, 'visibleonline',        $visibleonline);
+			set_user_setting($user_id, 'editaccount',          $editaccount);
+			set_user_setting($user_id, 'verified',             $verified);
+			set_user_setting($user_id, 'verified_by_admin',    $verified_by_admin);
+			foreach ($all_gedcoms as $ged_id=>$ged_name) {
+				set_user_gedcom_setting($user_id, $ged_id, 'gedcomid', safe_POST_xref('gedcomid'.$ged_id));
+				set_user_gedcom_setting($user_id, $ged_id, 'rootid',   safe_POST_xref('rootid'.$ged_id));
+				set_user_gedcom_setting($user_id, $ged_id, 'canedit',  safe_POST('canedit'.$ged_id, array_keys($ALL_EDIT_OPTIONS)));
+			}
+			// If we're verifying a new user, send them a message to let them know
+			if ($newly_verified && $action=='edituser2') {
+				i18n::init($user_language);
+				$serverURL = rtrim($SERVER_URL, '/');
+				$message=array();
+				$message["to"]=$username;
+				$headers="From: ".$WEBTREES_EMAIL;
+				$message["from"]=WT_USER_NAME;
+				$message["subject"]=i18n::translate('Approval of account at %s', $serverURL);
+				$message["body"]=i18n::translate('The administrator at the webtrees site %s has approved your application for an account.  You may now login by accessing the following link: %s', $serverURL, $serverURL);
+				$message["created"]="";
+				$message["method"]="messaging2";
+				addMessage($message);
+				// and send a copy to the admin
+/*				$message=array();
+				$message["to"]=WT_USER_NAME;
+				$headers="From: ".$WEBTREES_EMAIL;
+				$message["from"]=$username; // fake the from address - so the admin can "reply" to it.
+				$message["subject"]=i18n::translate('Approval of account at %s', $serverURL));
+				$message["body"]=i18n::translate('The administrator at the webtrees site %s has approved your application for an account.  You may now login by accessing the following link: %s', $serverURL, $serverURL));
+				$message["created"]="";
+				$message["method"]="messaging2";
+				addMessage($message); */
+			}
+			// Reload the form cleanly, to allow the user to verify their changes
+			header("Location: ".encode_url("useradmin.php?action=edituser&username={$username}&ged={$ged}", false));
+			exit;
 		}
 	}
 } else {
@@ -236,9 +219,9 @@ if ($action=="edituser") {
 			frm.username.focus();
 			return false;
 		}
-		if (frm.firstname.value=="") {
-			alert("<?php echo i18n::translate('You must enter a first and last name.'); ?>");
-			frm.firstname.focus();
+		if (frm.realname.value=="") {
+			alert("<?php echo i18n::translate('You must enter a real name.'); ?>");
+			frm.realname.focus();
 			return false;
 		}
 		if ((frm.pass1.value!="")&&(frm.pass1.value.length < 6)) {
@@ -283,12 +266,8 @@ if ($action=="edituser") {
 	<td class="optionbox wrap"><input type="text" name="username" tabindex="<?php echo ++$tab; ?>" value="<?php echo $username; ?>" /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php echo i18n::translate('First Name'), help_link('useradmin_firstname'); ?></td>
-	<td class="optionbox wrap"><input type="text" name="firstname" tabindex="<?php echo ++$tab; ?>" value="<?php echo PrintReady(get_user_setting($user_id, 'firstname')); ?>" size="50" /></td>
-	</tr>
-	<tr>
-	<td class="descriptionbox wrap"><?php echo i18n::translate('Last Name'), help_link('useradmin_lastname'); ?></td>
-	<td class="optionbox wrap"><input type="text" name="lastname" tabindex="<?php echo ++$tab; ?>" value="<?php echo PrintReady(get_user_setting($user_id, 'lastname')); ?>" size="50" /></td>
+	<td class="descriptionbox wrap"><?php echo i18n::translate('Real name'), help_link('useradmin_realname'); ?></td>
+	<td class="optionbox wrap"><input type="text" name="realname" tabindex="<?php echo ++$tab; ?>" value="<?php echo getUserFullName($user_id); ?>" size="50" /></td>
 	</tr>
 	<tr>
 	<td class="descriptionbox wrap"><?php echo i18n::translate('Password'), help_link('useradmin_password'); ?></td>
@@ -391,7 +370,7 @@ if ($action=="edituser") {
 	<td class="optionbox wrap"><input type="checkbox" name="new_relationship_privacy" tabindex="<?php echo ++$tab; ?>" value="Y" <?php if (get_user_setting($user_id, 'relationship_privacy')=="Y") echo "checked=\"checked\""; ?> /></td></tr>
 	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Max relationship privacy path length'), help_link('useradmin_path_length'); ?></td>
 	<td class="optionbox wrap"><input type="text" name="new_max_relation_path" tabindex="<?php echo ++$tab; ?>" value="<?php echo get_user_setting($user_id, 'max_relation_path'); ?>" size="5" /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Email Address'), help_link('useradmin_email'); ?></td><td class="optionbox wrap"><input type="text" name="emailaddress" tabindex="<?php echo ++$tab; ?>" dir="ltr" value="<?php echo get_user_setting($user_id, 'email'); ?>" size="50" /></td></tr>
+	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Email Address'), help_link('useradmin_email'); ?></td><td class="optionbox wrap"><input type="text" name="emailaddress" tabindex="<?php echo ++$tab; ?>" dir="ltr" value="<?php echo getUserEmail($user_id); ?>" size="50" /></td></tr>
 	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('User verified himself'), help_link('useradmin_verified'); ?></td><td class="optionbox wrap"><input type="checkbox" name="verified" tabindex="<?php echo ++$tab; ?>" value="yes" <?php if (get_user_setting($user_id, 'verified')=="yes") echo "checked=\"checked\""; ?> /></td></tr>
 	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('User approved by Admin'), help_link('useradmin_verbyadmin'); ?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php echo ++$tab; ?>" value="yes" <?php if (get_user_setting($user_id, 'verified_by_admin')=="yes") echo "checked=\"checked\""; ?> /></td></tr>
 	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Change Language'), help_link('edituser_change_lang'); ?></td><td class="optionbox wrap" valign="top">
@@ -473,9 +452,6 @@ if ($action == "listusers") {
 	$showprivs=($view=="preview"); // expand gedcom privs by default in print-preview
 
 	switch ($sort) {
-		case "sortfname":
-			$users = get_all_users("asc", "firstname", "lastname");
-			break;
 		case "sortllgn":
 			$users = get_all_users("desc", "sessiontime");
 			break;
@@ -491,9 +467,9 @@ if ($action == "listusers") {
 		case "sortusername":
 			$users = get_all_users("asc", "username");
 			break;
-		case "sortlname":
+		case "sortrealname":
 		default:
-			$users = get_all_users("asc", "lastname", "firstname");
+			$users = get_all_users("asc", "realname");
 			break;
 	}
 
@@ -546,7 +522,7 @@ if ($action == "listusers") {
 	echo "<td class=\"descriptionbox wrap\">";
 	echo i18n::translate('Send Message'), "</td>";
 	} ?>
-	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortlname&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo i18n::translate('Full Name'); ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortrealname&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo i18n::translate('Real name'); ?></a></td>
 	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortusername&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo i18n::translate('User name'); ?></a></td>
 	<td class="descriptionbox wrap"><?php echo i18n::translate(' Languages'); ?></td>
 	<td class="descriptionbox" style="padding-left:2px"><a href="javascript: <?php echo i18n::translate('Privileges'); ?>" onclick="<?php
@@ -685,9 +661,9 @@ if ($action == "createform") {
 				frm.username.focus();
 				return false;
 			}
-			if (frm.firstname.value=="") {
-				alert("<?php echo i18n::translate('You must enter a first and last name.'); ?>");
-				frm.firstname.focus();
+			if (frm.realname.value=="") {
+				alert("<?php echo i18n::translate('You must enter a real name.'); ?>");
+				frm.realname.focus();
 				return false;
 			}
 			if (frm.pass1.value=="") {
@@ -736,8 +712,7 @@ if ($action == "createform") {
 	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Back'); ?>" onclick="window.location='useradmin.php';"/>
 	</td></tr>
 		<tr><td class="descriptionbox wrap width20"><?php echo i18n::translate('User name'), help_link('useradmin_username'); ?></td><td class="optionbox wrap"><input type="text" name="username" tabindex="<?php echo ++$tab; ?>" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('First Name'), help_link('useradmin_firstname'); ?></td><td class="optionbox wrap"><input type="text" name="firstname" tabindex="<?php echo ++$tab; ?>" size="50" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Last Name'), help_link('useradmin_lastname'); ?></td><td class="optionbox wrap"><input type="text" name="lastname" tabindex="<?php echo ++$tab; ?>" size="50" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Real name'), help_link('useradmin_realname'); ?></td><td class="optionbox wrap"><input type="text" name="realname" tabindex="<?php echo ++$tab; ?>" size="50" /></td></tr>
 		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Password'), help_link('useradmin_password'); ?></td><td class="optionbox wrap"><input type="password" name="pass1" tabindex="<?php echo ++$tab; ?>" /></td></tr>
 		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Confirm Password'), help_link('useradmin_conf_password'); ?></td><td class="optionbox wrap"><input type="password" name="pass2" tabindex="<?php echo ++$tab; ?>" /></td></tr>
 		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('GEDCOM INDI record ID'), help_link('useradmin_gedcomid'); ?></td><td class="optionbox wrap">

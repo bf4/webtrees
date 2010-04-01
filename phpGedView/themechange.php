@@ -29,7 +29,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'themechange.php');
-require './config.php';
+require './includes/session.php';
 
 // Extract request variables
 $mytheme =safe_GET('mytheme');

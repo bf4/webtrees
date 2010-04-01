@@ -29,14 +29,9 @@
  */
 
 define('WT_SCRIPT_NAME', 'index.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/index_cache.php';
 require_once WT_ROOT.'includes/functions/functions_print_facts.php';  //--needed for the expand url function in some of the blocks
-
-if (!isset($CONFIGURED)) {
-	print "Unable to include the config.php file.  Make sure that . is in your PHP include path in the php.ini file.";
-	exit;
-}
 
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 if (isset($_REQUEST['ctype'])) $ctype = $_REQUEST['ctype'];

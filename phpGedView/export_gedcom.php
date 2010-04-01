@@ -28,7 +28,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'export_gedcom.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/functions/functions_export.php';
 
 // Which gedcoms do we have permission to export?

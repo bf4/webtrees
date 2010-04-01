@@ -31,7 +31,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'mediaviewer.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/controllers/media_ctrl.php';
 
 $controller = new MediaController();

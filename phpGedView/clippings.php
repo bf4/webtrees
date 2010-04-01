@@ -31,7 +31,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'clippings.php');
-require './config.php';
+require './includes/session.php';
 require WT_ROOT.'includes/controllers/clippings_ctrl.php';
 
 loadlangfile('pgv_admin');		// we need some definitions from this file, even when not logged in as admin

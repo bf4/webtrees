@@ -28,7 +28,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'descendancy.php');
-require './config.php';
+require './includes/session.php';
 require WT_ROOT.'includes/controllers/descendancy_ctrl.php';
 require WT_ROOT.'includes/functions/functions_print_lists.php';
 

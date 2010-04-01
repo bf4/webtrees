@@ -111,7 +111,7 @@ class GrampsExport {
 		$etResname = $eResname->appendChild($etResname);
 		$eResname = $eResearcher->appendChild($eResname);
 		$eResemail = $this->dom->createElement("resemail");
-		$etResemail = $this->dom->createTextNode(get_user_setting($user, 'email'));
+		$etResemail = $this->dom->createTextNode(getUserEmail($user));
 		$etResemail = $eResemail->appendChild($etResemail);
 		$eResemail = $eResearcher->appendChild($eResemail);
 		$eResearcher = $eHeader->appendChild($eResearcher);

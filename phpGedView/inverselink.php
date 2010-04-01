@@ -30,7 +30,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'inverselink.php');
-require './config.php';
+require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 	
 //-- page parameters and checking

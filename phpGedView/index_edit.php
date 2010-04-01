@@ -31,7 +31,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'index_edit.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/index_cache.php';
 
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];

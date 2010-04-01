@@ -31,7 +31,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'editgedcoms.php');
-require './config.php';
+require './includes/session.php';
 
 $all_gedcoms=get_all_gedcoms();
 asort($all_gedcoms);

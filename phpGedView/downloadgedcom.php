@@ -29,7 +29,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'downloadgedcom.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/functions/functions_export.php';
 
 // Validate user parameters

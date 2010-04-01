@@ -30,7 +30,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'help_text.php');
-require './config.php';
+require './includes/session.php';
 
 $help=safe_GET('help');
 switch ($help) {
@@ -2182,41 +2182,6 @@ case 'DAYS_TO_SHOW_LIMIT':
 	$text=i18n::translate('Enter the maximum number of days to show in Upcoming Events blocks.  This number cannot be greater than 30. If you enter a larger value, 30 will be used.<br /><br />The value you enter here determines how far ahead <b>webtrees</b> looks when searching for upcoming events.  The results of this search, done once daily, are copied into a temporary file.<br /><br />No Upcoming Events blocks on Index or Portal pages can request more days than this value.  The larger you make this, the longer it will take to build the daily database extract, and the longer it will take to display the block, even when you request to display a number of days less than this setting.');
 	break;
 
-case 'DBHOST':
-	$title=i18n::translate('Database host');
-	$text=i18n::translate('The DNS or IP address of the computer hosting your database server.  This setting is ignored if you are using an SQLite database.');
-	break;
-
-case 'DBNAME':
-	$title=i18n::translate('Database name');
-	$text=i18n::translate('The database in the server you want <b>webtrees</b> to use.<br /><br />The username you enter in the Database Username field must have Create, Insert, Update, Delete, and Select privileges on this database.  In SQLite you need to set this to a file name in a directory that is writable by PHP such as your index directory (index/webtrees.db).');
-	break;
-
-case 'DBPASS':
-	$title=i18n::translate('Database password');
-	$text=i18n::translate('The database password for the user you entered in the Database Username field.  This setting is ignored if you are using an SQLite database.');
-	break;
-
-case 'DBPORT':
-	$title=i18n::translate('Database port');
-	$text=i18n::translate('The TCP Port that should be used when connecting to your database server.  Leave this setting blank to use the default port for your particular type of database.  This setting is ignored if you are using an SQLite database.');
-	break;
-
-case 'DBTYPE':
-	$title=i18n::translate('Database type');
-	$text=i18n::translate('The type of database to connect to.<br /><br /><b>webtrees</b> can use any database that has a PDO driver available.  You need to ensure that your php.ini file loads both the <b>php_pdo</b> library and the appropriate driver for your database, e.g. <b>php_pdo_mysql</b>.<br /><br />Most databases require a username and password.  You also need to create the database before installing <b>webtrees</b>. However, SQLite does not need Database Host, Database Username, or Database Password, but you will need to set a file path for your database in the Database Name field.  <b>webtrees</b> will create the SQLite database file for you.');
-	break;
-
-case 'DBUSER':
-	$title=i18n::translate('Database username');
-	$text=i18n::translate('The database username required to login to your database.  This setting is ignored if you are using an SQLite database.');
-	break;
-
-case 'DB_UTF8_COLLATION':
-	$title=i18n::translate('Use the database to provide UTF-8 collation');
-	$text=i18n::translate('Controls whether <b>webtrees</b> should use the database\'s built-in sorting and collation facilities.  It is generally quicker to use the database to sort and filter data rather than PHP, although not all databases/versions provide this feature.  The collation sequence used for each language is set in that language\'s settings page.<br /><br /><span class="warning">IMPORTANT: You should only set this value to YES if you do so BEFORE the database tables are created for the first time. Selecting it on an existing database could cause your data to become corrupted.</span><br /><br />MySQL and PostgreSQL both offer good support for UTF-8, although not all collation sequences are available in earlier versions of MySQL.  Other databases offer little or no support for UTF-8. If you are unsure of your database\'s support of UTF-8, you should set this value to <b>No</b>.<br /><br />This <a href=\'http://en.wikipedia.org/wiki/UTF-8\' target=\'_blank\' title=\'Wikipedia article\'><b>Wikipedia article</b></a> contains comprehensive information and links about UTF-8.');
-	break;
-
 case 'DEFAULT_PEDIGREE_GENERATIONS':
 	$title=i18n::translate('Pedigree generations');
 	$text=i18n::translate('Set the default number of generations to display on Descendancy and Pedigree charts.');
@@ -2910,11 +2875,6 @@ case 'SURNAME_TRADITION':
 case 'SYNC_GEDCOM_FILE':
 	$title=i18n::translate('Synchronize edits into GEDCOM file');
 	$text=i18n::translate('In past versions of <b>webtrees</b> the pending edits were stored in the GEDCOM file and the changed records were then "accepted" into the database.  Starting with v4.1 pending changes are no longer stored in the GEDCOM file but in the changes file.  <br /><br />Setting this value to true will update the GEDCOM file when changes are accepted into the database.  This will keep the GEDCOM file synchronized with the database.  For greater compatibility with previous versions the default value of this field is on.<br /><br />You may want to turn it off to conserve memory when accepting changes.');
-	break;
-
-case 'TBLPREFIX':
-	$title=i18n::translate('Database table prefix');
-	$text=i18n::translate('A prefix to prepend to the tables created by <b>webtrees</b>.  By changing this value you can set up multiple <b>webtrees</b> sites to use the same physical database but different tables.  For example, the same site could host a "test" as well as a "production" installation of <b>webtrees</b> with completely independent data tables.');
 	break;
 
 case 'THEME_DIR':
@@ -4046,19 +4006,14 @@ case 'edituser_email':
 	$text=i18n::translate('Your correct email address is important to us to keep in touch with you.<br /><br />If you get a new email address, as usually happens when you change your Internet provider, please do not forget to change the address here as well.  You won\'t get a confirmation message from this site when you change this address, but any future messages directed to you will go this new address.');
 	break;
 
-case 'edituser_firstname':
-	$title=i18n::translate('First name');
-	$text=i18n::translate('In this box you can change your first name.  This is the name that other users see when you are logged in.<br /><br />Although the choice of what to put into this field is yours, you should inform the administrator when you change it.  When others see an unknown person on-line, they might wonder and ask questions.  The admin can find out without having received your notice, but you should save him that unnecessary work.');
-	break;
-
 case 'edituser_gedcomid':
 	$title=i18n::translate('GEDCOM individual record ID');
 	$text=i18n::translate('This is an identification number that links you to your own data in the database.<br /><br />You cannot change this ID; it\'s set by the administrator.  If you think that this ID is not correct, you should contact the administrator to have it changed.');
 	break;
 
-case 'edituser_lastname':
-	$title=i18n::translate('Last name');
-	$text=i18n::translate('In this box you can change your last name.  This is the name that other users see when you are logged in.<br /><br />Although the choice of what to put into this field is yours, you should inform the administrator when you change it.  When others see an unknown person on-line, they might wonder and ask questions.  The admin can find out without having received your notice, but you should save him that unnecessary work.');
+case 'edituser_realname':
+	$title=i18n::translate('Real name');
+	$text=i18n::translate('In this box you can change your real name.  This is the name that other users see when you are logged in.<br /><br />Although the choice of what to put into this field is yours, you should inform the administrator when you change it.  When others see an unknown person on-line, they might wonder and ask questions.  The admin can find out without having received your notice, but you should save him that unnecessary work.');
 	break;
 
 case 'edituser_my_account':
@@ -4822,19 +4777,14 @@ case 'new_password':
 	$text=i18n::translate('If you have forgotten your password, you can click this link to request a new password.<br /><br />You will be taken to the "Lost Password Request" page.');
 	break;
 
-case 'new_user_firstname':
-	$title=i18n::translate('First name');
-	$text=i18n::translate('In this box you have to type your first name.<br /><br />We need your first and last names to determine whether you qualify for an account at this site, and what your rights should be.  These names will be visible to other logged-in family members and users.');
-	break;
-
 case 'new_user':
 	$title=i18n::translate('Request user account');
 	$text=i18n::translate('If you are a visitor to this site and wish to request a user account, you can click this link.<br /><br />You will be taken to the "Register" page.');
 	break;
 
-case 'new_user_lastname':
-	$title=i18n::translate('Last name');
-	$text=i18n::translate('In this box you have to type your last name.<br /><br />We need your first and last names to determine whether you qualify for an account at this site, and what your rights should be.  These names will be visible to other logged-in family members and users.');
+case 'new_user_realname':
+	$title=i18n::translate('Real name');
+	$text=i18n::translate('In this box you have to type your real name.<br /><br />We need your first and last names to determine whether you qualify for an account at this site, and what your rights should be.  This name will be visible to other logged-in family members and users.');
 	break;
 
 case 'next_path':

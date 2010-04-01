@@ -29,7 +29,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'module.php');
-require './config.php';
+require './includes/session.php';
 
 // Simple mod system, based on the older phpnuke/postnuke
 define('WT_MOD_SIMPLE', 1);

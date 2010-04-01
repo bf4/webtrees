@@ -32,7 +32,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'rss.php');
-require './config.php';
+require './includes/session.php';
 
 require_once WT_ROOT.'includes/classes/class_feedcreator.php';
 require_once WT_ROOT.'includes/functions/functions_rss.php';

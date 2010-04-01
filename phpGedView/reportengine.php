@@ -30,7 +30,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'reportengine.php');
-require './config.php';
+require './includes/session.php';
 
 // We have finished writing to $_SESSION, so release the lock
 session_write_close();

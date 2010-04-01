@@ -28,7 +28,7 @@
 */
 
 define('WT_SCRIPT_NAME', 'branches.php');
-require './config.php';
+require './includes/session.php';
 
 //-- const
 $fact='MARR';

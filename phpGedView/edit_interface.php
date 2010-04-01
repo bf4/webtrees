@@ -30,7 +30,7 @@
 */
 
 define('WT_SCRIPT_NAME', 'edit_interface.php');
-require './config.php';
+require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 
 // TODO work out whether to use GET/POST for these

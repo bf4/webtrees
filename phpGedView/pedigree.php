@@ -33,7 +33,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'pedigree.php');
-require './config.php';
+require './includes/session.php';
 require WT_ROOT.'includes/controllers/pedigree_ctrl.php';
 
 $controller = new PedigreeController();

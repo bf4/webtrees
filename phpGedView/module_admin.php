@@ -28,7 +28,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'module_admin.php');
-require_once 'config.php';
+require_once 'includes/session.php';
 require_once(WT_ROOT.'includes/classes/class_module.php');
 
 

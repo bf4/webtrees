@@ -28,7 +28,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'message.php');
-require './config.php';
+require './includes/session.php';
 
 print_simple_header(i18n::translate('webtrees Message'));
 

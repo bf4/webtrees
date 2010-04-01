@@ -28,7 +28,8 @@
 */
 
 define('WT_SCRIPT_NAME', 'autocomplete.php');
-require './config.php';
+require './includes/session.php';
+
 header('Content-Type: text/plain; charset=UTF-8');
 
 // We have finished writing to $_SESSION, so release the lock

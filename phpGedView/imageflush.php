@@ -29,7 +29,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'imageflush.php');
-require './config.php';
+require './includes/session.php';
 
 /**
  * display any message as a PNG image

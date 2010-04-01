@@ -32,7 +32,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'hourglass.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/controllers/hourglass_ctrl.php';
 
 $controller = new HourglassController();

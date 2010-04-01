@@ -30,7 +30,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'login.php');
-require './config.php';
+require './includes/session.php';
 
 // Extract query parameters
 $url         =safe_POST('url',      WT_REGEX_URL);

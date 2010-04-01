@@ -91,50 +91,21 @@ class WT_DB {
 	}
 
 	// Implement the singleton pattern
-	public static function createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DB_UTF8_COLLATION) {
+	public static function createInstance($DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS) {
 		if (self::$pdo instanceof PDO) {
 			trigger_error('WT_DB::createInstance() can only be called once.', E_USER_ERROR);
 		}
-		// mysqli is legacy, from PEAR::DB
-		if ($DBTYPE=='mysqli') {
-			$DBTYPE='mysql';
-		}
-		// Check that the driver is loaded
-		if (!extension_loaded('pdo') || !in_array($DBTYPE, PDO::getAvailableDrivers())) {
-			trigger_error("PDO/{$DBTYPE} is not installed.", E_USER_ERROR);
-		}
 		// Create the underlying PDO object
-		switch ($DBTYPE) {
-		case 'mysql':
-			self::$pdo=new PDO(
-				"mysql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS,
-				array(
-					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
-					PDO::ATTR_CASE=>PDO::CASE_LOWER,
-					PDO::ATTR_AUTOCOMMIT=>true
-				)
-			);
-			self::$AUTO_ID_TYPE ='INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY';
-			self::$ID_TYPE      ='INTEGER UNSIGNED';
-			self::$INT1_TYPE    ='TINYINT';
-			self::$INT2_TYPE    ='SMALLINT';
-			self::$INT3_TYPE    ='MEDIUMINT';
-			self::$INT4_TYPE    ='INT';
-			self::$INT8_TYPE    ='BIGINT';
-			self::$CHAR_TYPE    ='CHAR';
-			self::$VARCHAR_TYPE ='VARCHAR';
-			self::$UNSIGNED     ='UNSIGNED';
-			self::$TEXT_TYPE    ='TEXT';
-			self::$LONGTEXT_TYPE='LONGTEXT';
-			if ($DB_UTF8_COLLATION) {
-				self::$pdo->exec("SET NAMES UTF8");
-				self::$UTF8_TABLE   ='CHARACTER SET utf8 COLLATE utf8_unicode_ci';
-			} else {
-				self::$UTF8_TABLE   ='';
-			}
-			break;
-		}
+		self::$pdo=new PDO(
+			"mysql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS,
+			array(
+				PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+				PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+				PDO::ATTR_CASE=>PDO::CASE_LOWER,
+				PDO::ATTR_AUTOCOMMIT=>true
+			)
+		);
+		self::$pdo->exec("SET NAMES UTF8");
 
 		// Assign the singleton
 		self::$instance=new self;

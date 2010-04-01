@@ -32,7 +32,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'treenav.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/classes/class_treenav.php';
 
 $zoom = 0;

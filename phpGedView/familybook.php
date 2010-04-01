@@ -30,7 +30,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'familybook.php');
-require './config.php';
+require './includes/session.php';
 require_once WT_ROOT.'includes/functions/functions_charts.php';
 
 // Extract form variables
