@@ -17,8 +17,8 @@ default: clean $(LABEL)$(COMPRESSION) webtrees.pot
 	@echo
 	@echo "Build successful. Now upload the files to launchpad.net:"
 	@echo
-	@echo "language-$(L10NVERSION)$(COMPRESSION) => https://launchpad.net/webtrees/....."
-	@echo "$(LABEL)$(COMPRESSION) => https://launchpad.net/webtrees/....."
+	@echo "language-$(L10NVERSION)$(COMPRESSION) => https://launchpad.net/webtrees/trunk/snapshot"
+	@echo "$(LABEL)$(COMPRESSION) => https://launchpad.net/webtrees/trunk/snapshot"
 	@echo "webtrees.pot => https://translations.launchpad.net/webtrees/trunk/+translations-upload"
 	@echo
 
