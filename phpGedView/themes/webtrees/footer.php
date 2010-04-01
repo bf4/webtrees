@@ -43,8 +43,6 @@ echo "</div> <!-- closing div id=\"content\" -->";
 	<img src="<?php echo $WT_IMAGE_DIR, '/', $WT_IMAGES['gedview']['other']; ?>" width="100" border="0" alt="<?php echo WT_WEBTREES, WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): ""; ?>"
 		title="<?php echo WT_WEBTREES, WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): "" ;?>" /></a><br />
 <br />
-<a href="<?php echo WT_SCRIPT_NAME, '?view=preview&amp;', get_query_string(); ?>"><?php echo i18n::translate('Printer-friendly Version'), help_link('preview'); ?></a>
-<br />
 <?php
 if ($SHOW_STATS || WT_DEBUG) {
 	echo execution_stats();

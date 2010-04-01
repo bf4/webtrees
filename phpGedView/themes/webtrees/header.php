@@ -62,7 +62,6 @@ if (!defined('WT_WEBTREES')) {
 			}
 		} ?>
 
-	<link rel="stylesheet" href="<?php echo $print_stylesheet; ?>" type="text/css" media="print" />
 	<?php if ($BROWSERTYPE == "msie") { ?>
 	<style type="text/css">
 		FORM { margin-top: 0px; margin-bottom: 0px; }
