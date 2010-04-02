@@ -56,25 +56,25 @@ echo
 	'</head><body>',
 	'<h1>', i18n::translate('<b>webtrees</b> site unavailable'), '</h1>',
 	'<div class="content">',
-	i18n::translate('<p>Oops!  The webserver is unable to connect to the database server.  It could be busy, undergoing maintenance, or simply broken.  You should <a href="index.php">try again</a> in a few minutes or contact the website administrator.</p>');
+	'<p>', i18n::translate('Oops!  The webserver is unable to connect to the database server.  It could be busy, undergoing maintenance, or simply broken.  You should <a href="index.php">try again</a> in a few minutes or contact the website administrator.'), '</p>';
 
 $config_ini_php=parse_ini_file('data/config.ini.php');
 if (is_array($config_ini_php) && array_key_exists('dbhost', $config_ini_php) && array_key_exists('dbport', $config_ini_php) && array_key_exists('dbuser', $config_ini_php) && array_key_exists('dbpass', $config_ini_php) && array_key_exists('dbname', $config_ini_php)) {
 	try {
 		$dbh=new PDO('mysql:host='.$config_ini_php['dbhost'].';port='.$config_ini_php['dbport'].';dbname='.$config_ini_php['dbname'], $config_ini_php['dbuser'], $config_ini_php['dbpass'], array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ, PDO::ATTR_CASE=>PDO::CASE_LOWER, PDO::ATTR_AUTOCOMMIT=>true));
 	} catch (PDOException $ex) {
-		echo i18n::translate('<p>The database reported the following error message:</p>');
+		echo '<p>', i18n::translate('The database reported the following error message:'), '</p>';
 		echo '<blockquote>', $ex->getMessage(), '</blockquote>';
 	}
 }
 
 echo i18n::translate('If you are the website administrator, you should check that:');
 echo '<ol>';
-echo i18n::translate('<li>the database connection settings in the file <b>/data/config.ini.php</b> are still correct</li>');
-echo i18n::translate('<li>the directory <b>/data</b> and the file <b>/data/config.ini.php</b> have access permissions that allow the webserver to read them</li>');
-echo i18n::translate('<li>you can connect to the database using other applications, such as phpmyadmin</li>');
+echo '<li>', i18n::translate('the database connection settings in the file <b>/data/config.ini.php</b> are still correct'), '</li>';
+echo '<li>', i18n::translate('the directory <b>/data</b> and the file <b>/data/config.ini.php</b> have access permissions that allow the webserver to read them'), '</li>';
+echo '<li>', i18n::translate('you can connect to the database using other applications, such as phpmyadmin'), '</li>';
 echo '</ol>';
-echo i18n::translate('<p class="good">If you cannot resolve the problem yourself, you can ask for help on the forums at <a href="http://webtrees.net">webtrees.net</a></p>');
+echo '<p class="good">', i18n::translate('If you cannot resolve the problem yourself, you can ask for help on the forums at <a href="http://webtrees.net">webtrees.net</a>'), '</p>';
 echo '</div>';
 echo '</body>';
 echo '</html>';
