@@ -1587,7 +1587,7 @@ case '_DEAT_HSIB':
 	$text='';
 	break;
 
-case '_DEAT_MOTHhelp':	
+case '_DEAT_MOTH':	
 	$title=i18n::translate('Death of mother');
 	$text='';
 	break;
@@ -2802,11 +2802,6 @@ case 'SHOW_RELATIVES_EVENTS':
 	$text=i18n::translate('Births, marriages, and deaths of relatives are important events in one\'s life. This option controls whether or not to show these events on the <i>Personal facts and details</i> tab on the Individual page.<br /><br />The events affected by this option are:<ul><li>Death of spouse</li><li>Birth and death of children</li><li>Death of parents</li><li>Birth and death of siblings</li><li>Death of grand-parents</li><li>Birth and death of parents\' siblings</li></ul>');
 	break;
 
-case 'SHOW_RESEARCH_ASSISTANT':
-	$title=i18n::translate('Show research assistant');
-	$text=i18n::translate('What type of user can view the Research Assistant module if it is installed?');
-	break;
-
 case 'SHOW_SOURCES':
 	$title=i18n::translate('Show sources');
 	$text=i18n::translate('Set the privacy access level for all Sources.  If the user does not have access to Sources, the Source list will be removed from the Lists menu and the Sources tab will not be shown on the Individual Details page.');
@@ -3013,11 +3008,6 @@ case 'calendar.php':
 	// menu
 	$title=i18n::translate('Anniversary calendar');
 	$text=i18n::translate('The anniversary calendar shows the persons and families who are linked to an event at a certain day or month or during a certain period of time. It has an advanced filtering system to select the right date, period, and events for you.<ul><li><a href="?help=annivers_date_select"><b>Day:</b></a></li><li><a href="?help=annivers_month_select"><b>Month:</b></a></li><li><a href="?help=annivers_year_select"><b>Year:</b></a></li><li><a href="?help=annivers_show"><b>Show / Show events of:</b></a></li><li><a href="?help=annivers_sex"><b>Gender</b></a></li><li><a href="?help=annivers_event"><b>Event</b></a></li><li><a href="?help=day_month"><b>View day / View month / View year</b></a></li><li><a href="?help=annivers_tip"><b>Tip</b></a></li></ul>');
-	break;
-
-case 'changelanguage.php':
-	$title=i18n::translate('Configuration of supported languages');
-	$text=i18n::translate('This page is used to control what language choices are available to your users.  For example, you can set things up so that only German and French are available.  This might be useful if, for example, you are not able to communicate with your users in Hungarian.<br /><br />You also use this page to alter certain aspects of <b>webtrees</b> that depend on the selected language.  For example, here is where you tell <b>webtrees</b> how to format date and time fields.<br /><br />The languages that are active and greyed out cannot be disabled because they are in use. Look at the bottom table to see where the language is used. When a language is no longer used by the GEDCOM or user you will be able to disable it.<br /><br />All of your changes will be recorded in a new file called <b>lang_settings.php</b> created in the <b>/index/</b> directory.  All of your further changes will be made to this new file and <b>webtrees</b> will use only <u>this</u> file.  You can revert to the original default language settings by deleting this file.<br /><br />If you must report problems with your language settings, please tell the <b>webtrees</b> support team whether this new file is present or not.');
 	break;
 
 case 'checklang.php':
@@ -3337,11 +3327,6 @@ case 'useradmin.php':
 	//////////////////////////////////////////////////////////////////////////////
 	// This section contains all the other help items.
 	//////////////////////////////////////////////////////////////////////////////
-
-case 'accesskey_viewing_advice':
-	$title=i18n::translate('Keyboard shortcuts');
-	$text=i18n::translate('Keyboard shortcuts are intended to help users who have difficulty with pointing devices such as a mouse.  Shortcut use differs according to your browser:<ul><li>Internet Explorer 5+: Hold down the ALT key while you strike the desired character, and then press ENTER.</li><li>Firefox 2+: Hold down the SHIFT and ALT key while you strike the desired character.  Do not press ENTER afterwards.</li><li>Firefox 1, 1.5 and Netscape 6+: Hold down the ALT key while you strike the desired character.  Do not press ENTER afterwards.</li><li>Opera: Hold down the SHIFT and ESC keys while you strike the desired character.  Do not press ENTER afterwards.</li><li>Internet Explorer 5+ for Mac / Safari 1.2+: Hold down the CTRL key while you strike the desired character.  Do not press ENTER afterwards.</li></ul><br />The following keyboard shortcuts are available: <ul><li>All Pages <ul><li><b>zero</b> - Information about keyboard shortcuts</li><li><b>one</b> - Home Page</li><li><b>2</b> - Help Contents</li><li><b>3</b> - Help with this page</li><li><b>4</b> - Contact </li><li><b>C</b> - Skip to Content</li><li><b>S</b> - Search </li></ul></li><li>Individual Page<ul><li><b>I</b> - Show Personal Facts and Details tab</li><li><b>N</b> - Show Notes tab</li><li><b>O</b> - Show Sources tab</li><li><b>A</b> - Show Media tab</li><li><b>R</b> - Show Close Relatives tab</li><li><b>L</b> - Show Research Assistant tab</li><li><b>P</b> - Show individual\'s Pedigree Chart</li><li><b>D</b> - Show individual\'s Descendancy Chart</li><li><b>T</b> - Show individual\'s Timeline Chart</li><li><b>M</b> - Show individual\'s Relationship to me chart</li><li><b>G</b> - View GEDCOM Record</li></ul></li><li>Family Pages <ul><li><b>P</b> - Show couple on timeline chart tab</li><li><b>D</b> - Show children on timeline chart tab</li><li><b>T</b> - Show family on timeline chart tab</li><li><b>G</b> - View GEDCOM Record</li></ul></li></ul>');
-	break;
 
 case 'add_child':
 	$title=i18n::translate('Add a child to this family');
@@ -3936,11 +3921,6 @@ case 'edit_given_name':
 	$text=i18n::translate('In this field you should enter the given names for the person.  As an example, in the name "John Robert Finlay", the given names that should be entered here are "John Robert"');
 	break;
 
-case 'edit_lang_utility':
-	$title=i18n::translate('Language file edit utility');
-	$text=i18n::translate('You can use this utility to edit the contents of a language file by using the contents of the English one.<br /><br />You will see the contents of the original English language file and the contents of the same file type (there are nine of these) in your chosen language.  You click on the message text shown below the English version.  This opens a new window where you can modify the text.  You can save the changes or abandon them.');
-	break;
-
 case 'edit_name':
 	$title=i18n::translate('Edit name');
 	$text=i18n::translate('This is the most important field in a person\'s Name record.<br /><br />This field should be filled automatically as the other fields are filled in, but it is provided so that you can edit the information according to your personal preference.<br /><br />The name in this field should be entered according to the GEDCOM 5.5.1 standards with the surname surrounded by forward slashes "/".  As an example, the name "John Robert Finlay Jr." should be entered like this: "John Robert /Finlay/ Jr.".');
@@ -4051,16 +4031,6 @@ case 'empty_lines_detected':
 	$text=i18n::translate('<b>webtrees</b> has detected that there are empty lines in your input file. These lines may cause errors and will be removed from the file before it is imported.');
 	break;
 
-case 'end_admin':
-	$title=i18n::translate('End extra admin information');
-	$text=i18n::translate('--- End extra Admin Info ---');
-	break;
-
-case 'export_lang_utility':
-	$title=i18n::translate('Language file export utility');
-	$text=i18n::translate('You can create documentation for administrators.<br /><br />This utility will produce an HTML version of the Configuration Help file in the selected language.  You can use your browser to look at this file, which is formatted for printing.');
-	break;
-
 case 'fambook_descent':
 	$title=i18n::translate('Descendant generations');
 	$text=i18n::translate('This value determines the number of descendant generations of the root person that will be printed in Hourglass format.');
@@ -4099,11 +4069,6 @@ case 'firstname_f':
 case 'firstname_i':
 	$title=i18n::translate('First name error');
 	$text=i18n::translate('The surname you have chosen has more than %s individuals.<br /><br />To help you find the person you want, the list has been broken into smaller lists according to the first letter of the person\'s given name.  This alphabetical sub-index works the same as the alphabetical index for surnames.<br /><ul><li>Click a letter to see all of the first names which start with that letter.</li><li>Choose <b>(unknown)</b> to list all of the persons with unknown first names.</li><li>Choosing <b>ALL</b> will display a list of all persons with the previously chosen surname.</li></ul>Because there are many names, it may take a long time for this list to appear on your screen.', $SUBLIST_TRIGGER_I);
-	break;
-
-case 'flagsfile':
-	$title=i18n::translate('Flag file');
-	$text=i18n::translate('Name of the national flag image file for the selected language.<br /><br />Images for many countries are available from <a href="http://w3f.com/gifs/index.html"><b>The WWWeb Factory</b></a> site.<br /><br />When you find a flag image you like, right-click on it and save the image in a temporary folder. Next, open the saved image with a suitable image editor (IrfanView is recommended for Windows systems), reduce its size 50x32 pixels, which is the normal size used in <b>webtrees</b>, and then save it as a GIF file to the <i><b>images/flags</b></i> folder.<br /><br />Although you can use any name you wish, you should select a name consistent with the two-letter language shortcut.  For example, Croatian is represented by the two-letter code <i><b>hr</b></i>, so the Croatian flag would normally be named <i><b>hr.gif</b></i>.');
 	break;
 
 case 'follow_spouse':
@@ -4176,11 +4141,6 @@ case 'global_facts':
 case 'google_chart_surname':
 	$title=i18n::translate('Surname');
 	$text=i18n::translate('The number of occurrences of the specified name will be shown on the map. If you leave this field empty, the most common surname will be used.');
-	break;
-
-case 'google_translate':
-	$title=i18n::translate('Googlemap translation tool');
-	$text=i18n::translate('This tool uses Google&reg; Translate to provide hints to the translator.  It is <b>not</b> intended to replace translations done by a person who fully understands the source and the target languages.    Please be aware also that the Google&reg; translate tool is neither reliable nor always able to perform a translation.<br /><br />When a language text has already been translated, there will be no link to Google&reg; Translate.<br /><br />For each text where you want to use the Google&reg; Translate tool, you click the <b>Google&reg; Translate</b> link.  After the page is reloaded, you should correct the mistranslated entries by hand. <b>There is no guarantee that the Google&reg; translation will be correct.</b> You will need to correct special characters such as #, <, >, / and HTML tags as well as references to other language or global variables in the translated text so that the result matches the original untranslated text.  Note that Google&reg; Translate will add a space after each HTML tag.  You will definitely need to remove these extra spaces.<br /><br />When you are satisfied with the result, click <b>Commit</b> to allow that result to be saved.  If you do not click <b>Commit</b>, the changes will be accumulated until you click the <b>Commit Google&reg; translated changes</b> link at the bottom of the page to commit all saved texts at once.');
 	break;
 
 case 'header_favorites':
@@ -5413,21 +5373,6 @@ case 'active':
 	$text=i18n::translate('Allow users to select this language if the option <b>Allow user to change language</b> is enabled.');
 	break;
 
-case 'hide_translated':
-	$title=i18n::translate('Hide translated language files');
-	$text=i18n::translate('If set to <b>Yes</b> you will only see those messages of your selected language file which have not been translated.  This means the new message does <u>not</u> appear in the target language file.<br /><br />Some language files contain English text for various untranslated messages.  This routine cannot identify these untranslated items, since they already are present in the target file.  The assumption is, "If the message is present in the target file, it must have been translated."');
-	break;
-
-case 'hs_inallhelp':
-	$title=i18n::translate('All text');
-	$text=i18n::translate('All text');
-	break;
-
-case 'hs_intruehelp':
-	$title=i18n::translate('Help text only');
-	$text=i18n::translate('Help text only');
-	break;
-
 case 'index':
 	$title=i18n::translate('Home page');
 	$text=i18n::translate('This page is the Home Page. It welcomes you to the selected <a href="#def_gedcom">GEDCOM</a> file. You can return to this page by selecting Home Page from the top menu. If there are multiple GEDCOMs on this site, you can select a GEDCOM from the drop-down menu.<br /><br />This Help page contains information about:<ul><li><a href="#index_portal"><b>Home Page</b></a></li><li><a href="#header"><b>Header Area</b></a></li><li><a href="#menu"><b>Menus</b></a></li><li><a href="#header_general"><b>General Information</b></a></li><li><a href="#def"><b>Definitions</b></a></li></ul>');
@@ -5442,11 +5387,6 @@ case 'menu_help':
 // not used? see 'menu'
 	$title=i18n::translate('Menus');
 	$text=i18n::translate('The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href="#menu_fam">Home page</a><br /></li><li><a href="#menu_myged">My Page</a><br /></li><li><a href="#menu_charts">Charts</a><br /></li><li><a href="#menu_lists">Lists</a><br /></li><li><a href="#menu_annical">Anniversary Calendar</a><br /></li><li><a href="#menu_clip">Family Tree Clippings Cart</a><br /></li><li><a href="#menu_search">Search</a><br /></li><li><a href="?help=help">Help</a></li></ul>');
-	break;
-
-case 'translation_forum':
-	$title=i18n::translate('<b>webtrees</b> translations');
-	$text=i18n::translate('This <a href="https://translations.launchpad.net/webtrees/trunk" target="_blank"><b>link</b></a> opens a new browser window.  You will be redirected to the translations forum of <b>webtrees</b>.');
 	break;
 
 case 'upload_gedcom':
