@@ -116,7 +116,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 		}
 	}
 	// I18N: There are separate lists of male/female names, containing %d names each
-	$title .= i18n::plural('Top Surnames', 'Top %d Surnames', $config['num'], $config['num']);
+	$title .= i18n::plural('Top surname', 'Top %d surnames', $config['num'], $config['num']);
 	$title .= help_link('index_common_names');
 
 	switch ($SURNAME_LIST_STYLE) {
