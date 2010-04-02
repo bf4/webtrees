@@ -5037,16 +5037,6 @@ case 'show_marnms':
 	$text=i18n::translate('The individual and family list pages can either include or exclude married names.  This option can be helpful when searching for individuals or families where you only know the married name.  Married names can only be included if they already exist in the database.<br /><br />On the family list, this value defaults to exclude.  On the individual list, the default value is set in the GEDCOM Configuration page.<br /><br />When you change this option, your selection will be remembered until you log off or your session ends.');
 	break;
 
-case 'show_repo_gedcom':
-	$title=i18n::translate('show_repo_gedcom');
-	$text=i18n::translate('When you click this link, the information about the repository, as it is stored in the database, will be displayed in a popup window.');
-	break;
-
-case 'show_source_gedcom':
-	$title=i18n::translate('show_source_gedcom');
-	$text=i18n::translate('When you click this link, the source\'s records will be displayed in raw database format.');
-	break;
-
 case 'show_spouse':
 	$title=i18n::translate('Show spouses');
 	$text=i18n::translate('By default this chart does not show spouses for the descendants because it makes the chart harder to read and understand.  Turning this option on will show spouses on the chart.');
@@ -5080,21 +5070,6 @@ case 'sortby':
 case 'soundex_search':
 	$title=i18n::translate('Search the way you think the name is written (Soundex)');
 	$text=i18n::translate('Soundex is a method of coding words according to their pronunciation.  This allows you to search the database for names and places when you don\'t know precisely how they are written.  <b>webtrees</b> supports two different Soundex algorithms that produce vastly different results.<ul><li><b>Basic</b><br />This method, patented in 1918 by Russell, is very simple and can be done by hand.<br /><br />Because the Basic method retains the first letter of the name as part of the resultant code, it is not very helpful when you are unsure of that first letter.  The Basic algorithm is not well suited to names that were originally in languages other than English, and even with English names the results are very surprising.  For example, a Basic Soundex search for <b>Smith</b> will return not only <b>Smith, Smid, Smit, Schmidt, Smyth, Smithe, Smithee, Schmitt</b>, all of which are clearly variations of <b>Smith</b>, but also <b>Smead, Sneed, Smoote, Sammett, Shand,</b> and <b>Snoddy</b>.  <br /><br /></li><li><b>Daitch-Mokotoff</b><br />This method, developed in 1985, is much more complex than the Basic method and is not easily done by hand.<br /><br />A Soundex search using this method produces much more accurate results.</li></ul>For details on both Soundex algorithms, visit this <a href="http://www.jewishgen.org/infofiles/soundex.html" target=_blank><b>Jewish Genealogical Society</b></a> web page.');
-	break;
-
-case 'sourcelist_listbox':
-	$title=i18n::translate('sourcelist_listbox');
-	$text=i18n::translate('In this box you see the names of the sources as they are stored in the GEDCOM.<br /><br />The names are displayed in alphabetical order.  When you click on a name in the list, you will go to the Source page where a list is displayed.  This list shows you which individuals or families are linked to that source.');
-	break;
-
-case 'sources_listbox':
-	$title=i18n::translate('sources_listbox');
-	$text=i18n::translate('In this box you see the names of individuals and families that are connected to the source.<br /><br />The names are displayed in alphabetical order.  When you click on a name in the list, you will go to the relevant Detail page.');
-	break;
-
-case 'start_admin':
-	$title=i18n::translate('start_admin');
-	$text=i18n::translate('+++ Begin extra Admin Info +++');
 	break;
 
 case 'stat':
@@ -5155,11 +5130,6 @@ case 'talloffset':
 case 'text_direction':
 	$title=i18n::translate('Text direction');
 	$text=i18n::translate('Identifies which direction is used to write text in the chosen language.  Most languages are written from left to right.  Arabic and Hebrew are examples of languages that are written in the opposite direction (right to left).');
-	break;
-
-case 'text_faq':
-	$title=i18n::translate('text_faq');
-	$text=i18n::translate('The FAQ (Frequently Asked Questions) page can contain an overview or a list of questions and answers on the use of this genealogy site.<br /><br />The use to which the FAQ page is put is entirely up to the site administrator. The site administrator controls the content of each item and also the order in which the items are shown on the page.');
 	break;
 
 case 'time_format':
