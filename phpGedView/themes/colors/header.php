@@ -32,71 +32,86 @@ if (!defined('WT_WEBTREES')) {
 	exit;
 }
 
+// Definitions to simplify logic on pages with right-to-left languages
+// TODO: merge this into the trunk?
+if ($TEXT_DIRECTION=='ltr') {
+	define ('WT_CSS_ALIGN',         'left');
+	define ('WT_CSS_REVERSE_ALIGN', 'right');
+} else {
+	define ('WT_CSS_ALIGN',         'right');
+	define ('WT_CSS_REVERSE_ALIGN', 'left');
+}
+
+echo
+	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+	'<html xmlns="http://www.w3.org/1999/xhtml" dir="', $TEXT_DIRECTION, '">',
+	'<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
+	'<title>', htmlspecialchars($GEDCOM_TITLE), '</title>',
+	'<link rel="shortcut icon" href="', $FAVICON, '" type="image/x-icon">';
+
+if ($ENABLE_RSS && !$REQUIRE_AUTHENTICATION) {
+	echo '<link href="', urlencode($SERVER_URL.'rss.php?ged='.WT_GEDCOM), '" rel="alternate" type="', $applicationType, '" title="', htmlspecialchars($GEDCOM_TITLE), '" />';
+}
+
+if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
+	<link rel="stylesheet" href="<?php echo $THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
+<?php 
+}
+
+if (WT_USE_LIGHTBOX) {
+	if ($TEXT_DIRECTION=='rtl') {
+		echo
+			'<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />',
+			'<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';
+	} else {
+		echo
+			'<link rel="stylesheet" href="modules/lightbox/css/clearbox_music.css" type="text/css" />',
+			'<link rel="stylesheet" href="modules/lightbox/css/album_page.css" type="text/css" media="screen" />';
+	}
+}
+if ($view!="preview" && $view!="simple") { 
+	echo
+	'<meta name="author" content="', htmlspecialchars($META_AUTHOR), '" />',
+	'<meta name="publisher" content="', htmlspecialchars($META_PUBLISHER), '" />',
+	'<meta name="copyright" content="', htmlspecialchars($META_COPYRIGHT), '" />',
+	'<meta name="description" content="', htmlspecialchars($META_DESCRIPTION), '" />',
+	'<meta name="page-topic" content="', htmlspecialchars($META_PAGE_TOPIC), '" />',
+	'<meta name="audience" content="', htmlspecialchars($META_AUDIENCE), '" />',
+	'<meta name="page-type" content="', htmlspecialchars($META_PAGE_TYPE), '" />',
+	'<meta name="robots" content="', htmlspecialchars($META_ROBOTS), '" />',
+	'<meta name="revisit-after" content="', htmlspecialchars($META_REVISIT), '" />',
+	'<meta name="keywords" content="', htmlspecialchars($META_KEYWORDS), '" />',
+	'<meta name="generator" content="', WT_WEBTREES, ' ', WT_VERSION_TEXT, '" />';
+}
+
+echo
+	$javascript, $head, 
+	'<script type="text/javascript" src="js/jquery/jquery.min.js"></script>',
+	'<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>',
+	'<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />';
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" <?php echo i18n::html_markup(); ?>>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<?php if (isset($_GET["pgvaction"]) && $_GET["pgvaction"]=="places_edit") { ?>
-			<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> <?php } 
-		?>
-		<?php if ($FAVICON) { ?><link rel="shortcut icon" href="<?php echo $FAVICON; ?>" type="image/x-icon" /> <?php } ?>
 
-		<title><?php echo $title; ?></title>
-		<?php if ($ENABLE_RSS && !$REQUIRE_AUTHENTICATION){ ?>
-			<link href="<?php echo encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}"); ?>" rel="alternate" type="<?php echo $applicationType; ?>" title="<?php echo htmlspecialchars($GEDCOM_TITLE); ?>" />
-		<?php } ?>
-		<?php if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
-			<link rel="stylesheet" href="<?php echo $THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
-		<?php }
-		// Additional css files required
-		if (WT_USE_LIGHTBOX) {
-			if ($TEXT_DIRECTION=='rtl') {
-				echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />';
-				echo '<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';
-			} else {
-				echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music.css" type="text/css" />';
-				echo '<link rel="stylesheet" href="modules/lightbox/css/album_page.css" type="text/css" media="screen" />';
-			}
-		} ?>
+<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
+<link rel="stylesheet" href="<?php echo $print_stylesheet; ?>" type="text/css" media="print" />
 
-	<link rel="stylesheet" href="<?php echo $print_stylesheet; ?>" type="text/css" media="print" />
-	<?php if ($BROWSERTYPE == "msie") { ?>
-	<style type="text/css">
-		FORM { margin-top: 0px; margin-bottom: 0px; }
-	</style>
-	<?php }
-	if ($view!="preview" && $view!="simple") { ?>
-		<?php if (!empty($META_AUTHOR)) { ?><meta name="author" content="<?php echo htmlspecialchars($META_AUTHOR); ?>" /><?php } ?>
-		<?php if (!empty($META_PUBLISHER)) { ?><meta name="publisher" content="<?php echo htmlspecialchars($META_PUBLISHER); ?>" /><?php } ?>
-		<?php if (!empty($META_COPYRIGHT)) { ?><meta name="copyright" content="<?php echo htmlspecialchars($META_COPYRIGHT); ?>" /><?php } ?>
-		<meta name="keywords" content="<?php echo htmlspecialchars($META_KEYWORDS); ?>" />
-		<?php if (!empty($META_DESCRIPTION)) {?><meta name="description" content="<?php echo htmlspecialchars($META_DESCRIPTION); ?>" /><?php } ?>
-		<?php if (!empty($META_PAGE_TOPIC)) {?><meta name="page-topic" content="<?php echo htmlspecialchars($META_PAGE_TOPIC); ?>" /><?php } ?>
-		<?php if (!empty($META_AUDIENCE)) {?><meta name="audience" content="<?php echo htmlspecialchars($META_AUDIENCE); ?>" /><?php } ?>
-		<?php if (!empty($META_PAGE_TYPE)) {?><meta name="page-type" content="<?php echo htmlspecialchars($META_PAGE_TYPE); ?>" /><?php } ?>
-		<?php if (!empty($META_ROBOTS)) {?><meta name="robots" content="<?php echo htmlspecialchars($META_ROBOTS); ?>" /><?php } ?>
-		<?php if (!empty($META_REVISIT)) {?><meta name="revisit-after" content="<?php echo htmlspecialchars($META_REVISIT); ?>" /><?php } ?>
-		<meta name="generator" content="<?php echo WT_WEBTREES, ' - ', WT_WEBTREES_URL; ?>" />
-	<?php } ?>
-	<?php echo $javascript; ?>
-	<?php echo $head; //-- additional header information ?>
-	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
-	<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />
-	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
-	<?php if ($TEXT_DIRECTION=='rtl') {?>
-		<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
-		<link type="text/css" href="<?php echo WT_THEME_DIR?>style_rtl.css" rel="Stylesheet"  media="all" />  
-	<?php }?>
-	<link type="text/css" href="<?php echo WT_THEME_DIR?>modules.css" rel="Stylesheet" />
-	<link type="text/css" href="<?php echo $stylesheet; ?>"  rel="stylesheet" media="all" />
-</head>
-<body id="body" <?php echo $bodyOnLoad; ?>>
-<!-- begin header section -->
 <?php
-if ($view=='preview') include($print_headerfile);
-else if ($view!='simple'){?>
+if ($TEXT_DIRECTION=='rtl') { ?>
+	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
+<?php } 
+
+echo
+	'<link type="text/css" href="themes/colors/modules.css" rel="Stylesheet" />',
+	'<link rel="stylesheet" href="', $stylesheet, '" type="text/css" media="all" />';
+	
+if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) {?> 
+	<link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" /> 
+<?php }
+	echo
+	'</head><body id="body" ', $bodyOnLoad, '>';
+flush(); // Allow the browser to start fetching external stylesheets, javascript, etc.
+?>
+
+<!-- begin header section -->
 <div id="header" class="<?php echo $TEXT_DIRECTION; ?>">
 
 <!-- begin colors code -->
@@ -123,7 +138,6 @@ else if ($view!='simple'){?>
 <?php print_favorite_selector(0); ?>
 			</div>
 		</td>
-<?php } ?>
 	</tr>
 </table>
 </div>
