@@ -307,6 +307,16 @@ jQuery(document).ready(function(){
 	?>
 	</div>
 	</div>
+	
+<?php // -- Sidebar --
+
+		global $controller;
+		if (method_exists($controller, 'getOtherMenu')) {	
+			// echo "&nbsp;";
+			require './sidebar.php'; 
+		}
+
+?>
 <?php
 foreach($controller->modules as $mod) {
 	if ($mod->hasTab() && $mod->getTab()) {
@@ -343,11 +353,20 @@ if (!$controller->indi->canDisplayDetails()) {
 			}
 		}
 		if ($controller->static_tab) {
-			?><li class="ui-state-default ui-corner-top static_tab" style="float: <?php echo ($TEXT_DIRECTION=='rtl')? 'left':'right';?>">
+			?><li class="ui-state-default ui-corner-top static_tab" style=" float:<?php echo ($TEXT_DIRECTION=='rtl')? 'left':'right';?>">
+			<?php /*
 				<a name="<?php echo $controller->static_tab->getName(); ?>" href="#<?php echo $controller->static_tab->getName()?>">
 					<span><?php echo $controller->static_tab->getTitle(); ?></span>
 				</a>
 				<a id="pin" href="#pin"><img src="<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES['pin-out']['other'];?>" border="0" alt=""/></a>
+			*/ ?>
+			<?php
+			//global $controller;
+			//if (method_exists($controller, 'getOtherMenu')) {	
+				// echo "&nbsp;";
+			//	require './sidebar.php'; 
+			//}
+			?>
 			</li><?php 
 		} 
 		 ?>

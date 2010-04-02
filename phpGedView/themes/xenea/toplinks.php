@@ -126,10 +126,6 @@ $menubar = new MenuBar();
 <br />
 </div>
 <!-- close div for div id="header" -->
-<?php
-	global $controller;
-	if (method_exists($controller, 'getOtherMenu')) {	
-		require './sidebar.php'; 
-	}
-?>
+
+
 <?php print "<div id=\"content\">\n"; ?>

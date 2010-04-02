@@ -44,10 +44,5 @@ if ($BROWSERTYPE == "opera")
 else
         print "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" id=\"container\" width=\"100%\" ><tr><td valign=\"top\" width=\"100%\"  id=\"cellcontainer\">";
 ?>
-<?php
-	global $controller;
-	if (method_exists($controller, 'getOtherMenu')) {	
-		require './sidebar.php'; 
-	}
-?>
+
 <div id="content">

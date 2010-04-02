@@ -10,7 +10,6 @@
 .static_tab_rtl {
 	float: left;
 	margin-left: 1px;
-	width: 240px;
 	border-color: #cccccc;
 }
 
@@ -21,6 +20,36 @@
 	background: #eff8f8; 
 	margin-top:0px; 
 	margin-left:41px;
+}
+.static_tab_rtl { display: none; }
+
+/* -----  Sidebar (rtl) ----- */
+#sidebar {
+	position: absolute;
+	left: 1px;
+	width: 0px;
+	height: 450px;
+	z-index: 50;
+	margin-top: 8px;
+	margin-left: 41px;
+	background-color: #dddddd;
+}
+#sidebar_controls {
+	position: absolute;
+	float: right;
+	right: -22px;
+	margin-top: 0px;
+	margin-right: 5px;
+	height: 21px;
+	width: 16px;
+	z-index: 10;
+}
+#sidebar_open img {
+	padding-top: 2px;
+	padding-bottom: 3px;
+	margin-right: 1px;
+	height: 15px;
+	background-color: #ffffff;
 }
 
 /* Navigator & Flyout menu Styles ------*/

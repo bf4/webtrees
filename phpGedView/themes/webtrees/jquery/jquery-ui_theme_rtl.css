@@ -6,10 +6,10 @@
 .ui-tabs .ui-tabs-nav li.ui-state-default {float: right; }
 .ui-tabs .ui-tabs-nav li a { float: right; }
 
+
 .static_tab_rtl {
 	float: left;
 	margin-right: 1px;
-	width: 240px;
 	border-color: #cccccc;
 }
 .static_tab_content_rtl {
@@ -18,6 +18,36 @@
 	left: 10px;
 	margin-top:-2px; 
 	
+}
+.static_tab_rtl { display: none; }
+
+/* -----  Sidebar (rtl) ----- */
+#sidebar {
+	position: absolute;
+	left: 1px;
+	width: 0px;
+	height: 450px;
+	z-index: 50;
+	margin-top: 10px;
+	margin-left: 12px;
+	background-color: #dddddd;
+}
+#sidebar_controls {
+	position: absolute;
+	float: right;
+	right: -22px;
+	margin-top: 0px;
+	margin-right: 5px;
+	height: 29px;
+	width: 16px;
+	z-index: 10;
+}
+#sidebar_open img {
+	padding-top: 6px;
+	padding-bottom: 7px;
+	margin-right: 0px;
+	height: 15px;
+	background-color: #ffffff;
 }
 
 /* Navigator & Flyout menu Styles ------*/

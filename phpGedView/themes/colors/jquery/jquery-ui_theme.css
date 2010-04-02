@@ -16,7 +16,6 @@
 .static_tab_ltr {
 	float: right;
 	margin-right: 1px;
-	width: 240px;
 	border-color: #cccccc;
 }
 .static_tab_content_ltr {
@@ -26,8 +25,23 @@
 	margin-top:-2px; 
 	
 }
+.static_tab_rtl { display: none; }
 
-
+/* ------- Sidebar ------- */
+#sidebar {
+	margin-left:0px;
+	margin-top: 8px;
+	margin-right: 21px;
+	background-color: #dddddd;
+}
+#sidebar_controls {
+	height: 28px;
+}
+#sidebar_open img {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	margin-left: 0px;
+}
 
 /* Navigator and Flyout menu Styles */
 .nam a:hover{

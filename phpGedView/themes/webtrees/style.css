@@ -427,8 +427,8 @@ a:hover .nameZoom {
 
 .sublinks_table .icon {
 	vertical-align: middle;
-	width: 25px;
-	height: 25px;
+	width: 20px;
+	height: 20px;
 }
 
 .menuitem .icon {
@@ -443,8 +443,8 @@ a:hover .nameZoom {
 
 .submenu .icon {
 	vertical-align: middle;
-	width: 25px;
-	height: 25px;
+	width: 20px;
+	height: 20px;
 }
 
 .subheaders {
@@ -549,7 +549,7 @@ a:hover .nameZoom {
 
 .submenuitem, .submenuitem_rtl {
 	vertical-align: middle;
-	height: 25px;
+	height: 20px;
 	color: #555555;
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
@@ -568,7 +568,7 @@ a:hover .nameZoom {
 
 .submenuitem_hover, .submenuitem_hover_rtl {
 	vertical-align: middle;
-	height: 25px;
+	height: 20px;
 	color: black;
 	font: 11px tahoma, arial, helvetica, sans-serif;
 	background-color: #e6f0fa;

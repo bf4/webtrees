@@ -16,7 +16,8 @@
 .static_tab_ltr {
 	float: right;
 	margin-right: 1px;
-	width: 240px;
+	width: 15px;
+	height: 27px;
 	border-color: #cccccc;
 }
 .static_tab_content_ltr {
@@ -26,7 +27,7 @@
 	margin-top:-2px; 
 	
 }
-
+.static_tab_rtl { display: none; }
 
 
 /* Navigator and Flyout menu Styles */

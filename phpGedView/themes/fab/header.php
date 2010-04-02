@@ -82,18 +82,17 @@ echo
 	'<script type="text/javascript" src="js/jquery/jquery.min.js"></script>',
 	'<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>',
 	'<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />';
-	?>
+	
+?>
 
 <link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
-<?php
 
-'<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />';
-	
-if ($TEXT_DIRECTION=='rtl') {
-	echo '<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />';
-}?>
+<?php if ($TEXT_DIRECTION=='rtl') {?>
+	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
+<?php }?>
 
-<link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" /> 
+<link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" />
+
 <?php
 echo
 	'</head><body id="body" ', $bodyOnLoad, '>';
@@ -182,9 +181,5 @@ if ($view!='simple') {
 	unset($menu_items, $n, $menu);
 	echo '</ul></div>';
 }
-	global $controller;
-	if (method_exists($controller, 'getOtherMenu')) {	
-		require './sidebar.php'; 
-	}
 echo '</div><div id="content">';
 flush(); // Allow the browser to format the header/menus while we generate the page

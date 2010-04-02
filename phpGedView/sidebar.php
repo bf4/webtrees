@@ -101,124 +101,42 @@ if (isset($controller)) {
 <?php 
 //-- standard theme styles
 if ($TEXT_DIRECTION=='ltr') { ?>
-#sidebar {
-	position: absolute;
-	right: 1px;
-	width: 0px;
-	height: 400px;
-	z-index: 50;
-	margin-top: 4px;
-	background-color: #dddddd;
-}
-#sidebar_controls {
-	position: absolute;
-	float: left;
-	left: -19px;
-	margin-top: 0px;
-	height:80px;
-	width: 15px;
-	z-index: 10;
-	background-color: #dddddd; 
-}
-#sidebar_open img {
-	padding-top: 30px;
-	padding-bottom: 30px; 
-	margin-left: 0px;
-	height: 14px;
-	background-color: #dddddd;
-}
+
 <?php } 
 //-- RTL styles
-else { ?>
+else {  ?>
+/*
 #sidebar {
 	position: absolute;
 	left: 1px;
 	width: 0px;
-	height: 100%;
+	height: 450px;
 	z-index: 50;
-	margin: 0px;
-	background-color: white;
+	margin-top: 10px;
+	margin-left: 12px;
+	background-color: #dddddd;
 }
 #sidebar_controls {
 	position: absolute;
 	float: right;
-	left: -17px;
+	right: -22px;
 	margin-top: 0px;
-	height:70px;
+	margin-right: 5px;
+	height: 29px;
 	width: 16px;
 	z-index: 10;
-	background-color: white;
 }
 #sidebar_open img {
-	padding-top: 34px;
-	padding-bottom: 32px;
-	margin-right: -3px;
+	padding-top: 6px;
+	padding-bottom: 7px;
+	margin-right: 0px;
+	height: 15px;
+	background-color: #ffffff;
 }
+*/
 <?php } ?>
 
 
-#sidebar_open {
-	padding: 0px;
-}
-
-
-#sidebarAccordion {
-	/* display: none; */
-	margin-top: -1px;
-}
-#sidebar_pin {
-	display: none;
-	padding: 1px;
-}
-.sb_indi_surname_li, .sb_fam_surname_li {
-	list-style-image: url('images/plus.gif');
-	white-space: nowrap;
-}
-.sb_desc_indi_li {
-	list-style-type: none;
-	white-space: nowrap;
-}
-.desc_tree_div {
-	display: none;
-}
-.desc_tree_div ul {
-	padding: 0px;
-	margin-left: 10px;
-	margin-top: 0px;
-	maring-right: 0px;
-}
-#sb_desc_content {
-	width: 100%;
-}
-#sb_desc_content ul {
-	padding: 0px;
-	marging: 0px;
-}
-.name_tree_div {
-	display: none;
-}
-.name_tree_div li,  .name_tree_div_visible li {
-	list-style: none;
-	margin: 0px;
-	padding: 0px;
-	white-space: nowrap;
-}
-
-.name_tree_div ul, .name_tree_div_visible ul {
-	padding: 0px;
-	margin: 0px;
-}
-
-#sb_clippings_content li {
-	list-style: none;
-	margin: 0px;
-	padding: 0px;
-	white-space: nowrap;
-}
-#sb_clippings_content ul {
-	padding: 0px;
-	marging: 0px;
-}
 // -->
 </style>
 <script type="text/javascript" src="js/jquery/jquery.scrollfollow.js"></script> 
@@ -244,7 +162,7 @@ function openCallback() {
 }
 jQuery(document).ready(function() {
 
-	jQuery('#sidebar').scrollFollow();
+//	jQuery('#sidebar').scrollFollow();
 
 	var modsLoaded = false;
 	jQuery('#sidebar_open').toggle(function() {

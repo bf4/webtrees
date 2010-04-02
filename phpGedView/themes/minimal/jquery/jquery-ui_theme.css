@@ -25,7 +25,6 @@
 .static_tab_ltr {
 	float: right;
 	margin-right: 0px;
-	width: 240px;
 	border-color: #cccccc;
 }
 .static_tab_content_ltr {
@@ -35,6 +34,24 @@
 	background: #efefef; 
 	margin-top:0px; 
 	margin-right:19px;
+}
+
+.static_tab_rtl { display: none; }
+
+/* ------- Sidebar ------- */
+#sidebar {
+	margin-left:0px;
+	margin-top: 9px;
+	margin-right: 19px;
+	background-color: #dddddd;
+}
+#sidebar_controls {
+	height: 22px;
+}
+#sidebar_open img {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	margin-left: 0px;
 }
 
 

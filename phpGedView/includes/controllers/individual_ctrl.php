@@ -52,6 +52,7 @@ $nonfacts[] = "HUSB";
 $nonfacts[] = "WIFE";
 $nonfacts[] = "RFN";
 $nonfacts[] = "_WT_OBJS";
+$nonfacts[] = "_PGV_OBJS";
 $nonfacts[] = "";
 
 //$nonfamfacts[] = "NCHI"; // Turning back on NCHI display for the indi page.

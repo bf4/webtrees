@@ -389,7 +389,7 @@
 .ui-slider-vertical .ui-slider-range-min { bottom: 0; }
 .ui-slider-vertical .ui-slider-range-max { top: 0; }
 
-/* Tabs ----------------------------------*/
+/* Tabs -----------------------------------*/
 .ui-tabs { padding: .2em; zoom: 1; }
 .ui-tabs .ui-tabs-nav { list-style: none; position: relative; padding: .2em .2em 0; }
 .ui-tabs .ui-tabs-nav li { position: relative; float: left; border-bottom-width: 0 !important; margin: .2em .2em -1px 1px; padding: 0; }
@@ -400,3 +400,99 @@
 .ui-tabs .ui-tabs-panel { padding: 1em 1.4em; display: block; border-width: 0; background: none; }
 .ui-tabs .ui-tabs-hide { display: none !important; }
 
+/* .static_tab_ltr { display: none; } */
+
+/* Sidebar --------------------------------*/
+#sidebar {
+	position: absolute;
+	right: 0px;
+	width: 0px;
+	height: 500px;
+	z-index: 50;
+	margin-left:0px;
+	margin-top: 10px;
+	margin-right: 12px;
+	background-color: #dddddd;
+}
+#sidebar_controls {
+	position: absolute;
+	float: left;
+	left: -20px;
+	margin-top: 0px;
+	margin-left: 4px;
+	height: 29px; 
+	width: 15px;
+	z-index: 10;
+	background-color: #ffffff;
+	border-bottom: transparent;
+}
+#sidebar_open img {
+margin-top: 1px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-right: -1px;
+	margin-left: 1px;
+	height: 14px;
+	background-color: white;
+}
+
+#sidebar_open {
+	padding: 0px;
+}
+#sidebarAccordion {
+	/* display: none; */
+	margin-top: -1px;
+}
+#sidebar_pin {
+	display: none;
+	padding: 1px;
+}
+.sb_indi_surname_li, .sb_fam_surname_li {
+	list-style-image: url('images/plus.gif');
+	white-space: nowrap;
+}
+.sb_desc_indi_li {
+	list-style-type: none;
+	white-space: nowrap;
+}
+.desc_tree_div {
+	display: none;
+}
+.desc_tree_div ul {
+	padding: 0px;
+	margin-left: 10px;
+	margin-top: 0px;
+	maring-right: 0px;
+}
+#sb_desc_content {
+	width: 100%;
+}
+#sb_desc_content ul {
+	padding: 0px;
+	marging: 0px;
+}
+.name_tree_div {
+	display: none;
+}
+.name_tree_div li,  .name_tree_div_visible li {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	white-space: nowrap;
+}
+
+.name_tree_div ul, .name_tree_div_visible ul {
+	padding: 0px;
+	margin: 0px;
+}
+
+#sb_clippings_content li {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	white-space: nowrap;
+}
+#sb_clippings_content ul {
+	padding: 0px;
+	marging: 0px;
+}

@@ -19,6 +19,36 @@
 	margin-top:-2px; 
 	
 }
+.static_tab_rtl { display: none; }
+
+/* -----  Sidebar (rtl) ----- */
+#sidebar {
+	position: absolute;
+	left: 1px;
+	width: 0px;
+	height: 450px;
+	z-index: 50;
+	margin-top: 10px;
+	margin-left: 21px;
+	background-color: #dddddd;
+}
+#sidebar_controls {
+	position: absolute;
+	float: right;
+	right: -22px;
+	margin-top: 0px;
+	margin-right: 5px;
+	height: 26px;
+	width: 16px;
+	z-index: 10;
+}
+#sidebar_open img {
+	padding-top: 2px;
+	padding-bottom: 3px;
+	margin-right: 1px;
+	height: 15px;
+	background-color: #ffffff;
+}
 
 /* Navigator & Flyout menu Styles ------*/
 .flyoutrtl {

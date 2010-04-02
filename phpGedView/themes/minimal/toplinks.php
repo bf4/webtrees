@@ -124,10 +124,5 @@ $menubar = new MenuBar();
 <img src="<?php print $WT_IMAGE_DIR."/".$WT_IMAGES["hline"]["other"]; ?>" width="100%" height="3" alt="" />
 </div>
 <!-- close div for div id="header" -->
-<?php
-	global $controller;
-	if (method_exists($controller, 'getOtherMenu')) {	
-		require './sidebar.php'; 
-	}
-?>
+
 <?php print "<div id=\"content\">\n"; ?>
