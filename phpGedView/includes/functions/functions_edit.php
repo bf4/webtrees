@@ -1145,10 +1145,10 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $PREFER_LEVEL2_SOURCES;
 	global $action, $event_add;
 	global $CensDate, $MEDIA_TYPES;
-	
-if (substr($tag, 0, strpos($tag, "CENS"))) {
-	$event_add="census_add";
-}
+
+	if (substr($tag, 0, strpos($tag, "CENS"))) {
+		$event_add="census_add";
+	}
 
 	if (substr($tag, 0, strpos($tag, "PLAC"))) {
 		?>
@@ -1377,7 +1377,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 			}
 			*/
 		} else {
-			echo i18n::translate($fact);
+			echo translate_fact($fact);
 		}
 	}
 	echo "\n";
