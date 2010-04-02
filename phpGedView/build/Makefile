@@ -57,6 +57,7 @@ $(LABEL): $(PHP)
 	rm -R $(LABEL)/library/Zend/{Acl,Amf,Application,Auth,Barcode,Captcha,CodeGenerator,Console,Controller,Config,Crypt,Currency,Date,Db,Debug,Dojo,Dom,Feed,File,Filter,Form,Gdata,Http,InfoCard,Json,Layout,Ldap,Log,Mail,Markup,Measure,Memory,Mime,Navigation,Oauth,OpenId,Paginator,Pdf,ProgressBar,Queue,Reflection,Rest,Search,Serializer,Service,Session,Soap,Tag,Test,Text,TimeSync,Tool,Uri,Validate,Version,View,Wildfire,XmlRpc}*
 	rm -R $(LABEL)/build
 	rm -Rf $(LABEL)/language/*
+	for file in `find . -path ./library -prune -o -name '*.php' -print`; do php -l $$file; done
 
 ################################################################################
 # Extract a language file from the downloaded archive file, and rename it
