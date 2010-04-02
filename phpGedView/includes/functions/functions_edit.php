@@ -1611,7 +1611,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			$b=strtolower($value);
 			if (@strpos($a, $b)!==false or @strpos($b, $a)!==false) echo " selected=\"selected\"";
 			$tmp="MARR_".strtoupper($key);
-			echo ">", i18n::translate($tmp), "</option>\n";
+			echo ">", translate_fact($tmp), "</option>\n";
 		}
 		echo "</select>";
 	}
