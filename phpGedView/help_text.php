@@ -3427,7 +3427,7 @@ case 'add_name':
 case 'add_new_facts':
 	// This is a general help text for multiple pages
 	$title=i18n::translate('Add a new fact');
-	$text=i18n::translate('<ul><li><a href="?help=add_facts.php">Add Fact</a></li><li><a href="?add_custom_facts">Add Custom Fact</a></li><li><a href="?help=add_from_clipboard">Add from Clipboard</a></li><li><a href="?help=def_gedcom_date">Dates in a GEDCOM File</a></li><li><a href="?help=add_facts_general">General Information about Adding</a></li></ul>');
+	$text=i18n::translate('<ul><li><a href="?help=add_facts">Add Fact</a></li><li><a href="?help=add_custom_facts">Add Custom Fact</a></li><li><a href="?help=add_from_clipboard">Add from Clipboard</a></li><li><a href="?help=def_gedcom_date">Dates in a GEDCOM File</a></li><li><a href="?help=add_facts_general">General Information about Adding</a></li></ul>');
 	break;
 	
 case 'add_new_gedcom':
