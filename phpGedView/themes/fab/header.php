@@ -81,17 +81,24 @@ echo
 	$javascript, $head, 
 	'<script type="text/javascript" src="js/jquery/jquery.min.js"></script>',
 	'<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>',
-	'<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />',
-	'<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />';
+	'<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />';
+	?>
+
+<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
+<?php
+
+'<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />';
 	
 if ($TEXT_DIRECTION=='rtl') {
 	echo '<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />';
-}
+}?>
 
+<link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" /> 
+<?php
 echo
-	'<link type="text/css" href="<?php echo WT_THEME_DIR?>modules.css" rel="Stylesheet" />',
 	'</head><body id="body" ', $bodyOnLoad, '>';
 flush(); // Allow the browser to start fetching external stylesheets, javascript, etc.
+
 echo '<div id="header" class="block">'; // Every page has a header
 if ($view!='simple') {
 	echo
