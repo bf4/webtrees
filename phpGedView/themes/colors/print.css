@@ -27,12 +27,8 @@
  */
 
 /*-- colors style --*/
-#toplinks, #header select, #header input, #footer select {
-	display:none;
-}
-#backprint {
-	display:none;
-}
+#toplinks, #header select, #header input, #footer select, #backprint, #sidebar { display:none; }
+
 /*-- pedigree chart specific stylesheets --*/
 #pedigree_chart {
 	position: absolute;
@@ -71,6 +67,7 @@
 }
 
 #header, #footer, .noprint {display:none !important;}
+
 form, button, input {display: none;} /* buttons and input are used out of forms in sortable tables*/
 
 .lifespan_outer {
