@@ -951,7 +951,7 @@ try {
 		'<p>', i18n::translate('You should set the file <b>%s</b> so that the webserver has read-only access.<br/>This normally means setting the permissions to "444" or "-r--r--r--".', WT_DATA_DIR.WT_CONFIG_FILE), '</p>',
 		'<p>', i18n::translate('<b>webtrees</b> will check the permissions in the next step.'), '</p>',
 		'<input type="hidden" name="action" value="download">',
-		'<input type="submit" value="'.i18n::translate('Download %s', WT_CONFIG_FILE).'">',
+		'<input type="submit" value="'. /* I18N: %s is a filename */ i18n::translate('Download %s', WT_CONFIG_FILE).'">',
 		'</form>',
 		'<p>', i18n::translate('After you have copied this file to the webserver and set the access permissions, click here to continue'), '</p>',
 		'<form name="config" action="', WT_SCRIPT_NAME, '" method="get">',

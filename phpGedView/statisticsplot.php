@@ -925,11 +925,11 @@ $nrfemale = $_SESSION[$GEDCOM."nrfemale"];
 
 //-- out of range values
 if (($y_as < 201) || ($y_as > 202)) {
-	echo i18n::translate('...'), $y_as, i18n::translate(' not implemented:'), "<br/>";
+	echo i18n::translate('%s not implemented', $y_as), "<br/>";
 	exit;
 }
 if (($z_as < 300) || ($z_as > 302)) {
-	echo i18n::translate('...'), $z_as, i18n::translate(' not implemented:'), "<br/>";
+	echo i18n::translate('%s not implemented', $z_as), "<br/>";
 	exit;
 }
 
@@ -988,7 +988,7 @@ case '9':
 	print_sources_stats_chart($x_as);
 	break;
 default:
-	echo i18n::translate('...'), $x_as, i18n::translate(' not implemented:'), "<br/>";
+	echo i18n::translate('%s not implemented', $x_as), "<br/>";
 	exit;
 }
 echo "<br /><div class =\"center noprint\">";

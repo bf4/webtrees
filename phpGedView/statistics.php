@@ -679,34 +679,26 @@ if (isset($content) && $content==1) {
 			echo "\" /><label for=\"z_time\">", i18n::translate('date periods'), "</label><br /><br />";
 			echo i18n::translate('boundaries for date periods:'), help_link('stat_gwz'), '<br />';
 
-			// Allow special processing for different languages
-			$func="date_localisation_{$lang_short_cut[$LANGUAGE]}";
-			if (!function_exists($func))
-				$func="DefaultDateLocalisation";
-			// Localise the date
-			$q1='from'; $d1='';
-			$q2=''; $d2=''; $q3='';
-			$func($q1, $d1, $q2, $d2, $q3);
 			?>
 			<select id="zas-grenzen-periode" name="zas-grenzen-periode">
 				<option value="1700,1750,1800,1850,1900,1950,2000" selected="selected"><?php
-					$d1 = 1700;
-					echo trim("{$q1} {$d1} {$q2} {$d2} {$q3}"), " ", i18n::translate('interval'), " 50 ", i18n::translate('years');?></option>
+					$d1=new GedcomDate('FROM 1700');
+					echo $d1->Display(false, false, array('gregorian')), " ", i18n::translate('interval'), " 50 ", i18n::translate('years');?></option>
 				<option value="1800,1840,1880,1920,1950,1970,2000"><?php
-					$d1 = 1800;
-					echo trim("{$q1} {$d1} {$q2} {$d2} {$q3}"), " ", i18n::translate('interval'), " 40 ", i18n::translate('years');?></option>
+					$d1=new GedcomDate('FROM 1800');
+					echo $d1->Display(false, false, array('gregorian')), " ", i18n::translate('interval'), " 40 ", i18n::translate('years');?></option>
 				<option value="1800,1850,1900,1950,2000"><?php
-					$d1 = 1800;
-					echo trim("{$q1} {$d1} {$q2} {$d2} {$q3}"), " ", i18n::translate('interval'), " 50 ", i18n::translate('years');?></option>
+					$d1=new GedcomDate('FROM 1800');
+					echo $d1->Display(false, false, array('gregorian')), " ", i18n::translate('interval'), " 50 ", i18n::translate('years');?></option>
 				<option value="1900,1920,1940,1960,1980,1990,2000"><?php
-					$d1 = 1900;
-					echo trim("{$q1} {$d1} {$q2} {$d2} {$q3}"), " ", i18n::translate('interval'), " 20 ", i18n::translate('years');?></option>
+					$d1=new GedcomDate('FROM 1900');
+					echo $d1->Display(false, false, array('gregorian')), " ", i18n::translate('interval'), " 20 ", i18n::translate('years');?></option>
 				<option value="1900,1925,1950,1975,2000"><?php
-					$d1 = 1900;
-					echo trim("{$q1} {$d1} {$q2} {$d2} {$q3}"), " ", i18n::translate('interval'), " 25 ", i18n::translate('years');?></option>
+					$d1=new GedcomDate('FROM 1900');
+					echo $d1->Display(false, false, array('gregorian')), " ", i18n::translate('interval'), " 25 ", i18n::translate('years');?></option>
 				<option value="1940,1950,1960,1970,1980,1990,2000"><?php
-					$d1 = 1940;
-					echo trim("{$q1} {$d1} {$q2} {$d2} {$q3}"), " ", i18n::translate('interval'), " 10 ", i18n::translate('years');?></option>
+					$d1=new GedcomDate('FROM 1940');
+					echo $d1->Display(false, false, array('gregorian')), " ", i18n::translate('interval'), " 10 ", i18n::translate('years');?></option>
 			</select>
 			<br /><br />
 			<?php
