@@ -79,7 +79,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 		}
 	}
 	// I18N: There are separate lists of male/female names, containing %d names each
-	$title .= i18n::plural('Top Given Names', 'Top %d Given Names', $config['num'], $config['num']);
+	$title .= i18n::plural('Top Given Name', 'Top %d Given Names', $config['num'], $config['num']);
 	$title .= help_link('index_common_given_names');
 
 	$content = '<div class="normal_inner_block">';
