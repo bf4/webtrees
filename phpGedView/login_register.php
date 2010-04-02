@@ -273,7 +273,7 @@ switch ($action) {
 					<table class="center facts_table width50">
 					<?php $i = 1;?>
 						<tr><td class="topbottombar" colspan="2"><?php echo i18n::translate('Request new user account'), help_link('register_info_0'.$WELCOME_TEXT_AUTH_MODE); ?><br /><?php if (strlen($message) > 0) echo $message; ?></td></tr>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Real Name'), help_link('new_user_realname'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_realname" value="<?php if (!$user_realname_false) echo $user_realname;?>" tabindex="<?php echo $i++;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Real name'), help_link('new_user_realname'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_realname" value="<?php if (!$user_realname_false) echo $user_realname;?>" tabindex="<?php echo $i++;?>" /> *</td></tr>
 						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Email Address'), help_link('edituser_email'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" size="30" name="user_email" value="<?php if (!$user_email_false) echo $user_email;?>" tabindex="<?php echo $i++;?>" /> *</td></tr>
 						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Desired user name'), help_link('username'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_name" value="<?php if (!$user_name_false) echo $user_name;?>" tabindex="<?php echo $i;?>" /> *</td></tr>
 						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Desired password'), help_link('edituser_password'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="password" name="user_password01" value="" tabindex="<?php echo $i++;?>" /> *</td></tr>
@@ -397,7 +397,7 @@ switch ($action) {
 				$mail_body .= i18n::translate('Hello Administrator ...') . "\r\n\r\n";
 				$mail_body .= i18n::translate('A prospective user registered himself with webtrees at %s.', WT_SERVER_NAME.WT_SCRIPT_PATH) . "\r\n\r\n";
 				$mail_body .= i18n::translate('User name') . " " . $user_name . "\r\n";
-				$mail_body .= i18n::translate('Real Name') . " " . $user_realname . "\r\n\r\n";
+				$mail_body .= i18n::translate('Real name') . " " . $user_realname . "\r\n\r\n";
 				$mail_body .= i18n::translate('Comments').": " . $user_comments . "\r\n\r\n";
 				$mail_body .= i18n::translate('The user received an email with the information necessary to confirm his access request.') . "\r\n\r\n";
 				if ($REQUIRE_ADMIN_AUTH_REGISTRATION) $mail_body .= i18n::translate('You will be informed by email when this prospective user has confirmed his request.  You can then complete the process by activating the user name.  The new user will not be able to login until you activate the account.') . "\r\n";

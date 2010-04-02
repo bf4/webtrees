@@ -157,7 +157,7 @@ echo '<input type="text" name="form_username" tabindex="', ++$tab, '" value="', 
 echo '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
-echo i18n::translate('Real Name'), help_link('edituser_realname'), '</td><td class="optionbox">';
+echo i18n::translate('Real name'), help_link('edituser_realname'), '</td><td class="optionbox">';
 echo '<input type="text" name="form_realname" tabindex="', ++$tab, '" value="', getUserFullName(WT_USER_ID), '" />';
 echo '</td></tr>';
 
