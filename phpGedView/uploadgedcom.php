@@ -808,7 +808,7 @@ if ($startimport == "true") {
 		var TIME_LIMIT = <?php print $timelimit; ?>;
 
 		function update_progress(bytes, time) {
-			perc = Math.round(100*(bytes / FILE_SIZE));
+			perc = Math.round(1000*(bytes / FILE_SIZE))/10;
 			if (perc>100) perc = 100;
 			progress = document.getElementById("progress_div");
 			if (progress) {
@@ -997,11 +997,11 @@ if ($stage == 1) {
 
 			$i ++;
 
-			//-- update the progress bars at every 50 records
-			if ($i % 25 == 0) {
+			//-- update the progress bars at every 10 records
+			if ($i % 10 == 0) {
 				$newtime = time();
 				$exectime = $newtime - $oldtime;
-				echo WT_JS_START, "update_progress($pos2, $exectime);", WT_JS_END;
+				echo WT_JS_START, "update_progress($TOTAL_BYTES, $exectime);", WT_JS_END;
 				flush();
 			} else {
 				print ' ';
