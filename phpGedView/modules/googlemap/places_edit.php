@@ -786,8 +786,8 @@ if ($action=="add") {
 		<td class="optionbox">
 			<select name="LATI_CONTROL" tabindex="<?php echo ++$i;?>" onchange="updateMap();">
 				<option value="" <?php if ($place_lati == null) echo " selected=\"selected\"";?>></option>
-				<option value="PL_N" <?php if ($place_lati > 0) echo " selected=\"selected\""; echo ">", i18n::translate('N'); ?></option>
-				<option value="PL_S" <?php if ($place_lati < 0) echo " selected=\"selected\""; echo ">", i18n::translate('S'); ?></option>
+				<option value="PL_N" <?php if ($place_lati > 0) echo " selected=\"selected\""; echo ">", i18n::translate_c('North', 'N'); ?></option>
+				<option value="PL_S" <?php if ($place_lati < 0) echo " selected=\"selected\""; echo ">", i18n::translate_c('South', 'S'); ?></option>
 			</select>
 			<input type="text" name="NEW_PLACE_LATI" value="<?php if ($place_lati != null) echo abs($place_lati);?>" size="20" tabindex="<?php echo ++$i;?>" onchange="updateMap();" /></td>
 	</tr>
@@ -796,8 +796,8 @@ if ($action=="add") {
 		<td class="optionbox">
 			<select name="LONG_CONTROL" tabindex="<?php echo ++$i;?>" onchange="updateMap();">
 				<option value="" <?php if ($place_long == null) echo " selected=\"selected\"";?>></option>
-				<option value="PL_E" <?php if ($place_long > 0) echo " selected=\"selected\""; echo ">", i18n::translate('E'); ?></option>
-				<option value="PL_W" <?php if ($place_long < 0) echo " selected=\"selected\""; echo ">", i18n::translate('W'); ?></option>
+				<option value="PL_E" <?php if ($place_long > 0) echo " selected=\"selected\""; echo ">", i18n::translate_c('East', 'E'); ?></option>
+				<option value="PL_W" <?php if ($place_long < 0) echo " selected=\"selected\""; echo ">", i18n::translate_c('West', 'W'); ?></option>
 			</select>
 			<input type="text" name="NEW_PLACE_LONG" value="<?php if ($place_long != null) echo abs($place_long);?>" size="20" tabindex="<?php echo ++$i;?>" onchange="updateMap();" /></td>
 	</tr>
