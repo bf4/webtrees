@@ -108,7 +108,7 @@ function sendErrorAndExit($type, $line1, $line2 = false) {
 		// if we are using mod rewrite, there will be no error status.  be sure to set it
 		header('HTTP/1.0 404 Not Found');
 		header('Status: 404 Not Found');
-		echo "<html><body>\n";
+		echo "<html ", i18n::html_markup(), "><body>\n";
 		echo "<!-- filler space so IE will display the custom 404 error -->";
 		echo "<!-- filler space so IE will display the custom 404 error -->";
 		echo "<!-- filler space so IE will display the custom 404 error -->";

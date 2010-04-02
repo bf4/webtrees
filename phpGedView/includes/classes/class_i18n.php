@@ -159,6 +159,14 @@ class i18n {
 		}
 	}
 
+	// Generate i18n markup for the <html> tag, e.g lang="ar" dir="RTL"
+	static public function html_markup() {
+		$localeData=Zend_Locale_Data::getList(self::$locale, 'layout');
+		$dir=$localeData['characters']=='right-to-left' ? 'RTL' : 'LTR';
+		list($lang)=explode('_', self::$locale);
+		return 'lang="'.$lang.'" xml:lang="'.$lang.'" dir="'.$dir.'"';
+	}
+
 	// echo i18n::translate('Hello World!');
 	// echo i18n::translate('The %s sat on the mat', 'cat');
 	static public function translate(/* var_args */) {

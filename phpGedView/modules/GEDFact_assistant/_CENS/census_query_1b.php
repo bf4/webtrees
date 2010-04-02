@@ -33,7 +33,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 ?>
 
-<html>
+<html <?php echo i18n::html_markup(); ?>>
 <head>
 </head>
 <body>

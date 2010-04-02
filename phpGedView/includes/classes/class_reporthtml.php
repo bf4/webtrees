@@ -187,7 +187,7 @@ class PGVReportBaseHTML extends PGVReportBase {
 
 		echo "
 <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
-<html xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"", $TEXT_DIRECTION, "\">
+<html xmlns=\"http://www.w3.org/1999/xhtml\" ", i18n::html_markup(), ">
 <head>
 <meta http-equiv=\"Content-Type\" content=\"text/html; charset=", $this->charset, "\" />
 <meta name=Generator content=\"", $this->generatedby, "\" />

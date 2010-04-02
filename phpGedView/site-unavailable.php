@@ -25,23 +25,6 @@
 
 define('WT_SCRIPT_NAME', 'site-unavailable.php');
 
-echo
-	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
-	'<html xmlns="http://www.w3.org/1999/xhtml">',
-	'<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
-	'<title>Site Unavailable - webtrees</title>',
-	'<style type="text/css">
-		body { 	color: gray; background-color: white; font: 14px tahoma, arial, helvetica, sans-serif;	padding:10px; }
-		a {	color: #81A9CB; font-weight: bold; text-decoration: none;}
-		a:hover {text-decoration: underline;}
-		h1 {color: #81A9CB; font-weight:normal; text-align:center;}
-		li {line-height:2;}
-		blockquote {color:red;}
-		.content { /*margin:auto; width:800px;*/ border:1px solid gray; padding:15px; -moz-border-radius:15px; -webkit-border-radius:15px;}
-		.good {color: green;}
-	</style>',
-	'</head><body>';
-
 // This script does not load session.php.
 // session.php won't run until a configuration file and database connection exist...
 // This next block of code is a minimal version of session.php
@@ -55,10 +38,26 @@ require 'includes/functions/functions.php';
 require 'includes/classes/class_i18n.php';
 define('WT_LOCALE', i18n::init());
 
-echo '<h1>', i18n::translate('<b>webtrees</b> site unavailable'), '</h1>';
+echo
+	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+	'<html xmlns="http://www.w3.org/1999/xhtml" ', i18n::html_markup(), '>',
+	'<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
+	'<title>Site Unavailable - webtrees</title>',
+	'<style type="text/css">
+		body { 	color: gray; background-color: white; font: 14px tahoma, arial, helvetica, sans-serif;	padding:10px; }
+		a {	color: #81A9CB; font-weight: bold; text-decoration: none;}
+		a:hover {text-decoration: underline;}
+		h1 {color: #81A9CB; font-weight:normal; text-align:center;}
+		li {line-height:2;}
+		blockquote {color:red;}
+		.content { /*margin:auto; width:800px;*/ border:1px solid gray; padding:15px; -moz-border-radius:15px; -webkit-border-radius:15px;}
+		.good {color: green;}
+	</style>',
+	'</head><body>',
+	'<h1>', i18n::translate('<b>webtrees</b> site unavailable'), '</h1>',
+	'<div class="content">',
+	i18n::translate('<p>Oops!  The webserver is unable to connect to the database server.  It could be busy, undergoing maintenance, or simply broken.  You should <a href="index.php">try again</a> in a few minutes or contact the website administrator.</p>');
 
-echo '<div class="content">';
-echo i18n::translate('<p>Oops!  The webserver is unable to connect to the database server.  It could be busy, undergoing maintenance, or simply broken.  You should <a href="index.php">try again</a> in a few minutes or contact the website administrator.</p>');
 $config_ini_php=parse_ini_file('data/config.ini.php');
 if (is_array($config_ini_php) && array_key_exists('dbhost', $config_ini_php) && array_key_exists('dbport', $config_ini_php) && array_key_exists('dbuser', $config_ini_php) && array_key_exists('dbpass', $config_ini_php) && array_key_exists('dbname', $config_ini_php)) {
 	try {
