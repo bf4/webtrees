@@ -65,7 +65,7 @@ $COLOR_THEME_LIST=array(
 	'mercury'         => /* I18N: This is the name of theme color-scheme */ i18n::translate('Mercury'),
 	'nocturnal'       => /* I18N: This is the name of theme color-scheme */ i18n::translate('Nocturnal'),
 	'olivia'          => /* I18N: This is the name of theme color-scheme */ i18n::translate('Olivia'),
-	'pinkplastic'     => /* I18N: This is the name of theme color-scheme */ i18n::translate('Pink Plastic'),
+	'pinkplastic'     => /* I18N: This is the name of theme color-scheme */ i18n::translate('Pink Plstic'),
 	'shinytomato'     => /* I18N: This is the name of theme color-scheme */ i18n::translate('Shiny Tomato'),
 	'tealtop'         => /* I18N: This is the name of theme color-scheme */ i18n::translate('Teal Top'),
 );
@@ -102,7 +102,7 @@ $rtl_stylesheet   = WT_THEME_DIR . "style_rtl.css";    //-- CSS level 2 styleshe
 $toplinks         = WT_THEME_DIR . "toplinks.php";     //-- File to display the icons and links to different sections    
 $footerfile       = WT_THEME_DIR . "footer.php";       //-- Footer information for the site     
 $WT_IMAGE_DIR     = WT_THEME_DIR . "images";           //-- directory to look for images
-$FAVICON          = WT_THEME_DIR . "/favicon.ico";
+$FAVICON          = WT_THEME_DIR . "favicon.ico";
 $WT_USE_HELPIMG   = true;                                // set to true to use image for help questionmark, set to false to use $wt_lang["qm"]
 $WT_MENU_LOCATION = "top";
 
