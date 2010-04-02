@@ -336,7 +336,7 @@ class i18n {
 		case 13: return i18n::translate('thirteenth');
 		case 14: return i18n::translate('fourteenth');
 		case 15: return i18n::translate('fifteenth');
-		default: return i18n::translate('%d x', $n);
+		default: return /* I18N: Generalisation of first, second, third, ... */i18n::translate('%d x', $n);
 		}
 	}
 
