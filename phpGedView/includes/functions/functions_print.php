@@ -2155,13 +2155,13 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	echo "<td class=\"optionbox wrap ", $TEXT_DIRECTION, "\">";
 	echo "<form method=\"get\" name=\"newfactform\" action=\"\" onsubmit=\"return false;\">";
 	echo "<select id=\"newfact\" name=\"newfact\">\n";
-	foreach($addfacts as $indexval => $fact) {
-		echo '<option value="', $fact, '">', i18n::translate($fact), " [".$fact."]</option>";
+	foreach($addfacts as $fact) {
+		echo '<option value="', $fact, '">', translate_fact($fact), " [".$fact."]</option>";
 	}
 	if (($type == "INDI") || ($type == "FAM")) echo "<option value=\"EVEN\">", i18n::translate('Custom Event'), " [EVEN]</option>";
 	echo "\n</select>\n";
 	echo "&nbsp;&nbsp;<input type=\"button\" value=\"", i18n::translate('Add'), "\" onclick=\"add_record('$id', 'newfact');\" /> ";
-	foreach($quickfacts as $k=>$v) echo "&nbsp;<small><a href='javascript://$v' onclick=\"add_new_record('$id', '$v');return false;\">", i18n::translate($v), "</a></small>&nbsp;";
+	foreach($quickfacts as $fact) echo "&nbsp;<small><a href='javascript://$fact' onclick=\"add_new_record('$id', '$fact');return false;\">", translate_fact($fact), "</a></small>&nbsp;";
 	echo "</form>";
 	echo "</td></tr>";
 }
