@@ -3421,11 +3421,6 @@ case 'add_new_gedcom':
 	$text=i18n::translate('You can start a new genealogical database from scratch.<br /><br />This procedure requires only a few simple steps. Step 1 is different from what you know already about uploading and adding. The other steps will be familiar.<ol><li><b>Naming the new GEDCOM</b><br />Type the name of the new GEDCOM <u>without</u> the extension <b>.ged</b>. The new file will be created in the directory named above the box where you enter the name.  Click <b>Add</b>.</li><li><b>Configuration page</b><br />You already know this page;  you configure the settings for your new GEDCOM file.</li><li><b>Validate</b><br />You already know this page;  the new GEDCOM is checked.  Since there is nothing in it, it will be ok.</li><li><b>Importing Records</b><br />Since there will be only one record to import, this will be finished very fast.</li></ol>That\'s it.  Now you can go to the Pedigree chart to see your first person in the new GEDCOM. Click the name of the person and start editing. After that, you can link new individuals to the first person.');
 	break;
 
-case 'add_new_language':
-	$title=i18n::translate('Add files and settings for a new language');
-	$text=i18n::translate('This routine lets you add a new, previously unavailable and completely unsupported language to <b>webtrees</b>.<br /><br />You can set up the standard settings of the new language.  These include language detection code, language direction, start of the week for this language, time settings, alphabet, etc.<br /><br />You will get more help on the settings of languages supported by <b>webtrees</b> after selecting the language and clicking the <b>Add new language</b> button.<br /><br />More help is available on the Configuration page for the language.');
-	break;
-
 case 'add_new_parent':
 	// This is a general help text for multiple pages
 	$title=i18n::translate('Add a new parent');
@@ -4619,11 +4614,6 @@ case 'more_config':
 	$text=i18n::translate('More help is available by clicking the <b>?</b> next to items on the page.');
 	break;
 
-case 'more':
-	$title=i18n::translate('more');
-	$text=i18n::translate('Contextual help is available on every screen; make sure that the <b>Show Contextual Help</b> option in the Help menu is on, and click on a <b>?</b> next to the subject.');
-	break;
-
 case 'move_mediadirs':
 	$title=i18n::translate('Move media directories');
 	$text=i18n::translate('When the Media Firewall is enabled, Multi-Media files can be stored in a server directory that is not accessible from the Internet.<br /><br />These buttons allow you to easily move an entire Media directory structure between the protected (not web-addressable) <b>%s%s</b> and the normal <b>%s</b> directories.', $MEDIA_FIREWALL_ROOTDIR, $MEDIA_DIRECTORY, $MEDIA_DIRECTORY);
@@ -4707,19 +4697,9 @@ case 'name_list':
 	$text=i18n::translate('This box will display either a surname list or a complete name list.  In both cases all surnames will start with the initial letter that you clicked in the Alphabetical index, unless you clicked <b>ALL</b>.<br /><br />Whether you will see a surname list or the complete name list depends on the status of the <b>Skip/Show Surname Lists</b> link.');
 	break;
 
-case 'name_reverse':
-	$title=i18n::translate('Display surname first');
-	$text=i18n::translate('In some languages the surname should be displayed first instead of the default to display it last.  Enabling this option will display the surname first.  Hungarian, Chinese, and Japanese are examples where the surname (the family name) is usually given first.');
-	break;
-
 case 'new_dir':
 	$title=i18n::translate('Media directory structure');
 	$text=i18n::translate('As an admin user you can create the directory structure you require to keep your media files organized. Creating directories from this page ensures that the thumbnail directories are created as well as creating a suitable index.php in each directory.<br /><br />Click on this link to enter the name of the directory you wish to create.');
-	break;
-
-case 'new_language':
-	$title=i18n::translate('Source language');
-	$text=i18n::translate('From this list box you can select the language whose messages you want to compare with those of another language.<br /><br />All changes and additions to language files are first made to the <b>English</b> language files, so you would normally select English as one of the languages to compare.');
 	break;
 
 case 'new_password':
@@ -4745,11 +4725,6 @@ case 'next_path':
 case 'no_update_CHAN':
 	$title=i18n::translate('Do not update the CHAN (Last Change) record');
 	$text=i18n::translate('Administrators sometimes need to clean up and correct the data submitted by users.  For example, they might need to correct the PLAC location to include the country.  When Administrators make such corrections, information about the original change is normally replaced.  This may not be desirable.<br /><br />When this option is selected, <b>webtrees</b> will retain the original Change information instead of replacing it with that of the current session.  With this option selected, Administrators also have the ability to modify or delete the information associated with the original CHAN tag.');
-	break;
-
-case 'old_language':
-	$title=i18n::translate('Secondary language');
-	$text=i18n::translate('From this list box you can select the language which you want to compare with the language selected in the <b>Source</b> list box.<br /><br />After you have made your choice, click the <b>Compare</b> button to get a list of all additions and subtractions in all four files of both languages.<br /><br />To refresh your memory:<br /><b>Addition</b> means: It is <u>in</u> the Source file, but <u>not</u> in the Secondary file.<br /><br /><b>Subtraction</b> means: It is <u>not</u> in the Source file, but it <u>is</u> in the Secondary file.  This might happen when a given message is no longer used and therefore was removed from the English files.  You can safely remove the corresponding message from the secondary language files.');
 	break;
 
 case 'oldest_top':
@@ -5245,11 +5220,6 @@ case 'verify_gedcom':
 case 'view_server_folder':
 	$title=i18n::translate('View server folder');
 	$text=i18n::translate('The administrator has enabled up to %s folder levels below the default <b>%s</b>.  This helps to organize the media files and reduces the possibility of name collisions.<br /><br />In this field, you select the media folder whose contents you wish to view.  When you select <b>ALL</b>, all media files will be shown without regard to the folder in which they are stored.  This can produce a very long list of media items.', $MEDIA_DRECTORY_LEVELS, $MEDIA_DIRECTORY);
-	break;
-
-case 'week_start':
-	$title=i18n::translate('Week starting day');
-	$text=i18n::translate('The day of the week that starts a new week in this language.  Most languages start the week on Sunday, but some start on Monday or other days.');
 	break;
 
 case 'welcome_new':
