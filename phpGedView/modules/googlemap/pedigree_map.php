@@ -325,31 +325,18 @@ echo "	<td valign=\"top\">";
 	if (isset($curgen)){
 		$total=pow(2,$curgen)-1;
 		$miss=$total-$count-$priv;
-		echo "<strong>".$count."</strong>\n";
-		if ($count == 1) {
-			echo " ".i18n::translate('individual displayed out of the normal total of')." \n";
-		} else if ($count > 1 && $count < 5) {
-			echo " ".i18n::translate('individuals displayed out of the normal total of')." \n";
-		} else if ($count > 21 && substr($count, -1, 1) > 1 && substr($count, -1, 1) < 5 && substr($count, -2, 1) != 1) {
-			echo " ".i18n::translate('individuals displayed out of the normal total of')." \n";
-		} else {
-			echo " ".i18n::translate('individuals displayed out of the normal total of')." \n";
-		}
-		echo "<strong>".$total."</strong>\n";
-		echo " ".i18n::translate('from')." \n";
-		echo "<strong>".$curgen."</strong>\n";
-		echo " ".i18n::translate('generations')."<br />\n";
+		echo i18n::plural(
+			'%1$d individual displayed, out of the normal total of %2$d, from %3$d generations.',
+			'%1$d individuals displayed, out of the normal total of %2$d, from %3$d generations.',
+			$count,
+			$count, $total, $curgen
+		), '<br/>';
 		echo "</td>\n";
 		echo "  </tr>\n";
 		echo "  <tr>\n";
 		echo "	<td valign=\"top\">\n";
-		if ($priv!=0) {
-			echo "<strong>".$priv."</strong> \n";
-			if ($priv == 1) {
-				echo " ".i18n::translate('individual is private.')." \n";
-			} else {
-				echo " ".i18n::translate('individuals are private.')." \n";
-			}
+		if ($priv) {
+			echo i18n::plural('%s individual is private.', '%s individuals are private.', $priv, $priv), '<br/>';
 		}
 		if ($count+$priv != $total) {
 			if ($miscount == 1) {
