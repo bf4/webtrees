@@ -50,8 +50,9 @@ color: #ffffff;
 
 /*	Define TopLink Color				*/
 
-#toplinks {
+#toplinks, .menuitem_hover a:hover {
 background:#a1443a;
+color: #fc6d1d;
 }
 
 /*	Define Base Color					*/
@@ -65,7 +66,7 @@ background:#a1443a;
 .person0,  .center .person_box,
 .submenuitem_hover, 
 .submenuitem_hover_rtl {
-background:#FFD9CC;
+background:#f0eaf0;
 }
 
 /*	Define Link Color					*/
@@ -75,7 +76,12 @@ color:#333333;
 text-decoration: none;
 }
 
-a.link:link, a.link:visited, a.link:active, a.link:hover, .menuitem a,
+a:hover { 
+color: #f50;
+text-decoration: none;
+}
+
+a.link:link, a.link:visited, a.link:active, a.link:hover, .menuitem a, 
 .nameZoom {
 color:#333333;
 }
@@ -952,8 +958,13 @@ border: solid black 1px;
 font-size: 12px;
 }
 
-.lang_form {
-margin-top: 3px;
+.theme_form, .lang_form {
+margin-top:0;
+font-size: 14px;
+}
+
+.theme_form option, .lang_form option, .color_form option {
+margin:3px;
 }
 
 .selected-option {
@@ -1106,13 +1117,9 @@ padding-right: 3px;
 }
 
 select {
-border-top-width: 1px;
-border-left-width: 1px;
+border:1px solid #ccc;
 font-family: tahoma, arial, helvetica, sans-serif;
 font-size: 12px;
-border-bottom-width: 1px;
-border-right-width: 1px;
-border-bottom-color: #000000;
 }
 
 form {
@@ -1302,12 +1309,6 @@ text-align: left;
 .rtl {
 text-align:right;
 direction: rtl; 
-}
-
-.theme_form {
-margin-top:0;
-font-size: 14px;
-color:#FFF;
 }
 
 .width10 {width:10%;}
@@ -1620,11 +1621,11 @@ dt {
 /* Override js/jquery-ui.custom.css            */
 /* Accordion ----------------------------------*/
 
-.ui-accordion .ui-accordion-header { background: #f21107; opacity: 0.67;}
-.ui-accordion .ui-accordion-header a { color: #fffffe ;}
+.ui-accordion .ui-accordion-header { background: #F96058;}
+.ui-accordion .ui-accordion-header a { color: #FFFFFF ;}
 
 /* Tabs ----------------------------------*/
-.ui-widget-header { border: 1px solid #fff; background: #f21107 url(/js/jquery/css/images/ui-bg_highlight-soft_100_e7eef3_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
+.ui-widget-header { border: 1px solid #fff; background: #F96058 url(/js/jquery/css/images/ui-bg_highlight-soft_100_e7eef3_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
 .ui-widget-content a:hover {color: #f50;}
 
 /* Interaction states ----------------------------------*/
