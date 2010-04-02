@@ -333,8 +333,8 @@ class stats_ui extends stats
 			$mon = date('M', $news['date']);
 			$year = date('Y', $news['date']);
 			$content .= "<div class=\"person_box\">";
-			$news['title']=embed_globals($news['title'];
-			$news['text' ]=embed_globals($news['text' ];
+			$news['title']=embed_globals($news['title']);
+			$news['text' ]=embed_globals($news['text' ]);
 			$trans = array_flip(get_html_translation_table(HTML_SPECIALCHARS));
 			$news['text'] = strtr($news['text'], $trans);
 			$content .= PrintReady($news['text'])."<br />\n<br />\n"
