@@ -759,11 +759,11 @@ document.getElementById("side_bar").innerHTML = side_bar_html;
 // === create the context menu div ===
 	  var contextmenu = document.createElement("div");
 	  contextmenu.style.visibility="hidden";
-	  contextmenu.innerHTML = '<a href="javascript:zoomIn()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom&nbsp;in');?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:zoomOut()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom&nbsp;out');?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:zoomInHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom&nbsp;in&nbsp;here');?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:zoomOutHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom&nbsp;out&nbsp;here');?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:centreMapHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Centre&nbsp;map&nbsp;here');?>&nbsp;&nbsp;</div></a>';
+	  contextmenu.innerHTML = '<a href="javascript:zoomIn()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom in');?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:zoomOut()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom out');?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:zoomInHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom in here');?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:zoomOutHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom out here');?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:centreMapHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Center map here');?>&nbsp;&nbsp;</div></a>';
 	  pm_map.getContainer().appendChild(contextmenu);
 
 	  // === listen for singlerightclick ===
