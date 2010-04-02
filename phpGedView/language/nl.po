@@ -2226,15 +2226,15 @@ msgstr "Deze functie is door de beheerder uitgeschakeld."
 #: ../index.php:311 ../index.php:372 ../index_edit.php:158
 #: ../includes/classes/class_menubar.php:110 ../help_text.php:4895
 msgid "My Page"
-msgstr "MyGedView"
+msgstr "My Page"
 
 #: ../index.php:373
 msgid "My Page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other webtrees users."
-msgstr "Op uw persoonlijke MyGedView pagina kunt u uw favoriete personen aangeven, kijken naar gebeurtenissen die binnenkort plaatsvinden en samenwerken met andere webtrees gebruikers van deze site."
+msgstr "Op uw persoonlijke My Page pagina kunt u uw favoriete personen aangeven, kijken naar gebeurtenissen die binnenkort plaatsvinden en samenwerken met andere webtrees gebruikers van deze site."
 
 #: ../index.php:446 ../index_edit.php:430 ../blocks/user_welcome.php:62
 msgid "Customize My Page"
-msgstr "MyGedView indelen"
+msgstr "My Page indelen"
 
 #: ../index.php:453 ../index_edit.php:431 ../blocks/gedcom_block.php:57
 msgid "Customize this GEDCOM Home Page"
@@ -2690,7 +2690,7 @@ msgid "Welcome"
 msgstr "Welkom"
 
 #: ../editconfig_gedcom.php:1326 ../includes/classes/class_menubar.php:119
-msgid "MyGedView"
+msgid "My Page"
 msgstr ""
 
 #: ../editconfig_gedcom.php:1332 ../help_text.php:3369
@@ -4976,7 +4976,7 @@ msgid "webtrees User Login"
 msgstr "webtrees aanmelden gebruiker"
 
 #: ../login.php:156
-msgid "In order to access My Page, you must be a registered user on the system.  On My Page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of webtrees pages.<br /><br />Enter your User name and Password in the appropriate fields to login to MyGedView."
+msgid "In order to access My Page, you must be a registered user on the system.  On My Page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of webtrees pages.<br /><br />Enter your User name and Password in the appropriate fields to login to My Page."
 msgstr ""
 
 #: ../login.php:161
@@ -5119,7 +5119,7 @@ msgstr ""
 
 #: ../index_edit.php:551
 msgid "Here is a short description of each of the blocks you can place on the Welcome or My Page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>"
-msgstr "Hier volgt een korte beschrijving van de vakken die u kunt toevoegen aan de Welkom of de MyGedView pagina.<br /><center><table border='1'><tr><td class='list_value'><b>Naam</b></td><td class='list_value'><b>Omschrijving</b></td></tr>&nbsp;</table></center>"
+msgstr "Hier volgt een korte beschrijving van de vakken die u kunt toevoegen aan de Welkom of de My Page pagina.<br /><center><table border='1'><tr><td class='list_value'><b>Naam</b></td><td class='list_value'><b>Omschrijving</b></td></tr>&nbsp;</table></center>"
 
 #: ../clippings.php:43 ../modules/clippings/index.php:40
 #: ../modules/clippings/help_text.php:40 ../help_text.php:2140
@@ -17818,7 +17818,7 @@ msgstr ""
 
 #: ../help_text.php:2431 ../help_text.php:5411
 msgid "On this page you can administer the current users and add new users.<br /><br /><b>User List</b><br />In this table the current users, their status, and their rights are displayed.  You can <b>delete</b> or <b>edit</b> users.<br /><br /><b>Add a new user</b><br />This form is almost the same as the one users see on the  <b>My Account</b> page.<br /><br />For several subjects we did not make special Help text for the administrator. In those cases you will see the following message:"
-msgstr "Op deze pagina kunt u gebruikers verwijderen, wijzigen en aanmaken.<br />Gebruikers dienen om de toegang tot uw site te regelen, er privacy-instellingen aan te relateren en het voor personen mogelijk te maken om de site op henzelf afgestemd te laten functioneren. Denk bij dit laatste aan de MyGedView pagina en de standaard-startpersoon voor overzichten.<br /><br />Door op de vraagtekens achter de verschillende onderwerpen te klikken, kunt u per onderwerp nadere informatie krijgen.<br />Als de vraagtekens niet zichtbaar zijn, controleer dan in het menu Help of de contextuele help is ingeschakeld.<br /><br />In een aantal gevallen is geen aparte helpinformatie voor de beheerder beschikbaar. U ziet dan de melding:"
+msgstr "Op deze pagina kunt u gebruikers verwijderen, wijzigen en aanmaken.<br />Gebruikers dienen om de toegang tot uw site te regelen, er privacy-instellingen aan te relateren en het voor personen mogelijk te maken om de site op henzelf afgestemd te laten functioneren. Denk bij dit laatste aan de My Page pagina en de standaard-startpersoon voor overzichten.<br /><br />Door op de vraagtekens achter de verschillende onderwerpen te klikken, kunt u per onderwerp nadere informatie krijgen.<br />Als de vraagtekens niet zichtbaar zijn, controleer dan in het menu Help of de contextuele help is ingeschakeld.<br /><br />In een aantal gevallen is geen aparte helpinformatie voor de beheerder beschikbaar. U ziet dan de melding:"
 
 #: ../help_text.php:2445
 msgid "This option controls whether or not to abbreviate labels like <b>Birth</b> on charts with just the first letter like <b>B</b>.<br /><br />You can customize the abbreviations by supplying overriding values in the <i>languages/extra.xx.php</i> file for each language.  For example, if you want to use <b>*</b> instead of <b>N</b> to abbreviate the BIRT fact in the French language, you should put the following entry into the <i>languages/extra.fr.php</i> file:<br /><br /><code>$factAbbrev[\"BIRT\"]&nbsp;=&nbsp;\"*\";</code><br /><br />The lengths of abbreviations specified this way are not limited to 1 character."
@@ -18174,7 +18174,7 @@ msgid "GEDCOM 5.5.1 allows you to link pictures, videos, and other multimedia ob
 msgstr ""
 
 #: ../help_text.php:2875
-msgid "Which page should users see after they have logged in?<br /><br />The choice made here determines whether a successful Login causes the Welcome or the MyGedView page to appear when the login is done from the Welcome page.<br /><br />A Login done from the link at the top of every other page will return the user to that page."
+msgid "Which page should users see after they have logged in?<br /><br />The choice made here determines whether a successful Login causes the Welcome or the My Page page to appear when the login is done from the Welcome page.<br /><br />A Login done from the link at the top of every other page will return the user to that page."
 msgstr ""
 
 #: ../help_text.php:2880
@@ -18347,7 +18347,7 @@ msgstr "Door middel van deze optie kunt op de pagina's vraagtekens weergeven naa
 
 #: ../help_text.php:3095
 msgid "Show hit counters on Portal and Individual pages."
-msgstr "Toont de bezoekteller op de MyGedView-pagina, de Genealogie-infopagina en op de personen-pagina."
+msgstr "Toont de bezoekteller op de My Page-pagina, de Genealogie-infopagina en op de personen-pagina."
 
 #: ../help_text.php:3100
 msgid "Set the privacy access level for all dead people."
@@ -18675,7 +18675,7 @@ msgid "By clicking this link, you can add a <u>new</u> male person and link this
 msgstr "Hiermee kunt u een nieuwe persoon toevoegen als partner voor de persoon bovenaan het scherm. U vormt hierdoor een nieuw gezin<br /><br />Als u op de koppeling heeft geklikt, krijgt u een nieuw scherm, waarop u zoveel mogelijk gegevens van de persoon dient in te vullen. "
 
 #: ../help_text.php:3459
-msgid "Adding multimedia files (MM) to the GEDCOM is a very nice feature.  Although this program already has a great look without media, if you add pictures or other MM to your relatives, it will only get better.<br /><br /><b>What you should understand about MM.</b><br />There are many formats of MM. Although webtrees can handle most of them, there some things to consider.<br /><ul><li><b>Formats</b><br />Pictures can be edited and saved in many formats.  For example, .jpg, .png, .bmp, .gif, etc.  If the same original picture was used to create each of the formats, the viewed image will appear to be the same size no matter which format is used.  However, the image files stored in the database will vary considerably in size.  Generally, .jpg images are considered to the most efficient in terms of storage space.</li><li><b>Image size</b><br />The larger the original image, the larger will be the resultant file's size. The picture should fit on the screen without scrolling; the maximum width or height should not be more than the width or height of the screen. webtrees is designed for screens of 1024x768 pixels but not all of this space is available for viewing pictures; the picture's size should be set accordingly.  To reduce file sizes, smaller pictures are more desirable.</li><li><b>Resolution</b><br />The resolution of a picture is usually measured in \"dpi\" (dots/inch), but this is valid only for printed pictures.  When considering pictures shown on screen, the only correct way is to use total dots or pixels. When printed, the picture could have a resolution of 150 - 300 dpi or more depending on the printer. Screen resolutions are rarely better than 50 pixels per inch.  If your picture will never be printed, you can safely lower its resolution (and consequently its file size) without affecting picture quality.  If a low-resolution picture is printed with too great a magnification, its quality will suffer; it will have a grainy appearance.</li><li><b>Color depth</b><br />Another way to keep a file small is to decrease the number of colors that you use.  The number of colors can differ from pure black and white (two colors) to true colors (millions of colors) and anything in between.  You can see that the more colors are used, the bigger the size of the files.</li></ul><b>Why is it important to keep the file size small?</b><br /><ul><li>First of all: Our webspace is limited.  The more large files there are, the more web space we need on the server. The more space we need, the higher our costs.</li><li>Bandwidth.  The more data our server has to send to the remote location (your location), the more we have to pay.  This is because the carrying capacity of the server's connection to the Internet is limited, and the link has to be shared (and paid for) by all of the applications running on the server.  webtrees is one of many applications that share the server.  The cost is normally apportioned according to the amount of data each application sends and receives.</li><li>Download time. If you have large files, the user (also you) will have to wait long for the page to download from the server.  Not everybody is blessed with a cable connection, broadband or DSL.</li></ul><b>How to upload your MM</b><br />There are two ways to upload media to the site.  If you have a lot of media items to upload you should contact the site administrator to discuss the best ways.  If it has been enabled by your site administrator, you can use the Upload Media form under your MyGedView menu.  You can also use the Upload option on the Multimedia form to upload media items."
+msgid "Adding multimedia files (MM) to the GEDCOM is a very nice feature.  Although this program already has a great look without media, if you add pictures or other MM to your relatives, it will only get better.<br /><br /><b>What you should understand about MM.</b><br />There are many formats of MM. Although webtrees can handle most of them, there some things to consider.<br /><ul><li><b>Formats</b><br />Pictures can be edited and saved in many formats.  For example, .jpg, .png, .bmp, .gif, etc.  If the same original picture was used to create each of the formats, the viewed image will appear to be the same size no matter which format is used.  However, the image files stored in the database will vary considerably in size.  Generally, .jpg images are considered to the most efficient in terms of storage space.</li><li><b>Image size</b><br />The larger the original image, the larger will be the resultant file's size. The picture should fit on the screen without scrolling; the maximum width or height should not be more than the width or height of the screen. webtrees is designed for screens of 1024x768 pixels but not all of this space is available for viewing pictures; the picture's size should be set accordingly.  To reduce file sizes, smaller pictures are more desirable.</li><li><b>Resolution</b><br />The resolution of a picture is usually measured in \"dpi\" (dots/inch), but this is valid only for printed pictures.  When considering pictures shown on screen, the only correct way is to use total dots or pixels. When printed, the picture could have a resolution of 150 - 300 dpi or more depending on the printer. Screen resolutions are rarely better than 50 pixels per inch.  If your picture will never be printed, you can safely lower its resolution (and consequently its file size) without affecting picture quality.  If a low-resolution picture is printed with too great a magnification, its quality will suffer; it will have a grainy appearance.</li><li><b>Color depth</b><br />Another way to keep a file small is to decrease the number of colors that you use.  The number of colors can differ from pure black and white (two colors) to true colors (millions of colors) and anything in between.  You can see that the more colors are used, the bigger the size of the files.</li></ul><b>Why is it important to keep the file size small?</b><br /><ul><li>First of all: Our webspace is limited.  The more large files there are, the more web space we need on the server. The more space we need, the higher our costs.</li><li>Bandwidth.  The more data our server has to send to the remote location (your location), the more we have to pay.  This is because the carrying capacity of the server's connection to the Internet is limited, and the link has to be shared (and paid for) by all of the applications running on the server.  webtrees is one of many applications that share the server.  The cost is normally apportioned according to the amount of data each application sends and receives.</li><li>Download time. If you have large files, the user (also you) will have to wait long for the page to download from the server.  Not everybody is blessed with a cable connection, broadband or DSL.</li></ul><b>How to upload your MM</b><br />There are two ways to upload media to the site.  If you have a lot of media items to upload you should contact the site administrator to discuss the best ways.  If it has been enabled by your site administrator, you can use the Upload Media form under your My Page menu.  You can also use the Upload option on the Multimedia form to upload media items."
 msgstr ""
 
 #: ../help_text.php:3463
@@ -19863,7 +19863,7 @@ msgstr ""
 
 #: ../help_text.php:4338
 msgid "The Favorites drop-down list shows the favorites that you have selected on your personalized My Page.  It also shows the favorites that the site administrator has selected for the currently active GEDCOM.  Clicking on one of the favorites entries will take you directly to the Individual Information page of that person.<br /><br />More help about adding Favorites is available in your personalized My Page."
-msgstr "In deze keuzelijst zijn de personen zichtbaar, die u als favorieten heeft geselecteerd.<br />Zodra u uit deze keuzelijst een van de aanwezige favorieten kiest, krijgt u de details van deze persoon te zien.<br /><br />U kunt favorieten toevoegen op uw persoonlijke MyGedView pagina of, op de pagina \"Detailgegevens persoon\", door in de keuzelijst \"Mijn Favorieten\" te kiezen voor \"Toevoegen aan mijn favorieten\".<br /><br />Meer helpinformatie over Favorieten is beschikbaar op uw persoonlijke MyGedView pagina."
+msgstr "In deze keuzelijst zijn de personen zichtbaar, die u als favorieten heeft geselecteerd.<br />Zodra u uit deze keuzelijst een van de aanwezige favorieten kiest, krijgt u de details van deze persoon te zien.<br /><br />U kunt favorieten toevoegen op uw persoonlijke My Page pagina of, op de pagina \"Detailgegevens persoon\", door in de keuzelijst \"Mijn Favorieten\" te kiezen voor \"Toevoegen aan mijn favorieten\".<br /><br />Meer helpinformatie over Favorieten is beschikbaar op uw persoonlijke My Page pagina."
 
 #: ../help_text.php:4342
 msgid "General Information"
@@ -19932,7 +19932,7 @@ msgid "Configure webtrees"
 msgstr "Instellen webtrees"
 
 #: ../help_text.php:4411
-msgid "On this page you configure the global settings for webtrees.  You have to do this after you have installed webtrees and are running it for the first time.<br /><br />You should review the <a href=\\\"readme.txt\\\" target=\\\"_blank\\\">readme.txt</a> file before continuing to configure webtrees.<br /><br />As these settings are <b>global</b>, they are for the whole program and for all genealogical databases you use with webtrees.<br /><br />Each genealogical database also has additional configuration options that you set after clicking the <b>Click here to administer GEDCOMs</b> link on this page.<br /><br />You can also access the GEDCOM Administration function from the main Admin page, whose link is found under the MyGedView icon or in the header of most pages.  On the Admin page, the relevant link is called <b>Manage GEDCOMs and edit Privacy.</b>"
+msgid "On this page you configure the global settings for webtrees.  You have to do this after you have installed webtrees and are running it for the first time.<br /><br />You should review the <a href=\\\"readme.txt\\\" target=\\\"_blank\\\">readme.txt</a> file before continuing to configure webtrees.<br /><br />As these settings are <b>global</b>, they are for the whole program and for all genealogical databases you use with webtrees.<br /><br />Each genealogical database also has additional configuration options that you set after clicking the <b>Click here to administer GEDCOMs</b> link on this page.<br /><br />You can also access the GEDCOM Administration function from the main Admin page, whose link is found under the My Page icon or in the header of most pages.  On the Admin page, the relevant link is called <b>Manage GEDCOMs and edit Privacy.</b>"
 msgstr ""
 
 #: ../help_text.php:4425
@@ -20024,7 +20024,7 @@ msgid "Charts Block"
 msgstr "Grafiek Blok"
 
 #: ../help_text.php:4506
-msgid "This block allows a pedigree, descendancy, or hourglass chart to appear on the Welcome or the MyGedView page.  Because of space limitations, the charts should be placed only on the left side of the page.<br /><br />When this block appears on the Welcome page, the root person and the type of chart to be displayed are determined by the administrator.  When this block appears on the user's personalized MyGedView page, these options are determined by the user.<br /><br />The behavior of these charts is identical to their behavior when they are called up from the menus.  Click on the box of a person to see more details about them."
+msgid "This block allows a pedigree, descendancy, or hourglass chart to appear on the Welcome or the My Page page.  Because of space limitations, the charts should be placed only on the left side of the page.<br /><br />When this block appears on the Welcome page, the root person and the type of chart to be displayed are determined by the administrator.  When this block appears on the user's personalized My Page page, these options are determined by the user.<br /><br />The behavior of these charts is identical to their behavior when they are called up from the menus.  Click on the box of a person to see more details about them."
 msgstr ""
 
 #: ../help_text.php:4510
@@ -20349,7 +20349,7 @@ msgstr ""
 
 #: ../help_text.php:4731
 msgid "Here you see two buttons to login to the system.<br /><br />The page you will be taken to depends on which button you click after typing your user name and password.<br /><ul><li>The <b>Login</b> button<br />If you click this button, you will be logged in and go directly to your My Page, where you can edit your settings, add or edit favorites, send and read messages, etc.</li><li>The <b>Admin</b> button<br />If you have Admin rights, you can click this button to go directly to the main Administration page.</li></ul>"
-msgstr "Hier ziet u twee knoppen om toegang te krijgen tot het systeem, nadat u uw gebruikersnaam en wachtwoord heeft ingetypt.<br />Afhankelijk van de gekozen knop gaat u naar:<br /><br />* De <b>Aanmelden</b> knop <br />Als u op deze linker knop klikt, wordt u aangemeld en gaat u direct naar uw persoonlijke MyGedView pagina. Hier kunt u uw eigen instellingen en favorieten aanpassen, e-mails ontvangen en versturen, enz.<br /><br />* De <b>Beheren</b> knop<br />Als u over beheerderrechten beschikt, kunt u deze knop gebruiken om direct naar de beheerpagina te gaan."
+msgstr "Hier ziet u twee knoppen om toegang te krijgen tot het systeem, nadat u uw gebruikersnaam en wachtwoord heeft ingetypt.<br />Afhankelijk van de gekozen knop gaat u naar:<br /><br />* De <b>Aanmelden</b> knop <br />Als u op deze linker knop klikt, wordt u aangemeld en gaat u direct naar uw persoonlijke My Page pagina. Hier kunt u uw eigen instellingen en favorieten aanpassen, e-mails ontvangen en versturen, enz.<br /><br />* De <b>Beheren</b> knop<br />Als u over beheerderrechten beschikt, kunt u deze knop gebruiken om direct naar de beheerpagina te gaan."
 
 #: ../help_text.php:4736
 msgid "Here you see two buttons to login to the system.<br /><br />The page you will be taken to or sent back to depends on which button you click after typing your user name and password.<br /><ul><li>The <b>Login</b> button<br />If you click this button, you will return to the page you were just on, but with logged-in access rights.<br /><br />For example, if you click <b>Login</b> when you were at the Pedigree page, you will return to that same page.  If you click this button when you were on the main Welcome page, you will be taken to My Page.</li><li>The <b>Admin</b> button<br />If you have Admin rights, you can click this button to go directly to the main Administration page.</li></ul>"
@@ -20373,7 +20373,7 @@ msgstr ""
 
 #: ../help_text.php:4751
 msgid "With this option, the webtrees internal messaging system will be used and no emails will be sent.<br /><br />You will receive only <u>internal</u> messages from the other users.  When another site user sends you a message, that message will appear in the Message block on your personal My Page.  If you have removed this block from your My Page, you will not see any messages.  They will, however, show up as soon as you configure My Page to again have the Message block."
-msgstr "Het interne webtrees berichtensysteem wordt gebruikt en er worden geen e-mailberichten verzonden.<br />U ontvangt uitsluitend interne berichten van andere gebruikers.<br />De berichten kunt u bekijken in het berichtenvak van uw persoonlijke MyGedView pagina"
+msgstr "Het interne webtrees berichtensysteem wordt gebruikt en er worden geen e-mailberichten verzonden.<br />U ontvangt uitsluitend interne berichten van andere gebruikers.<br />De berichten kunt u bekijken in het berichtenvak van uw persoonlijke My Page pagina"
 
 #: ../help_text.php:4756
 msgid "This option is like webtrees internal messaging, with one addition.  As an extra, a copy of the message will also be sent to the email address you configured on your Account page.<br /><br />This is the default contact method."
@@ -20458,7 +20458,7 @@ msgstr ""
 
 #: ../help_text.php:4816
 msgid "If you are logged in, this menu can include the following items:<ol><li>My Page<br />This takes you to your own customizable Starting page.</li><li>My Account<br />You can edit your personal data here.</li><li>My Pedigree<br />If you have selected a Root person for this GEDCOM, this will take you to the Pedigree chart for that person.</li><li>My Individual Record<br />This link will take you to your Individual Information page, where all genealogical data about yourself and your family is displayed.</li></ol>"
-msgstr "In dit menu vindt u, als u bent aangemeld als gebruiker, alle aan u gerelateerde onderwerpen terug. U kunt naar uw persoonlijke MyGedView pagina toegaan, uw gebruikersgegevens aanpassen, of direct naar uw kwartierstaat of detailgegevens toegaan.<br />Als u beschikt over beheerderrechten, kunt u naar het hoofdmenu Beheer of naar het menu \"Beheer GEDCOM-bestanden en privacy-instellingen\"."
+msgstr "In dit menu vindt u, als u bent aangemeld als gebruiker, alle aan u gerelateerde onderwerpen terug. U kunt naar uw persoonlijke My Page pagina toegaan, uw gebruikersgegevens aanpassen, of direct naar uw kwartierstaat of detailgegevens toegaan.<br />Als u beschikt over beheerderrechten, kunt u naar het hoofdmenu Beheer of naar het menu \"Beheer GEDCOM-bestanden en privacy-instellingen\"."
 
 #: ../help_text.php:4820
 msgid "Search Menu"
@@ -20531,7 +20531,7 @@ msgstr ""
 
 #: ../help_text.php:4871
 msgid "When you entered here for the first time, you already had some blocks on this page.  If you like, you can customize this My Page.<br /><br />When you click this link you will be taken to a form where you can add, move, or delete blocks.  More explanation is available on that form."
-msgstr "U heeft de mogelijkheid, om deze pagina naar eigen believen in de delen. U kunt vakken verwijderen en toevoegen, en bepalen waar deze op het scherm komen te staan.<br />Door op de koppeling \"MyGedView indelen\" te klikken, in het \"Welkom.....\" vak, wordt een venster geopend waarmee u de veranderingen kunt aanbrengen.<br />Ook treft u daar meer hulp over deze functie aan."
+msgstr "U heeft de mogelijkheid, om deze pagina naar eigen believen in de delen. U kunt vakken verwijderen en toevoegen, en bepalen waar deze op het scherm komen te staan.<br />Door op de koppeling \"My Page indelen\" te klikken, in het \"Welkom.....\" vak, wordt een venster geopend waarmee u de veranderingen kunt aanbrengen.<br />Ook treft u daar meer hulp over deze functie aan."
 
 #: ../help_text.php:4875
 msgid "My Favorites Block"
@@ -20546,8 +20546,8 @@ msgid "Login Block"
 msgstr ""
 
 #: ../help_text.php:4881
-msgid "In order to access My Page, you must be a registered user on the system.  On My Page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of webtrees pages.<br /><br />Enter your User name and Password in the appropriate fields to login to MyGedView."
-msgstr "Om toegang te verkrijgen tot uw persoonlijke MyGedView pagina, moet u beschikken over een gebruikernaam.<br /><br />Op deze persoonlijke pagina kunt u uw favoriete personen vastleggen, notities maken, boodschappen versturen. zien wie er verder nog aangelogd zijn en uw persoonlijke pagina naar believen indelen met nog meer informatievakken.<br /><br />Type, om naar uw persoonlijke MyGedView pagina te gaan, uw gebruikersnaam en wachtwoord in de vakjes in en klik op \"Aanmelden\"."
+msgid "In order to access My Page, you must be a registered user on the system.  On My Page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of webtrees pages.<br /><br />Enter your User name and Password in the appropriate fields to login to My Page."
+msgstr "Om toegang te verkrijgen tot uw persoonlijke My Page pagina, moet u beschikken over een gebruikernaam.<br /><br />Op deze persoonlijke pagina kunt u uw favoriete personen vastleggen, notities maken, boodschappen versturen. zien wie er verder nog aangelogd zijn en uw persoonlijke pagina naar believen indelen met nog meer informatievakken.<br /><br />Type, om naar uw persoonlijke My Page pagina te gaan, uw gebruikersnaam en wachtwoord in de vakjes in en klik op \"Aanmelden\"."
 
 #: ../help_text.php:4885
 msgid "My Messages Block"
@@ -20566,12 +20566,12 @@ msgid "You can use this journal to write notes or reminders for your own use.  W
 msgstr "Voor uw eigen gebruik kunt u notities maken op uw notitieblok. Als u een volgende keer de site bezoekt, kunt u de notities weer bekijken, aanpassen of verwijderen.<br /><br />De notities zijn alleen voor u zelf zichtbaar."
 
 #: ../help_text.php:4896
-msgid "This is your Personal page.<br /><br />Here you will find easy links to access your personal data such as <b>My Account</b>, <b>My Indi</b> (this is your Individual Information page), and <b>My Pedigree</b>.  You can have blocks with <b>Messages</b>, a <b>Journal</b> (like a Notepad) and many more.<br /><br />The layout of this page is similar to the Welcome page that you see when you first access this site.  While the parts of the Welcome page are selected by the site administrator, you can select what parts to include on this personalized page.  You will find the link to customize this page in the Welcome block or separately when the Welcome block is not present.<br /><br />You can choose from the following blocks:<ul><li><a href=\"#mygedview_welcome\"><b>Welcome</b></a></li><li><a href=\"#mygedview_customize\"><b>Customize MyGedView</b></a></li><li><a href=\"#mygedview_message\"><b>Messages</b></a></li><li><a href=\"#mygedview_events\"><b>Upcoming events</b></a></li><li><a href=\"#mygedview_onthisday\"><b>On this Day in Your History</b></a></li><li><a href=\"#mygedview_charts\"><b>Charts</b></a></li><li><a href=\"#mygedview_favorites\"><b>My Favorites</b></a></li><li><a href=\"#mygedview_stats\"><b>GEDCOM Statistics</b></a></li><li><a href=\"#mygedview_myjournal\"><b>My Journal</b></a></li><li><a href=\"#mygedview_media\"><b>Random Media</b></a></li><li><a href=\"#mygedview_loggedin\"><b>Logged In Users</b></a></li><li><a href=\"#mygedview_recent_changes\"><b>Recent Changes</b></a></li></ul>"
+msgid "This is your Personal page.<br /><br />Here you will find easy links to access your personal data such as <b>My Account</b>, <b>My Indi</b> (this is your Individual Information page), and <b>My Pedigree</b>.  You can have blocks with <b>Messages</b>, a <b>Journal</b> (like a Notepad) and many more.<br /><br />The layout of this page is similar to the Welcome page that you see when you first access this site.  While the parts of the Welcome page are selected by the site administrator, you can select what parts to include on this personalized page.  You will find the link to customize this page in the Welcome block or separately when the Welcome block is not present.<br /><br />You can choose from the following blocks:<ul><li><a href=\"#mygedview_welcome\"><b>Welcome</b></a></li><li><a href=\"#mygedview_customize\"><b>Customize My Page</b></a></li><li><a href=\"#mygedview_message\"><b>Messages</b></a></li><li><a href=\"#mygedview_events\"><b>Upcoming events</b></a></li><li><a href=\"#mygedview_onthisday\"><b>On this Day in Your History</b></a></li><li><a href=\"#mygedview_charts\"><b>Charts</b></a></li><li><a href=\"#mygedview_favorites\"><b>My Favorites</b></a></li><li><a href=\"#mygedview_stats\"><b>GEDCOM Statistics</b></a></li><li><a href=\"#mygedview_myjournal\"><b>My Journal</b></a></li><li><a href=\"#mygedview_media\"><b>Random Media</b></a></li><li><a href=\"#mygedview_loggedin\"><b>Logged In Users</b></a></li><li><a href=\"#mygedview_recent_changes\"><b>Recent Changes</b></a></li></ul>"
 msgstr ""
 
 #: ../help_text.php:4901
 msgid "The Welcome block shows you:<ul><li>The current GEDCOM file</li><li>The date and time</li><li>Links to:<ul><li>My Account</li><li>My Pedigree</li><li>My Individual Record</li><li>Customize My Page</li></ul></li></ul><br /><b>Note:</b><br />You will see the links to <b>My Indi</b> and <b>My Pedigree</b> only if you are known to the current GEDCOM file.  You might have a record in one GEDCOM file and therefore see the <b>My Indi</b> and <b>My Pedigree</b> links, while in another GEDCOM file you do not have a record and consequently these links are not displayed."
-msgstr "<dl>~WELKOM ......~<dt>In dit vak treft u het volgende aan:</dt><dd>- De omschrijving van de actieve genealogie</dd><dd>- De datum en tijd</dd><dd>- De volgende koppelingen</dd><dd> - - Mijn gegevens</dd><dd> - - Mijn kwartierstaat</dd><dd> - - Mijn persoonsgegevens</dd><dd> - - MyGedView indelen</dd></dl><b>Opmerking:</b><br /> de koppelingen naar Mijn kwartierstaat en Mijn persoonsgegevens worden alleen weergegeven, als u in de genealogie voorkomt."
+msgstr "<dl>~WELKOM ......~<dt>In dit vak treft u het volgende aan:</dt><dd>- De omschrijving van de actieve genealogie</dd><dd>- De datum en tijd</dd><dd>- De volgende koppelingen</dd><dd> - - Mijn gegevens</dd><dd> - - Mijn kwartierstaat</dd><dd> - - Mijn persoonsgegevens</dd><dd> - - My Page indelen</dd></dl><b>Opmerking:</b><br /> de koppelingen naar Mijn kwartierstaat en Mijn persoonsgegevens worden alleen weergegeven, als u in de genealogie voorkomt."
 
 #: ../help_text.php:4905 ../help_text.php:5010
 msgid "Name List"
@@ -21272,7 +21272,7 @@ msgstr ""
 
 #: ../help_text.php:5441
 msgid "The GEDCOM INDI record ID identifies the user.  It has to be set by the administrator.<br /><br />This ID is used as the ID on several pages such as <b>My Individual Record</b> and <b>My Pedigree</b>.<br /><br />You can set the user's GEDCOM ID separately for each GEDCOM.  If a user does not have a record in a GEDCOM, you leave that box empty."
-msgstr "Dit is het individual-ID, waarmee de desbetreffende gebruiker in de genealogie voorkomt. Het is van belang bijvoorbeeld voor privacy-instellingen, waarbij een gebruiker alleen de gegevens van directe familie mag zien. Ook is het de startpersoon voor \"Mijn kwartierstaat\" en \"Mijn persoon\" op de persoonlijke MyGedView pagina van de gebruiker.<br /><br />Voor iedere genealogie kunt u het ID voor de gebruiker instellen.<br />Als de gebruiker niet in de genealogie voorkomt, kunt u het veld leeg laten."
+msgstr "Dit is het individual-ID, waarmee de desbetreffende gebruiker in de genealogie voorkomt. Het is van belang bijvoorbeeld voor privacy-instellingen, waarbij een gebruiker alleen de gegevens van directe familie mag zien. Ook is het de startpersoon voor \"Mijn kwartierstaat\" en \"Mijn persoon\" op de persoonlijke My Page pagina van de gebruiker.<br /><br />Voor iedere genealogie kunt u het ID voor de gebruiker instellen.<br />Als de gebruiker niet in de genealogie voorkomt, kunt u het veld leeg laten."
 
 #: ../help_text.php:5445
 msgid "useradmin_path_length"
@@ -21433,7 +21433,7 @@ msgstr "Klik op de onderstaande koppeling, meldt u aan met het nieuwe wachtwoord
 
 #: ../login_register.php:134
 msgid "After you have logged in, select the «My Account» link under the «My Page» menu and fill in the password fields to change your password."
-msgstr "Doe het volgende nadat u bent aangemeld: klik op 'Mijn gegevens' in het menu 'MyGedView' en vul de gegevens bij wachtwoord in, om uw wachtwoord te wijzigen."
+msgstr "Doe het volgende nadat u bent aangemeld: klik op 'Mijn gegevens' in het menu 'My Page' en vul de gegevens bij wachtwoord in, om uw wachtwoord te wijzigen."
 
 #: ../login_register.php:140
 #, php-format
@@ -21737,7 +21737,7 @@ msgstr "Op deze dag, in het verleden...."
 
 #: ../blocks/todays_events.php:42
 msgid "The On This Day, in Your History... block shows anniversaries of events for today.  You can configure the amount of detail shown."
-msgstr "Het vak \"Op deze dag, in het verleden....\" toont een lijst met gebeurtenissen, die op deze dag hebben plaatsgevonden. De gebeurtenissen zijn beperkt tot de actieve genealogie. Op de persoonlijke MyGedView pagina worden alleen gebeurtenissen van levende personen getoond, op een Welkomstpagina de gebeurtenissen van alle personen. Als geen gebeurtenissen worden gevonden, wordt het vak niet getoond."
+msgstr "Het vak \"Op deze dag, in het verleden....\" toont een lijst met gebeurtenissen, die op deze dag hebben plaatsgevonden. De gebeurtenissen zijn beperkt tot de actieve genealogie. Op de persoonlijke My Page pagina worden alleen gebeurtenissen van levende personen getoond, op een Welkomstpagina de gebeurtenissen van alle personen. Als geen gebeurtenissen worden gevonden, wordt het vak niet getoond."
 
 #: ../blocks/user_favorites.php:41
 msgid "User Favorites"
@@ -21887,7 +21887,7 @@ msgstr "Welkom ......"
 
 #: ../blocks/user_welcome.php:40
 msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his My Page."
-msgstr "Het vak \"Welkom .....\" toont de gebruiker de datum en tijd, een directe koppeling naar de eigen gebruikersgegevens en de eigen kwartierstaat.<br />Ook kan de gebruiker de indeling van de eigen MyGedView-pagina wijzigen."
+msgstr "Het vak \"Welkom .....\" toont de gebruiker de datum en tijd, een directe koppeling naar de eigen gebruikersgegevens en de eigen kwartierstaat.<br />Ook kan de gebruiker de indeling van de eigen My Page-pagina wijzigen."
 
 #: ../blocks/rss_block.php:42 ../blocks/rss_block.php:56
 msgid "RSS Feeds"
@@ -23492,7 +23492,7 @@ msgstr ""
 #~ msgstr "Wijzig privacy"
 
 #~ msgid "Here you see two buttons to login to the system.<br /><br />The page you will be taken to or sent back to depends on which button you click after typing your user name and password.<br /><ul><li>The <b>Login</b> button<br />If you click this button, you will return to the page you were just on, but with logged-in access rights.<br /><br />For example, if you click <b>Login</b> when you were at the Pedigree page, you will return to that same page.  If you click this button when you were on the main Home Page, you will be taken to My Page.</li><li>The <b>Admin</b> button<br />If you have Admin rights, you can click this button to go directly to the main Administration page.</li></ul>"
-#~ msgstr "Hier ziet u twee knoppen om toegang te krijgen tot het systeem.<br />Afhankelijk van de gekozen knop gaat u naar:<br /><br />* De <b> Aanmelden </b> knop<br />Hier zijn twee mogelijkheden:<br /><br />Als u op \"Aanmelden\" klikte,vanaf een ander scherm in webtrees, keert u na het aanmelden terug naar waar u oorspronkelijk vandaan kwam.<br />Als u dus op deze knop klikte vanaf de kwartierstaat-pagina, keert u daar weer naar terug.<br /><br />Als dit het eerste scherm is, dat u in webtrees te zien krijgt, wordt u aangemeld en gaat u direct naar uw persoonlijke MyGedView pagina. Hier kunt u uw eigen instellingen en favorieten aanpassen, e-mails ontvangen en versturen, enz.<br /><br />* De <b>Beheren</b> knop<br />Als u over beheerderrechten beschikt, kunt u deze knop gebruiken om direct naar de beheerpagina te gaan."
+#~ msgstr "Hier ziet u twee knoppen om toegang te krijgen tot het systeem.<br />Afhankelijk van de gekozen knop gaat u naar:<br /><br />* De <b> Aanmelden </b> knop<br />Hier zijn twee mogelijkheden:<br /><br />Als u op \"Aanmelden\" klikte,vanaf een ander scherm in webtrees, keert u na het aanmelden terug naar waar u oorspronkelijk vandaan kwam.<br />Als u dus op deze knop klikte vanaf de kwartierstaat-pagina, keert u daar weer naar terug.<br /><br />Als dit het eerste scherm is, dat u in webtrees te zien krijgt, wordt u aangemeld en gaat u direct naar uw persoonlijke My Page pagina. Hier kunt u uw eigen instellingen en favorieten aanpassen, e-mails ontvangen en versturen, enz.<br /><br />* De <b>Beheren</b> knop<br />Als u over beheerderrechten beschikt, kunt u deze knop gebruiken om direct naar de beheerpagina te gaan."
 
 #~ msgid "All of this site's available genealogical databases are listed in this menu. Each database has its own customized Home Page, like this one.  If there is only one database at this site, there is no sub-menu under the Welcome Page icon."
 #~ msgstr "Het programma is in staat om meerdere genealogieën te bevatten. Met behulp van dit menu kiest u een genealogie, die u wilt raadplegen of wijzigen.<br />u komt dan terecht op de welkomstpagina van de desbetreffende genealogie.<br /><br />Als er slechts een genealogie in webtrees is opgenomen, wordt het submenu niet getoond."

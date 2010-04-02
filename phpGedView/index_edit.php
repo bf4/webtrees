@@ -1,6 +1,6 @@
 <?php
 /**
- * MyGedView page allows a logged in user the abilty
+ * My Page page allows a logged in user the abilty
  * to keep bookmarks, see a list of upcoming events, etc.
  *
  * webtrees: Web based Family History software

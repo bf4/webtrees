@@ -116,7 +116,7 @@ class MenuBar
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_mygedview");
 
 		//-- mygedview submenu
-		$submenu = new Menu(i18n::translate('MyGedView'), "index.php?ctype=user");
+		$submenu = new Menu(i18n::translate('My Page'), "index.php?ctype=user");
 		if (!empty($WT_IMAGES["mygedview"]["small"]))
 			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["mygedview"]["small"]);
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_mygedview");

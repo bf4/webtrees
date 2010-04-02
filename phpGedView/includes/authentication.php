@@ -3,7 +3,7 @@
  * User and Authentication functions
  *
  * This file contains functions for working with users and authenticating them.
- * It also handles the internal mail messages, favorites, news/journal, and storage of MyGedView
+ * It also handles the internal mail messages, favorites, news/journal, and storage of My Page
  * customizations.  Assumes that a database connection has already been established.
  *
  * You can extend webtrees to work with other systems by implementing the functions in this file.

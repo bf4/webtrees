@@ -153,7 +153,7 @@ echo "<div class=\"center\">\n";
 echo "<table class=\"center width60 ltr\"><tr><td>";
 switch ($help_message) {
 case 'mygedview_login_help':
-	echo i18n::translate('In order to access My Page, you must be a registered user on the system.  On My Page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of webtrees pages.<br /><br />Enter your User name and Password in the appropriate fields to login to MyGedView.');
+	echo i18n::translate('In order to access My Page, you must be a registered user on the system.  On My Page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of webtrees pages.<br /><br />Enter your User name and Password in the appropriate fields to login to My Page.');
 	break;
 default:
 	switch ($WELCOME_TEXT_AUTH_MODE){
