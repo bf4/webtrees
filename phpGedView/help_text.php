@@ -1328,7 +1328,7 @@ case '_BIRT_SIBL':
 	break;
 
 case '_BRTM':	
-	$title=i18n::translate('brit mila');
+	$title=i18n::translate('Brit mila');
 	$text='';
 	break;
 
