@@ -127,12 +127,8 @@ switch($modinfo['Module']['type'])
  *	1. Load english language if exists.
  *	2. Load current language if exists.
  */
-		if (file_exists(WT_ROOT.'modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$modinfo['Module']['default_language'].'.php')) {
-			require_once WT_ROOT.'modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$modinfo['Module']['default_language'].'.php';
-		}
-		if ($LANGUAGE != $modinfo['Module']['default_language'] && file_exists('./modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$LANGUAGE.'.php')) {
-			require_once WT_ROOT.'modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$LANGUAGE.'.php';
-		}
+
+		// TODO: load module.mo, for third-party modules
 
 /*
  * Load & Initialize

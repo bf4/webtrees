@@ -181,7 +181,7 @@ function get_prev_xref($pid, $ged_id=WT_GED_ID) {
 // Generate a list of alternate initial letters for the indilist and famlist
 ////////////////////////////////////////////////////////////////////////////////
 function db_collation_alternatives($letter) {
-	global $DB_UTF8_COLLATION, $MULTI_LETTER_ALPHABET, $MULTI_LETTER_EQUIV, $LANGUAGE;
+	global $DB_UTF8_COLLATION, $MULTI_LETTER_ALPHABET, $MULTI_LETTER_EQUIV;
 
 	// Multi-letter collation.
 	// e.g. on czech pages, we don't include "CH" under "C"
@@ -195,7 +195,7 @@ function db_collation_alternatives($letter) {
 
 	// Multi-letter equivalents
 	// e.g. on danish pages, we include "AA" under "Aring", not under "A"
-	foreach (preg_split('/[ ,;]/', $MULTI_LETTER_EQUIV[$LANGUAGE], -1, PREG_SPLIT_NO_EMPTY) as $digraph) {
+	foreach (preg_split('/[ ,;]/', $MULTI_LETTER_EQUIV[WT_LOCALE], -1, PREG_SPLIT_NO_EMPTY) as $digraph) {
 		list($from, $to)=explode('=', $digraph);
 		$from=utf8_strtoupper($from);
 		if ($from==$letter && strpos($from, $letter)===0) {
@@ -216,7 +216,7 @@ function db_collation_alternatives($letter) {
 // Generate a list of digraphs for the indilist and famlist
 ////////////////////////////////////////////////////////////////////////////////
 function db_collation_digraphs() {
-	global $MULTI_LETTER_ALPHABET, $MULTI_LETTER_EQUIV, $LANGUAGE;
+	global $MULTI_LETTER_ALPHABET, $MULTI_LETTER_EQUIV;
 
 	// Multi-letter collation.
 	// e.g. on czech pages, we don't include "CH" under "C"
@@ -227,7 +227,7 @@ function db_collation_digraphs() {
 
 	// Multi-letter equivalents
 	// e.g. danish pages, we include "AE" under "AE-ligature"
-	foreach (preg_split('/[ ,;]/', $MULTI_LETTER_EQUIV[$LANGUAGE], -1, PREG_SPLIT_NO_EMPTY) as $digraph) {
+	foreach (preg_split('/[ ,;]/', $MULTI_LETTER_EQUIV[WT_LOCALE], -1, PREG_SPLIT_NO_EMPTY) as $digraph) {
 		list($from, $to)=explode('=', $digraph);
 		$digraphs[$to]=utf8_strtoupper($from);
 	}

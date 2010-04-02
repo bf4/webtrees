@@ -50,14 +50,12 @@ $WT_BLOCKS["print_RSS_block"]["config"]		= array("cache"=>0);
  * Prints a block allowing the user to login to the site directly from the portal
  */
 function print_RSS_block($block = true, $config="", $side, $index) {
-	global $LANGUAGE;
-
 	$id="rss_block";
 	$title=i18n::translate('RSS Feeds').help_link('rss_feed');
 	$content = "<div class=\"center\">";
 	$content .= "<form method=\"post\" action=\"\" name=\"rssform\">";
 	$content .= "<br />";
-	$content .= "<select name=\"rssStyle\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = '".encode_url("rss.php?ged=".WT_GEDCOM."&lang={$LANGUAGE}") . "' + (document.rssform.module.value==''? '' : '&module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&rssStyle=' + document.rssform.rssStyle.value);\">";
+	$content .= "<select name=\"rssStyle\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = '".encode_url("rss.php?ged=".WT_GEDCOM."&lang=".WT_LOCALE) . "' + (document.rssform.module.value==''? '' : '&module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&rssStyle=' + document.rssform.rssStyle.value);\">";
 	$content .= "<option value=\"ATOM\" selected=\"selected\">ATOM 1.0</option>";
 	$content .= "<option value=\"RSS2.0\">RSS 2.0</option>";
 	$content .= "<option value=\"RSS1.0\">RSS 1.0</option>";
@@ -66,7 +64,7 @@ function print_RSS_block($block = true, $config="", $side, $index) {
 	$content .= "<option value=\"HTML\">HTML</option>";
 	$content .= "<option value=\"JS\">JavaScript</option>";
 	$content .= "</select>";
-	$content .= "<select name=\"module\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = '".encode_url("rss.php?ged=".WT_GEDCOM."&lang={$LANGUAGE}") . "' + (document.rssform.module.value==''? '' : '&module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&rssStyle=' + document.rssform.rssStyle.value);\">";
+	$content .= "<select name=\"module\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = '".encode_url("rss.php?ged=".WT_GEDCOM."&lang=".WT_LOCALE) . "' + (document.rssform.module.value==''? '' : '&module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&rssStyle=' + document.rssform.rssStyle.value);\">";
 	$content .= "<option value=\"\">" . i18n::translate('ALL') . "</option>";
 	$content .= "<option value=\"today\">" . i18n::translate('On This Day ...') . " </option>";
 	$content .= "<option value=\"upcoming\">" . i18n::translate('Upcoming Events') . "</option>";
@@ -76,7 +74,7 @@ function print_RSS_block($block = true, $config="", $side, $index) {
 	$content .= "<option value=\"recentChanges\">" . i18n::translate('Recent Changes') . "</option>";
 	$content .= "<option value=\"randomMedia\">" . i18n::translate('Random Picture') . "</option>";
 	$content .= "</select>";
-	$content .= " <a id=\"rss_button\" href=\"".encode_url("rss.php?ged=".WT_GEDCOM."&lang={$LANGUAGE}") . "\"><img class=\"icon\" src=\"images/feed-icon16x16.png\" alt=\"RSS\" title=\"RSS\" /></a>";
+	$content .= " <a id=\"rss_button\" href=\"".encode_url("rss.php?ged=".WT_GEDCOM."&lang=".WT_LOCALE) . "\"><img class=\"icon\" src=\"images/feed-icon16x16.png\" alt=\"RSS\" title=\"RSS\" /></a>";
 	$content .= "</form></div>";
 	$content .= "<div class=\"center\">";
 	$content .= "</div>";

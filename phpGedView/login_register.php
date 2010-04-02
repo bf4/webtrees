@@ -441,7 +441,6 @@ switch ($action) {
 		}
 
 		// Change to the new user's language
-		$oldLanguage = $LANGUAGE;
 		$user_id=get_user_id($user_name);
 		i18n::init(get_user_setting($user_id, 'language'));
 

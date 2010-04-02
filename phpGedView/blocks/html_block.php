@@ -76,7 +76,7 @@ function print_html_block($block=true, $config="", $side, $index) {
 }
 
 function print_html_block_config($config) {
-	global $ctype, $WT_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings;
+	global $ctype, $WT_BLOCKS, $TEXT_DIRECTION;
 	$useFCK = file_exists(WT_ROOT.'modules/FCKeditor/fckeditor.php');
 	if($useFCK){
 		require WT_ROOT.'modules/FCKeditor/fckeditor.php';
@@ -93,7 +93,7 @@ function print_html_block_config($config) {
 		$oFCKeditor->Width = 700;
 		$oFCKeditor->Height = 250;
 		$oFCKeditor->Config['AutoDetectLanguage'] = false ;
-		$oFCKeditor->Config['DefaultLanguage'] = $language_settings[$LANGUAGE]["lang_short_cut"];
+		$oFCKeditor->Config['DefaultLanguage'] = WT_LOCALE;
 		$oFCKeditor->Create() ;
 	} else { //use standard textarea
 		print "<textarea name=\"html\" rows=\"10\" cols=\"80\">" . str_replace("<", "&lt;", $config["html"]) ."</textarea>";

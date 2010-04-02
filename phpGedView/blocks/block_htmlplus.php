@@ -183,7 +183,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 
 function print_htmlplus_block_config($config)
 {
-	global $ctype, $WT_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings, $GEDCOM;
+	global $ctype, $WT_BLOCKS, $TEXT_DIRECTION, $GEDCOM;
 	$useFCK = file_exists(WT_ROOT.'modules/FCKeditor/fckeditor.php');
 	$templates = array();
 	$d = dir('blocks/');
@@ -293,7 +293,7 @@ function print_htmlplus_block_config($config)
 		$oFCKeditor->Width = 700;
 		$oFCKeditor->Height = 250;
 		$oFCKeditor->Config['AutoDetectLanguage'] = false ;
-		$oFCKeditor->Config['DefaultLanguage'] = $language_settings[$LANGUAGE]['lang_short_cut'];
+		$oFCKeditor->Config['DefaultLanguage'] = WT_LOCALE;
 		$oFCKeditor->Create() ;
 	}
 	else

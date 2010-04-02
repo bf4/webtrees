@@ -699,7 +699,7 @@ class MenuBar
 	*/
 	static function getReportsMenu($pid="", $famid="") {
 		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
-		global $LANGUAGE, $SEARCH_SPIDER;
+		global $SEARCH_SPIDER;
 		global $controller;
 		
 		$style = "top";
@@ -741,7 +741,7 @@ class MenuBar
 		$reports = get_report_list();
 		$menuList = array();
 		foreach ($reports as $file=>$report) {
-			if (!empty($report["title"][$LANGUAGE])) $label = $report["title"][$LANGUAGE];
+			if (!empty($report["title"][WT_LOCALE])) $label = $report["title"][WT_LOCALE];
 			else $label = implode("", $report["title"]);
 			$menuList[$file] = trim($label);
 		}
@@ -757,8 +757,8 @@ class MenuBar
 				$report["access"] = WT_PRIV_PUBLIC;
 			}
 			if ($report["access"]>=WT_USER_ACCESS_LEVEL) {
-				if (!empty($report["title"][$LANGUAGE])) {
-					$label = $report["title"][$LANGUAGE];
+				if (!empty($report["title"][WT_LOCALE])) {
+					$label = $report["title"][WT_LOCALE];
 				} else {
 					$label = implode("", $report["title"]);
 				}

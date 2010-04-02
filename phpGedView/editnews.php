@@ -102,7 +102,7 @@ if ($action=="compose") {
 		$oFCKeditor->Width = 700;
 		$oFCKeditor->Height = 250;
 		$oFCKeditor->Config['AutoDetectLanguage'] = false ;
-		$oFCKeditor->Config['DefaultLanguage'] = $language_settings[$LANGUAGE]["lang_short_cut"];
+		$oFCKeditor->Config['DefaultLanguage'] = WT_LOCALE;
 		$oFCKeditor->Create() ;
 	} else { //use standard textarea
 		print "<textarea name=\"text\" cols=\"80\" rows=\"10\">".$news["text"]."</textarea>";

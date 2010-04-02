@@ -1141,7 +1141,6 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm, $PRIVACY_BY_RESN;
-	global $lang_short_cut, $LANGUAGE;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $PREFER_LEVEL2_SOURCES;
 	global $action, $event_add;
 	global $CensDate, $MEDIA_TYPES;
@@ -1339,7 +1338,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		}
 		if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA") {
 			// Allow special processing for different languages
-			$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$func="fact_AKA_localisation_".WT_LOCALE;
 			if (function_exists($func)) {
 				// Localise the AKA fact
 				$func($fact, $pid);
@@ -1347,7 +1346,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		}
 		else if ($fact=="AGNC" && !empty($main_fact)) {
 			// Allow special processing for different languages
-			$func="fact_AGNC_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$func="fact_AGNC_localisation_".WT_LOCALE;
 			if (function_exists($func)) {
 				// Localise the AGNC fact
 				$func($fact, $main_fact);
@@ -2383,7 +2382,7 @@ function create_add_form($fact) {
 function create_edit_form($gedrec, $linenum, $level0type) {
 	global $WORD_WRAPPED_NOTES;
 	global $pid, $tags, $ADVANCED_PLAC_FACTS, $date_and_time, $templefacts;
-	global $lang_short_cut, $LANGUAGE, $FULL_SOURCES, $TEXT_DIRECTION;
+	global $FULL_SOURCES, $TEXT_DIRECTION;
 
 	$tags=array();
 	$gedlines = explode("\n", $gedrec); // -- find the number of lines in the record
@@ -2474,7 +2473,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			$tags[]=$type;
 			if ($type=="_AKAN" || $type=="_AKA" || $type=="ALIA") {
 				// Allow special processing for different languages
-				$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
+				$func="fact_AKA_localisation_".WT_LOCALE;
 				if (function_exists($func)) {
 					// Localise the AKA fact
 					$func($type, $pid);

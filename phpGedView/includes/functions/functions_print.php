@@ -2025,7 +2025,7 @@ function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 * @param string $key indi pid
 */
 function format_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM", "DEAT", "BURI", "BAPL", "ADOP")) {
-	global $LANGUAGE, $TEXT_DIRECTION;
+	global $TEXT_DIRECTION;
 
 	$html='';
 	$person = GedcomRecord::getInstance($key);

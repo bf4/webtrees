@@ -75,7 +75,6 @@ function print_fact(&$eventObj, $noedit=false) {
 	global $nonfacts;
 	global $WT_IMAGE_DIR, $WT_MENUS_AS_LISTS;
 	global $GEDCOM;
-	global $lang_short_cut, $LANGUAGE;
 	global $WORD_WRAPPED_NOTES;
 	global $TEXT_DIRECTION;
 	global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS, $SHOW_FACT_ICONS, $SHOW_MEDIA_FILENAME;
@@ -121,7 +120,7 @@ function print_fact(&$eventObj, $noedit=false) {
 	if ($fact!="EVEN" && $fact!="FACT" && $fact!="OBJE") {
 		if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA" || $fact == "_INTE") {
 			// Allow special processing for different languages
-			$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$func="fact_AKA_localisation_".WT_LOCALE;
 			if (function_exists($func)) {
 				// Localise the AKA or _INTE facts
 				$func($fact, $pid);
@@ -129,7 +128,7 @@ function print_fact(&$eventObj, $noedit=false) {
 		}
 		if ($fact=="_NMR") {
 			// Allow special processing for different languages
-			$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$func="fact_NMR_localisation_".WT_LOCALE;
 			if (function_exists($func)) {
 				// Localise the _NMR facts
 				$fact = $func($fact, $pid);
@@ -138,7 +137,7 @@ function print_fact(&$eventObj, $noedit=false) {
 		$explode_fact = explode("_", $fact);
 		if (!empty($explode_fact[1]) && !empty($explode_fact[2])) {
 			// Allow special processing for different languages
-			$func="cr_facts_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$func="cr_facts_localisation_".WT_LOCALE;
 			if (function_exists($func)) {
 				// Localise close relatives facts
 				$func($factrec, $fact, $explode_fact, $pid);

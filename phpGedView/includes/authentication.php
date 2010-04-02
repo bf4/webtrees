@@ -437,7 +437,7 @@ function AddToChangeLog($LogString, $ged="") {
 //----------------------------------- addMessage
 //-- stores a new message in the database
 function addMessage($message) {
-	global $TBLPREFIX, $CONTACT_METHOD, $LANGUAGE, $WT_STORE_MESSAGES, $SERVER_URL, $WT_SIMPLE_MAIL, $WEBMASTER_EMAIL;
+	global $TBLPREFIX, $CONTACT_METHOD, $WT_STORE_MESSAGES, $SERVER_URL, $WT_SIMPLE_MAIL, $WEBMASTER_EMAIL;
 	global $TEXT_DIRECTION;
 	global $WEBTREES_EMAIL;
 
@@ -467,7 +467,7 @@ function addMessage($message) {
 		$email2 .= "\r\n\r\n--------------------------------------\r\n\r\n".i18n::translate('This message was sent while viewing the following URL: ')."\r\n".$SERVER_URL.$message["url"]."\r\n";
 	$email2 .= "\r\n=--------------------------------------=\r\nIP ADDRESS: ".$_SERVER['REMOTE_ADDR']."\r\n";
 	$email2 .= "DNS LOOKUP: ".gethostbyaddr($_SERVER['REMOTE_ADDR'])."\r\n";
-	$email2 .= "LANGUAGE: $LANGUAGE\r\n";
+	$email2 .= "LANGUAGE: ".WT_LOCALE."\r\n";
 	$subject2 = "[".i18n::translate('webtrees Message').($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
 	$from ="";
 	if (!$user_id_from) {
@@ -521,7 +521,7 @@ function addMessage($message) {
 			$message["body"] .= "\r\n\r\n--------------------------------------\r\n\r\n".i18n::translate('This message was sent while viewing the following URL: ')."\r\n".$SERVER_URL.$message["url"]."\r\n";
 		$message["body"] .= "\r\n=--------------------------------------=\r\nIP ADDRESS: ".$_SERVER['REMOTE_ADDR']."\r\n";
 		$message["body"] .= "DNS LOOKUP: ".gethostbyaddr($_SERVER['REMOTE_ADDR'])."\r\n";
-		$message["body"] .= "LANGUAGE: $LANGUAGE\r\n";
+		$message["body"] .= "LANGUAGE: ".WT_LOCALE."\r\n";
 	}
 	if (empty($message["created"]))
 		$message["created"] = gmdate ("D, d M Y H:i:s T");

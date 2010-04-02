@@ -42,7 +42,7 @@ define('WT_FUNCTIONS_MAIL_PHP', '');
  */
 function pgvMail($to, $from, $subject, $message) {
 	global $WT_SMTP_ACTIVE, $WT_SMTP_HOST, $WT_SMTP_HELO, $WT_SMTP_FROM_NAME, $WT_SMTP_PORT, $WT_SMTP_AUTH, $WT_SMTP_AUTH_USER, $WT_SMTP_AUTH_PASS, $WT_SMTP_SSL;
-	global $LANGUAGE, $WT_STORE_MESSAGES, $TEXT_DIRECTION;
+	global $WT_STORE_MESSAGES, $TEXT_DIRECTION;
 	$mailFormat = "plain";
 	//$mailFormat = "html";
 	//$mailFormat = "multipart";
@@ -260,8 +260,6 @@ return $pgvLogo;
  * found at http://us3.php.net/bin2hex
  */
 function hex4email ($string,$charset) {
-	global $LANGUAGE;
-
 	//-- check if the string has extended characters in it
 	$str = utf8_decode($string);
 	//-- if the strings are the same no conversion is necessary

@@ -62,7 +62,7 @@ require_once WT_ROOT.'includes/functions/functions_utf-8.php';
 // checked).  This lets us use the syntax safe_GET('my_checkbox', 'yes', 'no')
 //
 // NOTE: when using listboxes, $regex can be an array of valid values.  For
-// example, you can use safe_POST('lang', array_keys($pgv_language), $LANGUAGE)
+// example, you can use safe_POST('lang', array_keys($pgv_language), WT_LOCALE)
 // to validate against a list of valid languages and supply a sensible default.
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -2693,7 +2693,7 @@ function normalize_query_string($query) {
  * @return array 	The array of the found reports with indexes [title] [file]
  */
 function get_report_list($force=false) {
-	global $INDEX_DIRECTORY, $report_array, $vars, $xml_parser, $elementHandler, $LANGUAGE;
+	global $INDEX_DIRECTORY, $report_array, $vars, $xml_parser, $elementHandler;
 
 	$files = array();
 	if (!$force) {
@@ -2707,7 +2707,7 @@ function get_report_list($force=false) {
 			fclose($fp);
 			$files = unserialize($reportdat);
 			foreach ($files as $indexval => $file) {
-				if (isset($file["title"][$LANGUAGE]) && (strlen($file["title"][$LANGUAGE])>1))
+				if (isset($file["title"][WT_LOCALE]) && (strlen($file["title"][WT_LOCALE])>1))
 					return $files;
 			}
 		}
@@ -2752,7 +2752,7 @@ function get_report_list($force=false) {
 			fclose($fp);
 			xml_parser_free($xml_parser);
 			if (isset($report_array["title"]) && isset($report_array["access"]) && isset($report_array["icon"])) {
-				$files[$file]["title"][$LANGUAGE] = $report_array["title"];
+				$files[$file]["title"][WT_LOCALE] = $report_array["title"];
 				$files[$file]["access"] = $report_array["access"];
 				$files[$file]["icon"] = $report_array["icon"];
 			}

@@ -53,7 +53,7 @@ if (empty($rssStyle)){
 }
 
 if (!isset($_SERVER['QUERY_STRING'])){
-	$_SERVER['QUERY_STRING'] = "lang=".$LANGUAGE;
+	$_SERVER['QUERY_STRING'] = "lang=".WT_LOCALE;
 }
 
 $printTodays = false;
@@ -95,7 +95,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 	$feed = new UniversalFeedCreator();
 	$feed->generator = WT_WEBTREES_URL;
 	$feed->title = get_gedcom_setting(WT_GED_ID, 'title');
-	$feed->language = $lang_short_cut[$LANGUAGE]; //$lang_langcode[$LANGUAGE];
+	$feed->language = WT_LOCALE;
 	$feed->descriptionHtmlSyndicated = true;
 	//$feed->descriptionTruncSize = 500; // does not make sense to truncate HTML since it will result in unpredictable output
 	$feed->link = $SERVER_URL;

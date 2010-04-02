@@ -139,7 +139,7 @@ if ($action=="choose") {
 	$reportList = get_report_list(true);
 	$reportTitles = array();
 	foreach ($reportList as $file=>$report) {
-		$reportTitles[$file] = $report["title"][$LANGUAGE];
+		$reportTitles[$file] = $report["title"][WT_LOCALE];
 	}
 	asort($reportTitles);
 	$reports = array();
@@ -158,7 +158,7 @@ if ($action=="choose") {
 	echo "<td class=\"optionbox\"><select onchange=\"this.form.submit();\" name=\"report\">\n";
 	foreach($reports as $file=>$report) {
 		if ($report["access"] >= WT_USER_ACCESS_LEVEL) {
-			echo "<option value=\"", $report["file"], "\">", $report["title"][$LANGUAGE], "</option>\n";
+			echo "<option value=\"", $report["file"], "\">", $report["title"][WT_LOCALE], "</option>\n";
 		}
 	}
 	echo "</select></td></tr>\n";

@@ -99,7 +99,7 @@ function print_family_header($famid) {
  */
 function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="", $personcount="1") {
 	global $view, $show_full, $show_famlink;
-	global $TEXT_DIRECTION, $SHOW_EMPTY_BOXES, $SHOW_ID_NUMBERS, $LANGUAGE;
+	global $TEXT_DIRECTION, $SHOW_EMPTY_BOXES, $SHOW_ID_NUMBERS;
 	global $pbwidth, $pbheight;
 	global $WT_IMAGE_DIR, $WT_IMAGES;
 	global $show_changes, $pgv_changes, $GEDCOM;

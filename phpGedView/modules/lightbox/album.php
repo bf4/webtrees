@@ -35,7 +35,7 @@ if (!defined('WT_WEBTREES')) {
 	exit;
 }
 
-global $LANGUAGE, $mediatab, $mediacnt;
+global $mediatab, $mediacnt;
 global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n, $LB_URL_WIDTH, $LB_URL_HEIGHT, $LB_TT_BALLOON ;
 global $reorder, $rownum, $sort_i, $GEDCOM;
 

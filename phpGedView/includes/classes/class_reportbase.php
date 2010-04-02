@@ -45,14 +45,14 @@ define("WT_RNEW", false);
 
 define("WT_CLASS_REPORTBASE_PHP", "");
 
-$ascii_langs = array("english", "danish", "dutch", "french", "hebrew", "hungarian", "german", "norwegian", "spanish", "spanish-ar");
+$ascii_langs = array("en", "da", "nl", "fr", "he", "hu", "de", "nn", "es");
 
 //-- setup special characters array to force embedded fonts
 $SpecialOrds = $RTLOrd;
 for($i=195; $i<215; $i++) $SpecialOrds[] = $i;
 
 if (!isset($embed_fonts)) {
-	if (in_array($LANGUAGE, $ascii_langs)) {
+	if (in_array(WT_LOCALE, $ascii_langs)) {
 		$embed_fonts = false;
 	} else {
 		$embed_fonts = true;
@@ -2740,13 +2740,13 @@ function PGVRSetVarSHandler($attrs) {
 	//	$var = str_replace(array("[", "]"), array("['", "']"), $value);
 	//	eval("\$value = $var;");
 	//}
-	$count = preg_match_all("/\\$(\w+)/", $value, $match, PREG_SET_ORDER);
-	$i=0;
-	while($i<$count) {
-		$t = $vars[$match[$i][1]]["id"];
-		$value = preg_replace("/\\$".$match[$i][1]."/", $t, $value, 1);
-		$i++;
-	}
+	//$count = preg_match_all("/\\$(\w+)/", $value, $match, PREG_SET_ORDER);
+	//$i=0;
+	//while($i<$count) {
+	//	$t = $vars[$match[$i][1]]["id"];
+	//	$value = preg_replace("/\\$".$match[$i][1]."/", $t, $value, 1);
+	//	$i++;
+	//}
 	// Arithmetic functions
 	if (preg_match("/(\d+)\s*([\-\+\*\/])\s*(\d+)/", $value, $match)) {
 		switch($match[2]) {

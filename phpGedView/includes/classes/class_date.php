@@ -355,14 +355,13 @@ class CalendarDate {
 
 	// Convert a date from one calendar to another.
 	function convert_to_cal($calendar) {
-		global $LANGUAGE;
   	switch ($calendar) {
 		case 'gregorian':
 			return new GregorianDate($this);
 		case 'julian':
 			return new JulianDate($this);
 		case 'jewish':
-			if ($LANGUAGE!='hebrew')
+			if (WT_LOCALE!='he')
 				return new JewishDate($this);
 			// no  break
 		case 'hebrew':
@@ -370,7 +369,7 @@ class CalendarDate {
 		case 'french':
 			return new FrenchRDate($this);
 		case 'arabic':
-			if ($LANGUAGE!='arabic')
+			if (WT_LOCALE!='ar')
 				return new ArabicDate($this);
 			// no  break
 		case 'hijri':
@@ -490,9 +489,7 @@ class CalendarDate {
 	}
 
 	function FormatOrdinalSuffix() {
-		global $lang_short_cut, $LANGUAGE;
-		$func="ordinal_suffix_{$lang_short_cut[$LANGUAGE]}";
-
+		$func="ordinal_suffix_".WT_LOCALE;
 		if (function_exists($func))
 			return $func($this->d);
 		else
@@ -1467,7 +1464,6 @@ class GedcomDate {
 
 	// Convert an individual gedcom date string into a CalendarDate object
 	static function ParseDate($date) {
-		global $LANGUAGE;
 		// Calendar escape specified? - use it
 		if (preg_match('/^(@#[^@]+@) ?(.*)/', $date, $match)) {
 			$cal=$match[1];
@@ -1536,12 +1532,12 @@ class GedcomDate {
 		case '@#djulian@':
 	 		return new JulianDate(array($y, $m, $d));
 		case '@#dhebrew@':
-			if ($LANGUAGE=='hebrew')
+			if (WT_LOCALE=='he')
 	 			return new HebrewDate(array($y, $m, $d));
 			else
 	 			return new JewishDate(array($y, $m, $d));
 		case '@#dhijri@':
-			if ($LANGUAGE=='arabic')
+			if (WT_LOCALE=='ar')
 				return new ArabicDate(array($y, $m, $d));
 			else
 				return new HijriDate(array($y, $m, $d));
@@ -1555,7 +1551,7 @@ class GedcomDate {
 	// Convert a date to the prefered format and calendar(s) display.
 	// Optionally make the date a URL to the calendar.
 	function Display($url=false, $date_fmt=null, $cal_fmts=null) {
-		global $lang_short_cut, $LANGUAGE, $TEXT_DIRECTION, $DATE_FORMAT, $CALENDAR_FORMAT;
+		global $TEXT_DIRECTION, $DATE_FORMAT, $CALENDAR_FORMAT;
 
 		// Convert dates to given calendars and given formats
 		if (!$date_fmt) {
@@ -1565,7 +1561,7 @@ class GedcomDate {
 			$cal_fmts=explode('_and_', $CALENDAR_FORMAT);
 
 		// Allow special processing for different languages
-		$func="date_localisation_{$lang_short_cut[$LANGUAGE]}";
+		$func="date_localisation_".WT_LOCALE;
 		if (!function_exists($func))
 			$func="DefaultDateLocalisation";
 

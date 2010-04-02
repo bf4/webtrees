@@ -1100,7 +1100,7 @@ if ($stage == 1) {
 	$exec_text = i18n::translate('Execution time:');
 	$go_pedi = i18n::translate('Click here to go to the Pedigree tree.');
 	$go_welc = i18n::translate('Home Page');
-	if ($LANGUAGE == "french" || $LANGUAGE == "italian") {
+	if (WT_LOCALE == "fr" || WT_LOCALE == "it") { // TODO Just escape it properly!
 		echo WT_JS_START, "complete_progress($importtime, \"$exec_text\", \"$go_pedi\", \"$go_welc\");", WT_JS_END;
 	} else {
 		echo WT_JS_START, "complete_progress($importtime, '$exec_text', '$go_pedi', '$go_welc');", WT_JS_END;
