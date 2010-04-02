@@ -2150,8 +2150,8 @@ function print_add_new_fact($id, $usedfacts, $type) {
 
 	usort($addfacts, "factsort");
 	echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, "\">";
-	echo help_link('add_new_facts');
-	echo i18n::translate('Add new fact'), "</td>\n";
+	echo i18n::translate('Add new fact');
+	echo help_link('add_new_facts'), "</td>\n";
 	echo "<td class=\"optionbox wrap ", $TEXT_DIRECTION, "\">";
 	echo "<form method=\"get\" name=\"newfactform\" action=\"\" onsubmit=\"return false;\">";
 	echo "<select id=\"newfact\" name=\"newfact\">\n";

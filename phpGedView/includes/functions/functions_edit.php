@@ -1316,7 +1316,36 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		echo "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 	}
 
-	// help link
+	
+	if (WT_DEBUG) {
+		echo $element_name, "<br />\n";
+	}
+	
+
+	// tag name
+	if (!empty($label)) {
+		if ($label=="Note" && $islink){
+			echo i18n::translate('Shared Note');
+		}else{
+			 echo $label;
+		}
+	} else {
+		if ($fact=="NOTE" && $islink){
+			echo i18n::translate('SHARED_NOTE');
+			/*
+			if (file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
+				//	use $label (GEDFact Assistant); 
+			}else{
+				echo i18n::translate('Shared Note');
+			}
+			*/
+		} else {
+			echo translate_fact($fact);
+		}
+	}
+	echo "\n";
+
+// help link
 	// If using GEDFact-assistant window
 	if ($action=="addnewnote_assisted") {
 		// Do not print on GEDFact Assistant window
@@ -1353,34 +1382,6 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			}
 		}
 	}
-	if (WT_DEBUG) {
-		echo $element_name, "<br />\n";
-	}
-	
-
-	// tag name
-	if (!empty($label)) {
-		if ($label=="Note" && $islink){
-			echo i18n::translate('Shared Note');
-		}else{
-			 echo $label;
-		}
-	} else {
-		if ($fact=="NOTE" && $islink){
-			echo i18n::translate('SHARED_NOTE');
-			/*
-			if (file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
-				//	use $label (GEDFact Assistant); 
-			}else{
-				echo i18n::translate('Shared Note');
-			}
-			*/
-		} else {
-			echo translate_fact($fact);
-		}
-	}
-	echo "\n";
-
 	// tag level
 	if ($level>0) {
 		if ($fact=="TEXT" and $level>1) {
