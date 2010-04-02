@@ -322,12 +322,12 @@ $i = 0;
 			<?php echo i18n::translate('Zoom factor of map'), help_link('GOOGLEMAP_MAP_ZOOM','googlemap'); ?>
 		</td>
 		<td class="optionbox">
-			<?php echo i18n::translate('Min.');?>: <select name="NEW_GM_MIN_ZOOM" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_ZOOM_help');">
+			<?php echo i18n::translate('minimum');?>: <select name="NEW_GM_MIN_ZOOM" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_ZOOM_help');">
 			<?php for ($j=1; $j < 15; $j++) { ?>
 			<option value="<?php echo $j, "\""; if ($GOOGLEMAP_MIN_ZOOM==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 			<?php } ?>
 			</select>
-			<?php echo i18n::translate('Max.');?>: <select name="NEW_GM_MAX_ZOOM" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_ZOOM_help');">
+			<?php echo i18n::translate('maximum');?>: <select name="NEW_GM_MAX_ZOOM" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_ZOOM_help');">
 			<?php for ($j=1; $j < 15; $j++) { ?>
 			<option value="<?php echo $j, "\""; if ($GOOGLEMAP_MAX_ZOOM==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 			<?php } ?>
