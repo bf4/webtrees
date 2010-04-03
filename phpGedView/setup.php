@@ -955,10 +955,10 @@ try {
 		'<p>', i18n::translate('You should set the file <b>%s</b> so that the webserver has read-only access.<br/>This normally means setting the permissions to "444" or "-r--r--r--".', WT_DATA_DIR.WT_CONFIG_FILE), '</p>',
 		'<p>', i18n::translate('<b>webtrees</b> will check the permissions in the next step.'), '</p>',
 		'<input type="hidden" name="action" value="download">',
-		'<input type="submit" value="'. /* I18N: %s is a filename */ i18n::translate('Download %s', WT_CONFIG_FILE).'" onClick="document.continue.continue.disabled=false; return true;">',
+		'<input type="submit" value="'. /* I18N: %s is a filename */ i18n::translate('Download %s', WT_CONFIG_FILE).'" onclick="document.continue.continue.disabled=false; return true;">',
 		'</form>',
 		'<p>', i18n::translate('After you have copied this file to the webserver and set the access permissions, click here to continue'), '</p>',
-		'<form name="continue" action="', WT_SCRIPT_NAME, '" method="get">',
+		'<form name="continue" action="', WT_SCRIPT_NAME, '" method="get" onsubmit="alert(\'', i18n::translate('Reminder: you must copy %s to your webserver', WT_CONFIG_FILE), '\');return true;">',
 		'<input type="submit" name="continue" value="'.i18n::translate('Continue').'" disabled>',
 		'</form></body></html>';
 } catch (PDOException $ex) {
