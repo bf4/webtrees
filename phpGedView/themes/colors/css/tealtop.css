@@ -1625,13 +1625,8 @@ dt {
 .ui-accordion .ui-accordion-header a { color: #FFFFFF ;}
 
 /* Tabs ----------------------------------*/
-.ui-widget-header { border: 1px solid #fff; background: #51B389 url(/js/jquery/css/images/ui-bg_highlight-soft_100_e7eef3_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
+.ui-widget-header { border: 1px solid #fff; background: #51B389 }
 .ui-widget-content a:hover {color: #f50;}
-.ui-widget-content .ui-state-hover {font-weight: bold;}
-
-.ui-state-default a { color: #000; text-decoration: none; outline: none; }
-.ui-state-default a:link, .ui-state-default a:visited  { color: #ffffff; }
-.ui-state-default a:hover { color: #f50; text-decoration: none; outline: none; }
 .ui-state-active, .ui-widget-content .ui-state-active { border: #999; }
 
 /* Override jquery-ui_theme.css                */
