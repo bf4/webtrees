@@ -1627,12 +1627,14 @@ dt {
 /* Tabs ----------------------------------*/
 .ui-widget-header { border: 1px solid #fff; background: #C6C8D2 url(/js/jquery/css/images/ui-bg_highlight-soft_100_e7eef3_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
 .ui-widget-content a:hover {color: #f50;}
+.ui-widget-content .ui-state-hover {font-weight: bold;}
 
-/* Interaction states ----------------------------------*/
-.ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #cccccc; background: #f0f2f5 url(/js/jquery/css/images/ui-bg_glass_80_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #444444; outline: none; }
-.ui-state-active {border: 1px solid #999999; }
+.ui-state-default a { color: #000; text-decoration: none; outline: none; }
+.ui-state-default a:link, .ui-state-default a:visited  { color: #707070; }
+.ui-state-default a:hover { color: #f50; text-decoration: none; outline: none; }
+.ui-state-active, .ui-widget-content .ui-state-active { border: #999; }
 
-/* Override jquery-ui_theme.css                */\
+/* Override jquery-ui_theme.css                */
 
 .static_tab_ltr {display:none;}
 
