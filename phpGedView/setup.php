@@ -473,7 +473,7 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 		!$_POST['smtpuse'] ? 'selected="selected"' : '',
 		'>', i18n::translate('no'), '</option>',
 		'</select></td><td>',
-		i18n::translate('If you don\'t want to send mail, for example when running webtrees with a single user or on a standalone compter, you can disable this feature.'),
+		i18n::translate('If you don\'t want to send mail, for example when running webtrees with a single user or on a standalone computer, you can disable this feature.'),
 		'</td></tr><tr><td>',
 		i18n::translate('Server'), '</td><td>',
 		'<input type="text" name="smtpserv" value="', htmlspecialchars($_POST['smtpserv']), '"></td><td>',
