@@ -69,8 +69,8 @@ if (WT_USE_LIGHTBOX) {
 			'<link rel="stylesheet" href="modules/lightbox/css/album_page.css" type="text/css" media="screen" />';
 	}
 }
-if ($view!="preview" && $view!="simple") { 
-	echo
+
+echo
 	'<meta name="author" content="', htmlspecialchars($META_AUTHOR), '" />',
 	'<meta name="publisher" content="', htmlspecialchars($META_PUBLISHER), '" />',
 	'<meta name="copyright" content="', htmlspecialchars($META_COPYRIGHT), '" />',
@@ -82,7 +82,7 @@ if ($view!="preview" && $view!="simple") {
 	'<meta name="revisit-after" content="', htmlspecialchars($META_REVISIT), '" />',
 	'<meta name="keywords" content="', htmlspecialchars($META_KEYWORDS), '" />',
 	'<meta name="generator" content="', WT_WEBTREES, ' ', WT_VERSION_TEXT, '" />';
-}
+
 
 echo
 	$javascript, $head, 

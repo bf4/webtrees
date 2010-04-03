@@ -3,7 +3,7 @@
 *
 * Based on standard theme, which is Copyright (C) 2002 to 2010  PGV Development Team.        
 *
-* $Id: style.css 7601 2010-03-22 04:27:47Z nigel $
+* $Id: ash.css 7782 2010-04-02 13:23:19Z rob $
 */
 
 .something {
@@ -1632,14 +1632,15 @@ dt {
 .ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #cccccc; background: #f0eaf0 url(/js/jquery/css/images/ui-bg_glass_80_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #444444; outline: none; }
 .ui-state-active {border: 1px solid #999999; }
 
-/* Override jquery-ui_theme.css                */
-/* Navigator and Flyout menu Styles ----------echo '<a href="', PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(), '">', i18n::translate('Printer-friendly Version'), '</a>';
-echo "<br />";-*/
+/* Override jquery-ui_theme.css                */\
+
+.static_tab_ltr {display:none;}
 
 .static_tab_content_ltr {
 	right: 0px; 
 	margin-top:0px; 
-	margin-right:22px;	margin-top:0px; 
+	margin-right:22px;
+	margin-top:0px; 
 }
 
 .flyout2 {
@@ -1658,6 +1659,9 @@ echo "<br />";-*/
 /* Override inline code in --------------------*/
 #sidebar {  
 background: #fff !important;
+	margin-top: 5px;
+	margin-right: 18px;
+}
 
 /* Navigator and Flyout menu Styles -----------*/
 

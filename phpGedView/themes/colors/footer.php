@@ -31,7 +31,6 @@ if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-
 //start colors unique code
 echo "</div>"; // Close table started in toplinks.html
 echo "<br />";
