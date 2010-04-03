@@ -1505,8 +1505,9 @@ function gedcomsort($a, $b) {
  * @param int $path_to_find which path in the relationship to find, 0 is the shortest path, 1 is the next shortest path, etc
  */
 function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignore_cache=false, $path_to_find=0) {
-	global $TIME_LIMIT, $start_time, $NODE_CACHE, $NODE_CACHE_LENGTH, $USE_RELATIONSHIP_PRIVACY, $pgv_changes;
+	global $start_time, $NODE_CACHE, $NODE_CACHE_LENGTH, $USE_RELATIONSHIP_PRIVACY, $pgv_changes;
 
+	$time_limit=get_site_setting('MAX_EXECUTION_TIME');
 	if (isset($pgv_changes[$pid2."_".WT_GEDCOM]) && WT_USER_CAN_EDIT)
 		$indirec = find_updated_record($pid2, WT_GED_ID);
 	else
@@ -1632,7 +1633,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		$count++;
 		$end_time = microtime(true);
 		$exectime = $end_time - $start_time;
-		if (($TIME_LIMIT>1)&&($exectime > $TIME_LIMIT-1)) {
+		if (($time_limit>1)&&($exectime > $time_limit-1)) {
 			echo "<span class=\"error\">", i18n::translate('The script timed out before a relationship could be found.'), "</span>\n";
 			return false;
 		}

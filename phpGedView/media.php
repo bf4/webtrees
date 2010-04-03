@@ -109,10 +109,10 @@ function move_file($src, $dest) {
 * and vice-versa.  Operates directly on the filesystem, does not use the db.
 */
 function move_files($path, $protect) {
-	global $MEDIA_FIREWALL_THUMBS, $TIME_LIMIT, $starttime;
+	global $MEDIA_FIREWALL_THUMBS, $starttime;
+	$timelimit=get_site_setting('MAX_EXECUTION_TIME');
 	if ($dir=@opendir($path)) {
 		while (($element=readdir($dir))!== false) {
-			$timelimit = $TIME_LIMIT ? $TIME_LIMIT : 0;
 			$exectime = time() - $starttime;
 			if (($timelimit != 0) && ($timelimit - $exectime) < 3) {
 				// bail now to ensure nothing is lost
@@ -163,13 +163,13 @@ function move_files($path, $protect) {
 * Operates directly on the filesystem, does not use the db.
 */
 function set_perms($path) {
-	global $MEDIA_FIREWALL_ROOTDIR, $MEDIA_DIRECTORY, $TIME_LIMIT, $starttime;
+	global $MEDIA_FIREWALL_ROOTDIR, $MEDIA_DIRECTORY, $starttime;
 	if (preg_match("'^($MEDIA_FIREWALL_ROOTDIR)?$MEDIA_DIRECTORY'", $path."/")==0){
 		return false;
 	}
+	$timelimit=get_site_setting('MAX_EXECUTION_TIME');
 	if ($dir=@opendir($path)) {
 		while (($element=readdir($dir))!== false) {
-			$timelimit = $TIME_LIMIT ? $TIME_LIMIT : 0;
 			$exectime = time() - $starttime;
 			if (($timelimit != 0) && ($timelimit - $exectime) < 3) {
 				// bail now to ensure nothing is lost

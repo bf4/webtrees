@@ -201,10 +201,3 @@ $NO_UPDATE_CHAN = false;	// -- Do not update the CHAN record if true
 
 $ENABLE_RSS = true;
 $RSS_FORMAT = "ATOM";		//-- default feed format.
-// -- amount of time to execute before quitting in seconds
-// -- set this to 0 to remove all time limits
-$TIME_LIMIT = "60";
-
-@set_time_limit($TIME_LIMIT);
-
-?>

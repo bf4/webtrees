@@ -130,8 +130,6 @@ function checkfile($filename) {
 	global $flag;
 	global $target;
 
-	set_time_limit(0); //
-
 	// loading source data
 	if (!$fd = fopen($filename, 'r')) die("Cannot open $filename");
 	while ($data = @fgets($fd)) {

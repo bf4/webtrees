@@ -75,7 +75,7 @@ if (!isset ($bakfile)) $bakfile = "";
 if (!isset ($cleanup_needed)) $cleanup_needed = false;
 if (!isset ($ok)) $ok = false;
 if (!isset ($startimport)) $startimport = false;
-if (!isset ($timelimit)) $timelimit = $TIME_LIMIT;
+if (!isset ($timelimit)) $timelimit = get_site_setting('MAX_EXECUTION_TIME');
 if (!isset ($importtime)) $importtime = 0;
 if (!isset ($no_upload)) $no_upload = false;
 if (!isset ($override)) $override = false;
@@ -1151,7 +1151,6 @@ if ($stage == 1) {
 	unset ($_SESSION['import_stats']);
 	unset ($_SESSION["TOTAL_BYTES"]);
 	unset ($_SESSION["fcontents"]);
-	@ set_time_limit($TIME_LIMIT);
 }
 }
 ?>

@@ -477,7 +477,6 @@ if ($action=="update") {
 	else {
 		$errors = true;
 	}
-	$configtext = preg_replace('/\$TIME_LIMIT\s*=\s*".*";/', "\$TIME_LIMIT = \"".$_POST["NEW_TIME_LIMIT"]."\";", $configtext);
 	$whichFile = $INDEX_DIRECTORY.$FILE."_conf.php";
 	if (!is_writable($whichFile)) {
 		$errors = true;
@@ -1070,12 +1069,6 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('GEDCOM Basics')."\" onclic
 		<td class="optionbox">
 			<?php echo edit_field_log_frequency('NEW_CHANGELOG_CREATE', $CHANGELOG_CREATE, 'tabindex="'.(++$i).'" onfocus="getHelp(\'CHANGELOG_CREATE\');"'); ?>
 		</td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap width20">
-			<?php echo i18n::translate('PHP time limit'), help_link('TIME_LIMIT'); ?>
-		</td>
-		<td class="optionbox"><input type="text" name="NEW_TIME_LIMIT" value="<?php print $TIME_LIMIT; ?>" size="5" tabindex="<?php echo ++$i; ?>" onfocus="getHelp('TIME_LIMIT');" /></td>
 	</tr>
 </table>
 <table class="facts_table" border="0">

@@ -62,28 +62,16 @@ if (!empty($_POST['action']) && $_POST['action']=='download') {
 	exit;
 }
 
-echo
-	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
-	'<html xmlns="http://www.w3.org/1999/xhtml" ', i18n::html_markup(), '>',
-	'<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
-	'<title>webtrees setup wizard</title>',
-	'<style type="text/css">
-		body { 	color: black; background-color: white; font: 14px tahoma, arial, helvetica, sans-serif;	padding:10px; }
-		a {	color: black; font-weight: normal; text-decoration: none;}
-		a:hover {color: #81A9CB;}
-		h1 {color: #81A9CB; font-weight:normal;}
-		legend {color:#81A9CB; font-style: italic; font-weight:bold; padding: 0 5px 5px; align: top;}
-		.good {color: green;}
-		.bad {color: red; font-weight: bold;}
-		.indifferent {color: blue;}
-	</style>',
-	'</head><body>';
-
 if (version_compare(PHP_VERSION, '5.2')<0) {
 	// Our translation system requires PHP 5.2, so we cannot translate this message :-(
-	echo '<p class="bad">Sorry, the setup process cannot start.</p>';
-	echo '<p>This server is running PHP version ', PHP_VERSION, '</p>';
-	echo '<p><b>webtrees</b> requires PHP 5.2 or later.  PHP 5.3 is recommended.</p>';
+	echo
+		'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+		'<html xmlns="http://www.w3.org/1999/xhtml">',
+		'<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
+		'<title>webtrees setup wizard</title>',
+		'<h1>Sorry, the setup wizard cannot start.</h1>',
+		'<p>This server is running PHP version ', PHP_VERSION, '</p>',
+		'<p><b>webtrees</b> requires PHP 5.2 or later.  PHP 5.3 is recommended.</p>';
 	if (version_compare(PHP_VERSION, '5.0')<0) {
 		echo '<p>Many servers offer both PHP4 and PHP5.  You may be able to change your default to PHP5 using a control panel or a configuration setting.</p>';
 	}
@@ -104,7 +92,23 @@ require 'includes/functions/functions_edit.php';
 require 'includes/classes/class_i18n.php';
 define('WT_LOCALE', i18n::init());
 
-echo '<h1>', i18n::translate('Setup wizard for <b>webtrees</b>'), '</h1>';
+echo
+	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+	'<html xmlns="http://www.w3.org/1999/xhtml" ', i18n::html_markup(), '>',
+	'<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
+	'<title>webtrees setup wizard</title>',
+	'<style type="text/css">
+		body { 	color: black; background-color: white; font: 14px tahoma, arial, helvetica, sans-serif;	padding:10px; }
+		a {	color: black; font-weight: normal; text-decoration: none;}
+		a:hover {color: #81A9CB;}
+		h1 {color: #81A9CB; font-weight:normal;}
+		legend {color:#81A9CB; font-style: italic; font-weight:bold; padding: 0 5px 5px; align: top;}
+		.good {color: green;}
+		.bad {color: red; font-weight: bold;}
+		.indifferent {color: blue;}
+	</style>',
+	'</head><body>',
+	'<h1>', i18n::translate('Setup wizard for <b>webtrees</b>'), '</h1>';
 
 if (file_exists(WT_DATA_DIR.WT_CONFIG_FILE)) {
 	$error=false;
@@ -213,7 +217,7 @@ if (empty($_POST['maxcpu']) || empty($_POST['maxmem'])) {
 	$cpu=ini_get('max_execution_time');
 	$maxcpu=$cpu;
 	for ($i=$cpu+1; $i<=300; ++$i) {
-		@ini_set('max_execution_time', $i);
+		@set_time_limit('max_execution_time', $i);
 		$newcpu=ini_get('max_execution_time');
 		if ($newcpu>$cpu) {
 			$maxcpu=$newcpu;
@@ -918,7 +922,7 @@ try {
 		"INSERT IGNORE INTO {$TBLPREFIX}site_setting (setting_name, setting_value) VALUES ".
 		"('WT_SCHEMA_VERSION',               '1'),".
 		"('DEFAULT_GEDCOM',                  'default.ged'),".
-		"('INDEX_DIRECTORY',                 'index/'),".
+		"('INDEX_DIRECTORY',                 'data/'),".
 		"('AUTHENTICATION_MODULE',           'includes/authentication.php'),".
 		"('STORE_MESSAGES',                  '1'),".
 		"('SIMPLE_MAIL',                     '1'),".
