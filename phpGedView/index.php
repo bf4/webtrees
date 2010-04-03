@@ -99,11 +99,11 @@ $time = client_time();
 
 if (!isset($action)) $action="";
 
-//-- make sure that they have user status before they can use this page
-//-- otherwise have them login again
+// Visitors should see any links to a user page, but they may be
+// following a link after an inactivity logout.
 if (!WT_USER_ID) {
-	if (!empty($ctype) && $ctype=="user") {
-		header("Location: login.php?help_message=mygedview_login_help&url=".urlencode("index.php?ctype=user"));
+	if (!empty($ctype) && $ctype=='user') {
+		header('Location: login.php&url=index.php?ctype=user');
 		exit;
 	} else {
 		$ctype = 'gedcom';

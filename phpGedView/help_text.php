@@ -4654,11 +4654,6 @@ case 'mygedview_favorites':
 	$text=i18n::translate('Favorites are similar to bookmarks.<br /><br />Suppose you have somebody in the family tree whose record you want to check regularly.  Just go to the person\'s Individual Information page and select the <b>Add to My Favorites</b> option from the Favorites drop-down list. This person is now book marked and added to your list of favorites.<br /><br />Wherever you are on this site, you can click on a name in the "My Favorites" drop-down list in the header.  This will take you to the Individual Information page of that person.');
 	break;
 
-case 'mygedview_login':
-	$title=i18n::translate('Login block');
-	$text=i18n::translate('In order to access My Page, you must be a registered user on the system.  On My Page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of <b>webtrees</b> pages.<br /><br />Enter your User name and Password in the appropriate fields to login to My Page.');
-	break;
-
 case 'mygedview_message':
 	$title=i18n::translate('Messages block');
 	$text=i18n::translate('In this block you will find the messages sent to you by other users or the admin.  You too can send messages to other users or to the admin.<br /><br />The <b>webtrees</b> mail system is designed to help protect your privacy.  You don\'t have to leave your email address here and others will not be able to see your email address.<br /><br />To expand a message, click on the message subject or the "<b>+</b>" symbol beside it.  You can delete multiple messages by checking the boxes next to the messages you want to delete and clicking on the <b>Delete Selected Messages</b> button.');

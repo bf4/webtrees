@@ -151,28 +151,22 @@ if ($type=="full") {
 echo "<div class=\"center\">\n";
 
 echo "<table class=\"center width60 ltr\"><tr><td>";
-switch ($help_message) {
-case 'mygedview_login_help':
-	echo i18n::translate('In order to access My Page, you must be a registered user on the system.  On My Page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of webtrees pages.<br /><br />Enter your User name and Password in the appropriate fields to login to My Page.');
+switch ($WELCOME_TEXT_AUTH_MODE){
+case 1:
+	echo i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to every visitor who has a user account.<br /><br />If you have a user account, you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your application, the site administrator will activate your account.  You will receive an email when your application has been approved.');
 	break;
-default:
-	switch ($WELCOME_TEXT_AUTH_MODE){
-	case 1:
-		echo i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to every visitor who has a user account.<br /><br />If you have a user account, you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your application, the site administrator will activate your account.  You will receive an email when your application has been approved.');
-		break;
-	case 2:
-		i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>authorized</u> users only.<br /><br />If you have a user account you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your information, the administrator will either approve or decline your account application.  You will receive an email message when your application has been approved.');
-		break;
-	case 3:
-		i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>family members only</u>.<br /><br />If you have a user account you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying the information you provide, the administrator will either approve or decline your request for an account.  You will receive an email when your request is approved.');
-		break;
-	case 4:
-		echo i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access is permitted to users who have an account and a password for this website.');
-		if ($WELCOME_TEXT_CUST_HEAD) {
-			echo embed_globals($WELCOME_TEXT_AUTH_MODE_4);
-		}
-		break;
+case 2:
+	i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>authorized</u> users only.<br /><br />If you have a user account you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your information, the administrator will either approve or decline your account application.  You will receive an email message when your application has been approved.');
+	break;
+case 3:
+	i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>family members only</u>.<br /><br />If you have a user account you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying the information you provide, the administrator will either approve or decline your request for an account.  You will receive an email when your request is approved.');
+	break;
+case 4:
+	echo i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access is permitted to users who have an account and a password for this website.');
+	if ($WELCOME_TEXT_CUST_HEAD) {
+		echo embed_globals($WELCOME_TEXT_AUTH_MODE_4);
 	}
+	break;
 }
 echo '</td></tr></table><br /><br />';
 $tab=0;		// initialize tab index
