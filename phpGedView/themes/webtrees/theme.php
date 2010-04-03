@@ -42,8 +42,6 @@ $print_stylesheet = WT_THEME_DIR."print.css";	//-- CSS level 2 print stylesheet 
 $toplinks = WT_THEME_DIR."toplinks.php";	//-- File to display the icons and links to different sections
 $headerfile = WT_THEME_DIR."header.php";	//-- Header information for the site
 $footerfile = WT_THEME_DIR."footer.php";	//-- Footer information for the site
-$print_footerfile = WT_THEME_DIR."print_footer.php";	//-- Print Preview Footer information for the site
-$print_headerfile = WT_THEME_DIR."print_header.php";	//-- Print Preview Header information for the site
 
 $WT_USE_HELPIMG = true;		// set to true to use image for help questionmark, set to false to use i18n::translate('?')
 $WT_IMAGE_DIR = WT_THEME_DIR."images";		//-- directory to look for images

@@ -67,7 +67,7 @@ if (!defined('WT_WEBTREES')) {
 		FORM { margin-top: 0px; margin-bottom: 0px; }
 	</style>
 	<?php }
-	if ($view!="preview" && $view!="simple") { ?>
+	if ($view!="simple") { ?>
 		<?php if (!empty($META_AUTHOR)) { ?><meta name="author" content="<?php echo htmlspecialchars($META_AUTHOR); ?>" /><?php } ?>
 		<?php if (!empty($META_PUBLISHER)) { ?><meta name="publisher" content="<?php echo htmlspecialchars($META_PUBLISHER); ?>" /><?php } ?>
 		<?php if (!empty($META_COPYRIGHT)) { ?><meta name="copyright" content="<?php echo htmlspecialchars($META_COPYRIGHT); ?>" /><?php } ?>
@@ -95,8 +95,7 @@ if (!defined('WT_WEBTREES')) {
 <!-- begin header section -->
 <?php
 if ($view!='simple')
-if ($view=='preview') include($print_headerfile);
-else {?>
+   {?>
 <script type="text/javascript">
 
 function switchMenu(openMe,closeMe)
