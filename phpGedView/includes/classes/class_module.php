@@ -32,17 +32,17 @@ if (!defined('WT_WEBTREES')) {
 	exit;
 }
 
-define('WT_class_MODULE_PHP', '');
+define('WT_CLASS_MODULE_PHP', '');
 
-require_once(WT_ROOT.'includes/classes/class_tab.php');
-require_once(WT_ROOT.'includes/classes/class_sidebar.php');
+require_once WT_ROOT.'includes/classes/class_tab.php';
+require_once WT_ROOT.'includes/classes/class_sidebar.php';
 
 /**
  * abstract class that is to be overidden by implementing modules
  * @author jfinlay
  *
  */
-abstract class WTModule {
+abstract class WT_Module {
 	private $id = 0;
 	private $accessLevel = array();
 	private $menuEnabled = array();
@@ -69,13 +69,13 @@ abstract class WTModule {
 	/**
 	 * Get an instance of the desired module class based on a db row
 	 * @param $row
-	 * @return WTModule
+	 * @return WT_Module
 	 */
 	static function &getInstance($row) {
 		$entry=$row->mod_name;
 		if (file_exists("modules/$entry/pgv_module.php")) {
 			include_once("modules/$entry/pgv_module.php");
-			$menu_class = $entry."_WTModule";
+			$menu_class = $entry."_WT_Module";
 			$obj = new $menu_class();
 			$obj->setId($row->mod_id);
 			$obj->setName($entry);
@@ -237,7 +237,7 @@ abstract class WTModule {
 		while($row = $statement->fetch()) {
 			if ($row->mod_name!=$entry) {
 				$entry = $row->mod_name;
-				$mod = WTModule::getInstance($row);
+				$mod = WT_Module::getInstance($row);
 				if ($mod) {
 					$modules[$entry] = $mod;
 					$mod->setGeneralAccess($row->mp_type, $row->mp_access, $row->mp_file);
@@ -265,7 +265,7 @@ abstract class WTModule {
 		while($row = $statement->fetch()) {
 			if ($row->mod_name!=$entry) {
 				$entry = $row->mod_name;
-				$mod = WTModule::getInstance($row);
+				$mod = WT_Module::getInstance($row);
 				if ($mod) { 
 					$modules[$entry] = $mod;
 					$mod->setGeneralAccess($row->mp_type, $row->mp_access, $row->mp_file);
@@ -291,9 +291,9 @@ abstract class WTModule {
 				if ($entry{0}!="." && $entry!=".svn" && is_dir("modules/$entry")) {
 					if (file_exists("modules/$entry/pgv_module.php")) {
 						include_once("modules/$entry/pgv_module.php");
-						$menu_class = $entry."_WTModule";
+						$menu_class = $entry."_WT_Module";
 						$obj = new $menu_class();
-						$mod = WTModule::getModuleByName($entry);
+						$mod = WT_Module::getModuleByName($entry);
 						if ($mod!=null) {
 							$mod->setVersion($obj->getVersion());
 							$mod->setPgvVersion($obj->getPgvVersion());
@@ -321,7 +321,7 @@ abstract class WTModule {
 		while($row = $stmt->fetch()) {
 			if ($row->mod_name!=$entry) {
 				$entry = $row->mod_name;
-				$mod = WTModule::getInstance($row);
+				$mod = WT_Module::getInstance($row);
 				$modules[$entry] = $mod;
 				$mod->setGeneralAccess($row->mp_type, $row->mp_access, $row->mp_file);
 			}
@@ -345,7 +345,7 @@ abstract class WTModule {
 		while($row = $stmt->fetch()) {
 			if ($row->mod_name!=$entry) {
 				$entry = $row->mod_name;
-				$mod = WTModule::getInstance($row);
+				$mod = WT_Module::getInstance($row);
 				$modules[$entry] = $mod;
 				$mod->setGeneralAccess($row->mp_type, $row->mp_access, $row->mp_file);
 			}
@@ -360,7 +360,7 @@ abstract class WTModule {
 
 	/**
 	 * Insert or Update a module in the database
-	 * @param $mod WTModule
+	 * @param $mod WT_Module
 	 * @return null
 	 */
 	static function updateModule(&$mod) {
@@ -414,7 +414,7 @@ abstract class WTModule {
 	}
 
 	static function setDefaultTabs($ged_id) {
-		$modules = WTModule::getInstalledList();
+		$modules = WT_Module::getInstalledList();
 		$taborder = 1;
 		foreach(self::$default_tabs as $modname) {
 			if (isset($modules[$modname])) {
@@ -423,7 +423,7 @@ abstract class WTModule {
 					$mod->setTaborder($taborder);
 					$mod->setAccessLevel(WT_PRIV_PUBLIC, $ged_id);
 					$mod->setTabEnabled(WT_PRIV_PUBLIC, $ged_id);
-					WTModule::updateModule($mod);
+					WT_Module::updateModule($mod);
 					$taborder++;
 				}
 			}
@@ -431,7 +431,7 @@ abstract class WTModule {
 	}
 
 	static function setDefaultMenus($ged_id) {
-		$modules = WTModule::getInstalledList();
+		$modules = WT_Module::getInstalledList();
 		$taborder = 0;
 		foreach(self::$default_menus as $modname) {
 			if (isset($modules[$modname])) {
@@ -440,7 +440,7 @@ abstract class WTModule {
 					$mod->setMenuorder($taborder);
 					$mod->setAccessLevel(WT_PRIV_PUBLIC, $ged_id);
 					$mod->setMenuEnabled(WT_PRIV_PUBLIC, $ged_id);
-					WTModule::updateModule($mod);
+					WT_Module::updateModule($mod);
 					$taborder++;
 				}
 			}
@@ -448,7 +448,7 @@ abstract class WTModule {
 	}
 
 	static function setDefaultSidebars($ged_id) {
-		$modules = WTModule::getInstalledList();
+		$modules = WT_Module::getInstalledList();
 		$taborder = 0;
 		foreach(self::$default_sidebars as $modname) {
 			if (isset($modules[$modname])) {
@@ -457,7 +457,7 @@ abstract class WTModule {
 					$mod->setSidebarorder($taborder);
 					$mod->setAccessLevel(WT_PRIV_PUBLIC, $ged_id);
 					$mod->setSidebarEnabled(WT_PRIV_PUBLIC, $ged_id);
-					WTModule::updateModule($mod);
+					WT_Module::updateModule($mod);
 					$taborder++;
 				}
 			}

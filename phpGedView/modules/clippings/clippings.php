@@ -34,7 +34,7 @@ if (!defined('WT_WEBTREES')) {
 
 require_once WT_ROOT.'includes/classes/class_sidebar.php';
 
-class clippings_Sidebar extends Sidebar {
+class clippings_Sidebar extends WT_Module_Sidebar {
 
 	var $clippingCtrl;
 	

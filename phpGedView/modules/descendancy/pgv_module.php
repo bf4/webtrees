@@ -35,7 +35,7 @@ if (!defined('WT_WEBTREES')) {
 require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/descendancy/descendancy.php");
 
-class descendancy_WTModule extends WTModule {
+class descendancy_WT_Module extends WT_Module {
 	protected $name = 'descendancy';
 	protected $description = 'Adds a sidebar which allows for easy navigation of indiviuals in a descendants tree-view format.';
 	protected $version = '4.2.2';

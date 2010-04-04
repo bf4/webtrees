@@ -34,7 +34,7 @@ if (!defined('WT_WEBTREES')) {
 require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/relatives/relatives.php");
 
-class relatives_WTModule extends WTModule {
+class relatives_WT_Module extends WT_Module {
 	protected $name = 'relatives';
 	protected $description = 'Adds a tab to the individual page which displays the families and close relatives of an individual.';
 	protected $version = '4.2.2';

@@ -34,7 +34,7 @@ if (!defined('WT_WEBTREES')) {
 
 require_once WT_ROOT.'includes/classes/class_tab.php';
 
-class personal_facts_Tab extends Tab {
+class personal_facts_Tab extends WT_Module_Tab {
 	
 	public function getContent() {
 		global $FACT_COUNT, $CONTACT_EMAIL, $WT_IMAGE_DIR, $WT_IMAGES, $EXPAND_RELATIVES_EVENTS;

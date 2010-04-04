@@ -34,7 +34,7 @@ if (!defined('WT_WEBTREES')) {
 
 require_once WT_ROOT.'includes/classes/class_tab.php';
 
-class relatives_Tab extends Tab {
+class relatives_Tab extends WT_Module_Tab {
 	
 
 	/**

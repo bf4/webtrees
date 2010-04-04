@@ -34,7 +34,7 @@ if (!defined('WT_WEBTREES')) {
 require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/clippings/clippings.php");
 
-class clippings_WTModule extends WTModule {
+class clippings_WT_Module extends WT_Module {
 	protected $name = 'clippings';
 	protected $description = 'Clippings Cart PGV Module';
 	protected $version = '4.2.2';

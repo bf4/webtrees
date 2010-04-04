@@ -6,8 +6,8 @@ require_once(WT_ROOT.'includes/classes/class_module.php');
 $sb_action = safe_GET('sb_action', WT_REGEX_ALPHANUM, 'none');
 //-- handle ajax calls
 if ($sb_action!='none') {
-	$sidebarmods = WTModule::getActiveList('S', WT_USER_ACCESS_LEVEL);
-	uasort($sidebarmods, "WTModule::compare_sidebar_order");
+	$sidebarmods = WT_Module::getActiveList('S', WT_USER_ACCESS_LEVEL);
+	uasort($sidebarmods, "WT_Module::compare_sidebar_order");
 	class tempController {
 		var $pid;
 		var $famid;

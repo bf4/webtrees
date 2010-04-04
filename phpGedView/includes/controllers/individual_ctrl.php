@@ -253,8 +253,8 @@ class IndividualControllerRoot extends BaseController {
 */
 		}
 		
-		$this->modules = WTModule::getActiveList('T');
-		uasort($this->modules, "WTModule::compare_tab_order");
+		$this->modules = WT_Module::getActiveList('T');
+		uasort($this->modules, "WT_Module::compare_tab_order");
 		$count = 0;
 		if (empty($this->default_tab)) $this->default_tab=0;
 		foreach($this->modules as $mod) {

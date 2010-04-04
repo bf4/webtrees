@@ -57,8 +57,8 @@ function write_access_option_numeric($checkVar) {
 
 $action = safe_POST('action');
 
-$modules = WTModule::getInstalledList();
-uasort($modules, "WTModule::compare_name");
+$modules = WT_Module::getInstalledList();
+uasort($modules, "WT_Module::compare_name");
 
 if ($action=='update_mods') {
   foreach($modules as $mod) {
@@ -87,7 +87,7 @@ if ($action=='update_mods') {
     $mod->setTaborder($value);
     $mod->setMenuorder(safe_POST_integer('menuorder-'.$mod->getName(), 0, 100, $mod->getMenuorder()));
     $mod->setSidebarorder(safe_POST_integer('sideorder-'.$mod->getName(), 0, 100, $mod->getSidebarorder()));
-	WTModule::updateModule($mod);
+	WT_Module::updateModule($mod);
   }
 }
 
@@ -255,7 +255,7 @@ foreach($modules as $mod) {
     </thead>
     <tbody>
 <?php
-uasort($modules, "WTModule::compare_menu_order");
+uasort($modules, "WT_Module::compare_menu_order");
 $order = 1;
 foreach($modules as $mod) {
 	if(!$mod->hasMenu()) continue;
@@ -306,7 +306,7 @@ $order++;
     </thead>
     <tbody>
 <?php
-uasort($modules, "WTModule::compare_tab_order");
+uasort($modules, "WT_Module::compare_tab_order");
 $order = 1;
 foreach($modules as $mod) {
 	if(!$mod->hasTab()) continue;
@@ -357,7 +357,7 @@ $order++;
     </thead>
     <tbody>
 <?php
-uasort($modules, "WTModule::compare_sidebar_order");
+uasort($modules, "WT_Module::compare_sidebar_order");
 $order = 1;
 foreach($modules as $mod) {
 	if(!$mod->hasSidebar()) continue;

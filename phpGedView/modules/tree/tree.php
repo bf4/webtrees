@@ -34,7 +34,7 @@ if (!defined('WT_WEBTREES')) {
 require_once WT_ROOT.'includes/classes/class_tab.php';
 require_once WT_ROOT.'includes/classes/class_treenav.php';
 
-class tree_Tab extends Tab {
+class tree_Tab extends WT_Module_Tab {
 
 	public function getJSCallback() {
 		return 'treetab.sizeLines(); 

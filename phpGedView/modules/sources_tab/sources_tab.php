@@ -33,7 +33,7 @@ if (!defined('WT_WEBTREES')) {
 }
 require_once WT_ROOT.'includes/classes/class_tab.php';
 
-class sources_tab_Tab extends Tab {
+class sources_tab_Tab extends WT_Module_Tab {
 
 	protected $sourceCount = null;
 

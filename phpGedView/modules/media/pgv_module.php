@@ -34,7 +34,7 @@ if (!defined('WT_WEBTREES')) {
 require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/media/media.php");
 
-class media_WTModule extends WTModule {
+class media_WT_Module extends WT_Module {
 	protected $name = 'media';
 	protected $description = 'Adds a tab to the individual page which displays the media items linked to an individual.';
 	protected $version = '4.2.2';

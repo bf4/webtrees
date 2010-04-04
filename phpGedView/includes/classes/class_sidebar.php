@@ -36,11 +36,11 @@ define('WT_CLASS_SIDEBAR_PHP', '');
 
 /**
  * Defines the base class for a sidebar
- * Sidebars are created by Modules through instances of the WTModule class
+ * Sidebars are created by Modules through instances of the WT_Module class
  * @author jfinlay
  *
  */
-abstract class Sidebar {
+abstract class WT_Module_Sidebar {
 	protected $name;
 	protected $controller = null;
 	
@@ -53,9 +53,7 @@ abstract class Sidebar {
 	 * Get the displayable title for this sidebar
 	 * @return string
 	 */
-	public function getTitle() {
-		return i18n::translate('Sidebar');
-	}
+	public abstract function getTitle();
 	
 	/**
 	 * get the content of the tab

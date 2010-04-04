@@ -34,7 +34,7 @@ if (!defined('WT_WEBTREES')) {
 require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/notes/notes.php");
 
-class notes_WTModule extends WTModule {
+class notes_WT_Module extends WT_Module {
 	protected $name = 'notes';
 	protected $description = 'Adds a tab to the individual page which displays the notes of an individual.';
 	protected $version = '4.2.2';

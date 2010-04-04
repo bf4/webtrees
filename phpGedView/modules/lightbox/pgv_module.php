@@ -2,7 +2,7 @@
 require_once("includes/classes/class_module.php");
 require_once("modules/lightbox/lightbox.php");
 
-class lightbox_WTModule extends WTModule {
+class lightbox_WT_Module extends WT_Module {
 	protected $name = 'lightbox';
 	protected $description = 'Adds a tab (Album) to the individual page which an alternate way to view and work with media.';
 	protected $version = '4.2.2';

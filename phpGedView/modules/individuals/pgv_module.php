@@ -35,7 +35,7 @@ if (!defined('WT_WEBTREES')) {
 require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/individuals/individuals.php");
 
-class individuals_WTModule extends WTModule {
+class individuals_WT_Module extends WT_Module {
 	protected $name = 'individuals';
 	protected $description = 'Adds a sidebar which allows for easy navigation of indiviuals in a list format.';
 	protected $version = '4.2.2';

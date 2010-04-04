@@ -2,7 +2,7 @@
 require_once WT_ROOT.'includes/classes/class_module.php';
 require_once WT_ROOT.'modules/family_nav/family_nav.php';
 
-class family_nav_WTModule extends WTModule {
+class family_nav_WT_Module extends WT_Module {
 	protected $name = 'family_nav';
 	protected $description = 'Adds a tab to the individual page which displays a family navigator on the individual page.';
 	protected $version = '4.2.2';

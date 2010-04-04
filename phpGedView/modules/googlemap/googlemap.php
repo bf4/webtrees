@@ -60,7 +60,7 @@ if($SESSION_HIDE_GOOGLEMAP == "empty") {
 		$SESSION_HIDE_GOOGLEMAP = "false";
 }
 
-class googlemap_Tab extends Tab {
+class googlemap_Tab extends WT_Module_Tab {
 
 	public function getPreLoadContent() {
 		$out = '';

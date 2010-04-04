@@ -43,7 +43,7 @@ require_once 'includes/classes/class_sidebar.php';
 require_once 'includes/functions/functions_charts.php';
 require_once 'includes/controllers/individual_ctrl.php';
 
-class family_nav_Tab extends Tab {
+class family_nav_Tab extends WT_Module_Tab {
 	
 	public function getLinkUrl(&$person) {
 		
@@ -767,7 +767,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 }
 
 
-class family_nav_Sidebar extends Sidebar { 
+class family_nav_Sidebar extends WT_Module_Sidebar { 
 
 	var $indi;
 	

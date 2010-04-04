@@ -35,7 +35,7 @@ if (!defined('WT_WEBTREES')) {
 require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/families/families.php");
 
-class families_WTModule extends WTModule {
+class families_WT_Module extends WT_Module {
 	protected $name = 'families';
 	protected $description = 'Adds a sidebar which allows for easy navigation of famlies in a list format.';
 	protected $version = '4.2.2';

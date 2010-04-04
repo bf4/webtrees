@@ -32,15 +32,15 @@ if (!defined('WT_WEBTREES')) {
 	exit;
 }
 
-define('WT_class_TAB_PHP', '');
+define('WT_CLASS_TAB_PHP', '');
 
 /**
  * Defines the base class for a tab on the individual page
- * Tabs are created by Modules through instances of the WTModule class
+ * Tabs are created by Modules through instances of the WT_Module class
  * @author jfinlay
  *
  */
-abstract class Tab {
+abstract class WT_Module_Tab {
 	protected $name;
 	protected $controller = null;
 	

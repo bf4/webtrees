@@ -36,7 +36,7 @@ require_once WT_ROOT.'includes/classes/class_sidebar.php';
 
 if (!defined('WT_AUTOCOMPLETE_LIMIT')) define('WT_AUTOCOMPLETE_LIMIT', 500);
 
-class descendancy_Sidebar extends Sidebar {
+class descendancy_Sidebar extends WT_Module_Sidebar {
 
 	public function getContent() {
 		global $WT_IMAGE_DIR, $WT_IMAGES;

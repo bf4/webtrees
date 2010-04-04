@@ -901,8 +901,8 @@ class MenuBar
 	*/
 	static function getModuleMenus() {
 		$modules = array();
-		$mods = WTModule::getActiveList('M', WT_USER_ACCESS_LEVEL);
-		uasort($mods, "WTModule::compare_menu_order");
+		$mods = WT_Module::getActiveList('M', WT_USER_ACCESS_LEVEL);
+		uasort($mods, "WT_Module::compare_menu_order");
 		foreach ($mods as $mod) {
 			$menu = $mod->getMenu();
 			if ($menu) $modules[] = $mod->getMenu();

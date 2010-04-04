@@ -34,7 +34,7 @@ if (!defined('WT_WEBTREES')) {
 require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/sources_tab/sources_tab.php");
 
-class sources_tab_WTModule extends WTModule {
+class sources_tab_WT_Module extends WT_Module {
 	protected $name = 'sources_tab';
 	protected $description = 'Adds a tab to the individual page which displays the sources linked to an individual.';
 	protected $version = '4.2.2';

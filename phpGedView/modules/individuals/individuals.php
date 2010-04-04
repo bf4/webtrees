@@ -36,7 +36,11 @@ require_once WT_ROOT.'includes/classes/class_sidebar.php';
 
 if (!defined('WT_AUTOCOMPLETE_LIMIT')) define('WT_AUTOCOMPLETE_LIMIT', 500);
 
-class individuals_Sidebar extends Sidebar {
+class individuals_Sidebar extends WT_Module_Sidebar {
+
+	public function getTitle() {
+		return i18n::translate('Individuals');
+	}
 
 	public function getContent() {
 		global $SHOW_MARRIED_NAMES;
