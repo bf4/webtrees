@@ -39,13 +39,12 @@ if ($sb_action!='none') {
 	if ($sb_action=='loadMods') {
 		$counter = 0;
 		foreach($sidebarmods as $mod) {
-			if ($mod->hasSidebar()) {
-				$sb = $mod->getSidebar();
-				if (isset($controller)) $sb->setController($controller);
-				if ($sb->hasSidebarContent()) {
-					?><h3 title="<?php echo $mod->getName()?>"><a href="#"><?php echo $sb->getTitle()?></a></h3>
+			if ($mod instanceof WT_Module_Sidebar) {
+				if (isset($controller)) $mod->setController($controller);
+				if ($mod->hasSidebarContent()) {
+					?><h3 title="<?php echo $mod->getName()?>"><a href="#"><?php echo $mod->getTitle()?></a></h3>
 					<div id="sb_content_<?php echo $mod->getName()?>">
-					<?php if ($counter==0) echo $sb->getSidebarContent();
+					<?php if ($counter==0) echo $mod->getSidebarContent();
 					else {?><img src="<?php echo $WT_IMAGE_DIR ?>/loading.gif" /><?php }?>
 					</div>
 					<?php 
@@ -59,19 +58,17 @@ if ($sb_action!='none') {
 		$modName = safe_GET('mod', WT_REGEX_URL, '');
 		if (isset($sidebarmods[$modName])) {
 			$mod = $sidebarmods[$modName];
-			if ($mod->hasSidebar()) {
-				$sb = $mod->getSidebar();
-				if (isset($controller)) $sb->setController($controller);
-				echo $sb->getSidebarContent();
+			if ($mod instanceof WT_Module_Sidebar) {
+				if (isset($controller)) $mod->setController($controller);
+				echo $mod->getSidebarContent();
 			}
 		}
 		exit;
 	}
 	if (isset($sidebarmods[$sb_action])) {
 		$mod = $sidebarmods[$sb_action];
-		if ($mod->hasSidebar()) {
-			$sb = $mod->getSidebar();
-			echo $sb->getAjaxContent();
+		if ($mod instanceof WT_Module_Sidebar) {
+			echo $mod->getSidebarAjaxContent();
 		}
 	}
 	exit;

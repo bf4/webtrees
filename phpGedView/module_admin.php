@@ -218,8 +218,8 @@ foreach($modules as $mod) {
 	<td class="list_value_wrap"><?php echo $mod->getDescription()?></td>
 	<td class="list_value"><?php echo $mod->getVersion() . " / " . $mod->getPgvVersion() ?></td>
 	<td class="list_value"><?php if ($mod->hasTab()) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
-	<td class="list_value"><?php if ($mod instanceof WT_ModuleMenu) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
-	<td class="list_value"><?php if ($mod->hasSidebar()) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
+	<td class="list_value"><?php if ($mod instanceof WT_Module_Menu) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
+	<td class="list_value"><?php if ($mod instanceof WT_Module_Sidebar) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
 	<td class="list_value_wrap">
 	  <table>
 	<?php
@@ -360,7 +360,7 @@ $order++;
 uasort($modules, "WT_Module::compare_sidebar_order");
 $order = 1;
 foreach($modules as $mod) {
-	if(!$mod->hasSidebar()) continue;
+	if(!$mod instanceof WT_Module_Sidebar) continue;
 	if ($mod->getSidebarorder()==0) $mod->setSidebarorder($order);
 	?><tr class="sortme">
 	<td class="list_value"><?php echo $mod->getTitle()?></td>

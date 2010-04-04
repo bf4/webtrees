@@ -31,8 +31,8 @@ if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-require_once(WT_ROOT."includes/classes/class_module.php");
-require_once(WT_ROOT."modules/tree/tree.php");
+require_once WT_ROOT.'includes/classes/class_module.php';
+require_once WT_ROOT.'modules/tree/tree.php';
 
 class tree_WT_Module extends WT_Module {
 	protected $version = '4.2.2';

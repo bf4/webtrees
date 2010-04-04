@@ -35,7 +35,6 @@ if (!defined('WT_WEBTREES')) {
 define('WT_CLASS_MODULE_PHP', '');
 
 require_once WT_ROOT.'includes/classes/class_tab.php';
-require_once WT_ROOT.'includes/classes/class_sidebar.php';
 
 // Modules can optionally implement the following interfaces.
 interface WT_Module_Config {
@@ -47,12 +46,15 @@ interface WT_Module_Menu {
 	public function defaultMenuOrder(); // 0-127
 }
 
-/*
 interface WT_Module_Sidebar {
 	public function defaultSidebarAccessLevel(); // WT_PRIV_HIDE, WT_PRIV_PUBLIC, WT_PRIV_USER, WT_PRIV_ADMIN
 	public function defaultSidebarOrder(); // 0-127
+	public function getSidebarContent();
+	public function getSidebarAjaxContent();
+	public function hasSidebarContent();
 }
 
+/*
 interface WT_Module_Tab {
 	public function defaultTabAccessLevel(); // WT_PRIV_HIDE, WT_PRIV_PUBLIC, WT_PRIV_USER, WT_PRIV_ADMIN
 	public function defaultTabOrder(); // 0-127
@@ -76,6 +78,8 @@ abstract class WT_Module {
 	protected $tab = null;
 	protected $sidebar = null;
 
+	protected $controller;
+
 	public static $default_tabs = array('family_nav', 'personal_facts', 'sources_tab', 'notes', 'media', 'lightbox', 'tree', 'googlemap', 'relatives', 'all_tab');
 	public static $default_sidebars = array('descendancy', 'family_nav', 'clippings', 'individuals', 'families');
 	public static $default_menus = array('page_menu');
@@ -87,6 +91,14 @@ abstract class WT_Module {
 	// This is an internal name, used to generate identifiers
 	public function getName() {
 		return str_replace('_WT_Module', '', get_class($this));
+	}
+
+	// Reference the parent page's controller
+	public function &getController() {
+		return $this->controller;
+	}
+	public function setController(&$c) {
+		$this->controller=$c;
 	}
 
 	/**
@@ -191,15 +203,8 @@ abstract class WT_Module {
 	 * should be overidden in extending classes
 	 * @return boolean
 	 */
-	public function hasSidebar() { return false; }
 
 	public function &getTab() { return null; }
-
-	/**
-	 * get the sidebar for this module
-	 * @return Sidebar
-	 */
-	public function &getSidebar() { return null; }
 
 	static function compare_tab_order(&$a, &$b) {
 		return $a->getTaborder() - $b->getTaborder();
@@ -445,7 +450,7 @@ abstract class WT_Module {
 		foreach(self::$default_sidebars as $modname) {
 			if (isset($modules[$modname])) {
 				$mod = $modules[$modname];
-				if ($mod->hasSidebar()) {
+				if ($mod instanceof WT_Module_Sidebar) {
 					$mod->setSidebarorder($taborder);
 					$mod->setAccessLevel(WT_PRIV_PUBLIC, $ged_id);
 					$mod->setSidebarEnabled(WT_PRIV_PUBLIC, $ged_id);
