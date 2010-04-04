@@ -112,6 +112,9 @@ flush(); // Allow the browser to start fetching external stylesheets, javascript
 ?>
 
 <!-- begin header section -->
+<?php
+if ($view!='simple')
+   {?>
 <div id="header" class="<?php echo $TEXT_DIRECTION; ?>">
 
 <!-- begin colors code -->
@@ -141,6 +144,7 @@ flush(); // Allow the browser to start fetching external stylesheets, javascript
 	</tr>
 </table>
 </div>
+<?php } ?>
 <!--end colors code -->
 <?php include($toplinks);
 } ?>
