@@ -32,7 +32,7 @@ if (!defined('WT_WEBTREES')) {
 	exit;
 }
 
-$theme_name = "Minimal";		//-- the name of this theme
+$theme_name = "minimal";		//-- the name of this theme
 
 $stylesheet = WT_THEME_DIR."style.css";	//-- CSS level 2 stylesheet to use
 $rtl_stylesheet = WT_THEME_DIR."style_rtl.css";	//-- CSS level 2 stylesheet to use

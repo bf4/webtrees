@@ -94,7 +94,7 @@ if (isset($_GET['themecolor']) && array_key_exists($_GET['themecolor'], $COLOR_T
 
 $_SESSION['themecolor']=$subColor;
 
-$theme_name       = "Colors";
+$theme_name       = "colors";
 $stylesheet       = WT_THEME_DIR  . "css/" . $subColor . ".css";
 $print_stylesheet = WT_THEME_DIR."print.css";	//-- CSS level 2 print stylesheet to use
 $headerfile       = WT_THEME_DIR . "header.php";	    //-- Header information for the site
