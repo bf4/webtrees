@@ -130,14 +130,14 @@ color:red;
 	padding: 0px;
 	margin-left: 10px;
 	margin-top: 0px;
-	maring-right: 0px;
+	margin-right: 0px;
 }
 #sb_desc_content {
 	width: 100%;
 }
 #sb_desc_content ul {
 	padding: 0px;
-	marging: 0px;
+	margin: 0px;
 }
 .name_tree_div {
 	display: none;
@@ -162,5 +162,5 @@ color:red;
 }
 #sb_clippings_content ul {
 	padding: 0px;
-	marging: 0px;
+	margin: 0px;
 }
