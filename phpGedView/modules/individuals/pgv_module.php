@@ -42,7 +42,7 @@ class individuals_WT_Module extends WT_Module implements WT_Module_Sidebar {
 
 	// Extend class WT_Module
 	public function getDescription() {
-		return i18n::translate('Adds a sidebar which allows for easy navigation of indiviuals in a list format.');
+		return i18n::translate('Adds a sidebar which allows for easy navigation of individuals in a list format.');
 	}
 
 	// Implement WT_Module_Sidebar
