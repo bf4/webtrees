@@ -3295,12 +3295,26 @@ case 'timeline.php':
 
 case 'treenav.php':
 	$title=i18n::translate('Interactive tree');
-	$text=i18n::translate('Use the Interactive Tree to view the entire family tree of a person in both directions.  This view is similar to the Hourglass view in that it shows both ancestors and descendants of a given root person.  This chart gives you a more compact view by showing boxes for couples or families instead of just individuals.<br /><ul><li><b>Scrolling</b><br />Whenever your mouse cursor changes to a Move icon, you can click and drag the tree to view other portions of the tree.  As you drag the tree future generations will automatically expand until there are no more generations left to view in that direction.<br /></li><li><b>Zoom</b><br />You can use the icons on the left of the tree to zoom in and out.  Zooming out will allow you to see more of the tree on the screen at a time.  As you zoom out the text can become difficult to read; when your mouse hovers over a box you will get an enlarged view of what is inside it.<br /></li><li><b>Expanding Details</b><br />Clicking on any box will expand the box and display a more detailed view.  While in expanded mode, clicking on a person\'s name will open their Individual Information page.');	
-	$text.=" ".i18n::translate('Clicking')."&nbsp<img src=\"$WT_IMAGE_DIR/".$WT_IMAGES["gedcom"]["small"]."\" width=\"15px\" height=\"15px\" alt=\"\">  ".i18n::translate('will redraw the tree with that person as the new root.');
-	$text.=" ".i18n::translate('Clicking')."&nbsp<img src=\"$WT_IMAGE_DIR/".$WT_IMAGES["family"]["button"]."\" width=\"15px\" height=\"15px\" alt=\"\">  ".i18n::translate('will take you to that family\'s detail page.');	
-	$text.="<br /></li><li><b>".i18n::translate('Toggle Spouses')."</b>";
-	$text.="<br />".i18n::translate('The')."&nbsp<img src=\"$WT_IMAGE_DIR/".$WT_IMAGES["sfamily"]["small"]."\" width=\"15px\" height=\"15px\" alt=\"\">  ".i18n::translate('icon directly under the Zoom buttons will toggle the display of all spouses on or off on the descendancy side.  When the display is set to show spouses, all of a person\'s spouses will appear in the box with them.  All of the person\'s children will be shown as well.  When the option to show spouses is off, only the person\'s last spouse and children with that spouse will be shown.<br /></li><li><b>Large Tree</b><br />The Interactive Tree is available from many different pages including the Tree tab on the Individual Information page and the Charts block on the Home Page.  When viewing the tree from one of these other pages, you will also have a Tree icon under the Zoom icons.');
-	$text.=" ".i18n::translate('Clicking')."&nbsp<img src=\"$WT_IMAGE_DIR/".$WT_IMAGES["gedcom"]["small"]."\" width=\"15px\" height=\"15px\" alt=\"\">  ".i18n::translate('will take you to the Interactive Tree page.</li></ul>');
+	$text=
+		i18n::translate('Use the Interactive Tree to view the entire family tree of a person in both directions.  This view is similar to the Hourglass view in that it shows both ancestors and descendants of a given root person.  This chart gives you a more compact view by showing boxes for couples or families instead of just individuals.').
+		'<br /><ul><li><b>'.i18n::translate('Scrolling').'</b><br />'.
+		i18n::translate('Whenever your mouse cursor changes to a Move icon, you can click and drag the tree to view other portions of the tree.  As you drag the tree future generations will automatically expand until there are no more generations left to view in that direction.').
+		'<br /></li><li><b>'.i18n::translate('Zoom').'</b><br />'.
+		i18n::translate('You can use the icons on the left of the tree to zoom in and out.  Zooming out will allow you to see more of the tree on the screen at a time.  As you zoom out the text can become difficult to read; when your mouse hovers over a box you will get an enlarged view of what is inside it.').
+		'<br /></li><li><b>'.i18n::translate('Expanding Details').'</b><br />'.
+		i18n::translate('Clicking on any box will expand the box and display a more detailed view.  While in expanded mode, clicking on a person\'s name will open their Individual Information page.').
+		'<br />'.
+		i18n::translate('Clicking %s will redraw the tree with that person as the new root.', '<img src="'.$WT_IMAGE_DIR.'/'.$WT_IMAGES['gedcom']['small'].'" width="15px" height="15px" alt="">').
+		'<br />'.
+		i18n::translate('Clicking %s will take you to that family\'s detail page.', '<img src="'.$WT_IMAGE_DIR.'/'.$WT_IMAGES['family']['button'].'" width="15px" height="15px" alt="">').
+		'<br /></li><li><b>'.i18n::translate('Toggle Spouses').'</b><br />'.
+		i18n::translate('The %s icon directly under the Zoom buttons will toggle the display of all spouses on or off on the descendancy side.  When the display is set to show spouses, all of a person\'s spouses will appear in the box with them.  All of the person\'s children will be shown as well.  When the option to show spouses is off, only the person\'s last spouse and children with that spouse will be shown.', '<img src="'.$WT_IMAGE_DIR.'/'.$WT_IMAGES['sfamily']['small'].'" width="15px" height="15px" alt="">').
+		'<br /></li><li><b>'.i18n::translate('Large Tree').'</b>'.
+		'<br />'.
+		i18n::translate('The Interactive Tree is available from many different pages including the Tree tab on the Individual Information page and the Charts block on the Home Page.  When viewing the tree from one of these other pages, you will also have a Tree icon under the Zoom icons.').
+		'<br />'.
+		i18n::translate('Clicking %s will take you to the Interactive Tree page.', '<img src="'.$WT_IMAGE_DIR.'/'.$WT_IMAGES['gedcom']['small'].'" width="15px" height="15px" alt="">').
+		'</li></ul>';
 	break;
 
 case 'uploadgedcom.php':
