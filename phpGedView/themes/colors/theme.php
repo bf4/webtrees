@@ -87,21 +87,21 @@ if (isset($_GET['themecolor']) && array_key_exists($_GET['themecolor'], $COLOR_T
 			$subColor='ash';
 		}
 	} else {
-		// Default color
+		// Default color set here
 		$subColor='ash';
 	}
 }
 
 $_SESSION['themecolor']=$subColor;
 
-$theme_name       = "colors";
-$stylesheet       = WT_THEME_DIR  . "css/" . $subColor . ".css";
-$print_stylesheet = WT_THEME_DIR."print.css";	//-- CSS level 2 print stylesheet to use
-$headerfile       = WT_THEME_DIR . "header.php";	    //-- Header information for the site
-$rtl_stylesheet   = WT_THEME_DIR . "style_rtl.css";    //-- CSS level 2 stylesheet to use
-$toplinks         = WT_THEME_DIR . "toplinks.php";     //-- File to display the icons and links to different sections    
-$footerfile       = WT_THEME_DIR . "footer.php";       //-- Footer information for the site     
-$WT_IMAGE_DIR     = WT_THEME_DIR . "images";           //-- directory to look for images
+$theme_name       = "Colors";
+$stylesheet       = WT_THEME_DIR . "css/" . $subColor . ".css";
+$print_stylesheet = WT_THEME_DIR . "print.css";			//-- CSS level 2 print stylesheet to use
+$headerfile       = WT_THEME_DIR . "header.php";		//-- Header information for the site
+$rtl_stylesheet   = WT_THEME_DIR . "style_rtl.css";		//-- CSS level 2 stylesheet to use
+$toplinks         = WT_THEME_DIR . "toplinks.php";		//-- File to display the icons and links to different sections    
+$footerfile       = WT_THEME_DIR . "footer.php";		//-- Footer information for the site     
+$WT_IMAGE_DIR     = WT_THEME_DIR . "images";			//-- directory to look for images
 $FAVICON          = WT_THEME_DIR . "favicon.ico";
 $WT_USE_HELPIMG   = true;                                // set to true to use image for help questionmark, set to false to use $wt_lang["qm"]
 $WT_MENU_LOCATION = "top";
@@ -131,7 +131,13 @@ $WT_IMAGES["source"]["large"] = "source.gif";
 $WT_IMAGES["sex"]["large"] = "male.gif";
 $WT_IMAGES["sexf"]["large"] = "female.gif";
 $WT_IMAGES["sexn"]["large"] = "fe_male.gif";
-$WT_IMAGES["edit_source"]["large"] = "small/edit_sour.gif";
+$WT_IMAGES['slide_open']['other'] = "open.png";
+$WT_IMAGES['slide_close']['other'] = "close.png";
+
+//- WT main icons for optional modules
+$WT_IMAGES["menu_gallery"]["large"] = "menu_gallery.gif";
+$WT_IMAGES["menu_punbb"]["large"] = "menu_punbb.gif";
+$WT_IMAGES["menu_research"]["large"] = "menu_research.gif";
 
 //- WT small icons
 $WT_IMAGES["admin"]["small"] = "small/admin.gif";
@@ -177,7 +183,6 @@ $WT_IMAGES["sfamily"]["small"] = "small/sfamily.gif";
 $WT_IMAGES["source"]["small"] = "small/source.gif";
 $WT_IMAGES["statistic"]["small"] = "small/statistic.gif";
 $WT_IMAGES["timeline"]["small"] = "small/timeline.gif";
-$WT_IMAGES["favorites"]["small"] = "small/gedcom.gif";
 
 //- WT buttons for data entry pages
 $WT_IMAGES["addrepository"]["button"] = "buttons/addrepository.gif";
@@ -245,8 +250,6 @@ $WT_IMAGES["pin-in"]["other"] = "pin-in.png";
 $WT_IMAGES["default_image_M"]["other"] = "silhouette_male.gif";
 $WT_IMAGES["default_image_F"]["other"] = "silhouette_female.gif";
 $WT_IMAGES["default_image_U"]["other"] = "silhouette_unknown.gif";
-$WT_IMAGES['slide_open']['other'] = "ldarrow.gif";
-$WT_IMAGES['slide_close']['other'] = "rdarrow.gif";
 
 // - lifespan chart arrows
 $WT_IMAGES["lsltarrow"]["other"] = "lsltarrow.gif";

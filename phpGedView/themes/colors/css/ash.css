@@ -76,11 +76,6 @@ color:#333333;
 text-decoration: none;
 }
 
-a:hover { 
-color: #f50;
-text-decoration: none;
-}
-
 a.link:link, a.link:visited, a.link:active, a.link:hover, .menuitem a, 
 .nameZoom {
 color:#333333;
@@ -244,14 +239,6 @@ table.header {
 width:100%;
 padding:0 10px;
 margin:8px 0px 0px 0px;
-}
-
-.name1 a:hover {
-font: bold 11px tahoma, arial, helvetica, sans-serif;
-}
-
-.name2 a:hover {
-font: bold 12px tahoma, arial, helvetica, sans-serif;
 }
 
 .nameZoom a:hover {
@@ -999,28 +986,17 @@ color:blue;
 font-weight:700;
 }
 
-.helpcontent {
-margin-left: 10px;
-margin-right:10px;
-}
-
-.helpfooter {
-margin: 10px;
-}
-
 .helpheader {
-margin: 10px;
-font-size: 18px;
+font-size: 16px;
 font-weight: bold;
 color:#000;
-text-decoration:none;
 }
 
 .helpstart {
-margin: 10px;
 font-size: 14px;
 font-weight: bold;
-text-decoration: none;
+color:blue;
+text-decoration:none;
 }
 
 .helptext {
@@ -1667,8 +1643,8 @@ dt {
 /* Override inline code in --------------------*/
 #sidebar {  
 background: #fff !important;
-	margin-top: 5px;
-	margin-right: 18px;
+	margin-top: 8px;
+	margin-right: 19px;
 }
 
 /* Navigator and Flyout menu Styles -----------*/
