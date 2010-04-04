@@ -36,18 +36,16 @@ require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/all_tab/all_tab.php");
 
 class all_tab_WT_Module extends WT_Module {
-	protected $name = 'all_tab';
-	protected $description = 'Adds a tab to the individual page which displays the contents of all other active tabs.';
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
 	protected $_tab = null;
 	
-	public function getName() {
-		return 'all_tab';
-	}
-
 	public function getTitle() {
 		return i18n::translate('All');
+	}
+
+	public function getDescription() {
+		return i18n::translate('Adds a tab to the individual page which displays the contents of all other active tabs.');
 	}
 
 	/**

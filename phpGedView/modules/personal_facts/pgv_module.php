@@ -35,18 +35,16 @@ require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/personal_facts/personal_facts.php");
 
 class personal_facts_WT_Module extends WT_Module {
-	protected $name = 'personal_facts';
-	protected $description = 'Adds a tab to the individual page which displays the facts of an individual and their close relatives.';
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
 	protected $_tab = null;
 
-	public function getName() {
-		return 'personal_facts';
-	}
-
 	public function getTitle() {
 		return i18n::translate('Personal Facts');
+	}
+
+	public function getDescription() {
+		return i18n::translate('Adds a tab to the individual page which displays the facts of an individual and their close relatives.');
 	}
 
 	/**

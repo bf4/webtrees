@@ -35,18 +35,16 @@ require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/notes/notes.php");
 
 class notes_WT_Module extends WT_Module {
-	protected $name = 'notes';
-	protected $description = 'Adds a tab to the individual page which displays the notes of an individual.';
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
 	protected $_tab = null;
 
-	public function getName() {
-		return 'notes';
-	}
-
 	public function getTitle() {
 		return i18n::translate('Notes');
+	}
+
+	public function getDescription() {
+		return i18n::translate('Adds a tab to the individual page which displays the notes of an individual.');
 	}
 
 	/**

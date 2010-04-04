@@ -35,18 +35,16 @@ require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/media/media.php");
 
 class media_WT_Module extends WT_Module {
-	protected $name = 'media';
-	protected $description = 'Adds a tab to the individual page which displays the media items linked to an individual.';
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
 	protected $_tab = null;
 	
-	public function getName() {
-		return 'media';
-	}
-
 	public function getTitle() {
 		return i18n::translate('Media');
+	}
+
+	public function getDescription() {
+		return i18n::translate('Adds a tab to the individual page which displays the media items linked to an individual.');
 	}
 
 	/**

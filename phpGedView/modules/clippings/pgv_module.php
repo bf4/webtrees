@@ -35,18 +35,16 @@ require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/clippings/clippings.php");
 
 class clippings_WT_Module extends WT_Module {
-	protected $name = 'clippings';
-	protected $description = 'Clippings Cart PGV Module';
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
 	protected $_sidebar = null;
 	
-	public function getName() {
-		return 'clippings';
+	public function getTitle() {
+		return i18n::translate('Clippings Cart');
 	}
 
-	public function getTitle() {
-		return i18n::translate('Clippings');
+	public function getDescription() {
+		return i18n::translate('Provides a clippings cart, to copy records for export/download.');
 	}
 
 	/**

@@ -214,7 +214,7 @@ foreach($modules as $mod) {
 	?><tr>
 	<td class="list_value"><?php if ($mod->getId()>0) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
 	<td class="list_value"><?php if ($mod->getConfigLink()) echo '<a href="'.$mod->getConfigLink().'"><img class="adminicon" src="'.$WT_IMAGE_DIR.'/'.$WT_IMAGES["admin"]["small"].'" border="0" alt="'.$mod->getName().'" /></a>'; ?></td>
-	<td class="list_value"><?php echo $mod->getName()?></td>
+	<td class="list_value"><?php echo $mod->getTitle()?></td>
 	<td class="list_value_wrap"><?php echo $mod->getDescription()?></td>
 	<td class="list_value"><?php echo $mod->getVersion() . " / " . $mod->getPgvVersion() ?></td>
 	<td class="list_value"><?php if ($mod->hasTab()) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
@@ -261,7 +261,7 @@ foreach($modules as $mod) {
 	if(!$mod->hasMenu()) continue;
 if ($mod->getMenuorder()==0) $mod->setMenuorder($order);
 	?><tr class="sortme">
-	<td class="list_value"><?php echo $mod->getName()?></td>
+	<td class="list_value"><?php echo $mod->getTitle()?></td>
 	<td class="list_value_wrap"><?php echo $mod->getDescription()?></td>
 	<td class="list_value"><input type="text" size="5" value="<?php echo $order; ?>" name="menuorder-<?php echo $mod->getName() ?>" />
 		<br />
@@ -312,7 +312,7 @@ foreach($modules as $mod) {
 	if(!$mod->hasTab()) continue;
 	if ($mod->getTaborder()==0) $mod->setTaborder($order);
 	?><tr class="sortme">
-	<td class="list_value"><?php echo $mod->getName()?></td>
+	<td class="list_value"><?php echo $mod->getTitle()?></td>
 	<td class="list_value_wrap"><?php echo $mod->getDescription()?></td>
 	<td class="list_value"><input type="text" size="5" value="<?php echo $order; ?>" name="taborder-<?php echo $mod->getName() ?>" />
 		<br />
@@ -363,7 +363,7 @@ foreach($modules as $mod) {
 	if(!$mod->hasSidebar()) continue;
 	if ($mod->getSidebarorder()==0) $mod->setSidebarorder($order);
 	?><tr class="sortme">
-	<td class="list_value"><?php echo $mod->getName()?></td>
+	<td class="list_value"><?php echo $mod->getTitle()?></td>
 	<td class="list_value_wrap"><?php echo $mod->getDescription()?></td>
 	<td class="list_value"><input type="text" size="5" value="<?php echo $order; ?>" name="sideorder-<?php echo $mod->getName() ?>" />
 		<br />

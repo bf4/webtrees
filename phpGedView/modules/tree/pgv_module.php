@@ -35,18 +35,16 @@ require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/tree/tree.php");
 
 class tree_WT_Module extends WT_Module {
-	protected $name = 'tree';
-	protected $description = 'Adds a tab to the individual page which displays the interactive tree for the given individual.';
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
 	protected $_tab = null;
 
-	public function getName() {
-		return 'tree';
-	}
-
 	public function getTitle() {
 		return i18n::translate('Tree');
+	}
+
+	public function getDescription() {
+		return i18n::translate('Adds a tab to the individual page which displays the interactive tree for the given individual.');
 	}
 
 	/**

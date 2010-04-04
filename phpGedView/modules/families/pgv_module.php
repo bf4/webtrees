@@ -36,18 +36,16 @@ require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/families/families.php");
 
 class families_WT_Module extends WT_Module {
-	protected $name = 'families';
-	protected $description = 'Adds a sidebar which allows for easy navigation of famlies in a list format.';
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
 	protected $_sidebar = null;
 
-	public function getName() {
-		return 'families';
-	}
-
 	public function getTitle() {
 		return i18n::translate('Families');
+	}
+
+	public function getDescription() {
+		return i18n::translate('Adds a sidebar which allows for easy navigation of famlies in a list format.');
 	}
 
 	public function hasSidebar() { return true; }

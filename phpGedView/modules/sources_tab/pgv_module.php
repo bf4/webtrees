@@ -35,18 +35,16 @@ require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/sources_tab/sources_tab.php");
 
 class sources_tab_WT_Module extends WT_Module {
-	protected $name = 'sources_tab';
-	protected $description = 'Adds a tab to the individual page which displays the sources linked to an individual.';
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
 	protected $_tab = null;
 	
-	public function getName() {
-		return 'sources_tab';
-	}
-
 	public function getTitle() {
 		return i18n::translate('Sources');
+	}
+
+	public function getDescription() {
+		return i18n::translate('Adds a tab to the individual page which displays the sources linked to an individual.');
 	}
 
 	/**

@@ -36,19 +36,15 @@ require_once("includes/classes/class_module.php");
 require_once("modules/notes/notes.php");
 
 class page_menu_WT_Module extends WT_Module {
-	protected $name = 'page_menu';
-	protected $description = 'Adds a menu to the menu bar which provides page specific options.';
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
 
-	public function getName() {
-		// TODO what is this module?
-		return 'page_menu';
+	public function getTitle() {
+		return i18n::translate('Page Menu');
 	}
 
-	public function getTitle() {
-		// TODO what is this module?
-		return 'Unknown';
+	public function getDescription() {
+		return i18n::translate('Adds a menu to the menu bar which provides page specific options.');
 	}
 
 	/**

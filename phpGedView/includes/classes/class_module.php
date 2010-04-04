@@ -53,8 +53,6 @@ abstract class WT_Module {
 	private $sidebarorder = 99;
 
 	// -- overide in base classes
-	protected $name = 'default name';
-	protected $description = 'this is the default description';
 	protected $version = '0';
 	protected $pgvVersion = '4.2.2';
 	protected $menu = null;
@@ -65,6 +63,15 @@ abstract class WT_Module {
 	public static $default_tabs = array('family_nav', 'personal_facts', 'sources_tab', 'notes', 'media', 'lightbox', 'tree', 'googlemap', 'relatives', 'all_tab');
 	public static $default_sidebars = array('descendancy', 'family_nav', 'clippings', 'individuals', 'families');
 	public static $default_menus = array('page_menu');
+
+	// Each module must provide the following functions:
+	abstract public function getTitle();       // To label tabs, etc.
+	abstract public function getDescription(); // A sentence describing what this module does
+
+	// This is an internal name, used to generate identifiers
+	public function getName() {
+		return str_replace('_WT_Module', '', get_class($this));
+	}
 
 	/**
 	 * Get an instance of the desired module class based on a db row
@@ -90,8 +97,6 @@ abstract class WT_Module {
 
 	//-- getters and setters
 	public function getId() { return $this->id; }
-	public function getName() { return $this->name; }
-	public function getDescription() { return $this->description; }
 	public function getTaborder() { return $this->taborder; }
 	public function getMenuorder() { return $this->menuorder; }
 	public function getSidebarorder() { return $this->sidebarorder; }
