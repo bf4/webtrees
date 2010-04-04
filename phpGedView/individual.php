@@ -131,9 +131,9 @@ jQuery(document).ready(function(){
 
 	<?php
 	foreach($controller->modules as $mod) {
-		if ($mod!=$controller->static_tab && $mod->hasTab() && $mod->getTab()) {
-			echo $mod->getTab()->getJSCallbackAllTabs()."\n";
-			$modjs = $mod->getTab()->getJSCallback();
+		if ($mod!=$controller->static_tab && $mod instanceof WT_Module_Tab) {
+			echo $mod->getJSCallbackAllTabs()."\n";
+			$modjs = $mod->getJSCallback();
 			if (!empty($modjs)) {
 				echo 'if (ui.tab.name == "'.$mod->getName().'") { '.$modjs.' }';
 			}
@@ -151,8 +151,8 @@ jQuery(document).ready(function(){
 				if (!pinned) {
 					if (jQuery(".static_tab_content").css("display")=="none") {
 							jQuery(".static_tab_content").show();
-							<?php echo $controller->static_tab->getTab()->getJSCallbackAllTabs()."\n";
-							$modjs = $controller->static_tab->getTab()->getJSCallback();
+							<?php echo $controller->static_tab->getJSCallbackAllTabs()."\n";
+							$modjs = $controller->static_tab->getJSCallback();
 							echo $modjs;
 							?>
 					}
@@ -174,8 +174,8 @@ jQuery(document).ready(function(){
 				// --- NOTE: --- REM next line to avoid the "page shift" when Navigator is pinned. (Purely a preference choice)
 				jQuery('#tabs > div').css('width', newwidth+'px');
 				jQuery('.static_tab_content').show();
-				<?php echo $controller->static_tab->getTab()->getJSCallbackAllTabs()."\n";
-				$modjs = $controller->static_tab->getTab()->getJSCallback();
+				<?php echo $controller->static_tab->getJSCallbackAllTabs()."\n";
+				$modjs = $controller->static_tab->getJSCallback();
 				echo $modjs;
 				?>
 				pinned = true;
@@ -195,12 +195,12 @@ jQuery(document).ready(function(){
 	
 	$tabcount = 0;
 	foreach($controller->modules as $mod) {
-		if ($mod!=$controller->static_tab && $mod->hasTab()) {
-			if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {
-				$modjs = $mod->getTab()->getJSCallback();
+		if ($mod!=$controller->static_tab && $mod instanceof WT_Module_Tab) {
+			if ($tabcount==$controller->default_tab || !$mod->canLoadAjax()) {
+				$modjs = $mod->getJSCallback();
 				echo $modjs."\n";
 			}
-			if ($mod->getTab()->hasTabContent()) $tabcount++; 
+			if ($mod->hasTabContent()) $tabcount++; 
 		}
 	}
 	?>
@@ -319,8 +319,8 @@ jQuery(document).ready(function(){
 ?>
 <?php
 foreach($controller->modules as $mod) {
-	if ($mod->hasTab() && $mod->getTab()) {
-		echo $mod->getTab()->getPreLoadContent();
+	if ($mod instanceof WT_Module_Tab) {
+		echo $mod->getPreLoadContent();
 	}
 } 
 ?>
@@ -341,15 +341,15 @@ if (!$controller->indi->canDisplayDetails()) {
 		<?php
 		$tabcount = 0; 
 		foreach($controller->modules as $mod) {
-			if ($mod!=$controller->static_tab && $mod->hasTab()) {
-				if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
+			if ($mod!=$controller->static_tab && $mod instanceof WT_Module_Tab) {
+				if ($tabcount==$controller->default_tab || !$mod->canLoadAjax()) {?>
 					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $mod->getTitle(); ?></span></a></li>
-				<?php } else if ($mod->hasTab() && $mod->getTab() && ($mod->getTab()->hasTabContent() || WT_USER_CAN_EDIT)) { ?>
+				<?php } else if ($mod instanceof WT_Module_Tab && ($mod->hasTabContent() || WT_USER_CAN_EDIT)) { ?>
 					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" href="individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
 						<span><?php echo $mod->getTitle()?></span>
 						</a></li>
 				<?php } 
-				if ($mod->getTab()->hasTabContent()) $tabcount++; 
+				if ($mod->hasTabContent()) $tabcount++; 
 			}
 		}
 		if ($controller->static_tab) {
@@ -375,19 +375,19 @@ if (!$controller->indi->canDisplayDetails()) {
 	<?php 
 	$tabcount = 0; 
 	foreach($controller->modules as $mod) {
-		if ($mod!=$controller->static_tab && $mod->hasTab()) {
-		if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
+		if ($mod!=$controller->static_tab && $mod instanceof WT_Module_Tab) {
+		if ($tabcount==$controller->default_tab || !$mod->canLoadAjax()) {?>
 		<div id="<?php echo $mod->getName()?>" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
-			<?php echo $mod->getTab()->getTabContent(); ?>
+			<?php echo $mod->getTabContent(); ?>
 		</div>	
 		<?php }
-		if ($mod->getTab()->hasTabContent() || WT_USER_CAN_EDIT) $tabcount++;
+		if ($mod->hasTabContent() || WT_USER_CAN_EDIT) $tabcount++;
 		}
 	} ?>
 	</div> <!-- tabs -->
 	<?php if ($controller->static_tab) { ?>
 	<div class="static_tab_content ui-corner-bottom ui-corner-all" id="<?php echo $controller->static_tab->getName();?>">
-	<?php echo $controller->static_tab->getTab()->getTabContent(); ?>
+	<?php echo $controller->static_tab->getTabContent(); ?>
 	</div> 
 	<!-- static tab -->
 	<?php }

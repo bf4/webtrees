@@ -34,8 +34,6 @@ if (!defined('WT_WEBTREES')) {
 
 define('WT_CLASS_MODULE_PHP', '');
 
-require_once WT_ROOT.'includes/classes/class_tab.php';
-
 // Modules can optionally implement the following interfaces.
 interface WT_Module_Config {
 	public function getConfigLink(); // URL of page to edit config
@@ -54,12 +52,16 @@ interface WT_Module_Sidebar {
 	public function hasSidebarContent();
 }
 
-/*
 interface WT_Module_Tab {
 	public function defaultTabAccessLevel(); // WT_PRIV_HIDE, WT_PRIV_PUBLIC, WT_PRIV_USER, WT_PRIV_ADMIN
 	public function defaultTabOrder(); // 0-127
+	public function getTabContent();
+	public function hasTabContent();
+	public function canLoadAjax();
+	public function getPreLoadContent();
+	public function getJSCallbackAllTabs();
+	public function getJSCallback();
 }
-*/
 
 abstract class WT_Module {
 	private $id = 0;
@@ -191,20 +193,6 @@ abstract class WT_Module {
 				break;
 		}
 	}
-
-	/**
-	 * does this module implement a tab
-	 * should be overidden in extending classes
-	 * @return boolean
-	 */
-	public function hasTab() { return false; }
-	/**
-	 * does this module implement a sidebar
-	 * should be overidden in extending classes
-	 * @return boolean
-	 */
-
-	public function &getTab() { return null; }
 
 	static function compare_tab_order(&$a, &$b) {
 		return $a->getTaborder() - $b->getTaborder();
@@ -416,7 +404,7 @@ abstract class WT_Module {
 		foreach(self::$default_tabs as $modname) {
 			if (isset($modules[$modname])) {
 				$mod = $modules[$modname];
-				if ($mod->hasTab()) {
+				if ($mod instanceof WT_Module_Tab) {
 					$mod->setTaborder($taborder);
 					$mod->setAccessLevel(WT_PRIV_PUBLIC, $ged_id);
 					$mod->setTabEnabled(WT_PRIV_PUBLIC, $ged_id);

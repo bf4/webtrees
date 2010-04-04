@@ -217,7 +217,7 @@ foreach($modules as $mod) {
 	<td class="list_value"><?php echo $mod->getTitle()?></td>
 	<td class="list_value_wrap"><?php echo $mod->getDescription()?></td>
 	<td class="list_value"><?php echo $mod->getVersion() . " / " . $mod->getPgvVersion() ?></td>
-	<td class="list_value"><?php if ($mod->hasTab()) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
+	<td class="list_value"><?php if ($mod instanceof WT_Module_Tab) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
 	<td class="list_value"><?php if ($mod instanceof WT_Module_Menu) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
 	<td class="list_value"><?php if ($mod instanceof WT_Module_Sidebar) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
 	<td class="list_value_wrap">
@@ -309,7 +309,7 @@ $order++;
 uasort($modules, "WT_Module::compare_tab_order");
 $order = 1;
 foreach($modules as $mod) {
-	if(!$mod->hasTab()) continue;
+	if(!$mod instanceof WT_Module_Tab) continue;
 	if ($mod->getTaborder()==0) $mod->setTaborder($order);
 	?><tr class="sortme">
 	<td class="list_value"><?php echo $mod->getTitle()?></td>

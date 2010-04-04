@@ -32,13 +32,11 @@ if (!defined('WT_WEBTREES')) {
 	exit;
 }
 
-require_once(WT_ROOT."includes/classes/class_module.php");
-require_once(WT_ROOT."modules/all_tab/all_tab.php");
+require_once WT_ROOT.'includes/classes/class_module.php';
 
-class all_tab_WT_Module extends WT_Module {
+class all_tab_WT_Module extends WT_Module implements WT_Module_Tab {
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
-	protected $_tab = null;
 	
 	// Extend class WT_Module
 	public function getTitle() {
@@ -50,24 +48,70 @@ class all_tab_WT_Module extends WT_Module {
 		return i18n::translate('Adds a tab to the individual page which displays the contents of all other active tabs.');
 	}
 
-	/**
-	 * get the tab for this
-	 * @return Tab
-	 */
-	public function &getTab() {
-		if ($this->_tab==null) {
-			$this->_tab = new all_tab_Tab();
-			$this->_tab->setName($this->getName());
-		}
-		return $this->_tab;
+	// Implement WT_Module_Tab
+	public function defaultTabAccessLevel() {
+		return WT_PRIV_PUBLIC;
 	}
 
-	/**
-	 * does this module implement a tab
-	 * should be overidden in extending classes
-	 * @return boolean
-	 */
-	public function hasTab() { return true; }
+	// Implement WT_Module_Tab
+	public function defaultTabOrder() {
+		return 99;
+	}
 
+	// Implement WT_Module_Tab
+	public function hasTabContent() {
+		return true;
+	}
+	
+	// Implement WT_Module_Tab
+	public function getTabContent() {
+		
+		$out = "<div id=\"all_content\">";
+		$out .= "<!-- all tab doesn't have it's own content -->";
+		$out .= "</div>";
+		return $out;
+	}
+	
+	// Implement WT_Module_Tab
+	public function canLoadAjax() {
+		return false;
+	}
+	
+	// Implement WT_Module_Tab
+	public function getPreLoadContent() {
+		return '';
+	}
+	
+	// Implement WT_Module_Tab
+	public function getJSCallbackAllTabs() {
+		return '';
+	}
+	
+	// Implement WT_Module_Tab
+	public function getJSCallback() {
+		$out = 'if (selectedTab=="all_tab") {
+		';
+		$i = 0;
+		foreach($this->controller->modules as $mod) {
+			if ($mod instanceof WT_Module_Tab) {
+				if ($i>0 && $mod->getName()!='all_tab' && $mod->canLoadAjax()) {
+					$out .= 'if (!tabCache["'.$mod->getName().'"]) {
+						jQuery("#'.$mod->getName().'").load("individual.php?action=ajax&module='.$mod->getName().'&pid='.$this->controller->pid.'");
+						tabCache["'.$mod->getName().'"] = true;
+					}';
+				}
+				$i++;
+			}
+		}
+		
+		$out .= '
+			jQuery("#tabs > div").each(function() { 
+				if (this.name!="all_tab") {
+					jQuery(this).removeClass("ui-tabs-hide");
+				}
+			});
+			}
+		';
+		return $out;
+	}
 }
-?>

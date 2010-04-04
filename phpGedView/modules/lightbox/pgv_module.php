@@ -33,12 +33,11 @@ if (!defined('WT_WEBTREES')) {
 }
 
 require_once WT_ROOT.'includes/classes/class_module.php';
-require_once WT_ROOT.'modules/lightbox/lightbox.php';
+require_once WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
 
-class lightbox_WT_Module extends WT_Module implements WT_Module_Config {
+class lightbox_WT_Module extends WT_Module implements WT_Module_Config, WT_Module_Tab {
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
-	protected $_tab = null;
 
 	// Extend WT_Module
 	public function getTitle() {
@@ -55,24 +54,93 @@ class lightbox_WT_Module extends WT_Module implements WT_Module_Config {
 		return 'module.php?mod=lightbox&pgvaction=lb_editconfig';
 	}
 
-	/**
-	 * get the tab for this
-	 * @return Tab
-	 */
-	public function &getTab() {
-		if ($this->_tab==null) {
-			$this->_tab = new lightbox_Tab();
-			$this->_tab->setName($this->getName());
-		}
-		return $this->_tab;
+	// Implement WT_Module_Tab
+	public function defaultTabAccessLevel() {
+		return WT_PRIV_PUBLIC;
 	}
 
-	/**
-	 * does this module implement a tab
-	 * should be overidden in extending classes
-	 * @return boolean
-	 */
-	public function hasTab() { return true; }
+	// Implement WT_Module_Tab
+	public function defaultTabOrder() {
+		return 99;
+	}
+
+	// Implement WT_Module_Tab
+	public function hasTabContent() {
+		global $MULTI_MEDIA;
+		return $MULTI_MEDIA && $this->get_media_count()>0;
+	}
+	
+	// Implement WT_Module_Tab
+	public function getTabContent() {
+		global $MULTI_MEDIA, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
+		global $pgv_changes;
+		global $GEDCOM, $MEDIATYPE, $pgv_changes;
+		global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $WT_IMAGE_DIR, $WT_IMAGES, $TEXT_DIRECTION, $is_media;
+		global $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec ;
+		global $edit ;
+		global $CONTACT_EMAIL, $pid, $tabno;
+		global $Fam_Navigator, $NAV_ALBUM;
+
+		ob_start();
+		$mediacnt = $this->get_media_count();
+		require_once 'modules/lightbox/functions/lb_head.php';
+		echo "<div id=\"lightbox2_content\">";
+
+		$media_found = false;
+		if (!$this->controller->indi->canDisplayDetails()) {
+			print "<table class=\"facts_table\" cellpadding=\"0\">\n";
+			print "<tr><td class=\"facts_value\">";
+			print_privacy_error($CONTACT_EMAIL);
+			print "</td></tr>";
+			print "</table>";
+		}else{
+			if (file_exists("modules/lightbox/album.php")) {
+				include_once('modules/lightbox/album.php');
+			}
+		}
+		echo "</div>";
+
+		$out .= ob_get_contents();
+		ob_end_clean();
+		$out .= "</div>";
+		return $out;
+	}
+
+	// Implement WT_Module_Tab
+	public function canLoadAjax() {
+		return true;
+	}
+
+	// Implement WT_Module_Tab
+	public function getPreLoadContent() {
+		$out = '';
+		ob_start();
+		include_once('modules/lightbox/functions/lb_call_js.php');
+		$out .= ob_get_contents();
+		ob_end_clean();
+		return $out; 
+	}
+	
+	// Implement WT_Module_Tab
+	public function getJSCallbackAllTabs() {
+		return 'CB_Init();';
+	}	
+	
+	// Implement WT_Module_Tab
+	public function getJSCallback() {
+		return '';
+	}
+
+	protected $mediaCount = null;
+	
+	private function get_media_count() {
+		if ($this->mediaCount===null) {
+			$ct = preg_match("/\d OBJE/", $this->controller->indi->getGedcomRecord());
+			foreach ($this->controller->indi->getSpouseFamilies() as $k=>$sfam)
+				$ct += preg_match("/\d OBJE/", $sfam->getGedcomRecord());
+			$this->mediaCount = $ct;
+		}
+		return $this->mediaCount;
+	}
 
 }
-?>

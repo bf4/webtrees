@@ -33,7 +33,6 @@ if (!defined('WT_WEBTREES')) {
 }
 
 require_once("includes/classes/class_module.php");
-require_once("modules/notes/notes.php");
 
 class page_menu_WT_Module extends WT_Module implements WT_Module_Menu {
 	protected $version = '4.2.2';

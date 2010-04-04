@@ -35,10 +35,9 @@ if (!defined('WT_WEBTREES')) {
 require_once WT_ROOT.'includes/classes/class_module.php';
 require_once WT_ROOT.'modules/googlemap/googlemap.php';
 
-class googlemap_WT_Module extends WT_Module implements WT_Module_Config {
+class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Module_Tab {
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
-	protected $_tab = null;
 
 	// Extend WT_Module
 	public function getTitle() {
@@ -55,23 +54,178 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config {
 		return 'module.php?mod=googlemap&pgvaction=admin-config';
 	}
 
-	/**
-	 * does this module implement a tab
-	 * should be overidden in extending classes
-	 * @return boolean
-	 */
-	public function hasTab() { return true; }
+	// Implement WT_Module_Tab
+	public function defaultTabAccessLevel() {
+		return WT_PRIV_PUBLIC;
+	}
+
+	// Implement WT_Module_Tab
+	public function defaultTabOrder() {
+		return 99;
+	}
 	
-	/**
-	 * get the tab for this
-	 * @return Tab
-	 */
-	public function &getTab() {  
-		if ($this->_tab==null) {
-			$this->_tab = new googlemap_Tab();
-			$this->_tab->setName($this->getName());
+	// Implement WT_Module_Tab
+	public function getPreLoadContent() {
+		$out = '';
+		ob_start();
+		setup_map();
+		$out.=ob_get_contents();
+		ob_end_clean();
+		return $out;
+	}
+
+	// Implement WT_Module_Tab
+	public function canLoadAjax() {
+		return true;
+	}
+
+	// Implement WT_Module_Tab
+	public function getTabContent() {
+		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $CONTACT_EMAIL, $WT_IMAGE_DIR, $WT_IMAGES;
+		global $TBLPREFIX;
+		global $GOOGLEMAP_ENABLED, $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
+		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $SHOW_LIVING_NAMES;
+		global $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD, $GOOGLEMAP_PH_CONTROLS;
+		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
+
+		ob_start();
+		?>
+<div id="gg_map_content">
+<table border="0" width="100%">
+	<tr>
+		<td><?php 
+		if (!$GOOGLEMAP_ENABLED) {
+			print "<table class=\"facts_table\">\n";
+			print "<tr><td id=\"no_tab8\" colspan=\"2\" class=\"facts_value\">".i18n::translate('GoogleMap module disabled')."</td></tr>\n";
+			if (WT_USER_IS_ADMIN) {
+				print "<tr><td align=\"center\" colspan=\"2\">\n";
+				print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".i18n::translate('Manage GoogleMap configuration')."</a>";
+				print "</td>";
+				print "</tr>\n";
+			}
+			print "\n\t</table>\n<br />";
+			?> <script language="JavaScript" type="text/javascript">
+			<!--
+				function ResizeMap () {}
+				function SetMarkersAndBounds () {}
+			//-->
+			</script> <?php
+		}else{
+			$tNew = str_replace(array("&HIDE_GOOGLEMAP=true", "&HIDE_GOOGLEMAP=false", "action=ajax&module=googlemap&"), "", $_SERVER["REQUEST_URI"]);
+			$tab = WT_DB::prepare("SELECT mod_taborder AS tab FROM {$TBLPREFIX}module WHERE mod_name=?")
+				->execute(array('googlemap'))
+				->fetchOneRow();
+			$tab = $tab->tab-2;
+			$tNew .= "&tab=".$tab;
+			$tNew = str_replace("&", "&amp;", $tNew);
+			if($SESSION_HIDE_GOOGLEMAP=="true") {
+				print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"".$tNew."&amp;HIDE_GOOGLEMAP=false\">";
+				print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Activate')."\" title=\"".i18n::translate('Activate')."\" />";
+				print " ".i18n::translate('Activate')."</a></span>\n";
+			} else {
+				print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"" .$tNew."&amp;HIDE_GOOGLEMAP=true\">";
+				print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Deactivate')."\" title=\"".i18n::translate('Deactivate')."\" />";
+				print " ".i18n::translate('Deactivate')."</a></span>\n";
+			}
+
+			if (!$this->controller->indi->canDisplayName()) {
+				print "\n\t<table class=\"facts_table\">";
+				print "<tr><td class=\"facts_value\">";
+				print_privacy_error($CONTACT_EMAIL);
+				print "</td></tr>";
+				print "\n\t</table>\n<br />";
+				print "<script type=\"text/javascript\">\n";
+				print "function ResizeMap ()\n{\n}\n</script>\n";
+			} else {
+				if($SESSION_HIDE_GOOGLEMAP=="false") {
+					print "<table width=\"100%\" border=\"0\" class=\"facts_table\">\n";
+					print "<tr><td valign=\"top\">\n";
+					print "<div id=\"googlemap_left\">\n";
+					print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br/>";
+					print "<div id=\"map_pane\" style=\"border: 1px solid gray; color:black; width: 100%; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
+					if (WT_USER_IS_ADMIN) {
+						print "<table width=\"100%\"><tr>\n";
+						print "<td width=\"33%\" align=\"left\">\n";
+						print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".i18n::translate('Manage GoogleMap configuration')."</a>";
+						print "</td>\n";
+						print "<td width=\"33%\" align=\"center\">\n";
+						print "<a href=\"module.php?mod=googlemap&amp;pgvaction=places\">".i18n::translate('Edit geographic place locations')."</a>";
+						print "</td>\n";
+						print "<td width=\"33%\" align=\"right\">\n";
+						print "<a href=\"module.php?mod=googlemap&amp;pgvaction=placecheck\">".i18n::translate('Place Check')."</a>";
+						print "</td>\n";
+						print "</tr></table>\n";
+					}
+					print "</div>\n";
+					print "</td>\n";
+					print "<td valign=\"top\" width=\"30%\">\n";
+					print "<div id=\"googlemap_content\">\n";
+					//setup_map();
+
+					$famids = array();
+					$families = $this->controller->indi->getSpouseFamilies();
+					foreach ($families as $famid=>$family) {
+						$famids[] = $family->getXref();
+					}
+					$this->controller->indi->add_family_facts(false);
+					create_indiv_buttons();
+					build_indiv_map($this->controller->getIndiFacts(), $famids);
+					print "</div>\n";
+					print "</td>";
+
+					print "</tr></table>\n";
+
+				}
+			}
 		}
-		return $this->_tab; 
+		// start
+		print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" id=\"marker6\" width=\"1\" height=\"1\" alt=\"\" />";
+		// end
+		?>
+		</td>
+	</tr>
+</table>
+</div>
+</div>
+		<?php
+		return ob_get_clean();
+	}
+
+	// Implement WT_Module_Tab
+	public function hasTabContent() {
+		global $GOOGLEMAP_ENABLED, $SEARCH_SPIDER;
+
+		return !$SEARCH_SPIDER && ($GOOGLEMAP_ENABLED || WT_USER_IS_ADMIN);
+	}
+
+	// Implement WT_Module_Tab
+	public function getJSCallback() {
+		global $GOOGLEMAP_PH_CONTROLS;
+		$out = "loadMap();\n";
+		if ($GOOGLEMAP_PH_CONTROLS) {
+			$out .= '// hide controls
+					GEvent.addListener(map,"mouseout",function()
+					{
+						map.hideControls();
+					});
+					// show controls
+					GEvent.addListener(map,"mouseover",function()
+					{
+						map.showControls();
+					});
+					GEvent.trigger(map,"mouseout");
+					';
+
+		}
+		$out.='map.setMapType(GOOGLEMAP_MAP_TYPE);
+				SetMarkersAndBounds();
+				ResizeMap();
+				';
+		return $out;
+	}
+	
+	// Implement WT_Module_Tab
+	public function getJSCallbackAllTabs() {
+		return '';
 	}
 }
-?>

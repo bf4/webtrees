@@ -258,16 +258,13 @@ class IndividualControllerRoot extends BaseController {
 		$count = 0;
 		if (empty($this->default_tab)) $this->default_tab=0;
 		foreach($this->modules as $mod) {
-			if ($mod->hasTab()) {
-				$tab = $mod->getTab();
-				if ($tab!=null) {
-					$tab->setController($this);
-					if ($tab->hasTabContent() || WT_USER_CAN_EDIT) {		
-						//-- convert default tab as name to number
-						if ($mod->getName()===$this->default_tab) $this->default_tab = $count;
-						if ($this->static_tab==null) $this->static_tab = $mod;
-						else $count++;
-					}
+			if ($mod instanceof WT_Module_Tab) {
+				$mod->setController($this);
+				if ($mod->hasTabContent() || WT_USER_CAN_EDIT) {		
+					//-- convert default tab as name to number
+					if ($mod->getName()===$this->default_tab) $this->default_tab = $count;
+					if ($this->static_tab==null) $this->static_tab = $mod;
+					else $count++;
 				}
 			}
 		}
@@ -284,7 +281,7 @@ class IndividualControllerRoot extends BaseController {
 				header("Content-Type: text/html; charset=UTF-8"); //AJAX calls do not have the meta tag headers and need this set
 				$mod = $this->modules[$tabname];
 				if ($mod) {
-					echo $mod->getTab()->getTabContent();
+					echo $mod->getTabContent();
 				}
 			}
 			

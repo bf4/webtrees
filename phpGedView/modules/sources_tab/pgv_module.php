@@ -31,13 +31,12 @@ if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-require_once(WT_ROOT."includes/classes/class_module.php");
-require_once(WT_ROOT."modules/sources_tab/sources_tab.php");
 
-class sources_tab_WT_Module extends WT_Module {
+require_once WT_ROOT.'includes/classes/class_module.php';
+
+class sources_tab_WT_Module extends WT_Module implements WT_Module_Tab {
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
-	protected $_tab = null;
 	
 	// Extend WT_Module
 	public function getTitle() {
@@ -49,24 +48,118 @@ class sources_tab_WT_Module extends WT_Module {
 		return i18n::translate('Adds a tab to the individual page which displays the sources linked to an individual.');
 	}
 
-	/**
-	 * get the tab for this
-	 * @return Tab
-	 */
-	public function &getTab() {
-		if ($this->_tab==null) {
-			$this->_tab = new sources_tab_Tab();
-			$this->_tab->setName($this->getName());
-		}
-		return $this->_tab;
+	// Implement WT_Module_Tab
+	public function defaultTabAccessLevel() {
+		return WT_PRIV_PUBLIC;
 	}
 
-	/**
-	 * does this module implement a tab
-	 * should be overidden in extending classes
-	 * @return boolean
-	 */
-	public function hasTab() { return true; }
+	// Implement WT_Module_Tab
+	public function defaultTabOrder() {
+		return 99;
+	}
+	
+	protected $sourceCount = null;
 
+	// Implement WT_Module_Tab
+	public function getTabContent() {
+		global $CONTACT_EMAIL, $FACT_COUNT;
+		global $SHOW_LEVEL2_NOTES;
+		global $NAV_SOURCES;
+		
+		/*if (isset($_COOKIE['row_sour2'])) $SHOW_LEVEL2_SOURCES = ($_COOKIE['row_sour2']);
+		else*/ $SHOW_LEVEL2_SOURCES = $SHOW_LEVEL2_NOTES;
+
+		ob_start();
+		?>
+		<table class="facts_table">
+		<?php
+		if (!$this->controller->indi->canDisplayDetails()) {
+			print "<tr><td class=\"facts_value\">";
+			print_privacy_error($CONTACT_EMAIL);
+			print "</td></tr>";
+		} else {
+		?>
+			<tr>
+				<td></td>
+				<td class="descriptionbox rela">
+					<input id="checkbox_sour2" type="checkbox" <?php if ($SHOW_LEVEL2_SOURCES) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_sour2');" />
+					<label for="checkbox_sour2"><?php echo i18n::translate('Show all sources'), help_link('show_fact_sources'); ?></label>
+					
+				</td>
+			</tr>
+			<?php
+			$otheritems = $this->controller->getOtherFacts();
+				foreach ($otheritems as $key => $event) {
+					if ($event->getTag()=="SOUR") print_main_sources($event->getGedcomRecord(), 1, $this->controller->pid, $event->getLineNumber());
+				$FACT_COUNT++;
+			}
+		}
+			// 2nd level sources [ 1712181 ]
+			$this->controller->indi->add_family_facts(false);
+			foreach ($this->controller->getIndiFacts() as $key => $factrec) {
+					print_main_sources($factrec->getGedcomRecord(), 2, $this->controller->pid, $factrec->getLineNumber(), true);
+			}
+			if ($this->get_source_count()==0) print "<tr><td id=\"no_tab3\" colspan=\"2\" class=\"facts_value\">".i18n::translate('There are no Source citations for this individual.')."</td></tr>\n";
+			//-- New Source Link
+			if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
+			?>
+				<tr>
+					<td class="facts_label"><?php echo i18n::translate('Add Source Citation'), help_link('add_source'); ?></td>
+					<td class="facts_value">
+					<a href="javascript:;" onclick="add_new_record('<?php echo $this->controller->pid; ?>','SOUR'); return false;"><?php echo i18n::translate('Add a new Source Citation'); ?></a>
+					<br />
+					</td>
+				</tr>
+			<?php
+			}
+		?>
+		</table>
+		<br />
+		<?php
+		if (!$SHOW_LEVEL2_SOURCES) {
+		?>
+			<script language="JavaScript" type="text/javascript">
+			<!--
+			toggleByClassName('TR', 'row_sour2');
+			//-->
+			</script>
+	<?php
+		}
+		return '<div id="'.$this->getName().'_content">'.ob_get_clean().'</div>';
+	}
+
+	function get_source_count() {
+		if ($this->sourceCount===null) {
+			$ct = preg_match_all("/\d SOUR @(.*)@/", $this->controller->indi->gedrec, $match, PREG_SET_ORDER);
+			foreach ($this->controller->indi->getSpouseFamilies() as $k => $sfam)
+				$ct += preg_match("/\d SOUR /", $sfam->getGedcomRecord());
+			$this->sourceCount = $ct;
+		}
+		return $this->sourceCount;
+	}
+
+	// Implement WT_Module_Tab
+	public function hasTabContent() {
+		return $this->get_source_count()>0;
+	}
+	// Implement WT_Module_Tab
+	public function canLoadAjax() {
+		return true;
+	}
+
+	// Implement WT_Module_Tab
+	public function getPreLoadContent() {
+		return '';
+	}
+	
+	// Implement WT_Module_Tab
+	public function getJSCallbackAllTabs() {
+		return '';
+	}
+	
+	// Implement WT_Module_Tab
+	public function getJSCallback() {
+		return '';
+	}
+	
 }
-?>
