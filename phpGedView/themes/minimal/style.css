@@ -636,12 +636,24 @@ table.center{
 	font-weight: bold;
 }
 
+.helpcontent {
+	margin-left: 10px;
+	margin-right:10px;
+}
+
+.helpfooter {
+	margin: 10px;
+}
+
 .helpheader {
-	font: bold 16px tahoma, arial, helvetica, sans-serif;
+	margin: 10px;
+	font-size: 18px;
+	font-weight: bold;
 	color: black;
 }
 
 .helpstart {
+	margin: 10px;
 	font: bold 14px tahoma, arial, helvetica, sans-serif;
 	color: #444444;
 	text-decoration: none;

@@ -999,17 +999,28 @@ color:blue;
 font-weight:700;
 }
 
+.helpcontent {
+margin-left: 10px;
+margin-right:10px;
+}
+
+.helpfooter {
+margin: 10px;
+}
+
 .helpheader {
-font-size: 16px;
+margin: 10px;
+font-size: 18px;
 font-weight: bold;
 color:#000;
+text-decoration:none;
 }
 
 .helpstart {
+margin: 10px;
 font-size: 14px;
 font-weight: bold;
-color:blue;
-text-decoration:none;
+text-decoration: none;
 }
 
 .helptext {

@@ -2924,9 +2924,9 @@ case 'USE_RIN':
 
 case 'USE_SILHOUETTE':
 	$title=i18n::translate('Use silhouettes');
-	$text=i18n::translate('Use silhouette images when no highlighted image for that person has been specified.  The images used are specific to the gender of the person in question.<br /><br /><table><tr><td wrap valign="middle">This image might be used when the gender of the person is unknown: </td><td><img src="images/silhouette_unknown.gif" width="40" alt="Silhouette image" title="Silhouette image" /></td></tr></table>');
+	$text=i18n::translate('Use silhouette images when no highlighted image for that person has been specified.  The images used are specific to the gender of the person in question.<br /><br /><table><tr><td wrap valign="middle">This image might be used when the gender of the person is unknown:')." </td><td><img src=\"$WT_IMAGE_DIR/".$WT_IMAGES["default_image_U"]["other"]."\" width=\"40\" alt=\"Silhouette image\" title=\"Silhouette image\" /></td></tr></table>";
 	break;
-
+	
 case 'USE_THUMBS_MAIN':
 	$title=i18n::translate('Use thumbnail');
 	$text=i18n::translate('This option determines whether <b>webtrees</b> should send the large or the small image to the browser whenever a chart or the Personal Details page requires a thumbnail.<br /><br />The <b>No</b> choice will cause <b>webtrees</b> to send the large image, while the <b>Yes</b> choice will cause the small image to be sent.  Each individual image also has the &laquo;Always use main image?&raquo; option which, when set to <b>Yes</b>, will cause the large image to be sent regardless of the setting of the &laquo;Use thumbnail&raquo; option in the GEDCOM configuration.  You cannot force <b>webtrees</b> to send small images when the GEDCOM configuration specifies that large images should always be used.<br /><br /><b>webtrees</b> does not re-size the image being sent; the browser does this according to the page specifications it has also received.  This can have undesirable consequences when the image being sent is not truly a thumbnail where <b>webtrees</b> is expecting to send a small image.  This is not an error:  There are occasions where it may be desirable to display a large image in places where one would normally expect to see a thumbnail-sized picture.<br /><br />You should avoid setting the &laquo;Use thumbnail&raquo; option to <b>No</b>.  This choice will cause excessive amounts of image-related data to be sent to the browser, only to have the browser discard the excess.  Page loads, particularly of charts with many images, can be seriously slowed.');
@@ -2979,12 +2979,12 @@ case 'addmedia.php':
 
 case 'addremotelink.php':
 	// not called from pop up function. see link_remote
-	$title=i18n::translate('Add remote link');
+	$title=i18n::translate('Add a remote link');
 	$text=i18n::translate('Use this form to link people to other people either from another site or another genealogical database accessible to your copy of webtrees.<br /><br />To add such a link, you must first select the relationship type, then choose a site already known to webtrees or define a new site, and then enter that site\'s ID of the person you want to link to.  <b>webtrees</b> will then automatically download information from the remote site as necessary.  The downloaded information does <u>not</u> become part of your genealogical database; it remains on the original site but is incorporated into the various pages where this remotely linked person is displayed.<br /><br />Refer to the Help link next to each element on the page for more information about that element.  You can also check the online English tutorial for more information: <a href=\"#WT_WEBTREES_WIKI#/en/index.php?title=How_To:Remote_Link_Individuals_Across_Websites_And_Databases\" target=\"_blank\">#WT_WEBTREES_WIKI#</a>.');
 	break;
 
 case 'addsearchlink.php':
-	$title=i18n::translate('Add local link');
+	$title=i18n::translate('Add a local link');
 	$text='';
 	break;
 
@@ -2995,7 +2995,7 @@ case 'admin.php':
 
 case 'ancestry.php':
 	$title=i18n::translate('Ancestry chart');
-	$text=i18n::translate('The Ancestry page is very similar to the <a href="?help=pedigree.php">Pedigree Tree</a>, but with more details and alternate <a href="?help=chart_style_help">Chart style</a> displays.<br /><br />Each ancestry is shown with a unique number, calculated according to the <i>Sosa-Stradonitz</i> system:<div style="padding-left:30px;"><b>Even</b> numbers for men (child*2)<br /><b>Odd</b> numbers for women (husband+1) except for <b>1</b></div><br />Example:<br /><div style="padding-left:30px;">The root person is <b>1</b>, regardless of gender.<br /><b>1</b>\'s father is <b>2</b> (<b>1</b> * 2), mother is <b>3</b> (<b>2</b> + 1).<br /><b>2</b>\'s father is <b>4</b> (<b>2</b> * 2), mother is <b>5</b> (<b>4</b> + 1).<br /><b>3</b>\'s father is <b>6</b> (<b>3</b> * 2), mother is <b>7</b> (<b>6</b> + 1).<br /><b>7</b>\'s father is <b>14</b> (<b>7</b> * 2), mother is <b>15</b> (<b>14</b> +1).<br />etc.');
+	$text=i18n::translate('The Ancestry page is very similar to the <a href="?help=pedigree.php">Pedigree Tree</a>, but with more details and alternate <a href="?help=chart_style">Chart style</a> displays.<br /><br />Each ancestry is shown with a unique number, calculated according to the <i>Sosa-Stradonitz</i> system:<div style="padding-left:30px;"><b>Even</b> numbers for men (child*2)<br /><b>Odd</b> numbers for women (husband+1) except for <b>1</b></div><br />Example:<br /><div style="padding-left:30px;">The root person is <b>1</b>, regardless of gender.<br /><b>1</b>\'s father is <b>2</b> (<b>1</b> * 2), mother is <b>3</b> (<b>2</b> + 1).<br /><b>2</b>\'s father is <b>4</b> (<b>2</b> * 2), mother is <b>5</b> (<b>4</b> + 1).<br /><b>3</b>\'s father is <b>6</b> (<b>3</b> * 2), mother is <b>7</b> (<b>6</b> + 1).<br /><b>7</b>\'s father is <b>14</b> (<b>7</b> * 2), mother is <b>15</b> (<b>14</b> +1).<br />etc.');
 	break;
 
 case 'branches.php':
@@ -3024,11 +3024,6 @@ case 'compact.php':
 case 'descendancy.php':
 	$title=i18n::translate('Descendancy chart');
 	$text=i18n::translate('This page will show the descendants of a person.<br /><br />You can choose a starting (root) person for this Descendancy chart or you can be linked to this page by clicking the <b>Descendancy Chart</b> link on another page.  Click on Arrow icons to navigate this tree in the direction of the arrow.  Click on the Chart icon in any Person box to change the root of the tree to that person.');
-	break;
-
-case 'dir_editor.php':
-	$title=i18n::translate('Cleanup index directory');
-	$text=i18n::translate('This tool can help site administrators clean up files in the Index directory.<br /><br />Over time, files such as log files, old GEDCOM files, and old backup files can build up in the Index directory.  Since many of these files are created by the program, they may be owned by the web server user.  If they are owned by the web server user, you might not be able to delete them. This tool lets you delete these files even when they are owned by the web server user account.<br /><br />To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src="./images/RESN_confidential.gif" alt="\" > are required for proper operation and cannot be removed.<br />Files marked with <img src="./images/RESN_locked.gif" alt="\" > have important settings or pending change data and should only be deleted if you are sure you know what you are doing.');
 	break;
 
 case 'edit_changes.php':
@@ -3300,8 +3295,13 @@ case 'timeline.php':
 
 case 'treenav.php':
 	$title=i18n::translate('Interactive tree');
-	$text=i18n::translate('Use the Interactive Tree to view the entire family tree of a person in both directions.  This view is similar to the Hourglass view in that it shows both ancestors and descendants of a given root person.  This chart gives you a more compact view by showing boxes for couples or families instead of just individuals.<br /><ul><li><b>Scrolling</b><br />Whenever your mouse cursor changes to a Move icon, you can click and drag the tree to view other portions of the tree.  As you drag the tree future generations will automatically expand until there are no more generations left to view in that direction.<br /></li><li><b>Zoom</b><br />You can use the icons on the left of the tree to zoom in and out.  Zooming out will allow you to see more of the tree on the screen at a time.  As you zoom out the text can become difficult to read; when your mouse hovers over a box you will get an enlarged view of what is inside it.<br /></li><li><b>Expanding Details</b><br />Clicking on any box will expand the box and display a more detailed view.  While in expanded mode, clicking on a person\'s name will open their Individual Information page.  Clicking <img src="./images/small/gedcom.gif" width="15px" height="15px" alt="" /> will redraw the tree with that person as the new root.  Clicking <img src="./images/buttons/family.gif" alt="" /> will take you to that family\'s detail page.<br /></li><li><b>Toggle Spouses</b><br />The <img src="./images/small/sfamily.gif" width="15px" height="15px" alt="" /> icon directly under the Zoom buttons will toggle the display of all spouses on or off on the descendancy side.  When the display is set to show spouses, all of a person\'s spouses will appear in the box with them.  All of the person\'s children will be shown as well.  When the option to show spouses is off, only the person\'s last spouse and children with that spouse will be shown.<br /></li><li><b>Large Tree</b><br />The Interactive Tree is available from many different pages including the Tree tab on the Individual Information page and the Charts block on the Home Page.  When viewing the tree from one of these other pages, you will also have a Tree icon under the Zoom icons.  If you click <img src="./images/small/gedcom.gif" width="15px" height="15px" alt="" /> you will be taken to the Interactive Tree page.</li></ul>');
-    break;
+	$text=i18n::translate('Use the Interactive Tree to view the entire family tree of a person in both directions.  This view is similar to the Hourglass view in that it shows both ancestors and descendants of a given root person.  This chart gives you a more compact view by showing boxes for couples or families instead of just individuals.<br /><ul><li><b>Scrolling</b><br />Whenever your mouse cursor changes to a Move icon, you can click and drag the tree to view other portions of the tree.  As you drag the tree future generations will automatically expand until there are no more generations left to view in that direction.<br /></li><li><b>Zoom</b><br />You can use the icons on the left of the tree to zoom in and out.  Zooming out will allow you to see more of the tree on the screen at a time.  As you zoom out the text can become difficult to read; when your mouse hovers over a box you will get an enlarged view of what is inside it.<br /></li><li><b>Expanding Details</b><br />Clicking on any box will expand the box and display a more detailed view.  While in expanded mode, clicking on a person\'s name will open their Individual Information page.');	
+	$text.=" ".i18n::translate('Clicking')."&nbsp<img src=\"$WT_IMAGE_DIR/".$WT_IMAGES["gedcom"]["small"]."\" width=\"15px\" height=\"15px\" alt=\"\">  ".i18n::translate('will redraw the tree with that person as the new root.');
+	$text.=" ".i18n::translate('Clicking')."&nbsp<img src=\"$WT_IMAGE_DIR/".$WT_IMAGES["family"]["button"]."\" width=\"15px\" height=\"15px\" alt=\"\">  ".i18n::translate('will take you to that family\'s detail page.');	
+	$text.="<br /></li><li><b>".i18n::translate('Toggle Spouses')."</b>";
+	$text.="<br />".i18n::translate('The')."&nbsp<img src=\"$WT_IMAGE_DIR/".$WT_IMAGES["sfamily"]["small"]."\" width=\"15px\" height=\"15px\" alt=\"\">  ".i18n::translate('icon directly under the Zoom buttons will toggle the display of all spouses on or off on the descendancy side.  When the display is set to show spouses, all of a person\'s spouses will appear in the box with them.  All of the person\'s children will be shown as well.  When the option to show spouses is off, only the person\'s last spouse and children with that spouse will be shown.<br /></li><li><b>Large Tree</b><br />The Interactive Tree is available from many different pages including the Tree tab on the Individual Information page and the Charts block on the Home Page.  When viewing the tree from one of these other pages, you will also have a Tree icon under the Zoom icons.');
+	$text.=" ".i18n::translate('Clicking')."&nbsp<img src=\"$WT_IMAGE_DIR/".$WT_IMAGES["gedcom"]["small"]."\" width=\"15px\" height=\"15px\" alt=\"\">  ".i18n::translate('will take you to the Interactive Tree page.</li></ul>');
+	break;
 
 case 'uploadgedcom.php':
 	$title=i18n::translate('Upload GEDCOM');
@@ -3328,7 +3328,7 @@ case 'add_child':
 	break;
 
 case 'add_custom_facts':
-	$title=i18n::translate('Add custom fact');
+	$title=i18n::translate('Add a custom fact');
 	$text=i18n::translate('If you can\'t find the fact that you want to add in the list of GEDCOM facts, you can enter a <b>custom fact</b> as well.<br /><br />Entering a custom fact is just as simple as entering one of the pre-defined ones.  The only difference is that you have to name the fact instead of picking its name from a list. You have to do this in the top field: <b>Type</b>');
 	break;
 
@@ -3338,7 +3338,7 @@ case 'add_facts_general':
 	break;
 
 case 'add_facts':
-	$title=i18n::translate('Add fact');
+	$title=i18n::translate('Add a fact');
 	$text=i18n::translate('Here you can add a fact to the record being edited.<br /><br />First choose a fact from the drop-down list, then click the <b>Add</b> button.  All possible facts that you can add to the database are in that drop-down list.');
 	break;
 
@@ -4196,11 +4196,6 @@ case 'help_contents_help':
 	$text.=i18n::translate('<span class="helpstart"">Help items</span><ul><li><a href="?help=add_media">Add media</a></li><li><a href="?help=ancestry.php">Ancestry chart</a></li><li><a href="?help=calendar.php">Calendar</a></li><li><a href="?help=fanchart.php">Circle diagram</a></li><li><a href="?help=clippings.php">Clippings cart</a></li><li><a href="?help=def">Definitions</a></li><li><a href="?help=descendancy.php">Descendancy chart</a></li><li><a href="?help=famlist.php">Families</a></li><li><a href="?help=familybook.php">Family book chart</a></li><li><a href="?help=family.php">Family information</a></li><li><a href="?help=faq.php">FAQ list</a></li><li><a href="?help=gedcom_info">GEDCOM information</a></li><li><a href="?help=header">Header</a></li><li><a href="?help=help">Help</a></li><li><a href="?help=index_portal">Home page</a></li><li><a href="?help=hourglass.php">Hourglass chart</a></li><li><a href="?help=individual.php">Individual information</a></li><li><a href="?help=indilist.php">Individuals</a></li><li><a href="?help=treenav.php">Interactive tree</a></li><li><a href="?help=accesskey_viewing_advice">Keyboard shortcuts</a></li><li><a href="?help=login.php">Login</a></li><li><a href="?help=pls_note11">Lost password request</a></li><li><a href="?help=menu">Menus</a></li><li><a href="?help=medialist.php">Multimedia</a></li><li><a href="?help=edituser.php">My account</a></li><li><a href="?help=mygedview_portal">My page</a></li><li><a href="?help=edituser_password">Password</a></li><li><a href="?help=pedigree.php">Pedigree Tree</a></li><li><a href="?help=placelist.php">Place hierarchy</a></li><li><a href="?help=relationship.php">Relationship chart</a></li><li><a href="?help=reportengine.php">Reports</a></li><li><a href="?help=login_register.php">Request new user account</a></li><li><a href="?help=best_display">Screen resolution</a></li><li><a href="?help=search">Search</a></li><li><a href="?help=hs_title">Search help text</a></li><li><a href="?help=source.php">Source</a></li><li><a href="?help=sourcelist.php">Sources</a></li><li><a href="?help=timeline.php">Timeline chart</a></li><li><a href="?help=edituser_username">Username</a></li></ul>');
 	break;
 
-case 'help_dir_editor.php':
-	$title=i18n::translate('Cleanup index directory');
-	$text=i18n::translate('This tool can help site administrators clean up files in the Index directory.<br /><br />Over time, files such as log files, old GEDCOM files, and old backup files can build up in the Index directory.  Since many of these files are created by the program, they may be owned by the web server user.  If they are owned by the web server user, you might not be able to delete them. This tool lets you delete these files even when they are owned by the web server user account.<br /><br />To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src="./images/RESN_confidential.gif" alt="\" > are required for proper operation and cannot be removed.<br />Files marked with <img src="./images/RESN_locked.gif" alt="\" > have important settings or pending change data and should only be deleted if you are sure you know what you are doing.');
-	break;
-
 case 'help_editconfig.php':
 	$title=i18n::translate('Configure webtrees');
 	$text=i18n::translate('On this page you configure the global settings for <b>webtrees</b>.  You have to do this after you have installed <b>webtrees</b> and are running it for the first time.<br /><br />You should review the <a href=\"readme.txt\" target=\"_blank\">readme.txt</a> file before continuing to configure <b>webtrees</b>.<br /><br />As these settings are <b>global</b>, they are for the whole program and for all genealogical databases you use with <b>webtrees</b>.<br /><br />Each genealogical database also has additional configuration options that you set after clicking the <b>Click here to administer GEDCOMs</b> link on this page.<br /><br />You can also access the GEDCOM Administration function from the main Admin page, whose link is found under the My Page icon or in the header of most pages.  On the Admin page, the relevant link is called <b>Manage GEDCOMs and edit Privacy.</b>');
@@ -4279,7 +4274,7 @@ case 'include_media':
 	break;
 
 case 'index_add_favorites':
-	$title=i18n::translate('Add favorite');
+	$title=i18n::translate('Add a new favorite');
 	$text=i18n::translate('This form allows you to add a new favorite item to your list of favorites.<br /><br />You must enter either an ID for the person, family, or source you want to store as a favorite, or you must enter a URL and a title.  The Note field is optional and can be used to describe the favorite.  Anything entered in the Note field will be displayed in the Favorites block after the item.');
 	break;
 
@@ -4570,7 +4565,7 @@ case 'menu_annical':
 
 case 'menu_charts':
 	$title=i18n::translate('Charts menu');
-	$text=i18n::translate('The available charts are:<ol><li><a href="?help=help_pedigree.php"><b>Pedigree Tree</b></a><br />This will link you to the Pedigree chart of this GEDCOM file. The pedigree will start with the person configured by the administrator. When you are logged in the starting person can be whoever you have configured in your Account preferences.</li><li><a href="?help=help_descendancy.php"><b>Descendancy Chart</b></a><br />The Descendancy chart is essentially a <a href="?help=help_pedigree.php"><b>Pedigree Tree</b></a> in reverse order.  This comparison is not quite correct, but while the Pedigree chart shows you all the ancestors of a starting person, the Descendancy chart shows you all the descendants of a starting person.</li><li><a href="?help=help_timeline.php"><b>Timeline Chart</b></a><br />Here you view the events of a person along a time line.  It\'s interesting to compare the events of two or more persons along the same time line.</li><li><a href="?help=help_relationship.php"><b>Relationship Chart</b></a><br />Here you can check the relation of a person to yourself or to another person.</li><li><a href="?help=help_ancestry.php"><b>Ancestry Chart</b></a><br />This chart is very similar to the <a href="?help=help_pedigree.php"><b>Pedigree Tree</b></a>, but with more details and alternate <a href="?help=chart_style_help"><b>Chart style</b></a> displays.</li><li><a href="?help=help_fanchart.php"><b>Circle Diagram</b></a><br />This chart is very similar to the <a href="?help=help_pedigree.php"><b>Pedigree Tree</b></a>, but in a more graphical way.</li></ol>');
+	$text=i18n::translate('The available charts are:<ol><li><a href="?help=help_pedigree.php"><b>Pedigree Tree</b></a><br />This will link you to the Pedigree chart of this GEDCOM file. The pedigree will start with the person configured by the administrator. When you are logged in the starting person can be whoever you have configured in your Account preferences.</li><li><a href="?help=help_descendancy.php"><b>Descendancy Chart</b></a><br />The Descendancy chart is essentially a <a href="?help=help_pedigree.php"><b>Pedigree Tree</b></a> in reverse order.  This comparison is not quite correct, but while the Pedigree chart shows you all the ancestors of a starting person, the Descendancy chart shows you all the descendants of a starting person.</li><li><a href="?help=help_timeline.php"><b>Timeline Chart</b></a><br />Here you view the events of a person along a time line.  It\'s interesting to compare the events of two or more persons along the same time line.</li><li><a href="?help=help_relationship.php"><b>Relationship Chart</b></a><br />Here you can check the relation of a person to yourself or to another person.</li><li><a href="?help=help_ancestry.php"><b>Ancestry Chart</b></a><br />This chart is very similar to the <a href="?help=help_pedigree.php"><b>Pedigree Tree</b></a>, but with more details and alternate <a href="?help=chart_style"><b>Chart style</b></a> displays.</li><li><a href="?help=help_fanchart.php"><b>Circle Diagram</b></a><br />This chart is very similar to the <a href="?help=help_pedigree.php"><b>Pedigree Tree</b></a>, but in a more graphical way.</li></ol>');
 	break;
 
 case 'menu_clip':
@@ -4633,11 +4628,6 @@ case 'multi_letter_equiv':
 	$text=i18n::translate('In some languages, multiple letters are often treated as equivalent to a single letter when generating lists of names.<br /><br />For example, in Dutch, names beginning with IJ are listed together with names beginning with Y. In Norwegian, names beginning with AA are listed with &Aring;. In some languages, there are letters that can be written as one character or two. For example in Slovakian, the two characters D and \xC5\xBE can be written as the single character \xC7\x85. By specifying equivalents here, you can allow names beginning with these letters to be grouped together on the individual list pages.<br /><br />You should specify a comma-separated list of equivalents. To support databases that don\'t recognize UTF-8 encoding, you should specify both upper and lower case equivalents. This example demonstrates the format to use.<br /><br />Aa=&Aring;,aa=&aring;');
 	break;
 
-case 'multiple':
-	$title=i18n::translate('multiple');
-	$text=i18n::translate('<center>--- This is a general help text for multiple pages ---</center>');
-	break;
-
 case 'mygedview_charts':
 // duplicate text. see index_charts
 	$title=i18n::translate('Charts block');
@@ -4645,7 +4635,7 @@ case 'mygedview_charts':
 	break;
 
 case 'mygedview_customize':
-	$title=i18n::translate('Customise my page');
+	$title=i18n::translate('Customize My Page');
 	$text=i18n::translate('When you entered here for the first time, you already had some blocks on this page.  If you like, you can customize this My Page.<br /><br />When you click this link you will be taken to a form where you can add, move, or delete blocks.  More explanation is available on that form.');
 	break;
 
@@ -4666,7 +4656,7 @@ case 'mygedview_myjournal':
 
 case 'mygedview_portal':
 // duplicate text. see index_myged_help
-	$title=i18n::translate('My page');
+	$title=i18n::translate('My Page');
 	$text=i18n::translate('This is your personal page.<br /><br />Here you will find easy links to access your personal data such as <b>My Account</b>, <b>My Indi</b> (this is your Individual Information page), and <b>My Pedigree</b>.  You can have blocks with <b>Messages</b>, a <b>Journal</b> (like a Notepad) and many more.<br /><br />The layout of this page is similar to the Home Page that you see when you first access this site.  While the parts of the Home Page are selected by the site administrator, you can select what parts to include on this personalized page.  You will find the link to customize this page in the Welcome block or separately when the Welcome block is not present.<br /><br />You can choose from the following blocks:<ul><li><a href="?help=index_charts"><b>Charts</b></a></li><li><a href="?help=mygedview_customize"><b>Customize my page</b></a></li><li><a href="?help=index_stats"><b>GEDCOM statistics</b></a></li><li><a href="?help=index_loggedin"><b>Logged in users</b></a></li><li><a href="?help=mygedview_message"><b>Messages</b></a></li><li><a href="?help=mygedview_favorites"><b>My favorites</b></a></li><li><a href="?help=mygedview_myjournal"><b>My journal</b></a></li><li><a href="?help=index_onthisday"><b>On this day in your history</b></a></li><li><a href="?help=index_media"><b>Random media</b></a></li><li><a href="?help=recent_changes"><b>Recent changes</b></a></li><li><a href="?help=index_events"><b>Upcoming events</b></a></li><li><a href="?help=mygedview_welcome"><b>Welcome</b></a></li></ul>');
 	break;
 
@@ -5247,6 +5237,16 @@ case 'active':
 	$text=i18n::translate('Allow users to select this language if the option <b>Allow user to change language</b> is enabled.');
 	break;
 
+case 'dir_editor.php':
+	$title=i18n::translate('Cleanup index directory');
+	$text=i18n::translate('This tool can help site administrators clean up files in the Index directory.<br /><br />Over time, files such as log files, old GEDCOM files, and old backup files can build up in the Index directory.  Since many of these files are created by the program, they may be owned by the web server user.  If they are owned by the web server user, you might not be able to delete them. This tool lets you delete these files even when they are owned by the web server user account.<br /><br />To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src="./images/RESN_confidential.gif" alt="\" > are required for proper operation and cannot be removed.<br />Files marked with <img src="./images/RESN_locked.gif" alt="\" > have important settings or pending change data and should only be deleted if you are sure you know what you are doing.');
+	break;
+
+case 'help_dir_editor.php':
+	$title=i18n::translate('Cleanup index directory');
+	$text=i18n::translate('This tool can help site administrators clean up files in the Index directory.<br /><br />Over time, files such as log files, old GEDCOM files, and old backup files can build up in the Index directory.  Since many of these files are created by the program, they may be owned by the web server user.  If they are owned by the web server user, you might not be able to delete them. This tool lets you delete these files even when they are owned by the web server user account.<br /><br />To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src="./images/RESN_confidential.gif" alt="\" > are required for proper operation and cannot be removed.<br />Files marked with <img src="./images/RESN_locked.gif" alt="\" > have important settings or pending change data and should only be deleted if you are sure you know what you are doing.');
+	break;
+
 case 'index':
 	$title=i18n::translate('Home page');
 	$text=i18n::translate('This page is the Home Page. It welcomes you to the selected <a href="#def_gedcom">GEDCOM</a> file. You can return to this page by selecting Home Page from the top menu. If there are multiple GEDCOMs on this site, you can select a GEDCOM from the drop-down menu.<br /><br />This Help page contains information about:<ul><li><a href="#index_portal"><b>Home Page</b></a></li><li><a href="#header"><b>Header Area</b></a></li><li><a href="#menu"><b>Menus</b></a></li><li><a href="#header_general"><b>General Information</b></a></li><li><a href="#def"><b>Definitions</b></a></li></ul>');
@@ -5261,6 +5261,11 @@ case 'menu_help':
 // not used? see 'menu'
 	$title=i18n::translate('Menus');
 	$text=i18n::translate('The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href="#menu_fam">Home page</a><br /></li><li><a href="#menu_myged">My Page</a><br /></li><li><a href="#menu_charts">Charts</a><br /></li><li><a href="#menu_lists">Lists</a><br /></li><li><a href="#menu_annical">Anniversary Calendar</a><br /></li><li><a href="#menu_clip">Family Tree Clippings Cart</a><br /></li><li><a href="#menu_search">Search</a><br /></li><li><a href="?help=help">Help</a></li></ul>');
+	break;
+
+case 'multiple':
+	$title=i18n::translate('multiple');
+	$text=i18n::translate('<center>--- This is a general help text for multiple pages ---</center>');
 	break;
 
 case 'upload_gedcom':
@@ -5399,13 +5404,13 @@ case 'ah9':
 	
 }
 
-
 print_simple_header(i18n::translate('Help for «%s»', htmlspecialchars($title)));
-echo '<h1>', htmlspecialchars($title), '</h1>';
-echo '<p>', nl2br($text), '</p>';
-echo '<br /><br /><br />';
-echo '<a href="javascript:;" onclick="window.history.go(-1)">',"<img src=\"".$WT_IMAGE_DIR."/larrow.gif\" alt=\"< \" /><br />";
+echo '<div class="helpheader">', htmlspecialchars($title),'</div>';
+echo '<div class="helpcontent">', nl2br($text),'</div>';
+echo '<div class="helpfooter"><br />';
+echo '<a href="javascript:;" onclick="window.history.go(-1)">',"<img src=\"$WT_IMAGE_DIR/".$WT_IMAGES["larrow"]["other"]."\" alt=\"<\"><br />";
 echo '<a href="help_text.php?help=help_contents_help"><b>', i18n::translate('Help Contents'), '</b></a><br />';
 echo '<a href="javascript:;" onclick="window.close();"><b>', i18n::translate('Close Window'), '</b></a>';
+echo '</div>';
 print_simple_footer();
 ?>
