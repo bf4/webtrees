@@ -737,7 +737,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 		if ($this->indi->canDisplayDetails() && WT_USER_NAME) {
 			$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url($this->indi->getLinkUrl()."&action=addfav&gid={$this->pid}"));
-			if (!empty($WT_IMAGES["gedcom"]["small"])) $submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["gedcom"]["small"]);
+			if (!empty($WT_IMAGES["favorites"]["small"])) $submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["favorites"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}

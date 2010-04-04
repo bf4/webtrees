@@ -72,11 +72,7 @@ $WT_IMAGES["source"]["large"] = "source.gif";
 $WT_IMAGES["sex"]["large"] = "male.gif";
 $WT_IMAGES["sexf"]["large"] = "female.gif";
 $WT_IMAGES["sexn"]["large"] = "fe_male.gif";
-
-//- PGV main icons for optional modules
-$WT_IMAGES["menu_gallery"]["large"] = "menu_gallery.gif";
-$WT_IMAGES["menu_punbb"]["large"] = "menu_punbb.gif";
-$WT_IMAGES["menu_research"]["large"] = "menu_research.gif";
+$WT_IMAGES["edit_source"]["large"] = "small/edit_sour.gif";
 
 //- PGV small icons
 $WT_IMAGES["admin"]["small"] = "small/admin.gif";
@@ -120,6 +116,7 @@ $WT_IMAGES["sfamily"]["small"] = "small/sfamily.gif";
 $WT_IMAGES["source"]["small"] = "small/source.gif";
 $WT_IMAGES["statistic"]["small"] = "small/statistic.gif";
 $WT_IMAGES["timeline"]["small"] = "small/timeline.gif";
+$WT_IMAGES["favorites"]["small"] = "small/gedcom.gif";
 
 //- PGV buttons for data entry pages
 $WT_IMAGES["addmedia"]["button"] = "buttons/addmedia.gif";

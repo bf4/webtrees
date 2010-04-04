@@ -70,28 +70,24 @@ $WT_IMAGES["sexf"]["large"] = "female.gif";
 $WT_IMAGES["sexn"]["large"] = "fe_male.gif";
 $WT_IMAGES["edit_indi"]["large"] = "edit_indi.png";
 $WT_IMAGES["edit_fam"]["large"] = "edit_fam.png";
-
-//- PGV main icons for optional modules
-$WT_IMAGES["menu_gallery"]["large"] = "menu_gallery.gif";
-$WT_IMAGES["menu_punbb"]["large"] = "menu_punbb.gif";
-$WT_IMAGES["menu_research"]["large"] = "menu_research.gif";
+$WT_IMAGES["edit_source"]["large"] = "edit_source.png";
 
 //- PGV small icons
-$WT_IMAGES["admin"]["small"] = "small/admin.gif";
-$WT_IMAGES["ancestry"]["small"] = "small/ancestry.gif";
-$WT_IMAGES["calendar"]["small"] = "small/calendar.gif";
+$WT_IMAGES["admin"]["small"] = "small/admin.png";
+$WT_IMAGES["ancestry"]["small"] = "small/ancestry.png";
+$WT_IMAGES["calendar"]["small"] = "small/calendar.png";
 $WT_IMAGES["cfamily"]["small"] = "small/cfamily.png";
 $WT_IMAGES["clippings"]["small"] = "small/clippings.png";
-$WT_IMAGES["descendant"]["small"] = "small/descendancy.gif";
+$WT_IMAGES["descendant"]["small"] = "small/descendancy.png";
 $WT_IMAGES["favorites"]["small"] = "small/favorites.png";
 $WT_IMAGES["edit_indi"]["small"] = "small/edit_indi.gif";
-$WT_IMAGES["edit_sour"]["small"] = "small/edit_sour.gif";
+$WT_IMAGES["edit_sour"]["small"] = "small/edit_source.png";
 $WT_IMAGES["edit_repo"]["small"] = "small/edit_repo.gif";
-$WT_IMAGES["fambook"]["small"] = "small/fambook.gif";
-$WT_IMAGES["fanchart"]["small"] = "small/fanchart.gif";
-$WT_IMAGES["gedcom"]["small"] = "small/gedcom.gif";
+$WT_IMAGES["fambook"]["small"] = "small/fambook.png";
+$WT_IMAGES["fanchart"]["small"] = "small/fanchart.png";
+$WT_IMAGES["gedcom"]["small"] = "small/tree.png";
 $WT_IMAGES["help"]["small"] = "small/help.png";
-$WT_IMAGES["hourglass"]["small"] = "small/hourglass.gif";
+$WT_IMAGES["hourglass"]["small"] = "small/hourglass.png";
 $WT_IMAGES["indis"]["small"] = "small/indis.png";
 $WT_IMAGES["media"]["small"] = "small/media.gif";
 $WT_IMAGES["menu_help"]["small"] = "small/help2.png";
@@ -101,7 +97,7 @@ $WT_IMAGES["menu_source"]["small"] = "small/source.png";
 $WT_IMAGES["mygedview"]["small"] = "small/my_gedview.png";
 $WT_IMAGES["notes"]["small"] = "small/notes.png";
 $WT_IMAGES["patriarch"]["small"] = "small/patriarch.png";
-$WT_IMAGES["pedigree"]["small"] = "small/pedigree.gif";
+$WT_IMAGES["pedigree"]["small"] = "small/pedigree.png";
 $WT_IMAGES["place"]["small"] = "small/place.png";
 $WT_IMAGES["relationship"]["small"] = "small/relationship.gif";
 $WT_IMAGES["reports"]["small"] = "small/reports.gif";
@@ -112,8 +108,8 @@ $WT_IMAGES["sexf"]["small"] = "small/female.gif";
 $WT_IMAGES["sexn"]["small"] = "small/fe_male.gif";
 $WT_IMAGES["sfamily"]["small"] = "small/sfamily.png";
 $WT_IMAGES["source"]["small"] = "small/source.gif";
-$WT_IMAGES["statistic"]["small"] = "small/statistic.gif";
-$WT_IMAGES["timeline"]["small"] = "small/timeline.gif";
+$WT_IMAGES["statistic"]["small"] = "small/statistic.png";
+$WT_IMAGES["timeline"]["small"] = "small/timeline.png";
 
 //- PGV buttons for data entry pages
 $WT_IMAGES["addmedia"]["button"] = "buttons/addmedia.gif";
