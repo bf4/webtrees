@@ -15,7 +15,7 @@ class lightbox_WTModule extends WTModule {
 	}
 
 	public function getTitle() {
-		return i18n::translate('Lightbox');
+		return i18n::translate('Album');
 	}
 
 	/**
