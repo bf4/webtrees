@@ -42,10 +42,10 @@ if ($sb_action!='none') {
 			if ($mod->hasSidebar()) {
 				$sb = $mod->getSidebar();
 				if (isset($controller)) $sb->setController($controller);
-				if ($sb->hasContent()) {
+				if ($sb->hasSidebarContent()) {
 					?><h3 title="<?php echo $mod->getName()?>"><a href="#"><?php echo $sb->getTitle()?></a></h3>
 					<div id="sb_content_<?php echo $mod->getName()?>">
-					<?php if ($counter==0) echo $sb->getContent();
+					<?php if ($counter==0) echo $sb->getSidebarContent();
 					else {?><img src="<?php echo $WT_IMAGE_DIR ?>/loading.gif" /><?php }?>
 					</div>
 					<?php 
@@ -62,7 +62,7 @@ if ($sb_action!='none') {
 			if ($mod->hasSidebar()) {
 				$sb = $mod->getSidebar();
 				if (isset($controller)) $sb->setController($controller);
-				echo $sb->getContent();
+				echo $sb->getSidebarContent();
 			}
 		}
 		exit;

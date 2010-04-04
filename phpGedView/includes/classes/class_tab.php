@@ -53,14 +53,14 @@ abstract class WT_Module_Tab {
 	 * get the content of the tab
 	 * @return string
 	 */
-	public abstract function getContent();
+	public abstract function getTabContent();
 	/**
 	 * does this tab have content
 	 * This method can be used to hide a tab for insufficient access rights or
 	 * lack of data
 	 * @return boolean
 	 */
-	public abstract function hasContent();
+	public abstract function hasTabContent();
 	
 	/**
 	 * can this tab be loaded with AJAX

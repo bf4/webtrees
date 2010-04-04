@@ -40,7 +40,7 @@ class families_Sidebar extends WT_Module_Sidebar {
 		return i18n::translate('Families');
 	}
 
-	public function getContent() {
+	public function getSidebarContent() {
 		global $SHOW_MARRIED_NAMES;
 		global $WT_IMAGE_DIR, $WT_IMAGES;
 
@@ -246,7 +246,7 @@ class families_Sidebar extends WT_Module_Sidebar {
 		else return $this->getSurnameFams($alpha, $surname);
 	}
 
-	public function hasContent() {
+	public function hasSidebarContent() {
 		return true;
 	}
 }

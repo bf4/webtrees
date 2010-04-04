@@ -36,7 +36,7 @@ require_once WT_ROOT.'includes/classes/class_tab.php';
 
 class personal_facts_Tab extends WT_Module_Tab {
 	
-	public function getContent() {
+	public function getTabContent() {
 		global $FACT_COUNT, $CONTACT_EMAIL, $WT_IMAGE_DIR, $WT_IMAGES, $EXPAND_RELATIVES_EVENTS;
 		global $n_chil, $n_gchi, $n_ggch;
 		global $EXPAND_RELATIVES_EVENTS;
@@ -117,7 +117,7 @@ class personal_facts_Tab extends WT_Module_Tab {
 		return '<div id="'.$this->getName().'_content">'.ob_get_clean().'</div>';
 	}
 	
-	public function hasContent() {
+	public function hasTabContent() {
 		return true;
 	}
 } 

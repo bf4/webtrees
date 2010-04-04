@@ -36,7 +36,7 @@ require_once WT_ROOT.'includes/classes/class_sidebar.php';
 
 class descendancy_Sidebar extends WT_Module_Sidebar {
 
-	public function getContent() {
+	public function getSidebarContent() {
 		global $WT_IMAGE_DIR, $WT_IMAGES;
 
 		$out = '<script type="text/javascript">
@@ -228,7 +228,7 @@ class descendancy_Sidebar extends WT_Module_Sidebar {
 		else if (!empty($famid)) return $this->loadChildren($famid, 1);
 	}
 
-	public function hasContent() {
+	public function hasSidebarContent() {
 		return true;
 	}
 	

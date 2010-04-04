@@ -65,7 +65,7 @@ class all_tab_Tab extends WT_Module_Tab {
 	
 	public function canLoadAjax() { return false; }
 	
-	public function getContent() {
+	public function getTabContent() {
 		
 		$out = "<div id=\"all_content\">";
 		$out .= "<!-- all tab doesn't have it's own content -->";
@@ -73,7 +73,7 @@ class all_tab_Tab extends WT_Module_Tab {
 		return $out;
 	}
 
-	public function hasContent() {
+	public function hasTabContent() {
 		return true;
 	}
 }

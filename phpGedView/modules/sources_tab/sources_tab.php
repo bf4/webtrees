@@ -37,7 +37,7 @@ class sources_tab_Tab extends WT_Module_Tab {
 
 	protected $sourceCount = null;
 
-	public function getContent() {
+	public function getTabContent() {
 		global $CONTACT_EMAIL, $FACT_COUNT;
 		global $SHOW_LEVEL2_NOTES;
 		global $NAV_SOURCES;
@@ -114,7 +114,7 @@ class sources_tab_Tab extends WT_Module_Tab {
 		return $this->sourceCount;
 	}
 
-	public function hasContent() {
+	public function hasTabContent() {
 		return $this->get_source_count()>0;
 	}
 }

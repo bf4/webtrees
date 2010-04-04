@@ -38,7 +38,7 @@ class media_Tab extends WT_Module_Tab {
 
 	protected $mediaCount = null;
 	
-	public function getContent() {
+	public function getTabContent() {
 		global $CONTACT_EMAIL, $MULTI_MEDIA;
 		global $NAV_MEDIA;
 		
@@ -96,7 +96,7 @@ class media_Tab extends WT_Module_Tab {
 		return $this->mediaCount;
 	}
 
-	public function hasContent() {
+	public function hasTabContent() {
 		global $MULTI_MEDIA;
 		return ($MULTI_MEDIA && $this->get_media_count()>0);
 	}

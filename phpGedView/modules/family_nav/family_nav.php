@@ -49,11 +49,11 @@ class family_nav_Tab extends WT_Module_Tab {
 		
 	}
 	
-	public function hasContent() {
+	public function hasTabContent() {
 		return true;
 	}
 
-	public function getContent() {
+	public function getTabContent() {
 		$out = '';
 		ob_start();
 		// -----------------------------------------------------------------------------
@@ -536,7 +536,7 @@ class family_nav_Tab extends WT_Module_Tab {
 		ob_end_clean();
 		return $out;
 		
-	} // End public function getContent()
+	} // End public function getTabContent()
 
 function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0, $personcount="1") {
 	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $ZOOM_BOXES, $LINK_ICONS, $SCRIPT_NAME, $GEDCOM;
@@ -771,7 +771,7 @@ class family_nav_Sidebar extends WT_Module_Sidebar {
 
 	var $indi;
 	
-	public function getContent() {
+	public function getSidebarContent() {
 		global $WT_IMAGE_DIR, $WT_IMAGES;
 
 		$out = '<div id="sb_family_nav_content">';
@@ -793,7 +793,7 @@ class family_nav_Sidebar extends WT_Module_Sidebar {
 				$this->controller->indi=$root;
 				$this->controller->pid=$root->getXref();
 				$tab->setController($this->controller);
-				$out .= $tab->getContent();
+				$out .= $tab->getTabContent();
 			}
 		}
 		$out .= '</div>';
@@ -804,7 +804,7 @@ class family_nav_Sidebar extends WT_Module_Sidebar {
 		return "";
 	}
 
-	public function hasContent() {
+	public function hasSidebarContent() {
 		return true;
 	}
 	

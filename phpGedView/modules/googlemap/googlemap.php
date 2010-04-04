@@ -73,7 +73,7 @@ class googlemap_Tab extends WT_Module_Tab {
 
 	public function canLoadAjax() { return true; }
 
-	public function getContent() {
+	public function getTabContent() {
 		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $CONTACT_EMAIL, $WT_IMAGE_DIR, $WT_IMAGES;
 		global $TBLPREFIX;
 		global $GOOGLEMAP_ENABLED, $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
@@ -184,7 +184,7 @@ class googlemap_Tab extends WT_Module_Tab {
 		return ob_get_clean();
 	}
 
-	public function hasContent() {
+	public function hasTabContent() {
 		global $GOOGLEMAP_ENABLED, $SEARCH_SPIDER;
 
 		return !$SEARCH_SPIDER && ($GOOGLEMAP_ENABLED || WT_USER_IS_ADMIN);

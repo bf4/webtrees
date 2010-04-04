@@ -37,7 +37,7 @@ class notes_Tab extends WT_Module_Tab {
 
 	protected $noteCount = null;
 
-	public function getContent() {
+	public function getTabContent() {
 		global $CONTACT_EMAIL, $FACT_COUNT;
 		global $SHOW_LEVEL2_NOTES;
 		global $NAV_NOTES;
@@ -125,7 +125,7 @@ if (!$SHOW_LEVEL2_NOTES) {
 		return $this->noteCount;
 	}
 
-	public function hasContent() {
+	public function hasTabContent() {
 		return $this->get_note_count()>0;
 	}
 }

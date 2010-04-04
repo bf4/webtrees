@@ -305,7 +305,7 @@ class relatives_Tab extends WT_Module_Tab {
 		}
 	}
 	
-	public function getContent() {
+	public function getTabContent() {
 		global $SHOW_ID_NUMBERS, $WT_IMAGE_DIR, $WT_IMAGES, $SHOW_AGE_DIFF;
 		global $pgv_changes, $GEDCOM, $ABBREVIATE_CHART_LABELS;
 		global $show_full, $personcount;
@@ -477,7 +477,7 @@ class relatives_Tab extends WT_Module_Tab {
 		return '<div id="'.$this->getName().'_content">'.ob_get_clean().'</div>';
 	}
 
-	public function hasContent() {
+	public function hasTabContent() {
 		return true;
 	}
 }

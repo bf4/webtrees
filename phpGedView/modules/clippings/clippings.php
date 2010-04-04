@@ -93,7 +93,7 @@ class clippings_Sidebar extends WT_Module_Sidebar {
 		$out .= '<br />';
 		return $out;
 	}
-	public function getContent() {
+	public function getSidebarContent() {
 		require_once WT_ROOT.'modules/clippings/clippings_ctrl.php';
 		global $WT_IMAGE_DIR, $WT_IMAGES;
 		global $cart, $GEDCOM;
@@ -196,7 +196,7 @@ class clippings_Sidebar extends WT_Module_Sidebar {
 		</table>
 		</form>';
 		}
-		else return $this->getContent();
+		else return $this->getSidebarContent();
 		return $out;
 	}
 	
@@ -414,7 +414,7 @@ class clippings_Sidebar extends WT_Module_Sidebar {
 		return $this->getCartList();
 	}
 
-	public function hasContent() {
+	public function hasSidebarContent() {
 		return true;
 	}
 }

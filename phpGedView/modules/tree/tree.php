@@ -44,7 +44,7 @@ if (!parent) parent = document.getElementById("tabs");
 outdiv.style.width = (parent.offsetWidth-30) + "px";';
 	}
 	
-	public function getContent() {
+	public function getTabContent() {
 		ob_start();
 		$inav = new TreeNav($this->controller->pid,'treetab');
 		$inav->generations = 5;
@@ -53,7 +53,7 @@ outdiv.style.width = (parent.offsetWidth-30) + "px";';
 		return '<div id="'.$this->getName().'_content">'.ob_get_clean().'</div>';
 	}
 	
-	public function hasContent() {
+	public function hasTabContent() {
 		return true;
 	}
 } 

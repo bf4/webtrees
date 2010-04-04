@@ -23,7 +23,7 @@ class lightbox_Tab extends media_Tab {
 		return 'CB_Init();';
 	}
 	
-	public function getContent() {
+	public function getTabContent() {
 		global $MULTI_MEDIA, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 		global $pgv_changes;
 		global $GEDCOM, $MEDIATYPE, $pgv_changes;
@@ -58,7 +58,7 @@ class lightbox_Tab extends media_Tab {
 		return $out;
 	}
 
-	public function hasContent() {
+	public function hasTabContent() {
 		global $MULTI_MEDIA;
 		return $MULTI_MEDIA && $this->get_media_count()>0;
 	}

@@ -59,7 +59,7 @@ abstract class WT_Module_Sidebar {
 	 * get the content of the tab
 	 * @return string
 	 */
-	public abstract function getContent();
+	public abstract function getSidebarContent();
 	
 	/**
 	 * get the content of the tab during an ajax callback
@@ -73,7 +73,7 @@ abstract class WT_Module_Sidebar {
 	 * lack of data
 	 * @return boolean
 	 */
-	public abstract function hasContent();
+	public abstract function hasSidebarContent();
 	
 } 
 ?>

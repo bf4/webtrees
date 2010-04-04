@@ -200,7 +200,7 @@ jQuery(document).ready(function(){
 				$modjs = $mod->getTab()->getJSCallback();
 				echo $modjs."\n";
 			}
-			if ($mod->getTab()->hasContent()) $tabcount++; 
+			if ($mod->getTab()->hasTabContent()) $tabcount++; 
 		}
 	}
 	?>
@@ -344,12 +344,12 @@ if (!$controller->indi->canDisplayDetails()) {
 			if ($mod!=$controller->static_tab && $mod->hasTab()) {
 				if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
 					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $mod->getTitle(); ?></span></a></li>
-				<?php } else if ($mod->hasTab() && $mod->getTab() && ($mod->getTab()->hasContent() || WT_USER_CAN_EDIT)) { ?>
+				<?php } else if ($mod->hasTab() && $mod->getTab() && ($mod->getTab()->hasTabContent() || WT_USER_CAN_EDIT)) { ?>
 					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" href="individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
 						<span><?php echo $mod->getTitle()?></span>
 						</a></li>
 				<?php } 
-				if ($mod->getTab()->hasContent()) $tabcount++; 
+				if ($mod->getTab()->hasTabContent()) $tabcount++; 
 			}
 		}
 		if ($controller->static_tab) {
@@ -378,16 +378,16 @@ if (!$controller->indi->canDisplayDetails()) {
 		if ($mod!=$controller->static_tab && $mod->hasTab()) {
 		if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
 		<div id="<?php echo $mod->getName()?>" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
-			<?php echo $mod->getTab()->getContent(); ?>
+			<?php echo $mod->getTab()->getTabContent(); ?>
 		</div>	
 		<?php }
-		if ($mod->getTab()->hasContent() || WT_USER_CAN_EDIT) $tabcount++;
+		if ($mod->getTab()->hasTabContent() || WT_USER_CAN_EDIT) $tabcount++;
 		}
 	} ?>
 	</div> <!-- tabs -->
 	<?php if ($controller->static_tab) { ?>
 	<div class="static_tab_content ui-corner-bottom ui-corner-all" id="<?php echo $controller->static_tab->getName();?>">
-	<?php echo $controller->static_tab->getTab()->getContent(); ?>
+	<?php echo $controller->static_tab->getTab()->getTabContent(); ?>
 	</div> 
 	<!-- static tab -->
 	<?php }
