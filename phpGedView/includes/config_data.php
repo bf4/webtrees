@@ -150,7 +150,6 @@ $TEMPLE_CODES = array(
 	'BIRMI'=>i18n::translate('Birmingham, Alabama'),
 	'BISMA'=>i18n::translate('Bismarck, North Dakota'),
 	'BOGOT'=>i18n::translate('Bogota, Colombia'),
-	'BOGOT'=>i18n::translate('Bogota, Columbia'),
 	'BOISE'=>i18n::translate('Boise, Idaho'),
 	'BOSTO'=>i18n::translate('Boston, Massachusetts'),
 	'BOUNT'=>i18n::translate('Bountiful, Utah'),
