@@ -37,11 +37,28 @@ define('WT_CLASS_MODULE_PHP', '');
 require_once WT_ROOT.'includes/classes/class_tab.php';
 require_once WT_ROOT.'includes/classes/class_sidebar.php';
 
-/**
- * abstract class that is to be overidden by implementing modules
- * @author jfinlay
- *
- */
+// Modules can optionally implement the following interfaces.
+interface WT_Module_Config {
+	public function getConfigLink(); // URL of page to edit config
+}
+
+interface WT_Module_Menu {
+	public function defaultMenuAccessLevel(); // WT_PRIV_HIDE, WT_PRIV_PUBLIC, WT_PRIV_USER, WT_PRIV_ADMIN
+	public function defaultMenuOrder(); // 0-127
+}
+
+/*
+interface WT_Module_Sidebar {
+	public function defaultSidebarAccessLevel(); // WT_PRIV_HIDE, WT_PRIV_PUBLIC, WT_PRIV_USER, WT_PRIV_ADMIN
+	public function defaultSidebarOrder(); // 0-127
+}
+
+interface WT_Module_Tab {
+	public function defaultTabAccessLevel(); // WT_PRIV_HIDE, WT_PRIV_PUBLIC, WT_PRIV_USER, WT_PRIV_ADMIN
+	public function defaultTabOrder(); // 0-127
+}
+*/
+
 abstract class WT_Module {
 	private $id = 0;
 	private $accessLevel = array();
@@ -58,13 +75,12 @@ abstract class WT_Module {
 	protected $menu = null;
 	protected $tab = null;
 	protected $sidebar = null;
-	protected $configLink = null;
 
 	public static $default_tabs = array('family_nav', 'personal_facts', 'sources_tab', 'notes', 'media', 'lightbox', 'tree', 'googlemap', 'relatives', 'all_tab');
 	public static $default_sidebars = array('descendancy', 'family_nav', 'clippings', 'individuals', 'families');
 	public static $default_menus = array('page_menu');
 
-	// Each module must provide the following functions:
+	// Each module must provide the following functions
 	abstract public function getTitle();       // To label tabs, etc.
 	abstract public function getDescription(); // A sentence describing what this module does
 
@@ -85,8 +101,6 @@ abstract class WT_Module {
 			$menu_class = $entry."_WT_Module";
 			$obj = new $menu_class();
 			$obj->setId($row->mod_id);
-			$obj->setName($entry);
-			$obj->setDescription($row->mod_description);
 			$obj->setTaborder($row->mod_taborder);
 			$obj->setMenuorder($row->mod_menuorder);
 			$obj->setSidebarorder($row->mod_sidebarorder);
@@ -130,9 +144,7 @@ abstract class WT_Module {
 	public function getSidebarEnabledArray() {
 		return $this->sidebarEnabled;
 	}
-	public function setName($name) { $this->name = $name; }
 	public function setId($id) { $this->id = $id; }
-	public function setDescription($d) { $this->description = $d; }
 	public function setVersion($v) { $this->version = $v; }
 	public function setPgvVersion($v) { $this->pgvVersion = $v; }
 	public function setMenuorder($o) { $this->menuorder = $o; }
@@ -175,37 +187,12 @@ abstract class WT_Module {
 	 */
 	public function hasTab() { return false; }
 	/**
-	 * does this module implement a menu
-	 * should be overidden in extending classes
-	 * @return boolean
-	 */
-	public function hasMenu() { return false; }
-
-	/**
 	 * does this module implement a sidebar
 	 * should be overidden in extending classes
 	 * @return boolean
 	 */
 	public function hasSidebar() { return false; }
 
-
-	/**
-	 * does this module implement a menu
-	 * should be overidden in extending classes
-	 * @return boolean
-	 */
-	public function getConfigLink() { return $this->configLink; }
-
-	/**
-	 * get the menu for this module
-	 * should be overidden in extending classes
-	 * @return Menu
-	 */
-	public function &getMenu() { return null; }
-	/**
-	 * get the tab for this module
-	 * @return Tab
-	 */
 	public function &getTab() { return null; }
 
 	/**
@@ -441,7 +428,7 @@ abstract class WT_Module {
 		foreach(self::$default_menus as $modname) {
 			if (isset($modules[$modname])) {
 				$mod = $modules[$modname];
-				if ($mod->hasMenu()) {
+				if ($mod instanceof WT_Module_Menu) {
 					$mod->setMenuorder($taborder);
 					$mod->setAccessLevel(WT_PRIV_PUBLIC, $ged_id);
 					$mod->setMenuEnabled(WT_PRIV_PUBLIC, $ged_id);

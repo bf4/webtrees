@@ -213,12 +213,12 @@ print_header(i18n::translate('Module Administration'));
 foreach($modules as $mod) {
 	?><tr>
 	<td class="list_value"><?php if ($mod->getId()>0) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
-	<td class="list_value"><?php if ($mod->getConfigLink()) echo '<a href="'.$mod->getConfigLink().'"><img class="adminicon" src="'.$WT_IMAGE_DIR.'/'.$WT_IMAGES["admin"]["small"].'" border="0" alt="'.$mod->getName().'" /></a>'; ?></td>
+	<td class="list_value"><?php if ($mod instanceof WT_Module_Config) echo '<a href="', $mod->getConfigLink(), '"><img class="adminicon" src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["admin"]["small"], '" border="0" alt="', $mod->getName(), '" /></a>'; ?></td>
 	<td class="list_value"><?php echo $mod->getTitle()?></td>
 	<td class="list_value_wrap"><?php echo $mod->getDescription()?></td>
 	<td class="list_value"><?php echo $mod->getVersion() . " / " . $mod->getPgvVersion() ?></td>
 	<td class="list_value"><?php if ($mod->hasTab()) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
-	<td class="list_value"><?php if ($mod->hasMenu()) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
+	<td class="list_value"><?php if ($mod instanceof WT_ModuleMenu) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
 	<td class="list_value"><?php if ($mod->hasSidebar()) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
 	<td class="list_value_wrap">
 	  <table>
@@ -258,7 +258,7 @@ foreach($modules as $mod) {
 uasort($modules, "WT_Module::compare_menu_order");
 $order = 1;
 foreach($modules as $mod) {
-	if(!$mod->hasMenu()) continue;
+	if(!$mod instanceof WT_Module_Menu) continue;
 if ($mod->getMenuorder()==0) $mod->setMenuorder($order);
 	?><tr class="sortme">
 	<td class="list_value"><?php echo $mod->getTitle()?></td>

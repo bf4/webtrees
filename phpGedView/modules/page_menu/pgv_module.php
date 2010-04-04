@@ -35,45 +35,43 @@ if (!defined('WT_WEBTREES')) {
 require_once("includes/classes/class_module.php");
 require_once("modules/notes/notes.php");
 
-class page_menu_WT_Module extends WT_Module {
+class page_menu_WT_Module extends WT_Module implements WT_Module_Menu {
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
 
+	// Extend WT_Module
 	public function getTitle() {
 		return i18n::translate('Page Menu');
 	}
 
+	// Extend WT_Module
 	public function getDescription() {
 		return i18n::translate('Adds a menu to the menu bar which provides page specific options.');
 	}
 
-	/**
-	 * does this module implement a menu
-	 * should be overidden in extending classes
-	 * @return boolean
-	 */
-	public function hasMenu() { return true; }
-	/**
-	 * does this module implement a tab
-	 * should be overidden in extending classes
-	 * @return boolean
-	 */
-	public function hasTab() { return false; }
+	// Implement WT_Module_Menu
+	public function defaultMenuAccessLevel() {
+		return WT_PRIV_PUBLIC;
+	}
+
+	// Implement WT_Module_Menu
+	public function defaultMenuOrder() {
+		return 99;
+	}
 	
-	/**
-	 * get the menu for this tab
-	 * should be overidden in extending classes
-	 * @return Menu
-	 */
-	public function &getMenu() { 
-		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
-		global $controller;
+	// Implement WT_Module_Menu
+	public function getMenu() { 
+		global $TEXT_DIRECTION, $controller;
 
 		$menu = null;
-		if (empty($controller)) return null;
-
-		if($TEXT_DIRECTION == 'rtl'){$ff = '_rtl';}else{$ff = '';}
-
+		if (empty($controller)) {
+			return null;
+		}
+		if ($TEXT_DIRECTION == 'rtl') {
+			$ff = '_rtl';
+		} else {
+			$ff = '';
+		}
 		if (method_exists($controller, 'getOtherMenu')) {	
 			$menu = $controller->getOtherMenu();
 			$menu->addClass('menuitem'.$ff, 'menuitem_hover'.$ff, 'submenu'.$ff, 'icon_large_gedcom');
@@ -81,18 +79,17 @@ class page_menu_WT_Module extends WT_Module {
 		}
 		if (WT_USER_CAN_EDIT && method_exists($controller, 'getEditMenu')) {
 			$editmenu = $controller->getEditMenu();
-			if ($menu==null) $menu = $editmenu;
-			else {
+			if ($menu==null) {
+				$menu = $editmenu;
+			} else {
 				$menu->addLabel($editmenu->label, 'down');
 				$menu->addIcon($editmenu->icon);
 				$menu->addSeparator();
-				foreach($editmenu->submenus as $sub) {
+				foreach ($editmenu->submenus as $sub) {
 					$menu->addSubMenu($sub);
 				}
 			}
 		}
-
 		return $menu;
 	}
 }
-?>

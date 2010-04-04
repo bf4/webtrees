@@ -40,10 +40,12 @@ class all_tab_WT_Module extends WT_Module {
 	protected $pgvVersion = '4.2.2';
 	protected $_tab = null;
 	
+	// Extend class WT_Module
 	public function getTitle() {
 		return i18n::translate('All');
 	}
 
+	// Extend class WT_Module
 	public function getDescription() {
 		return i18n::translate('Adds a tab to the individual page which displays the contents of all other active tabs.');
 	}
@@ -60,12 +62,6 @@ class all_tab_WT_Module extends WT_Module {
 		return $this->_tab;
 	}
 
-	/**
-	 * does this module implement a menu
-	 * should be overidden in extending classes
-	 * @return boolean
-	 */
-	public function hasMenu() { return false; }
 	/**
 	 * does this module implement a tab
 	 * should be overidden in extending classes

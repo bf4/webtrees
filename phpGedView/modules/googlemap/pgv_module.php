@@ -32,29 +32,29 @@ if (!defined('WT_WEBTREES')) {
 	exit;
 }
 
-require_once("includes/classes/class_module.php");
-require_once("modules/googlemap/googlemap.php");
+require_once WT_ROOT.'includes/classes/class_module.php';
+require_once WT_ROOT.'modules/googlemap/googlemap.php';
 
-class googlemap_WT_Module extends WT_Module {
+class googlemap_WT_Module extends WT_Module implements WT_Module_Config {
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
-	protected $configLink = 'module.php?mod=googlemap&pgvaction=admin-config';
 	protected $_tab = null;
 
+	// Extend WT_Module
 	public function getTitle() {
 		return i18n::translate('Googlemap');
 	}
 
+	// Extend WT_Module
 	public function getDescription() {
 		return i18n::translate('Adds a tab to the individual page which maps the events of an individual and their close relatives on a Google map.');
 	}
 
-	/**
-	 * does this module implement a menu
-	 * should be overidden in extending classes
-	 * @return boolean
-	 */
-	public function hasMenu() { return false; }
+	// Implement WT_Module_Config
+	public function getConfigLink() {
+		return 'module.php?mod=googlemap&pgvaction=admin-config';
+	}
+
 	/**
 	 * does this module implement a tab
 	 * should be overidden in extending classes

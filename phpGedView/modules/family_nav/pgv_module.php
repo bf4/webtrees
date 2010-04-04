@@ -41,10 +41,12 @@ class family_nav_WT_Module extends WT_Module {
 	protected $_tab = null;
 	protected $_sidebar = null;
 
+	// Extend WT_Module
 	public function getTitle() {
 		return i18n::translate('Family Navigator');
 	}
 
+	// Extend WT_Module
 	public function getDescription() {
 		return i18n::translate('Adds a tab to the individual page which displays a family navigator on the individual page.');
 	}
@@ -60,12 +62,6 @@ class family_nav_WT_Module extends WT_Module {
 		return $this->_sidebar; 
 	}
 
-	/**
-	 * does this module implement a menu
-	 * should be overidden in extending classes
-	 * @return boolean
-	 */
-	public function hasMenu() { return false; }
 	/**
 	 * does this module implement a tab
 	 * should be overidden in extending classes

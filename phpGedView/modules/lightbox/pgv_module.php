@@ -32,21 +32,27 @@ if (!defined('WT_WEBTREES')) {
 	exit;
 }
 
-require_once("includes/classes/class_module.php");
-require_once("modules/lightbox/lightbox.php");
+require_once WT_ROOT.'includes/classes/class_module.php';
+require_once WT_ROOT.'modules/lightbox/lightbox.php';
 
-class lightbox_WT_Module extends WT_Module {
+class lightbox_WT_Module extends WT_Module implements WT_Module_Config {
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
-	protected $configLink = 'module.php?mod=lightbox&pgvaction=lb_editconfig';
 	protected $_tab = null;
 
+	// Extend WT_Module
 	public function getTitle() {
 		return i18n::translate('Album');
 	}
 
+	// Extend WT_Module
 	public function getDescription() {
 		return i18n::translate('Adds a tab (Album) to the individual page which an alternate way to view and work with media.');
+	}
+
+	// Implement WT_Module_Config
+	public function getConfigLink() {
+		return 'module.php?mod=lightbox&pgvaction=lb_editconfig';
 	}
 
 	/**
@@ -61,12 +67,6 @@ class lightbox_WT_Module extends WT_Module {
 		return $this->_tab;
 	}
 
-	/**
-	 * does this module implement a menu
-	 * should be overidden in extending classes
-	 * @return boolean
-	 */
-	public function hasMenu() { return false; }
 	/**
 	 * does this module implement a tab
 	 * should be overidden in extending classes

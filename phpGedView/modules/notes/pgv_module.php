@@ -39,20 +39,16 @@ class notes_WT_Module extends WT_Module {
 	protected $pgvVersion = '4.2.2';
 	protected $_tab = null;
 
+	// Extend WT_Module
 	public function getTitle() {
 		return i18n::translate('Notes');
 	}
 
+	// Extend WT_Module
 	public function getDescription() {
 		return i18n::translate('Adds a tab to the individual page which displays the notes of an individual.');
 	}
 
-	/**
-	 * does this module implement a menu
-	 * should be overidden in extending classes
-	 * @return boolean
-	 */
-	public function hasMenu() { return false; }
 	/**
 	 * does this module implement a tab
 	 * should be overidden in extending classes

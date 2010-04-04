@@ -34,25 +34,21 @@ if (!defined('WT_WEBTREES')) {
 require_once(WT_ROOT."includes/classes/class_module.php");
 require_once(WT_ROOT."modules/clippings/clippings.php");
 
-class clippings_WT_Module extends WT_Module {
+class clippings_WT_Module extends WT_Module implements WT_Module_Menu {
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
 	protected $_sidebar = null;
 	
+	// Extend class WT_Module
 	public function getTitle() {
 		return i18n::translate('Clippings Cart');
 	}
 
+	// Extend class WT_Module
 	public function getDescription() {
 		return i18n::translate('Provides a clippings cart, to copy records for export/download.');
 	}
 
-	/**
-	 * does this module implement a menu
-	 * should be overidden in extending classes
-	 * @return boolean
-	 */
-	public function hasMenu() { return true; }
 	public function hasSidebar() { return true; }
 	
 	/**
@@ -68,23 +64,28 @@ class clippings_WT_Module extends WT_Module {
 		return $this->_sidebar; 
 	}
 	
-	/**
-	 * get the menu for this tab
-	 * should be overidden in extending classes
-	 * @return Menu
-	 */
-	public function &getMenu() { 
-		global $ENABLE_CLIPPINGS_CART;
-		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $SEARCH_SPIDER;
+	// Implement WT_Module_Menu
+	public function defaultMenuAccessLevel() {
+		return WT_PRIV_PUBLIC;
+	}
+
+	// Implement WT_Module_Menu
+	public function defaultMenuOrder() {
+		return 99;
+	}
+	
+	// Implement WT_Module_Menu
+	public function getMenu() { 
+		global $ENABLE_CLIPPINGS_CART, $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
-		if (!empty($SEARCH_SPIDER)) {
-			$menu = new Menu("", "", "");
-			return $menu;
+		if ($SEARCH_SPIDER) {
+			return new Menu("", "", "");
 		}
 		//-- main clippings menu item
-		$menu = new Menu(i18n::translate('Family Tree Clippings Cart'), encode_url('module.php?mod=clippings&amp;ged='.$GEDCOM), "down");
-		if (!empty($WT_IMAGES["clippings"]["large"]))
+		$menu = new Menu($this->getDescription(), encode_url('module.php?mod=clippings&amp;ged='.$GEDCOM), "down");
+		if (!empty($WT_IMAGES["clippings"]["large"])) {
 			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["clippings"]["large"]);
+		}
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_clippings");
 
 		return $menu;
