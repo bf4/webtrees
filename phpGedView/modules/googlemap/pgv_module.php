@@ -36,9 +36,6 @@ require_once WT_ROOT.'includes/classes/class_module.php';
 require_once WT_ROOT.'modules/googlemap/googlemap.php';
 
 class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Module_Tab {
-	protected $version = '4.2.2';
-	protected $pgvVersion = '4.2.2';
-
 	// Extend WT_Module
 	public function getTitle() {
 		return i18n::translate('Googlemap');

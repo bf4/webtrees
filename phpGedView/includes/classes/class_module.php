@@ -73,13 +73,6 @@ abstract class WT_Module {
 	private $menuorder = 99;
 	private $sidebarorder = 99;
 
-	// -- overide in base classes
-	protected $version = '0';
-	protected $pgvVersion = '4.2.2';
-	protected $menu = null;
-	protected $tab = null;
-	protected $sidebar = null;
-
 	protected $controller;
 
 	public static $default_tabs = array('family_nav', 'personal_facts', 'sources_tab', 'notes', 'media', 'lightbox', 'tree', 'googlemap', 'relatives', 'all_tab');
@@ -128,8 +121,6 @@ abstract class WT_Module {
 	public function getTaborder() { return $this->taborder; }
 	public function getMenuorder() { return $this->menuorder; }
 	public function getSidebarorder() { return $this->sidebarorder; }
-	public function getVersion() { return $this->version; }
-	public function getPgvVersion() { return $this->pgvVersion; }
 	public function getAccessLevel($gedId = WT_GED_ID) {
 		if (!isset($this->accessLevel[$gedId])) $this->accessLevel[$gedId] = WT_PRIV_PUBLIC;
 		return $this->accessLevel[$gedId];
@@ -159,8 +150,6 @@ abstract class WT_Module {
 		return $this->sidebarEnabled;
 	}
 	public function setId($id) { $this->id = $id; }
-	public function setVersion($v) { $this->version = $v; }
-	public function setPgvVersion($v) { $this->pgvVersion = $v; }
 	public function setMenuorder($o) { $this->menuorder = $o; }
 	public function setTaborder($o) { $this->taborder = $o; }
 	public function setSidebarorder($o) { $this->sidebarorder = $o; }
@@ -280,11 +269,8 @@ abstract class WT_Module {
 						$obj = new $menu_class();
 						$mod = WT_Module::getModuleByName($entry);
 						if ($mod!=null) {
-							$mod->setVersion($obj->getVersion());
-							$mod->setPgvVersion($obj->getPgvVersion());
 							$modules[$entry] = $mod;
-						}
-						else {
+						} else {
 							$modules[$entry] = $obj;
 						}
 					}

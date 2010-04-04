@@ -201,10 +201,9 @@ print_header(i18n::translate('Module Administration'));
       <th class="list_label"><?php echo i18n::translate('Mod Settings')?></th>
       <th class="list_label"><?php echo i18n::translate('Module Name')?></th>
       <th class="list_label"><?php echo i18n::translate('Description')?></th>
-      <th class="list_label"><?php echo i18n::translate('Version / PGV')?></th>
-      <th class="list_label"><?php echo i18n::translate('Tab?')?></th>
-      <th class="list_label"><?php echo i18n::translate('Menu?')?></th>
-      <th class="list_label"><?php echo i18n::translate('Sidebar?')?></th>
+      <th class="list_label"><?php echo i18n::translate('Tab')?></th>
+      <th class="list_label"><?php echo i18n::translate('Menu')?></th>
+      <th class="list_label"><?php echo i18n::translate('Sidebar')?></th>
       <th class="list_label"><?php echo i18n::translate('Access Level')?></th>
       </tr>
     </thead>
@@ -216,7 +215,6 @@ foreach($modules as $mod) {
 	<td class="list_value"><?php if ($mod instanceof WT_Module_Config) echo '<a href="', $mod->getConfigLink(), '"><img class="adminicon" src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["admin"]["small"], '" border="0" alt="', $mod->getName(), '" /></a>'; ?></td>
 	<td class="list_value"><?php echo $mod->getTitle()?></td>
 	<td class="list_value_wrap"><?php echo $mod->getDescription()?></td>
-	<td class="list_value"><?php echo $mod->getVersion() . " / " . $mod->getPgvVersion() ?></td>
 	<td class="list_value"><?php if ($mod instanceof WT_Module_Tab) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
 	<td class="list_value"><?php if ($mod instanceof WT_Module_Menu) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
 	<td class="list_value"><?php if ($mod instanceof WT_Module_Sidebar) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>

@@ -37,9 +37,6 @@ require_once WT_ROOT.'includes/functions/functions_charts.php';
 require_once WT_ROOT.'includes/controllers/individual_ctrl.php';
 
 class family_nav_WT_Module extends WT_Module implements WT_Module_Sidebar, WT_Module_Tab {
-	protected $version = '4.2.2';
-	protected $pgvVersion = '4.2.2';
-
 	// Extend WT_Module
 	public function getTitle() {
 		return i18n::translate('Family Navigator');
