@@ -1644,6 +1644,7 @@ class GedcomDate {
 		case 'to':     /* I18N: Gedcom TO dates      */ $tmp=i18n::translate('to %s',               $d1.$conv1); break;
 		case 'betand': /* I18N: Gedcom BET-AND dates */ $tmp=i18n::translate('between %s and %s',   $d1.$conv1, $d2.$conv2); break;
 		case 'fromto': /* I18N: Gedcom FROM-TO dates */ $tmp=i18n::translate('from %s to %s',       $d1.$conv1, $d2.$conv2); break;
+		default: $tmp=i18n::translate('Invalid date'); break; // e.g. BET without AND
 		}
 
 		// Return at least one printable character, for better formatting in tables.
