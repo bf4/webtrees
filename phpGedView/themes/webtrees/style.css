@@ -70,6 +70,10 @@ ul {
 	margin: 8px;
 }
 
+.edit_link:after {
+	content: url(images/small/edit.png);
+}
+
 .button {
 	width: 60px;
 }
