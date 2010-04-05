@@ -1612,7 +1612,7 @@ dt {
 .ui-accordion .ui-accordion-header a { color: #FFFFFF ;}
 
 /* Tabs ----------------------------------*/
-.ui-widget-header { border: 1px solid #fff; background: #af2604 }
+.ui-widget-header { border: 1px solid #fff; background: #af2604 !important; }
 .ui-widget-content a:hover {color: #f50;}
 .ui-state-active, .ui-widget-content .ui-state-active { border: #999; }
 
@@ -1643,8 +1643,7 @@ dt {
 /* Override inline code in --------------------*/
 #sidebar {  
 background: #fff !important;
-	margin-top: 8px;
-	margin-right: 19px;
+margin: 15px 18px 15px 15px;
 }
 
 /* Navigator and Flyout menu Styles -----------*/
