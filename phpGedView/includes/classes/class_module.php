@@ -40,18 +40,18 @@ interface WT_Module_Config {
 }
 
 interface WT_Module_Menu {
-	public function defaultMenuOrder(); // 0-127
+	public function defaultMenuOrder(); // 0-127.  Use multiples of 10 to allow third-party modules to choose position
 }
 
 interface WT_Module_Sidebar {
-	public function defaultSidebarOrder(); // 0-127
+	public function defaultSidebarOrder(); // 0-127.  Use multiples of 10 to allow third-party modules to choose position
 	public function getSidebarContent();
 	public function getSidebarAjaxContent();
 	public function hasSidebarContent();
 }
 
 interface WT_Module_Tab {
-	public function defaultTabOrder(); // 0-127
+	public function defaultTabOrder(); // 0-127.  Use multiples of 10 to allow third-party modules to choose position
 	public function getTabContent();
 	public function hasTabContent();
 	public function canLoadAjax();
