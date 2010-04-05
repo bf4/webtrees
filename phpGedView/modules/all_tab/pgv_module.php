@@ -47,7 +47,7 @@ class all_tab_WT_Module extends WT_Module implements WT_Module_Tab {
 
 	// Implement WT_Module_Tab
 	public function defaultTabOrder() {
-		return 99;
+		return 90;
 	}
 
 	// Implement WT_Module_Tab

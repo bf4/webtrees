@@ -53,7 +53,7 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 
 	// Implement WT_Module_Tab
 	public function defaultTabOrder() {
-		return 99;
+		return 80;
 	}
 	
 	// Implement WT_Module_Tab

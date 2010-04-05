@@ -47,7 +47,7 @@ class notes_WT_Module extends WT_Module implements WT_Module_Tab {
 
 	// Implement WT_Module_Tab
 	public function defaultTabOrder() {
-		return 99;
+		return 40;
 	}
 	
 	protected $noteCount = null;

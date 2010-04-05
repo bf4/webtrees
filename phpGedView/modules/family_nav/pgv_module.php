@@ -92,7 +92,7 @@ class family_nav_WT_Module extends WT_Module implements WT_Module_Sidebar, WT_Mo
 
 	// Implement WT_Module_Tab
 	public function defaultTabOrder() {
-		return 99;
+		return 0;
 	}
 	
 	public function getLinkUrl(&$person) {
