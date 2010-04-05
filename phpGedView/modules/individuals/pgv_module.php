@@ -46,11 +46,6 @@ class individuals_WT_Module extends WT_Module implements WT_Module_Sidebar {
 	}
 
 	// Implement WT_Module_Sidebar
-	public function defaultSidebarAccessLevel() {
-		return WT_PRIV_PUBLIC;
-	}
-
-	// Implement WT_Module_Sidebar
 	public function defaultSidebarOrder() {
 		return 99;
 	}

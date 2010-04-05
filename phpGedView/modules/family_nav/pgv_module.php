@@ -48,11 +48,6 @@ class family_nav_WT_Module extends WT_Module implements WT_Module_Sidebar, WT_Mo
 	}
 
 	// Implement WT_Module_Sidebar
-	public function defaultSidebarAccessLevel() {
-		return WT_PRIV_PUBLIC;
-	}
-
-	// Implement WT_Module_Sidebar
 	public function defaultSidebarOrder() {
 		return 99;
 	}
@@ -93,11 +88,6 @@ class family_nav_WT_Module extends WT_Module implements WT_Module_Sidebar, WT_Mo
 	// Implement WT_Module_Sidebar
 	public function getSidebarAjaxContent() {
 		return "";
-	}
-
-	// Implement WT_Module_Tab
-	public function defaultTabAccessLevel() {
-		return WT_PRIV_PUBLIC;
 	}
 
 	// Implement WT_Module_Tab

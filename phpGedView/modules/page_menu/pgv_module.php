@@ -46,11 +46,6 @@ class page_menu_WT_Module extends WT_Module implements WT_Module_Menu {
 	}
 
 	// Implement WT_Module_Menu
-	public function defaultMenuAccessLevel() {
-		return WT_PRIV_PUBLIC;
-	}
-
-	// Implement WT_Module_Menu
 	public function defaultMenuOrder() {
 		return 99;
 	}

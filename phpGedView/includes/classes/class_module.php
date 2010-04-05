@@ -40,12 +40,10 @@ interface WT_Module_Config {
 }
 
 interface WT_Module_Menu {
-	public function defaultMenuAccessLevel(); // WT_PRIV_HIDE, WT_PRIV_PUBLIC, WT_PRIV_USER, WT_PRIV_ADMIN
 	public function defaultMenuOrder(); // 0-127
 }
 
 interface WT_Module_Sidebar {
-	public function defaultSidebarAccessLevel(); // WT_PRIV_HIDE, WT_PRIV_PUBLIC, WT_PRIV_USER, WT_PRIV_ADMIN
 	public function defaultSidebarOrder(); // 0-127
 	public function getSidebarContent();
 	public function getSidebarAjaxContent();
@@ -53,7 +51,6 @@ interface WT_Module_Sidebar {
 }
 
 interface WT_Module_Tab {
-	public function defaultTabAccessLevel(); // WT_PRIV_HIDE, WT_PRIV_PUBLIC, WT_PRIV_USER, WT_PRIV_ADMIN
 	public function defaultTabOrder(); // 0-127
 	public function getTabContent();
 	public function hasTabContent();
@@ -83,8 +80,14 @@ abstract class WT_Module {
 	abstract public function getTitle();       // To label tabs, etc.
 	abstract public function getDescription(); // A sentence describing what this module does
 
+	// This is the default for all the module's components.
+	// Returns one of: WT_PRIV_HIDE, WT_PRIV_PUBLIC, WT_PRIV_USER, WT_PRIV_ADMIN
+	public function defaultAccessLevel() {
+		return WT_PRIV_PUBLIC;
+	}
+
 	// This is an internal name, used to generate identifiers
-	public function getName() {
+	final public function getName() {
 		return str_replace('_WT_Module', '', get_class($this));
 	}
 
