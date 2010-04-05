@@ -44,9 +44,13 @@ class clippings_WT_Module extends WT_Module implements WT_Module_Menu, WT_Module
 		return i18n::translate('Provides a clippings cart, to copy records for export/download.');
 	}
 
+	// Extend class WT_Module
+	public function defaultAccessLevel() {
+		return WT_PRIV_USER;
+	}
 	// Implement WT_Module_Menu
 	public function defaultMenuOrder() {
-		return 99;
+		return 20;
 	}
 	
 	// Implement WT_Module_Menu
@@ -68,7 +72,7 @@ class clippings_WT_Module extends WT_Module implements WT_Module_Menu, WT_Module
 
 	// Implement WT_Module_Sidebar
 	public function defaultSidebarOrder() {
-		return 99;
+		return 50;
 	}
 	
 	// Impelement WT_Module_Sidebar

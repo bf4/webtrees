@@ -49,7 +49,7 @@ class family_nav_WT_Module extends WT_Module implements WT_Module_Sidebar, WT_Mo
 
 	// Implement WT_Module_Sidebar
 	public function defaultSidebarOrder() {
-		return 99;
+		return 10;
 	}
 	
 	// Implement WT_Module_Sidebar
