@@ -134,7 +134,7 @@ class wtServiceLogic extends GenealogyService {
 			$return = new SOAP_Value('result', '{urn:'.$this->__namespace.'}authResult', $return);
 			$msg = "Guest Web Service Authenticate ";
 			if (!empty($_SERVER['HTTP_USER_AGENT'])) $msg .= $_SERVER['HTTP_USER_AGENT'];
-			AddToLog($msg);
+			AddToLog($msg, 'auth');
 			return $return;
 		}
 
@@ -153,7 +153,7 @@ class wtServiceLogic extends GenealogyService {
 			$return = new SOAP_Value('result', '{urn:'.$this->__namespace.'}authResult', $return);
 			$msg = "$username Web Service Authenticate ";
 			if (!empty($_SERVER['HTTP_USER_AGENT'])) $msg .= $_SERVER['HTTP_USER_AGENT'];
-			AddToLog($msg);
+			AddToLog($msg, 'auth');
 			return $return;
 
 		}
@@ -216,15 +216,15 @@ class wtServiceLogic extends GenealogyService {
 		$public_vars = array("CHARACTER_SET","GEDCOM","PEDIGREE_ROOT_ID","LANGUAGE");
 		//-- only allow public vars to non authenticated users
 		if (!empty($var) && (in_array($var, $public_vars)) && (isset($GLOBALS[$var]))) {
-			addDebugLog("getVar var=$var SUCCESS ".$GLOBALS[$var]);
+			addToLog("getVar var=$var SUCCESS ".$GLOBALS[$var], 'debug');
 			return $GLOBALS[$var];
 		}
 		//-- authenticated users can access any var not in $CONFIG_VARS
 		elseif ((!empty($pgv_user))&&(!empty($var))&&(isset($GLOBALS[$var]))&&(!in_array($var, $CONFIG_VARS))) {
-			addDebugLog("getVar var=$var SUCCESS\n".$GLOBALS[$var]);
+			addToLog("getVar var=$var SUCCESS\n".$GLOBALS[$var], 'debug');
 			return $GLOBALS[$var];
 		} else {
-			addDebugLog("getVar var=$var ERROR 13: Invalid variable specified.  Please provide a variable.");
+			addToLog("getVar var=$var ERROR 13: Invalid variable specified.  Please provide a variable.", 'debug');
 			return new SOAP_Fault("ERROR 13: Invalid variable specified.\n", 'Client', '', null);
 		}
 	}
@@ -243,15 +243,15 @@ class wtServiceLogic extends GenealogyService {
 				$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
 				$xref = append_gedrec($gedrec);
 				if ($xref) {
-					addDebugLog("append gedrec=$gedrec SUCCESS\n$xref");
+					addToLog("append gedrec=$gedrec SUCCESS\n$xref"i, 'debug');
 					return $xref;
 				}
 			} else {
-				addDebugLog("append gedrec=$gedrec ERROR 11: No write privileges for this record.");
+				addToLog("append gedrec=$gedrec ERROR 11: No write privileges for this record.", 'debug');
 				return new SOAP_Fault("ERROR 11: No write privileges for this record.", 'Client', '', null);
 			}
 		} else {
-			addDebugLog("append ERROR 8: No gedcom record provided.  Unable to process request.");
+			addToLog("append ERROR 8: No gedcom record provided.  Unable to process request.", 'debug');
 			return new SOAP_Fault("ERROR 8: No write privileges for this record.", 'Client', '', null);
 		}
 	}
@@ -269,15 +269,15 @@ class wtServiceLogic extends GenealogyService {
 			if (((empty($_SESSION['readonly']))&& WT_USER_CAN_EDIT)&&(displayDetailsById($RID))) {
 				$success = delete_gedrec($RID);
 				if ($success) {
-					addDebugLog("delete RID=$RID SUCCESS");
+					addToLog("delete RID=$RID SUCCESS", 'debug');
 					return "delete RID=$RID SUCCESS";
 				}
 			} else {
-				addDebugLog("delete RID=$RID ERROR 11: No write privileges for this record.");
+				addToLog("delete RID=$RID ERROR 11: No write privileges for this record.", 'debug');
 				return new SOAP_Fault("ERROR 11: No write privileges for this record.", 'Client', '', null);
 			}
 		} else {
-			addDebugLog("delete ERROR 3: No gedcom id specified.  Please specify a xref.");
+			addToLog("delete ERROR 3: No gedcom id specified.  Please specify a xref.", 'debug');
 			return new SOAP_Fault("ERROR 3: No write privileges for this record.", 'Client', '', null);
 		}
 	}
@@ -387,7 +387,7 @@ class wtServiceLogic extends GenealogyService {
 						$result = $this->createPerson($PID, $gedrec, "result");
 						$msg = "Person record $PID access through Web Service ";
 						if (!empty($_SERVER['HTTP_USER_AGENT'])) $msg .= $_SERVER['HTTP_USER_AGENT'];
-						AddToLog($msg);
+						AddToLog($msg, 'auth');
 						return $result;
 					} else {
 						return new SOAP_Fault("Unable to find person with ID ".$PID,'Client','',null);
@@ -569,7 +569,7 @@ class wtServiceLogic extends GenealogyService {
 						$gedrecords = $gedrecords . "\n".trim($gedrec);
 						$msg = "GEDCOM record $xref1 accessed through Web Service ";
 						if (!empty($_SERVER['HTTP_USER_AGENT'])) $msg .= $_SERVER['HTTP_USER_AGENT'];
-						AddToLog($msg);
+						AddToLog($msg, 'auth');
 					} else {
 						return new SOAP_Fault("No Results found for PID:".$PID,'Client','',null);
 					}
@@ -606,7 +606,7 @@ class wtServiceLogic extends GenealogyService {
 		// 10 JAN 2005 only will take the standard date format of a gedcom
 
 		if (strlen($query) > 1) {
-			AddToLog('Search query: ' . $query);
+			AddToLog('Search query: ' . $query, 'auth');
 			// this is use to figure out if it is just a keyword or a advanced search
 			if (!(strstr($query, 'NAME') || strstr($query, 'BIRTHDATE') ||
 					strstr($query, 'DEATHDATE') || strstr($query, 'BIRTHPLACE') ||
@@ -937,7 +937,7 @@ class wtServiceLogic extends GenealogyService {
 		if (empty($position)) $position='first';
 		if (empty($type)) $type='INDI';
 		if ((empty($type))||(!in_array($type, array("INDI","FAM","SOUR","REPO","NOTE","OBJE","OTHER")))) {
-			addDebugLog("getXref type=$type position=$position ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER");
+			addToLog("getXref type=$type position=$position ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER", 'debug');
 			//print "ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER\n";
 			return new SOAP_Fault('ERROR 18: Invalid $type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER', 'Server', '', null);
 		}
@@ -959,22 +959,22 @@ class wtServiceLogic extends GenealogyService {
 		reset($myindilist);
 		if ($position=='first') {
 			$xref = current($myindilist);
-			addDebugLog("getXref type=$type position=$position SUCCESS\n$xref");
+			addToLog("getXref type=$type position=$position SUCCESS\n$xref", 'debug');
 			return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', array($xref));
 		} elseif ($position=='last') {
 			$xref = end($myindilist);
-			addDebugLog("getXref type=$type position=$position SUCCESS\n$xref");
+			addToLog("getXref type=$type position=$position SUCCESS\n$xref", 'debug');
 			return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', array($xref));
 		} elseif ($position=='next') {
 			// TODO: $xref can never be set?  This code looks like it was just copied from client.php
 			if (!empty($xref)) {
 				$xref1 = get_next_xref($xref);
 				if ($xref1) {
-					addDebugLog("getXref type=$type position=$position xref=$xref SUCCESS\n$xref1");
+					addToLog("getXref type=$type position=$position xref=$xref SUCCESS\n$xref1", 'debug');
 					return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', array($xref));
 				}
 			} else {
-				addDebugLog("getXref type=$type position=$position ERROR 3: No gedcom id specified.  Please specify a xref.");
+				addToLog("getXref type=$type position=$position ERROR 3: No gedcom id specified.  Please specify a xref.", 'debug');
 				//print "ERROR 3: No gedcom id specified.  Please specify a xref.\n";
 				return new SOAP_Fault('ERROR 3: No gedcom id specified.  Please specify a xref.', 'Server', '', null);
 			}
@@ -983,37 +983,37 @@ class wtServiceLogic extends GenealogyService {
 			if (!empty($xref)) {
 				$xref1 = get_prev_xref($xref);
 				if ($xref1) {
-					addDebugLog("getXref type=$type position=$position xref=$xref SUCCESS\n$xref1");
+					addToLog("getXref type=$type position=$position xref=$xref SUCCESS\n$xref1", 'debug');
 					return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', array($xref));
 				}
 			} else {
-				addDebugLog("getXref type=$type position=$position ERROR 3: No gedcom id specified.  Please specify a xref.");
+				addToLog("getXref type=$type position=$position ERROR 3: No gedcom id specified.  Please specify a xref.", 'debug');
 				//print "ERROR 3: No gedcom id specified.  Please specify a xref.\n";
 				return new SOAP_Fault('ERROR 3: No gedcom id specified.  Please specify a xref.', 'Server', '', null);
 			}
 		} elseif ($position=='all') {
-			addDebugLog("getXref type=$type position=$position ");
+			addToLog("getXref type=$type position=$position ", 'debug');
 			return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', $myindilist);
 		} elseif ($position=='new') {
 			if (empty($_SESSION['readonly']) && WT_USER_CAN_EDIT) {
 				if ((empty($type))||(!in_array($type, array("INDI","FAM","SOUR","REPO","NOTE","OBJE","OTHER")))) {
-					addDebugLog("getXref type=$type position=$position ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER");
+					addToLog("getXref type=$type position=$position ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER", 'debug');
 					//print "ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER\n";
 					return new SOAP_Fault('ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER', 'Server', '', null);
 				}
 				$gedrec = "0 @REF@ $type";
 				$xref = append_gedrec($gedrec);
 				if ($xref) {
-					addDebugLog("getXref type=$type position=$position SUCCESS\n$xref");
+					addToLog("getXref type=$type position=$position SUCCESS\n$xref", 'debug');
 					return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', array($xref));
 				}
 			} else {
-				addDebugLog("getXref type=$type position=$position ERROR 11: No write privileges for this record.");
+				addToLog("getXref type=$type position=$position ERROR 11: No write privileges for this record.", 'debug');
 				//print "ERROR 11: No write privileges for this record.\n";
 				return new SOAP_Fault('ERROR 11: No write privileges for this record', 'Server', '', null);
 			}
 		} else {
-			addDebugLog("getXref type=$type position=$position ERROR 17: Unknown position reference.  Valid values are first, last, prev, next.");
+			addToLog("getXref type=$type position=$position ERROR 17: Unknown position reference.  Valid values are first, last, prev, next.", 'debug');
 			//print "ERROR 17: Unknown position reference.  Valid values are first, last, prev, next.\n";
 			return new SOAP_Fault('ERROR 17: Unknown position reference.  Valid values are first, last, prev, next', 'Server', '', null);
 		}
