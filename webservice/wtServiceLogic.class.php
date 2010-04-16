@@ -243,7 +243,7 @@ class wtServiceLogic extends GenealogyService {
 				$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
 				$xref = append_gedrec($gedrec);
 				if ($xref) {
-					addToLog("append gedrec=$gedrec SUCCESS\n$xref"i, 'debug');
+					addToLog("append gedrec=$gedrec SUCCESS\n$xref", 'debug');
 					return $xref;
 				}
 			} else {
