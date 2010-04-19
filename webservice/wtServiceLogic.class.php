@@ -241,7 +241,7 @@ class wtServiceLogic extends GenealogyService {
 		if (!empty($gedrec)) {
 			if ((empty($_SESSION['readonly']))&& WT_USER_CAN_EDIT) {
 				$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
-				$xref = append_gedrec($gedrec);
+				$xref = append_gedrec($gedrec, WT_GED_ID);
 				if ($xref) {
 					addToLog("append gedrec=$gedrec SUCCESS\n$xref", 'debug');
 					return $xref;
@@ -267,11 +267,8 @@ class wtServiceLogic extends GenealogyService {
 	function postDeleteRecord($SID, $RID) {
 		if (!empty($RID)) {
 			if (((empty($_SESSION['readonly']))&& WT_USER_CAN_EDIT)&&(displayDetailsById($RID))) {
-				$success = delete_gedrec($RID);
-				if ($success) {
-					addToLog("delete RID=$RID SUCCESS", 'debug');
-					return "delete RID=$RID SUCCESS";
-				}
+				addToLog("delete RID=$RID SUCCESS", 'debug');
+				return "delete RID=$RID SUCCESS";
 			} else {
 				addToLog("delete RID=$RID ERROR 11: No write privileges for this record.", 'debug');
 				return new SOAP_Fault("ERROR 11: No write privileges for this record.", 'Client', '', null);
@@ -296,7 +293,7 @@ class wtServiceLogic extends GenealogyService {
 			if (!empty($gedcom)) {
 				if (empty($_SESSION['readonly']) && WT_USER_CAN_EDIT && displayDetailsById($RID)) {
 					$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedcom);
-					$success = replace_gedrec($RID, $gedrec);
+					$success = replace_gedrec($RID, WT_GED_ID, $gedrec);
 					return 'Gedcom updated.';
 				} else {
 					return new SOAP_Fault("No write privileges for this record.", 'Client', '', null);
@@ -359,7 +356,7 @@ class wtServiceLogic extends GenealogyService {
 	* @param string PID person id
 	*/
 	function postGetPersonByID($SID, $PID) {
-		global $pgv_changes, $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
+		global $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
 
 		$returnType = 'gedcom';
 
@@ -371,14 +368,7 @@ class wtServiceLogic extends GenealogyService {
 				$gedrec = "";
 				$xref1 = trim($xref1);
 				if (!empty($xref1)) {
-					if (isset($pgv_changes[$xref1."_".$GEDCOM])) {
-						$gedrec = find_updated_record($xref1, WT_GED_ID);
-					}
-
-					if (empty($gedrec)) {
-						$gedrec = find_person_record($xref1, WT_GED_ID);
-					}
-
+					$gedrec = find_gedcom_record($xref1, WT_GED_ID, true);
 					if (!empty($gedrec)) {
 						$gedrec = trim($gedrec);
 						preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
@@ -433,7 +423,7 @@ class wtServiceLogic extends GenealogyService {
 	 * @param string SID
 	 ***/
 	function postGetFamilyByID($SID, $FID) {
-		global $pgv_changes, $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
+		global $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
 		if ($data_type="GEDCOM") {
 			$returnType = 'gedcom';
 		} else {
@@ -447,14 +437,7 @@ class wtServiceLogic extends GenealogyService {
 				$gedrec = "";
 				$xref1 = trim($xref1);
 				if (!empty($xref1)) {
-					if (isset($pgv_changes[$xref1."_".$GEDCOM])) {
-						$gedrec = find_updated_record($xref1, WT_GED_ID);
-					}
-
-					if (empty($gedrec)) {
-						$gedrec = find_family_record($xref1, WT_GED_ID);
-					}
-
+					$gedrec = find_gedcom_record($xref1, WT_GED_ID, true);
 					if (!empty($gedrec)) {
 						$gedrec = trim($gedrec);
 						preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
@@ -498,7 +481,7 @@ class wtServiceLogic extends GenealogyService {
 	 * @param string SCID Source id
 	 */
 	function postGetSourceByID($SID, $SCID) {
-		global $pgv_changes, $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
+		global $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
 
 		$returnType = 'gedcom';
 
@@ -510,14 +493,7 @@ class wtServiceLogic extends GenealogyService {
 				$gedrec = "";
 				$xref1 = trim($xref1);
 				if (!empty($xref1)) {
-					if (isset($pgv_changes[$xref1."_".$GEDCOM])) {
-						$gedrec = find_updated_record($xref1, WT_GED_ID);
-					}
-
-					if (empty($gedrec)) {
-						$gedrec = find_source_record($xref1, WT_GED_ID);
-					}
-
+					$gedrec = find_gedcom_record($xref1, WT_GED_ID, true);
 					if (!empty($gedrec)) {
 						$gedrec = trim($gedrec);
 						preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
@@ -542,7 +518,7 @@ class wtServiceLogic extends GenealogyService {
 	 * @return string		the raw gedcom record is returned
 	 */
 	function postGetGedcomRecord($SID, $PID) {
-		global $pgv_changes, $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
+		global $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
 
 		if (!empty($PID)) {
 			$xrefs = explode(';', $PID);
@@ -552,14 +528,7 @@ class wtServiceLogic extends GenealogyService {
 				$gedrec = "";
 				$xref1 = trim($xref1);
 				if (!empty($xref1)) {
-					if (isset($pgv_changes[$xref1."_".$GEDCOM])) {
-						$gedrec = find_updated_record($xref1, WT_GED_ID);
-					}
-
-					if (empty($gedrec)) {
-						$gedrec = find_gedcom_record($xref1, WT_GED_ID);
-					}
-
+					$gedrec = find_gedcom_record($xref1, WT_GED_ID, true);
 					if (!empty($gedrec)) {
 						$gedrec = trim($gedrec);
 						preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
@@ -1002,7 +971,7 @@ class wtServiceLogic extends GenealogyService {
 					return new SOAP_Fault('ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER', 'Server', '', null);
 				}
 				$gedrec = "0 @REF@ $type";
-				$xref = append_gedrec($gedrec);
+				$xref = append_gedrec($gedrec, WT_GED_ID);
 				if ($xref) {
 					addToLog("getXref type=$type position=$position SUCCESS\n$xref", 'debug');
 					return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', array($xref));
