@@ -212,7 +212,7 @@ class wtServiceLogic extends GenealogyService {
 	*/
 	function postGetVar($SID, $var) {
 		global $CONFIG_VARS;
-		$pgv_user = getUserName();
+		$wt_user = getUserName();
 		$public_vars = array("CHARACTER_SET","GEDCOM","PEDIGREE_ROOT_ID","LANGUAGE");
 		//-- only allow public vars to non authenticated users
 		if (!empty($var) && (in_array($var, $public_vars)) && (isset($GLOBALS[$var]))) {
@@ -220,7 +220,7 @@ class wtServiceLogic extends GenealogyService {
 			return $GLOBALS[$var];
 		}
 		//-- authenticated users can access any var not in $CONFIG_VARS
-		elseif ((!empty($pgv_user))&&(!empty($var))&&(isset($GLOBALS[$var]))&&(!in_array($var, $CONFIG_VARS))) {
+		elseif ((!empty($wt_user))&&(!empty($var))&&(isset($GLOBALS[$var]))&&(!in_array($var, $CONFIG_VARS))) {
 			addToLog("getVar var=$var SUCCESS\n".$GLOBALS[$var], 'debug');
 			return $GLOBALS[$var];
 		} else {
