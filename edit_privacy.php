@@ -31,6 +31,7 @@
 define('WT_SCRIPT_NAME', 'edit_privacy.php');
 require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_print_facts.php';
+require WT_ROOT.'includes/functions/functions_edit.php';
 
 if (empty($ged)) $ged = $GEDCOM;
 
@@ -39,93 +40,40 @@ if (!userGedcomAdmin(WT_USER_ID, $ged)) {
 	exit;
 }
 
+switch (safe_POST('action')) {
+case 'delete':
+	WT_DB::prepare(
+		"DELETE FROM {$TBLPREFIX}default_resn WHERE default_resn_id=?"
+	)->execute(array(safe_POST('default_resn_id')));
+	break;
+case 'add_xref':
+	WT_DB::prepare(
+		"REPLACE INTO {$TBLPREFIX}default_resn (gedcom_id, xref, resn) VALUES (?, ?, ?)"
+	)->execute(array(WT_GED_ID, safe_POST('xref'), safe_POST('resn')));
+	break;
+case 'add_tag_type':
+	WT_DB::prepare(
+		"REPLACE INTO {$TBLPREFIX}default_resn (gedcom_id, tag_type, resn) VALUES (?, ?, ?)"
+	)->execute(array(WT_GED_ID, safe_POST('tag_type'), safe_POST('resn')));
+	break;
+case 'update':
+	header('Location: editgedcoms.php');
+	exit;
+}
+
 $PRIVACY_CONSTANTS=array(
-	WT_PRIV_NONE  =>'WT_PRIV_NONE',
-	WT_PRIV_USER  =>'WT_PRIV_USER',
-	WT_PRIV_PUBLIC=>'WT_PRIV_PUBLIC',
-	WT_PRIV_HIDE  =>'WT_PRIV_HIDE'
+	'none'        =>i18n::translate('Show to public'),
+	'privacy'     =>i18n::translate('Show only to authenticated users'),
+	'confidential'=>i18n::translate('Show only to admin users'),
+	'hidden'      =>i18n::translate('Hide even from admin users')
 );
 
-$action=safe_POST('action', 'update');
-
-$all_tags=array_unique(array_merge(
-	explode(',', $INDI_FACTS_ADD),
-	explode(',', $FAM_FACTS_ADD),
-	explode(',', $NOTE_FACTS_ADD),
-	explode(',', $SOUR_FACTS_ADD),
-	explode(',', $REPO_FACTS_ADD)
-));
-
-$v_new_person_privacy_access_ID		= safe_POST('v_new_person_privacy_access_ID',		WT_REGEX_XREF);
-$v_new_person_privacy_access_option	= safe_POST('v_new_person_privacy_access_option',	$PRIVACY_CONSTANTS);
-$v_person_privacy_del				= safe_POST('v_person_privacy_del',					'1');
-$v_person_privacy					= safe_POST('v_person_privacy',						$PRIVACY_CONSTANTS);
-
-$v_new_user_privacy_username		= safe_POST('v_new_user_privacy_username',			get_all_users());
-$v_new_user_privacy_access_ID		= safe_POST('v_new_user_privacy_access_ID',			WT_REGEX_XREF);
-$v_new_user_privacy_access_option	= safe_POST('v_new_user_privacy_access_option',		$PRIVACY_CONSTANTS);
-$v_user_privacy_del					= safe_POST('v_user_privacy_del',					'1');
-$v_user_privacy						= safe_POST('v_user_privacy');
-
-$v_new_global_facts_abbr			= safe_POST('v_new_global_facts_abbr',				$all_tags);
-$v_new_global_facts_choice			= safe_POST('v_new_global_facts_choice',			array('show', 'details'));
-$v_new_global_facts_access_option	= safe_POST('v_new_global_facts_access_option',		$PRIVACY_CONSTANTS);
-$v_global_facts_del					= safe_POST('v_global_facts_del',					'1');
-$v_global_facts						= safe_POST('v_global_facts');
-
-$v_new_person_facts_access_ID		= safe_POST('v_new_person_facts_access_ID',			WT_REGEX_XREF);
-$v_new_person_facts_abbr			= safe_POST('v_new_person_facts_abbr',				$all_tags);
-$v_new_person_facts_choice			= safe_POST('v_new_person_facts_choice',			array('show', 'details'));
-$v_new_person_facts_access_option	= safe_POST('v_new_person_facts_access_option',		$PRIVACY_CONSTANTS);
-$v_person_facts_del					= safe_POST('v_person_facts_del',					'1');
-$v_person_facts						= safe_POST('v_person_facts');
-
-// These values may not be present in privacy files created by old versions of PGV
-if (!isset($PRIVACY_BY_YEAR)) $PRIVACY_BY_YEAR = false;
-if (!isset($MAX_ALIVE_AGE)) $MAX_ALIVE_AGE = 120;
-
-/**
- * print yes/no select option
- *
- * @param string $checkVar
- */
-function write_yes_no($checkVar) {
-	print "<option";
-	if ($checkVar == false) print " selected=\"selected\"";
-	print " value=\"no\">";
-	print i18n::translate('No');
-	print "</option>\n";
-
-	print "<option";
-	if ($checkVar == true) print " selected=\"selected\"";
-	print " value=\"yes\">";
-	print i18n::translate('Yes');
-	print "</option>";
+$all_tags=array();
+foreach (explode(',', "{$INDI_FACTS_ADD},{$FAM_FACTS_ADD},{$NOTE_FACTS_ADD},{$SOUR_FACTS_ADD},{$REPO_FACTS_ADD}") as $tag) {
+	$all_tags[$tag]=i18n::translate('%1$s [%2$s]', translate_fact($tag), $tag);
 }
 
-/**
- * print find and print gedcom record ID
- *
- * @param string $checkVar	gedcom key
- * @param string $outputVar	error message style
- */
-function search_ID_details($checkVar, $outputVar) {
-	$record=GedcomRecord::getInstance($checkVar);
-	if ($record) {
-		echo $record->format_list('span');
-	} else {
-		print "<span class=\"error\">";
-		if ($outputVar == 1) {
-			print i18n::translate('Unable to find individual with id');
-			print "<br />[" . $checkVar . "]";
-		}
-		if ($outputVar == 2) {
-			print i18n::translate('Unable to find individual with id');
-		}
-		print "</span><br /><br />";
-	}
-}
-
+uasort($all_tags, 'utf8_strcasecmp');
 
 $PRIVACY_MODULE = get_privacy_file(WT_GED_ID);
 
@@ -278,522 +226,190 @@ if ($action=="update") {
 	<input type="hidden" name="action" value="update" />
 	<input type="hidden" name="ged" value="<?php print $GEDCOM;?>" />
 
-	<!-- NOTE: General Privacy Settings header bar -->
 	<table class="facts_table">
 		<tr>
-			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
-				<?php
-				print "<a href=\"javascript: ".i18n::translate('General Privacy settings')."\" onclick=\"expand_layer('general-privacy-options');return false\"><img id=\"general-privacy-options_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> ";
-				?>
-				<a href="javascript: <?php print i18n::translate('General Privacy settings'); ?>" onclick="expand_layer('general-privacy-options');return false"><b><?php echo i18n::translate('General Privacy settings'), help_link('general_privacy'); ?></b></a>
+			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>" colspan="2">
+				<?php echo i18n::translate('General Privacy settings'); ?>
 			</td>
 		</tr>
-	</table>
-
-	<!-- NOTE: General Privacy Settings options -->
-	<div id="general-privacy-options" style="display: block">
-		<table class="facts_table">
-			<tr>
-				<td class="descriptionbox wrap width20 <?php print $TEXT_DIRECTION; ?>">
-					<?php echo i18n::translate('Show dead people'), help_link('SHOW_DEAD_PEOPLE'); ?>
-				</td>
-				<td class="optionbox">
-					<select size="1" name="v_SHOW_DEAD_PEOPLE"><?php write_access_option($SHOW_DEAD_PEOPLE); ?></select>
-				</td>
-			</tr>
-			<tr>
-				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Show living names'), help_link('SHOW_LIVING_NAMES'); ?>
-				</td>
-				<td class="optionbox">
-					<select size="1" name="v_SHOW_LIVING_NAMES"><?php write_access_option($SHOW_LIVING_NAMES); ?></select>
-				</td>
-			</tr>
-			<tr>
-				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Show sources'), help_link('SHOW_SOURCES'); ?>
-				</td>
-				<td class="optionbox">
-					<select size="1" name="v_SHOW_SOURCES"><?php write_access_option($SHOW_SOURCES); ?></select>
-				</td>
-			</tr>
-			<tr>
-				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Enable Clippings Cart'), help_link('ENABLE_CLIPPINGS_CART'); ?>
-				</td>
-				<td class="optionbox">
-					<select size="1" name="v_ENABLE_CLIPPINGS_CART"><?php write_access_option($ENABLE_CLIPPINGS_CART); ?></select>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Show Multi-Site Search'), help_link('SHOW_MULTISITE_SEARCH'); ?>
-				</td>
-				<td class="optionbox">
-					<select size="1" name="v_SHOW_MULTISITE_SEARCH"><?php write_access_option($SHOW_MULTISITE_SEARCH); ?></select>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Limit Privacy by age of event'), help_link('PRIVACY_BY_YEAR'); ?>
-				</td>
-				<td class="optionbox">
-					<select size="1" name="v_PRIVACY_BY_YEAR"><?php write_yes_no($PRIVACY_BY_YEAR); ?></select>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Use GEDCOM (RESN) Privacy restriction'), help_link('PRIVACY_BY_RESN'); ?>
-				</td>
-				<td class="optionbox">
-					<select size="1" name="v_PRIVACY_BY_RESN"><?php write_yes_no($PRIVACY_BY_RESN); ?></select>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Show private relationships'), help_link('SHOW_PRIVATE_RELATIONSHIPS'); ?>
-				</td>
-				<td class="optionbox">
-					<select size="1" name="v_SHOW_PRIVATE_RELATIONSHIPS"><?php write_yes_no($SHOW_PRIVATE_RELATIONSHIPS); ?></select>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Use relationship privacy'), help_link('USE_RELATIONSHIP_PRIVACY'); ?>
-				</td>
-				<td class="optionbox">
-					<select size="1" name="v_USE_RELATIONSHIP_PRIVACY"><?php write_yes_no($USE_RELATIONSHIP_PRIVACY); ?></select>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Max. relation path length'), help_link('MAX_RELATION_PATH_LENGTH'); ?>
-				</td>
-				<td class="optionbox">
-					<select size="1" name="v_MAX_RELATION_PATH_LENGTH"><?php
-					for ($y = 1; $y <= 10; $y++) {
-						print "<option";
-						if ($MAX_RELATION_PATH_LENGTH == $y) print " selected=\"selected\"";
-						print ">";
-						print $y;
-						print "</option>";
-					}
-					?></select>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Check marriage relations'), help_link('CHECK_MARRIAGE_RELATIONS'); ?>
-				</td>
-				<td class="optionbox">
-					<select size="1" name="v_CHECK_MARRIAGE_RELATIONS"><?php write_yes_no($CHECK_MARRIAGE_RELATIONS); ?></select>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Age at which to assume a person is dead'), help_link('MAX_ALIVE_AGE'); ?>
-				</td>
-				<td class="optionbox">
-					<input type="text" name="v_MAX_ALIVE_AGE" value="<?php print $MAX_ALIVE_AGE; ?>" size="5" />
-				</td>
-			</tr>
-		</table>
-	</div>
-
-	<!-- -------------- person_privacy -----------------------------------
-
-	NOTE: General Person Settings header bar -->
-	<table class="facts_table">
 		<tr>
-			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
-				<?php
-				print "<a href=\"javascript: ".i18n::translate('Privacy settings by ID')."\" onclick=\"expand_layer('person-privacy-options');return false\"><img id=\"person-privacy-options_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
-				<a href="javascript: <?php echo i18n::translate('Privacy settings by ID'); ?>" onclick="expand_layer('person-privacy-options');return false"><b><?php echo i18n::translate('Privacy settings by ID'); ?></b></a><?php echo help_link('person_privacy'); ?>
-			</td>
-		</tr>
-	</table>
-
-	<!-- NOTE: General Privacy Settings options -->
-	<div id="person-privacy-options" style="display: none">
-		<table class="facts_table">
-			<tr>
-				<td class="topbottombar" colspan="2">
-					<b><?php print i18n::translate('Add new setting for Privacy by ID'); ?></b>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="descriptionbox">
-					<?php print i18n::translate('ID'); ?></td>
-				<td class="descriptionbox"><?php print i18n::translate('Show to?'); ?></td>
-			</tr>
-
-			<tr>
-				<td class="optionbox width20">
-					<input type="text" class="pedigree_form" name="v_new_person_privacy_access_ID" id="v_new_person_privacy_access_ID" size="4" />
-					<?php
-					print_findindi_link("v_new_person_privacy_access_ID","");
-					print_findfamily_link("v_new_person_privacy_access_ID");
-					print_findsource_link("v_new_person_privacy_access_ID");
-					print_findrepository_link("v_new_person_privacy_access_ID");
-					print_findmedia_link("v_new_person_privacy_access_ID", "1media");
-					?>
-				</td>
-				<td class="optionbox">
-					<select size="1" name="v_new_person_privacy_access_option"><?php write_access_option(""); ?></select>
-				</td>
-			</tr>
-		</table>
-
-		<?php if (count($person_privacy) > 0) { ?>
-		<table class="facts_table">
-			<tr>
-				<td class="topbottombar" colspan="4">
-					<?php print i18n::translate('Edit existing settings for Privacy by ID'); ?>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="descriptionbox"><?php print i18n::translate('Delete'); ?></td>
-				<td class="descriptionbox"><?php print i18n::translate('ID'); ?></td>
-				<td class="descriptionbox"><?php print i18n::translate('Full Name'); ?></td>
-				<td class="descriptionbox"><?php print i18n::translate('Show to?'); ?></td>
-			</tr>
-			<?php foreach ($person_privacy as $key=>$value) { ?>
-			<tr>
-				<td class="optionbox">
-					<input type="checkbox" name="v_person_privacy_del[<?php print $key; ?>]" value="1" />
-				</td>
-				<td class="optionbox">
-					<?php print $key; ?>
-				</td>
-				<td class="optionbox">
-					<?php search_ID_details($key, 1); ?>
-				</td>
-				<td class="optionbox">
-					<select size="1" name="v_person_privacy[<?php print $key; ?>]"><?php write_access_option($value); ?></select>
-				</td>
-			</tr>
-			<?php } ?>
-		</table>
-		<?php } ?>
-	</div>
-
-	<!-- -------------- user_privacy -----------------------------------
-
-	NOTE: User Privacy Settings header bar -->
-	<table class="facts_table">
-		<tr>
-			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
-				<?php print "<a href=\"javascript: ".i18n::translate('User Privacy settings')."\" onclick=\"expand_layer('user-privacy-options');return false\"><img id=\"user-privacy-options_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
-				<a href="javascript: <?php print i18n::translate('User Privacy settings'); ?>" onclick="expand_layer('user-privacy-options');return false"><b><?php echo i18n::translate('User Privacy settings'); ?></b></a><?php echo help_link('user_privacy'); ?>
-			</td>
-		</tr>
-	</table>
-
-	<!-- NOTE: User Privacy Settings options -->
-	<div id="user-privacy-options" style="display: none">
-	<table class="facts_table">
-		<tr>
-			<td class="topbottombar" colspan="3">
-				<b><?php print i18n::translate('Add new setting for User Privacy'); ?></b>
-			</td>
-		</tr>
-
-		<tr>
-			<td class="descriptionbox"><?php print i18n::translate('Username'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('ID'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('Show?'); ?></td>
-		</tr>
-
-		<tr class="<?php print $TEXT_DIRECTION; ?>">
-			<td class="optionbox width20">
-				<select size="1" name="v_new_user_privacy_username">
-				<?php
-				foreach (get_all_users() as $user_id=>$user_name) {
-					echo '<option value="', $user_id, '">';
-					if ($TEXT_DIRECTION == 'ltr') {
-						echo $user_id, ' (', getUserFullName($user_id), ')</option>';
-					} else {
-						echo getLRM(), '(', getUserFullName($user_id), ')', getLRM(), ' ', $user_id, '</option>';
-					}
-
-				}
-				?>
-				</select>
+			<td class="descriptionbox wrap width20 <?php print $TEXT_DIRECTION; ?>">
+				<?php echo i18n::translate('Show dead people'), help_link('SHOW_DEAD_PEOPLE'); ?>
 			</td>
 			<td class="optionbox">
-				<input type="text" class="pedigree_form" name="v_new_user_privacy_access_ID" id="v_new_user_privacy_access_ID" size="4" />
-				<?php
-				print_findindi_link("v_new_user_privacy_access_ID","");
-				print_findfamily_link("v_new_user_privacy_access_ID");
-				print_findsource_link("v_new_user_privacy_access_ID");
-				print_findrepository_link("v_new_user_privacy_access_ID");
-				print_findmedia_link("v_new_person_privacy_access_ID", "1media");
-				?>
+				<select size="1" name="v_SHOW_DEAD_PEOPLE"><?php write_access_option($SHOW_DEAD_PEOPLE); ?></select>
+			</td>
+		</tr>
+		<tr>
+			<td class="descriptionbox wrap">
+				<?php echo i18n::translate('Show living names'), help_link('SHOW_LIVING_NAMES'); ?>
 			</td>
 			<td class="optionbox">
-				<select size="1" name="v_new_user_privacy_access_option"><?php write_access_option(""); ?></select>
-			</td>
-		</tr>
-	</table>
-	<?php if (count($user_privacy) > 0) { ?>
-	<table class="facts_table">
-		<tr>
-			<td class="topbottombar" colspan="5">
-				<?php print i18n::translate('Edit existing settings for User Privacy'); ?>
+				<select size="1" name="v_SHOW_LIVING_NAMES"><?php write_access_option($SHOW_LIVING_NAMES); ?></select>
 			</td>
 		</tr>
 		<tr>
-			<td class="descriptionbox"><?php print i18n::translate('Delete'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('Username'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('ID'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('Full Name'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('Show?'); ?></td>
+			<td class="descriptionbox wrap">
+				<?php echo i18n::translate('Show sources'), help_link('SHOW_SOURCES'); ?>
+			</td>
+			<td class="optionbox">
+				<select size="1" name="v_SHOW_SOURCES"><?php write_access_option($SHOW_SOURCES); ?></select>
+			</td>
+		</tr>
+		<tr>
+			<td class="descriptionbox wrap">
+				<?php echo i18n::translate('Enable Clippings Cart'), help_link('ENABLE_CLIPPINGS_CART'); ?>
+			</td>
+			<td class="optionbox">
+				<select size="1" name="v_ENABLE_CLIPPINGS_CART"><?php write_access_option($ENABLE_CLIPPINGS_CART); ?></select>
+		</td>
 		</tr>
 
-		<?php
-		foreach ($user_privacy as $key=>$value) {
-			foreach ($value as $id=>$setting) {
-		?>
-		<tr class="<?php print $TEXT_DIRECTION; ?>">
-			<td class="optionbox">
-				<input type="checkbox" name="v_user_privacy_del[<?php print $key; ?>][<?php print $id; ?>]" value="1" />
+		<tr>
+			<td class="descriptionbox wrap">
+				<?php echo i18n::translate('Show Multi-Site Search'), help_link('SHOW_MULTISITE_SEARCH'); ?>
 			</td>
 			<td class="optionbox">
-				<?php echo $key, '<br />', getLRM(), '(', getUserFullName($key), ')', getLRM(); ?>
-			</td>
-			<td class="optionbox">
-				<?php print $id; ?>
-			</td>
-			<td class="optionbox">
-				<?php search_ID_details($id, 2); ?>
-			</td>
-			<td class="optionbox">
-				<select size="1" name="v_user_privacy[<?php print $key; ?>][<?php print $id; ?>]"><?php write_access_option($setting); ?></select>
+				<select size="1" name="v_SHOW_MULTISITE_SEARCH"><?php write_access_option($SHOW_MULTISITE_SEARCH); ?></select>
 			</td>
 		</tr>
 
-		<?php } } ?>
-	</table>
-	<?php } ?>
-	</div>
-	<!-- -------------- global_facts -----------------------------------
-
-	NOTE: Global Settings header bar -->
-	<table class="facts_table">
 		<tr>
-			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
-				<?php
-				print "<a href=\"javascript: ".i18n::translate('Global Fact Privacy settings')."\" onclick=\"expand_layer('global-facts-options');return false\"><img id=\"global-facts-options_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
-				<a href="javascript: <?php print i18n::translate('Global Fact Privacy settings'); ?>" onclick="expand_layer('global-facts-options');return false"><b><?php echo i18n::translate('Global Fact Privacy settings'); ?></b></a><?php echo help_link('global_facts'); ?>
+			<td class="descriptionbox wrap">
+				<?php echo i18n::translate('Limit Privacy by age of event'), help_link('PRIVACY_BY_YEAR'); ?>
+			</td>
+			<td class="optionbox">
+				<?php echo edit_field_yes_no('v_PRIVACY_BY_YEAR', $PRIVACY_BY_YEAR); ?>
 			</td>
 		</tr>
-	</table>
 
-	<!-- NOTE: Global Settings options -->
-	<div id="global-facts-options" style="display: none">
-	<table class="facts_table">
 		<tr>
-			<td class="topbottombar" colspan="3">
-				<b><?php print i18n::translate('Add new setting for Global Fact Privacy'); ?></b></td>
-		</tr>
-		<tr>
-			<td class="descriptionbox"><?php print i18n::translate('Name of fact'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('Choice'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('Show to?'); ?></td>
-		</tr>
-		<tr class="<?php print $TEXT_DIRECTION; ?>">
+			<td class="descriptionbox wrap">
+				<?php echo i18n::translate('Use GEDCOM (RESN) Privacy restriction'), help_link('PRIVACY_BY_RESN'); ?>
+			</td>
 			<td class="optionbox">
-				<select size="1" name="v_new_global_facts_abbr">
-				<?php
-				print "<option value=\"\">".i18n::translate('Choose: ')."</option>";
-				foreach ($all_tags as $tag) {
+				<?php echo edit_field_yes_no('v_PRIVACY_BY_RESN', $PRIVACY_BY_RESN); ?>
+			</td>
+		</tr>
+
+		<tr>
+			<td class="descriptionbox wrap">
+				<?php echo i18n::translate('Show private relationships'), help_link('SHOW_PRIVATE_RELATIONSHIPS'); ?>
+			</td>
+			<td class="optionbox">
+				<?php echo edit_field_yes_no('v_SHOW_PRIVATE_RELATIONSHIPS', $SHOW_PRIVATE_RELATIONSHIPS); ?>
+			</td>
+		</tr>
+
+		<tr>
+			<td class="descriptionbox wrap">
+				<?php echo i18n::translate('Use relationship privacy'), help_link('USE_RELATIONSHIP_PRIVACY'); ?>
+			</td>
+			<td class="optionbox">
+				<?php echo edit_field_yes_no('v_USE_RELATIONSHIP_PRIVACY', $USE_RELATIONSHIP_PRIVACY); ?>
+			</td>
+		</tr>
+
+		<tr>
+			<td class="descriptionbox wrap">
+				<?php echo i18n::translate('Max. relation path length'), help_link('MAX_RELATION_PATH_LENGTH'); ?>
+			</td>
+			<td class="optionbox">
+				<select size="1" name="v_MAX_RELATION_PATH_LENGTH"><?php
+				for ($y = 1; $y <= 10; $y++) {
 					print "<option";
-					print " value=\"";
-					print $tag;
-					print "\">";
-					print $tag . " - " . i18n::translate($tag);
+					if ($MAX_RELATION_PATH_LENGTH == $y) print " selected=\"selected\"";
+					print ">";
+					print $y;
 					print "</option>";
 				}
-				?>
-				</select>
-			</td>
-			<td class="optionbox">
-				<select size="1" name="v_new_global_facts_choice">
-					<option value="details"><?php print i18n::translate('Show fact details'); ?></option>
-					<option value="show"><?php print i18n::translate('Show fact'); ?></option>
-				</select>
-			</td>
-			<td class="optionbox">
-				<select size="1" name="v_new_global_facts_access_option"><?php write_access_option(""); ?></select>
+				?></select>
 			</td>
 		</tr>
-	</table>
-	<?php if (count($global_facts) > 0) { ?>
-	<table class="facts_table">
-		<tr>
-			<td class="topbottombar" colspan="4">
-				<b><?php print i18n::translate('Edit existing settings for Global Fact Privacy'); ?></b>
-			</td>
-		</tr>
-		<tr>
-			<td class="descriptionbox"><?php print i18n::translate('Delete'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('Name of fact'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('Choice'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('Show to?'); ?></td>
-		</tr>
-		<?php
-		foreach ($global_facts as $tag=>$value) {
-			foreach ($value as $key=>$setting) {
-		?>
-		<tr class="<?php print $TEXT_DIRECTION; ?>">
-			<td class="optionbox">
-				<input type="checkbox" name="v_global_facts_del[<?php print $tag; ?>][<?php print $key; ?>]" value="1" />
-			</td>
-			<td class="optionbox">
-				<?php
-				echo i18n::translate($tag);
-				?>
-			</td>
-			<td class="optionbox">
-				<?php
-				if ($key == "show") print i18n::translate('Show fact');
-				if ($key == "details") print i18n::translate('Show fact details');
-				?>
-			</td>
-			<td class="optionbox">
-				<select size="1" name="v_global_facts[<?php print $tag; ?>][<?php print $key; ?>]"><?php write_access_option($setting); ?></select>
-			</td>
-		</tr>
-		<?php } } ?>
-	</table>
-	<?php } else print "&nbsp;"; ?>
-	</div>
-	<!-- -------------- person_facts -----------------------------------
-	NOTE: Person Facts header bar -->
-	<table class="facts_table">
-		<tr>
-			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
-				<?php print "<a href=\"javascript: ".i18n::translate('Facts Privacy settings by ID')."\" onclick=\"expand_layer('person-facts-options');return false\"><img id=\"person-facts-options_img\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
-				<a href="javascript: <?php print i18n::translate('Facts Privacy settings by ID'); ?>" onclick="expand_layer('person-facts-options');return false"><b><?php echo i18n::translate('Facts Privacy settings by ID'); ?></b></a><?php echo help_link('person_facts'); ?>
-			</td>
-		</tr>
-	</table>
 
-	<!-- NOTE: Person Facts options -->
-	<div id="person-facts-options" style="display: none">
+		<tr>
+			<td class="descriptionbox wrap">
+				<?php echo i18n::translate('Check marriage relations'), help_link('CHECK_MARRIAGE_RELATIONS'); ?>
+			</td>
+			<td class="optionbox">
+				<?php echo edit_field_yes_no('v_CHECK_MARRIAGE_RELATIONS', $CHECK_MARRIAGE_RELATIONS); ?>
+			</td>
+		</tr>
+
+		<tr>
+			<td class="descriptionbox wrap">
+				<?php echo i18n::translate('Age at which to assume a person is dead'), help_link('MAX_ALIVE_AGE'); ?>
+			</td>
+			<td class="optionbox">
+				<input type="text" name="v_MAX_ALIVE_AGE" value="<?php print $MAX_ALIVE_AGE; ?>" size="5" />
+			</td>
+		</tr>
+		<tr>
+			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>" colspan="2">
+				<input type="submit" value="<?php echo i18n::translate('Save'); ?>" />
+			</td>
+		</tr>
+	</table>
+	</form>
+	<br />
 	<table class="facts_table">
 		<tr>
-			<td class="topbottombar" colspan="4">
-				<b><?php print i18n::translate('Add new setting for Facts Privacy by ID'); ?></b>
+			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>" colspan="3">
+				<?php echo i18n::translate('Default privacy restrictions - these apply to records and facts that do not contain an explicit restriction'); ?>
 			</td>
 		</tr>
-		<tr>
-			<td class="descriptionbox"><?php print i18n::translate('ID'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('Name of fact'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('Choice'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('Show to?'); ?></td>
-		</tr>
-		<tr class="<?php print $TEXT_DIRECTION; ?>">
-			<td class="optionbox">
-				<input type="text" class="pedigree_form" name="v_new_person_facts_access_ID" id="v_new_person_facts_access_ID" size="4" />
-				<?php
-				print_findindi_link("v_new_person_facts_access_ID","");
-				print_findfamily_link("v_new_person_facts_access_ID");
-				print_findsource_link("v_new_person_facts_access_ID");
-				print_findrepository_link("v_new_person_facts_access_ID");
-				?>
-			</td>
-			<td class="optionbox">
-				<select size="1" name="v_new_person_facts_abbr">
-				<?php
-				foreach ($all_tags as $tag) {
-					print "<option";
-					print " value=\"";
-					print $tag;
-					print "\">";
-					print $tag . " - " . i18n::translate($tag);
-					print "</option>";
-				}
-				?>
-				</select>
-			</td>
-			<td class="optionbox">
-				<select size="1" name="v_new_person_facts_choice">
-					<option value="details"><?php print i18n::translate('Show fact details'); ?></option>
-					<option value="show"><?php print i18n::translate('Show fact'); ?></option>
-				</select>
-			</td>
-			<td class="optionbox">
-				<select size="1" name="v_new_person_facts_access_option"><?php write_access_option(""); ?></select>
-			</td>
-		</tr>
-	</table>
-	<?php if (count($person_facts) > 0) { ?>
-	<table class="facts_table">
-		<tr>
-			<td class="topbottombar" colspan="6"><b><?php print i18n::translate('Edit existing settings for Facts Privacy by ID'); ?></b></td>
-		</tr>
-		<tr>
-			<td class="descriptionbox"><?php print i18n::translate('Delete'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('ID'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('Full Name'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('Name of fact'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('Choice'); ?></td>
-			<td class="descriptionbox"><?php print i18n::translate('Show to?'); ?></td>
-		</tr>
-		<?php
-		foreach ($person_facts as $id=>$value) {
-				foreach ($value as $tag=>$value1) {
-					foreach ($value1 as $key=>$setting) {
-		?>
-		<tr class="<?php print $TEXT_DIRECTION; ?>">
-			<td class="optionbox">
-				<input type="checkbox" name="v_person_facts_del[<?php print $id; ?>][<?php print $tag; ?>][<?php print $key; ?>]" value="1" />
-			</td>
-			<td class="optionbox">
-				<?php print $id; ?>
-			</td>
-			<td class="optionbox">
-				<?php search_ID_details($id, 2); ?>
-			</td>
-			<td class="optionbox">
-				<?php print $tag. " - ".i18n::translate($tag); ?>
-			</td>
-			<td class="optionbox">
-				<?php
-				if ($key == "show") print i18n::translate('Show fact');
-				if ($key == "details") print i18n::translate('Show fact details');
-				?>
-			</td>
-			<td class="optionbox">
-				<select size="1" name="v_person_facts[<?php print $id; ?>][<?php print $tag; ?>][<?php print $key; ?>]"><?php write_access_option($setting); ?></select>
-			</td>
-		</tr>
-		<?php } } } ?>
-	</table>
-	<?php } ?>
-	</div>
-	<table class="facts_table" border="0">
-		<tr>
-			<td class="topbottombar">
-				<input type="submit" value="<?php print i18n::translate('Save configuration'); ?>" onclick="closeHelp();" />
-				&nbsp;&nbsp;
-				<input type="reset" value="<?php print i18n::translate('Reset'); ?>" /><br />
-			</td>
-		</tr>
-	</table>
-</form>
 <?php
+$rows=WT_DB::prepare(
+	"SELECT default_resn_id, tag_type, xref, resn".
+	" FROM {$TBLPREFIX}default_resn".
+	" WHERE gedcom_id=?".
+	" ORDER BY xref, tag_type"
+)->execute(array(WT_GED_ID))->fetchAll();
+foreach ($rows as $row) {
+	echo '<form method="post" action="', WT_SCRIPT_NAME, '"><tr><td class="optionbox" width="*">';
+	echo '<input type="hidden" name="action" value="delete">';
+	echo '<input type="hidden" name="default_resn_id" value="', $row->default_resn_id, '">';
+	if ($row->xref) {
+		// I18N: "Record ID I1234 (John DOE)
+		$record=GedcomRecord::getInstance($row->xref);
+		if ($record) {
+			$name=$record->getFullName();
+		} else {
+			$name=i18n::translate('this record does not exist');
+		}
+		echo i18n::translate('Record ID %1$s (%2$s)', $row->xref, $name);
+	} else {
+		// I18N: "Record type SOUR (Source)
+		echo i18n::translate('Record type %1$s (%2$s)', $row->tag_type, translate_fact($row->tag_type));
+	}
+	echo '</td><td class="optionbox" width="1">';
+	echo $PRIVACY_CONSTANTS[$row->resn];
+	echo '</td><td class="optionbox" width="1">';
+	echo '<input type="submit" value="', i18n::translate('Delete'), '" />';
+	echo '</td></tr></form>';
+}
+echo '<form method="post" action="', WT_SCRIPT_NAME, '"><tr><td class="optionbox" width="*">';
+echo '<input type="hidden" name="action" value="add_xref">';
+echo '<input type="text" class="pedigree_form" name="xref" id="xref" size="6" />';
+print_findindi_link("xref","");
+print_findfamily_link("xref");
+print_findsource_link("xref");
+print_findrepository_link("xref");
+print_findmedia_link("xref", "1media");
+echo '</td><td class="optionbox" width="1">';
+echo select_edit_control('resn', $PRIVACY_CONSTANTS, null, 'privacy', null);
+echo '</td><td class="optionbox" width="1">';
+echo '<input type="submit" value="', i18n::translate('Add'), '" />';
+echo '</td></tr></form>';
+unset($PRIVACY_CONSTANTS['none']); // The fact default is 'none' - do not need to select it.
+echo '<form method="post" action="', WT_SCRIPT_NAME, '"><tr><td class="optionbox" width="*">';
+echo '<input type="hidden" name="action" value="add_tag_type">';
+echo select_edit_control('tag_type', $all_tags, null, null, null);
+echo '</td><td class="optionbox" width="1">';
+echo select_edit_control('resn', $PRIVACY_CONSTANTS, null, 'privacy', null);
+echo '</td><td class="optionbox" width="1">';
+echo '<input type="submit" value="', i18n::translate('Add'), '" />';
+echo '</td></tr></form>';
+echo '</table>';
 print_footer();
-
-?>
+exit;

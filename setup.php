@@ -679,6 +679,107 @@ try {
 		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
 	);
 	$dbh->exec(
+		"CREATE TABLE IF NOT EXISTS wt_edit (".
+		" edit_id INTEGER AUTO_INCREMENT NOT NULL,".
+		" user_id INTEGER                NOT NULL,".
+		" created TIMESTAMP              NOT NULL DEFAULT CURRENT_TIMESTAMP,".
+		" PRIMARY KEY     (edit_id),".
+		" FOREIGN KEY fk1 (user_id) REFERENCES wt_user (user_id)".
+		") ENGINE=InnoDB COLLATE=utf8_unicode_ci"
+	);
+	$dbh->exec(
+		"CREATE TABLE IF NOT EXISTS wt_default_resn (".
+		" default_resn_id INTEGER AUTO_INCREMENT                             NOT NULL,".
+		" gedcom_id       INTEGER                                            NOT NULL,".
+		" tag_type        VARCHAR(15)                                        NOT NULL,".
+		" xref            VARCHAR(20)                                        NOT NULL,".
+		" resn            ENUM ('none', 'privacy', 'confidential', 'hidden') NOT NULL,".
+		" PRIMARY KEY     (default_resn_id),".
+		" UNIQUE  KEY ux1 (gedcom_id, record_type),".
+		" UNIQUE  KEY ux2 (gedcom_id, xref),".
+		" FOREIGN KEY fk1 (gedcom_id)  REFERENCES wt_gedcom (gedcom_id)".
+		") ENGINE=InnoDB COLLATE=utf8_unicode_ci"
+	);
+	$dbh->exec(
+		"CREATE TABLE IF NOT EXISTS wt_record (".
+		" record_id    INTEGER AUTO_INCREMENT NOT NULL,".
+		" gedcom_id    INTEGER                NOT NULL,".
+		" xref         VARCHAR(20)            NOT NULL,".
+		" record_type  VARCHAR(15)            NOT NULL,".
+		" resn         ENUM ('none', 'privacy', 'confidential', 'hidden') NOT NULL,".
+		" gedcom_data  MEDIUMTEXT             NOT NULL,".
+		" created_by   INTEGER                    NULL,".
+		" deleted_by   INTEGER                    NULL,".
+		" PRIMARY KEY     (record_id),".
+		"         KEY ix1 (gedcom_id, record_type, xref),".
+		" UNIQUE  KEY ux1 (gedcom_id, xref, created_by),".
+		" UNIQUE  KEY ux2 (gedcom_id, xref, deleted_by),".
+		" FOREIGN KEY fk1 (gedcom_id)  REFERENCES wt_gedcom (gedcom_id),".
+		" FOREIGN KEY fk2 (created_by) REFERENCES wt_edit   (edit_id),".
+		" FOREIGN KEY fk3 (deleted_by) REFERENCES wt_edit   (edit_id)	".
+		") ENGINE=InnoDB COLLATE=utf8_unicode_ci"
+	);
+	$dbh->exec(
+		"CREATE OR REPLACE VIEW wt_record_public_view AS".
+		" SELECT record_id, gedcom_id, xref, record_type, record_value".
+		" FROM wt_record".
+		" WHERE resn='none' AND created_by IS NULL"
+	);
+	$dbh->exec(
+		"CREATE OR REPLACE VIEW wt_record_user_view AS".
+		" SELECT record_id, gedcom_id, xref, record_type, record_value".
+		" FROM wt_record".
+		" WHERE resn<='privacy' AND deleted_by IS NULL"
+	);
+	$dbh->exec(
+		"CREATE OR REPLACE VIEW wt_record_admin_view AS".
+		" SELECT record_id, gedcom_id, xref, record_type, record_value".
+		" FROM wt_record".
+		" WHERE resn<='confidential' AND deleted_by IS NULL"
+	);
+	$dbh->exec(
+		"CREATE TABLE IF NOT EXISTS wt_fact (".
+		" fact_id      INTEGER AUTO_INCREMENT NOT NULL,".
+		" record_id    INTEGER                NOT NULL,".
+		" fact_type    VARCHAR(15)            NOT NULL,".
+		" fact_value   TEXT                       NULL,".
+		" link_xref    VARCHAR(20)                NULL,".
+		" resn         ENUM ('none', 'privacy', 'confidential', 'hidden') NOT NULL,".
+		" gedcom_data  TEXT                   NOT NULL,".
+		" created_by   INTEGER                    NULL,".
+		" deleted_by   INTEGER                    NULL,".
+		" PRIMARY KEY     (fact_id),".
+		"         KEY ix1 (record_id, resn, fact_type),".
+		" FOREIGN KEY fk1 (record_id)  REFERENCES wt_record (record_id),".
+		" FOREIGN KEY fk2 (created_by) REFERENCES wt_edit   (edit_id),".
+		" FOREIGN KEY fk3 (deleted_by) REFERENCES wt_edit   (edit_id)	".
+		") ENGINE=InnoDB COLLATE=utf8_unicode_ci"
+	);
+	$dbh->exec(
+		"CREATE OR REPLACE VIEW wt_fact_public_view AS".
+		" SELECT fact_id, record_id, gedcom_id, xref, fact_type, fact_value, link_xref, f.gedcom_data".
+		" FROM wt_fact f".
+		" JOIN wt_record r USING (record_id)".
+		" WHERE f.resn='none' AND f.created_by IS NULL".
+		" AND   r.resn='none' AND r.created_by IS NULL"
+	);
+	$dbh->exec(
+		"CREATE OR REPLACE VIEW wt_fact_user_view AS".
+		" SELECT fact_id, record_id, gedcom_id, xref, fact_type, fact_value, link_xref, f.gedcom_data".
+		" FROM wt_fact f".
+		" JOIN wt_record r USING (record_id)".
+		" WHERE f.resn<='privacy' AND f.deleted_by IS NULL".
+		" AND   r.resn<='privacy' AND r.deleted_by IS NULL"
+	);
+	$dbh->exec(
+		"CREATE OR REPLACE VIEW wt_fact_admin_view AS".
+		" SELECT fact_id, record_id, gedcom_id, xref, fact_type, fact_value, link_xref, f.gedcom_data".
+		" FROM wt_fact f".
+		" JOIN wt_record r USING (record_id)".
+		" WHERE f.resn<='confidential' AND f.deleted_by IS NULL".
+		" AND   r.resn<='confidential' AND r.deleted_by IS NULL"
+	);
+	$dbh->exec(
 		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}messages (".
 		" m_id      INTEGER AUTO_INCREMENT NOT NULL,".
 		" m_from    VARCHAR(255)           NOT NULL,".

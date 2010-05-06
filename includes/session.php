@@ -406,6 +406,18 @@ if (WT_USER_ID && safe_GET_bool('logout')) {
 	exit;
 }
 
+// Which view of data should we see? Filter by privacy and pending changes.
+if (WT_USER_GEDCOM_ADMIN) {
+	define('WT_RECORD_VIEW', "{$TBLPREFIX}record_admin_view");
+	define('WT_FACT_VIEW',   "{$TBLPREFIX}fact_admin_view");
+} elseif (WT_USER_ID) {
+	define('WT_RECORD_VIEW', "{$TBLPREFIX}record_user_view");
+	define('WT_FACT_VIEW',   "{$TBLPREFIX}fact_user_view");
+} else {
+	define('WT_RECORD_VIEW', "{$TBLPREFIX}record_public_view");
+	define('WT_FACT_VIEW',   "{$TBLPREFIX}fact_public_view");
+}
+
 // Check for page views exceeding the limit
 CheckPageViews();
 

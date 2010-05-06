@@ -587,6 +587,8 @@ function import_record($gedrec, $ged_id, $update) {
 	static $sql_insert_fam=null;
 	static $sql_insert_sour=null;
 	static $sql_insert_other=null;
+	static $sql_insert_record1=null;
+	static $sql_insert_record2=null;
 	if (!$sql_insert_indi) {
 		$sql_insert_indi=WT_DB::prepare(
 			"INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_isdead, i_sex, i_gedcom) VALUES (?,?,?,?,?,?)"
@@ -599,6 +601,13 @@ function import_record($gedrec, $ged_id, $update) {
 		);
 		$sql_insert_other=WT_DB::prepare(
 			"INSERT INTO {$TBLPREFIX}other (o_id, o_file, o_type, o_gedcom) VALUES (?,?,?,?)"
+		);
+		$sql_insert_record1=WT_DB::prepare(
+			"INSERT INTO {$TBLPREFIX}record (gedcom_id, xref, record_type, gedcom_data, resn) VALUES (?,?,?,?,?)"
+		);
+		$sql_insert_record2=WT_DB::prepare(
+			"INSERT INTO {$TBLPREFIX}record (gedcom_id, xref, record_type, gedcom_data, resn)".
+			" SELECT ?, ?, ?, ?, IFNULL(MAX(resn), 'none') FROM {$TBLPREFIX}default_resn WHERE gedcom_id=? AND (xref=? OR tag_type=?)"
 		);
 	}
 
@@ -651,6 +660,16 @@ function import_record($gedrec, $ged_id, $update) {
 			return;
 		}
 	}
+
+	// Create a new record
+	if (preg_match('/\n1 RESN (none|privacy|confidential|hidden)/', $gedrec, $match)) {
+		// Explicit RESN
+		$sql_insert_record1->execute(array($ged_id, $xref, $type, $gedrec, $match[1]));
+	} else {
+		// Default RESN
+		$sql_insert_record2->execute(array($ged_id, $xref, $type, $gedrec, $ged_id, $xref, $type));
+	}
+	$record_id=WT_DB::getInstance()->lastInsertId();
 
 	switch ($type) {
 	case 'INDI':
@@ -1197,6 +1216,9 @@ function update_media($gid, $ged_id, $gedrec, $update = false) {
 */
 function empty_database($ged_id, $keepmedia) {
 	global $TBLPREFIX;
+
+	WT_DB::prepare("DELETE {$TBLPREFIX}fact FROM {$TBLPREFIX}fact JOIN {$TBLPREFIX}record USING (record_id) WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}record      WHERE gedcom_id =?")->execute(array($ged_id));
 
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}individuals WHERE i_file =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}families    WHERE f_file =?")->execute(array($ged_id));

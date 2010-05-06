@@ -49,6 +49,19 @@ require_once WT_ROOT.'includes/classes/class_module.php';
 WT_Module::setDefaultAccess($ged_id);
 
 ////////////////////////////////////////////////////////////////////////////////
+// Privacy settings
+////////////////////////////////////////////////////////////////////////////////
+WT_DB::prepare(
+	"INSERT INTO {$TBLPREFIX}default_resn (gedcom_id, tag_type, resn) VALUES ".
+	"(?, 'SOUR', 'privacy'),".
+	"(?, 'REPO', 'privacy'),".
+	"(?, 'SUBM', 'confidential'),".
+	"(?, 'SUBN', 'confidential'),".
+	"(?, 'SSN',  'confidential'),".
+	"(?, '_UID', 'hidden')"
+)->execute(array_fill(0, 6, $ged_id));
+
+////////////////////////////////////////////////////////////////////////////////
 // General settings
 ////////////////////////////////////////////////////////////////////////////////
 $statement=WT_DB::prepare(

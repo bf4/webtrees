@@ -1827,6 +1827,10 @@ function delete_gedcom($ged_id) {
 	// Don't delete the logs.
 	WT_DB::prepare("UPDATE {$TBLPREFIX}log SET gedcom_id=NULL   WHERE gedcom_id =?")->execute(array($ged_id));
 
+	WT_DB::prepare("DELETE {$TBLPREFIX}fact FROM {$TBLPREFIX}fact JOIN {$TBLPREFIX}record USING (record_id) WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}record              WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}default_resn        WHERE gedcom_id =?")->execute(array($ged_id));
+
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}blocks              WHERE b_username=?")->execute(array($ged   ));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}news                WHERE n_username=?")->execute(array($ged   ));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}dates               WHERE d_file    =?")->execute(array($ged_id));
