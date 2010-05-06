@@ -695,7 +695,7 @@ try {
 		" xref            VARCHAR(20)                                        NOT NULL,".
 		" resn            ENUM ('none', 'privacy', 'confidential', 'hidden') NOT NULL,".
 		" PRIMARY KEY     (default_resn_id),".
-		" UNIQUE  KEY ux1 (gedcom_id, record_type),".
+		" UNIQUE  KEY ux1 (gedcom_id, tag_type),".
 		" UNIQUE  KEY ux2 (gedcom_id, xref),".
 		" FOREIGN KEY fk1 (gedcom_id)  REFERENCES wt_gedcom (gedcom_id)".
 		") ENGINE=InnoDB COLLATE=utf8_unicode_ci"
@@ -721,21 +721,21 @@ try {
 	);
 	$dbh->exec(
 		"CREATE OR REPLACE VIEW wt_record_public_view AS".
-		" SELECT record_id, gedcom_id, xref, record_type, record_value".
+		" SELECT record_id, gedcom_id, xref, record_type, gedcom_data".
 		" FROM wt_record".
 		" WHERE resn='none' AND created_by IS NULL"
 	);
 	$dbh->exec(
 		"CREATE OR REPLACE VIEW wt_record_user_view AS".
-		" SELECT record_id, gedcom_id, xref, record_type, record_value".
+		" SELECT record_id, gedcom_id, xref, record_type, gedcom_data".
 		" FROM wt_record".
-		" WHERE resn<='privacy' AND deleted_by IS NULL"
+		" WHERE resn IN ('none', 'privacy') AND deleted_by IS NULL"
 	);
 	$dbh->exec(
 		"CREATE OR REPLACE VIEW wt_record_admin_view AS".
-		" SELECT record_id, gedcom_id, xref, record_type, record_value".
+		" SELECT record_id, gedcom_id, xref, record_type, gedcom_data".
 		" FROM wt_record".
-		" WHERE resn<='confidential' AND deleted_by IS NULL"
+		" WHERE resn<>'hidden' AND deleted_by IS NULL"
 	);
 	$dbh->exec(
 		"CREATE TABLE IF NOT EXISTS wt_fact (".
@@ -768,16 +768,16 @@ try {
 		" SELECT fact_id, record_id, gedcom_id, xref, fact_type, fact_value, link_xref, f.gedcom_data".
 		" FROM wt_fact f".
 		" JOIN wt_record r USING (record_id)".
-		" WHERE f.resn<='privacy' AND f.deleted_by IS NULL".
-		" AND   r.resn<='privacy' AND r.deleted_by IS NULL"
+		" WHERE f.resn IN ('none', 'privacy') AND f.deleted_by IS NULL".
+		" AND   r.resn IN ('none', 'privacy') AND r.deleted_by IS NULL"
 	);
 	$dbh->exec(
 		"CREATE OR REPLACE VIEW wt_fact_admin_view AS".
 		" SELECT fact_id, record_id, gedcom_id, xref, fact_type, fact_value, link_xref, f.gedcom_data".
 		" FROM wt_fact f".
 		" JOIN wt_record r USING (record_id)".
-		" WHERE f.resn<='confidential' AND f.deleted_by IS NULL".
-		" AND   r.resn<='confidential' AND r.deleted_by IS NULL"
+		" WHERE f.resn<>'hidden' AND f.deleted_by IS NULL".
+		" AND   r.resn<>'hidden' AND r.deleted_by IS NULL"
 	);
 	$dbh->exec(
 		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}messages (".
