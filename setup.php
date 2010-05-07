@@ -952,16 +952,6 @@ try {
 		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
 	);
 	$dbh->exec(
-		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}other (".
-		" o_id     VARCHAR(20) NOT NULL,".
-		" o_file   INTEGER     NOT NULL,".
-		" o_type   VARCHAR(15) NOT NULL,".
-		" o_gedcom LONGTEXT        NULL,".
-		" PRIMARY KEY     (o_id, o_file),".
-		" UNIQUE  KEY ux1 (o_file, o_id)".
-		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
-	);
-	$dbh->exec(
 		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}sources (".
 		" s_id     VARCHAR(20)    NOT NULL,".
 		" s_file   INTEGER        NOT NULL,".

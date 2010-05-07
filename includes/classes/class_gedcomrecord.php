@@ -62,7 +62,13 @@ class GedcomRecord {
 
 	// Create a GedcomRecord object from either raw GEDCOM data or a database row
 	function __construct($data, $simple=false) {
-		if (is_array($data)) {
+		if (is_object($data)) {
+			// Construct from a row from the database
+			$this->xref  =$data->xref;
+			$this->type  =$data->record_type;
+			$this->ged_id=$data->gedcom_id;
+			$this->gedrec=$data->gedcom_data;
+		} elseif (is_array($data)) {
 			// Construct from a row from the database
 			$this->xref  =$data['xref'];
 			$this->type  =$data['type'];
@@ -111,7 +117,10 @@ class GedcomRecord {
 
 		$is_pending=false; // Did this record come from a pending edit
 
-		if (is_array($data)) {
+		if (is_object($data)) {
+			$ged_id=$data->gedcom_id;
+			$pid   =$data->xref;
+		} elseif (is_array($data)) {
 			$ged_id=$data['ged_id'];
 			$pid   =$data['xref'];
 		} else {
@@ -125,36 +134,8 @@ class GedcomRecord {
 		}
 
 		// Look for the record in the database
-		if (!is_array($data)) {
-			if (version_compare(PHP_VERSION, '5.3', '>=')) {
-				// If we know what sort of object we are, we can query the table directly.
-				switch (get_called_class()) {
-				case 'Person':
-					$data=fetch_person_record($pid, $ged_id);
-					break;
-				case 'Family':
-					$data=fetch_family_record($pid, $ged_id);
-					break;
-				case 'Source':
-					$data=fetch_source_record($pid, $ged_id);
-					break;
-				case 'Media':
-					$data=fetch_media_record($pid, $ged_id);
-					break;
-				case 'Repository':
-				case 'Note':
-					$data=fetch_other_record($pid, $ged_id);
-					break;
-				default:
-					// Type unknown - try each of the five tables in turn....
-					$data=fetch_gedcom_record($pid, $ged_id);
-					break;
-				}
-			} else {
-				// Late-static-binding is unavailable in PHP 5.2, so we do not what what
-				// sort of object we are - try each of the five tables in turn....
-				$data=fetch_gedcom_record($pid, $ged_id);
-			}
+		if (!is_array($data) && !is_object($data)) {
+			$data=fetch_gedcom_record($pid, $ged_id);
 
 			// If we didn't find the record in the database, it may be remote
 			if (!$data && strpos($pid, ':')) {
@@ -178,7 +159,9 @@ class GedcomRecord {
 		}
 
 		// Create the object
-		if (is_array($data)) {
+		if (is_object($data)) {
+			$type=$data->record_type;
+		} elseif (is_array($data)) {
 			$type=$data['type'];
 		} elseif (preg_match('/^0 @'.WT_REGEX_XREF.'@ ('.WT_REGEX_TAG.')/', $data, $match)) {
 			$type=$match[1];

@@ -40,141 +40,41 @@ if (!defined('WT_WEBTREES')) {
 define('WT_FUNCTIONS_DB_PHP', '');
 
 //-- gets the first record in the gedcom
-function get_first_xref($type, $ged_id=WT_GED_ID) {
+function get_first_xref($type, $gedcom_id=WT_GED_ID) {
 	global $TBLPREFIX;
 
-	switch ($type) {
-	case "INDI":
-		return
-			WT_DB::prepare("SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=?")
-			->execute(array($ged_id))
-			->fetchOne();
-		break;
-	case "FAM":
-		return
-			WT_DB::prepare("SELECT MIN(f_id) FROM {$TBLPREFIX}families WHERE f_file=?")
-			->execute(array($ged_id))
-			->fetchOne();
-	case "SOUR":
-		return
-			WT_DB::prepare("SELECT MIN(s_id) FROM {$TBLPREFIX}sources WHERE s_file=?")
-			->execute(array($ged_id))
-			->fetchOne();
-	case "OBJE":
-		return
-			WT_DB::prepare("SELECT MIN(m_media) FROM {$TBLPREFIX}media WHERE m_gedfile=?")
-			->execute(array($ged_id))
-			->fetchOne();
-	default:
-		return
-			WT_DB::prepare("SELECT MIN(o_id) FROM {$TBLPREFIX}other WHERE o_file=? AND o_type=?")
-			->execute(array($ged_id, $type))
-			->fetchOne();
-	}
+	return WT_DB::prepare(
+		"SELECT MIN(xref) FROM ".WT_RECORD_VIEW." WHERE gedcom_id=? AND record_type=?"
+	)->execute(array($gedcom_id, $type))->fetchOne();
 }
 
 //-- gets the last record in the gedcom
-function get_last_xref($type, $ged_id=WT_GED_ID) {
+function get_last_xref($type, $gedcom_id=WT_GED_ID) {
 	global $TBLPREFIX;
 
-	switch ($type) {
-	case "INDI":
-		return
-			WT_DB::prepare("SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=?")
-			->execute(array($ged_id))
-			->fetchOne();
-		break;
-	case "FAM":
-		return
-			WT_DB::prepare("SELECT MAX(f_id) FROM {$TBLPREFIX}families WHERE f_file=?")
-			->execute(array($ged_id))
-			->fetchOne();
-	case "SOUR":
-		return
-			WT_DB::prepare("SELECT MAX(s_id) FROM {$TBLPREFIX}sources WHERE s_file=?")
-			->execute(array($ged_id))
-			->fetchOne();
-	case "OBJE":
-		return
-			WT_DB::prepare("SELECT MAX(m_media) FROM {$TBLPREFIX}media WHERE m_gedfile=?")
-			->execute(array($ged_id))
-			->fetchOne();
-	default:
-		return
-			WT_DB::prepare("SELECT MAX(o_id) FROM {$TBLPREFIX}other WHERE o_file=? AND o_type=?")
-			->execute(array($ged_id, $type))
-			->fetchOne();
-	}
+	return WT_DB::prepare(
+		"SELECT MAX(xref) FROM ".WT_RECORD_VIEW." WHERE gedcom_id=? AND record_type=?"
+	)->execute(array($gedcom_id, $type))->fetchOne();
 }
 
 //-- gets the next person in the gedcom
-function get_next_xref($pid, $ged_id=WT_GED_ID) {
+function get_next_xref($xref, $gedcom_id=WT_GED_ID) {
 	global $TBLPREFIX;
 
-	$type=gedcom_record_type($pid, $ged_id);
-	switch ($type) {
-	case "INDI":
-		return
-			WT_DB::prepare("SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id>?")
-			->execute(array($ged_id, $pid))
-			->fetchOne();
-		break;
-	case "FAM":
-		return
-			WT_DB::prepare("SELECT MIN(f_id) FROM {$TBLPREFIX}families WHERE f_file=? AND f_id>?")
-			->execute(array($ged_id, $pid))
-			->fetchOne();
-	case "SOUR":
-		return
-			WT_DB::prepare("SELECT MIN(s_id) FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id>?")
-			->execute(array($ged_id, $pid))
-			->fetchOne();
-	case "OBJE":
-		return
-			WT_DB::prepare("SELECT MIN(m_media) FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media>?")
-			->execute(array($ged_id, $pid))
-			->fetchOne();
-	default:
-		return
-			WT_DB::prepare("SELECT MIN(o_id) FROM {$TBLPREFIX}other WHERE o_file=? AND o_type=? AND o_id>?")
-			->execute(array($ged_id, $type, $pid))
-			->fetchOne();
-	}
+	$type=gedcom_record_type($xref, $gedcom_id);
+	return WT_DB::prepare(
+		"SELECT MIN(xref) FROM ".WT_RECORD_VIEW." WHERE gedcom_id=? AND record_type=? AND xref>?"
+	)->execute(array($gedcom_id, $type, $xref))->fetchOne();
 }
 
 //-- gets the previous person in the gedcom
-function get_prev_xref($pid, $ged_id=WT_GED_ID) {
+function get_prev_xref($xref, $gedcom_id=WT_GED_ID) {
 	global $TBLPREFIX;
 
-	$type=gedcom_record_type($pid, $ged_id);
-	switch ($type) {
-	case "INDI":
-		return
-			WT_DB::prepare("SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id<?")
-			->execute(array($ged_id, $pid))
-			->fetchOne();
-		break;
-	case "FAM":
-		return
-			WT_DB::prepare("SELECT MAX(f_id) FROM {$TBLPREFIX}families WHERE f_file=? AND f_id<?")
-			->execute(array($ged_id, $pid))
-			->fetchOne();
-	case "SOUR":
-		return
-			WT_DB::prepare("SELECT MAX(s_id) FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id<?")
-			->execute(array($ged_id, $pid))
-			->fetchOne();
-	case "OBJE":
-		return
-			WT_DB::prepare("SELECT MAX(m_media) FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media<?")
-			->execute(array($ged_id, $pid))
-			->fetchOne();
-	default:
-		return
-			WT_DB::prepare("SELECT MAX(o_id) FROM {$TBLPREFIX}other WHERE o_file=? AND o_type=? AND o_id<?")
-			->execute(array($ged_id, $type, $pid))
-			->fetchOne();
-	}
+	$type=gedcom_record_type($xref, $gedcom_id);
+	return WT_DB::prepare(
+		"SELECT MAX(xref) FROM ".WT_RECORD_VIEW." WHERE gedcom_id=? AND record_type=? AND xref<?"
+	)->execute(array($gedcom_id, $type, $xref))->fetchOne();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -537,36 +437,13 @@ function fetch_child_ids($parent_id, $ged_id) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Count the number of records of each type in the database.  Return an array
-// of 'type'=>count for each type where records exist.
-////////////////////////////////////////////////////////////////////////////////
-function count_all_records($ged_id) {
-	global $TBLPREFIX;
-
-	return
-		WT_DB::prepare(
-			"SELECT 'INDI' AS type, COUNT(*) AS num FROM {$TBLPREFIX}individuals WHERE i_file=?".
-			" UNION ALL ".
-			"SELECT 'FAM'  AS type, COUNT(*) AS num FROM {$TBLPREFIX}families    WHERE f_file=?".
-			" UNION ALL ".
-			"SELECT 'SOUR' AS type, COUNT(*) AS num FROM {$TBLPREFIX}sources     WHERE s_file=?".
-			" UNION ALL ".
-			"SELECT 'OBJE' AS type, COUNT(*) AS num FROM {$TBLPREFIX}media       WHERE m_gedfile=?".
-			" UNION ALL ".
-			"SELECT o_type AS type, COUNT(*) as num FROM {$TBLPREFIX}other       WHERE o_file=? GROUP BY type"
-		)
-		->execute(array($ged_id, $ged_id, $ged_id, $ged_id, $ged_id))
-		->fetchAssoc();
-}
-
-////////////////////////////////////////////////////////////////////////////////
 // Count the number of records linked to a given record
 ////////////////////////////////////////////////////////////////////////////////
 function count_linked_indi($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
 	return
-		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, ".WT_RECORD_VIEW." WHERE gedcom_id=l_file AND xref=l_from AND l_file=? AND l_type=? AND l_to=? AND record_type='INDI'")
 		->execute(array($ged_id, $link, $xref))
 		->fetchOne();
 }
@@ -574,7 +451,7 @@ function count_linked_fam($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
 	return
-		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}families WHERE f_file=l_file AND f_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, ".WT_RECORD_VIEW." WHERE gedcom_id=l_file AND xref=l_from AND l_file=? AND l_type=? AND l_to=? AND record_type='FAM'")
 		->execute(array($ged_id, $link, $xref))
 		->fetchOne();
 }
@@ -582,15 +459,15 @@ function count_linked_note($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
 	return
-		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}other WHERE o_file=l_file AND o_id=l_from AND o_type=? AND l_file=? AND l_type=? AND l_to=?")
-		->execute(array('NOTE', $ged_id, $link, $xref))
+		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, ".WT_RECORD_VIEW." WHERE gedcom_id=l_file AND xref=l_from AND l_file=? AND l_type=? AND l_to=? AND record_type='NOTE'")
+		->execute(array($ged_id, $link, $xref))
 		->fetchOne();
 }
 function count_linked_sour($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
 	return
-		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}sources WHERE s_file=l_file AND s_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, ".WT_RECORD_VIEW." WHERE gedcom_id=l_file AND xref=l_from AND l_file=? AND l_type=? AND l_to=? AND record_type='SOUR'")
 		->execute(array($ged_id, $link, $xref))
 		->fetchOne();
 }
@@ -598,7 +475,7 @@ function count_linked_obje($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
 	return
-		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}media WHERE m_gedfile=l_file AND m_media=l_from AND l_file=? AND l_type=? AND l_to=?")
+		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, ".WT_RECORD_VIEW." WHERE gedcom_id=l_file AND xref=l_from AND l_file=? AND l_type=? AND l_to=? AND record_type='OBJE'")
 		->execute(array($ged_id, $link, $xref))
 		->fetchOne();
 }
@@ -610,13 +487,13 @@ function fetch_linked_indi($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
 	$rows=WT_DB::prepare(
-		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
-		" FROM {$TBLPREFIX}individuals".
-		" JOIN {$TBLPREFIX}link ON (i_file=l_file AND i_id=l_from)".
-		" LEFT JOIN {$TBLPREFIX}name ON (i_file=n_file AND i_id=n_id AND n_num=0)".
-		" WHERE i_file=? AND l_type=? AND l_to=?".
+		"SELECT record_type, xref, gedcom_id, gedcom_data".
+		" FROM ".WT_RECORD_VIEW.
+		" JOIN {$TBLPREFIX}link ON (gedcom_id=l_file AND xref=l_from)".
+		" LEFT JOIN {$TBLPREFIX}name ON (gedcom_id=n_file AND xref=n_id AND n_num=0)".
+		" WHERE gedcom_id=? AND record_type='INDI' AND l_type=? AND l_to=?".
 		" ORDER BY n_sort"
-	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
+	)->execute(array($ged_id, $link, $xref))->fetchAll();
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -628,13 +505,13 @@ function fetch_linked_fam($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
 	$rows=WT_DB::prepare(
-		"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil".
-		" FROM {$TBLPREFIX}families".
-		" JOIN {$TBLPREFIX}link ON (f_file=l_file AND f_id=l_from)".
-		" LEFT JOIN {$TBLPREFIX}name ON (f_file=n_file AND f_id=n_id AND n_num=0)".
-		" WHERE f_file=? AND l_type=? AND l_to=?".
+		"SELECT record_type, xref, gedcom_id, gedcom_data".
+		" FROM ".WT_RECORD_VIEW.
+		" JOIN {$TBLPREFIX}link ON (gedcom_id=l_file AND xref=l_from)".
+		" LEFT JOIN {$TBLPREFIX}name ON (gedcom_id=n_file AND xref=n_id AND n_num=0)".
+		" WHERE gedcom_id=? AND record_type='FAM' AND l_type=? AND l_to=?".
 		" ORDER BY n_sort"
-	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
+	)->execute(array($ged_id, $link, $xref))->fetchAll();
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -646,13 +523,13 @@ function fetch_linked_note($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
 	$rows=WT_DB::prepare(
-		"SELECT 'NOTE' AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec".
-		" FROM {$TBLPREFIX}other".
-		" JOIN {$TBLPREFIX}link ON (o_file=l_file AND o_id=l_from)".
-		" LEFT JOIN {$TBLPREFIX}name ON (o_file=n_file AND o_id=n_id AND n_num=0)".
-		" WHERE o_file=? AND o_type='NOTE' AND l_type=? AND l_to=?".
+		"SELECT record_type, xref, gedcom_id, gedcom_data".
+		" FROM ".WT_RECORD_VIEW.
+		" JOIN {$TBLPREFIX}link ON (gedcom_id=l_file AND xref=l_from)".
+		" LEFT JOIN {$TBLPREFIX}name ON (gedcom_id=n_file AND xref=n_id AND n_num=0)".
+		" WHERE gedcom_id=? AND record_type='NOTE' AND l_type=? AND l_to=?".
 		" ORDER BY n_sort"
-	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
+	)->execute(array($ged_id, $link, $xref))->fetchAll();
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -664,13 +541,13 @@ function fetch_linked_sour($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
 	$rows=WT_DB::prepare(
-			"SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec".
-			" FROM {$TBLPREFIX}sources".
-			" JOIN {$TBLPREFIX}link ON (s_file=l_file AND s_id=l_from)".
-			" LEFT JOIN {$TBLPREFIX}name ON (s_file=n_file AND s_id=n_id AND n_num=0)".
-			" WHERE s_file=? AND l_type=? AND l_to=?".
-			" ORDER BY n_sort"
-		)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
+		"SELECT record_type, xref, gedcom_id, gedcom_data".
+		" FROM ".WT_RECORD_VIEW.
+		" JOIN {$TBLPREFIX}link ON (gedcom_id=l_file AND xref=l_from)".
+		" LEFT JOIN {$TBLPREFIX}name ON (gedcom_id=n_file AND xref=n_id AND n_num=0)".
+		" WHERE gedcom_id=? AND record_type='SOUR' AND l_type=? AND l_to=?".
+		" ORDER BY n_sort"
+	)->execute(array($ged_id, $link, $xref))->fetchAll();
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -682,13 +559,13 @@ function fetch_linked_obje($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
 	$rows=WT_DB::prepare(
-		"SELECT 'OBJE' AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file".
-		" FROM {$TBLPREFIX}media".
-		" JOIN {$TBLPREFIX}link ON (m_gedfile=l_file AND m_media=l_from)".
-		" LEFT JOIN {$TBLPREFIX}name ON (m_gedfile=n_file AND m_media=n_id AND n_num=0)".
-		" WHERE m_gedfile=? AND l_type=? AND l_to=?".
+		"SELECT record_type, xref, gedcom_id, gedcom_data".
+		" FROM ".WT_RECORD_VIEW.
+		" JOIN {$TBLPREFIX}link ON (gedcom_id=l_file AND xref=l_from)".
+		" LEFT JOIN {$TBLPREFIX}name ON (gedcom_id=n_file AND xref=n_id AND n_num=0)".
+		" WHERE gedcom_id=? AND record_type='OBJE' AND l_type=? AND l_to=?".
 		" ORDER BY n_sort"
-	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
+	)->execute(array($ged_id, $link, $xref))->fetchAll();
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -716,103 +593,16 @@ function fetch_all_links($xref, $ged_id) {
 // To simplify common processing, the xref, gedcom id and gedcom record are
 // renamed consistently.  The other columns are fetched as they are.
 ////////////////////////////////////////////////////////////////////////////////
-function fetch_person_record($xref, $ged_id) {
-	global $TBLPREFIX;
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
-			"FROM {$TBLPREFIX}individuals WHERE i_id=? AND i_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
-}
-function fetch_family_record($xref, $ged_id) {
-	global $TBLPREFIX;
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
-			"FROM {$TBLPREFIX}families WHERE f_id=? AND f_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
-}
-function fetch_source_record($xref, $ged_id) {
-	global $TBLPREFIX;
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
-			"FROM {$TBLPREFIX}sources WHERE s_id=? AND s_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
-}
-function fetch_note_record($xref, $ged_id) {
-	// Notes are (currently) stored in the other table
-	return fetch_other_record($xref, $ged_id);
-}
-function fetch_media_record($xref, $ged_id) {
-	global $TBLPREFIX;
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT 'OBJE' AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file ".
-			"FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
-}
-function fetch_other_record($xref, $ged_id) {
-	global $TBLPREFIX;
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
-			"FROM {$TBLPREFIX}other WHERE o_id=? AND o_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
-}
 function fetch_gedcom_record($xref, $ged_id) {
-	// We don't know the type of the record, so use the prefix to suggest the likely type.
-	global $GEDCOM_ID_PREFIX, $FAM_ID_PREFIX, $SOURCE_ID_PREFIX, $MEDIA_ID_PREFIX;
+	global $TBLPREFIX;
+	static $statement=null;
 
-	if       (strpos($xref, $GEDCOM_ID_PREFIX)===0) {
-		$row=fetch_person_record($xref, $ged_id);
-	} elseif (strpos($xref, $FAM_ID_PREFIX   )===0) {
-		$row=fetch_family_record($xref, $ged_id);
-	} elseif (strpos($xref, $SOURCE_ID_PREFIX)===0) {
-		$row=fetch_source_record($xref, $ged_id);
-	} elseif (strpos($xref, $MEDIA_ID_PREFIX )===0) {
-		$row=fetch_media_record ($xref, $ged_id);
-	} else {
-		$row=fetch_other_record ($xref, $ged_id);
+	if (is_null($statement)) {
+		$statement=WT_DB::prepare(
+			"SELECT record_type, xref, gedcom_id, gedcom_data FROM ".WT_RECORD_VIEW." WHERE xref=? AND gedcom_id=?"
+		);
 	}
-
-	if ($row) {
-		// If we found it, good
-		return $row;
-	} else {
-		// Otherwise, try the other types
-		if       (strpos($xref, $GEDCOM_ID_PREFIX)!==0 && $row=fetch_person_record($xref, $ged_id)) {
-			return $row;
-		} elseif (strpos($xref, $FAM_ID_PREFIX   )!==0 && $row=fetch_family_record($xref, $ged_id)) {
-			return $row;
-		} elseif (strpos($xref, $SOURCE_ID_PREFIX)!==0 && $row=fetch_source_record($xref, $ged_id)) {
-			return $row;
-		} elseif (strpos($xref, $MEDIA_ID_PREFIX )!==0 && $row=fetch_media_record ($xref, $ged_id)) {
-			return $row;
-		} else {
-			return fetch_other_record($xref, $ged_id);
-		}
-	}
+	return $statement->execute(array($xref, $ged_id))->fetchOneRow();
 }
 
 /**
@@ -823,15 +613,7 @@ function fetch_gedcom_record($xref, $ged_id) {
 * @return string the raw gedcom record is returned
 */
 function find_family_record($xref, $ged_id) {
-	global $TBLPREFIX;
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT f_gedcom FROM {$TBLPREFIX}families WHERE f_id=? AND f_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
+	return find_gedcom_record($xref, $ged_id);
 }
 
 /**
@@ -842,15 +624,7 @@ function find_family_record($xref, $ged_id) {
 * @return string the raw gedcom record is returned
 */
 function find_person_record($xref, $ged_id) {
-	global $TBLPREFIX;
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id=? AND i_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
+	return find_gedcom_record($xref, $ged_id);
 }
 
 /**
@@ -861,15 +635,7 @@ function find_person_record($xref, $ged_id) {
 * @return string the raw gedcom record is returned
 */
 function find_source_record($xref, $ged_id) {
-	global $TBLPREFIX;
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT s_gedcom FROM {$TBLPREFIX}sources WHERE s_id=? AND s_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
+	return find_gedcom_record($xref, $ged_id);
 }
 
 /**
@@ -878,15 +644,7 @@ function find_source_record($xref, $ged_id) {
 * @param string $gedfile the gedcom file id
 */
 function find_other_record($xref, $ged_id) {
-	global $TBLPREFIX;
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_id=? AND o_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
+	return find_gedcom_record($xref, $ged_id);
 }
 
 /**
@@ -894,15 +652,7 @@ function find_other_record($xref, $ged_id) {
 * @param string $rid the record id
 */
 function find_media_record($xref, $ged_id) {
-	global $TBLPREFIX;
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
+	return find_gedcom_record($xref, $ged_id);
 }
 
 // Find the gedcom data for a record. Optionally include pending changes.
@@ -912,29 +662,10 @@ function find_gedcom_record($xref, $ged_id, $pending=false) {
 
 	if (is_null($statement)) {
 		$statement=WT_DB::prepare(
-			"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id   =? AND i_file   =? UNION ALL ".
-			"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id   =? AND f_file   =? UNION ALL ".
-			"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id   =? AND s_file   =? UNION ALL ".
-			"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media=? AND m_gedfile=? UNION ALL ".
-			"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id   =? AND o_file   =?"
+			"SELECT gedcom_data FROM ".WT_RECORD_VIEW." WHERE xref=? AND gedcom_id=?"
 		);
 	}
-
-	if ($pending) {
-		// This will return NULL if no record exists, or an empty string if the record has been deleted.
-		$gedcom=find_updated_record($xref, $ged_id);
-	} else {
-		$gedcom=null;
-	}
-	
-	if (is_null($gedcom)) {
-		return
-			$statement
-			->execute(array($xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id))
-			->fetchOne();
-	} else {
-		return $gedcom;
-	}
+	return $statement->execute(array($xref, $ged_id))->fetchOne();
 }
 
 /**
@@ -959,25 +690,17 @@ function find_updated_record($xref, $ged_id) {
 
 // Find the type of a gedcom record. Check the cache before querying the database.
 // Returns 'INDI', 'FAM', etc., or null if the record does not exist.
-function gedcom_record_type($xref, $ged_id) {
-	global $TBLPREFIX, $gedcom_record_cache;
+function gedcom_record_type($xref, $gedcom_id) {
+	global $TBLPREFIX;
 	static $statement=null;
 
 	if (is_null($statement)) {
 		$statement=WT_DB::prepare(
-			"SELECT 'INDI' FROM {$TBLPREFIX}individuals WHERE i_id   =? AND i_file   =? UNION ALL ".
-			"SELECT 'FAM'  FROM {$TBLPREFIX}families    WHERE f_id   =? AND f_file   =? UNION ALL ".
-			"SELECT 'SOUR' FROM {$TBLPREFIX}sources     WHERE s_id   =? AND s_file   =? UNION ALL ".
-			"SELECT 'OBJE' FROM {$TBLPREFIX}media       WHERE m_media=? AND m_gedfile=? UNION ALL ".
-			"SELECT o_type FROM {$TBLPREFIX}other       WHERE o_id   =? AND o_file   =?"
+			"SELECT record_type FROM ".WT_RECORD_VIEW." WHERE gedcom_id=? AND xref=?"
 		);
 	}
 
-	if (isset($gedcom_record_cache[$xref][$ged_id])) {
-		return $gedcom_record_cache[$xref][$ged_id]->getType();
-	} else {
-		return $statement->execute(array($xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id))->fetchOne();
-	}
+	return $statement->execute(array($gedcom_id, $xref))->fetchOne();
 }
 
 // Find out if there are any pending changes that a given user may accept
@@ -1034,9 +757,9 @@ function get_source_list($ged_id) {
 	global $TBLPREFIX;
 
 	$rows=
-		WT_DB::prepare("SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources s WHERE s_file=?")
+		WT_DB::prepare("SELECT record_type, xref, gedcom_id, gedcom_data FROM ".WT_RECORD_VIEW." WHERE record_type='SOUR' AND gedcom_id=?")
 		->execute(array($ged_id))
-		->fetchAll(PDO::FETCH_ASSOC);
+		->fetchAll();
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -1052,9 +775,9 @@ function get_repo_list($ged_id) {
 	global $TBLPREFIX;
 
 	$rows=
-		WT_DB::prepare("SELECT 'REPO' AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}other WHERE o_type='REPO' AND o_file=?")
+		WT_DB::prepare("SELECT record_type, xref, gedcom_id, gedcom_data FROM ".WT_RECORD_VIEW." WHERE record_type='REPO' AND gedcom_id=?")
 		->execute(array($ged_id))
-		->fetchAll(PDO::FETCH_ASSOC);
+		->fetchAll();
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -1069,9 +792,9 @@ function get_note_list($ged_id) {
 	global $TBLPREFIX;
 
 	$rows=
-		WT_DB::prepare("SELECT 'NOTE' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}other WHERE o_type=? AND o_file=?")
-		->execute(array('NOTE', $ged_id))
-		->fetchAll(PDO::FETCH_ASSOC);
+		WT_DB::prepare("SELECT record_type, xref, gedcom_id, gedcom_data FROM ".WT_RECORD_VIEW." WHERE record_type='NOTE' AND gedcom_id=?")
+		->execute(array($ged_id))
+		->fetchAll();
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -1648,16 +1371,17 @@ function search_notes($query, $geds, $match, $skip) {
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(utf8_strtoupper($q), '/');
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]="o_gedcom LIKE ".WT_DB::quote("%{$q}%");
+			$querysql[]="gedcom_data LIKE ".WT_DB::quote("%{$q}%");
 		} else {
-			$querysql[]="(o_gedcom LIKE ".WT_DB::quote("%{$q}%")." OR o_gedcom LIKE ".WT_DB::quote(utf8_strtoupper("%{$q}%"))." OR o_gedcom LIKE ".WT_DB::quote(utf8_strtolower("%{$q}%")).")";
+			$querysql[]="(gedcom_data LIKE ".WT_DB::quote("%{$q}%")." OR gedcom_data LIKE ".WT_DB::quote(utf8_strtoupper("%{$q}%"))." OR gedcom_data LIKE ".WT_DB::quote(utf8_strtolower("%{$q}%")).")";
 		}
 	}
 
-	$sql="SELECT 'NOTE' AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}other WHERE (".implode(" {$match} ", $querysql).") AND o_type='NOTE' AND o_file IN (".implode(',', $geds).')';
+	// TODO - search each gedcom separately - to ensure privacy views correct
+	$sql="SELECT record_type, xref, gedcom_id, gedcom_data FROM ".WT_RECORD_VIEW." WHERE (".implode(" {$match} ", $querysql).") AND record_type='NOTE' AND gedcom_id IN (".implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
-	$sql.=' ORDER BY ged_id';
+	$sql.=' ORDER BY gedcom_id';
 
 	// Tags we might not want to search
 	if (WT_USER_IS_ADMIN) {
@@ -1667,14 +1391,14 @@ function search_notes($query, $geds, $match, $skip) {
 	}
 
 	$list=array();
-	$rows=WT_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
+	$rows=WT_DB::prepare($sql)->fetchAll();
 	$GED_ID=WT_GED_ID;
 	foreach ($rows as $row) {
 		// Switch privacy file if necessary
-		if ($row['ged_id']!=$GED_ID) {
-			$GEDCOM=get_gedcom_from_id($row['ged_id']);
-			load_privacy_file($row['ged_id']);
-			$GED_ID=$row['ged_id'];
+		if ($row->gedcom_id!=$GED_ID) {
+			$GEDCOM=get_gedcom_from_id($row->gedcom_id);
+			load_privacy_file($row->gedcom_id);
+			$GED_ID=$row->gedcom_id;
 		}
 		$note=Note::getInstance($row);
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
@@ -1845,7 +1569,6 @@ function delete_gedcom($ged_id) {
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}module_privacy      WHERE gedcom_id =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}name                WHERE n_file    =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}nextid              WHERE ni_gedfile=?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}other               WHERE o_file    =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks          WHERE pl_file   =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}places              WHERE p_file    =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}sources             WHERE s_file    =?")->execute(array($ged_id));
@@ -2760,13 +2483,13 @@ function get_autocomplete_FAM($FILTER, $ids, $ged_id=WT_GED_ID) {
 function get_autocomplete_NOTE($FILTER, $ged_id=WT_GED_ID) {
 	global $TBLPREFIX;
 
-	$sql="SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
-			 "FROM {$TBLPREFIX}other ".
-			 "WHERE o_gedcom LIKE ? AND o_type='NOTE' AND o_file=?";
+	$sql="SELECT record_type, xref, gedcom_id, gedcom_data".
+			 " FROM ".WT_RECORD_VIEW.
+			 " WHERE gedcom_data LIKE ? AND record_type='NOTE' AND gedcom_id=?";
 	return
 		WT_DB::prepareLimit($sql, WT_AUTOCOMPLETE_LIMIT)
 		->execute(array("%{$FILTER}%", $ged_id))
-		->fetchAll(PDO::FETCH_ASSOC);
+		->fetchAll();
 }
 
 function get_autocomplete_SOUR($FILTER, $ged_id=WT_GED_ID) {
@@ -2835,22 +2558,22 @@ function get_autocomplete_REPO($FILTER, $ged_id=WT_GED_ID) {
 	global $TBLPREFIX;
 
 	$sql=
-		"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
-		"FROM {$TBLPREFIX}other ".
-		"WHERE (o_gedcom LIKE ? OR o_id LIKE ?) AND o_file=? AND o_type='REPO'";
+		"SELECT record_type, xref, gedcom_id, gedcom_data".
+		" FROM ".WT_RECORD_VIEW.
+		" WHERE (gedcom_data LIKE ? OR xref LIKE ?) AND gedcom_id=? AND record_type='REPO'";
 	return
 		WT_DB::prepareLimit($sql, WT_AUTOCOMPLETE_LIMIT)
 		->execute(array("%1 NAME %{$FILTER}%", "{$FILTER}%", $ged_id))
-		->fetchAll(PDO::FETCH_ASSOC);
+		->fetchAll();
 }
 
 function get_autocomplete_REPO_NAME($FILTER, $ged_id=WT_GED_ID) {
 	global $TBLPREFIX;
 
 	$sql=
-		"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
-		"FROM {$TBLPREFIX}other ".
-		"WHERE o_gedcom LIKE ? AND o_file=? AND o_type='REPO'";
+		"SELECT record_type, xref, gedcom_id, gedcom_data".
+		" FROM ".WT_RECORD_VIEW.
+		" WHERE gedcom_data LIKE ? AND gedcom_id=? AND record_type='REPO'";
 	return
 		WT_DB::prepareLimit($sql, WT_AUTOCOMPLETE_LIMIT)
 		->execute(array("%1 NAME %{$FILTER}%", $ged_id))

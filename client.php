@@ -348,38 +348,12 @@ case 'getxref':
 		print "SUCCESS\n$xref\n";
 		break;
 	case 'all':
-		switch($type) {
-			case "INDI":
-				$statement=
-					WT_DB::prepare("SELECT i_id FROM {$TBLPREFIX}individuals WHERE i_file=? ORDER BY i_id")
-					->execute(array($GED_ID));
-				break;
-			case "FAM":
-				$statement=
-					WT_DB::prepare("SELECT f_id FROM {$TBLPREFIX}families WHERE f_file=? ORDER BY f_id")
-					->execute(array($GED_ID));
-				break;
-			case "SOUR":
-				$statement=
-					WT_DB::prepare("SELECT s_id FROM {$TBLPREFIX}sources WHERE s_file=? ORDER BY s_id")
-					->execute(array($GED_ID));
-			case "OBJE":
-				$statement=
-					WT_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_gedfile=? ORDER BY m_media")
-					->execute(array($GED_ID));
-			case "OTHER":
-				$statement=
-					WT_DB::prepare("SELECT o_id FROM {$TBLPREFIX}other WHERE o_file=? AND o_type NOT IN ('REPO', 'NOTE') ORDER BY o_id")
-					->execute(array($GED_ID));
-				break;
-			default:
-				$statement=
-					WT_DB::prepare("SELECT o_id FROM {$TBLPREFIX}other WHERE o_file=? AND o_type=? ORDER BY o_id")
-					->execute(array($GED_ID, $type));
-		}
+		$xrefs=WT_DB::prepare(
+			"SELECT xref FROM ".WT_RECORD_VIEW." WHERE record_type=? AND gedcom_id=?"
+		)->execute(array($type, $GED_ID))->fetchOneColumn();
 		print "SUCCESS\n";
-		foreach ($statement->fetchOneColumn() as $id) {
-			print "{$id}\n";
+		foreach ($xrefs as $xref) {
+			print "{$xref}\n";
 		}
 		addToLog($action." type=$type position=$position ", 'debug');
 		break;

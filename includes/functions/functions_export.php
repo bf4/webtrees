@@ -137,15 +137,15 @@ function gedcom_header($gedfile) {
 		}
 		// Link to SUBM/SUBN records, if they exist
 		$subn=
-			WT_DB::prepare("SELECT o_id FROM {$TBLPREFIX}other WHERE o_type=? AND o_file=?")
-			->execute(array('SUBN', $ged_id))
+			WT_DB::prepare("SELECT xref FROM ".WT_RECORD_VIEW." WHERE record_type='SUBN' AND gedcom_id=?")
+			->execute(array($ged_id))
 			->fetchOne();
 		if ($subn) {
 			$SUBN="\n1 SUBN @{$subn}@";
 		}
 		$subm=
-			WT_DB::prepare("SELECT o_id FROM {$TBLPREFIX}other WHERE o_type=? AND o_file=?")
-			->execute(array('SUBM', $ged_id))
+			WT_DB::prepare("SELECT xref FROM ".WT_RECORD_VIEW." WHERE record_type='SUBM' AND gedcom_id=?")
+			->execute(array($ged_id))
 			->fetchOne();
 		if ($subm) {
 			$SUBM="\n1 SUBM @{$subm}@";
@@ -286,71 +286,10 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
 	$buffer=reformat_record_export($head);
 
 	$recs=
-		WT_DB::prepare("SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id NOT LIKE ? ORDER BY i_id")
+		WT_DB::prepare("SELECT gedcom_data FROM {$TBLPREFIX}record WHERE created_by IS NULL AND gedcom_id=? AND xref NOT LIKE ? ORDER BY xref")
 		->execute(array($ged_id, '%:%'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
-		$rec=remove_custom_tags($rec, $exportOptions['noCustomTags']);
-		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
-		if ($exportOptions['toANSI']=="yes") $rec=utf8_decode($rec);
-		$buffer.=reformat_record_export($rec);
-		if (strlen($buffer)>65536) {
-			fwrite($gedout, $buffer);
-			$buffer='';
-		}
-	}
-
-	$recs=
-		WT_DB::prepare("SELECT f_gedcom FROM {$TBLPREFIX}families WHERE f_file=? AND f_id NOT LIKE ? ORDER BY f_id")
-		->execute(array($ged_id, '%:%'))
-		->fetchOneColumn();
-	foreach ($recs as $rec) {
-		$rec=remove_custom_tags($rec, $exportOptions['noCustomTags']);
-		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
-		if ($exportOptions['toANSI']=="yes") $rec=utf8_decode($rec);
-		$buffer.=reformat_record_export($rec);
-		if (strlen($buffer)>65536) {
-			fwrite($gedout, $buffer);
-			$buffer='';
-		}
-	}
-
-	$recs=
-		WT_DB::prepare("SELECT s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id NOT LIKE ? ORDER BY s_id")
-		->execute(array($ged_id, '%:%'))
-		->fetchOneColumn();
-	foreach ($recs as $rec) {
-		$rec=remove_custom_tags($rec, $exportOptions['noCustomTags']);
-		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
-		if ($exportOptions['toANSI']=="yes") $rec=utf8_decode($rec);
-		$buffer.=reformat_record_export($rec);
-		if (strlen($buffer)>65536) {
-			fwrite($gedout, $buffer);
-			$buffer='';
-		}
-	}
-
-	$recs=
-		WT_DB::prepare("SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_file=? AND o_id NOT LIKE ? AND o_type!=? AND o_type!=? ORDER BY o_id")
-		->execute(array($ged_id, '%:%', 'HEAD', 'TRLR'))
-		->fetchOneColumn();
-	foreach ($recs as $rec) {
-		$rec=remove_custom_tags($rec, $exportOptions['noCustomTags']);
-		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
-		if ($exportOptions['toANSI']=="yes") $rec=utf8_decode($rec);
-		$buffer.=reformat_record_export($rec);
-		if (strlen($buffer)>65536) {
-			fwrite($gedout, $buffer);
-			$buffer='';
-		}
-	}
-
-	$recs=
-		WT_DB::prepare("SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media NOT LIKE ? ORDER BY m_media")
-		->execute(array($ged_id, '%:%'))
-		->fetchOneColumn();
-	foreach ($recs as $rec) {
-		$rec = convert_media_path($rec, $exportOptions['path'], $exportOptions['slashes']);
 		$rec=remove_custom_tags($rec, $exportOptions['noCustomTags']);
 		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
 		if ($exportOptions['toANSI']=="yes") $rec=utf8_decode($rec);

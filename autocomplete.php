@@ -220,7 +220,7 @@ function autocomplete_FAM($FILTER, $OPTION) {
 	foreach ($rows as $row) {
 		$family = Family::getInstance($row);
 		if ($family->canDisplayName()) {
-			$data[$row["xref"]] =
+			$data[$row->xref] =
 				$family->getFullName().
 				" <u>".
 				ltrim($family->getMarriageYear(), "0").
@@ -241,7 +241,7 @@ function autocomplete_NOTE($FILTER) {
 	foreach ($rows as $row) {
 		$note = Note::getInstance($row);
 		if ($note->canDisplayName()) {
-			$data[$row["xref"]] = $note->getFullName();
+			$data[$row->xref] = $note->getFullName();
 		}
 	}
 	return $data;
@@ -258,7 +258,7 @@ function autocomplete_SOUR($FILTER) {
 	foreach ($rows as $row) {
 		$source = Source::getInstance($row);
 		if ($source->canDisplayName()) {
-			$data[$row["xref"]] = $source->getFullName();
+			$data[$row->xref] = $source->getFullName();
 		}
 	}
 	return $data;
@@ -380,7 +380,7 @@ function autocomplete_REPO($FILTER) {
 	foreach ($rows as $row) {
 		$repository = Repository::getInstance($row);
 		if ($repository->canDisplayName()) {
-			$data[$row["xref"]] = $repository->getFullName();
+			$data[$row->xref] = $repository->getFullName();
 		}
 	}
 	return $data;

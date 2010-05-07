@@ -586,7 +586,6 @@ function import_record($gedrec, $ged_id, $update) {
 	static $sql_insert_indi=null;
 	static $sql_insert_fam=null;
 	static $sql_insert_sour=null;
-	static $sql_insert_other=null;
 	static $sql_insert_record1=null;
 	static $sql_insert_record2=null;
 	if (!$sql_insert_indi) {
@@ -598,9 +597,6 @@ function import_record($gedrec, $ged_id, $update) {
 		);
 		$sql_insert_sour=WT_DB::prepare(
 			"INSERT INTO {$TBLPREFIX}sources (s_id, s_file, s_name, s_gedcom, s_dbid) VALUES (?,?,?,?,?)"
-		);
-		$sql_insert_other=WT_DB::prepare(
-			"INSERT INTO {$TBLPREFIX}other (o_id, o_file, o_type, o_gedcom) VALUES (?,?,?,?)"
 		);
 		$sql_insert_record1=WT_DB::prepare(
 			"INSERT INTO {$TBLPREFIX}record (gedcom_id, xref, record_type, gedcom_data, resn) VALUES (?,?,?,?,?)"
@@ -1223,7 +1219,6 @@ function empty_database($ged_id, $keepmedia) {
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}individuals WHERE i_file =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}families    WHERE f_file =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}sources     WHERE s_file =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}other       WHERE o_file =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}places      WHERE p_file =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks  WHERE pl_file=?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}remotelinks WHERE r_file =?")->execute(array($ged_id));
@@ -1360,10 +1355,8 @@ function update_record($gedrec, $ged_id, $delete) {
 	case 'OBJE':
 		WT_DB::prepare("DELETE FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?")->execute(array($gid, $ged_id));
 		break;
-	default:
-		WT_DB::prepare("DELETE FROM {$TBLPREFIX}other WHERE o_id=? AND o_file=?")->execute(array($gid, $ged_id));
-		break;
 	}
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}record WHERE xref=? AND gedcom_id=?")->execute(array($gid, $ged_id));
 
 	if (!$delete) {
 		import_record($gedrec, $ged_id, true);

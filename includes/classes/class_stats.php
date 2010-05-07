@@ -472,7 +472,7 @@ class stats {
 	function totalNotes() {
 		global $TBLPREFIX;
 		return
-			WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}other WHERE o_type=? AND o_file=?")
+			WT_DB::prepare("SELECT COUNT(*) FROM ".WT_RECORD_VIEW." WHERE record_type=? AND gedcom_id=?")
 			->execute(array('NOTE', $this->_ged_id))
 			->fetchOne();
 	}
@@ -484,8 +484,8 @@ class stats {
 	function totalOtherRecords() {
 		global $TBLPREFIX;
 		return
-			WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}other WHERE o_type<>? AND o_file=?")
-			->execute(array('NOTE', $this->_ged_id))
+			WT_DB::prepare("SELECT COUNT(*) FROM ".WT_RECORD_VIEW." WHERE record_type NOT IN ('INDI','FAM','SOUR','REPO','OBJE','NOTE') AND gedcom_id=?")
+			->execute(array($this->_ged_id))
 			->fetchOne();
 	}
 

@@ -241,38 +241,15 @@ class batch_update {
 	function getAllXrefs() {
 		global $TBLPREFIX;
 
-		$sql=array();
-		$vars=array();
+		$vars=array(WT_GED_ID);
+		$qs=array();
 		foreach ($this->PLUGIN->getRecordTypesToUpdate() as $type) {
-			switch ($type) {
-			case 'INDI':
-				$sql[]="SELECT i_id, 'INDI' FROM {$TBLPREFIX}individuals WHERE i_file=?";
-				$vars[]=WT_GED_ID;
-				break;
-			case 'FAM':
-				$sql[]="SELECT f_id, 'FAM' FROM {$TBLPREFIX}families WHERE f_file=?";
-				$vars[]=WT_GED_ID;
-				break;
-			case 'SOUR':
-				$sql[]="SELECT s_id, 'SOUR' FROM {$TBLPREFIX}sources WHERE s_file=?";
-				$vars[]=WT_GED_ID;
-				break;
-			case 'OBJE':
-				$sql[]="SELECT m_media, 'OBJE' FROM {$TBLPREFIX}media WHERE m_gedfile=?";
-				$vars[]=WT_GED_ID;
-				break;
-			default:
-				$sql[]="SELECT o_id, ? FROM {$TBLPREFIX}other WHERE o_type=? AND o_file=?";
-				$vars[]=$type;
-				$vars[]=$type;
-				$vars[]=WT_GED_ID;
-				break;
-			}
+			$vars[]=$type;
+			$qs[]='?';
 		}
-		$this->all_xrefs=
-			WT_DB::prepare(implode(' UNION ', $sql).' ORDER BY 1 ASC')
-			->execute($vars)
-			->fetchAssoc();
+		$this->all_xrefs=WT_DB::prepare(
+			"SELECT xref, record_type FROM ".WT_RECORD_VIEW." WHERE gedcom_id=? AND record_type IN (".implode(',', $qs).") ORDER BY xref"
+		)->execute($vars)->fetchAssoc();
 	}
 
 	// Scan the plugin directory for a list of plugins

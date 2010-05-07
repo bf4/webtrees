@@ -49,7 +49,27 @@ class Family extends GedcomRecord {
 
 	// Create a Family object from either raw GEDCOM data or a database row
 	function __construct($data, $simple=true) {
-		if (is_array($data)) {
+		if (is_object($data)) {
+			// Construct from raw GEDCOM data
+			if (preg_match('/^1 HUSB @(.+)@/m', $data->gedcom_data, $match)) {
+				$this->husb=Person::getInstance($match[1]);
+			}
+			if (preg_match('/^1 WIFE @(.+)@/m', $data->gedcom_data, $match)) {
+				$this->wife=Person::getInstance($match[1]);
+			}
+			if (preg_match_all('/^1 CHIL @(.+)@/m', $data->gedcom_data, $match)) {
+				$this->childrenIds=$match[1];
+			}
+			if (preg_match('/^1 NCHI (\d+)/m', $data->gedcom_data, $match)) {
+				$this->numChildren=$match[1];
+			} else {
+				$this->numChildren=count($this->childrenIds);
+			}
+			// Check for divorce, etc. *before* we privatize the data so
+			// we can correctly label spouses/ex-spouses/partners
+			$this->_isDivorced=(bool)preg_match('/\n1 ('.WT_EVENTS_DIV.')( Y|\n)/', $data->gedcom_data);
+			$this->_isNotMarried=(bool)preg_match('/\n1 _NMR( Y|\n)/', $data->gedcom_data);
+		} elseif (is_array($data)) {
 			// Construct from a row from the database
 			if ($data['f_husb']) {
 				$this->husb=Person::getInstance($data['f_husb']);

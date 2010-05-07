@@ -53,7 +53,14 @@ class Media extends GedcomRecord {
 
 	// Create a Media object from either raw GEDCOM data or a database row
 	function __construct($data) {
-		if (is_array($data)) {
+		if (is_object($data)) {
+			// Construct from raw GEDCOM data
+			$this->title = get_gedcom_value('TITL', 1, $data->gedcom_data);
+			if (empty($this->title)) {
+				$this->title = get_gedcom_value('TITL', 2, $data->gedcom_data);
+			}
+			$this->file = get_gedcom_value('FILE', 1, $data->gedcom_data);
+		} elseif (is_array($data)) {
 			// Construct from a row from the database
 			$this->title=$data['m_titl'];
 			$this->file =$data['m_file'];
