@@ -588,6 +588,7 @@ function import_record($gedrec, $ged_id, $update) {
 	static $sql_insert_sour=null;
 	static $sql_insert_record1=null;
 	static $sql_insert_record2=null;
+	static $sql_insert_fact=null;
 	if (!$sql_insert_indi) {
 		$sql_insert_indi=WT_DB::prepare(
 			"INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_isdead, i_sex, i_gedcom) VALUES (?,?,?,?,?,?)"
@@ -604,6 +605,14 @@ function import_record($gedrec, $ged_id, $update) {
 		$sql_insert_record2=WT_DB::prepare(
 			"INSERT INTO {$TBLPREFIX}record (gedcom_id, xref, record_type, gedcom_data, resn)".
 			" SELECT ?, ?, ?, ?, IFNULL(MAX(resn), 'none') FROM {$TBLPREFIX}default_resn WHERE gedcom_id=? AND (xref=? OR tag_type=?)"
+		);
+		$sql_insert_fact=WT_DB::prepare(
+			"INSERT INTO {$TBLPREFIX}fact (record_id, fact_type, fact_value, link_xref, gedcom_data, resn) VALUES (".
+			" ?,?,?,?,?,".
+			" CASE WHEN ? IN ('none','privacy','confidential','hidden') THEN ? ELSE".
+			"  (SELECT IFNULL(MAX(resn), 'none') FROM {$TBLPREFIX}default_resn WHERE gedcom_id=? AND tag_type=?)".
+			" END".
+			")"
 		);
 	}
 
@@ -666,6 +675,27 @@ function import_record($gedrec, $ged_id, $update) {
 		$sql_insert_record2->execute(array($ged_id, $xref, $type, $gedrec, $ged_id, $xref, $type));
 	}
 	$record_id=WT_DB::getInstance()->lastInsertId();
+
+	// Create the facts for this record
+	preg_match_all('/\n(1 ('.WT_REGEX_TAG.') ?(.*)(?:\n[2-9].*)*)/', $gedrec, $matches, PREG_SET_ORDER);
+	foreach ($matches as $match) {
+		list(,$gedcom_data, $fact_type, $fact_value)=$match;
+		if (preg_match('/^@'.WT_REGEX_XREF.'@$/', $fact_value)) {
+			$link_xref=trim($fact_value, '@');
+			$fact_value=null;
+		} else {
+			$link_xref=null;
+			if ($fact_value=='') {
+				$fact_value=null;
+			}
+		}
+		if (preg_match('/\n2 RESN (none|privacy|confidential|hidden)/', $gedcom_data, $submatch)) {
+			$resn=$submatch[1];
+		} else {
+			$resn=null;
+		}
+		$sql_insert_fact->execute(array($record_id, $fact_type, $fact_value, $link_xref, $gedcom_data, $resn, $resn, $ged_id, $fact_type));
+	}
 
 	switch ($type) {
 	case 'INDI':
@@ -747,16 +777,6 @@ function import_record($gedrec, $ged_id, $update) {
 		break;
 	case 'OBJE':
 		// OBJE records are imported by update_media function
-		break;
-	case 'HEAD':
-		if (!strpos($gedrec, "\n1 DATE ")) {
-			$gedrec.="\n1 DATE ".date('j M Y');
-		}
-		// no break
-	default:
-		if (substr($type, 0, 1)!='_') {
-			$sql_insert_other->execute(array($xref, $ged_id, $type, $gedrec));
-		}
 		break;
 	}
 
