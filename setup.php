@@ -706,8 +706,8 @@ try {
 		" gedcom_id    INTEGER                NOT NULL,".
 		" xref         VARCHAR(20)            NOT NULL,".
 		" record_type  VARCHAR(15)            NOT NULL,".
-		" resn         ENUM ('none', 'privacy', 'confidential', 'hidden') NOT NULL,".
 		" gedcom_data  MEDIUMTEXT             NOT NULL,".
+		" resn         ENUM ('none', 'privacy', 'confidential', 'hidden') NOT NULL,".
 		" created_by   INTEGER                    NULL,".
 		" deleted_by   INTEGER                    NULL,".
 		" PRIMARY KEY     (record_id),".
@@ -744,8 +744,8 @@ try {
 		" fact_type    VARCHAR(15)            NOT NULL,".
 		" fact_value   TEXT                       NULL,".
 		" link_xref    VARCHAR(20)                NULL,".
-		" resn         ENUM ('none', 'privacy', 'confidential', 'hidden') NOT NULL,".
 		" gedcom_data  TEXT                   NOT NULL,".
+		" resn         ENUM ('none', 'privacy', 'confidential', 'hidden') NOT NULL,".
 		" created_by   INTEGER                    NULL,".
 		" deleted_by   INTEGER                    NULL,".
 		" PRIMARY KEY     (fact_id),".
