@@ -1,12 +1,14 @@
 <?php
 /**
- * Module system for adding features to phpGedView.
+ * Lightbox configuration User Interface.
+ *
+ * Provides links for administrators to get to other administrative areas of the site
  *
  * webtrees: Web based Family History software
  * Copyright (C) 2010 webtrees development team.
  *
  * Derived from PhpGedView
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,20 +24,31 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * This Page Is Valid XHTML 1.0 Transitional! > 01 September 2005
+ *
  * @package webtrees
- * @subpackage Display
- * @version $Id$
- * @author Patrick Kellum
+ * @subpackage Admin
+ * $Id$
  */
 
-define('WT_SCRIPT_NAME', 'module.php');
-require './includes/session.php';
-
-$all_modules=WT_Module::getActiveModules();
-$mod=safe_REQUEST($_REQUEST, 'mod', array_keys($all_modules));
-if ($mod) {
-	$module=$all_modules[$mod];
-	$module->modAction(safe_REQUEST($_REQUEST, 'mod_action'));
-} else {
-	header('Location: index.php');
+if (!defined('WT_WEBTREES')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
 }
+
+if (WT_USER_IS_ADMIN) { ?>
+   <tr>
+	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo i18n::translate('Lightbox-Album Configuration'); ?></td>
+   </tr>
+   <tr>
+      <td class="optionbox">
+		<a href="module.php?mod=lightbox&mod_action=lb_editconfig"><?php echo i18n::translate('Manage Lightbox configuration');?>
+		</a><?php echo help_link('LIGHTBOX_CONFIG','lightbox'); ?>
+	  </td>
+      <td class="optionbox">
+		
+	  </td>
+   </tr>
+
+<?php }
+?>

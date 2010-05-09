@@ -35,8 +35,10 @@ if (!defined('WT_WEBTREES')) {
 require WT_ROOT.'modules/googlemap/defaultconfig.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 
+global $countries, $EDIT_AUTOCLOSE;
+$action=safe_REQUEST($_REQUEST, 'action');
+
 if (isset($_REQUEST['countrySelected'])) $countrySelected = $_REQUEST['countrySelected'];
-if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 
 if (!isset($countrySelected)) $countrySelected="Countries";
 
@@ -108,10 +110,10 @@ else {
 
 	function selectCountry() {
 		if (document.flags.COUNTRYSELECT.value == "Countries") {
-			window.location="module.php?mod=googlemap&pgvaction=flags";
+			window.location="module.php?mod=googlemap&mod_action=flags";
 		}
 		else {
-			window.location="module.php?mod=googlemap&pgvaction=flags&countrySelected=" + document.flags.COUNTRYSELECT.value;
+			window.location="module.php?mod=googlemap&mod_action=flags&countrySelected=" + document.flags.COUNTRYSELECT.value;
 		}
 	}
 
@@ -145,7 +147,7 @@ else {
 	}
 ?>
 
-<form method="post" id="flags" name="flags" action="module.php?mod=googlemap&pgvaction=flags&countrySelected=<?php echo $countrySelected;?>">
+<form method="post" id="flags" name="flags" action="module.php?mod=googlemap&mod_action=flags&countrySelected=<?php echo $countrySelected;?>">
 	<input type="hidden" name="action" value="ChangeFlag" />
 	<input type="hidden" name="selcountry" value="<?php echo $countrySelected;?>" />
 	<input id="savebutton" name="save1" type="submit" disabled="true" value="<?php echo i18n::translate('Save');?>" /><br />

@@ -35,8 +35,7 @@ if (!defined('WT_WEBTREES')) {
 	exit;
 }
 
-require WT_ROOT.'/modules/googlemap/googlemap.php'; // gives access to googlemap functions
-
+global $TBLPREFIX;
 $action   =safe_POST     ('action'                                              );
 $gedcom_id=safe_POST     ('gedcom_id', array_keys(get_all_gedcoms()), WT_GED_ID);
 $openinnew=safe_POST_bool('openinnew'                                           );
@@ -48,7 +47,7 @@ if (!WT_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=placelist.php");
 	exit;
 }
-print_header(i18n::translate('Place Check').' - '.$GEDCOM);
+print_header(i18n::translate('Place Check').' - '.WT_GEDCOM);
 
 $target=$openinnew ? "target='_blank'" : "";
 
@@ -56,7 +55,7 @@ echo "<div align=\"center\" style=\"width: 99%;\"><h1>", i18n::translate('Place 
 
 //Start of User Defined options
 echo "<table border='0' width='100%' height='100px' overflow='auto';>";
-echo "<form method='post' name='placecheck' action='module.php?mod=googlemap&amp;pgvaction=placecheck'>";
+echo "<form method='post' name='placecheck' action='module.php?mod=googlemap&amp;mod_action=placecheck'>";
 echo "<tr valign='top'>";
 echo "<td>";
 echo "<table align='left'>";
@@ -203,12 +202,12 @@ case 'go':
 	<script language="JavaScript" type="text/javascript">
 	<!--
 	function edit_place_location(placeid) {
-		window.open('module.php?mod=googlemap&pgvaction=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50, left=50, width=680, height=550, resizable=1, scrollbars=1');
+		window.open('module.php?mod=googlemap&mod_action=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50, left=50, width=680, height=550, resizable=1, scrollbars=1');
 		return false;
 	}
 	
 	function add_place_location(placeid) {
-		window.open('module.php?mod=googlemap&pgvaction=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50, left=50, width=680, height=550, resizable=1, scrollbars=1');
+		window.open('module.php?mod=googlemap&mod_action=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50, left=50, width=680, height=550, resizable=1, scrollbars=1');
 		return false;
 	}
 	function showchanges() {

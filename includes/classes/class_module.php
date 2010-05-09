@@ -95,6 +95,35 @@ abstract class WT_Module {
 	final public function &getController()   { return $this->controller; }
 	final public function setController(&$c) { $this->controller=$c;     }
 
+	// Run an action specified on the URL through module.php?mod=FOO&mod_action=BAR
+	public function modAction($mod_action) {
+	}
+
+	final static public function getActiveModules() {
+		global $TBLPREFIX;
+
+		$module_names=WT_DB::prepare(
+			"SELECT module_name".
+			" FROM {$TBLPREFIX}module".
+			" WHERE status='enabled'".
+			" ORDER BY module_name"
+		)->fetchOneColumn();
+		$array=array();
+		foreach ($module_names as $module_name) {
+			if (file_exists(WT_ROOT.'modules/'.$module_name.'/module.php')) {
+				require_once WT_ROOT.'modules/'.$module_name.'/module.php';
+				$class=$module_name.'_WT_Module';
+				$array[$module_name]=new $class();
+			} else {
+				// Module has been deleted from disk?  Remove it from the database.
+				AddToLog("Module {$module_name} has been deleted from disk - deleting from database", 'config');
+				WT_DB::prepare("DELETE FROM {$TBLPREFIX}module_privacy WHERE module_name=?")->execute(array($module_name));
+				WT_DB::prepare("DELETE FROM {$TBLPREFIX}module WHERE module_name=?")->execute(array($module_name));
+			}
+		}
+		return $array;
+	}
+
 	final static private function getActiveModulesByComponent($component, $ged_id, $access_level) {
 		global $TBLPREFIX;
 
@@ -118,6 +147,9 @@ abstract class WT_Module {
 				WT_DB::prepare("DELETE FROM {$TBLPREFIX}module WHERE module_name=?")->execute(array($module_name));
 			}
 		}
+		if ($component!='menu' && $component!='sidebar' && $component!='tab') {
+			uasort($array, create_function('$x,$y', 'return utf8_strcasecmp($x->getTitle(), $y->getTitle());'));
+		}
 		return $array;
 	}
 
@@ -127,7 +159,6 @@ abstract class WT_Module {
 		if ($blocks===null) {
 			$blocks=self::getActiveModulesByComponent('block', $ged_id, $access_level);
 		}
-		usort($blocks, create_function('$x,$y', 'return utf8_strcasecmp($x->getTitle(), $y->getTitle());'));
 		return $blocks;
 	}
 
@@ -137,7 +168,6 @@ abstract class WT_Module {
 		if ($charts===null) {
 			$charts=self::getActiveModulesByComponent('chart', $ged_id, $access_level);
 		}
-		usort($charts, create_function('$x,$y', 'return utf8_strcasecmp($x->getTitle(), $y->getTitle());'));
 		return $charts;
 	}
 
@@ -156,7 +186,6 @@ abstract class WT_Module {
 		if ($reports===null) {
 			$reports=self::getActiveModulesByComponent('report', $ged_id, $access_level);
 		}
-		usort($reports, create_function('$x,$y', 'return utf8_strcasecmp($x->getTitle(), $y->getTitle());'));
 		return $reports;
 	}
 
@@ -184,7 +213,6 @@ abstract class WT_Module {
 		if ($themes===null) {
 			$themes=self::getActiveModulesByComponent('theme', $ged_id, $access_level);
 		}
-		usort($themes, create_function('$x,$y', 'return utf8_strcasecmp($x->getTitle(), $y->getTitle());'));
 		return $themes;
 	}
 
@@ -194,12 +222,13 @@ abstract class WT_Module {
 		if ($modules===null) {
 			$dir=opendir(WT_ROOT.'modules');
 			while (($file=readdir($dir))!==false) {
-				if (preg_match('/^[a-z_]+$/', $file) && file_exists(WT_ROOT.'modules/'.$file.'/module.php')) {
+				if (preg_match('/^[a-zA-Z_]+$/', $file) && file_exists(WT_ROOT.'modules/'.$file.'/module.php')) {
 					require_once WT_ROOT.'modules/'.$file.'/module.php';
 					$class=$file.'_WT_Module';
-					$modules[]=new $class();					
+					$modules[$file]=new $class();
 				}
 			}
+			usort($modules, create_function('$x,$y', 'return utf8_strcasecmp($x->getTitle(), $y->getTitle());'));
 		}
 		return $modules;
 	}
@@ -208,12 +237,11 @@ abstract class WT_Module {
 	final static public function getInstalledBlocks() {
 		global $TBLPREFIX;
 		$modules=array();
-		foreach (self::getInstalledModules() as $module) {
+		foreach (self::getInstalledModules() as $name=>$module) {
 			if ($module instanceof WT_Module_Block) {
-				$modules[]=$module;
+				$modules[$name]=$module;
 			}
 		}
-		usort($modules, create_function('$x,$y', 'return utf8_strcasecmp($x->getTitle(), $y->getTitle());'));
 		return $modules;
 	}
 
@@ -221,12 +249,11 @@ abstract class WT_Module {
 	final static public function getInstalledCharts() {
 		global $TBLPREFIX;
 		$modules=array();
-		foreach (self::getInstalledModules() as $module) {
+		foreach (self::getInstalledModules() as $name=>$module) {
 			if ($module instanceof WT_Module_Chart) {
-				$modules[]=$module;
+				$modules[$name]=$module;
 			}
 		}
-		usort($modules, create_function('$x,$y', 'return utf8_strcasecmp($x->getTitle(), $y->getTitle());'));
 		return $modules;
 	}
 
@@ -234,15 +261,14 @@ abstract class WT_Module {
 	final static public function getInstalledMenus() {
 		global $TBLPREFIX;
 		$modules=array();
-		foreach (self::getInstalledModules() as $module) {
+		foreach (self::getInstalledModules() as $name=>$module) {
 			if ($module instanceof WT_Module_Menu) {
 				$module->sort=WT_DB::prepare(
 					"SELECT menu_order FROM {$TBLPREFIX}module WHERE module_name=?"
 				)->execute(array($module->getName()))->fetchOne();
-				$modules[]=$module;
+				$modules[$name]=$module;
 			}
 		}
-		usort($modules, create_function('$x,$y', 'return $x->sort-$y->sort;'));
 		return $modules;
 	}
 
@@ -250,12 +276,11 @@ abstract class WT_Module {
 	final static public function getInstalledReports() {
 		global $TBLPREFIX;
 		$modules=array();
-		foreach (self::getInstalledModules() as $module) {
+		foreach (self::getInstalledModules() as $name=>$module) {
 			if ($module instanceof WT_Module_Report) {
-				$modules[]=$module;
+				$modules[$name]=$module;
 			}
 		}
-		usort($modules, create_function('$x,$y', 'return utf8_strcasecmp($x->getTitle(), $y->getTitle());'));
 		return $modules;
 	}
 
@@ -263,15 +288,14 @@ abstract class WT_Module {
 	final static public function getInstalledSidebars() {
 		global $TBLPREFIX;
 		$modules=array();
-		foreach (self::getInstalledModules() as $module) {
+		foreach (self::getInstalledModules() as $name=>$module) {
 			if ($module instanceof WT_Module_Sidebar) {
 				$module->sort=WT_DB::prepare(
 					"SELECT sidebar_order FROM {$TBLPREFIX}module WHERE module_name=?"
 				)->execute(array($module->getName()))->fetchOne();
-				$modules[]=$module;
+				$modules[$name]=$module;
 			}
 		}
-		usort($modules, create_function('$x,$y', 'return $x->sort-$y->sort;'));
 		return $modules;
 	}
 
@@ -279,15 +303,14 @@ abstract class WT_Module {
 	final static public function getInstalledTabs() {
 		global $TBLPREFIX;
 		$modules=array();
-		foreach (self::getInstalledModules() as $module) {
+		foreach (self::getInstalledModules() as $name=>$module) {
 			if ($module instanceof WT_Module_Tab) {
 				$module->sort=WT_DB::prepare(
 					"SELECT tab_order FROM {$TBLPREFIX}module WHERE module_name=?"
 				)->execute(array($module->getName()))->fetchOne();
-				$modules[]=$module;
+				$modules[$name]=$module;
 			}
 		}
-		usort($modules, create_function('$x,$y', 'return $x->sort-$y->sort;'));
 		return $modules;
 	}
 
@@ -295,12 +318,11 @@ abstract class WT_Module {
 	final static public function getInstalledThemes() {
 		global $TBLPREFIX;
 		$modules=array();
-		foreach (self::getInstalledModules() as $module) {
+		foreach (self::getInstalledModules() as $name=>$module) {
 			if ($module instanceof WT_Module_Theme) {
-				$modules[]=$module;
+				$modules[$name]=$module;
 			}
 		}
-		usort($modules, create_function('$x,$y', 'return utf8_strcasecmp($x->getTitle(), $y->getTitle());'));
 		return $modules;
 	}
 
@@ -352,9 +374,5 @@ abstract class WT_Module {
 				"INSERT INTO {$TBLPREFIX}module_privacy (module_name, gedcom_id, component, access_level) VALUES (?, ?, 'theme', ?)"
 			)->execute(array($module->getName(), $ged_id, $module->defaultAccessLevel()));
 		}
-	}
-
-	static public function compare_name(&$a, &$b) {
-		return strcmp($a->getName(), $b->getName());
 	}
 }
