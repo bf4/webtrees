@@ -68,9 +68,9 @@ $PRIVACY_CONSTANTS=array(
 	'hidden'      =>i18n::translate('Hide even from admin users')
 );
 
-$all_tags=array();
-foreach (explode(',', "{$INDI_FACTS_ADD},{$FAM_FACTS_ADD},{$NOTE_FACTS_ADD},{$SOUR_FACTS_ADD},{$REPO_FACTS_ADD}") as $tag) {
-	$all_tags[$tag]=i18n::translate('%1$s [%2$s]', translate_fact($tag), $tag);
+$all_tags=WT_DB::prepare("SELECT fact_type FROM {$TBLPREFIX}fact WHERE fact_type NOT IN ('FAMC','FAMS','HUSB','WIFE','CHIL') UNION SELECT record_type FROM {$TBLPREFIX}record WHERE record_type NOT IN ('HEAD','TRLR')")->fetchOneColumn();
+foreach ($all_tags as &$tag) {
+	$tag=i18n::translate('%1$s [%2$s]', strip_tags(translate_fact($tag)), $tag);
 }
 
 uasort($all_tags, 'utf8_strcasecmp');
