@@ -1316,6 +1316,13 @@ function findSpecialChar(field) {
 	window.open('find.php?type=specialchar', '_blank', 'top=55,left=55,width=500,height=500,scrollbars=1,resizeable=1');
 	return false;
 }
+function findFact(field, facts, ged) {
+	pastefield = field;
+	tags = facts;
+	left = screen.width-555;
+	window.open('find.php?type=facts&tags='+tags+'&ged='+ged, '_blank', 'top=55,left='+left+',width=500,height=500,scrollbars=1,resizeable=1');
+	return false;
+}
 
 function toggleByClassName(tagName, className) {
 	var disp = "";

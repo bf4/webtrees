@@ -45,959 +45,945 @@ switch ($help) {
 	//////////////////////////////////////////////////////////////////////////////
 
 case 'ABBR':
-	$title=i18n::translate('Abbreviation');
+	$title=translate_fact('ABBR');
 	$text=i18n::translate('Use this field for storing an abbreviated version of a title.  This field is used in conjunction with the title field on sources.  By default <b>webtrees</b> will first use the title and then the abbreviated title.<br /><br />According to the GEDCOM 5.5 specification, "this entry is to provide a short title used for sorting, filing, and retrieving source records (pg 62)."<br /><br />In <b>webtrees</b> the abbreviated title is optional, but in other genealogical programs it is required.');
 	break;
 
 case 'ADDR':
-	$title=i18n::translate('Address');
+	$title=translate_fact('ADDR');
 	$text=i18n::translate('Enter the address into the field just as you would write it on an envelope.<br /><br />Leave this field blank if you do not want to include an address.');
 	break;
 
 case 'ADR1':	
-	$title=i18n::translate('Address line 1');
+	$title=translate_fact('ADR1');
 	$text='';
 	break;
 
 case 'ADR2':	
-	$title=i18n::translate('Address line 2');
+	$title=translate_fact('ADR2');
 	$text='';
 	break;
 
 case 'ADOP':
-	$title=i18n::translate('Adoption');
+	$title=translate_fact('ADOP');
 	$text='';
 	break;
 
 case 'AFN':	
-	$title=i18n::translate('Ancestral File Number');
+	$title=translate_fact('AFN');
 	$text='';
 	break;
 
 case 'AGE':	
-	$title=i18n::translate('Age');
+	$title=translate_fact('AGE');
 	$text='';
 	break;
 
 case 'AGNC':
-	$title=i18n::translate('Agency');
+	$title=translate_fact('AGNC');
 	$text=i18n::translate('The organization, institution, corporation, person, or other entity that has authority.<br /><br />For example, an employer of a person, or a church that administered rites or events, or an organization responsible for creating and/or archiving records.');
 	break;
 
 case 'ALIA':	
-	$title=i18n::translate('Alias');
+	$title=translate_fact('ALIA');
 	$text='';
 	break;
 
 case 'ANCE':	
-	$title=i18n::translate('Generations of ancestors');
+	$title=translate_fact('ANCE');
 	$text='';
 	break;
 
 case 'ANCI':	
-	$title=i18n::translate('Ancestors interest');
+	$title=translate_fact('ANCI');
 	$text='';
 	break;
 
 case 'ANUL':	
-	$title=i18n::translate('Annulment');
+	$title=translate_fact('ANUL');
 	$text='';
 	break;
 
 case 'ASSO':
-	$title=i18n::translate('Associate');
+	$title=translate_fact('ASSO');
 	$text=i18n::translate('Enter associate GEDCOM ID.');
 	break;
 
 case 'AUTH':	
-	$title=i18n::translate('Author');
+	$title=translate_fact('AUTH');
 	$text='';
 	break;
 
 case 'BAPL':	
-	$title=i18n::translate('LDS baptism');
+	$title=translate_fact('BAPL');
 	$text='';
 	break;
 
 case 'BAPM':	
-	$title=i18n::translate('Baptism');
-	// I18N: This is a very short abbreviation for the label "Baptism", to be used on genealogy charts
-	$abbrev=i18n::translate('ABBREV_BAPM');
+	$title=translate_fact('BAPM');
 	$text='';
 	break;
 
 case 'BAPM:DATE':	
-	$title=i18n::translate('Date of baptism');
+	$title=translate_fact('BAPM:DATE');
 	$text='';
 	break;
 
 case 'BAPM:PLAC':	
-	$title=i18n::translate('Place of baptism');
+	$title=translate_fact('BAPM:PLAC');
 	$text='';
 	break;
 
 case 'BAPM:SOUR':	
-	$title=i18n::translate('Source for baptism');
+	$title=translate_fact('BAPM:SOUR');
 	$text='';
 	break;
 
 case 'BARM':	
-	$title=i18n::translate('Bar mitzvah');
+	$title=translate_fact('BARM');
 	$text='';
 	break;
 
 case 'BARM:DATE':	
-	$title=i18n::translate('Date of bar mitzvah');
+	$title=translate_fact('BARM:DATE');
 	$text='';
 	break;
 
 case 'BARM:PLAC':	
-	$title=i18n::translate('Place of bar mitzvah');
+	$title=translate_fact('BARM:PLAC');
 	$text='';
 	break;
 
 case 'BARM:SOUR':	
-	$title=i18n::translate('Source for bar mitzvah');
+	$title=translate_fact('BARM:SOUR');
 	$text='';
 	break;
 
 case 'BASM':	
-	$title=i18n::translate('Bas mitzvah');
+	$title=translate_fact('BASM');
 	$text='';
 	break;
 
 case 'BASM:DATE':	
-	$title=i18n::translate('Date of bas mitzvah');
+	$title=translate_fact('BASM:DATE');
 	$text='';
 	break;
 
 case 'BASM:PLAC':	
-	$title=i18n::translate('Place of bas mitzvah');
+	$title=translate_fact('BASM:PLAC');
 	$text='';
 	break;
 
 case 'BASM:SOUR':	
-	$title=i18n::translate('Source for bas mitzvah');
+	$title=translate_fact('BASM:SOUR');
 	$text='';
 	break;
 
 case 'BIRT':	
-	$title=i18n::translate('Birth');
-	// I18N: This is a very short abbreviation for the label "Birth", to be used on genealogy charts
-	$abbr=i18n::translate('ABBREV_BIRT');
+	$title=translate_fact('BIRT');
 	$text='';
 	break;
 
 case 'BIRT:DATE':	
-	$title=i18n::translate('Date of birth');
+	$title=translate_fact('BIRT:DATE');
 	$text='';
 	break;
 
 case 'BIRT:PLAC':	
-	$title=i18n::translate('Place of birth');
+	$title=translate_fact('BIRT:PLAC');
 	$text='';
 	break;
 
 case 'BIRT:SOUR':	
-	$title=i18n::translate('Source for birth');
+	$title=translate_fact('BIRT:SOUR');
 	$text='';
 	break;
 
 case 'BLES':	
-	$title=i18n::translate('Blessing');
+	$title=translate_fact('BLES');
 	$text='';
 	break;
 
 case 'BLOB':	
-	$title=i18n::translate('Binary Data Object');
+	$title=translate_fact('BLOB');
 	$text='';
 	break;
 
 case 'BURI':	
-	$title=i18n::translate('Burial');
-	// I18N: This is a very short abbreviation for the label "Burial", to be used on genealogy charts
-	$abbr=i18n::translate('ABBREV_BURI');
+	$title=translate_fact('BURI');
 	$text='';
 	break;
 
 case 'BURI:DATE':	
-	$title=i18n::translate('Date of burial');
+	$title=translate_fact('BURI:DATE');
 	$text='';
 	break;
 
 case 'BURI:PLAC':	
-	$title=i18n::translate('Place of burial');
+	$title=translate_fact('BURI:PLAC');
 	$text='';
 	break;
 
 case 'BURI:SOUR':	
-	$title=i18n::translate('Source for burial');
+	$title=translate_fact('BURI:SOUR');
 	$text='';
 	break;
 
 case 'CALN':	
-	$title=i18n::translate('Call number');
+	$title=translate_fact('CALN');
 	$text='The number used by a repository to identify the specific items in its collections.';
 	break;
 
 case 'CAST':	
-	$title=i18n::translate('Caste');
+	$title=translate_fact('CAST');
 	$text='The name of an individual\'s rank or status in society which is sometimes based on racial or religious differences, or differences in wealth, inherited rank, profession, occupation, etc.';
 	break;
 
 case 'CAUS':	
-	$title=i18n::translate('Cause');
+	$title=translate_fact('CAUS');
 	$text=i18n::translate('A description of the cause of the associated event or fact, such as the cause of death.');
 	break;
 
 case 'CEME':
-	$title=i18n::translate('Cemetery');
+	$title=translate_fact('Cemetery');
 	$text=i18n::translate('Enter the name of the cemetery or other resting place where individual is buried.');
 	break;
 
 case 'CENS':	
-	$title=i18n::translate('Census');
+	$title=translate_fact('CENS');
 	$text='';
 	break;
 
 case 'CHAN':	
-	$title=i18n::translate('Last change');
+	$title=translate_fact('CHAN');
 	$text='';
 	break;
 
 case 'CHAR':	
-	$title=i18n::translate('Character set');
+	$title=translate_fact('CHAR');
 	$text='';
 	break;
 
 case 'CHIL':	
-	$title=i18n::translate('Child');
+	$title=translate_fact('CHIL');
 	$text='';
 	break;
 
 case 'CHR':	
-	$title=i18n::translate('Christening');
-	// I18N: This is a very short abbreviation for the label "Christening", to be used on genealogy charts
-	$abbr=i18n::translate('ABBREV_CHR');
+	$title=translate_fact('CHR');
 	$text='';
 	break;
 
 case 'CHR:DATE':	
-	$title=i18n::translate('Date of christening');
+	$title=translate_fact('CHR:DATE');
 	$text='';
 	break;
 
 case 'CHR:PLAC':	
-	$title=i18n::translate('Place of christening');
+	$title=translate_fact('CHR:PLAC');
 	$text='';
 	break;
 
 case 'CHR:SOUR':	
-	$title=i18n::translate('Source for christening');
+	$title=translate_fact('CHR:SOUR');
 	$text='';
 	break;
 
 case 'CHRA':	
-	$title=i18n::translate('Adult christening');
+	$title=translate_fact('CHRA');
 	$text='';
 	break;
 
 case 'CITN':	
-	$title=i18n::translate('Citizenship');
+	$title=translate_fact('CITN');
 	$text='';
 	break;
 
 case 'CITY':	
-	$title=i18n::translate('City');
+	$title=translate_fact('CITY');
 	$text='';
 	break;
 
 case 'COMM':	
-	$title=i18n::translate('Comment');
+	$title=translate_fact('COMM');
 	$text='';
 	break;
 
 case 'CONC':	
-	$title=i18n::translate('Concatenation');
+	$title=translate_fact('Concatenation');
 	$text='';
 	break;
 
 case 'CONT':	
-	$title=i18n::translate('Continued');
+	$title=translate_fact('Continued');
 	$text='';
 	break;
 
 case 'CONF':	
-	$title=i18n::translate('Confirmation');
+	$title=translate_fact('CONF');
 	$text='';
 	break;
 
 case 'CONF:DATE':	
-	$title=i18n::translate('Date of confirmation');
+	$title=translate_fact('CONF:DATE');
 	$text='';
 	break;
 
 case 'CONF:PLAC':	
-	$title=i18n::translate('Place of confirmation');
+	$title=translate_fact('CONF:PLAC');
 	$text='';
 	break;
 
 case 'CONF:SOUR':	
-	$title=i18n::translate('Source for confirmation');
+	$title=translate_fact('CONF:SOUR');
 	$text='';
 	break;
 
 case 'CONL':	
-	$title=i18n::translate('LDS confirmation');
+	$title=translate_fact('CONL');
 	$text='';
 	break;
 
 case 'COPR':	
-	$title=i18n::translate('Copyright');
+	$title=translate_fact('COPR');
 	$text='';
 	break;
 
 case 'CORP':	
-	$title=i18n::translate('Corporation');
+	$title=translate_fact('CORP');
 	$text='A name of an institution, agency, corporation, or company.';
 	break;
 
 case 'CREM':	
-	$title=i18n::translate('Cremation');
+	$title=translate_fact('CREM');
 	$text='Disposal of the remains of a person\'s body by fire.';
 	break;
 
 case 'CTRY':	
-	$title=i18n::translate('Country');
+	$title=translate_fact('CTRY');
 	$text='';
 	break;
 
 case 'DATA':	
-	$title=i18n::translate('Data');
+	$title=translate_fact('DATA');
 	$text='';
 	break;
 
 case 'DATA:DATE':	
-	$title=i18n::translate('Date of entry in original source');
+	$title=translate_fact('DATA:DATE');
 	$text='';
 	break;
 
 case 'DATE':	
-	$title=i18n::translate('Date');
+	$title=translate_fact('DATE');
 	$text='';
 	break;
 
 case 'DEAT':	
-	$title=i18n::translate('Death');
-	// I18N: This is a very short abbreviation for the label "Death", to be used on genealogy charts
-	$abbr=i18n::translate('ABBREV_DEAT');
+	$title=translate_fact('DEAT');
+	$text='';
+	break;
+
+case 'DEAT:CAUS':	
+	$title=translate_fact('DEAT:CAUS');
 	$text='';
 	break;
 
 case 'DEAT:DATE':	
-	$title=i18n::translate('Date of death');
+	$title=translate_fact('DEAT:DATE');
 	$text='';
 	break;
 
 case 'DEAT:PLAC':	
-	$title=i18n::translate('Place of death');
+	$title=translate_fact('DEAT:PLAC');
 	$text='';
 	break;
 
 case 'DEAT:SOUR':	
-	$title=i18n::translate('Source for death');
+	$title=translate_fact('DEAT:SOUR');
 	$text='';
 	break;
 
 case 'DESC':	
-	$title=i18n::translate('Descendants');
+	$title=translate_fact('DESC');
 	$text='Pertaining to offspring of an individual.';
 	break;
 
 case 'DESI':	
-	$title=i18n::translate('Descendants interest');
+	$title=translate_fact('DESI');
 	$text='';
 	break;
 
 case 'DEST':	
-	$title=i18n::translate('Destination');
+	$title=translate_fact('DEST');
 	$text='';
 	break;
 
 case 'DIV':	
-	$title=i18n::translate('Divorce');
+	$title=translate_fact('DIV');
 	$text='';
 	break;
 
 case 'DIVF':	
-	$title=i18n::translate('Divorce filed');
+	$title=translate_fact('DIVF');
 	$text='';
 	break;
 
 case 'DSCR':	
-	$title=i18n::translate('Description');
+	$title=translate_fact('Description');
 	$text='';
 	break;
 
 case 'EDUC':	
-	$title=i18n::translate('Education');
+	$title=translate_fact('Education');
 	$text='';
 	break;
 
 case 'EMAI':
-	$title=i18n::translate('Email address');
-	$text='';
-	break;
-
 case 'EMAIL':
-	$title=i18n::translate('Email address');
+case 'EMAL':	
+case '_EMAIL':	
+	$title=translate_fact('EMAIL');
 	$text=i18n::translate('Enter the email address.<br /><br />An example email address looks like this: <b>name@hotmail.com</b>  Leave this field blank if you do not want to include an email address.');
 	break;
 
-case 'EMAL':	
-	$title=i18n::translate('Email address');
-	$text='';
-	break;
-
 case 'EMIG':	
-	$title=i18n::translate('Emigration');
+	$title=translate_fact('EMIG');
 	$text='';
 	break;
 
 case 'ENDL':	
-	$title=i18n::translate('LDS endowment');
+	$title=translate_fact('ENDL');
 	$text='';
 	break;
 
 case 'ENGA':	
-	$title=i18n::translate('Engagement');
+	$title=translate_fact('ENGA');
 	$text='';
 	break;
 
 case 'ENGA:DATE':	
-	$title=i18n::translate('Date of engagement');
+	$title=translate_fact('ENGA:DATE');
 	$text='';
 	break;
 
 case 'ENGA:PLAC':	
-	$title=i18n::translate('Place of engagement');
+	$title=translate_fact('ENGA:PLAC');
 	$text='';
 	break;
 
 case 'ENGA:SOUR':	
-	$title=i18n::translate('Source for engagement');
+	$title=translate_fact('ENGA:SOUR');
 	$text='';
 	break;
 
 case 'EVEN':	
-	$title=i18n::translate('Event');
+	$title=translate_fact('EVEN');
 	$text='';
 	break;
 
 case 'FACT':	
-	$title=i18n::translate('Fact');
+	$title=translate_fact('FACT');
 	$text='';
 	break;
 
 case 'FAM':	
-	$title=i18n::translate('Family');
+	$title=translate_fact('FAM');
 	$text='';
 	break;
 
 case 'FAMC':	
-	$title=i18n::translate('Family as a child');
+	$title=translate_fact('FAMC');
 	$text='';
 	break;
 
 case 'FAMC:HUSB:BIRT:PLAC':	
-	$title=i18n::translate('Father\'s birthplace');
+	$title=translate_fact('FAMC:HUSB:BIRT:PLAC');
 	$text='';
 	break;
 
 case 'FAMC:HUSB:FAMC:HUSB:GIVN':	
-	$title=i18n::translate('Paternal grandfather\'s given name');
+	$title=translate_fact('FAMC:HUSB:FAMC:HUSB:GIVN');
 	$text='';
 	break;
 
 case 'FAMC:HUSB:FAMC:WIFE:GIVN':	
-	$title=i18n::translate('Paternal grandmother\'s given name');
+	$title=translate_fact('FAMC:HUSB:FAMC:WIFE:GIVN');
 	$text='';
 	break;
 
 case 'FAMC:HUSB:GIVN':	
-	$title=i18n::translate('Father\'s given name');
+	$title=translate_fact('FAMC:HUSB:GIVN');
 	$text='';
 	break;
 
 case 'FAMC:HUSB:OCCU':	
-	$title=i18n::translate('Father\'s occupation');
+	$title=translate_fact('FAMC:HUSB:OCCU');
 	$text='';
 	break;
 
 case 'FAMC:HUSB:OCCU':	
-	$title=i18n::translate('Father\'s surname');
+	$title=translate_fact('FAMC:HUSB:OCCU');
 	$text='';
 	break;
 
 case 'FAMC:MARR:PLAC':	
-	$title=i18n::translate('Parents\' marriage place');
+	$title=translate_fact('FAMC:MARR:PLAC');
 	$text='';
 	break;
 
 case 'FAMC:MARR:PLAC':	
-	$title=i18n::translate('Mother\'s birthplace');
+	$title=translate_fact('FAMC:MARR:PLAC');
 	$text='';
 	break;
 
 case 'FAMC:WIFE:FAMC:HUSB:GIVN':	
-	$title=i18n::translate('Maternal grandfather\'s given name');
+	$title=translate_fact('FAMC:WIFE:FAMC:HUSB:GIVN');
 	$text='';
 	break;
 
 case 'FAMC:WIFE:FAMC:WIFE:GIVN':	
-	$title=i18n::translate('Maternal grandmother\'s Given Name');
+	$title=translate_fact('FAMC:WIFE:FAMC:WIFE:GIVN');
 	$text='';
 	break;
 
 case 'FAMC:WIFE:GIVN':	
-	$title=i18n::translate('Mother\'s given name');
+	$title=translate_fact('FAMC:WIFE:GIVN');
 	$text='';
 	break;
 
 case 'FAMC:WIFE:SURN':	
-	$title=i18n::translate('Mother\'s surname');
+	$title=translate_fact('FAMC:WIFE:SURN');
 	$text='';
 	break;
 
 case 'FAMF':	
-	$title=i18n::translate('Family file');
+	$title=translate_fact('FAMF');
 	$text='';
 	break;
 
 case 'FAMS':	
-	$title=i18n::translate('Family as a spouse');
+	$title=translate_fact('FAMS');
 	$text='';
 	break;
 
 case 'FAMS:CENS:DATE':	
-	$title=i18n::translate('Spouse census date');
+	$title=translate_fact('FAMS:CENS:DATE');
 	$text='';
 	break;
 
 case 'FAMS:CENS:PLAC':	
-	$title=i18n::translate('Spouse census place');
+	$title=translate_fact('FAMS:CENS:PLAC');
 	$text='';
 	break;
 
 case 'FAMS:CHIL:BIRT:PLAC':	
-	$title=i18n::translate('Child\'s birth place');
+	$title=translate_fact('FAMS:CHIL:BIRT:PLAC');
 	$text='';
 	break;
 
 case 'FAMS:DIV:DATE':	
-	$title=i18n::translate('Spouse divorce date');
+	$title=translate_fact('FAMS:DIV:DATE');
 	$text='';
 	break;
 
 case 'FAMS:DIV:PLAC':	
-	$title=i18n::translate('Spouse divorce place');
+	$title=translate_fact('FAMS:DIV:PLAC');
 	$text='';
 	break;
 
-case 'FAMS:MARR:DAT':	
-	$title=i18n::translate('Marriage date');
+case 'FAMS:MARR:DATE':	
+	$title=translate_fact('FAMS:MARR:DATE');
 	$text='';
 	break;
 
 case 'FAMS:MARR:PLAC':	
-	$title=i18n::translate('Marriage place');
+	$title=translate_fact('FAMS:MARR:PLAC');
 	$text='';
 	break;
 
 case 'FAMS:NOTE':	
-	$title=i18n::translate('Spouse note');
+	$title=translate_fact('FAMS:NOTE');
 	$text='';
 	break;
 
 case 'FAMS:SLGS:DATE':	
-	$title=i18n::translate('LDS spouse sealing date');
+	$title=translate_fact('FAMS:SLGS:DATE');
 	$text='';
 	break;
 
 case 'FAMS:SLGS:PLAC':	
-	$title=i18n::translate('LDS spouse sealing place');
+	$title=translate_fact('FAMS:SLGS:PLAC');
 	$text='';
 	break;
 
 case 'FAMS:SLGS:TEMP':	
-	$title=i18n::translate('LDS spouse sealing temple');
+	$title=translate_fact('FAMS:SLGS:TEMP');
 	$text='';
 	break;
 
 case 'FAMS:SPOUSE:BIRT:PLAC':	
-	$title=i18n::translate('Spouse\'s birth place');
+	$title=translate_fact('FAMS:SPOUSE:BIRT:PLAC');
 	$text='';
 	break;
 
 case 'FAMS:SPOUSE:DEAT:PLAC':	
-	$title=i18n::translate('Spouse\'s death place');
+	$title=translate_fact('FAMS:SPOUSE:DEAT:PLAC');
 	$text='';
 	break;
 
 case 'FAX':
-	$title=i18n::translate('Fax');
+	$title=translate_fact('FAX');
 	$text=i18n::translate('Enter the FAX number including the country and area code.<br /><br />Leave this field blank if you do not want to include a FAX number.  For example, a number in Germany might be +49 25859 56 76 89 and a number in USA or Canada might be +1 888 555-1212.');
 	break;
 
 case 'FCOM':	
-	$title=i18n::translate('First communion');
+	$title=translate_fact('FCOM');
 	$text='';
 	break;
 
 case 'FCOM:DATE':	
-	$title=i18n::translate('Date of first communion');
+	$title=translate_fact('FCOM:DATE');
 	$text='';
 	break;
 
 case 'FCOM:PLAC':	
-	$title=i18n::translate('Place of first communion');
+	$title=translate_fact('FCOM:PLAC');
 	$text='';
 	break;
 
 case 'FCOM:SOUR':	
-	$title=i18n::translate('Source for first communion');
+	$title=translate_fact('FCOM:SOUR');
 	$text='';
 	break;
 
 case 'FILE':
-	$title=i18n::translate('Filename');
+	$title=translate_fact('FILE');
 	$text=i18n::translate('This is the most important field in the multimedia object record.  It indicates which file to use. At the very minimum, you need to enter the file\'s name.  Depending on your settings, more information about the file\'s location may be helpful.<br /><br />You can use the <b>Find Media</b> link to help you locate media items that have already been uploaded to the site.<br /><br />See <a href="readme.txt" target="_blank"><b>Readme.txt</b></a> for more information.');
 	break;
 
 case 'FONE':	
-	$title=i18n::translate('Phonetic');
+	$title=translate_fact('FONE');
 	$text='';
 	break;
 
 case 'FORM':
-	$title=i18n::translate('Format');
+	$title=translate_fact('FORM');
 	$text=i18n::translate('This is an optional field that can be used to enter the file format of the multimedia object.  Some genealogy programs may look at this field to determine how to handle the item.  However, since media do not transfer across computer systems very well, this field is not very important.');
 	break;
 
 case 'GEDC':	
-	$title=i18n::translate('Gedcom');
+	$title=translate_fact('GEDC');
 	$text='';
 	break;
 
 case 'GIVN':
-	$title=i18n::translate('Given names');
+	$title=translate_fact('GIVN');
 	$text=i18n::translate('In this field you should enter the given names for the person.  As an example, in the name "John Robert Finlay", the given names that should be entered here are "John Robert"');
 	break;
 
 case 'GRAD':	
-	$title=i18n::translate('Graduation');
+	$title=translate_fact('GRAD');
 	$text='';
 	break;
 
 case 'HEAD':	
-	$title=i18n::translate('Header');
+	$title=translate_fact('HEAD');
 	$text='';
 	break;
 
 case 'HUSB':	
-	$title=i18n::translate('Husband');
+	$title=translate_fact('HUSB');
 	$text='';
 	break;
 
 case 'IDNO':	
-	$title=i18n::translate('Identification number');
+	$title=translate_fact('IDNO');
 	$text='';
 	break;
 
 case 'IMMI':	
-	$title=i18n::translate('Immigration');
+	$title=translate_fact('IMMI');
 	$text='';
 	break;
 
 case 'INDI':	
-	$title=i18n::translate('Individual');
+	$title=translate_fact('INDI');
 	$text='';
 	break;
 
 case 'INFL':	
-	$title=i18n::translate('Infant');
+	$title=translate_fact('INFL');
 	$text='';
 	break;
 
 case 'LANG':	
-	$title=i18n::translate('Language');
+	$title=translate_fact('LANG');
 	$text='';
 	break;
 
 case 'LATI':	
-	$title=i18n::translate('Latitude');
+	$title=translate_fact('LATI');
 	$text='';
 	break;
 
 case 'LEGA':	
-	$title=i18n::translate('Legatee');
+	$title=translate_fact('LEGA');
 	$text='';
 	break;
 
 case 'LONG':	
-	$title=i18n::translate('Longitude');
+	$title=translate_fact('LONG');
 	$text='';
 	break;
 
 case 'MAP':	
-	$title=i18n::translate('Map');
+	$title=translate_fact('MAP');
 	$text='';
 	break;
 
 case 'MARB':	
-	$title=i18n::translate('Marriage banns');
+	$title=translate_fact('MARB');
 	$text='';
 	break;
 
 case 'MARB:DATE':	
-	$title=i18n::translate('Date of marriage banns');
+	$title=translate_fact('MARB:DATE');
 	$text='';
 	break;
 
 case 'MARB:PLAC':	
-	$title=i18n::translate('Place of marriage banns');
+	$title=translate_fact('MARB:PLAC');
 	$text='';
 	break;
 
 case 'MARB:SOUR':	
-	$title=i18n::translate('Source for marriage banns');
+	$title=translate_fact('MARB:SOUR');
 	$text='';
 	break;
 
 case 'MARC':	
-	$title=i18n::translate('Marriage contract');
+	$title=translate_fact('MARC');
 	$text='';
 	break;
 
 case 'MARL':	
-	$title=i18n::translate('Marriage licence');
+	$title=translate_fact('MARL');
 	$text='';
 	break;
 
 case 'MARR':	
-	$title=i18n::translate('Marriage');
-	// I18N: This is a very short abbreviation for the label "Marriage", to be used on genealogy charts
-	$abbr=i18n::translate('ABBREV_MARR');
+	$title=translate_fact('MARR');
 	$text='';
 	break;
 
 case 'MARR:':	
-	$title=i18n::translate('Date of marriage date');
+	$title=translate_fact('MARR');
 	$text='';
 	break;
 
 case 'MARR:PLAC':	
-	$title=i18n::translate('Place of marriage');
+	$title=translate_fact('MARR:PLAC');
 	$text='';
 	break;
 
 case 'MARR:SOUR':	
-	$title=i18n::translate('Source for marriage');
+	$title=translate_fact('MARR:SOUR');
 	$text='';
 	break;
 
 case 'MARR_CIVIL':	
-	$title=i18n::translate('Civil marriage');
+	$title=translate_fact('MARR_CIVIL');
 	$text='';
 	break;
 
 case 'MARR_PARTNERS':	
-	$title=i18n::translate('Registered partnership');
+	$title=translate_fact('MARR_PARTNERS');
 	$text='';
 	break;
 
 case 'MARR_RELIGIOUS':	
-	$title=i18n::translate('Religious marriage');
+	$title=translate_fact('MARR_RELIGIOUS');
 	$text='';
 	break;
 
 case 'MARR_UNKNOWN':	
-	$title=i18n::translate('Marriage type unknown');
+	$title=translate_fact('MARR_UNKNOWN');
 	$text='';
 	break;
 
 case 'MARS':	
-	$title=i18n::translate('Marriage settlement');
+	$title=translate_fact('MARS');
 	$text='';
 	break;
 
 case 'MEDI':	
-	$title=i18n::translate('Media type');
+	$title=translate_fact('MEDI');
 	$text='';
 	break;
 
 case 'NAME':
-	$title=i18n::translate('Name');
+	$title=translate_fact('NAME');
 	$text=i18n::translate('This is the most important field in a person\'s Name record.<br /><br />This field should be filled automatically as the other fields are filled in, but it is provided so that you can edit the information according to your personal preference.<br /><br />The name in this field should be entered according to the GEDCOM 5.5.1 standards with the surname surrounded by forward slashes "/".  As an example, the name "John Robert Finlay Jr." should be entered like this: "John Robert /Finlay/ Jr.".');
 	break;
 
 case 'NAME:FONE':	
-	$title=i18n::translate('Phonetic name');
+	$title=translate_fact('NAME:FONE');
 	$text='';
 	break;
 
 case 'NAME:_HEB':	
-	$title=i18n::translate('Name in Hebrew');
+	$title=translate_fact('NAME:_HEB');
 	$text='';
 	break;
 
 case 'NATI':	
-	$title=i18n::translate('Nationality');
+	$title=translate_fact('NATI');
 	$text='';
 	break;
 
 case 'NATU':	
-	$title=i18n::translate('Naturalization');
+	$title=translate_fact('NATU');
 	$text='';
 	break;
 
 case 'NCHI':
-	$title=i18n::translate('Number of children');
+	$title=translate_fact('NCHI');
 	$text=i18n::translate('Enter the number of children for this individual or family. This is an optional field.');
 	break;
 
 case 'NICK':
-	$title=i18n::translate('Nickname');
+	$title=translate_fact('NICK');
 	$text=i18n::translate('In this field you should enter any nicknames for the person.<br />This is an optional field.<br /><br />Ways to add a nickname:<ul><li>Select <b>modify name</b> then enter nickname and save</li><li>Select <b>add new name</b> then enter nickname AND name and save</li><li>Select <b>edit GEDCOM record</b> to add multiple [2&nbsp;NICK] records subordinate to the main [1&nbsp;NAME] record.</li></ul>');
 	break;
 
 case 'NMR':	
-	$title=i18n::translate('Number of marriages');
+	$title=translate_fact('NMR');
 	$text='';
 	break;
 
 case 'NOTE':
-	$title=i18n::translate('Note');
+	$title=translate_fact('NOTE');
 	$text=i18n::translate('Notes are free-form text and will appear in the Fact Details section of the page.');
 	break;
 
 case 'NPFX':
-	$title=i18n::translate('Name prefix');
+	$title=translate_fact('NPFX');
 	$text=i18n::translate('This optional field allows you to enter a name prefix such as "Dr." or "Adm."');
 	break;
 
 case 'NSFX':
-	$title=i18n::translate('Name suffix');
+	$title=translate_fact('NSFX');
 	$text=i18n::translate('In this optional field you should enter the name suffix for the person.  Examples of name suffixes are "Sr.", "Jr.", and "III".');
 	break;
 
 case 'OBJE':	
-	$title=i18n::translate('Multimedia object');
+	$title=translate_fact('OBJE');
 	$text='';
 	break;
 
 case 'OCCU':	
-	$title=i18n::translate('Occupation');
+	$title=translate_fact('OCCU');
 	$text='';
 	break;
 
 case 'ORDI':	
-	$title=i18n::translate('Ordinance');
+	$title=translate_fact('ORDI');
 	$text='';
 	break;
 
 case 'ORDN':	
-	$title=i18n::translate('Ordination');
+	$title=translate_fact('ORDN');
 	$text='';
 	break;
 
 case 'PAGE':
-	$title=i18n::translate('Citation details');
+	$title=translate_fact('PAGE');
 	$text=i18n::translate('In the Citation Details field you would enter the page number or other information that might help someone find the information in the source.');
 	break;
 
 case 'PEDI':
-	$title=i18n::translate('Pedigree');
+	$title=translate_fact('PEDI');
 	$text=i18n::translate('This field describes the relationship of the child to its family.  The possibilities are:<ul><li><b>unknown</b>&nbsp;&nbsp;&nbsp;The child\'s relationship to its family cannot be determined.  When this option is selected, the Pedigree field will not be copied into the database.<br /><br /></li><li><b>Birth</b>&nbsp;&nbsp;&nbsp;This option indicates that the child is related to its family by birth.<br /><br /></li><li><b>Adopted</b>&nbsp;&nbsp;&nbsp;This option indicates that the child was adopted by its family.  This does <i>not</i> indicate that there is no blood relationship between the child and its family; it shows that the child was adopted by the family in question sometime after the child\'s birth.<br /><br /></li><li><b>Foster</b>&nbsp;&nbsp;&nbsp;This option indicates that the child is a foster child of the family.  Usually, there is no blood relationship between the child and its family.<br /><br /></li><li><b>Sealing</b>&nbsp;&nbsp;&nbsp;The child was sealed to its family in an LDS <i>sealing</i> ceremony.  A child sealing is performed when the parents were sealed to each other after the birth of the child.  Children born after the parents\' sealing are automatically sealed to the family.<br /><br /></li></ul>');
 	break;
 
 case 'PHON':
-	$title=i18n::translate('Phone');
+	$title=translate_fact('PHON');
 	$text=i18n::translate('Enter the phone number including the country and area code.<br /><br />Leave this field blank if you do not want to include a phone number.  For example, a number in Germany might be +49 25859 56 76 89 and a number in USA or Canada might be +1 888 555-1212.');
 	break;
 
 case 'PLAC':
-	$title=i18n::translate('Place');
+	$title=translate_fact('PLAC');
 	$text=i18n::translate('Places should be entered according to the standards for genealogy.  In genealogy, places are recorded with the most specific information about the place first and then working up to the least specific place last, using commas to separate the different place levels.  The level at which you record the place information should represent the levels of government or church where vital records for that place are kept.<br /><br />For example, a place like Salt Lake City would be entered as "Salt Lake City, Salt Lake, Utah, USA".<br /><br />Let\'s examine each part of this place.  The first part, "Salt Lake City," is the city or township where the event occurred.  In some countries, there may be municipalities or districts inside a city which are important to note.  In that case, they should come before the city.  The next part, "Salt Lake," is the county.  "Utah" is the state, and "USA" is the country.  It is important to note each place because genealogical records are kept by the governments of each level.<br /><br />If a level of the place is unknown, you should leave a space between the commas.  Suppose, in the example above, you didn\'t know the county for Salt Lake City.  You should then record it like this: "Salt Lake City, , Utah, USA".  Suppose you only know that a person was born in Utah.  You would enter the information like this: ", , Utah, USA".  <br /><br />You can use the <b>Find Place</b> link to help you find places that already exist in the database.');
 	break;
 
 case 'PLAC:FONE':	
-	$title=i18n::translate('Phonetic place');
+	$title=translate_fact('PLAC:FONE');
 	$text='';
 	break;
 
 case 'PLAC:ROMN':	
-	$title=i18n::translate('Romanized place');
+	$title=translate_fact('PLAC:ROMN');
 	$text='';
 	break;
 
 case 'PLAC:_HEB':	
-	$title=i18n::translate('Place in Hebrew');
+	$title=translate_fact('PLAC:_HEB');
 	$text='';
 	break;
 
 case 'POST':	
-	$title=i18n::translate('Postal code');
+	$title=translate_fact('POST');
 	$text='';
 	break;
 
 case 'PROB':	
-	$title=i18n::translate('Probate');
+	$title=translate_fact('PROB');
 	$text='';
 	break;
 
 case 'PROP':	
-	$title=i18n::translate('Property');
+	$title=translate_fact('PROP');
 	$text='';
 	break;
 
 case 'PUBL':	
-	$title=i18n::translate('Publication');
+	$title=translate_fact('PUBL');
 	$text='';
 	break;
 
 case 'QUAY':
-	$title=i18n::translate('Quality of data');
+	$title=translate_fact('QUAY');
 	$text=i18n::translate('You would use this field to record the quality or reliability of the data found in this source.  Many genealogy applications use a number in the field. <b>3</b> might mean that the data is a primary source, <b>2</b> might mean that it was a secondary source, <b>1</b> might mean the information is questionable, and <b>0</b> might mean that the source is unreliable.');
 	break;
 
 case 'REFN':	
-	$title=i18n::translate('Reference number');
+	$title=translate_fact('REFN');
 	$text='';
 	break;
 
 case 'RELA':
-	$title=i18n::translate('Relationship');
+	$title=translate_fact('RELA');
 	$text=i18n::translate('Select a relationship name from the list. Selecting <b>Godfather</b> means: <i>This associate is the Godfather of the current individual</i>.');
 	break;
 
 case 'RELI':	
-	$title=i18n::translate('Religion');
+	$title=translate_fact('RELI');
 	$text='';
 	break;
 
 case 'REPO':	
-	$title=i18n::translate('Repository');
+	$title=translate_fact('REPO');
 	$text='';
 	break;
 
 case 'RESI':	
-	$title=i18n::translate('Residence');
+	$title=translate_fact('RESI');
 	$text='';
 	break;
 
 case 'RESN':
-	$title=i18n::translate('Restriction');
+	$title=translate_fact('RESN');
 	$text=
 		i18n::translate('Apart from general privacy settings, <b>webtrees</b> has the ability to set restrictions on viewing and editing fact information for individuals and families. The restrictions can be set by anyone who is allowed to edit the information, unless privacy or formerly set restrictions prohibit this.').
 		'<br /><br />'.i18n::translate('The following values can be used:').
@@ -1015,1073 +1001,1068 @@ case 'RESN':
 	break;
 
 case 'RETI':	
-	$title=i18n::translate('Retirement');
+	$title=translate_fact('RETI');
 	$text='';
 	break;
 
 case 'RFN':	
-	$title=i18n::translate('Record file number');
+	$title=translate_fact('RFN');
 	$text='';
 	break;
 
 case 'RIN':	
-	$title=i18n::translate('Record ID number');
+	$title=translate_fact('RIN');
 	$text='';
 	break;
 
 case 'ROLE':	
-	$title=i18n::translate('Role');
+	$title=translate_fact('ROLE');
 	$text='';
 	break;
 
 case 'ROMN':
-	$title=i18n::translate('Romanized');
+	$title=translate_fact('ROMN');
 	$text=i18n::translate('In many cultures it is customary to have a traditional name spelled in the traditional characters and also a romanized version of the name as it would be spelled or pronounced in languages based on the Latin alphabet, such as English.<br /><br />If you prefer to use a non-Latin alphabet such as Hebrew, Greek, Russian, Chinese, or Arabic to enter the name in the standard name fields, then you can use this field to enter the same name using the Latin alphabet.  Both versions of the name will appear in lists and charts.<br /><br />Although this field is labelled "Romanized", it is not restricted to containing only characters based on the Latin alphabet.  This might be of use with Japanese names, where three different alphabets may occur.');
 	break;
 
 case 'SERV':	
-	$title=i18n::translate('Remote server');
+	$title=translate_fact('SERV');
 	$text='';
 	break;
 
 case 'SEX':
-	$title=i18n::translate('Gender');
+	$title=translate_fact('SEX');
 	$text=i18n::translate('Choose the appropriate gender from the drop-down list.  The <b>unknown</b> option indicates that the gender is unknown.');
 	break;
 
 case 'SHARED_NOTE':
-	$title=i18n::translate('Shared note');
+	$title=translate_fact('SHARED_NOTE');
 	$text=i18n::translate('Shared Notes are free-form text and will appear in the Fact Details section of the page.<br /><br />Each shared note can be linked to more than one person, family, source, or event.');
 	break;
 
 case 'SLGC':	
-	$title=i18n::translate('LDS child sealing');
+	$title=translate_fact('SLGC');
 	$text='';
 	break;
 
 case 'SLGS':	
-	$title=i18n::translate('LDS spouse sealing');
+	$title=translate_fact('SLGS');
 	$text='';
 	break;
 
 case 'SOUR':
-	$title=i18n::translate('Source');
+	$title=translate_fact('SOUR');
 	$text=i18n::translate('This field allows you to change the source record that this fact\'s source citation links to.  This field takes a Source ID.  Beside the field will be listed the title of the current source ID.  Use the <b>Find ID</b> link to look up the source\'s ID number.  To remove the entire citation, make this field blank.');
 	break;
 
 case 'SPFX':
-	$title=i18n::translate('Surname prefix');
+	$title=translate_fact('SPFX');
 	$text=i18n::translate('Enter or select from the list words that precede the main part of the Surname.  Examples of such words are <b>von</b> Braun, <b>van der</b> Kloot, <b>de</b> Graaf, etc.');
 	break;
 
 case 'SSN':	
-	$title=i18n::translate('Social Security Number');
+	$title=translate_fact('SSN');
 	$text='';
 	break;
 
 case 'STAE':	
-	$title=i18n::translate('State');
+	$title=translate_fact('STAE');
 	$text='';
 	break;
 
 case 'STAT':
-	$title=i18n::translate('Status');
+	$title=translate_fact('STAT');
 	$text=i18n::translate('This is an optional status field and is used mostly for LDS ordinances as they are run through the TempleReady program.');
 	break;
 
 case 'STAT:DATE':	
-	$title=i18n::translate('Status change date');
+	$title=translate_fact('STAT:DATE');
 	$text='';
 	break;
 
 case 'SUBM':	
-	$title=i18n::translate('Submitter');
+	$title=translate_fact('SUBM');
 	$text='';
 	break;
 
 case 'SUBN':	
-	$title=i18n::translate('Submission');
+	$title=translate_fact('SUBN');
 	$text='';
 	break;
 
 case 'SURN':
-	$title=i18n::translate('Surname');
+	$title=translate_fact('SURN');
 	$text=i18n::translate('In this field you should enter the surname for the person.  As an example, in the name "John Robert Finlay", the surname that should be entered here is "Finlay"<br /><br />Individuals with multiple surnames, common in Spain and Portugal, should separate the surnames with a comma.  This indicates that the person is to be listed under each of the names.  For example, the surname "Cortes,Vega" will be listed under both <b>C</b> and <b>V</b>, whereas the surname "Cortes Vega" will only be listed under <b>C</b>.');
 	break;
 
 case 'TEMP':
-	$title=i18n::translate('Temple');
+	$title=translate_fact('TEMP');
 	$text=i18n::translate('For LDS ordinances, this field records the Temple where it was performed.');
 	break;
 
 case 'TEXT':
-	$title=i18n::translate('Text');
+	$title=translate_fact('TEXT');
 	$text=i18n::translate('In this field you would enter the citation text for this source.  Examples of data may be a transcription of the text from the source, or a description of what was in the citation.');
 	break;
 
 case 'TIME':
-	$title=i18n::translate('Time');
+	$title=translate_fact('TIME');
 	$text=i18n::translate('Enter the time for this event in 24-hour format with leading zeroes. Midnight is 00:00. Examples: 04:50 13:00 20:30.');
 	break;
 
 case 'TITL':
-	$title=i18n::translate('Title');
+	$title=translate_fact('TITL');
 	$text=i18n::translate('Enter a title for the item you are editing.  If this is a title for a multimedia item, enter a descriptive title that will identify that item to the user.');
 	break;
 
 case 'TITL:FONE':	
-	$title=i18n::translate('Phonetic title');
+	$title=translate_fact('TITL:FONE');
 	$text='';
 	break;
 
 case 'TITL:ROMN':	
-	$title=i18n::translate('Romanized title');
+	$title=translate_fact('TITL:ROMN');
 	$text='';
 	break;
 
 case 'TITL:_HEB':	
-	$title=i18n::translate('Title in Hebrew');
+	$title=translate_fact('TITL:_HEB');
 	$text='';
 	break;
 
 case 'TRLR':	
-	$title=i18n::translate('Trailer');
+	$title=translate_fact('TRLR');
 	$text='';
 	break;
 
 case 'TYPE':
-	$title=i18n::translate('Type');
+	$title=translate_fact('TYPE');
 	$text=i18n::translate('The Type field is used to enter additional information about the item.  In most cases, the field is completely free-form, and you can enter anything you want.');
 	break;
 
 case 'URL':
-	$title=i18n::translate('Web URL');
+	$title=translate_fact('URL');
 	$text=i18n::translate('Enter the URL address including the http://.<br /><br />An example URL looks like this: <b>http://www.webtrees.net/</b> Leave this field blank if you do not want to include a URL.');
 	break;
 
 case 'VERS':	
-	$title=i18n::translate('Version');
+	$title=translate_fact('VERS');
 	$text='';
 	break;
 
 case 'WIFE':	
-	$title=i18n::translate('Wife');
+	$title=translate_fact('WIFE');
 	$text='';
 	break;
 
 case 'WILL':	
-	$title=i18n::translate('Will');
+	$title=translate_fact('WILL');
 	$text='';
 	break;
 
 case 'WWW':	
-	$title=i18n::translate('Web home page');
+	$title=translate_fact('WWW');
 	$text='';
 	break;
 
 case '_ADOP_CHIL':	
-	$title=i18n::translate('Adoption of a child');
+	$title=translate_fact('_ADOP_CHIL');
 	$text='';
 	break;
 
 case '_ADOP_COUS':	
-	$title=i18n::translate('Adoption of a first cousin');
+	$title=translate_fact('_ADOP_COUS');
 	$text='';
 	break;
 
 case '_ADOP_FSIB':	
-	$title=i18n::translate('Adoption of father\'s sibling');
+	$title=translate_fact('_ADOP_FSIB');
 	$text='';
 	break;
 
 case '_ADOP_GCHI':	
-	$title=i18n::translate('Adoption of a grandchild');
+	$title=translate_fact('_ADOP_GCHI');
 	$text='';
 	break;
 
 case '_ADOP_GGCH':	
-	$title=i18n::translate('Adoption of a great-grandchild');
+	$title=translate_fact('_ADOP_GGCH');
 	$text='';
 	break;
 
 case '_ADOP_HSIB':	
-	$title=i18n::translate('Adoption of half-sibling');
+	$title=translate_fact('_ADOP_HSIB');
 	$text='';
 	break;
 
 case '_ADOP_MSIB':	
-	$title=i18n::translate('Adoption of mother\'s sibling');
+	$title=translate_fact('_ADOP_MSIB');
 	$text='';
 	break;
 
 case '_ADOP_NEPH':	
-	$title=i18n::translate('Adoption of a nephew or niece');
+	$title=translate_fact('_ADOP_NEPH');
 	$text='';
 	break;
 
 case '_ADOP_SIBL':	
-	$title=i18n::translate('Adoption of sibling');
+	$title=translate_fact('_ADOP_SIBL');
 	$text='';
 	break;
 
 case '_ADPF':	
-	$title=i18n::translate('Adopted by father');
+	$title=translate_fact('_ADPF');
 	$text='';
 	break;
 
 case '_ADPM':	
-	$title=i18n::translate('Adopted by mother');
+	$title=translate_fact('_ADPM');
 	$text='';
 	break;
 
 case '_AKA':	
-	$title=i18n::translate('Also known as');
-	$text='';
-	break;
-
 case '_AKAN':	
-	$title=i18n::translate('Also known as');
+	$title=translate_fact('_AKA');
 	$text='';
 	break;
 
 case '_BAPM_CHIL':	
-	$title=i18n::translate('Baptism of a child');
+	$title=translate_fact('_BAPM_CHIL');
 	$text='';
 	break;
 
 case '_BAPM_COUS':	
-	$title=i18n::translate('Baptism of a first cousin');
+	$title=translate_fact('_BAPM_COUS');
 	$text='';
 	break;
 
 case '_BAPM_FSIB':	
-	$title=i18n::translate('Baptism of father\'s sibling');
+	$title=translate_fact('_BAPM_FSIB');
 	$text='';
 	break;
 
 case '_BAPM_GCHI':	
-	$title=i18n::translate('Baptism of a grandchild');
+	$title=translate_fact('_BAPM_GCHI');
 	$text='';
 	break;
 
 case '_BAPM_GGCH':	
-	$title=i18n::translate('Baptism of a great-grandchild');
+	$title=translate_fact('_BAPM_GGCH');
 	$text='';
 	break;
 
 case '_BAPM_HSIB':	
-	$title=i18n::translate('Baptism of half-sibling');
+	$title=translate_fact('_BAPM_HSIB');
 	$text='';
 	break;
 
 case '_BAPM_MSIB':	
-	$title=i18n::translate('Baptism of mother\'s sibling');
+	$title=translate_fact('_BAPM_MSIB');
 	$text='';
 	break;
 
 case '_BAPM_NEPH':	
-	$title=i18n::translate('Baptism of a nephew or niece');
+	$title=translate_fact('_BAPM_NEPH');
 	$text='';
 	break;
 
 case '_BAPM_SIBL':	
-	$title=i18n::translate('Baptism of sibling');
+	$title=translate_fact('_BAPM_SIBL');
 	$text='';
 	break;
 
 case '_BIBL':	
-	$title=i18n::translate('Bibliography');
+	$title=translate_fact('_BIBL');
 	$text='';
 	break;
 
 case '_BIRT_CHIL':
-	$tag_name=i18n::translate('_BIRT_CHIL');
-	$title=i18n::translate('Birth of a child');
+	$title=translate_fact('_BIRT_CHIL');
 	$text='';
 	break;
 
 case '_BIRT_COUS':	
-	$title=i18n::translate('Birth of a first cousin');
+	$title=translate_fact('_BIRT_COUS');
 	$text='';
 	break;
 
 case '_BIRT_FSIB':	
-	$title=i18n::translate('Birth of father\'s sibling');
+	$title=translate_fact('_BIRT_FSIB');
 	$text='';
 	break;
 
 case '_BIRT_GCHI':	
-	$title=i18n::translate('Birth of a grandchild');
+	$title=translate_fact('_BIRT_GCHI');
 	$text='';
 	break;
 
 case '_BIRT_GGCH':	
-	$title=i18n::translate('Birth of a great-grandchild');
+	$title=translate_fact('_BIRT_GGCH');
 	$text='';
 	break;
 
 case '_BIRT_HSIB':	
-	$title=i18n::translate('Birth of half-sibling');
+	$title=translate_fact('_BIRT_HSIB');
 	$text='';
 	break;
 
 case '_BIRT_MSIB':	
-	$title=i18n::translate('Birth of mother\'s sibling');
+	$title=translate_fact('_BIRT_MSIB');
 	$text='';
 	break;
 
 case '_BIRT_NEPH':	
-	$title=i18n::translate('Birth of a nephew or niece');
+	$title=translate_fact('_BIRT_NEPH');
 	$text='';
 	break;
 
 case '_BIRT_SIBL':	
-	$title=i18n::translate('Birth of sibling');
+	$title=translate_fact('_BIRT_SIBL');
 	$text='';
 	break;
 
 case '_BRTM':	
-	$title=i18n::translate('Brit mila');
+	$title=translate_fact('_BRTM');
 	$text='';
 	break;
 
 case '_BRTM:DATE':	
-	$title=i18n::translate('Date of brit mila');
+	$title=translate_fact('_BRTM:DATE');
 	$text='';
 	break;
 
 case '_BRTM:PLAC':	
-	$title=i18n::translate('Place of brit mila');
+	$title=translate_fact('_BRTM:PLAC');
 	$text='';
 	break;
 
 case '_BRTM:SOUR':	
-	$title=i18n::translate('Source for brit mila');
+	$title=translate_fact('_BRTM:SOUR');
 	$text='';
 	break;
 
 case '_BURI_CHIL':	
-	$title=i18n::translate('Burial of a child');
+	$title=translate_fact('_BURI_CHIL');
 	$text='';
 	break;
 
 case '_BURI_COUS':	
-	$title=i18n::translate('Burial of a first cousin');
+	$title=translate_fact('_BURI_COUS');
 	$text='';
 	break;
 
 case '_BURI_FATH':	
-	$title=i18n::translate('Burial of father');
+	$title=translate_fact('_BURI_FATH');
 	$text='';
 	break;
 
 case '_BURI_FSIB':	
-	$title=i18n::translate('Burial of father\'s sibling');
+	$title=translate_fact('_BURI_FSIB');
 	$text='';
 	break;
 
 case '_BURI_GCHI':	
-	$title=i18n::translate('Burial of a grandchild');
+	$title=translate_fact('_BURI_GCHI');
 	$text='';
 	break;
 
 case '_BURI_GGCH':	
-	$title=i18n::translate('Burial of a great-grandchild');
+	$title=translate_fact('_BURI_GGCH');
 	$text='';
 	break;
 
 case '_BURI_GGPA':	
-	$title=i18n::translate('Burial of a great-grand-parent');
+	$title=translate_fact('_BURI_GGPA');
 	$text='';
 	break;
 
 case '_BURI_GPAR':	
-	$title=i18n::translate('Burial of a grand-parent');
+	$title=translate_fact('_BURI_GPAR');
 	$text='';
 	break;
 
 case '_BURI_HSIB':	
-	$title=i18n::translate('Burial of half-sibling');
+	$title=translate_fact('_BURI_HSIB');
 	$text='';
 	break;
 
 case '_BURI_MOTH':	
-	$title=i18n::translate('Burial of mother');
+	$title=translate_fact('_BURI_MOTH');
 	$text='';
 	break;
 
 case '_BURI_MSIB':	
-	$title=i18n::translate('Burial of mother\'s sibling');
+	$title=translate_fact('_BURI_MSIB');
 	$text='';
 	break;
 
 case '_BURI_NEPH':	
-	$title=i18n::translate('Burial of a nephew or niece');
+	$title=translate_fact('_BURI_NEPH');
 	$text='';
 	break;
 
 case '_BURI_SIBL':	
-	$title=i18n::translate('Burial of sibling');
+	$title=translate_fact('_BURI_SIBL');
 	$text='';
 	break;
 
 case '_BURI_SPOU':	
-	$title=i18n::translate('Burial of spouse');
+	$title=translate_fact('_BURI_SPOU');
 	$text='';
 	break;
 
 case '_CHR_CHIL':	
-	$title=i18n::translate('Christening of a child');
+	$title=translate_fact('_CHR_CHIL');
 	$text='';
 	break;
 
 case '_CHR_COUS':	
-	$title=i18n::translate('Christening of a first cousin');
+	$title=translate_fact('_CHR_COUS');
 	$text='';
 	break;
 
 case '_CHR_FSIB':	
-	$title=i18n::translate('Christening of father\'s sibling');
+	$title=translate_fact('_CHR_FSIB');
 	$text='';
 	break;
 
 case '_CHR_GCHI':	
-	$title=i18n::translate('Christening of a grandchild');
+	$title=translate_fact('_CHR_GCHI');
 	$text='';
 	break;
 
 case '_CHR_GGCH':	
-	$title=i18n::translate('Christening of a great-grandchild');
+	$title=translate_fact('_CHR_GGCH');
 	$text='';
 	break;
 
 case '_CHR_HSIB':	
-	$title=i18n::translate('Christening of half-sibling');
+	$title=translate_fact('_CHR_HSIB');
 	$text='';
 	break;
 
 case '_CHR_MSIB':	
-	$title=i18n::translate('Christening of mother\'s sibling');
+	$title=translate_fact('_CHR_MSIB');
 	$text='';
 	break;
 
 case '_CHR_NEPH':	
-	$title=i18n::translate('Christening of a nephew or niece');
+	$title=translate_fact('_CHR_NEPH');
 	$text='';
 	break;
 
 case '_CHR_SIBL':	
-	$title=i18n::translate('Christening of sibling');
+	$title=translate_fact('_CHR_SIBL');
 	$text='';
 	break;
 
 case '_COML':	
-	$title=i18n::translate('Common law marriage');
+	$title=translate_fact('_COML');
 	$text='';
 	break;
 
 case '_CREM_CHIL':	
-	$title=i18n::translate('Cremation of a child');
+	$title=translate_fact('_CREM_CHIL');
 	$text='';
 	break;
 
 case '_CREM_COUS':	
-	$title=i18n::translate('Cremation of a first cousin');
+	$title=translate_fact('_CREM_COUS');
 	$text='';
 	break;
 
 case '_CREM_FATH':	
-	$title=i18n::translate('Cremation of father');
+	$title=translate_fact('_CREM_FATH');
 	$text='';
 	break;
 
 case '_CREM_FSIB':	
-	$title=i18n::translate('Cremation of father\'s sibling');
+	$title=translate_fact('_CREM_FSIB');
 	$text='';
 	break;
 
 case '_CREM_GCHI':	
-	$title=i18n::translate('Cremation of a grandchild');
+	$title=translate_fact('_CREM_GCHI');
 	$text='';
 	break;
 
 case '_CREM_GGCH':	
-	$title=i18n::translate('Cremation of a great-grandchild');
+	$title=translate_fact('_CREM_GGCH');
 	$text='';
 	break;
 
 case '_CREM_GGPA':	
-	$title=i18n::translate('Cremation of a great-grand-parent');
+	$title=translate_fact('_CREM_GGPA');
 	$text='';
 	break;
 
 case '_CREM_GPAR':	
-	$title=i18n::translate('Cremation of a grand-parent');
+	$title=translate_fact('_CREM_GPAR');
 	$text='';
 	break;
 
 case '_CREM_HSIB':	
-	$title=i18n::translate('Cremation of half-sibling');
+	$title=translate_fact('_CREM_HSIB');
 	$text='';
 	break;
 
 case '_CREM_MOTH':	
-	$title=i18n::translate('Cremation of mother');
+	$title=translate_fact('_CREM_MOTH');
 	$text='';
 	break;
 
 case '_CREM_MSIB':	
-	$title=i18n::translate('Cremation of mother\'s sibling');
+	$title=translate_fact('_CREM_MSIB');
 	$text='';
 	break;
 
 case '_CREM_NEPH':	
-	$title=i18n::translate('Cremation of a nephew or niece');
+	$title=translate_fact('_CREM_NEPH');
 	$text='';
 	break;
 
 case '_CREM_SIBL':	
-	$title=i18n::translate('Cremation of sibling');
+	$title=translate_fact('_CREM_SIBL');
 	$text='';
 	break;
 
 case '_CREM_SPOU':	
-	$title=i18n::translate('Cremation of spouse');
+	$title=translate_fact('_CREM_SPOU');
 	$text='';
 	break;
 
 case '_DBID':	
-	$title=i18n::translate('Linked database ID');
+	$title=translate_fact('_DBID');
 	$text='';
 	break;
 
 case '_DEAT_CHIL':	
-	$title=i18n::translate('Death of a child');
+	$title=translate_fact('_DEAT_CHIL');
 	$text='';
 	break;
 
 case '_DEAT_COUS':	
-	$title=i18n::translate('Death of a first cousin');
+	$title=translate_fact('_DEAT_COUS');
 	$text='';
 	break;
 
 case '_DEAT_FATH':	
-	$title=i18n::translate('Death of father');
+	$title=translate_fact('_DEAT_FATH');
 	$text='';
 	break;
 
 case '_DEAT_FSIB':	
-	$title=i18n::translate('Death of father\'s sibling');
+	$title=translate_fact('_DEAT_FSIB');
 	$text='';
 	break;
 
 case '_DEAT_GCHI':	
-	$title=i18n::translate('Death of a grandchild');
+	$title=translate_fact('_DEAT_GCHI');
 	$text='';
 	break;
 
 case '_DEAT_GGCH':	
-	$title=i18n::translate('Death of a great-grandchild');
+	$title=translate_fact('_DEAT_GGCH');
 	$text='';
 	break;
 
 case '_DEAT_GGPA':	
-	$title=i18n::translate('Death of a great-grand-parent');
+	$title=translate_fact('_DEAT_GGPA');
 	$text='';
 	break;
 
 case '_DEAT_GPAR':	
-	$title=i18n::translate('Death of a grand-parent');
+	$title=translate_fact('_DEAT_GPAR');
 	$text='';
 	break;
 
 case '_DEAT_HSIB':	
-	$title=i18n::translate('Death of half-sibling');
+	$title=translate_fact('_DEAT_HSIB');
 	$text='';
 	break;
 
 case '_DEAT_MOTH':	
-	$title=i18n::translate('Death of mother');
+	$title=translate_fact('_DEAT_MOTH');
 	$text='';
 	break;
 
 case '_DEAT_MSIB':	
-	$title=i18n::translate('Death of mother\'s sibling');
+	$title=translate_fact('_DEAT_MSIB');
 	$text='';
 	break;
 
 case '_DEAT_NEPH':	
-	$title=i18n::translate('Death of a nephew or niece');
+	$title=translate_fact('_DEAT_NEPH');
 	$text='';
 	break;
 
-case '_':	
-	$title=i18n::translate('Death of sibling');
+case '_DEAT_SIBL':	
+	$title=translate_fact('_DEAT_SIBL');
 	$text='';
 	break;
 
 case '_DEAT_SPOU':	
-	$title=i18n::translate('Death of spouse');
+	$title=translate_fact('_DEAT_SPOU');
 	$text='';
 	break;
 
 case '_DEG':	
-	$title=i18n::translate('Degree');
+	$title=translate_fact('_DEG');
 	$text='';
 	break;
 
 case '_DETS':	
-	$title=i18n::translate('Death of one spouse');
+	$title=translate_fact('_DETS');
 	$text='';
 	break;
 
 case '_EMAIL':	
-	$title=i18n::translate('Email address');
+	$title=translate_fact('_EMAIL');
 	$text='';
 	break;
 
 case '_EYEC':	
-	$title=i18n::translate('Eye color');
+	$title=translate_fact('_EYEC');
 	$text='';
 	break;
 
 case '_FA1':	
-	$title=i18n::translate('Fact 1');
+	$title=translate_fact('_FA1');
 	$text='';
 	break;
 
 case '_FA2':	
-	$title=i18n::translate('Fact 2');
+	$title=translate_fact('_FA2');
 	$text='';
 	break;
 
 case '_FA3':	
-	$title=i18n::translate('Fact 3');
+	$title=translate_fact('_FA3');
 	$text='';
 	break;
 
 case '_FA4':	
-	$title=i18n::translate('Fact 4');
+	$title=translate_fact('_FA4');
 	$text='';
 	break;
 
 case '_FA5':	
-	$title=i18n::translate('Fact 5');
+	$title=translate_fact('_FA5');
 	$text='';
 	break;
 
 case '_FA6':	
-	$title=i18n::translate('Fact 6');
+	$title=translate_fact('_FA6');
 	$text='';
 	break;
 
 case '_FA7':	
-	$title=i18n::translate('Fact 7');
+	$title=translate_fact('_FA7');
 	$text='';
 	break;
 
 case '_FA8':	
-	$title=i18n::translate('Fact 8');
+	$title=translate_fact('_FA8');
 	$text='';
 	break;
 
 case '_FA9':	
-	$title=i18n::translate('Fact 9');
+	$title=translate_fact('_FA9');
 	$text='';
 	break;
 
 case '_FA10':	
-	$title=i18n::translate('Fact 10');
+	$title=translate_fact('_FA10');
 	$text='';
 	break;
 
 case '_FA11':	
-	$title=i18n::translate('Fact 11');
+	$title=translate_fact('_FA11');
 	$text='';
 	break;
 
 case '_FA12':	
-	$title=i18n::translate('Fact 12');
+	$title=translate_fact('_FA12');
 	$text='';
 	break;
 
 case '_FA13':	
-	$title=i18n::translate('Fact 13');
+	$title=translate_fact('_FA13');
 	$text='';
 	break;
 
 case '_FAMC_EMIG':	
-	$title=i18n::translate('Emigration of parents');
+	$title=translate_fact('_FAMC_EMIG');
 	$text='';
 	break;
 
 case '_FAMC_RESI':	
-	$title=i18n::translate('Residence of parents');
+	$title=translate_fact('_FAMC_RESI');
 	$text='';
 	break;
 
 case '_FNRL':	
-	$title=i18n::translate('Funeral');
+	$title=translate_fact('_FNRL');
 	$text='';
 	break;
 
 case '_FREL':	
-	$title=i18n::translate('Relationship to father');
+	$title=translate_fact('_FREL');
 	$text='';
 	break;
 
 case '_GEDF':	
-	$title=i18n::translate('GEDCOM file');
+	$title=translate_fact('_GEDF');
 	$text='';
 	break;
 
 case '_HAIR':	
-	$title=i18n::translate('Hair color');
+	$title=translate_fact('_HAIR');
 	$text='';
 	break;
 
 case '_HEB':
-	$title=i18n::translate('Hebrew');
+	$title=translate_fact('_HEB');
 	$text=i18n::translate('In many cultures it is customary to have a traditional name spelled in the traditional characters and also a romanized version of the name as it would be spelled or pronounced in languages based on the Latin alphabet, such as English.<br /><br />If you prefer to use the Latin alphabet to enter the name in the standard name fields, then you can use this field to enter the same name in the non-Latin alphabet such as Greek, Hebrew, Russian, Arabic, or Chinese.  Both versions of the name will appear in lists and charts.<br /><br />Although this field is labelled "Hebrew", it is not restricted to containing only Hebrew characters.');
 	break;
 
 case '_HEIG':	
-	$title=i18n::translate('Height');
+	$title=translate_fact('_HEIG');
 	$text='';
 	break;
 
 case '_HNM':	
-	$title=i18n::translate('Hebrew name');
+	$title=translate_fact('_HNM');
 	$text='';
 	break;
 
 case '_HOL':	
-	$title=i18n::translate('Holocaust');
+	$title=translate_fact('_HOL');
 	$text='';
 	break;
 
 case '_INTE':	
-	$title=i18n::translate('Interred');
+	$title=translate_fact('_INTE');
 	$text='';
 	break;
 
 case '_MARB_CHIL':	
-	$title=i18n::translate('Marriage bann of a child');
+	$title=translate_fact('_MARB_CHIL');
 	$text='';
 	break;
 
 case '_MARB_COUS':	
-	$title=i18n::translate('Marriage bann of a first cousin');
+	$title=translate_fact('_MARB_COUS');
 	$text='';
 	break;
 
 case '_MARB_FAMC':	
-	$title=i18n::translate('Marriage bann of parents');
+	$title=translate_fact('_MARB_FAMC');
 	$text='';
 	break;
 
 case '_MARB_FATH':	
-	$title=i18n::translate('Marriage bann of father');
+	$title=translate_fact('_MARB_FATH');
 	$text='';
 	break;
 
 case '_MARB_FSIB':	
-	$title=i18n::translate('Marriage bann of father\'s sibling');
+	$title=translate_fact('_MARB_FSIB');
 	$text='';
 	break;
 
 case '_MARB_GCHI':	
-	$title=i18n::translate('Marriage bann of a grandchild');
+	$title=translate_fact('_MARB_GCHI');
 	$text='';
 	break;
 
 case '_MARB_GGCH':	
-	$title=i18n::translate('Marriage bann of a great-grandchild');
+	$title=translate_fact('_MARB_GGCH');
 	$text='';
 	break;
 
 case '_MARB_HSIB':	
-	$title=i18n::translate('Marriage bann of half-sibling');
+	$title=translate_fact('_MARB_HSIB');
 	$text='';
 	break;
 
 case '_MARB_MOTH':	
-	$title=i18n::translate('Marriage bann of mother');
+	$title=translate_fact('_MARB_MOTH');
 	$text='';
 	break;
 
 case '_MARB_MSIB':	
-	$title=i18n::translate('Marriage bann of mother\'s sibling');
+	$title=translate_fact('_MARB_MSIB');
 	$text='';
 	break;
 
 case '_MARB_NEPH':	
-	$title=i18n::translate('Marriage bann of a nephew or niece');
+	$title=translate_fact('_MARB_NEPH');
 	$text='';
 	break;
 
 case '_MARB_SIBL':	
-	$title=i18n::translate('Marriage bann of sibling');
+	$title=translate_fact('_MARB_SIBL');
 	$text='';
 	break;
 
 case '_MARI':	
-	$title=i18n::translate('Marriage intention');
+	$title=translate_fact('_MARI');
 	$text='';
 	break;
 
 case '_MARNM':
-	$title=i18n::translate('Married name');
+	$title=translate_fact('_MARNM');
 	$text=i18n::translate('Enter the married name for this person, using the same formatting rules that apply to the Name field.  This field is optional.<br /><br />For example, if Mary Jane Brown married John White, you might enter (without the quotation marks, of course)<ul><li>American usage:&nbsp;&nbsp;"Mary Jane Brown /White/"</li><li>European usage:&nbsp;&nbsp;"Mary Jane /White/"</li><li>Alternate European usage:&nbsp;&nbsp;"Mary Jane /White-Brown/" or "Mary Jane /Brown-White/"</li></ul>You should do this only if Mary Brown began calling herself by the new name after marrying John White.  In some places, Quebec (Canada) for example, it\'s illegal for names to be changed in this way.<br /><br />Men sometimes change their name after marriage, most often using the hyphenated form but occasionally taking the wife\'s surname.');
 	break;
 
-case '_PRIM':
-	$title=i18n::translate('Highlighted image');
-	$text=i18n::translate('Use this field to signal that this media item is the highlighted or primary item for the person it is attached to.  The highlighted image is the one that will be used on charts and on the Individual page.');
-	break;
-
 case '_MARNM_SURN':	
-	$title=i18n::translate('Married surname');
+	$title=translate_fact('_MARNM_SURN');
 	$text='';
 	break;
 
 case '_MARR_CHIL':	
-	$title=i18n::translate('Marriage of a child');
+	$title=translate_fact('_MARR_CHIL');
 	$text='';
 	break;
 
 case '_MARR_COUS':	
-	$title=i18n::translate('Marriage of a first cousin');
+	$title=translate_fact('_MARR_COUS');
 	$text='';
 	break;
 
 case '_MARR_FAMC':	
-	$title=i18n::translate('Marriage of parents');
+	$title=translate_fact('_MARR_FAMC');
 	$text='';
 	break;
 
 case '_MARR_FATH':	
-	$title=i18n::translate('Marriage of father');
+	$title=translate_fact('_MARR_FATH');
 	$text='';
 	break;
 
 case '_MARR_FSIB':	
-	$title=i18n::translate('Marriage of father\'s sibling');
+	$title=translate_fact('_MARR_FSIB');
 	$text='';
 	break;
 
 case '_MARR_GCHI':	
-	$title=i18n::translate('Marriage of a grandchild');
+	$title=translate_fact('_MARR_GCHI');
 	$text='';
 	break;
 
 case '_MARR_GGCH':	
-	$title=i18n::translate('Marriage of a great-grandchild');
+	$title=translate_fact('_MARR_GGCH');
 	$text='';
 	break;
 
 case '_MARR_HSIB':	
-	$title=i18n::translate('Marriage of half-sibling');
+	$title=translate_fact('_MARR_HSIB');
 	$text='';
 	break;
 
 case '_MARR_MOTH':	
-	$title=i18n::translate('Marriage of mother');
+	$title=translate_fact('_MARR_MOTH');
 	$text='';
 	break;
 
 case '_MARR_MSIB':	
-	$title=i18n::translate('Marriage of mother\'s sibling');
+	$title=translate_fact('_MARR_MSIB');
 	$text='';
 	break;
 
 case '_MARR_NEPH':	
-	$title=i18n::translate('Marriage of a nephew or niece');
+	$title=translate_fact('_MARR_NEPH');
 	$text='';
 	break;
 
 case '_MARR_SIBL':	
-	$title=i18n::translate('Marriage of sibling');
+	$title=translate_fact('_MARR_SIBL');
 	$text='';
 	break;
 
 case '_MBON':	
-	$title=i18n::translate('Marriage bond');
+	$title=translate_fact('_MBON');
 	$text='';
 	break;
 
 case '_MDCL':	
-	$title=i18n::translate('Medical');
+	$title=translate_fact('_MDCL');
 	$text='';
 	break;
 
 case '_MEDC':	
-	$title=i18n::translate('Medical condition');
+	$title=translate_fact('_MEDC');
 	$text='';
 	break;
 
 case '_MEND':	
-	$title=i18n::translate('Marriage ending status');
+	$title=translate_fact('_MEND');
 	$text='';
 	break;
 
 case '_MILI':	
-	$title=i18n::translate('Military');
+	$title=translate_fact('_MILI');
 	$text='';
 	break;
 
 case '_MILT':	
-	$title=i18n::translate('Military service');
+	$title=translate_fact('_MILT');
 	$text='';
 	break;
 
 case '_MREL':	
-	$title=i18n::translate('Relationship to mother');
+	$title=translate_fact('_MREL');
 	$text='';
 	break;
 
 case '_MSTAT':	
-	$title=i18n::translate('Marriage beginning status');
+	$title=translate_fact('_MSTAT');
 	$text='';
 	break;
 
 case '_NAME':	
-	$title=i18n::translate('Mailing name');
+	$title=translate_fact('_NAME');
 	$text='';
 	break;
 
 case '_NAMS':	
-	$title=i18n::translate('Namesake');
+	$title=translate_fact('_NAMS');
 	$text='';
 	break;
 
 case '_NLIV':	
-	$title=i18n::translate('Not living');
+	$title=translate_fact('_NLIV');
 	$text='';
 	break;
 
 case '_NMAR':	
-	$title=i18n::translate('Never married');
+	$title=translate_fact('_NMAR');
 	$text='';
 	break;
 
 case '_NMR':	
-	$title=i18n::translate('Not married');
+	$title=translate_fact('_NMR');
 	$text='';
 	break;
 
+case '_PRIM':
+	$title=translate_fact('_PRIM');
+	$text=i18n::translate('Use this field to signal that this media item is the highlighted or primary item for the person it is attached to.  The highlighted image is the one that will be used on charts and on the Individual page.');
+	break;
+
 case '_WT_USER':	
-	$title=i18n::translate('Last changed by');
+	$title=translate_fact('_WT_USER');
 	$text='';
 	break;
 
 case '_PRMN':	
-	$title=i18n::translate('Permanent number');
+	$title=translate_fact('_PRMN');
 	$text='';
 	break;
 
 case '_SCBK':	
-	$title=i18n::translate('Scrapbook');
+	$title=translate_fact('_SCBK');
 	$text='';
 	break;
 
 case '_SEPR':	
-	$title=i18n::translate('Separated');
+	$title=translate_fact('_SEPR');
 	$text='';
 	break;
 
 case '_SSHOW':	
-	$title=i18n::translate('Slide show');
+	$title=translate_fact('_SSHOW');
 	$text='';
 	break;
 
 case '_STAT':	
-	$title=i18n::translate('Marriage status');
+	$title=translate_fact('_STAT');
 	$text='';
 	break;
 
 case '_SUBQ':	
-	$title=i18n::translate('Short version');
+	$title=translate_fact('_SUBQ');
 	$text='';
 	break;
 
 case '_THUM':
-	$title=i18n::translate('Always use main image?');
+	$title=translate_fact('_THUM');
 	$text=i18n::translate('This option lets you override the usual selection for a thumbnail image.<br /><br />The GEDCOM has a configuration option that specifies whether <b>webtrees</b> should send the large or the small image to the browser whenever the current page requires a thumbnail.  The &laquo;Always use main image?&raquo; option, when set to <b>Yes</b>, temporarily overrides the setting of the GEDCOM configuration option, so that <b>webtrees</b> will always send the large image.  You cannot force <b>webtrees</b> to send the small image when the GEDCOM configuration specifies that large images should always be used.<br /><br /><b>webtrees</b> does not re-size the image being sent; the browser does this according to the page specifications it has also received.  This can have undesirable consequences when the image being sent is not truly a thumbnail where <b>webtrees</b> is expecting to send a small image.  This is not an error:  There are occasions where it may be desirable to display a large image in places where one would normally expect to see a thumbnail-sized picture.<br /><br />You should avoid setting the &laquo;Always use main image?&raquo; option to <b>Yes</b>.  This choice will cause excessive amounts of image-related data to be sent to the browser, only to have the browser discard the excess.  Page loads, particularly of charts with many images, can be seriously slowed.');
 	break;
 
 case '_TODO':	
-	$title=i18n::translate('To do item');
+	$title=translate_fact('_TODO');
 	$text='';
 	break;
 
 case '_TYPE':	
-	$title=i18n::translate('Media type');
+	$title=translate_fact('_TYPE');
 	$text='';
 	break;
 
 case '_UID':	
-	$title=i18n::translate('Globally unique identifier');
+	$title=translate_fact('_UID');
 	$text='';
 	break;
 
 case '_URL':	
-	$title=i18n::translate('Web URL');
+	$title=translate_fact('_URL');
 	$text='';
 	break;
 
 case '_WEIG':	
-	$title=i18n::translate('Weight');
+	$title=translate_fact('_WEIG');
 	$text='';
 	break;
 
 case '_YART':	
-	$title=i18n::translate('Yahrzeit');
+	$title=translate_fact('_YART');
 	$text='';
 	break;
 
 case '__BRTM_CHIL':	
-	$title=i18n::translate('Brit mila of a child');
+	$title=translate_fact('__BRTM_CHIL');
 	$text='';
 	break;
 
 case '__BRTM_COUS':	
-	$title=i18n::translate('Brit mila of a first cousin');
+	$title=translate_fact('__BRTM_COUS');
 	$text='';
 	break;
 
 case '__BRTM_FSIB':	
-	$title=i18n::translate('Brit mila of father\'s sibling');
+	$title=translate_fact('__BRTM_FSIB');
 	$text='';
 	break;
 
 case '__BRTM_GCHI':	
-	$title=i18n::translate('Brit mila of a grandchild');
+	$title=translate_fact('__BRTM_GCHI');
 	$text='';
 	break;
 
 case '__BRTM_GGCH':	
-	$title=i18n::translate('Brit mila of a great-grandchild');
+	$title=translate_fact('__BRTM_GGCH');
 	$text='';
 	break;
 
 case '__BRTM_HSIB':	
-	$title=i18n::translate('Brit mila of half-sibling');
+	$title=translate_fact('__BRTM_HSIB');
 	$text='';
 	break;
 
 case '__BRTM_MSIB':	
-	$title=i18n::translate('Brit mila of mother\'s sibling');
+	$title=translate_fact('__BRTM_MSIB');
 	$text='';
 	break;
 
 case '__BRTM_NEPH':	
-	$title=i18n::translate('Brit mila of a nephew');
+	$title=translate_fact('__BRTM_NEPH');
 	$text='';
 	break;
 
 case '__BRTM_SIBL':	
-	$title=i18n::translate('Brit mila of sibling');
+	$title=translate_fact('__BRTM_SIBL');
 	$text='';
 	break;
 
@@ -2130,11 +2111,6 @@ case 'AUTO_GENERATE_THUMBS':
 	$text=i18n::translate('Should the system automatically generate thumbnails for images that do not have them.  Your PHP installation might not support this functionality.');
 	break;
 
-case 'BOM_detected':
-	$title=i18n::translate('A Byte Order Mark (BOM) was detected at the beginning of the file. On cleanup, this special code will be removed.');
-	$text=i18n::translate('The GEDCOM file you are importing has a special 3-byte code at the beginning.  This special code is used by some programs to indicate that the file has been recorded in the UTF-8 character set.<br /><br />Although this special code is not really an error, <b>webtrees</b> will not work properly when the input file contains the code.  You should let <b>webtrees</b> remove the code.');
-	break;
-
 case 'CALENDAR_FORMAT':
 	$title=i18n::translate('Calendar format');
 	$text=i18n::translate('Dates can be recorded in various calendars such as Gregorian, Julian, or the Jewish Calendar.  This option allows you to convert dates to a preferred calendar.  For example, you could select Gregorian to convert Julian and Hebrew dates to Gregorian.  The converted date is shown in parentheses after the regular date.<br /><br />Dates are only converted if they are valid for the calendar.  For example, only dates between 22&nbsp;SEP&nbsp;1792 and 31&nbsp;DEC&nbsp;1805 will be converted to the French Republican calendar and only dates after 15&nbsp;OCT&nbsp;1582 will be converted to the Gregorian calendar.<br /><br />Hebrew is the same as Jewish, but using Hebrew characters.  Arabic is the same as Hijri, but using Arabic characters.<br /><br />Note: Since the Jewish and Hijri calendar day starts at dusk, any event taking place from dusk till midnight will display as one day prior to the correct date.  The display of Hebrew and Arabic can be problematic in old browsers, which may display text backwards (left to right) or not at all.');
@@ -2148,11 +2124,6 @@ case 'CHARACTER_SET':
 case 'CHART_BOX_TAGS':
 	$title=i18n::translate('Other facts to show in charts');
 	$text=i18n::translate('This should be a comma or space separated list of facts, in addition to Birth and Death, that you want to appear in chart boxes such as the Pedigree chart.  This list requires you to use fact tags as defined in the GEDCOM 5.5.1 Standard.  For example, if you wanted the occupation to show up in the box, you would add "OCCU" to this field.');
-	break;
-
-case 'CHECK_CHILD_DATES':
-	$title=i18n::translate('Check child dates');
-	$text=i18n::translate('Check children\'s dates when determining whether a person is dead.  On older systems and large GEDCOMs this can slow down the response time of your site.');
 	break;
 
 case 'CHECK_MARRIAGE_RELATIONS':
@@ -2601,13 +2572,13 @@ case 'PRIVACY_BY_YEAR':
 	break;
 
 case 'QUICK_REQUIRED_FACTS':
-	$title=i18n::translate('Facts to always show on quick update');
-	$text=i18n::translate('This is a comma separated list of GEDCOM fact tags that will always be shown on the Quick Update form whether or not they already exist in the individual\'s record.  For example, if BIRT is in the list, fields for birth date and birth place will always be shown on the form.');
+	$title=i18n::translate('Facts for new individuals');
+	$text=i18n::translate('This is a comma separated list of GEDCOM fact tags that will be shown when adding a new person.  For example, if BIRT is in the list, fields for birth date and birth place will be shown on the form.');
 	break;
 
 case 'QUICK_REQUIRED_FAMFACTS':
-	$title=i18n::translate('Facts for families to always show on quick update');
-	$text=i18n::translate('This is a comma separated list of GEDCOM fact tags that will always be shown on the Family tabs of the Quick Update form whether or not they already exist in the family\'s record.  For example, if MARR is in the list, then fields for marriage date and marriage place will always be shown on the form.');
+	$title=i18n::translate('Facts for new families');
+	$text=i18n::translate('This is a comma separated list of GEDCOM fact tags that will be shown when adding a new family.  For example, if MARR is in the list, then fields for marriage date and marriage place will be shown on the form.');
 	break;
 
 case 'REPO_FACTS_ADD':
@@ -2850,8 +2821,8 @@ case 'SURNAME_TRADITION':
 	$text=i18n::translate('When you add new members to a family, <b>webtrees</b> can supply default values for surnames according to regional custom.<br /><br /><ul><li>In the <b>Paternal</b> tradition, all family members share the father\'s surname.</li><li>In the <b>Spanish</b> and <b>Portuguese</b> tradition, children receive a surname from each parent.</li><li>In the <b>Icelandic</b> tradition, children receive their male parent\'s given name as a surname, with a suffix that denotes gender.</li><li>In the <b>Polish</b> tradition, all family members share the father\'s surname. For some surnames, the suffix indicates gender.  The suffixes <i>ski</i>, <i>cki</i>, and <i>dzki</i> indicate male, while the corresponding suffixes <i>ska</i>, <i>cka</i>, and <i>dzka</i> indicate female.</li></ul>');
 	break;
 
-case 'THEME_DIR':
-	$title=i18n::translate('Theme directory');
+case 'THEME':
+	$title=i18n::translate('Theme');
 	$text=i18n::translate('The directory where your <b>webtrees</b> theme files are kept.<br /><br />You may customize any of the standard themes that come with <b>webtrees</b> to give your site a unique look and feel.  See the Theme Customization section of the <a href="readme.txt">readme.txt</a> file for more information.');
 	break;
 
@@ -3519,11 +3490,6 @@ case 'apply_privacy':
 	$text=i18n::translate('When this option is checked, the output file will pass through privacy checks according to the selected option.  This can result in the removal of certain information.  The output file will contain only the information that is normally visible to a user with the indicated privilege level.<br /><br />If you only have GEDCOM administrator rights, you cannot specify that the output file should be privatized according to the Site administrator privilege level.');
 	break;
 
-case 'autoContinue':
-	$title=i18n::translate('Automatically press «continue» button');
-	$text=i18n::translate('When <b>webtrees</b> detects that the GEDCOM Import requires more time than is permitted by the time limit, it will display a <b>Continue</b> button that you must press to continue the Import.<br /><br />When this option is set to <b>Yes</b>, <b>webtrees</b> will automatically press the <b>Continue</b> button for you.  This should relieve the tedium of having to press the button repeatedly for lengthy Imports.');
-	break;
-
 case 'basic_or_all':
 	$title=i18n::translate('Show only births, deaths and marriages?');
 	$text=i18n::translate('This option lets you eliminate some dated events.  For example, Divorce, Cremation, Graduation, Bar Mitzvah, First Communion, etc. should all be dated.<br /><br />When you select <b>Yes</b>, only Births, Deaths, and Marriages will be shown. When you select <b>No</b>, all dated events will be shown.');
@@ -3537,11 +3503,6 @@ case 'block_move_right':
 case 'block_move_up':
 	$title=i18n::translate('Move list entries');
 	$text=i18n::translate('Use these buttons to re-arrange the order of the entries within the list.  The blocks will be printed in the order in which they are listed.<br /><br />Highlight the entry to be moved, and then click a button to move that entry up or down.');
-	break;
-
-case 'bom_check':
-	$title=i18n::translate('Byte Order Mark (BOM) check');
-	$text=i18n::translate('This check will analyze all the language files for the BOM (Byte Order Mark). If found, it will remove the BOM from the affected file. These special codes can cause malfunctions in some parts of <b>webtrees</b>.');
 	break;
 
 case 'box_width':
@@ -3622,11 +3583,6 @@ case 'convertPath':
 case 'convertSlashes':
 	$title=i18n::translate('Convert media folder separators to');
 	$text=i18n::translate('This option determines whether folder names in the FILE specification of media objects should be separated by forward slashes or by backslashes.  Your choice depends on the requirements of the receiving operating system.<br /><br />The choice <b>Forward slashes : /</b> is appropriate for most operating systems other than Microsoft Windows.  The choice <b>Backslashes : \</b> should be used when the destination program is running on a Microsoft Windows system.<br /><br />Media paths that are actually URLs will not be changed.');
-	break;
-
-case 'convert_ansi2utf':
-	$title=i18n::translate('Convert ANSI to UTF-8');
-	$text=i18n::translate('To ensure that the information in your input GEDCOM files is processed and displayed correctly, these files should be encoded in UTF-8.<br /><br />Some of the more modern genealogy programs can export their data to a GEDCOM file in UTF-8 encoding.  Older programs often don\'t have this capability.  If your program does not offer you this option, <b>webtrees</b> can convert the file for you.<br /><br />When <b>webtrees</b> validates the input file, it will detect the file\'s encoding and advise you accordingly.');
 	break;
 
 case 'cookie':
@@ -3722,16 +3678,6 @@ case 'desc_generations':
 case 'desc_rootid':
 	$title=i18n::translate('Root individual');
 	$text=i18n::translate('If you want to display a chart with a new starting (root) person, the ID of that new starting person is typed here.<br /><br />If you don\'t know the ID of that person, use the <b>Find ID</b> link.<br /><br /><b>ID NUMBER</b><br />The ID numbers used inside <b>webtrees</b> are <u>not</u> the identification numbers issued by various governments (driving permit or passport numbers, for instance).  The ID number referred to here is simply a number used within the database to uniquely identify each individual; it was assigned by the ancestry program that created the GEDCOM file which was imported into <b>webtrees</b>.');
-	break;
-
-case 'detected_ansi2utf':
-	$title=i18n::translate('ANSI character set');
-	$text=i18n::translate('The GEDCOM file being validated now is encoded in the ANSI character set.  You are strongly advised to convert the file\'s encoding to UTF-8.<br /><br /><br />~CONVERT ANSI TO UTF-8~<br /><br />To ensure that the information in your input GEDCOM files is processed and displayed correctly, these files should be encoded in UTF-8.<br /><br />Some of the more modern genealogy programs can export their data to a GEDCOM file in UTF-8 encoding.  Older programs often don\'t have this capability.  If your program does not offer you this option, <b>webtrees</b> can convert the file for you.<br /><br />When <b>webtrees</b> validates the input file, it will detect the file\'s encoding and advise you accordingly.');
-	break;
-
-case 'detected_date':
-	$title=i18n::translate('Date format will be changed');
-	$text=i18n::translate('The date format that is standard for <b>webtrees</b> and also according to the GEDCOM 5.5.1 Standard is <b>DD&nbsp;MMM&nbsp;YYYY</b> (e.g. 01&nbsp;JAN&nbsp;2004)<br /><br />If, after your GEDCOM file has been validated, you see a message that a wrong date format has been detected, <b>webtrees</b> will convert the incorrectly formatted dates as prescribed by the Standard.<br /><br />You have, however, the option to choose either "<b>day</b> before month" (DD&nbsp;MMM&nbsp;YYYY), or "<b>month</b> before day" (MMM&nbsp;DD&nbsp;YYYY).<br /><br />We recommend that you use the first format (day before month).');
 	break;
 
 case 'download_gedcom':
@@ -3868,11 +3814,6 @@ case 'edit_suffix':
 case 'edit_surname':
 	$title=i18n::translate('Edit surname');
 	$text=i18n::translate('In this field you should enter the surname for the person.  As an example, in the name "John Robert Finlay", the surname that should be entered here is "Finlay"<br /><br />Individuals with multiple surnames, common in Spain and Portugal, should separate the surnames with a comma.  This indicates that the person is to be listed under each of the names.  For example, the surname "Cortes,Vega" will be listed under both <b>C</b> and <b>V</b>, whereas the surname "Cortes Vega" will only be listed under <b>C</b>.');
-	break;
-	
-case 'edit_TIME':
-	$title=i18n::translate('Time');
-	$text=i18n::translate('Enter the time for this event in 24-hour format with leading zeroes. Midnight is 00:00. Examples: 04:50 13:00 20:30.<br /><br />.');
 	break;
 	
 case 'edituser_change_lang':
@@ -4117,19 +4058,18 @@ case 'help_contents_help':
 			<ul><li><a href="?help=add_media">'.i18n::translate('Add media').'</a></li><li><a href="?help=ancestry.php">'.i18n::translate('Ancestry chart').'</a></li><li><a href="?help=calendar.php">'.i18n::translate('Calendar').'</a></li><li><a href="?help=fanchart.php">'.i18n::translate('Circle diagram').'</a></li><li><a href="?help=clippings.php">'
 			.i18n::translate('Clippings cart').'</a></li><li><a href="?help=def">'.i18n::translate('Definitions').'</a></li><li><a href="?help=descendancy.php">'.i18n::translate('Descendancy chart').'</a></li><li><a href="?help=famlist.php">'.i18n::translate('Families').'</a></li><li><a href="?help=familybook.php">'
 			.i18n::translate('Family book chart').'</a></li><li><a href="?help=family.php">'.i18n::translate('Family information').'</a></li><li><a href="?help=faq.php">'.i18n::translate('FAQ list').'</a></li><li><a href="?help=gedcom_info">'.i18n::translate('GEDCOM information').'</a></li><li><a href="?help=header">'
-			.i18n::translate('Header').'</a></li><li><a href="?help=help">'.i18n::translate('Help').'</a></li><li><a href="?help=index_portal">'.i18n::translate('Home Page').'</a></li><li><a href="?help=hourglass.php">'.i18n::translate('Hourglass chart').'</a></li><li><a href="?help=individual.php">'
-			.i18n::translate('Individual information').'</a></li><li><a href="?help=indilist.php">'.i18n::translate('Individuals').'</a></li><li><a href="?help=treenav.php">'.i18n::translate('Interactive tree').'</a></li><li><a href="?help=accesskey_viewing_advice">'.i18n::translate('Keyboard shortcuts').'</a></li><li><a href="?help=login.php">'
+			.i18n::translate('Header').'</a></li><li><a href="?help=help">'.i18n::translate('Help').'</a></li><li><a href="?help=index_portal">'.i18n::translate('Home page').'</a></li><li><a href="?help=hourglass.php">'.i18n::translate('Hourglass chart').'</a></li><li><a href="?help=individual.php">'
+			.i18n::translate('Individual information').'</a></li><li><a href="?help=indilist.php">'.i18n::translate('Individuals').'</a></li><li><a href="?help=treenav.php">'.i18n::translate('Interactive tree').'</a></li><li><a href="?help=login.php">'
 			.i18n::translate('Login').'</a></li><li><a href="?help=pls_note11">'.i18n::translate('Lost password request').'</a></li><li><a href="?help=menu">'.i18n::translate('Menus').'</a></li><li><a href="?help=medialist.php">'.i18n::translate('Multimedia').'</a></li><li><a href="?help=edituser.php">'
 			.i18n::translate('My account').'</a></li><li><a href="?help=mygedview_portal">'.i18n::translate('My Page').'</a></li><li><a href="?help=edituser_password">'.i18n::translate('Password').'</a></li><li><a href="?help=pedigree.php">'.i18n::translate('Pedigree Tree').'</a></li><li><a href="?help=placelist.php">'
-			.i18n::translate('Place hierarchy').'</a></li><li><a href="?help=relationship.php">'.i18n::translate('Relationship chart').'</a></li><li><a href="?help=reportengine.php">'.i18n::translate('Reports').'</a></li><li><a href="?help=login_register.php">'.i18n::translate('Request new user account').'</a></li><li><a href="?help=search">'.i18n::translate('Search').'</a></li><li><a href="?help=hs_title">'.i18n::translate('Search help text').'</a></li><li><a href="?help=source.php">'.i18n::translate('Source').'</a></li><li><a href="?help=sourcelist.php">'
+			.i18n::translate('Place hierarchy').'</a></li><li><a href="?help=relationship.php">'.i18n::translate('Relationship chart').'</a></li><li><a href="?help=reportengine.php">'.i18n::translate('Reports').'</a></li><li><a href="?help=login_register.php">'.i18n::translate('Request new user account').'</a></li><li><a href="?help=search">'.i18n::translate('Search').'</a></li><li><a href="?help=source.php">'.i18n::translate('Source').'</a></li><li><a href="?help=sourcelist.php">'
 			.i18n::translate('Sources').'</a></li><li><a href="?help=timeline.php">'.i18n::translate('Timeline chart').'</a></li><li><a href="?help=edituser_username">'.i18n::translate('Username').'</a></li></ul></td>';	
 		if (WT_USER_IS_ADMIN) {
 			$text.='<td valign="top"><span class="helpstart">'.i18n::translate('Administrator help items').'</span><ul><li><a href="?help=admin.php">'.i18n::translate('Administration').'</a></li><li><a href="?help=help_editconfig.php">'.i18n::translate('Configure').'</a></li><li><a href="?help=help_faq.php">'
 			.i18n::translate('FAQ List: Edit').'</a></li><li><a href="?help=add_gedcom">'.i18n::translate('GEDCOM: Add').'</li><li><a href="?help=add_upload_gedcom">'.i18n::translate('GEDCOM: Add vs Upload').'</a></li><li><a href="?help=edit_gedcoms">'.i18n::translate('GEDCOM: Administration page').'</a></li><li><a href="?help=change_indi2id">'
-			.i18n::translate('GEDCOM: Change Individual ID to ...').'</a></li><li><a href="?help=gedcom_configfile">'.i18n::translate('GEDCOM: Configuration file').'</a></li><li><a href="?help=edit_config_gedcom">'.i18n::translate('GEDCOM: Configure').'</a></li><li><a href="?help=convert_ansi2utf">'
-			.i18n::translate('GEDCOM: Convert ANSI to UTF-8').'</a></li><li><a href="?help=add_new_gedcom">'.i18n::translate('GEDCOM: Create new').'</a></li><li><a href="?help=default_gedcom">'.i18n::translate('GEDCOM: Default').'</a></li><li><a href="?help=delete_gedcom">'.i18n::translate('GEDCOM: Delete').'</a></li><li><a href="?help=download_gedcom">'
+			.i18n::translate('GEDCOM: Change Individual ID to ...').'</a></li><li><a href="?help=gedcom_configfile">'.i18n::translate('GEDCOM: Configuration file').'</a></li><li><a href="?help=edit_config_gedcom">'.i18n::translate('GEDCOM: Configure').'</a></li><li><a href="?help=add_new_gedcom">'.i18n::translate('GEDCOM: Create new').'</a></li><li><a href="?help=default_gedcom">'.i18n::translate('GEDCOM: Default').'</a></li><li><a href="?help=delete_gedcom">'.i18n::translate('GEDCOM: Delete').'</a></li><li><a href="?help=download_gedcom">'
 			.i18n::translate('GEDCOM: Download').'<a/></li><li><a href="?help=import_gedcom">'.i18n::translate('GEDCOM: Import').'</a></li><li><a href="?help=edit_privacy">'.i18n::translate('GEDCOM: Privacy settings').'</a></li><li><a href="?help=upload_gedcom">'.i18n::translate('GEDCOM: Upload').'</a></li><li><a href="?help=validate_gedcom">'
-			.i18n::translate('GEDCOM: Validate').'</a></li><li><a href="?help=readmefile">'.i18n::translate('Readme File').'</a></li><li><a href="?help=help_useradmin.php">'.i18n::translate('User Administration').'</a></li></ul></td>';
+			.i18n::translate('GEDCOM: Validate').'</a></li><li><a href="?help=readmefile">'.i18n::translate('Readme file').'</a></li><li><a href="?help=help_useradmin.php">'.i18n::translate('User administration').'</a></li></ul></td>';
 		}
 	$text.=('</tr></table>');
 	break;
@@ -4188,12 +4128,7 @@ case 'help_useradmin.php':
 
 case 'hide_context':
 	$title=i18n::translate('Hide contextual help');
-	$text=i18n::translate('Hide Contextual Help');
-	break;
-
-case 'hs_title':
-	$title=i18n::translate('Search help text');
-	$text=i18n::translate('You can search <b>webtrees</b> Help system.  The Search Help Text feature gives you a high degree of control over the way the search functions; you should be able to find what you are looking for easily.<br /><br /><span class="helpstart">Search for</span><br />You enter the words or the phrase you wish to find.<br /><br />The search does not pay attention to the case (upper or lower) of the search terms or the text being examined.  This means that if you search for <b>Individual</b>, you will find text containing <b>Individual</b>, <b>individual</b>, or <b>INDIVIDUAL</b>.  You will also find text containing <b>individuals</b>, etc. since the search is looking for sequences of characters rather than words.<br /><br />You can have the search look for several words at once.  Enter all of the words, separating each of them by a space, like this: <b>individual&nbsp;family&nbsp;child</b>.  When more than one word is entered, the meaning of what you have typed is clarified in the Search type field.<br /><br /><br /><span class="helpstart">Search type</span><br />You clarify the meaning of what you have entered into the Search for field by selecting among the possibilities presented here.<br /><dl><dt><b>Any word</b></dt><dd>If you have entered <b>individual&nbsp;family&nbsp;child</b>, this option will find Help text that contains one of the words listed.  The order of the words doesn\'t matter.  The meaning of the search is: "Find Help text containing <b>individual</b> <u>or</u> <b>family</b> <u>or</u> <b>child</b>".</dd><dt><b>All words</b></dt><dd>If you have entered <b>individual&nbsp;family&nbsp;child</b>, this option will find Help text that contains all of the words listed.  The order of the words doesn\'t matter.  The meaning of the search is: "Find Help text containing <b>individual</b> <u>and</u> <b>family</b> <u>and</u> <b>child</b>".</dd><dt><b>Exact phrase</b></dt><dd>If you have entered <b>individual&nbsp;family&nbsp;child</b>, this option will find Help text that contains all of the words listed in the order given.  The meaning of the search is: "Find Help text containing the words <b>individual&nbsp;family&nbsp;child</b> in exactly that order with no other words or characters between".  You probably won\'t find this particular phrase in any Help text.<br /><br />There are a few limitations on this type of search.  Certain special characters such as <b>&quot; &lt; &gt;</b> etc. are contained within the Help text in symbolic form and won\'t be found if they form part of the text you enter.  Some Help text contains a special kind of Space character represented by <b>&amp;nbsp;</b> and you won\'t find phrases containing this character.</dd></dl><br /><br /><span class="helpstart">Search in</span><br />You determine the scope of the search here.<br /><br />Administrators have the choice of searching User Help or Configuration Help or both.  Users do not have this choice; because they do not have access to any configuration features, they can only search the User Help file.<br /><br />The Help files contain not only Help text but also certain text strings used to build input forms and other material.  This option lets you control whether the entire Help file should be examined or whether only the Help text should be looked at.');
+	$text=i18n::translate('Hide contextual help');
 	break;
 
 case 'import_gedcom':
@@ -4419,11 +4354,6 @@ case 'login_buttons':
 case 'login_page':
 	$title=i18n::translate('Login page');
 	$text=i18n::translate('On this page you can login, request a new password, or request a new user account.');
-	break;
-
-case 'macfile_detected':
-	$title=i18n::translate('Macintosh file detected.  On cleanup your file will be converted to a DOS file.');
-	$text=i18n::translate('<b>webtrees</b> detected that your GEDCOM file was created on a Macintosh computer.<br /><br />Macintosh files end each line with a CR control code.  CR is Ctrl+M.<br />Unix files end each line with an LF control code.  LF is Ctrl+J.<br />Windows and DOS use a two-code sequence, CR followed by LF.<br /><br /><b>webtrees</b> requires that all files use Unix or DOS line endings. When you click the Cleanup button, your line endings will be converted accordingly.');
 	break;
 
 case 'mail_option1':
@@ -4924,11 +4854,6 @@ case 'talloffset':
 	$text=i18n::translate('With this option you determine the page layout orientation.<br /><br />Changing this setting might be useful if you want to make a screen print or if you have a different type of screen.<ul><li><b>Portrait</b> mode will make the tree taller, such that a 4 generation chart should fit on a single page printed vertically.</li><li><b>Landscape</b> mode will make a wider tree that should print on a single page printed horizontally.</li><li><b>Oldest at top</b> mode rotates the chart, but not its boxes, by 90 degrees counter-clockwise, so that the oldest generation is at the top of the chart.</li><li><b>Oldest at bottom</b> mode rotates the chart, but not its boxes, by 90 degrees clockwise, so that the oldest generation is at the bottom of the chart.</li></ul');
 	break;
 
-case 'time_limit':
-	$title=i18n::translate('Time limit:');
-	$text=i18n::translate('The maximum time the import is allowed to run for processing the GEDCOM file.');
-	break;
-
 case 'timeline_control':
 	$title=i18n::translate('Timeline control');
 	$text=i18n::translate('Click the drop down menu to change the speed at which the timeline scrolls.<br/><br/>~Begin Year~<br/>Enter the starting year of the range.<br/><br/>~End Year~<br/>Enter the ending year of the range.<br/><br/>~Search~<br/>Click the Search button to begin searching for events that occurred within the range identified by the Begin Year and End Year fields.');
@@ -4967,11 +4892,6 @@ case 'upload_media_folder':
 case 'upload_media':
 	$title=i18n::translate('Upload media files');
 	$text=i18n::translate('Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>%s</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to <b>%s</b>. For example, <b>%smyfamily</b>. If the thumbnail directory does not exist, it is created automatically.', $MEDIA_DIRECTORY, $MEDIA_DIRECTORY, $MEDIA_DIRECTORY);
-	break;
-
-case 'upload_path':
-	$title=i18n::translate('Upload path');
-	$text=i18n::translate('This is the path where the GEDCOM file you wish to upload can be found. To select the path, click on <b>Browse</b> and navigate to your GEDCOM file and then click <b>Open</b>.');
 	break;
 
 case 'upload_server_file':
@@ -5079,11 +4999,6 @@ case 'validate_gedcom':
 	$text=i18n::translate('This is the third step in the procedure to add externally created GEDCOM data to your genealogical database.<br /><br /><b>webtrees</b> will check the input file for the correct use of Date format, Place format, Character Set, etc.  Some deviations from the GEDCOM 5.5.1 Standard, to which <b>webtrees</b> adheres, can be corrected automatically. Examples are Macintosh line endings and incorrect use of Place format.  When this happens, you will see a message that the data has been changed.  For other abnormalities you will get a warning message with a recommended solution.<br /><br /><b>Optional Tools</b><br />At this moment there is only one additional tool:<br /><b>Change Individual ID to...</b>.<br /><br /><b>More help</b><br />More help is available by clicking the <b>?</b> next to items on the page.');
 	break;
 
-case 'verify_gedcom':
-	$title=i18n::translate('Verify GEDCOM');
-	$text=i18n::translate('Here you can choose to either continue with the upload and import of this GEDCOM file or to abort the upload and import.');
-	break;
-
 case 'view_server_folder':
 	$title=i18n::translate('View server folder');
 	$text=i18n::translate('The administrator has enabled up to %s folder levels below the default <b>%s</b>.  This helps to organize the media files and reduces the possibility of name collisions.<br /><br />In this field, you select the media folder whose contents you wish to view.  When you select <b>ALL</b>, all media files will be shown without regard to the folder in which they are stored.  This can produce a very long list of media items.', $MEDIA_DRECTORY_LEVELS, $MEDIA_DIRECTORY);
@@ -5155,13 +5070,6 @@ case 'multiple':
 	$title=i18n::translate('multiple');
 	$text=i18n::translate('<center>--- This is a general help text for multiple pages ---</center>');
 	break;
-
-case 'upload_gedcom':
- // not used? see 'help_uploadgedcom.php'
-	$title=i18n::translate('Upload GEDCOM');
-	$text=i18n::translate('Unlike the <b>Add GEDCOM</b> function, the GEDCOM file you wish to add to your database does not have to be on your server.<br /><br />In Step 1 you select a GEDCOM file from your local computer. Type the complete path and file name in the text box or use the <b>Browse</b> button on the page.<br /><br />You can also use this function to upload a ZIP file containing the GEDCOM file. <b>webtrees</b> will recognize the ZIP file and extract the file and the filename automatically.<br /><br />If a GEDCOM file with the same name already exists in <b>webtrees</b>, it will, after your confirmation, be overwritten. However, all GEDCOM settings made previously will be preserved.<br /><br />You will find more help on other pages of the procedure.');
-	break;
-
 
 // ===================================================	
 

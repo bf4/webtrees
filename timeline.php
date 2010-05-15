@@ -249,7 +249,7 @@ document.onmousemove = MM;
 document.onmouseup = MU;
 //-->
 </script>
-<h2><?php echo i18n::translate('Timeline Chart'); ?></h2>
+<h2><?php echo i18n::translate('Timeline chart'); ?></h2>
 <?php if (!$controller->isPrintPreview()) { ?><form name="people" action="timeline.php"><?php } ?>
 <?php
 $controller->checkPrivacy();
@@ -292,10 +292,10 @@ $controller->checkPrivacy();
 			<?php if (!$controller->isPrintPreview()) {
 				?>
 				<a href="timeline.php?<?php echo $controller->pidlinks; ?>&amp;scale=<?php echo $controller->scale; ?>&amp;remove=<?php echo $pid;?>" >
-				<span class="details1"><?php echo i18n::translate('Remove Person'), help_link('remove_person'); ?></span></a>
+				<span class="details1"><?php echo i18n::translate('Remove person'), help_link('remove_person'); ?></span></a>
 			<?php if (!empty($controller->birthyears[$pid])) { ?>
 				<span class="details1"><br />
-				<?php echo i18n::translate('Show Age Marker'), help_link('show_age_marker'); ?>
+				<?php echo i18n::translate('Show age marker'), help_link('show_age_marker'); ?>
 				<input type="checkbox" name="agebar<?php echo $p; ?>" value="ON" onclick="showhide('agebox<?php echo $p; ?>', this);" />
 				</span>
 			<?php }
@@ -310,7 +310,7 @@ $controller->checkPrivacy();
 				echo "<br />";
 				?>
 				<a href="timeline.php?<?php echo $controller->pidlinks; ?>&amp;scale=<?php echo $controller->scale; ?>&amp;remove=<?php echo $pid;?>" >
-				<span class="details1"><?php echo i18n::translate('Remove Person'), help_link('remove_person'); ?></span></a>
+				<span class="details1"><?php echo i18n::translate('Remove person'), help_link('remove_person'); ?></span></a>
 			<?php } ?>
 			<br />
 		<?php } ?>
@@ -332,8 +332,8 @@ $controller->checkPrivacy();
 		$scalemod = round($controller->scale*.2) + 1;
 		?>
 		<td class="list_value" style="padding: 5px">
-			<a href="<?php echo WT_SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale+$scalemod); ?>"><img src="<?php print $WT_IMAGE_DIR."/".$WT_IMAGES['zoomin']['other']; ?>" title="<?php print i18n::translate('Zoom In'); ?>" alt="<?php print i18n::translate('Zoom In'); ?>" border="0" /></a><br />
-			<a href="<?php echo WT_SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale-$scalemod); ?>"><img src="<?php print $WT_IMAGE_DIR."/".$WT_IMAGES['zoomout']['other']; ?>" title="<?php print i18n::translate('Zoom Out'); ?>" alt="<?php print i18n::translate('Zoom Out'); ?>" border="0" /></a><br />
+			<a href="<?php echo WT_SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale+$scalemod); ?>"><img src="<?php print $WT_IMAGE_DIR."/".$WT_IMAGES['zoomin']['other']; ?>" title="<?php print i18n::translate('Zoom in'); ?>" alt="<?php print i18n::translate('Zoom in'); ?>" border="0" /></a><br />
+			<a href="<?php echo WT_SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale-$scalemod); ?>"><img src="<?php print $WT_IMAGE_DIR."/".$WT_IMAGES['zoomout']['other']; ?>" title="<?php print i18n::translate('Zoom out'); ?>" alt="<?php print i18n::translate('Zoom out'); ?>" border="0" /></a><br />
 			<input type="button" value="<?php print i18n::translate('Clear Chart'); ?>" onclick="window.location = 'timeline.php?clear=1';" />
 		</td>
 	<?php } ?>

@@ -256,7 +256,7 @@ if (WT_USER_IS_ADMIN) {
 }
 
 // Print the header of the page
-print_header(i18n::translate('Manage MultiMedia'));
+print_header(i18n::translate('Manage multimedia'));
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -766,7 +766,7 @@ if (check_media_structure()) {
 	<input type="hidden" name="all" value="true" />
 	<input type="hidden" name="subclick" />
 	<table class="facts_table center width75 <?php print $TEXT_DIRECTION; ?>">
-	<tr><td class="topbottombar" colspan="4"><?php echo i18n::translate('Manage MultiMedia'), help_link('manage_media'); ?></td></tr>
+	<tr><td class="topbottombar" colspan="4"><?php echo i18n::translate('Manage multimedia'), help_link('manage_media'); ?></td></tr>
 	<?php
 	if ($TEXT_DIRECTION=='ltr') $legendAlign = 'align="right"';
 	else $legendAlign = 'align="left"';
@@ -775,13 +775,13 @@ if (check_media_structure()) {
 	<!-- // NOTE: Row 1 left: Sort sequence -->
 	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php echo i18n::translate('Sequence'), help_link('sortby'); ?></td>
 	<td class="optionbox wrap"><select name="sortby">
-		<option value="title" <?php if ($sortby=='title') print "selected=\"selected\"";?>><?php print i18n::translate('TITL');?></option>
-		<option value="file" <?php if ($sortby=='file') print "selected=\"selected\"";?>><?php print i18n::translate('FILE');?></option>
+		<option value="title" <?php if ($sortby=='title') print "selected=\"selected\"";?>><?php print translate_fact('TITL');?></option>
+		<option value="file" <?php if ($sortby=='file') print "selected=\"selected\"";?>><?php print translate_fact('FILE');?></option>
 	</select></td>
 
 	<!-- // NOTE: Row 1 right, Upload media files -->
-	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php echo i18n::translate('Upload Media files'), help_link('upload_media'); ?></td>
-	<td class="optionbox wrap"><?php print "<a href=\"#\" onclick=\"expand_layer('uploadmedia');\">".i18n::translate('Upload Media files')."</a>"; ?></td></tr>
+	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php echo i18n::translate('Upload media files'), help_link('upload_media'); ?></td>
+	<td class="optionbox wrap"><?php print "<a href=\"#\" onclick=\"expand_layer('uploadmedia');\">".i18n::translate('Upload media files')."</a>"; ?></td></tr>
 
 	<!-- // NOTE: Row 2 left: Filter options -->
 	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php echo i18n::translate('Filter'), help_link('simple_filter'); ?></td>
@@ -807,8 +807,8 @@ if (check_media_structure()) {
 		<input type="text" name="filter" value="<?php if($filter) print $filter;?>" /><br /><input type="submit" name="search" value="<?php print i18n::translate('Filter');?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="all" value="<?php print i18n::translate('Display all'); ?>" onclick="this.form.subclick.value=this.name" /></td>
 
 	<!-- // NOTE: Row 2 right: Add media -->
-	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php echo i18n::translate('Add Media'), help_link('add_media'); ?></td>
-	<td class="optionbox wrap"><a href="javascript: <?php echo i18n::translate('Add Media'); ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;"> <?php echo i18n::translate('Add a new Media item'); ?></a></td></tr>
+	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php echo i18n::translate('Add media'), help_link('add_media'); ?></td>
+	<td class="optionbox wrap"><a href="javascript: <?php echo i18n::translate('Add media'); ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;"> <?php echo i18n::translate('Add a new media item'); ?></a></td></tr>
 
 	<!-- // NOTE: Row 3 left: Show thumbnails -->
 	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php echo i18n::translate('Show thumbnails'), help_link('show_thumb'); ?></td>

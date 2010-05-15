@@ -39,7 +39,7 @@ if (!defined('WT_WEBTREES')) {
 
 require WT_ROOT.'modules/googlemap/defaultconfig.php';
 
-global $TBLPREFIX;
+global $TBLPREFIX, $iso3166;
 $action=safe_REQUEST($_REQUEST, 'action');
 if (isset($_REQUEST['parent']))	 $parent=$_REQUEST['parent'];
 if (isset($_REQUEST['display'])) $display=$_REQUEST['display'];
@@ -584,9 +584,9 @@ echo "</form>";
 $placelist=get_place_list_loc($parent);
 
 echo "<table class=\"facts_table\"><tr>";
-echo "<th class=\"descriptionbox\">", i18n::translate('PLAC'), "</th>";
-echo "<th class=\"descriptionbox\">", i18n::translate('LATI'), "</th>";
-echo "<th class=\"descriptionbox\">", i18n::translate('LONG'), "</th>";
+echo "<th class=\"descriptionbox\">", translate_fact('PLAC'), "</th>";
+echo "<th class=\"descriptionbox\">", translate_fact('LATI'), "</th>";
+echo "<th class=\"descriptionbox\">", translate_fact('LONG'), "</th>";
 echo "<th class=\"descriptionbox\">".i18n::translate('Zoom factor')."</th>";
 echo "<th class=\"descriptionbox\">".i18n::translate('Icon')."</th>";
 echo "<th class=\"descriptionbox\" colspan=\"2\">";

@@ -62,6 +62,8 @@ if (!empty($_POST['action']) && $_POST['action']=='download') {
 	exit;
 }
 
+header('Content-Type: text/html; charset=UTF-8');
+
 if (version_compare(PHP_VERSION, '5.2')<0) {
 	// Our translation system requires PHP 5.2, so we cannot translate this message :-(
 	echo
@@ -591,8 +593,8 @@ try {
 		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}gedcom (".
 		" gedcom_id     INTEGER AUTO_INCREMENT                        NOT NULL,".
 		" gedcom_name   VARCHAR(255)                                  NOT NULL,".
-		" import_gedcom LONGBLOB                                      NOT NULL DEFAULT '',".
-		" import_offset INTEGER UNSIGNED                              NOT NULL DEFAULT 1,".
+		" import_gedcom LONGBLOB                                      NOT NULL,".
+		" import_offset INTEGER UNSIGNED                              NOT NULL,".
 		" PRIMARY KEY     (gedcom_id),".
 		" UNIQUE  KEY ux1 (gedcom_name)".
 		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
@@ -806,18 +808,6 @@ try {
 		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
 	);
 	$dbh->exec(
-		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}blocks (".
-		" b_id       INTEGER AUTO_INCREMENT NOT NULL,".
-		" b_username VARCHAR(100)           NOT NULL,".
-		" b_location VARCHAR(30)            NOT NULL,".
-	 	" b_order    INTEGER                NOT NULL,".
-		" b_name     VARCHAR(255)           NOT NULL,".
-		" b_config   TEXT                   NOT NULL,".
-		" PRIMARY KEY (b_id),".
-		"         KEY ix1 (b_username)".
-		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
-	);
-	$dbh->exec(
 		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}news (".
 		" n_id       INTEGER AUTO_INCREMENT NOT NULL,".
 		" n_username VARCHAR(100)           NOT NULL,".
@@ -1018,6 +1008,29 @@ try {
 		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
 	);
 	$dbh->exec(
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}block (".
+		" block_id    INTEGER AUTO_INCREMENT        NOT NULL,".
+		" gedcom_id   INTEGER                           NULL,".
+		" user_id     INTEGER                           NULL,".
+		" location    ENUM('faq', 'main','side')    NOT NULL,".
+	 	" block_order INTEGER                       NOT NULL,".
+		" module_name VARCHAR(32)                   NOT NULL,".
+		" PRIMARY KEY     (block_id),".
+		" FOREIGN KEY fk1 (gedcom_id  ) REFERENCES {$TBLPREFIX}gedcom (gedcom_id  ), /* ON DELETE CASCADE */".
+		" FOREIGN KEY fk2 (user_id    ) REFERENCES {$TBLPREFIX}user   (user_id    ), /* ON DELETE CASCADE */".
+		" FOREIGN KEY fk3 (module_name) REFERENCES {$TBLPREFIX}module (module_name)  /* ON DELETE CASCADE */".
+		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
+	);
+	$dbh->exec(
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}block_setting (".
+		" block_id      INTEGER     NOT NULL,".
+		" setting_name  VARCHAR(32) NOT NULL,".
+		" setting_value TEXT        NOT NULL,".
+		" PRIMARY KEY     (block_id, setting_name),".
+		" FOREIGN KEY fk1 (block_id) REFERENCES {$TBLPREFIX}block (block_id) /* ON DELETE CASCADE */".
+		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
+	);
+	$dbh->exec(
 		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}hit_counter (".
 		" gedcom_id      INTEGER     NOT NULL,".
 		" page_name      VARCHAR(32) NOT NULL,".
@@ -1109,12 +1122,13 @@ try {
 	}
 	echo
 		'<input type="hidden" name="action" value="download">',
-		'<input type="submit" value="'. /* I18N: %s is a filename */ i18n::translate('Download %s', WT_CONFIG_FILE).'" onclick="document.continue.continue.disabled=false; return true;">',
+		'<input type="submit" value="'. /* I18N: %s is a filename */ i18n::translate('Download %s', WT_CONFIG_FILE).'" onclick="document.contform.contbtn.disabled=false; return true;">',
 		'</form>',
 		'<p>', i18n::translate('After you have copied this file to the webserver and set the access permissions, click here to continue'), '</p>',
-		'<form name="continue" action="', WT_SCRIPT_NAME, '" method="get" onsubmit="alert(\'', i18n::translate('Reminder: you must copy %s to your webserver', WT_CONFIG_FILE), '\');return true;">',
-		'<input type="submit" name="continue" value="'.i18n::translate('Continue').'" disabled>',
+		'<form name="contform" action="', WT_SCRIPT_NAME, '" method="get" onsubmit="alert(\'', i18n::translate('Reminder: you must copy %s to your webserver', WT_CONFIG_FILE), '\');return true;">',
+		'<input type="submit" name="contbtn" value="'.i18n::translate('Continue').'" disabled>',
 		'</form></body></html>';
+	exit;
 } catch (PDOException $ex) {
 	echo
 		'<p class="bad">', i18n::translate('An unexpected database error occured.'), '</p>',

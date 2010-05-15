@@ -77,7 +77,7 @@ echo "</select></td></tr>";
 echo "<tr><td class='descriptionbox'>", i18n::translate('Top Level Place'), "</td>";
 echo "<td class='optionbox'><select name='country'>";
 echo "<option value='XYZ' selected='selected'>", i18n::translate('Select Top Level...'), "</option>";
-echo "<option value='XYZ'>", i18n::translate('ALL'), "</option>";
+echo "<option value='XYZ'>", i18n::translate('All'), "</option>";
 $rows=
 	WT_DB::prepare("SELECT pl_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_level=0 ORDER BY pl_place")
 	->fetchAssoc();
@@ -96,7 +96,7 @@ if ($country!='XYZ') {
 	echo "<tr><td class='descriptionbox'>", i18n::translate('Level One Place'), "</td>";
 	echo "<td class='optionbox'><select name='state'>";
 	echo "<option value='XYZ' selected='selected'>", i18n::translate('Select Next Level...'), "</option>";
-	echo "<option value='XYZ'>", i18n::translate('ALL'), "</option>";
+	echo "<option value='XYZ'>", i18n::translate('All'), "</option>";
 	$places=
 		WT_DB::prepare("SELECT pl_place FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=? ORDER BY pl_place")
 		->execute(array($par_id))
@@ -128,8 +128,8 @@ echo "</td>";
 echo "<td rowspan='2'>";
 echo "<table align='right'>";
 echo "<tr><td colspan='4' align='center' class='descriptionbox'><strong>", i18n::translate('Key to colors used below'), "</strong></td></tr>";
-echo "<tr><td class='facts_value error'>", i18n::translate('PLAC'), "</td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", i18n::translate('this place and its coordinates do not exist in the GoogleMap tables'), "</font></td></tr>";
-echo "<tr><td class='facts_value'><a>", i18n::translate('PLAC'), "</a></td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", i18n::translate('this place exists in the GoogleMap tables, but has no coordinates'), "</font></td></tr>";
+echo "<tr><td class='facts_value error'>", translate_fact('PLAC'), "</td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", i18n::translate('this place and its coordinates do not exist in the GoogleMap tables'), "</font></td></tr>";
+echo "<tr><td class='facts_value'><a>", translate_fact('PLAC'), "</a></td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", i18n::translate('this place exists in the GoogleMap tables, but has no coordinates'), "</font></td></tr>";
 echo "<tr><td class='facts_value'><strong>".i18n::translate('Unknown')."</font></td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", i18n::translate('this place level is blank in your GEDCOM file. It should be added to<br />GoogleMap places as "unknown" with coordinates from its parent<br />level before you add any place to the next level'), "</font></td></tr>";
 echo "<tr><td class='facts_value'><a>".i18n::translate('Unknown')."</a></td><td class='facts_value' align='center'>N55.0</td><td align='center' class='facts_value'>W75.0</td><td class='facts_value'><font size=\"-2\">", i18n::translate('this place level is blank in your GEDCOM file, but exists as \'unknown\'<br />in the GoogleMap places table with coordinates. No action required<br />until the missing level can be entered'), "</font></td></tr>";
 echo "</table>";
@@ -231,7 +231,7 @@ case 'go':
 	echo "</tr><tr>";
 	$cols=0;
 	while ($cols<$max) {
-		echo "<td class='descriptionbox' align='center'><strong>", i18n::translate('PLAC'), "</strong></td><td class='descriptionbox' align='center'><strong>", i18n::translate('Latitude'), "</strong><td class='descriptionbox' align='center'><strong>", i18n::translate('Longitude'), "</strong></td></td>";
+		echo "<td class='descriptionbox' align='center'><strong>", translate_fact('PLAC'), "</strong></td><td class='descriptionbox' align='center'><strong>", i18n::translate('Latitude'), "</strong><td class='descriptionbox' align='center'><strong>", i18n::translate('Longitude'), "</strong></td></td>";
 		$cols++;
 	}
 	echo "</tr>";

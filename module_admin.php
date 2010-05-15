@@ -24,7 +24,7 @@
  *
  * @package webtrees
  * @subpackage Module
- * @version $Id: admin.php 5151 2009-03-04 18:51:04Z canajun2eh $
+ * @version $Id$
  */
 
 define('WT_SCRIPT_NAME', 'module_admin.php');
@@ -117,21 +117,21 @@ if ($action=='update_mods') {
 			
     }
 
-		$value = safe_POST_integer('menuorder-'.$module_name, 1, 127, 0);
+		$value = safe_POST('menuorder-'.$module_name);
 		if ($value) {
 			WT_DB::prepare(
 				"UPDATE {$TBLPREFIX}module SET menu_order=? WHERE module_name=?"
 			)->execute(array($value, $module_name));
 		}
 
-		$value = safe_POST_integer('taborder-'.$module_name, 1, 127, 0);
+		$value = safe_POST('taborder-'.$module_name);
 		if ($value) {
 			WT_DB::prepare(
 				"UPDATE {$TBLPREFIX}module SET tab_order=? WHERE module_name=?"
 			)->execute(array($value, $module_name));
 		}
 
-		$value = safe_POST_integer('sidebarorder-'.$module_name, 1, 127, 0);
+		$value = safe_POST('sidebarorder-'.$module_name);
 		if ($value) {
 			WT_DB::prepare(
 				"UPDATE {$TBLPREFIX}module SET sidebar_order=? WHERE module_name=?"
@@ -140,7 +140,7 @@ if ($action=='update_mods') {
   }
 }
 
-print_header(i18n::translate('Module Administration'));
+print_header(i18n::translate('Module administration'));
 ?>
 <style type="text/css">
 <!--
@@ -221,19 +221,19 @@ print_header(i18n::translate('Module Administration'));
 	    reindexMods('tabs_table');
 	    reindexMods('sidebars_table');
 	});
+	
+	jQuery("#installed_table")
+		.tablesorter({sortList: [[2,0], [3,0]], widgets: ['zebra']})
+
   });
 //]]>
   </script>
 <div align="center">
-<div class="width75">
-
-<p><?php echo "<h2>".i18n::translate('Module Administration')."</h2>"; ?></p>
+	<div class="width90">
+		<p><?php echo "<h2>".i18n::translate('Module administration')."</h2>"; ?></p>
 <p><?php echo i18n::translate('Below is the list of all the modules installed in this instance of webtrees.  Modules are installed by placing them in the <i>modules</i> directory.  Here you can set the access level per GEDCOM for each module.  If a module includes tabs for the individual page or menus for the menu bar, you can also set the access level and order of each of them.')?></p>
 <p><input TYPE="button" VALUE="<?php echo i18n::translate('Return to Administration page');?>" onclick="javascript:window.location='admin.php'" /></p>
-
-<form method="post" action="module_admin.php"> 
-	<input type="hidden" name="action" value="update_mods" />
-
+		<!-- page tabs -->
 <div id="tabs">
 <ul>
 	<li><a href="#installed_tab"><span><?php echo i18n::translate('All Modules')?></span></a></li>
@@ -245,22 +245,24 @@ print_header(i18n::translate('Module Administration'));
 	<li><a href="#reports_tab"><span><?php echo i18n::translate('Reports')?></span></a></li>
 	<li><a href="#themes_tab"><span><?php echo i18n::translate('Themes')?></span></a></li>
 </ul>
+		<!-- installed -->
 <div id="installed_tab">
-<!-- installed -->
-  <table id="installed_table" class="list_table">
+			<form method="post" action="module_admin.php"> 
+				<input type="hidden" name="action" value="update_mods" />
+				<table id="installed_table" class="tablesorter" border="0" cellpadding="0" cellspacing="1">
     <thead>
       <tr>
-      <th class="list_label"><?php echo i18n::translate('Enabled'); ?></th>
-      <th class="list_label"><?php echo i18n::translate('Configuration'); ?></th>
-      <th class="list_label"><?php echo i18n::translate('Module Name'); ?></th>
-      <th class="list_label"><?php echo i18n::translate('Description'); ?></th>
-      <th class="list_label"><?php echo i18n::translate('Menu'); ?></th>
-      <th class="list_label"><?php echo i18n::translate('Tab'); ?></th>
-      <th class="list_label"><?php echo i18n::translate('Sidebar'); ?></th>
-      <th class="list_label"><?php echo i18n::translate('Block'); ?></th>
-      <th class="list_label"><?php echo i18n::translate('Chart'); ?></th>
-      <th class="list_label"><?php echo i18n::translate('Report'); ?></th>
-      <th class="list_label"><?php echo i18n::translate('Theme'); ?></th>
+					  <th><?php echo i18n::translate('Enabled'); ?></th>
+					  <th><?php echo i18n::translate('Configuration'); ?></th>
+					  <th><?php echo i18n::translate('Module Name'); ?></th>
+					  <th><?php echo i18n::translate('Description'); ?></th>
+					  <th><?php echo i18n::translate('Menu'); ?></th>
+					  <th><?php echo i18n::translate('Tab'); ?></th>
+					  <th><?php echo i18n::translate('Sidebar'); ?></th>
+					  <th><?php echo i18n::translate('Block'); ?></th>
+					  <th><?php echo i18n::translate('Chart'); ?></th>
+					  <th><?php echo i18n::translate('Report'); ?></th>
+					  <th><?php echo i18n::translate('Theme'); ?></th>
       </tr>
     </thead>
     <tbody>
@@ -270,40 +272,45 @@ foreach (WT_Module::getInstalledModules() as $module) {
 		"SELECT status FROM {$TBLPREFIX}module WHERE module_name=?"
 	)->execute(array($module->getName()))->fetchOne();
 	?><tr>
-	<td class="list_value">
+							<td>
 		<input type="checkbox" name="status-<?php echo $module->getName(); ?>" value="Y" <?php if ($status=='enabled') {echo 'checked';} ?>/>
 	</td>
-	<td class="list_value"><?php if ($module instanceof WT_Module_Config) echo '<a href="', $module->getConfigLink(), '"><img class="adminicon" src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["admin"]["small"], '" border="0" alt="', $module->getName(), '" /></a>'; ?></td>
-	<td class="list_value_wrap"><?php echo $module->getTitle()?></td>
-	<td class="list_value_wrap"><?php echo $module->getDescription()?></td>
-	<td class="list_value"><?php if ($module instanceof WT_Module_Menu) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
-	<td class="list_value"><?php if ($module instanceof WT_Module_Tab) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
-	<td class="list_value"><?php if ($module instanceof WT_Module_Sidebar) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
-	<td class="list_value"><?php if ($module instanceof WT_Module_Block) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
-	<td class="list_value"><?php if ($module instanceof WT_Module_Chart) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
-	<td class="list_value"><?php if ($module instanceof WT_Module_Report) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
-	<td class="list_value"><?php if ($module instanceof WT_Module_Theme) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
+							<td><?php if ($module instanceof WT_Module_Config) echo '<a href="', $module->getConfigLink(), '"><img class="adminicon" src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["admin"]["small"], '" border="0" alt="', $module->getName(), '" /></a>'; ?></td>
+							<td><?php echo $module->getTitle()?></td>
+							<td><?php echo $module->getDescription()?></td>
+							<td><?php if ($module instanceof WT_Module_Menu) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
+							<td><?php if ($module instanceof WT_Module_Tab) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
+							<td><?php if ($module instanceof WT_Module_Sidebar) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
+							<td><?php if ($module instanceof WT_Module_Block) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
+							<td><?php if ($module instanceof WT_Module_Chart) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
+							<td><?php if ($module instanceof WT_Module_Report) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
+							<td><?php if ($module instanceof WT_Module_Theme) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
 	</tr>
 	<?php 
 }
 ?>
     </tbody>
   </table>
+				<input type="submit" value="<?php echo i18n::translate('Save')?>" />
+			</form>
 </div>
+		<!-- menus -->
 <div id="menus_tab">
+			<form method="post" action="module_admin.php#menus_tab"> 
+				<input type="hidden" name="action" value="update_mods" />
 <table id="menus_table" class="list_table">
     <thead>
       <tr>
       <th class="list_label"><?php echo i18n::translate('Module Name')?></th>
       <th class="list_label"><?php echo i18n::translate('Order')?></th>
-      <th class="list_label"><?php echo i18n::translate('Access Level')?></th>
+					  <th class="list_label"><?php echo i18n::translate('Access level')?></th>
       </tr>
     </thead>
     <tbody>
 <?php
 $order = 1;
-foreach(WT_Module::getInstalledMenus() as $module) {
-	?><tr class="sortme">
+						foreach(WT_Module::getInstalledMenus() as $module) {?>
+						<tr class="sortme">
 	<td class="list_value"><?php echo $module->getTitle()?></td>
 	<td class="list_value"><input type="text" size="5" value="<?php echo $order; ?>" name="menuorder-<?php echo $module->getName() ?>" />
 		<br />
@@ -337,21 +344,26 @@ $order++;
 ?>
     </tbody>
   </table>
+				<input type="submit" value="<?php echo i18n::translate('Save')?>" />
+			</form>
 </div>
+		<!-- tabs -->
 <div id="tabs_tab">
+			<form method="post" action="module_admin.php#tabs_tab"> 
+				<input type="hidden" name="action" value="update_mods" />
 <table id="tabs_table" class="list_table">
     <thead>
       <tr>
       <th class="list_label"><?php echo i18n::translate('Module Name')?></th>
       <th class="list_label"><?php echo i18n::translate('Order')?></th>
-      <th class="list_label"><?php echo i18n::translate('Access Level')?></th>
+					  <th class="list_label"><?php echo i18n::translate('Access level')?></th>
       </tr>
     </thead>
     <tbody>
 <?php
 $order = 1;
-foreach(WT_Module::getInstalledTabs() as $module) {
-	?><tr class="sortme">
+						foreach(WT_Module::getInstalledTabs() as $module) {?>
+						<tr class="sortme">
 	<td class="list_value"><?php echo $module->getTitle()?></td>
 	<td class="list_value"><input type="text" size="5" value="<?php echo $order; ?>" name="taborder-<?php echo $module->getName() ?>" />
 		<br />
@@ -385,21 +397,26 @@ $order++;
 ?>
     </tbody>
   </table>
+				<input type="submit" value="<?php echo i18n::translate('Save')?>" />
+			</form>
 </div>
+		<!-- sidebars -->
 <div id="sidebars_tab">
+			<form method="post" action="module_admin.php#sidebars_tab"> 
+				<input type="hidden" name="action" value="update_mods" />
 <table id="sidebars_table" class="list_table">
     <thead>
       <tr>
       <th class="list_label"><?php echo i18n::translate('Module Name')?></th>
       <th class="list_label"><?php echo i18n::translate('Order')?></th>
-      <th class="list_label"><?php echo i18n::translate('Access Level')?></th>
+					  <th class="list_label"><?php echo i18n::translate('Access level')?></th>
       </tr>
     </thead>
     <tbody>
 <?php
 $order = 1;
-foreach(WT_Module::getInstalledSidebars() as $module) {
-	?><tr class="sortme">
+						foreach(WT_Module::getInstalledSidebars() as $module) {?>
+							<tr class="sortme">
 	<td class="list_value"><?php echo $module->getTitle()?></td>
 	<td class="list_value"><input type="text" size="5" value="<?php echo $order; ?>" name="sidebarorder-<?php echo $module->getName() ?>" />
 		<br />
@@ -433,20 +450,25 @@ $order++;
 ?>
     </tbody>
   </table>
+				<input type="submit" value="<?php echo i18n::translate('Save')?>" />
+			</form>
 </div>
+		<!-- blocks -->
 <div id="blocks_tab">
+			<form method="post" action="module_admin.php#blocks_tab"> 
+				<input type="hidden" name="action" value="update_mods" />
 <table id="blocks_table" class="list_table">
     <thead>
       <tr>
       <th class="list_label"><?php echo i18n::translate('Module Name')?></th>
-      <th class="list_label"><?php echo i18n::translate('Access Level')?></th>
+					  <th class="list_label"><?php echo i18n::translate('Access level')?></th>
       </tr>
     </thead>
     <tbody>
 <?php
 $order = 1;
-foreach(WT_Module::getInstalledBlocks() as $module) {
-	?><tr class="sortme">
+						foreach(WT_Module::getInstalledBlocks() as $module) {?>
+						<tr class="sortme">
 	<td class="list_value"><?php echo $module->getTitle()?></td>
 	<td class="list_value_wrap">
 	<table>
@@ -473,20 +495,25 @@ $order++;
 ?>
     </tbody>
   </table>
+				<input type="submit" value="<?php echo i18n::translate('Save')?>" />
+			</form>
 </div>
+		<!-- charts -->
 <div id="charts_tab">
+			<form method="post" action="module_admin.php#charts_tab"> 
+				<input type="hidden" name="action" value="update_mods" />
 <table id="charts_table" class="list_table">
     <thead>
       <tr>
       <th class="list_label"><?php echo i18n::translate('Module Name')?></th>
-      <th class="list_label"><?php echo i18n::translate('Access Level')?></th>
+					  <th class="list_label"><?php echo i18n::translate('Access level')?></th>
       </tr>
     </thead>
     <tbody>
 <?php
 $order = 1;
-foreach(WT_Module::getInstalledCharts() as $module) {
-	?><tr class="sortme">
+						foreach(WT_Module::getInstalledCharts() as $module) {?>
+							<tr class="sortme">
 	<td class="list_value"><?php echo $module->getTitle()?></td>
 	<td class="list_value_wrap">
 	<table>
@@ -513,20 +540,25 @@ $order++;
 ?>
     </tbody>
   </table>
+				<input type="submit" value="<?php echo i18n::translate('Save')?>" />
+			</form>
 </div>
+		<!-- reports -->
 <div id="reports_tab">
+			<form method="post" action="module_admin.php#reports_tab"> 
+				<input type="hidden" name="action" value="update_mods" />
 <table id="reports_table" class="list_table">
     <thead>
       <tr>
       <th class="list_label"><?php echo i18n::translate('Module Name')?></th>
-      <th class="list_label"><?php echo i18n::translate('Access Level')?></th>
+					  <th class="list_label"><?php echo i18n::translate('Access level')?></th>
       </tr>
     </thead>
     <tbody>
 <?php
 $order = 1;
-foreach(WT_Module::getInstalledReports() as $module) {
-	?><tr class="sortme">
+						foreach(WT_Module::getInstalledReports() as $module) {?>
+							<tr class="sortme">
 	<td class="list_value"><?php echo $module->getTitle()?></td>
 	<td class="list_value_wrap">
 	<table>
@@ -553,20 +585,25 @@ $order++;
 ?>
     </tbody>
   </table>
+				<input type="submit" value="<?php echo i18n::translate('Save')?>" />
+			</form>
 </div>
+		<!-- themes -->
 <div id="themes_tab">
+			<form method="post" action="module_admin.php#themes_tab"> 
+				<input type="hidden" name="action" value="update_mods" />
 <table id="themes_table" class="list_table">
     <thead>
       <tr>
       <th class="list_label"><?php echo i18n::translate('Module Name')?></th>
-      <th class="list_label"><?php echo i18n::translate('Access Level')?></th>
+					  <th class="list_label"><?php echo i18n::translate('Access level')?></th>
       </tr>
     </thead>
     <tbody>
 <?php
 $order = 1;
-foreach(WT_Module::getInstalledThemes() as $module) {
-	?><tr class="sortme">
+						foreach(WT_Module::getInstalledThemes() as $module) {?>
+						<tr class="sortme">
 	<td class="list_value"><?php echo $module->getTitle()?></td>
 	<td class="list_value_wrap">
 	<table>
@@ -593,11 +630,11 @@ $order++;
 ?>
     </tbody>
   </table>
-</div>
 <input type="submit" value="<?php echo i18n::translate('Save')?>" />
-</div>
 </form>
 </div>
+</div>
+	</div>
 </div>
 <?php
 print_footer();

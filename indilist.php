@@ -8,7 +8,7 @@
  * The alphabet bar shows all the available letters users can click. The bar is built
  * up from the lastnames first letter. Added to this bar is the symbol @, which is
  * shown as a translated version of the variable <var>pgv_lang["NN"]</var>, and a
- * translated version of the word ALL by means of variable <var>i18n::translate('ALL')</var>.
+ * translated version of the word ALL by means of variable <var>i18n::translate('All')</var>.
  *
  * The details can be shown in two ways, with surnames or without surnames. By default
  * the user first sees a list of surnames of the chosen letter and by clicking on a
@@ -93,7 +93,7 @@ $initials=get_indilist_salpha($SHOW_MARRIED_NAMES, false, WT_GED_ID);
 if ($show_all=='yes') {
 	$alpha='';
 	$surname='';
-	$legend=i18n::translate('ALL');
+	$legend=i18n::translate('All');
 	$url='indilist.php?show_all=yes';
 } elseif ($surname) {
 	$surname=utf8_strtoupper($surname);
@@ -167,9 +167,9 @@ foreach ($initials as $letter=>$count) {
 // Search spiders don't get the "show all" option as the other links give them everything.
 if (!$SEARCH_SPIDER) {
 	if ($show_all=='yes') {
-		$list[]='<span class="warning">'.i18n::translate('ALL').'</span>';
+		$list[]='<span class="warning">'.i18n::translate('All').'</span>';
 	} else {
-		$list[]='<a href="indilist.php?show_all=yes">'.i18n::translate('ALL').'</a>';
+		$list[]='<a href="indilist.php?show_all=yes">'.i18n::translate('All').'</a>';
 	}
 }
 echo '<div class="alpha_index"><p class="center">';
@@ -183,10 +183,10 @@ if (!$SEARCH_SPIDER) {
  	echo '<p class="center">';
 	if ($alpha!='@' && $alpha!=',' && !$surname) {
 		if ($surname_sublist=='yes') {
-			echo '<a href="', $url, '&amp;surname_sublist=no">', i18n::translate('Skip Surname lists'), '</a>';
+			echo '<a href="', $url, '&amp;surname_sublist=no">', i18n::translate('Skip surname lists'), '</a>';
 			echo help_link('skip_sublist', 'qm', 'skip_surnames');
 		} else {
-			echo '<a href="', $url, '&amp;surname_sublist=yes">', i18n::translate('Show Surname lists'), '</a>';
+			echo '<a href="', $url, '&amp;surname_sublist=yes">', i18n::translate('Show surname lists'), '</a>';
 			echo help_link('skip_sublist', 'qm', 'show_surnames');
 		}
 		echo '&nbsp;&nbsp;&nbsp;';
@@ -256,9 +256,9 @@ if ($showList) {
 				// Search spiders don't get the "show all" option as the other links give them everything.
 				if (!$SEARCH_SPIDER) {
 					if ($show_all_firstnames=='yes') {
-						$list[]='<span class="warning">'.i18n::translate('ALL').'</span>';
+						$list[]='<span class="warning">'.i18n::translate('All').'</span>';
 					} else {
-						$list[]='<a href="'.$url.'&amp;show_all_firstnames=yes">'.i18n::translate('ALL').'</a>';
+						$list[]='<a href="'.$url.'&amp;show_all_firstnames=yes">'.i18n::translate('All').'</a>';
 					}
 				}
 				if ($show_all=='no') {

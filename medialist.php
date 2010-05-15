@@ -54,7 +54,9 @@ $columns = safe_GET('columns', array('1', '2'), '2');
 $currentdironly = (isset($_REQUEST['subdirs']) && $_REQUEST['subdirs']=="on") ? false : true;
 $show_thumbnail = (isset($_REQUEST['thumbnails']) && $_REQUEST['thumbnails']=="on") ? true : false;
 $exclude_links = (isset($_REQUEST['exclude_links']) && $_REQUEST['exclude_links']=="on") ? true : false;
- 
+$subdirs = safe_GET('subdirs');
+$thumbnail = safe_GET('thumbnail');
+
 if ($reset == "Reset") {
 	$sortby = "title";
 	$max = "20";
@@ -236,7 +238,7 @@ $_SESSION['medialist'] = $medialist;
 					echo "<option value=\"", $f, "\"";
 					if ($folder==$f) echo " selected=\"selected\"";
 					echo ">";
-					if ($f=="ALL") echo i18n::translate('ALL');
+					if ($f=="ALL") echo i18n::translate('All');
 					else echo $f;
 					echo "</option>\n";
 				}

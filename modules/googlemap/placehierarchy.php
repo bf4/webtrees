@@ -37,6 +37,7 @@ if (!defined('WT_WEBTREES')) {
 
 global $TBLPREFIX;
 
+require WT_ROOT.'modules/googlemap/googlemap.php';
 if (file_exists(WT_ROOT.'modules/googlemap/defaultconfig.php')) {
 	require WT_ROOT.'modules/googlemap/defaultconfig.php';
 }
@@ -182,7 +183,7 @@ function create_map() {
 	?>
 	<!-- Start of map scripts -->
 	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
-	<script src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
+	<script src="modules/googlemap/wt_googlemap.js" type="text/javascript"></script>
 	<?php
 	if (WT_USER_IS_ADMIN) {
 		echo "<table style=\"width: ", $GOOGLEMAP_PH_XSIZE, "px\">";

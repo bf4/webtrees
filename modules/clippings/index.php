@@ -33,12 +33,13 @@
 require_once WT_ROOT.'modules/clippings/clippings_ctrl.php';
 
 global $ENABLE_AUTOCOMPLETE, $cart, $MAX_PEDIGREE_GENERATIONS, $TEXT_DIRECTION, $GEDCOM;
+global $WT_IMAGE_DIR, $WT_IMAGES;
 
 $controller = new ClippingsController();
 $controller->init();
 
 // -- print html header information
-print_header(i18n::translate('Clippings Cart'));
+print_header(i18n::translate('Clippings cart'));
 
 if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 
@@ -177,7 +178,7 @@ if ($ct==0) {
 		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Zip File(s)'), help_link('zip'); ?></td>
 		<td class="optionbox"><input type="checkbox" name="Zip" value="yes" checked="checked" /></td></tr>
 
-		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Include Media (automatically zips files)'), help_link('include_media'); ?></td>
+		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Include media (automatically zips files)'), help_link('include_media'); ?></td>
 		<td class="optionbox"><input type="checkbox" name="IncludeMedia" value="yes" checked="checked" /></td></tr>
 
 		<?php
@@ -278,7 +279,7 @@ if ($ct==0) {
 
 
 	<?php } ?>
-	<br /><a href="module.php?mod=clippings&amp;action=empty"><?php echo i18n::translate('Empty Cart');?></a><?php echo help_link('empty_cart', 'clippings'); ?>
+	<br /><a href="module.php?mod=clippings&amp;mod_action=index&amp;action=empty"><?php echo i18n::translate('Empty Cart');?></a><?php echo help_link('empty_cart', 'clippings'); ?>
 	</td></tr>
 
 	<tr><td class="topbottombar"><h2><?php echo i18n::translate('Family Tree Clippings Cart'), help_link('clip_cart', 'clippings'); ?></h2></td></tr>
@@ -315,7 +316,7 @@ if ($ct==0) {
 			if ($record) echo '<a href="', encode_url($record->getLinkUrl()), '">', PrintReady($record->getListName()), '</a>';
 			?>
 			</td>
-			<td class="list_value center vmiddle"><a href="module.php?mod=clippings&amp;action=remove&amp;item=<?php echo $i;?>"><img src="<?php echo $WT_IMAGE_DIR, "/", $WT_IMAGES["remove"]["other"];?>" border="0" alt="<?php echo i18n::translate('Remove')?>" title="<?php echo i18n::translate('Remove');?>" /></a></td>
+			<td class="list_value center vmiddle"><a href="module.php?mod=clippings&amp;mod_action=index&amp;action=remove&amp;item=<?php echo $i;?>"><img src="<?php echo $WT_IMAGE_DIR, "/", $WT_IMAGES["remove"]["other"];?>" border="0" alt="<?php echo i18n::translate('Remove')?>" title="<?php echo i18n::translate('Remove');?>" /></a></td>
 		</tr>
 		<?php
 		}

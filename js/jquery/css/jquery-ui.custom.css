@@ -277,8 +277,8 @@
 .ui-accordion .ui-accordion-header-active { border-bottom: 0 !important; }
 .ui-accordion .ui-accordion-header a { display: block; font-size: 1em; padding: .5em .5em .5em 2.2em; }
 .ui-accordion .ui-accordion-header .ui-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
-.ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; }
-.ui-accordion .ui-accordion-content-active { display: block; max-height: 500px;}
+.ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: visible; display: none; }
+.ui-accordion .ui-accordion-content-active { display: block; }
 
 /* Datepicker ----------------------------------*/
 .ui-datepicker { width: 17em; padding: .2em .2em 0; }
@@ -468,7 +468,11 @@ margin-top: 1px;
 	margin-right: 0px;
 }
 #sb_desc_content {
-	width: 100%;
+	width: 240px;
+	margin-left: -20px;
+	overflow: auto;
+	padding-top: 5px;
+	padding-bottom: 8px;
 }
 #sb_desc_content ul {
 	padding: 0px;

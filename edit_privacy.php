@@ -228,7 +228,7 @@ if ($action=="update") {
 	<table class="facts_table">
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>" colspan="2">
-				<?php echo i18n::translate('General Privacy settings'); ?>
+				<?php echo i18n::translate('General privacy settings'); ?>
 			</td>
 		</tr>
 		<tr>
@@ -257,7 +257,7 @@ if ($action=="update") {
 		</tr>
 		<tr>
 			<td class="descriptionbox wrap">
-				<?php echo i18n::translate('Enable Clippings Cart'), help_link('ENABLE_CLIPPINGS_CART'); ?>
+				<?php echo i18n::translate('Enable clippings Cart'), help_link('ENABLE_CLIPPINGS_CART'); ?>
 			</td>
 			<td class="optionbox">
 				<select size="1" name="v_ENABLE_CLIPPINGS_CART"><?php write_access_option($ENABLE_CLIPPINGS_CART); ?></select>
@@ -266,7 +266,7 @@ if ($action=="update") {
 
 		<tr>
 			<td class="descriptionbox wrap">
-				<?php echo i18n::translate('Show Multi-Site Search'), help_link('SHOW_MULTISITE_SEARCH'); ?>
+				<?php echo i18n::translate('Show multi-site search'), help_link('SHOW_MULTISITE_SEARCH'); ?>
 			</td>
 			<td class="optionbox">
 				<select size="1" name="v_SHOW_MULTISITE_SEARCH"><?php write_access_option($SHOW_MULTISITE_SEARCH); ?></select>
@@ -275,7 +275,7 @@ if ($action=="update") {
 
 		<tr>
 			<td class="descriptionbox wrap">
-				<?php echo i18n::translate('Limit Privacy by age of event'), help_link('PRIVACY_BY_YEAR'); ?>
+				<?php echo i18n::translate('Limit privacy by age of event'), help_link('PRIVACY_BY_YEAR'); ?>
 			</td>
 			<td class="optionbox">
 				<?php echo edit_field_yes_no('v_PRIVACY_BY_YEAR', $PRIVACY_BY_YEAR); ?>

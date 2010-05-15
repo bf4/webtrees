@@ -19,8 +19,8 @@
 
 /* Sidebar --------------------------------*/
 .ui-accordion .ui-accordion-header .ui-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
-.ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; }
-.ui-accordion .ui-accordion-content-active { display: block;  height: 550px;}
+.ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: visible; display: none; }
+.ui-accordion .ui-accordion-content-active { display: block;}
 
 #sidebar {
 	position: absolute;
@@ -74,11 +74,12 @@ color:red;
 }
 .nav_content {
 	width: 235px;
-	margin-left: -25px;
-	background:#eff8f8;
+
+	margin-left: -18px;
+
 	padding-left:5px;
 	padding-right:5px;
-	padding-top:3px;
+	padding-top:0px;
 }
 .flyout {
 	color:#000000; 

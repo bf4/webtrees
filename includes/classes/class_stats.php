@@ -1298,16 +1298,9 @@ class stats {
 			// Beware divide by zero
 			if ($tot==0) return '';
 			$centuries = "";
-			$func="century_localisation_".WT_LOCALE;
 			foreach ($rows as $values) {
-				if (function_exists($func)) {
-					$century = $func($values['century']);
-				}
-				else {
-					$century = $values['century'];
-				}
 				$counts[] = round(100 * $values['total'] / $tot, 0);
-				$centuries .= $century.' - '.$values['total'].'|';
+				$centuries .= i18n::century_name($values['century']).' - '.$values['total'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
@@ -1363,16 +1356,9 @@ class stats {
 			// Beware divide by zero
 			if ($tot==0) return '';
 			$centuries = "";
-			$func="century_localisation_".WT_LOCALE;
 			foreach ($rows as $values) {
-				if (function_exists($func)) {
-					$century = $func($values['century']);
-				}
-				else {
-					$century = $values['century'];
-				}
 				$counts[] = round(100 * $values['total'] / $tot, 0);
-				$centuries .= $century.' - '.$values['total'].'|';
+				$centuries .= i18n::century_name($values['century']).' - '.$values['total'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
@@ -1712,7 +1698,6 @@ class stats {
 					.' death.d_julianday1>birth.d_julianday2'
 				.' GROUP BY century, sex ORDER BY century, sex');
 			if (empty($rows)) return '';
-			$func="century_localisation_".WT_LOCALE;
 			$chxl = "0:|";
 			$countsm = "";
 			$countsf = "";
@@ -1722,10 +1707,7 @@ class stats {
 			}
 			foreach ($out as $century=>$values) {
 				if ($sizes[0]<980) $sizes[0] += 50;
-				if (function_exists($func)) {
-					$century = $func($century, false);
-				}
-				$chxl .= $century."|";
+				$chxl .= i18n::century_name($century)."|";
 				$average = 0;
 				if (isset($values['F'])) {
 					$countsf .= $values['F'].",";
@@ -1895,7 +1877,7 @@ class stats {
 				if (isset($eventTypes[$row['fact']])) {
 					$result=$eventTypes[$row['fact']];
 				} else {
-					$result=i18n::translate($row['fact']);
+					$result=translate_fact($row['fact']);
 				}
 				break;
 			case 'name':
@@ -2380,17 +2362,10 @@ class stats {
 			// Beware divide by zero
 			if ($tot==0) return '';
 			$centuries = "";
-			$func="century_localisation_".WT_LOCALE;
 			$counts=array();
 			foreach ($rows as $values) {
-				if (function_exists($func)) {
-					$century = $func($values['century']);
-				}
-				else {
-					$century = $values['century'];
-				}
 				$counts[] = round(100 * $values['total'] / $tot, 0);
-				$centuries .= $century.' - '.$values['total'].'|';
+				$centuries .= i18n::century_name($values['century']).' - '.$values['total'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
@@ -2463,17 +2438,10 @@ class stats {
 			// Beware divide by zero
 			if ($tot==0) return '';
 			$centuries = "";
-			$func="century_localisation_".WT_LOCALE;
 			$counts=array();
 			foreach ($rows as $values) {
-				if (function_exists($func)) {
-					$century = $func($values['century']);
-				}
-				else {
-					$century = $values['century'];
-				}
 				$counts[] = round(100 * $values['total'] / $tot, 0);
-				$centuries .= $century.' - '.$values['total'].'|';
+				$centuries .= i18n::century_name($values['century']).' - '.$values['total'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
@@ -2545,7 +2513,6 @@ class stats {
 			foreach ($rows as $values) {
 				if ($max<$values['age']) $max = $values['age'];
 			}
-			$func="century_localisation_".WT_LOCALE;
 			$chxl = "0:|";
 			$chmm = "";
 			$chmf = "";
@@ -2558,10 +2525,7 @@ class stats {
 			}
 			foreach ($out as $century=>$values) {
 				if ($sizes[0]<1000) $sizes[0] += 50;
-				if (function_exists($func)) {
-					$century = $func($century, false);
-				}
-				$chxl .= $century."|";
+				$chxl .= i18n::century_name($century)."|";
 				$average = 0;
 				if (isset($values['F'])) {
 					if ($max<=50) $value = $values['F']*2;
@@ -2594,7 +2558,7 @@ class stats {
 			$chmf = substr($chmf,0,-1);
 			$chd = "t2:{$countsm}|{$countsf}|{$countsa}";
 			if ($max<=50) $chxl .= "1:||".i18n::translate('century')."|2:|0|10|20|30|40|50|3:||".i18n::translate('Age')."|";
-			else 	$chxl .= "1:||".i18n::translate('century')."|2:|0|10|20|30|40|50|60|70|80|90|100|3:||".i18n::translate('Age')."|";
+			else $chxl .= "1:||".i18n::translate('century')."|2:|0|10|20|30|40|50|60|70|80|90|100|3:||".i18n::translate('Age')."|";
 			if (count($rows)>4 || utf8_strlen(i18n::translate('Average age in century of marriage'))<30) {
 				$chtt = i18n::translate('Average age in century of marriage');
 			} else {
@@ -3028,16 +2992,10 @@ class stats {
 			$chm = "";
 			$chxl = "0:|";
 			$i = 0;
-			$func="century_localisation_".WT_LOCALE;
 			$counts=array();
 			foreach ($rows as $values) {
 				if ($sizes[0]<980) $sizes[0] += 38;
-				if (function_exists($func)) {
-					$chxl .= $func($values['century'], false)."|";
-				}
-				else {
-					$chxl .= $values['century']."|";
-				}
+				$chxl .= i18n::century_name($values['century'])."|";
 				if ($max<=5) $counts[] = round($values['num']*819.2-1, 1);
 				else $counts[] = round($values['num']*409.6, 1);
 				$chm .= 't'.$values['num'].',000000,0,'.$i.',11,1|';
@@ -3183,15 +3141,9 @@ class stats {
 		$chm = "";
 		$chxl = "0:|";
 		$i = 0;
-		$func="century_localisation_".WT_LOCALE;
 		foreach ($rows as $values) {
 			if ($sizes[0]<980) $sizes[0] += 38;
-			if (function_exists($func)) {
-				$chxl .= $func($values['century'], false)."|";
-			}
-			else {
-				$chxl .= $values['century']."|";
-			}
+			$chxl .= i18n::century_name($values['century'])."|";
 			$counts[] = round(4095*$values['count']/($max+1));
 			$chm .= 't'.$values['count'].',000000,0,'.$i.',11,1|';
 			$i++;
@@ -3469,7 +3421,7 @@ class stats {
 		if ($common) {
 			switch ($type) {
 			case 'table':
-				$lookup=array('M'=>i18n::translate('Male'), 'F'=>i18n::translate('Female'), 'U'=>i18n::translate('unknown'), 'B'=>i18n::translate('ALL'));
+				$lookup=array('M'=>i18n::translate('Male'), 'F'=>i18n::translate('Female'), 'U'=>i18n::translate('unknown'), 'B'=>i18n::translate('All'));
 				return '<table><tr><td colspan="2" class="descriptionbox center">'.$lookup[$sex].'</td></tr><tr><td class="descriptionbox center">'.i18n::translate('Names').'</td><td class="descriptionbox center">'.i18n::translate('Count').'</td></tr>'.join('', $common).'</table>';
 			case 'list':
 				return "<ul>\n".join("\n", $common)."</ul>\n";

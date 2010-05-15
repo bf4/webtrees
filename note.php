@@ -93,8 +93,8 @@ if ($nt==1) {
 echo '<tr><td align="left" class="descriptionbox ', $TEXT_DIRECTION, '">';
 	echo '<center>';
 	if (!empty($WT_IMAGES["notes"]["small"]) && $SHOW_FACT_ICONS)
-		echo '<img src="', $WT_IMAGE_DIR, "/", $WT_IMAGES["notes"]["small"], '" alt="', i18n::translate('Shared Note'), '" title="', i18n::translate('Shared Note'), '" align="middle" /> ';
-	echo i18n::translate('Shared Note'), "</center>";
+		echo '<img src="', $WT_IMAGE_DIR, "/", $WT_IMAGES["notes"]["small"], '" alt="', i18n::translate('Shared note'), '" title="', i18n::translate('Shared note'), '" align="middle" /> ';
+	echo i18n::translate('Shared note'), "</center>";
 	echo '<br /><br />';
 	if (WT_USER_CAN_EDIT) {
 		echo "<a href=\"javascript: edit_note()\"> ";
@@ -125,9 +125,9 @@ if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
 	print_add_new_fact($controller->nid, $notefacts, 'NOTE');
 	// new media
 	echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, '">';
-	echo i18n::translate('Add Media'), help_link('add_media');
+	echo i18n::translate('Add media'), help_link('add_media');
 	echo '</td><td class="optionbox ', $TEXT_DIRECTION, '">';
-	echo '<a href="javascript: ', i18n::translate('Add Media'), '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->nid, '\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', i18n::translate('Add a new Media item'), '</a>';
+	echo '<a href="javascript: ', i18n::translate('Add media'), '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->nid, '\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', i18n::translate('Add a new media item'), '</a>';
 	echo '<br />';
 	echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid=', $controller->nid, '&linkto=note\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', i18n::translate('Link to an existing Media item'), '</a>';
 	echo '</td></tr>';

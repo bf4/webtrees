@@ -54,11 +54,11 @@ $level = safe_GET('level');
 if (empty($action)) $action = "find";
 if (empty($display)) $display = "hierarchy";
 
-if ($display=="hierarchy") print_header(i18n::translate('Place Hierarchy'));
+if ($display=="hierarchy") print_header(i18n::translate('Place hierarchy'));
 else print_header(i18n::translate('Place List'));
 
 echo "\n\t<div class=\"center\">";
-if ($display=="hierarchy") echo "<h2>", i18n::translate('Place Hierarchy'), "</h2>\n\t";
+if ($display=="hierarchy") echo "<h2>", i18n::translate('Place hierarchy'), "</h2>\n\t";
 else echo "<h2>", i18n::translate('Place List'), "</h2>\n\t";
 
 // Make sure the "parent" array has no holes
@@ -312,7 +312,7 @@ if ($display=="hierarchy") {
 				echo " ", i18n::translate('Place Hierarchy after'), ": ";
 				echo PrintReady($num_place);
 			} else {
-				echo i18n::translate('Place Hierarchy');
+				echo i18n::translate('Place hierarchy');
 			}
 			echo help_link('ppp_placelist');
 			echo "</td></tr><tr><td class=\"list_value\"><ul>";
@@ -464,7 +464,7 @@ if ($display=="list") {
 		echo "\n\t\t</ul></td></tr>\n\t\t";
 		if ($i>1) {
 			echo "<tr><td>";
-			if ($i>0) echo i18n::translate('Total Unique Places'), " ", $i;
+			if ($i>0) echo i18n::translate('Total unique places'), " ", $i;
 			echo "</td></tr>\n";
 		}
 		echo "\n\t\t</table>";

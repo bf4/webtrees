@@ -42,7 +42,7 @@ if (!defined('WT_WEBTREES')) {
 require WT_ROOT.'includes/controllers/pedigree_ctrl.php';
 require WT_ROOT.'modules/googlemap/defaultconfig.php';
 
-global $MAX_PEDIGREE_GENERATIONS, $ENABLE_AUTOCOMPLETE, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $WT_IMAGES, $WT_IMAGE_DIR;
+global $PEDIGREE_GENERATIONS, $MAX_PEDIGREE_GENERATIONS, $ENABLE_AUTOCOMPLETE, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $WT_IMAGES, $WT_IMAGE_DIR, $GEDCOM;
 
 // Default is show for both of these.
 $hideflags = safe_GET('hideflags');
@@ -166,7 +166,7 @@ if (!$controller->isPrintPreview()) {
 					<?php echo i18n::translate('Generations'), help_link('PEDIGREE_GENERATIONS'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Cluster Size'), help_link('PEDIGREE_MAP_clustersize','googlemap'); ?>
+					<?php echo i18n::translate('Cluster size'), help_link('PEDIGREE_MAP_clustersize','googlemap'); ?>
 				</td>
 				<td class="descriptionbox wrap">
 					<?php
@@ -628,7 +628,8 @@ for ($i=0; $i<($controller->treesize); $i++) {
 			$curgen++;
 		}
 		$relationship=get_relationship_name(get_relationship($controller->rootid, $pid, false));
-		$event = "<img src='modules/googlemap/images/sq".($curgen+1).".png' width='10' height='10'>".
+		if (empty($relationship)) $relationship=i18n::translate('self');
+		$event = "<img src='modules/googlemap/images/sq".$curgen.".png' width='10' height='10'>".
 			 "<strong>&nbsp;".$relationship.":&nbsp;</strong>";
 
 		// add thumbnail image
@@ -655,7 +656,7 @@ for ($i=0; $i<($controller->treesize); $i++) {
 		// end of add image
 
 		$dataleft  = $image . $event . addslashes($name);
-		$datamid   = " <span><a href='individual.php?pid=". $pid . "' id='alturl' title='" . i18n::translate('Individual Information') . "'>";
+		$datamid   = " <span><a href='individual.php?pid=". $pid . "' id='alturl' title='" . i18n::translate('Individual information') . "'>";
 		if ($TEXT_DIRECTION == "rtl") $datamid .= PrintReady("(".$pid.")");
 		else $datamid .= "(". $pid . ")";
 		$datamid  .= "</a></span>";

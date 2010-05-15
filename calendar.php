@@ -102,7 +102,7 @@ if ($cal_date->d>$days_in_month && $action=='today')
 	$action='calendar';
 
 // Print the header stuff
-print_header(i18n::translate('Anniversary Calendar'));
+print_header(i18n::translate('Anniversary calendar'));
 echo '<div style="text-align: center;" id="calendar_page">';
 
 if ($view!='preview') {
@@ -223,7 +223,7 @@ if ($view!='preview') {
 	echo ">".i18n::translate('Births, Deaths, Marriages')."</option>";
 	echo "<option value=\"all\"";
 	if ($filterev == "all") echo " selected=\"selected\"";
-	echo ">".i18n::translate('ALL')."</option>";
+	echo ">".i18n::translate('All')."</option>";
 	echo "<option value=\"BIRT\"";
 	if ($filterev == "BIRT") echo " selected=\"selected\"";
 	echo ">".translate_fact('BIRT')."</option>";
@@ -581,7 +581,7 @@ function apply_filter($facts, $filterof, $filtersx) {
 ////////////////////////////////////////////////////////////////////////////////
 function calendar_fact_text($fact, $show_places) {
 	global $TEXT_DIRECTION;
-	$text=i18n::translate($fact['fact']).' - '.$fact['date']->Display(true, "", array());
+	$text=translate_fact($fact['fact']).' - '.$fact['date']->Display(true, "", array());
 	if ($fact['anniv']>0)
 		$text.=' <span dir="'.$TEXT_DIRECTION.'">('.i18n::translate('%s year anniversary', $fact['anniv']).')</span>';
 	if ($show_places && !empty($fact['plac']))
