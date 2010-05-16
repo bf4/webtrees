@@ -76,6 +76,18 @@ function edit_field_yes_no($name, $selected='', $extra='') {
 	);
 }
 
+// Print an edit control for a checkbox, with a hidden field to store one of the two states.
+// By default, a checkbox is either set, or not sent.
+// This gives us a three options, set, unset or not sent.
+// Useful for dynamically generated forms where we don't know what elements are present.
+function checkbox_with_value($name, $is_checked='', $checked_value='1', $unchecked_value='0', $extra='') {
+	return
+		'<input type="hidden" id="'.$name.'-value" name="'.$name.'-value" value="'.($is_checked?$checked_value:$unchecked_value).'" />'.
+		'<input type="checkbox", name="'.$name.'" value="'.$checked_value.'"'.
+		($is_checked ? ' checked="checked"' : '').
+		' onclick="document.getElementById(\''.$name.'-value\').value=(this.checked ? \''.$checked_value.'\' : \''.$unchecked_value.'\');" />';
+}
+
 // Print an edit control for logging frequency
 function edit_field_log_frequency($name, $selected='', $extra='') {
 	$LOG_FREQUENCY=array(
@@ -293,21 +305,21 @@ function append_gedrec($gedrec, $ged_id) {
 }
 
 //-- this function will delete the gedcom record with
-//-- the given $gid
-function delete_gedrec($gid, $ged_id) {
+//-- the given $xref
+function delete_gedrec($xref, $ged_id) {
 	global $TBLPREFIX;
 	
 	WT_DB::prepare(
 		"INSERT INTO {$TBLPREFIX}change (gedcom_id, xref, old_gedcom, new_gedcom, user_id) VALUES (?, ?, ?, ?, ?)"
 	)->execute(array(
 		$ged_id,
-		$gid,
-		find_gedcom_record($gid, $ged_id, true),
+		$xref,
+		find_gedcom_record($xref, $ged_id, true),
 		'',
 		WT_USER_ID
 	));
 
-	AddToChangeLog("Deleting gedcom record $gid");
+	AddToChangeLog("Deleting gedcom record $xref");
 
 	if (WT_USER_AUTO_ACCEPT) {
 		accept_all_changes($xref, WT_GED_ID);
