@@ -189,7 +189,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				$personlinks .= "</td></tr></table>";
 			}
 			// NOTE: Start div out-$pid.$personcount.$count
-			if ($style==1) $outBoxAdd .= " class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden; z-index:'-1';\"";
+			if ($style==1) $outBoxAdd .= " class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden; z-index:-1;\"";
 			else $outBoxAdd .= " style=\"padding: 2px;\"";
 			// NOTE: Zoom
 			if (($ZOOM_BOXES!="disabled")&&(!$show_full)) {
@@ -2103,8 +2103,8 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	echo "<td class=\"optionbox wrap ", $TEXT_DIRECTION, "\">";
 	echo "<form method=\"get\" name=\"newfactform\" action=\"\" onsubmit=\"return false;\">";
 	echo "<select id=\"newfact\" name=\"newfact\">\n";
-	foreach($tanslated_addfacts as $tag=>$fact) {
-		echo '<option value="', $fact, '">', $fact, " [".$tag."]</option>";
+	foreach($tanslated_addfacts as $fact=>$fact_name) {
+		echo '<option value="', $fact, '">', $fact_name, " [".$fact."]</option>";
 	}
 	if (($type == "INDI") || ($type == "FAM")) echo "<option value=\"EVEN\">", i18n::translate('Custom Event'), " [EVEN]</option>";
 	echo "\n</select>\n";
@@ -2281,14 +2281,14 @@ function print_findmedia_link($element_id, $choose="", $ged='', $asString=false)
 	echo $out;
 }
 
-function print_findfact_link($element_id, $facts, $ged='', $asString=false) {
+function print_findfact_link($element_id, $ged='', $asString=false) {
 	global $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
 
 	$text = i18n::translate('Find fact tag');
 	if (empty($ged)) $ged=$GEDCOM;
 	if (isset($WT_IMAGES["keyboard"]["button"])) $Link = "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["keyboard"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
-	$out = " <a href=\"javascript:;\" onclick=\"findFact(document.getElementById('".$element_id."'), '".$facts."', '".$ged."'); return false;\">";
+	$out = " <a href=\"javascript:;\" onclick=\"findFact(document.getElementById('".$element_id."'), '".$ged."'); return false;\">";
 	$out .= $Link;
 	$out .= "</a>";
 	if ($asString) return $out;

@@ -46,7 +46,8 @@ fieldset,
 	margin:3px;
 	padding:3px;
 	border:1px solid DarkGray;
-	border-radius:3px;
+	/* Uncomment this next line when it becomes a standard */
+	/*border-radius:3px;*/
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;
 }
@@ -295,7 +296,7 @@ img {
 	overflow: hidden;
 }
 .ac_loading {
-	xbackground: white url(../../images/indicator.gif) right center no-repeat;
+	background: white url(images/indicator.gif) right center no-repeat;
 }
 .ac_odd {
 	background-color: #eee;
@@ -477,7 +478,7 @@ img {
 
 /*-- descendancy chart specific stylesheets --*/
 #descendancy_chart ul {
-	background-image: url(../../images/vline.gif);
+	background-image: url(images/vline.gif);
 	background-repeat: repeat-y;
 	background-position: left top;
 	list-style: none;
@@ -497,7 +498,7 @@ img {
 
 /*-- descendancy chart rtl specific stylesheets --*/
 #descendancy_chart_rtl ul {
-	background-image: url(../../images/vline.gif);
+	background-image: url(images/vline.gif);
 	background-repeat: repeat-y;
 	background-position: right top;
 	list-style: none;
@@ -528,7 +529,7 @@ img {
 
 /*-- ancestry chart specific stylesheets --*/
 #ancestry_chart ul {
-	background-image: url(../../images/vline.gif);
+	background-image: url(images/vline.gif);
 	background-repeat: repeat-y;
 	background-position: left top;
 	list-style: none;
@@ -548,7 +549,7 @@ img {
 
 /*-- ancestry chart rtl specific stylesheets --*/
 #ancestry_chart_rtl ul {
-	background-image: url(../../images/vline.gif);
+	background-image: url(images/vline.gif);
 	background-repeat: repeat-y;
 	background-position: right top;
 	list-style: none;
