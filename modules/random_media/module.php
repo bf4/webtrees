@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
+ * @version $Id$
  */
 
 if (!defined('WT_WEBTREES')) {
@@ -31,6 +31,7 @@ if (!defined('WT_WEBTREES')) {
 }
 
 require_once WT_ROOT.'includes/classes/class_module.php';
+require_once WT_ROOT.'includes/functions/functions_print_facts.php';
 
 class random_media_WT_Module extends WT_Module implements WT_Module_Block {
 	// Extend class WT_Module
@@ -45,7 +46,7 @@ class random_media_WT_Module extends WT_Module implements WT_Module_Block {
 
 	// Implement class WT_Module_Block
 	public function getBlock($block_id) {
-		global $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES;
+		global $ctype, $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES;
 		global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES;
 		global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $WT_IMAGE_DIR, $WT_IMAGES;
 
@@ -119,19 +120,27 @@ class random_media_WT_Module extends WT_Module implements WT_Module_Block {
 				if (WT_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />";}
 
 				// Filter according to format and type  (Default: unless configured otherwise, don't filter)
-				if (!empty($medialist[$value]["FORM"]) && !get_block_setting($block_id, "filter_".$medialist[$value]["FORM"])) $disp = false;
-				if (!empty($medialist[$value]["TYPE"]) && !get_block_setting($block_id, "filter_".$medialist[$value]["TYPE"])) $disp = false;
-				if (WT_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed Format or Type filters</span><br />";}
+				if (!array_key_exists($medialist[$value]["FORM"], $filters)) {
+					$disp=false;
+				} elseif (!array_key_exists($medialist[$value]["TYPE"], $filters)) {
+					$disp=false;
+				} elseif (!empty($medialist[$value]["FORM"]) && !$filters[$medialist[$value]["FORM"]]) {
+					$disp=false;
+				} elseif (!empty($medialist[$value]["TYPE"]) && !$filters[$medialist[$value]["TYPE"]]) {
+					$disp=false;
+				}
+				if (WT_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed Format or Type filters</span><br />";
+				}
 
 				if ($disp && count($links) != 0){
 					if ($disp && $filter!="all") {
 						// Apply filter criteria
-						$ct = preg_match("/0\s(@.*@)\sOBJE/", $medialist[$value]["GEDCOM"], $match);
+						$ct = preg_match("/0 (@.*@) OBJE/", $medialist[$value]["GEDCOM"], $match);
 						$objectID = $match[1];
 						//-- we could probably use the database for this filter
 						foreach($links as $key=>$type) {
 							$gedrec = find_gedcom_record($key, WT_GED_ID);
-							$ct2 = preg_match("/(\d)\sOBJE\s{$objectID}/", $gedrec, $match2);
+							$ct2 = preg_match("/(\d) OBJE {$objectID}/", $gedrec, $match2);
 							if ($ct2>0) {
 								$objectRefLevel = $match2[1];
 								if ($filter=="indi" && $objectRefLevel!="1") $disp = false;
@@ -162,8 +171,8 @@ class random_media_WT_Module extends WT_Module implements WT_Module_Block {
 				$id=$this->getName().$block_id;
 				$title='';
 				$content = "";
-				$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?action=configure&block_id={$block_id}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-				$title .= "<img class=\"adminicon\" src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
+				$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?action=configure&amp;ctype={$ctype}&amp;block_id={$block_id}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">"
+			."<img class=\"adminicon\" src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure').'" /></a>';
 				$title .= i18n::translate('Random Picture');
 				$title .= help_link('index_media');
 				$content = "<div id=\"random_picture_container$block_id\">";

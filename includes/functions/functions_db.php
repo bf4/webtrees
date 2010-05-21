@@ -882,7 +882,7 @@ function search_indis($query, $geds, $match, $skip) {
 	$queryregex=array();
 
 	foreach ($query as $q) {
-		$queryregex[]=preg_quote($q, '/');
+		$queryregex[]=preg_quote(utf8_strtoupper($q), '/');
 		$querysql[]="i_gedcom LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".i18n::$collation."'";
 		}
 
@@ -890,13 +890,6 @@ function search_indis($query, $geds, $match, $skip) {
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
-
-	// Tags we might not want to search
-	if (WT_USER_IS_ADMIN) {
-		$skipregex='/^\d (_UID|_WT_USER|FILE|FORM|TYPE|CHAN|SUBM|REFN) .*('.implode('|', $queryregex).')/im';
-	} else {
-		$skipregex='/^\d (_UID|_WT_USER|FILE|FORM|TYPE|CHAN|SUBM|REFN|RESN) .*('.implode('|', $queryregex).')/im';
-	}
 
 	$list=array();
 	$rows=WT_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
@@ -908,19 +901,19 @@ function search_indis($query, $geds, $match, $skip) {
 			load_privacy_file($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
-		$indi=Person::getInstance($row);
+		$record=Person::getInstance($row);
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
-		$gedrec=utf8_strtoupper($indi->getGedcomRecord());
-		foreach ($queryregex as $q) {
-			if (!preg_match('/\n\d\ '.WT_REGEX_TAG.' .*'.$q.'/i', $gedrec)) {
+		$gedrec=utf8_strtoupper($record->getGedcomRecord());
+		if ($skip) {
+			$gedrec=preg_replace('/\n\d (_UID|_WT_USER|FILE|FORM|TYPE|CHAN|SUBM|REFN|RESN) .*/', '', $gedrec);
+		}
+		foreach ($queryregex as $regex) {
+			if (!preg_match('/\n\d '.WT_REGEX_TAG.' .*'.$regex.'/', $gedrec)) {
 				continue 2;
 			}
 		}
-		if ($skip && preg_match($skipregex, $gedrec)) {
-			continue;
+		$list[]=$record;
 		}
-		$list[]=$indi;
-	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=WT_GED_ID) {
 		$GEDCOM=WT_GEDCOM;
@@ -1178,13 +1171,6 @@ function search_fams($query, $geds, $match, $skip) {
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
 
-	// Tags we might not want to search
-	if (WT_USER_IS_ADMIN) {
-		$skipregex='/^\d (_UID|_WT_USER|FILE|FORM|TYPE|CHAN|SUBM|REFN) .*('.implode('|', $queryregex).')/im';
-	} else {
-		$skipregex='/^\d (_UID|_WT_USER|FILE|FORM|TYPE|CHAN|SUBM|REFN|RESN) .*('.implode('|', $queryregex).')/im';
-	}
-
 	$list=array();
 	$rows=WT_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 	$GED_ID=WT_GED_ID;
@@ -1195,20 +1181,19 @@ function search_fams($query, $geds, $match, $skip) {
 			load_privacy_file($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
-		$family=Family::getInstance($row);
+		$record=Family::getInstance($row);
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
-		$gedrec=utf8_strtoupper($family->getGedcomRecord());
-		foreach ($queryregex as $q) {
-			if (!preg_match('/\n\d\ '.WT_REGEX_TAG.' .*'.$q.'/i', $gedrec)) {
+		$gedrec=utf8_strtoupper($record->getGedcomRecord());
+		if ($skip) {
+			$gedrec=preg_replace('/\n\d (_UID|_WT_USER|FILE|FORM|TYPE|CHAN|SUBM|REFN|RESN) .*/', '', $gedrec);
+		}
+		foreach ($queryregex as $regex) {
+			if (!preg_match('/\n\d '.WT_REGEX_TAG.' .*'.$regex.'/', $gedrec)) {
 				continue 2;
 			}
 		}
-		if ($skip && preg_match($skipregex, $gedrec)) {
-			continue;
+		$list[]=$record;
 		}
-
-		$list[]=$family;
-	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=WT_GED_ID) {
 		$GEDCOM=WT_GEDCOM;
@@ -1282,7 +1267,7 @@ function search_sources($query, $geds, $match, $skip) {
 	$queryregex=array();
 
 	foreach ($query as $q) {
-		$queryregex[]=preg_quote($q, '/');
+		$queryregex[]=preg_quote(utf8_strtoupper($q), '/');
 		$querysql[]="s_gedcom LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".i18n::$collation."'";
 		}
 
@@ -1290,13 +1275,6 @@ function search_sources($query, $geds, $match, $skip) {
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
-
-	// Tags we might not want to search
-	if (WT_USER_IS_ADMIN) {
-		$skipregex='/^\d (_UID|_WT_USER|FILE|FORM|TYPE|CHAN|SUBM|REFN) .*('.implode('|', $queryregex).')/im';
-	} else {
-		$skipregex='/^\d (_UID|_WT_USER|FILE|FORM|TYPE|CHAN|SUBM|REFN|RESN) .*('.implode('|', $queryregex).')/im';
-	}
 
 	$list=array();
 	$rows=WT_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
@@ -1308,19 +1286,19 @@ function search_sources($query, $geds, $match, $skip) {
 			load_privacy_file($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
-		$source=Source::getInstance($row);
+		$record=Source::getInstance($row);
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
-		$gedrec=utf8_strtoupper($source->getGedcomRecord());
-		foreach ($queryregex as $q) {
-			if (!preg_match('/\n\d\ '.WT_REGEX_TAG.' .*'.$q.'/i', $gedrec)) {
+		$gedrec=utf8_strtoupper($record->getGedcomRecord());
+		if ($skip) {
+			$gedrec=preg_replace('/\n\d (_UID|_WT_USER|FILE|FORM|TYPE|CHAN|SUBM|REFN|RESN) .*/', '', $gedrec);
+		}
+		foreach ($queryregex as $regex) {
+			if (!preg_match('/\n\d '.WT_REGEX_TAG.' .*'.$regex.'/', $gedrec)) {
 				continue 2;
 			}
 		}
-		if ($skip && preg_match($skipregex, $gedrec)) {
-			continue;
+		$list[]=$record;
 		}
-		$list[]=$source;
-	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=WT_GED_ID) {
 		$GEDCOM=WT_GEDCOM;
@@ -1358,13 +1336,6 @@ function search_notes($query, $geds, $match, $skip) {
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY gedcom_id';
 
-	// Tags we might not want to search
-	if (WT_USER_IS_ADMIN) {
-		$skipregex='/^\d (_UID|_WT_USER|FILE|FORM|TYPE|CHAN|SUBM|REFN) .*('.implode('|', $queryregex).')/im';
-	} else {
-		$skipregex='/^\d (_UID|_WT_USER|FILE|FORM|TYPE|CHAN|SUBM|REFN|RESN) .*('.implode('|', $queryregex).')/im';
-	}
-
 	$list=array();
 	$rows=WT_DB::prepare($sql)->fetchAll();
 	$GED_ID=WT_GED_ID;
@@ -1375,19 +1346,19 @@ function search_notes($query, $geds, $match, $skip) {
 			load_privacy_file($row->gedcom_id);
 			$GED_ID=$row->gedcom_id;
 		}
-		$note=Note::getInstance($row);
+		$record=Note::getInstance($row);
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
-		$gedrec=utf8_strtoupper($note->getGedcomRecord());
-		foreach ($queryregex as $q) {
-			if (!preg_match('/(\n\d|^0 @'.WT_REGEX_XREF.'@) '.WT_REGEX_TAG.' .*'.$q.'/i', $gedrec)) {
+		$gedrec=utf8_strtoupper($record->getGedcomRecord());
+		if ($skip) {
+			$gedrec=preg_replace('/\n\d (_UID|_WT_USER|FILE|FORM|TYPE|CHAN|SUBM|REFN|RESN) .*/', '', $gedrec);
+		}
+		foreach ($queryregex as $regex) {
+			if (!preg_match('/\n\d '.WT_REGEX_TAG.' .*'.$regex.'/', $gedrec)) {
 				continue 2;
 			}
 		}
-		if ($skip && preg_match($skipregex, $gedrec)) {
-			continue;
+		$list[]=$record;
 		}
-		$list[]=$note;
-	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=WT_GED_ID) {
 		$GEDCOM=WT_GEDCOM;

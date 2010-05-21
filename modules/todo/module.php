@@ -59,8 +59,8 @@ class todo_WT_Module extends WT_Module implements WT_Module_Block {
 			} else {
 				$name = WT_USER_NAME;
 			}
-			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?action=configure&block_id={$block_id}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
+			$title.="<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?action=configure&amp;ctype={$ctype}&amp;block_id={$block_id}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+			$title.="<img class=\"adminicon\" src=\"$WT_IMAGE_DIR/".$WT_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 		$title.=i18n::translate('&quot;To Do&quot; tasks').help_link('todo');
 		$content='';
@@ -84,14 +84,14 @@ class todo_WT_Module extends WT_Module implements WT_Module_Block {
 		foreach (get_calendar_events(0, $end_jd, '_TODO', WT_GED_ID) as $todo) {
 			$record=GedcomRecord::getInstance($todo['id']);
 			if ($record && $record->canDisplayDetails()) {
-				$pgvu=get_gedcom_value('_WT_USER', 2, $todo['factrec']);
-				if ($pgvu==WT_USER_NAME || !$pgvu && $show_unassigned || $pgvu && $show_other) {
+				$wt_user=get_gedcom_value('_WT_USER', 2, $todo['factrec']);
+				if ($wt_user==WT_USER_NAME || !$wt_user && $show_unassigned || $wt_user && $show_other) {
 					$content.='<tr valign="top">';
 					$content.='<td class="list_value_wrap">'.str_replace('<a', '<a name="'.$todo['date']->MinJD().'"', $todo['date']->Display(false)).'</td>';
 					$name=$record->getListName();
 					$content.='<td class="list_value_wrap" align="'.get_align(WT_GEDCOM).'"><a href="'.encode_url($record->getLinkUrl()).'">'.PrintReady($name).'</a></td>';
 					if ($show_unassigned || $show_other) {
-						$content.='<td class="list_value_wrap">'.$pgvu.'</td>';
+						$content.='<td class="list_value_wrap">'.$wt_user.'</td>';
 					}
 					$text=get_gedcom_value('_TODO', 1, $todo['factrec']);
 					$content.='<td class="list_value_wrap" align="'.get_align($text).'">'.PrintReady($text).'</td>';
