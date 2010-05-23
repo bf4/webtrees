@@ -18,7 +18,7 @@
 	right: 0px;
 	width: 0px;
 	margin-left:0px;
-	margin-top: 8px;
+	margin-top: 18px;
 	margin-right: 12px;
 	background-color: transparent;
 
@@ -91,6 +91,7 @@ color:red;
 }
 .flyout2 a:hover{
 	color:#ff0000;
+	background-color:DarkSlateGray !important;
 }
 .flyout4 {
 	color:#000000;
