@@ -356,7 +356,7 @@ class wtServiceLogic extends GenealogyService {
 	* @param string PID person id
 	*/
 	function postGetPersonByID($SID, $PID) {
-		global $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
+		global $GEDCOM, $MEDIA_DIRECTORY;
 
 		$returnType = 'gedcom';
 
@@ -423,7 +423,7 @@ class wtServiceLogic extends GenealogyService {
 	 * @param string SID
 	 ***/
 	function postGetFamilyByID($SID, $FID) {
-		global $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
+		global $GEDCOM, $MEDIA_DIRECTORY;
 		if ($data_type="GEDCOM") {
 			$returnType = 'gedcom';
 		} else {
@@ -481,7 +481,7 @@ class wtServiceLogic extends GenealogyService {
 	 * @param string SCID Source id
 	 */
 	function postGetSourceByID($SID, $SCID) {
-		global $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
+		global $GEDCOM, $MEDIA_DIRECTORY;
 
 		$returnType = 'gedcom';
 
@@ -518,7 +518,7 @@ class wtServiceLogic extends GenealogyService {
 	 * @return string		the raw gedcom record is returned
 	 */
 	function postGetGedcomRecord($SID, $PID) {
-		global $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
+		global $GEDCOM, $MEDIA_DIRECTORY;
 
 		if (!empty($PID)) {
 			$xrefs = explode(';', $PID);
@@ -551,7 +551,7 @@ class wtServiceLogic extends GenealogyService {
 						$ct = preg_match_all("/ FILE (.*)/", $gedrecords, $match, PREG_SET_ORDER);
 						for($i=0; $i<$ct; $i++)
 						{
-							$mediaurl = $SERVER_URL.$MEDIA_DIRECTORY.extract_filename($match[$i][1]);
+							$mediaurl = WT_SERVER_NAME.WT_SCRIPT_PATH.$MEDIA_DIRECTORY.extract_filename($match[$i][1]);
 							$gedrecords = str_replace($match[$i][1], $mediaurl, $gedrecords);
 						}
 					}
