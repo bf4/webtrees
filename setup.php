@@ -681,6 +681,16 @@ try {
 		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
 	);
 	$dbh->exec(
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}message (".
+		" message_id INTEGER AUTO_INCREMENT NOT NULL,".
+		" sender     VARCHAR(64)            NOT NULL,". // username or email address
+		" ip_address VARCHAR(40)            NOT NULL,". // long enough for IPv6
+		" user_id    INTEGER                NOT NULL,".
+		" subject    VARCHAR(255)           NOT NULL,".
+		" body       TEXT                   NOT NULL,".
+		" created    TIMESTAMP              NOT NULL DEFAULT CURRENT_TIMESTAMP,".
+		" PRIMARY KEY     (message_id),".
+		" FOREIGN KEY fk1 (user_id)   REFERENCES {$TBLPREFIX}user (user_id) /* ON DELETE RESTRICT */".
 		"CREATE TABLE IF NOT EXISTS wt_edit (".
 		" edit_id INTEGER AUTO_INCREMENT NOT NULL,".
 		" user_id INTEGER                NOT NULL,".
@@ -934,11 +944,12 @@ try {
 		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
 	);
 	$dbh->exec(
-		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}nextid (".
-		" ni_id      INTEGER     NOT NULL,". // TODO: use auto-increment columns
-		" ni_type    VARCHAR(15) NOT NULL,".
-		" ni_gedfile INTEGER     NOT NULL,".
-		" PRIMARY KEY (ni_type, ni_gedfile)".
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}next_id (".
+		" gedcom_id   INTEGER     NOT NULL,".
+		" record_type VARCHAR(15) NOT NULL,".
+		" next_id     INTEGER     NOT NULL,".
+		" PRIMARY KEY     (gedcom_id, record_type),".
+		" FOREIGN KEY fk1 (gedcom_id) REFERENCES {$TBLPREFIX}gedcom (gedcom_id) /* ON DELETE CASCADE */".
 		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
 	);
 	$dbh->exec(
@@ -990,10 +1001,19 @@ try {
 		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}module (".
 		" module_name   VARCHAR(32)                 NOT NULL,".
 		" status        ENUM('enabled', 'disabled') NOT NULL DEFAULT 'enabled',".
-		" tab_order     TINYINT                     NULL, ".
-		" menu_order    TINYINT                     NULL, ".
-		" sidebar_order TINYINT                     NULL,".
+		" tab_order     INTEGER                         NULL, ".
+		" menu_order    INTEGER                         NULL, ".
+		" sidebar_order INTEGER                         NULL,".
 		" PRIMARY KEY (module_name)".
+		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
+	);
+	$dbh->exec(
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}module_setting (".
+		" module_name   VARCHAR(32) NOT NULL,".
+		" setting_name  VARCHAR(32) NOT NULL,".
+		" setting_value TEXT        NOT NULL,".
+		" PRIMARY KEY     (module_name, setting_name),".
+		" FOREIGN KEY fk1 (module_name) REFERENCES {$TBLPREFIX}module (module_name) /* ON DELETE CASCADE */".
 		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
 	);
 	$dbh->exec(
@@ -1096,8 +1116,6 @@ try {
 		"('SESSION_TIME',                    '7200'),".
 		"('SERVER_URL',                      ''),".
 		"('LOGIN_URL',                       'login.php'),".
-		"('MAX_VIEWS',                       '20'),".
-		"('MAX_VIEW_TIME',                   '1'),".
 		"('MEMORY_LIMIT',                    '".addcslashes($_POST['maxmem'], "'")."M'),".
 		"('MAX_EXECUTION_TIME',              '".addcslashes($_POST['maxcpu'], "'")."'),".
 		"('SMTP_ACTIVE',                     '".addcslashes($_POST['smtpuse'], "'")."'),".

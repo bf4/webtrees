@@ -1515,7 +1515,7 @@ function delete_gedcom($ged_id) {
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}media_mapping       WHERE mm_gedfile=?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}module_privacy      WHERE gedcom_id =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}name                WHERE n_file    =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}nextid              WHERE ni_gedfile=?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}next_id             WHERE gedcom_id =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks          WHERE pl_file   =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}places              WHERE p_file    =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM {$TBLPREFIX}sources             WHERE s_file    =?")->execute(array($ged_id));
@@ -2101,8 +2101,6 @@ function rename_user($old_username, $new_username) {
 
 	WT_DB::prepare("UPDATE {$TBLPREFIX}user      SET user_name=?   WHERE user_name  =?")->execute(array($new_username, $old_username));
 	WT_DB::prepare("UPDATE {$TBLPREFIX}favorites SET fv_username=? WHERE fv_username=?")->execute(array($new_username, $old_username));
-	WT_DB::prepare("UPDATE {$TBLPREFIX}messages  SET m_from     =? WHERE m_from     =?")->execute(array($new_username, $old_username));
-	WT_DB::prepare("UPDATE {$TBLPREFIX}messages  SET m_to       =? WHERE m_to       =?")->execute(array($new_username, $old_username));
 	WT_DB::prepare("UPDATE {$TBLPREFIX}news      SET n_username =? WHERE n_username =?")->execute(array($new_username, $old_username));
 }
 
@@ -2111,13 +2109,13 @@ function delete_user($user_id) {
 
 	$user_name=get_user_name($user_id);
 	WT_DB::prepare("DELETE {$TBLPREFIX}block_setting FROM {$TBLPREFIX}block_setting JOIN {$TBLPREFIX}block USING (block_id) WHERE user_id=?")->execute(array($user_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}block               WHERE user_id =?"        )->execute(array($user_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}user_gedcom_setting WHERE user_id =?"        )->execute(array($user_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}user_setting        WHERE user_id =?"        )->execute(array($user_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}user                WHERE user_id =?"        )->execute(array($user_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}favorites           WHERE fv_username=?"     )->execute(array($user_name));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}messages            WHERE m_from=? OR m_to=?")->execute(array($user_name, $user_name));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}news                WHERE n_username =?"     )->execute(array($user_name));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}block               WHERE user_id=?"    )->execute(array($user_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}user_gedcom_setting WHERE user_id=?"    )->execute(array($user_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}user_setting        WHERE user_id=?"    )->execute(array($user_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}message             WHERE user_id=?"    )->execute(array($user_name, $user_name));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}user                WHERE user_id=?"    )->execute(array($user_id));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}favorites           WHERE fv_username=?")->execute(array($user_name));
+	WT_DB::prepare("DELETE FROM {$TBLPREFIX}news                WHERE n_username =?")->execute(array($user_name));
 }
 
 function get_all_users($order='ASC', $key='realname') {
@@ -2413,6 +2411,32 @@ function set_block_setting($block_id, $setting_name, $setting_value) {
 	}
 }
 
+function get_module_setting($module_name, $setting_name, $default_value=null) {
+	global $TBLPREFIX;
+
+	$value=
+		WT_DB::prepare("SELECT setting_value FROM {$TBLPREFIX}module_setting WHERE module_name=? AND setting_name=?")
+		->execute(array($module_name, $setting_name))
+		->fetchOne();
+
+	if (is_null($value)) {
+		return $default_value;
+	} else {
+		return $value;
+	}
+}
+
+function set_module_setting($module_name, $setting_name, $setting_value) {
+	global $TBLPREFIX;
+
+	if (is_null($setting_value)) {
+		WT_DB::prepare("DELETE FROM {$TBLPREFIX}module_setting WHERE module_name=? AND setting_name=?")
+			->execute(array($module_name, $setting_name));
+	} else {
+		WT_DB::prepare("REPLACE INTO {$TBLPREFIX}module_setting (module_name, setting_name, setting_value) VALUES (?, ?, ?)")
+			->execute(array($module_name, $setting_name, $setting_value));
+	}
+}
 
 /**
 * update favorites regarding a merge of records
