@@ -1,11 +1,12 @@
 <?php
 /**
+ * Module help text.
+ *
+ * This file is included from the application help_text.php script.
+ * It simply needs to set $title and $text for the help topic $help_topic
  *
  * webtrees: Web based Family History software
  * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
- * Copyright (C) 2002 to 2009  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,26 +22,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package webtrees
  * @version $Id$
  */
 
-if (!defined('WT_WEBTREES')) {
+if (!defined('WT_WEBTREES') || !defined('WT_SCRIPT_NAME') || WT_SCRIPT_NAME!='help_text.php') {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-define('WT_FUNCTIONS_EN_PHP', '');
+switch ($help) {
+case 'add_story':
+	$title='';
+	$text='';
+	break;
 
-////////////////////////////////////////////////////////////////////////////////
-// Create an ordinal suffix for a number.
-////////////////////////////////////////////////////////////////////////////////
-function ordinal_suffix_en($n) {
-	if ($n==1 || $n==21 || $n==31)
-		return 'st';
-	if ($n==2 || $n==22)
-		return 'nd';
-	if ($n==3 || $n==23)
-		return 'rd';
-  return 'th';
+case 'delete_story':
+	$title='';
+	$text='';
+	break;
+
+case 'edit_story':
+	$title='';
+	$text='';
+	break;
+
 }

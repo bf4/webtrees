@@ -166,7 +166,7 @@ class i18n {
 	// Generate i18n markup for the <html> tag, e.g lang="ar" dir="RTL"
 	static public function html_markup() {
 		$localeData=Zend_Locale_Data::getList(self::$locale, 'layout');
-		$dir=$localeData['characters']=='right-to-left' ? 'RTL' : 'LTR';
+		$dir=$localeData['characters']=='right-to-left' ? 'rtl' : 'ltr';
 		list($lang)=explode('_', self::$locale);
 		return 'lang="'.$lang.'" xml:lang="'.$lang.'" dir="'.$dir.'"';
 	}
@@ -181,10 +181,26 @@ class i18n {
 				$arg=i18n::make_list($arg);
 			}
 		}
-		// TODO: for each embedded string, if the text-direction is the opposite of the
-		// page language, then wrap it in &ltr; on LTR pages and &rtl; on RTL pages.
-		// This will ensure that non/weakly direction characters in the main string
-		// are displayed correctly by the browser's BIDI algorithm.
+		foreach ($args as $n=>&$arg) {
+			if ($n) {
+				if (is_numeric($arg)) {
+					// TODO? Convert latin to, say, arabic digits.
+				} else {
+					// For each embedded string, if the text-direction is the opposite of the
+					// page language, then wrap it in directional indicators.  This will stop
+					// weakly-directional characters being displayed in the wrong sequence.
+					if (self::$dir=='ltr') {
+						if (utf8_direction($arg)=='rtl') {
+							$arg='&lrm;'.$arg.'&lrm;';
+						}
+					} else {
+						if (utf8_direction($arg)=='ltr') {
+							$arg='&rlm;'.$arg.'&rlm;';
+						}
+					}
+				}
+			}
+		}
 		return call_user_func_array('sprintf', $args);
 	}
 
