@@ -31,12 +31,15 @@ if (!defined('WT_SCRIPT_NAME')) define('WT_SCRIPT_NAME', 'sidebar.php');
 require_once('includes/session.php');
 require_once(WT_ROOT.'includes/classes/class_module.php');
 
+$sidebarmods = WT_Module::getActiveSidebars();
+if (!$sidebarmods) {
+	return;
+}
+
 $sb_action = safe_GET('sb_action', WT_REGEX_ALPHANUM, 'none');
 //-- handle ajax calls
-
 if ($sb_action!='none') {
 	header('Content-type: text/html; charset=UTF-8');
-	$sidebarmods = WT_Module::getActiveSidebars();
 	class tempController {
 		var $pid;
 		var $famid;
@@ -222,7 +225,7 @@ jQuery(document).ready(function() {
 		jQuery('#sidebar_open img').attr('style', 'margin-left:0px;' ).attr('src', '<?php echo $WT_IMAGE_DIR."/".$WT_IMAGES['slide_open']['other'];?>').attr('title', '<?php echo i18n::translate('Sidebar Open');?>');
 		jQuery('#sidebar').css('left', '');
 		jQuery('#sidebar').animate({
-			right: "0px",
+			right: "4px",
 			width: "0px"
 		}, 500, 'linear', closeCallback);		
 		// Shift content back ------------------------------

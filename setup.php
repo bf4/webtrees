@@ -86,6 +86,7 @@ if (version_compare(PHP_VERSION, '5.2')<0) {
 define('WT_WEBTREES', true);
 define('WT_ROOT', '');
 define('WT_GED_ID', 0);
+define('WT_USER_ID', 0);
 set_include_path('library'.PATH_SEPARATOR.get_include_path());
 require_once 'Zend/Loader/Autoloader.php';
 Zend_Loader_Autoloader::getInstance();
@@ -801,31 +802,6 @@ try {
 		" m_created VARCHAR(255)           NOT NULL,". // TODO: timestamp
 		" PRIMARY KEY     (m_id),".
 		"         KEY ix1 (m_to)".
-		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
-	);
-	$dbh->exec(
-		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}favorites (".
-		" fv_id       INTEGER AUTO_INCREMENT NOT NULL,".
-	 	" fv_username VARCHAR(32)            NOT NULL,". // TODO user_id, ged_id
-		" fv_gid      VARCHAR(20)                NULL,".
-		" fv_type     VARCHAR(15)                NULL,".
-		" fv_file     VARCHAR(100)               NULL,".
-		" fv_url      VARCHAR(255)               NULL,".
-	 	" fv_title    VARCHAR(255)               NULL,".
-		" fv_note     TEXT                       NULL,".
-		" PRIMARY KEY (fv_id),".
-		"         KEY ix1 (fv_username)".
-		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
-	);
-	$dbh->exec(
-		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}news (".
-		" n_id       INTEGER AUTO_INCREMENT NOT NULL,".
-		" n_username VARCHAR(100)           NOT NULL,".
-		" n_date     INTEGER                NOT NULL,".
-		" n_title    VARCHAR(255)           NOT NULL,".
-		" n_text     TEXT                   NOT NULL,".
-		" PRIMARY KEY     (n_id),".
-		"         KEY ix1 (n_username)".
 		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
 	);
 	$dbh->exec(
