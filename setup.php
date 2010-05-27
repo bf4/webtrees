@@ -692,6 +692,9 @@ try {
 		" created    TIMESTAMP              NOT NULL DEFAULT CURRENT_TIMESTAMP,".
 		" PRIMARY KEY     (message_id),".
 		" FOREIGN KEY fk1 (user_id)   REFERENCES {$TBLPREFIX}user (user_id) /* ON DELETE RESTRICT */".
+		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
+	);
+	$dbh->exec(
 		"CREATE TABLE IF NOT EXISTS wt_edit (".
 		" edit_id INTEGER AUTO_INCREMENT NOT NULL,".
 		" user_id INTEGER                NOT NULL,".
