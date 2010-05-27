@@ -236,7 +236,7 @@ if ($action=="update") {
 				<?php echo i18n::translate('Show dead people'), help_link('SHOW_DEAD_PEOPLE'); ?>
 			</td>
 			<td class="optionbox">
-				<select size="1" name="v_SHOW_DEAD_PEOPLE"><?php write_access_option($SHOW_DEAD_PEOPLE); ?></select>
+					<?php echo edit_field_access_level("v_SHOW_DEAD_PEOPLE", $SHOW_DEAD_PEOPLE); ?>
 			</td>
 		</tr>
 		<tr>
@@ -244,7 +244,7 @@ if ($action=="update") {
 				<?php echo i18n::translate('Show living names'), help_link('SHOW_LIVING_NAMES'); ?>
 			</td>
 			<td class="optionbox">
-				<select size="1" name="v_SHOW_LIVING_NAMES"><?php write_access_option($SHOW_LIVING_NAMES); ?></select>
+					<?php echo edit_field_access_level("v_SHOW_LIVING_NAMES", $SHOW_LIVING_NAMES); ?>
 			</td>
 		</tr>
 		<tr>
@@ -252,7 +252,7 @@ if ($action=="update") {
 				<?php echo i18n::translate('Show sources'), help_link('SHOW_SOURCES'); ?>
 			</td>
 			<td class="optionbox">
-				<select size="1" name="v_SHOW_SOURCES"><?php write_access_option($SHOW_SOURCES); ?></select>
+					<?php echo edit_field_access_level("v_SHOW_SOURCES", $SHOW_SOURCES); ?>
 			</td>
 		</tr>
 		<tr>
@@ -260,7 +260,7 @@ if ($action=="update") {
 				<?php echo i18n::translate('Enable clippings Cart'), help_link('ENABLE_CLIPPINGS_CART'); ?>
 			</td>
 			<td class="optionbox">
-				<select size="1" name="v_ENABLE_CLIPPINGS_CART"><?php write_access_option($ENABLE_CLIPPINGS_CART); ?></select>
+					<?php echo edit_field_access_level("v_ENABLE_CLIPPINGS_CART", $ENABLE_CLIPPINGS_CART); ?>
 		</td>
 		</tr>
 
@@ -269,7 +269,7 @@ if ($action=="update") {
 				<?php echo i18n::translate('Show multi-site search'), help_link('SHOW_MULTISITE_SEARCH'); ?>
 			</td>
 			<td class="optionbox">
-				<select size="1" name="v_SHOW_MULTISITE_SEARCH"><?php write_access_option($SHOW_MULTISITE_SEARCH); ?></select>
+					<?php echo edit_field_access_level("v_SHOW_MULTISITE_SEARCH", $SHOW_MULTISITE_SEARCH); ?>
 			</td>
 		</tr>
 

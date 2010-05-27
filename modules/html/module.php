@@ -92,12 +92,6 @@ class html_WT_Module extends WT_Module implements WT_Module_Block {
 			$stats = new stats($GEDCOM);
 		}
 
-		// Make some values from the GEDCOM's 0 HEAD record visible to the world
-		global $CREATED_SOFTWARE, $CREATED_VERSION, $CREATED_DATE;
-		$CREATED_SOFTWARE = $stats->gedcomCreatedSoftware();
-		$CREATED_VERSION = $stats->gedcomCreatedVersion();
-		$CREATED_DATE = $stats->gedcomDate();
-
 		/*
 	 	* First Pass.
 	 	* Handle embedded language, fact, global, etc. references
@@ -127,23 +121,17 @@ class html_WT_Module extends WT_Module implements WT_Module_Block {
 		$id=$this->getName().$block_id;
 		$title='';
 		if ($ctype=="gedcom" && WT_USER_GEDCOM_ADMIN || $ctype=="user" && WT_USER_ID) {
-			if ($ctype=="gedcom") {
-				$name = WT_GEDCOM;
-			} else {
-				$name = WT_USER_NAME;
-			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?action=configure&amp;ctype={$ctype}&amp;block_id={$block_id}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">"
 			."<img class=\"adminicon\" src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure').'" /></a>';
-			;
-		}
-		if (WT_USER_GEDCOM_ADMIN) {
-			$title .= help_link('index_htmlplus_a');
-		} else {
 			$title .= help_link('index_htmlplus');
 		}
 		$title.=$title_tmp;
 
 		$content = $html;
+
+		if (get_block_setting($block_id, 'show_timestamp', false)) {
+			$content.='<br/>'.format_timestamp(get_block_setting($block_id, 'timestamp', time()));
+		}
 
 		$block=get_block_setting($block_id, 'block', false);
 		if ($block) {
@@ -171,11 +159,13 @@ class html_WT_Module extends WT_Module implements WT_Module_Block {
 	// Implement class WT_Module_Block
 	public function configureBlock($block_id) {
 		if (safe_POST_bool('save')) {
-			set_block_setting($block_id, 'compat', safe_POST_bool('compat'));
-			set_block_setting($block_id, 'ui', safe_POST_bool('ui'));
-			set_block_setting($block_id, 'gedcom', safe_POST('gedcom'));
-			set_block_setting($block_id, 'title', $_POST['title']);
-			set_block_setting($block_id, 'html', $_POST['html']);
+			set_block_setting($block_id, 'compat',         safe_POST_bool('compat'));
+			set_block_setting($block_id, 'ui',             safe_POST_bool('ui'));
+			set_block_setting($block_id, 'gedcom',         safe_POST('gedcom'));
+			set_block_setting($block_id, 'title',          $_POST['title']);
+			set_block_setting($block_id, 'html',           $_POST['html']);
+			set_block_setting($block_id, 'show_timestamp', safe_POST_bool('show_timestamp'));
+			set_block_setting($block_id, 'timestamp',      safe_POST('timestamp'));
 			$languages=array();
 			foreach (i18n::installed_languages() as $code=>$name) {
 				if (safe_POST_bool('lang_'.$code)) {
@@ -426,6 +416,14 @@ i18n::translate('Narrative description')=>/* I18N: do not translate the #keyword
 			."</td><td class=\"optionbox\"><input type=\"checkbox\" name=\"ui\" value=\"1\"{$ui} /></td>\n"
 			."\t</tr>\n"
 		;
+
+		$show_timestamp=get_block_setting($block_id, 'show_timestamp', false);
+		echo '<tr><td class="descriptionbox wrap width33">';
+		echo i18n::translate('Show the date and time of update');
+		echo '</td><td class="optionbox">';
+		echo edit_field_yes_no('show_timestamp', $show_timestamp);
+		echo '<input type="hidden" name="timestamp" value="'.time().'">';
+		echo '</td></tr>';
 
 		$languages=get_block_setting($block_id, 'languages', WT_LOCALE);
 		echo '<tr><td class="descriptionbox wrap width33">';
