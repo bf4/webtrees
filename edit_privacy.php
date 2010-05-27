@@ -257,7 +257,7 @@ if ($action=="update") {
 		</tr>
 		<tr>
 			<td class="descriptionbox wrap">
-				<?php echo i18n::translate('Enable clippings Cart'), help_link('ENABLE_CLIPPINGS_CART'); ?>
+				<?php echo i18n::translate('Enable clippings cart'), help_link('ENABLE_CLIPPINGS_CART'); ?>
 			</td>
 			<td class="optionbox">
 					<?php echo edit_field_access_level("v_ENABLE_CLIPPINGS_CART", $ENABLE_CLIPPINGS_CART); ?>
@@ -360,13 +360,13 @@ foreach ($rows as $row) {
 	echo '<input type="hidden" name="action" value="delete">';
 	echo '<input type="hidden" name="default_resn_id" value="', $row->default_resn_id, '">';
 	if ($row->xref) {
-		// I18N: "Record ID I1234 (John DOE)
 		$record=GedcomRecord::getInstance($row->xref);
 		if ($record) {
 			$name=$record->getFullName();
 		} else {
 			$name=i18n::translate('this record does not exist');
 		}
+		// I18N: "Record ID I1234 (John DOE)
 		echo i18n::translate('Record ID %1$s (%2$s)', $row->xref, $name);
 	} else {
 		// I18N: "Record type SOUR (Source)
@@ -391,11 +391,11 @@ echo select_edit_control('resn', $PRIVACY_CONSTANTS, null, 'privacy', null);
 echo '</td><td class="optionbox" width="1">';
 echo '<input type="submit" value="', i18n::translate('Add'), '" />';
 echo '</td></tr></form>';
-unset($PRIVACY_CONSTANTS['none']); // The fact default is 'none' - do not need to select it.
 echo '<form method="post" action="', WT_SCRIPT_NAME, '"><tr><td class="optionbox" width="*">';
 echo '<input type="hidden" name="action" value="add_tag_type">';
 echo select_edit_control('tag_type', $all_tags, null, null, null);
 echo '</td><td class="optionbox" width="1">';
+unset($PRIVACY_CONSTANTS['none']); // The fact default is 'none' - do not need to select it.
 echo select_edit_control('resn', $PRIVACY_CONSTANTS, null, 'privacy', null);
 echo '</td><td class="optionbox" width="1">';
 echo '<input type="submit" value="', i18n::translate('Add'), '" />';
