@@ -216,7 +216,7 @@ try {
 		exit;
 	}
 	WT_DB::createInstance($dbconfig['dbhost'], $dbconfig['dbport'], $dbconfig['dbname'], $dbconfig['dbuser'], $dbconfig['dbpass']);
-	$TBLPREFIX=$dbconfig['tblpfx'];
+	define('WT_TBLPREFIX', $dbconfig['tblpfx']);
 	unset($dbconfig);
 	try {
 		WT_DB::updateSchema(WT_ROOT.'includes/db_schema/', 'WT_SCHEMA_VERSION', WT_SCHEMA_VERSION);
@@ -408,14 +408,14 @@ if (WT_USER_ID && safe_GET_bool('logout')) {
 
 // Which view of data should we see? Filter by privacy and pending changes.
 if (WT_USER_GEDCOM_ADMIN) {
-	define('WT_RECORD_VIEW', "{$TBLPREFIX}record_admin_view");
-	define('WT_FACT_VIEW',   "{$TBLPREFIX}fact_admin_view");
+	define('WT_RECORD_VIEW', WT_TBLPREFIX.'record_admin_view');
+	define('WT_FACT_VIEW',   WT_TBLPREFIX.'fact_admin_view');
 } elseif (WT_USER_ID) {
-	define('WT_RECORD_VIEW', "{$TBLPREFIX}record_user_view");
-	define('WT_FACT_VIEW',   "{$TBLPREFIX}fact_user_view");
+	define('WT_RECORD_VIEW', WT_TBLPREFIX.'record_user_view');
+	define('WT_FACT_VIEW',   WT_TBLPREFIX.'fact_user_view');
 } else {
-	define('WT_RECORD_VIEW', "{$TBLPREFIX}record_public_view");
-	define('WT_FACT_VIEW',   "{$TBLPREFIX}fact_public_view");
+	define('WT_RECORD_VIEW', WT_TBLPREFIX.'record_public_view');
+	define('WT_FACT_VIEW',   WT_TBLPREFIX.'fact_public_view');
 }
 
 $show_context_help = '';

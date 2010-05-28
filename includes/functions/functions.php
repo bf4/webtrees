@@ -244,8 +244,7 @@ function get_privacy_file($ged_id=WT_GED_ID) {
 
 function load_privacy_file($ged_id=WT_GED_ID) {
 	// Load the privacy settings into global scope
-	global $SHOW_DEAD_PEOPLE, $SHOW_LIVING_NAMES, $SHOW_SOURCES, $MAX_ALIVE_AGE;
-	global $ENABLE_CLIPPINGS_CART, $SHOW_MULTISITE_SEARCH;
+	global $SHOW_DEAD_PEOPLE, $SHOW_LIVING_NAMES, $SHOW_SOURCES, $MAX_ALIVE_AGE, $SHOW_MULTISITE_SEARCH;
 	global $USE_RELATIONSHIP_PRIVACY, $MAX_RELATION_PATH_LENGTH, $CHECK_MARRIAGE_RELATIONS;
 	global $PRIVACY_BY_YEAR, $SHOW_PRIVATE_RELATIONSHIPS;
 	global $person_privacy, $user_privacy, $global_facts, $person_facts;
@@ -1012,7 +1011,7 @@ function find_visible_families_in_record($indirec, $tag) {
  * @return array an object array with indexes "thumb" and "file" for thumbnail and filename
  */
 function find_highlighted_object($pid, $ged_id, $indirec) {
-	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS, $WT_IMAGE_DIR, $WT_IMAGES, $MEDIA_EXTERNAL, $TBLPREFIX;
+	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS, $WT_IMAGE_DIR, $WT_IMAGES, $MEDIA_EXTERNAL;
 
 	if (!showFactDetails("OBJE", $pid)) {
 		return false;
@@ -1044,7 +1043,7 @@ function find_highlighted_object($pid, $ged_id, $indirec) {
 
 	//-- find all of the media items for a person
 	$media=
-		WT_DB::prepare("SELECT m_media, m_file, m_gedrec, mm_gedrec FROM {$TBLPREFIX}media, {$TBLPREFIX}media_mapping WHERE m_media=mm_media AND m_gedfile=mm_gedfile AND m_gedfile=? AND mm_gid=? ORDER BY mm_order")
+		WT_DB::prepare("SELECT m_media, m_file, m_gedrec, mm_gedrec FROM ##media, ##media_mapping WHERE m_media=mm_media AND m_gedfile=mm_gedfile AND m_gedfile=? AND mm_gid=? ORDER BY mm_order")
 		->execute(array($ged_id, $pid))
 		->fetchAll(PDO::FETCH_NUM);
 
@@ -2841,7 +2840,7 @@ function add_descendancy(&$list, $pid, $parents=false, $generations=-1) {
  * @return string
  */
 function get_new_xref($type='INDI', $ged_id=WT_GED_ID, $use_cache=false) {
-	global $TBLPREFIX, $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX;
+	global $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX;
 
 	switch ($type) {
 	case "INDI":
@@ -2865,7 +2864,7 @@ function get_new_xref($type='INDI', $ged_id=WT_GED_ID, $use_cache=false) {
 	}
 
 	$num=
-		WT_DB::prepare("SELECT next_id FROM {$TBLPREFIX}next_id WHERE record_type=? AND gedcom_id=?")
+		WT_DB::prepare("SELECT next_id FROM ##next_id WHERE record_type=? AND gedcom_id=?")
 		->execute(array($type, $ged_id))
 		->fetchOne();
 
@@ -2875,7 +2874,7 @@ function get_new_xref($type='INDI', $ged_id=WT_GED_ID, $use_cache=false) {
 
 	if (is_null($num)) {
 		$num = 1;
-		WT_DB::prepare("INSERT INTO {$TBLPREFIX}next_id (gedcom_id, record_type, next_id) VALUES(?, ?, 1)")
+		WT_DB::prepare("INSERT INTO ##next_id (gedcom_id, record_type, next_id) VALUES(?, ?, 1)")
 			->execute(array($ged_id, $type));
 	}
 
@@ -2894,7 +2893,7 @@ function get_new_xref($type='INDI', $ged_id=WT_GED_ID, $use_cache=false) {
 	$key = $prefix.$num;
 
 	//-- update the next id number in the DB table
-	WT_DB::prepare("UPDATE {$TBLPREFIX}next_id SET next_id=? WHERE record_type=? AND gedcom_id=?")
+	WT_DB::prepare("UPDATE ##next_id SET next_id=? WHERE record_type=? AND gedcom_id=?")
 		->execute(array($num+1, $type, $ged_id));
 	return $key;
 }

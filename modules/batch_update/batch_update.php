@@ -242,8 +242,6 @@ class batch_update {
 	}
 
 	function getAllXrefs() {
-		global $TBLPREFIX;
-
 		$vars=array(WT_GED_ID);
 		$qs=array();
 		foreach ($this->PLUGIN->getRecordTypesToUpdate() as $type) {

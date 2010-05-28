@@ -65,7 +65,7 @@ WT_DB::prepare(
 // General settings
 ////////////////////////////////////////////////////////////////////////////////
 $statement=WT_DB::prepare(
-	"INSERT IGNORE INTO {$TBLPREFIX}gedcom_setting (gedcom_id, setting_name, setting_value) VALUES (?, ?, ?)");
+	"INSERT IGNORE INTO ##gedcom_setting (gedcom_id, setting_name, setting_value) VALUES (?, ?, ?)");
 
 $statement->execute(array($ged_id, 'title', i18n::translate('Genealogy from [%s]', $ged_name)));
 $statement->execute(array($ged_id, 'imported', 0));

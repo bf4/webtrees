@@ -32,6 +32,14 @@ if (!defined('WT_WEBTREES')) {
 
 require_once WT_ROOT.'includes/classes/class_module.php';
 
+// Create tables, if not already present
+try {
+	WT_DB::updateSchema('./modules/user_blog/db_schema/', 'NB_SCHEMA_VERSION', 1);
+}	 catch (PDOException $ex) {
+	// The schema update scripts should never fail.  If they do, there is no clean recovery.
+	die($ex);
+}
+
 class user_blog_WT_Module extends WT_Module implements WT_Module_Block {
 	// Extend class WT_Module
 	public function getTitle() {
@@ -47,14 +55,6 @@ class user_blog_WT_Module extends WT_Module implements WT_Module_Block {
 	public function getBlock($block_id) {
 		global $ctype, $WT_IMAGE_DIR, $WT_IMAGES, $TEXT_DIRECTION, $THEME_DIR;
 
-		// Create tables, if not already present
-		try {
-			WT_DB::updateSchema('./modules/'.$this->getName().'/db_schema/', 'NB_SCHEMA_VERSION', 1);
-		}	 catch (PDOException $ex) {
-			// The schema update scripts should never fail.  If they do, there is no clean recovery.
-			die($ex);
-		}
-
 		switch (safe_GET('action')) {
 		case 'deletenews':
 			$news_id=safe_GET('news_id');
@@ -67,7 +67,7 @@ class user_blog_WT_Module extends WT_Module implements WT_Module_Block {
 		$usernews = getUserNews(WT_USER_ID);
 
 		$id=$this->getName().$block_id;
-		$title=i18n::translate('My Journal').help_link('mygedview_myjournal');
+		$title=i18n::translate('My Journal').help_link('mypage_myjournal');
 		$content = "";
 		if (count($usernews)==0) {
 			$content .= i18n::translate('You have not created any Journal items.').' ';

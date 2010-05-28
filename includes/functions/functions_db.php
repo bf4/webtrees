@@ -41,8 +41,6 @@ define('WT_FUNCTIONS_DB_PHP', '');
 
 //-- gets the first record in the gedcom
 function get_first_xref($type, $gedcom_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	return WT_DB::prepare(
 		"SELECT MIN(xref) FROM ".WT_RECORD_VIEW." WHERE gedcom_id=? AND record_type=?"
 	)->execute(array($gedcom_id, $type))->fetchOne();
@@ -50,8 +48,6 @@ function get_first_xref($type, $gedcom_id=WT_GED_ID) {
 
 //-- gets the last record in the gedcom
 function get_last_xref($type, $gedcom_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	return WT_DB::prepare(
 		"SELECT MAX(xref) FROM ".WT_RECORD_VIEW." WHERE gedcom_id=? AND record_type=?"
 	)->execute(array($gedcom_id, $type))->fetchOne();
@@ -59,8 +55,6 @@ function get_last_xref($type, $gedcom_id=WT_GED_ID) {
 
 //-- gets the next person in the gedcom
 function get_next_xref($xref, $gedcom_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	$type=gedcom_record_type($xref, $gedcom_id);
 	return WT_DB::prepare(
 		"SELECT MIN(xref) FROM ".WT_RECORD_VIEW." WHERE gedcom_id=? AND record_type=? AND xref>?"
@@ -69,8 +63,6 @@ function get_next_xref($xref, $gedcom_id=WT_GED_ID) {
 
 //-- gets the previous person in the gedcom
 function get_prev_xref($xref, $gedcom_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	$type=gedcom_record_type($xref, $gedcom_id);
 	return WT_DB::prepare(
 		"SELECT MAX(xref) FROM ".WT_RECORD_VIEW." WHERE gedcom_id=? AND record_type=? AND xref<?"
@@ -84,20 +76,18 @@ function get_prev_xref($xref, $gedcom_id=WT_GED_ID) {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_salpha($marnm, $fams, $ged_id) {
-	global $TBLPREFIX;
-
 	$alphas=array();
 	// This logic relies on the database's collation rules to ensure that accented letters
 	// and digraphs appear in the correct listing.
 	foreach (explode(' ', i18n::$alphabet) as $letter) {
-		$query="SELECT COUNT(DISTINCT i_id) FROM {$TBLPREFIX}individuals";
+		$query="SELECT COUNT(DISTINCT i_id) FROM ##individuals";
 		if ($marnm) {
-			$query.=" JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
+			$query.=" JOIN ##name ON (i_id=n_id AND i_file=n_file)";
 		} else {
-			$query.=" JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file AND n_type!='_MARNM')";
+			$query.=" JOIN ##name ON (i_id=n_id AND i_file=n_file AND n_type!='_MARNM')";
 		}
 		if ($fams) {
-			$query.=" JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
+			$query.=" JOIN ##link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
 		}
 		$query.=" WHERE n_file=? AND n_sort LIKE '{$letter}%' COLLATE '".i18n::$collation."'";
 		foreach (explode(' ', i18n::$alphabet) as $letter2) {
@@ -111,14 +101,14 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 	// This includes "@" (unknown) and "," (none)
 	$query=
 		"SELECT LEFT(n_sort, 1), COUNT(DISTINCT i_id)".
-		" FROM {$TBLPREFIX}individuals";
+		" FROM ##individuals";
 	if ($marnm) {
-		$query.=" JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
+		$query.=" JOIN ##name ON (i_id=n_id AND i_file=n_file)";
 	} else {
-		$query.=" JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file AND n_type!='_MARNM')";
+		$query.=" JOIN ##name ON (i_id=n_id AND i_file=n_file AND n_type!='_MARNM')";
 	}
 	if ($fams) {
-		$query.=" JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
+		$query.=" JOIN ##link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
 	}
 	$query.=" WHERE n_file=?";
 	foreach (explode(' ', i18n::$alphabet) as $letter) {
@@ -151,20 +141,18 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
-	global $TBLPREFIX;
-
 	$alphas=array();
 	// This logic relies on the database's collation rules to ensure that accented letters
 	// and digraphs appear in the correct listing.
 	foreach (explode(' ', i18n::$alphabet) as $letter) {
-		$query="SELECT COUNT(DISTINCT i_id) FROM {$TBLPREFIX}individuals";
+		$query="SELECT COUNT(DISTINCT i_id) FROM ##individuals";
 		if ($marnm) {
-			$query.=" JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
+			$query.=" JOIN ##name ON (i_id=n_id AND i_file=n_file)";
 		} else {
-			$query.=" JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file AND n_type!='_MARNM')";
+			$query.=" JOIN ##name ON (i_id=n_id AND i_file=n_file AND n_type!='_MARNM')";
 		}
 		if ($fams) {
-			$query.=" JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
+			$query.=" JOIN ##link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
 		}
 		$query.=" WHERE n_file=?";
 		if ($surn) {
@@ -184,14 +172,14 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 	// This includes "@" (unknown) and "," (none)
 	$query=
 		"SELECT LEFT(n_givn, 1), COUNT(DISTINCT i_id)".
-		" FROM {$TBLPREFIX}individuals";
+		" FROM ##individuals";
 	if ($marnm) {
-		$query.=" JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
+		$query.=" JOIN ##name ON (i_id=n_id AND i_file=n_file)";
 	} else {
-		$query.=" JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file AND n_type!='_MARNM')";
+		$query.=" JOIN ##name ON (i_id=n_id AND i_file=n_file AND n_type!='_MARNM')";
 	}
 	if ($fams) {
-		$query.=" JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
+		$query.=" JOIN ##link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
 	}
 	$query.=" WHERE n_file=?";
 	if ($surn) {
@@ -230,11 +218,9 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
-	global $TBLPREFIX;
-
-	$sql="SELECT DISTINCT n_surn, n_surname, n_id FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
+	$sql="SELECT DISTINCT n_surn, n_surname, n_id FROM ##individuals JOIN ##name ON (i_id=n_id AND i_file=n_file)";
 	if ($fams) {
-		$sql.=" JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
+		$sql.=" JOIN ##link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
 	}
 	$where=array("n_file={$ged_id}");
 	if (!$marnm) {
@@ -273,9 +259,7 @@ function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
-	global $TBLPREFIX;
-
-	$sql="SELECT DISTINCT n_surn, n_surname, l_to FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file) JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
+	$sql="SELECT DISTINCT n_surn, n_surname, l_to FROM ##individuals JOIN ##name ON (i_id=n_id AND i_file=n_file) JOIN ##link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
 	$where=array("n_file={$ged_id}");
 	if (!$marnm) {
 		$where[]="n_type!='_MARNM'";
@@ -323,11 +307,9 @@ function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
 // To search for names with no surnames, use $salpha=","
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fams=false, $ged_id=null) {
-	global $TBLPREFIX;
-
-	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_surn, n_surname, n_num FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
+	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_surn, n_surname, n_num FROM ##individuals JOIN ##name ON (i_id=n_id AND i_file=n_file)";
 	if ($fams) {
-		$sql.=" JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file)";
+		$sql.=" JOIN ##link ON (i_id=l_from AND i_file=l_file)";
 	}
 	$where=array();
 	if ($ged_id) {
@@ -398,8 +380,6 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 // To search for names with no surnames, use $salpha=","
 ////////////////////////////////////////////////////////////////////////////////
 function get_famlist_fams($surn='', $salpha='', $galpha='', $marnm, $ged_id=null) {
-	global $TBLPREFIX;
-
 	$list=array();
 	foreach (get_indilist_indis($surn, $salpha, $galpha, $marnm, true, $ged_id) as $indi) {
 		foreach ($indi->getSpouseFamilies() as $family) {
@@ -410,7 +390,7 @@ function get_famlist_fams($surn='', $salpha='', $galpha='', $marnm, $ged_id=null
 	// with missing spouses
 	if ($surn=='@N.N.' || $salpha=='@') {
 		$rows=
-			WT_DB::prepare("SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families f WHERE f_file={$ged_id} AND (f_husb='' OR f_wife='')")
+			WT_DB::prepare("SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM ##families f WHERE f_file={$ged_id} AND (f_husb='' OR f_wife='')")
 			->execute(array($ged_id))
 			->fetchAll(PDO::FETCH_ASSOC);
 
@@ -426,11 +406,10 @@ function get_famlist_fams($surn='', $salpha='', $galpha='', $marnm, $ged_id=null
 // Fetch a list of children for an individual, from all their partners.
 ////////////////////////////////////////////////////////////////////////////////
 function fetch_child_ids($parent_id, $ged_id) {
-	global $TBLPREFIX;
 	static $statement=null;
 
 	if (is_null($statement)) {
-		$statement=WT_DB::prepare("SELECT DISTINCT child.l_from AS xref FROM {$TBLPREFIX}link child, {$TBLPREFIX}link spouse WHERE child.l_type=? AND spouse.l_type=? AND child.l_file=spouse.l_file AND child.l_to=spouse.l_to AND spouse.l_from=? AND child.l_file=?");
+		$statement=WT_DB::prepare("SELECT DISTINCT child.l_from AS xref FROM ##link child, ##link spouse WHERE child.l_type=? AND spouse.l_type=? AND child.l_file=spouse.l_file AND child.l_to=spouse.l_to AND spouse.l_from=? AND child.l_file=?");
 	}
 
 	return $statement->execute(array('FAMC', 'FAMS', $parent_id, $ged_id))->fetchOneColumn();
@@ -440,42 +419,32 @@ function fetch_child_ids($parent_id, $ged_id) {
 // Count the number of records linked to a given record
 ////////////////////////////////////////////////////////////////////////////////
 function count_linked_indi($xref, $link, $ged_id) {
-	global $TBLPREFIX;
-
 	return
-		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, ".WT_RECORD_VIEW." WHERE gedcom_id=l_file AND xref=l_from AND l_file=? AND l_type=? AND l_to=? AND record_type='INDI'")
+		WT_DB::prepare("SELECT COUNT(*) FROM ##link, ".WT_RECORD_VIEW." WHERE gedcom_id=l_file AND xref=l_from AND l_file=? AND l_type=? AND l_to=? AND record_type='INDI'")
 		->execute(array($ged_id, $link, $xref))
 		->fetchOne();
 }
 function count_linked_fam($xref, $link, $ged_id) {
-	global $TBLPREFIX;
-
 	return
-		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, ".WT_RECORD_VIEW." WHERE gedcom_id=l_file AND xref=l_from AND l_file=? AND l_type=? AND l_to=? AND record_type='FAM'")
+		WT_DB::prepare("SELECT COUNT(*) FROM ##link, ".WT_RECORD_VIEW." WHERE gedcom_id=l_file AND xref=l_from AND l_file=? AND l_type=? AND l_to=? AND record_type='FAM'")
 		->execute(array($ged_id, $link, $xref))
 		->fetchOne();
 }
 function count_linked_note($xref, $link, $ged_id) {
-	global $TBLPREFIX;
-
 	return
-		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, ".WT_RECORD_VIEW." WHERE gedcom_id=l_file AND xref=l_from AND l_file=? AND l_type=? AND l_to=? AND record_type='NOTE'")
+		WT_DB::prepare("SELECT COUNT(*) FROM ##link, ".WT_RECORD_VIEW." WHERE gedcom_id=l_file AND xref=l_from AND l_file=? AND l_type=? AND l_to=? AND record_type='NOTE'")
 		->execute(array($ged_id, $link, $xref))
 		->fetchOne();
 }
 function count_linked_sour($xref, $link, $ged_id) {
-	global $TBLPREFIX;
-
 	return
-		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, ".WT_RECORD_VIEW." WHERE gedcom_id=l_file AND xref=l_from AND l_file=? AND l_type=? AND l_to=? AND record_type='SOUR'")
+		WT_DB::prepare("SELECT COUNT(*) FROM ##link, ".WT_RECORD_VIEW." WHERE gedcom_id=l_file AND xref=l_from AND l_file=? AND l_type=? AND l_to=? AND record_type='SOUR'")
 		->execute(array($ged_id, $link, $xref))
 		->fetchOne();
 }
 function count_linked_obje($xref, $link, $ged_id) {
-	global $TBLPREFIX;
-
 	return
-		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, ".WT_RECORD_VIEW." WHERE gedcom_id=l_file AND xref=l_from AND l_file=? AND l_type=? AND l_to=? AND record_type='OBJE'")
+		WT_DB::prepare("SELECT COUNT(*) FROM ##link, ".WT_RECORD_VIEW." WHERE gedcom_id=l_file AND xref=l_from AND l_file=? AND l_type=? AND l_to=? AND record_type='OBJE'")
 		->execute(array($ged_id, $link, $xref))
 		->fetchOne();
 }
@@ -484,13 +453,11 @@ function count_linked_obje($xref, $link, $ged_id) {
 // Fetch records linked to a given record
 ////////////////////////////////////////////////////////////////////////////////
 function fetch_linked_indi($xref, $link, $ged_id) {
-	global $TBLPREFIX;
-
 	$rows=WT_DB::prepare(
 		"SELECT record_type, xref, gedcom_id, gedcom_data".
 		" FROM ".WT_RECORD_VIEW.
-		" JOIN {$TBLPREFIX}link ON (gedcom_id=l_file AND xref=l_from)".
-		" LEFT JOIN {$TBLPREFIX}name ON (gedcom_id=n_file AND xref=n_id AND n_num=0)".
+		" JOIN ##link ON (gedcom_id=l_file AND xref=l_from)".
+		" LEFT JOIN ##name ON (gedcom_id=n_file AND xref=n_id AND n_num=0)".
 		" WHERE gedcom_id=? AND record_type='INDI' AND l_type=? AND l_to=?".
 		" ORDER BY n_sort"
 	)->execute(array($ged_id, $link, $xref))->fetchAll();
@@ -502,13 +469,11 @@ function fetch_linked_indi($xref, $link, $ged_id) {
 	return $list;
 }
 function fetch_linked_fam($xref, $link, $ged_id) {
-	global $TBLPREFIX;
-
 	$rows=WT_DB::prepare(
 		"SELECT record_type, xref, gedcom_id, gedcom_data".
 		" FROM ".WT_RECORD_VIEW.
-		" JOIN {$TBLPREFIX}link ON (gedcom_id=l_file AND xref=l_from)".
-		" LEFT JOIN {$TBLPREFIX}name ON (gedcom_id=n_file AND xref=n_id AND n_num=0)".
+		" JOIN ##link ON (gedcom_id=l_file AND xref=l_from)".
+		" LEFT JOIN ##name ON (gedcom_id=n_file AND xref=n_id AND n_num=0)".
 		" WHERE gedcom_id=? AND record_type='FAM' AND l_type=? AND l_to=?".
 		" ORDER BY n_sort"
 	)->execute(array($ged_id, $link, $xref))->fetchAll();
@@ -520,13 +485,11 @@ function fetch_linked_fam($xref, $link, $ged_id) {
 	return $list;
 }
 function fetch_linked_note($xref, $link, $ged_id) {
-	global $TBLPREFIX;
-
 	$rows=WT_DB::prepare(
 		"SELECT record_type, xref, gedcom_id, gedcom_data".
 		" FROM ".WT_RECORD_VIEW.
-		" JOIN {$TBLPREFIX}link ON (gedcom_id=l_file AND xref=l_from)".
-		" LEFT JOIN {$TBLPREFIX}name ON (gedcom_id=n_file AND xref=n_id AND n_num=0)".
+		" JOIN ##link ON (gedcom_id=l_file AND xref=l_from)".
+		" LEFT JOIN ##name ON (gedcom_id=n_file AND xref=n_id AND n_num=0)".
 		" WHERE gedcom_id=? AND record_type='NOTE' AND l_type=? AND l_to=?".
 		" ORDER BY n_sort"
 	)->execute(array($ged_id, $link, $xref))->fetchAll();
@@ -538,13 +501,11 @@ function fetch_linked_note($xref, $link, $ged_id) {
 	return $list;
 }
 function fetch_linked_sour($xref, $link, $ged_id) {
-	global $TBLPREFIX;
-
 	$rows=WT_DB::prepare(
 		"SELECT record_type, xref, gedcom_id, gedcom_data".
 		" FROM ".WT_RECORD_VIEW.
-		" JOIN {$TBLPREFIX}link ON (gedcom_id=l_file AND xref=l_from)".
-		" LEFT JOIN {$TBLPREFIX}name ON (gedcom_id=n_file AND xref=n_id AND n_num=0)".
+		" JOIN ##link ON (gedcom_id=l_file AND xref=l_from)".
+		" LEFT JOIN ##name ON (gedcom_id=n_file AND xref=n_id AND n_num=0)".
 		" WHERE gedcom_id=? AND record_type='SOUR' AND l_type=? AND l_to=?".
 		" ORDER BY n_sort"
 	)->execute(array($ged_id, $link, $xref))->fetchAll();
@@ -556,13 +517,11 @@ function fetch_linked_sour($xref, $link, $ged_id) {
 	return $list;
 }
 function fetch_linked_obje($xref, $link, $ged_id) {
-	global $TBLPREFIX;
-
 	$rows=WT_DB::prepare(
 		"SELECT record_type, xref, gedcom_id, gedcom_data".
 		" FROM ".WT_RECORD_VIEW.
-		" JOIN {$TBLPREFIX}link ON (gedcom_id=l_file AND xref=l_from)".
-		" LEFT JOIN {$TBLPREFIX}name ON (gedcom_id=n_file AND xref=n_id AND n_num=0)".
+		" JOIN ##link ON (gedcom_id=l_file AND xref=l_from)".
+		" LEFT JOIN ##name ON (gedcom_id=n_file AND xref=n_id AND n_num=0)".
 		" WHERE gedcom_id=? AND record_type='OBJE' AND l_type=? AND l_to=?".
 		" ORDER BY n_sort"
 	)->execute(array($ged_id, $link, $xref))->fetchAll();
@@ -579,10 +538,8 @@ function fetch_linked_obje($xref, $link, $ged_id) {
 // also delete all links to it.
 ////////////////////////////////////////////////////////////////////////////////
 function fetch_all_links($xref, $ged_id) {
-	global $TBLPREFIX;
-
 	return
-		WT_DB::prepare("SELECT l_from FROM {$TBLPREFIX}link WHERE l_file=? AND l_to=?")
+		WT_DB::prepare("SELECT l_from FROM ##link WHERE l_file=? AND l_to=?")
 		->execute(array($ged_id, $xref))
 		->fetchOneColumn();
 }
@@ -594,7 +551,6 @@ function fetch_all_links($xref, $ged_id) {
 // renamed consistently.  The other columns are fetched as they are.
 ////////////////////////////////////////////////////////////////////////////////
 function fetch_gedcom_record($xref, $ged_id) {
-	global $TBLPREFIX;
 	static $statement=null;
 
 	if (is_null($statement)) {
@@ -657,7 +613,6 @@ function find_media_record($xref, $ged_id) {
 
 // Find the gedcom data for a record. Optionally include pending changes.
 function find_gedcom_record($xref, $ged_id, $pending=false) {
-	global $TBLPREFIX;
 	static $statement=null;
 
 	if (is_null($statement)) {
@@ -674,12 +629,11 @@ function find_gedcom_record($xref, $ged_id, $pending=false) {
  * @param string $gedfile	the gedcom file to get the record from.. defaults to currently active gedcom
  */
 function find_updated_record($xref, $ged_id) {
-	global $TBLPREFIX;
 	static $statement=null;
 
 	if (is_null($statement)) {
 		$statement=WT_DB::prepare(
-			"SELECT new_gedcom FROM {$TBLPREFIX}change WHERE gedcom_id=? AND xref=? AND status='pending' ".
+			"SELECT new_gedcom FROM ##change WHERE gedcom_id=? AND xref=? AND status='pending' ".
 			"ORDER BY change_id DESC LIMIT 1"
 		);
 	}
@@ -690,8 +644,8 @@ function find_updated_record($xref, $ged_id) {
 
 // Find the type of a gedcom record. Check the cache before querying the database.
 // Returns 'INDI', 'FAM', etc., or null if the record does not exist.
-function gedcom_record_type($xref, $gedcom_id) {
-	global $TBLPREFIX;
+function gedcom_record_type($xref, $ged_id) {
+	global $gedcom_record_cache;
 	static $statement=null;
 
 	if (is_null($statement)) {
@@ -705,13 +659,11 @@ function gedcom_record_type($xref, $gedcom_id) {
 
 // Find out if there are any pending changes that a given user may accept
 function exists_pending_change($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	if (userCanAccept($user_id, $ged_id)) {
 		return
 			WT_DB::prepare(
 				"SELECT 1".
-				" FROM {$TBLPREFIX}change".
+				" FROM ##change".
 				" WHERE status='pending' AND gedcom_id=?"
 			)->execute(array($ged_id))->fetchOne();
 	} else {
@@ -731,19 +683,15 @@ function exists_pending_change($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
 * @param bool $isdead true=dead
 */
 function update_isdead($xref, $ged_id, $isdead) {
-	global $TBLPREFIX;
-
 	$isdead=$isdead ? 1 : 0; // DB uses int, not bool
-	WT_DB::prepare("UPDATE {$TBLPREFIX}individuals SET i_isdead=? WHERE i_id=? AND i_file=?")->execute(array($isdead, $xref, $ged_id));
+	WT_DB::prepare("UPDATE ##individuals SET i_isdead=? WHERE i_id=? AND i_file=?")->execute(array($isdead, $xref, $ged_id));
 	return $isdead;
 }
 
 // Reset the i_isdead status for individuals
 // This is necessary when we change the MAX_ALIVE_YEARS value
 function reset_isdead($ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
-	WT_DB::prepare("UPDATE {$TBLPREFIX}individuals SET i_isdead=-1 WHERE i_file=?")->execute(array($ged_id));
+	WT_DB::prepare("UPDATE ##individuals SET i_isdead=-1 WHERE i_file=?")->execute(array($ged_id));
 }
 
 /**
@@ -754,8 +702,6 @@ function reset_isdead($ged_id=WT_GED_ID) {
 * @return array the array of sources
 */
 function get_source_list($ged_id) {
-	global $TBLPREFIX;
-
 	$rows=
 		WT_DB::prepare("SELECT record_type, xref, gedcom_id, gedcom_data FROM ".WT_RECORD_VIEW." WHERE record_type='SOUR' AND gedcom_id=?")
 		->execute(array($ged_id))
@@ -772,8 +718,6 @@ function get_source_list($ged_id) {
 // Get a list of repositories from the database
 // $ged_id - the gedcom to search
 function get_repo_list($ged_id) {
-	global $TBLPREFIX;
-
 	$rows=
 		WT_DB::prepare("SELECT record_type, xref, gedcom_id, gedcom_data FROM ".WT_RECORD_VIEW." WHERE record_type='REPO' AND gedcom_id=?")
 		->execute(array($ged_id))
@@ -789,8 +733,6 @@ function get_repo_list($ged_id) {
 
 //-- get the shared note list from the datastore
 function get_note_list($ged_id) {
-	global $TBLPREFIX;
-
 	$rows=
 		WT_DB::prepare("SELECT record_type, xref, gedcom_id, gedcom_data FROM ".WT_RECORD_VIEW." WHERE record_type='NOTE' AND gedcom_id=?")
 		->execute(array($ged_id))
@@ -807,9 +749,7 @@ function get_note_list($ged_id) {
 
 // Search for INDIs using custom SQL generated by the report engine
 function search_indis_custom($join, $where, $order) {
-	global $TBLPREFIX;
-
-	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals ".implode(' ', $join).' WHERE '.implode(' AND ', $where);
+	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM ##individuals ".implode(' ', $join).' WHERE '.implode(' AND ', $where);
 	if ($order) {
 		$sql.=' ORDER BY '.implode(' ', $order);
 	}
@@ -836,9 +776,7 @@ function search_indis_custom($join, $where, $order) {
 
 // Search for FAMs using custom SQL generated by the report engine
 function search_fams_custom($join, $where, $order) {
-	global $TBLPREFIX;
-
-	$sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families ".implode(' ', $join).' WHERE '.implode(' AND ', $where);
+	$sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM ##families ".implode(' ', $join).' WHERE '.implode(' AND ', $where);
 	if ($order) {
 		$sql.=' ORDER BY '.implode(' ', $order);
 	}
@@ -869,7 +807,7 @@ function search_fams_custom($join, $where, $order) {
 // $match - AND or OR
 // $skip - ignore data in certain tags
 function search_indis($query, $geds, $match, $skip) {
-	global $TBLPREFIX, $GEDCOM;
+	global $GEDCOM;
 
 	// No query => no results
 	if (!$query) {
@@ -886,7 +824,7 @@ function search_indis($query, $geds, $match, $skip) {
 		$querysql[]="i_gedcom LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".i18n::$collation."'";
 		}
 
-	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals WHERE (".implode(" {$match} ", $querysql).') AND i_file IN ('.implode(',', $geds).')';
+	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM ##individuals WHERE (".implode(" {$match} ", $querysql).') AND i_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
@@ -927,7 +865,7 @@ function search_indis($query, $geds, $match, $skip) {
 // $geds - array of gedcoms to search
 // $match - AND or OR
 function search_indis_names($query, $geds, $match) {
-	global $TBLPREFIX, $GEDCOM;
+	global $GEDCOM;
 
 	// No query => no results
 	if (!$query) {
@@ -939,7 +877,7 @@ function search_indis_names($query, $geds, $match) {
 	foreach ($query as $q) {
 		$querysql[]="n_full LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".i18n::$collation."'";
 		}
-	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_num FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON i_id=n_id AND i_file=n_file WHERE (".implode(" {$match} ", $querysql).') AND i_file IN ('.implode(',', $geds).')';
+	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_num FROM ##individuals JOIN ##name ON i_id=n_id AND i_file=n_file WHERE (".implode(" {$match} ", $querysql).') AND i_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
@@ -978,15 +916,13 @@ function search_indis_names($query, $geds, $match) {
 // $lastname, $firstname, $place - search terms
 // $geds - array of gedcoms to search
 function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
-	global $TBLPREFIX;
-
-	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals";
+	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM ##individuals";
 	if ($place) {
-		$sql.=" JOIN {$TBLPREFIX}placelinks ON (pl_file=i_file AND pl_gid=i_id)";
-		$sql.=" JOIN {$TBLPREFIX}places ON (p_file=pl_file AND pl_p_id=p_id)";
+		$sql.=" JOIN ##placelinks ON (pl_file=i_file AND pl_gid=i_id)";
+		$sql.=" JOIN ##places ON (p_file=pl_file AND pl_p_id=p_id)";
 	}
 	if ($firstname || $lastname) {
-		$sql.=" JOIN {$TBLPREFIX}name ON (i_file=n_file AND i_id=n_id)";
+		$sql.=" JOIN ##name ON (i_file=n_file AND i_id=n_id)";
 			}
 	$sql.=' WHERE i_file IN ('.implode(',', $geds).')';
 	switch ($soundex) {
@@ -1055,9 +991,7 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 * @param int $jd, leave empty to include all
 */
 function get_recent_changes($jd=0, $allgeds=false) {
-	global $TBLPREFIX;
-
-	$sql="SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_fact='CHAN' AND d_julianday1>=? AND d_gid NOT LIKE ?";
+	$sql="SELECT d_gid FROM ##dates WHERE d_fact='CHAN' AND d_julianday1>=? AND d_gid NOT LIKE ?";
 	$vars=array($jd, '%:%');
 	if (!$allgeds) {
 		$sql.=" AND d_file=?";
@@ -1070,9 +1004,7 @@ function get_recent_changes($jd=0, $allgeds=false) {
 
 // Seach for individuals with events on a given day
 function search_indis_dates($day, $month, $year, $facts) {
-	global $TBLPREFIX;
-
-	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}dates ON i_id=d_gid AND i_file=d_file WHERE i_file=?";
+	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM ##individuals JOIN ##dates ON i_id=d_gid AND i_file=d_file WHERE i_file=?";
 	$vars=array(WT_GED_ID);
 	if ($day) {
 		$sql.=" AND d_day=?";
@@ -1110,9 +1042,7 @@ function search_indis_dates($day, $month, $year, $facts) {
 
 // Seach for individuals with events in a given date range
 function search_indis_daterange($start, $end, $facts) {
-	global $TBLPREFIX;
-
-	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}dates ON i_id=d_gid AND i_file=d_file WHERE i_file=? AND d_julianday1 BETWEEN ? AND ?";
+	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM ##individuals JOIN ##dates ON i_id=d_gid AND i_file=d_file WHERE i_file=? AND d_julianday1 BETWEEN ? AND ?";
 	$vars=array(WT_GED_ID, $start, $end);
 	
 	if ($facts) {
@@ -1149,7 +1079,7 @@ function search_indis_year_range($startyear, $endyear) {
 // $match - AND or OR
 // $skip - ignore data in certain tags
 function search_fams($query, $geds, $match, $skip) {
-	global $TBLPREFIX, $GEDCOM;
+	global $GEDCOM;
 
 	// No query => no results
 	if (!$query) {
@@ -1166,7 +1096,7 @@ function search_fams($query, $geds, $match, $skip) {
 		$querysql[]="f_gedcom LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".i18n::$collation."'";
 		}
 
-	$sql="SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families WHERE (".implode(" {$match} ", $querysql).') AND f_file IN ('.implode(',', $geds).')';
+	$sql="SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM ##families WHERE (".implode(" {$match} ", $querysql).') AND f_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
@@ -1207,7 +1137,7 @@ function search_fams($query, $geds, $match, $skip) {
 // $geds - array of gedcoms to search
 // $match - AND or OR
 function search_fams_names($query, $geds, $match) {
-	global $TBLPREFIX, $GEDCOM;
+	global $GEDCOM;
 
 	// No query => no results
 	if (!$query) {
@@ -1220,7 +1150,7 @@ function search_fams_names($query, $geds, $match) {
 		$querysql[]="(husb.n_full LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".i18n::$collation."' OR wife.n_full LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".i18n::$collation."')";
 		}
 
-	$sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families LEFT OUTER JOIN {$TBLPREFIX}name husb ON f_husb=husb.n_id AND f_file=husb.n_file LEFT OUTER JOIN {$TBLPREFIX}name wife ON f_wife=wife.n_id AND f_file=wife.n_file WHERE (".implode(" {$match} ", $querysql).') AND f_file IN ('.implode(',', $geds).')';
+	$sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM ##families LEFT OUTER JOIN ##name husb ON f_husb=husb.n_id AND f_file=husb.n_file LEFT OUTER JOIN ##name wife ON f_wife=wife.n_id AND f_file=wife.n_file WHERE (".implode(" {$match} ", $querysql).') AND f_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
@@ -1254,7 +1184,7 @@ function search_fams_names($query, $geds, $match) {
 // $match - AND or OR
 // $skip - ignore data in certain tags
 function search_sources($query, $geds, $match, $skip) {
-	global $TBLPREFIX, $GEDCOM;
+	global $GEDCOM;
 
 	// No query => no results
 	if (!$query) {
@@ -1271,7 +1201,7 @@ function search_sources($query, $geds, $match, $skip) {
 		$querysql[]="s_gedcom LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".i18n::$collation."'";
 		}
 
-	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources WHERE (".implode(" {$match} ", $querysql).') AND s_file IN ('.implode(',', $geds).')';
+	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM ##sources WHERE (".implode(" {$match} ", $querysql).') AND s_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
@@ -1313,7 +1243,7 @@ function search_sources($query, $geds, $match, $skip) {
 // $match - AND or OR
 // $skip - ignore data in certain tags
 function search_notes($query, $geds, $match, $skip) {
-	global $TBLPREFIX, $GEDCOM;
+	global $GEDCOM;
 
 	// No query => no results
 	if (!$query) {
@@ -1374,11 +1304,10 @@ function search_notes($query, $geds, $match, $skip) {
 * @return int
 */
 function get_place_parent_id($parent, $level) {
-	global $TBLPREFIX;
 	static $statement=null;
 
 	if (is_null($statement)) {
-		$statement=WT_DB::prepare("SELECT p_id FROM {$TBLPREFIX}places WHERE p_level=? AND p_parent_id=? AND p_place LIKE ? AND p_file=?");
+		$statement=WT_DB::prepare("SELECT p_id FROM ##places WHERE p_level=? AND p_parent_id=? AND p_place LIKE ? AND p_file=?");
 	}
 
 	$parent_id=0;
@@ -1399,17 +1328,15 @@ function get_place_parent_id($parent, $level) {
 * we are at.
 */
 function get_place_list($parent, $level) {
-	global $TBLPREFIX;
-
 	// --- find all of the place in the file
 	if ($level==0) {
 		return
-			WT_DB::prepare("SELECT p_place FROM {$TBLPREFIX}places WHERE p_level=? AND p_file=? ORDER BY p_place")
+			WT_DB::prepare("SELECT p_place FROM ##places WHERE p_level=? AND p_file=? ORDER BY p_place")
 			->execute(array(0, WT_GED_ID))
 			->fetchOneColumn();
 	} else {
 		return
-			WT_DB::prepare("SELECT p_place FROM {$TBLPREFIX}places WHERE p_level=? AND p_parent_id=? AND p_file=? ORDER BY p_place")
+			WT_DB::prepare("SELECT p_place FROM ##places WHERE p_level=? AND p_parent_id=? AND p_file=? ORDER BY p_place")
 			->execute(array($level, get_place_parent_id($parent, $level), WT_GED_ID))
 			->fetchOneColumn();
 	}
@@ -1422,19 +1349,17 @@ function get_place_list($parent, $level) {
 * @return array
 */
 function get_place_positions($parent, $level='') {
-	global $TBLPREFIX;
-
 	// TODO: this function needs splitting into two
 
 	if ($level!=='') {
 		return
-			WT_DB::prepare("SELECT DISTINCT pl_gid FROM {$TBLPREFIX}placelinks WHERE pl_p_id=? AND pl_file=?")
+			WT_DB::prepare("SELECT DISTINCT pl_gid FROM ##placelinks WHERE pl_p_id=? AND pl_file=?")
 			->execute(array(get_place_parent_id($parent, $level), WT_GED_ID))
 			->fetchOneColumn();
 	} else {
 		//-- we don't know the level so get the any matching place
 		return
-			WT_DB::prepare("SELECT DISTINCT pl_gid FROM {$TBLPREFIX}placelinks, {$TBLPREFIX}places WHERE p_place LIKE ? AND p_file=pl_file AND p_id=pl_p_id AND p_file=?")
+			WT_DB::prepare("SELECT DISTINCT pl_gid FROM ##placelinks, ##places WHERE p_place LIKE ? AND p_file=pl_file AND p_id=pl_p_id AND p_file=?")
 			->execute(array($parent, WT_GED_ID))
 			->fetchOneColumn();
 	}
@@ -1442,10 +1367,8 @@ function get_place_positions($parent, $level='') {
 
 //-- find all of the places
 function find_place_list($place) {
-	global $TBLPREFIX;
-
 	$rows=
-		WT_DB::prepare("SELECT p_id, p_place, p_parent_id  FROM {$TBLPREFIX}places WHERE p_file=? ORDER BY p_parent_id, p_id")
+		WT_DB::prepare("SELECT p_id, p_place, p_parent_id  FROM ##places WHERE p_file=? ORDER BY p_parent_id, p_id")
 		->execute(array(WT_GED_ID))
 		->fetchAll();
 
@@ -1474,10 +1397,8 @@ function find_place_list($place) {
 
 //-- function to find the gedcom id for the given rin
 function find_rin_id($rin) {
-	global $TBLPREFIX;
-
 	$xref=
-		WT_DB::prepare("SELECT i_id FROM {$TBLPREFIX}individuals WHERE i_rin=? AND i_file=?")
+		WT_DB::prepare("SELECT i_id FROM ##individuals WHERE i_rin=? AND i_file=?")
 		->execute(array($rin, WT_GED_ID))
 		->fetchOne();
 
@@ -1490,38 +1411,36 @@ function find_rin_id($rin) {
 * @param string $ged  the filename of the gedcom to delete
 */
 function delete_gedcom($ged_id) {
-	global $TBLPREFIX;
-
 	$ged=get_gedcom_from_id($ged_id);
 
 	// Don't delete the logs.
-	WT_DB::prepare("UPDATE {$TBLPREFIX}log SET gedcom_id=NULL   WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("UPDATE ##log SET gedcom_id=NULL   WHERE gedcom_id =?")->execute(array($ged_id));
 
-	WT_DB::prepare("DELETE {$TBLPREFIX}block_setting FROM {$TBLPREFIX}block_setting JOIN {$TBLPREFIX}block USING (block_id) WHERE gedcom_id=?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}block               WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE {$TBLPREFIX}fact FROM {$TBLPREFIX}fact JOIN {$TBLPREFIX}record USING (record_id) WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}record              WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}default_resn        WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE ##block_setting FROM ##block_setting JOIN ##block USING (block_id) WHERE gedcom_id=?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##block               WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE ##fact FROM ##fact JOIN {$TBLPREFIX}record USING (record_id) WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##record              WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##default_resn        WHERE gedcom_id =?")->execute(array($ged_id));
 
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}news                WHERE n_username=?")->execute(array($ged   ));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}dates               WHERE d_file    =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}families            WHERE f_file    =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}favorites           WHERE fv_file   =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}user_gedcom_setting WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}gedcom_setting      WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}individuals         WHERE i_file    =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}link                WHERE l_file    =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}media               WHERE m_gedfile =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}media_mapping       WHERE mm_gedfile=?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}module_privacy      WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}name                WHERE n_file    =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}next_id             WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks          WHERE pl_file   =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}places              WHERE p_file    =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}sources             WHERE s_file    =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}hit_counter         WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}change              WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}gedcom              WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##news                WHERE n_username=?")->execute(array($ged   ));
+	WT_DB::prepare("DELETE FROM ##dates               WHERE d_file    =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##families            WHERE f_file    =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##favorites           WHERE fv_file   =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##user_gedcom_setting WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##gedcom_setting      WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##individuals         WHERE i_file    =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##link                WHERE l_file    =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##}media               WHERE m_gedfile =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##media_mapping       WHERE mm_gedfile=?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##module_privacy      WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##name                WHERE n_file    =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##next_id             WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##placelinks          WHERE pl_file   =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##places              WHERE p_file    =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##sources             WHERE s_file    =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##hit_counter         WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##change              WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM ##gedcom              WHERE gedcom_id =?")->execute(array($ged_id));
 
 	if (get_site_setting('DEFAULT_GEDCOM')==$ged) {
 		set_site_setting('DEFAULT_GEDCOM', '');
@@ -1536,12 +1455,10 @@ function delete_gedcom($ged_id) {
 * @return array
 */
 function get_top_surnames($ged_id, $min, $max) {
-	global $TBLPREFIX;
-
 	// Use n_surn, rather than n_surname, as it is used to generate url's for
 	// the inid-list, etc.
 	return
-		WT_DB::prepareLimit("SELECT n_surn, COUNT(n_surn) FROM {$TBLPREFIX}name WHERE n_file=? AND n_type!=? AND n_surn NOT IN (?, ?, ?, ?) GROUP BY n_surn HAVING COUNT(n_surn)>=".$min." ORDER BY 2 DESC", $max)
+		WT_DB::prepareLimit("SELECT n_surn, COUNT(n_surn) FROM ##name WHERE n_file=? AND n_type!=? AND n_surn NOT IN (?, ?, ?, ?) GROUP BY n_surn HAVING COUNT(n_surn)>=".$min." ORDER BY 2 DESC", $max)
 		->execute(array($ged_id, '_MARNM', '@N.N.', '', '?', 'UNKNOWN'))
 		->fetchAssoc();
 }
@@ -1553,7 +1470,7 @@ function get_top_surnames($ged_id, $min, $max) {
 * @return int the new id
 */
 function get_next_id($table, $field) {
-	global $TBLPREFIX, $TABLE_IDS;
+	global $TABLE_IDS;
 
 	if (!isset($TABLE_IDS)) {
 		$TABLE_IDS = array();
@@ -1562,7 +1479,7 @@ function get_next_id($table, $field) {
 		$TABLE_IDS[$table][$field]++;
 		return $TABLE_IDS[$table][$field];
 	}
-	$newid=WT_DB::prepare("SELECT MAX({$field}) FROM {$TBLPREFIX}{$table}")->fetchOne();
+	$newid=WT_DB::prepare("SELECT MAX({$field}) FROM ##{$table}")->fetchOne();
 	$newid++;
 	$TABLE_IDS[$table][$field] = $newid;
 	return $newid;
@@ -1572,11 +1489,9 @@ function get_next_id($table, $field) {
 * get a list of remote servers
 */
 function get_server_list($ged_id=WT_GED_ID){
-	global $TBLPREFIX;
-
 	$sitelist = array();
 
-	$rows=WT_DB::prepare("SELECT s_id, s_name, s_gedcom, s_file FROM {$TBLPREFIX}sources WHERE s_file=? AND s_dbid=? ORDER BY s_name")
+	$rows=WT_DB::prepare("SELECT s_id, s_name, s_gedcom, s_file FROM ##sources WHERE s_file=? AND s_dbid=? ORDER BY s_name")
 		->execute(array($ged_id, 'Y'))
 		->fetchAll();
 	foreach ($rows as $row) {
@@ -1643,10 +1558,8 @@ function delete_fact($linenum, $pid, $gedrec) {
 * @return gid Stub ID that contains the RFN number. Returns false if it didn't find anything
 */
 function get_remote_id($rfn) {
-	global $TBLPREFIX;
-
 	return
-		WT_DB::prepare("SELECT r_gid FROM {$TBLPREFIX}remotelinks WHERE r_linkid=? AND r_file=?")
+		WT_DB::prepare("SELECT r_gid FROM ##remotelinks WHERE r_linkid=? AND r_file=?")
 		->execute(array($rfn, WT_GED_ID))
 		->fetchOne();
 }
@@ -1659,8 +1572,6 @@ function get_remote_id($rfn) {
 // $ged_id - the id of the gedcom to search
 ////////////////////////////////////////////////////////////////////////////////
 function get_anniversary_events($jd, $facts='', $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	// If no facts specified, get all except these
 	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
 	if ($facts!='_TODO') {
@@ -1789,8 +1700,8 @@ function get_anniversary_events($jd, $facts='', $ged_id=WT_GED_ID) {
 		$where.=" AND d_file=".$ged_id;
 
 		// Now fetch these anniversaries
-		$ind_sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
-		$fam_sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
+		$ind_sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, d_type, d_day, d_month, d_year, d_fact, d_type FROM ##dates, ##individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
+		$fam_sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil, d_type, d_day, d_month, d_year, d_fact, d_type FROM ##dates, ##families {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
 		foreach (array($ind_sql, $fam_sql) as $sql) {
 			$rows=WT_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 			foreach ($rows as $row) {
@@ -1849,8 +1760,6 @@ function get_anniversary_events($jd, $facts='', $ged_id=WT_GED_ID) {
 // $ged_id    - the id of the gedcom to search
 ////////////////////////////////////////////////////////////////////////////////
 function get_calendar_events($jd1, $jd2, $facts='', $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	// If no facts specified, get all except these
 	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
 	if ($facts!='_TODO') {
@@ -1877,8 +1786,8 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=WT_GED_ID) {
 	$where.=" AND d_file=".$ged_id;
 
 	// Now fetch these events
-	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_julianday1";
-	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_julianday1";
+	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact, d_type FROM ##dates, ##individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_julianday1";
+	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact, d_type FROM ##dates, ##families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_julianday1";
 	foreach (array($ind_sql, $fam_sql) as $sql) {
 		$rows=WT_DB::prepare($sql)->fetchAll(PDO::FETCH_NUM);
 		foreach ($rows as $row) {
@@ -1950,10 +1859,8 @@ function get_events_list($jd1, $jd2, $events='') {
 // Check if a media file is shared (i.e. used by another gedcom)
 ////////////////////////////////////////////////////////////////////////////////
 function is_media_used_in_other_gedcom($file_name, $ged_id) {
-	global $TBLPREFIX;
-
 	return
-		(bool)WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}media WHERE m_file LIKE ? AND m_gedfile<>?")
+		(bool)WT_DB::prepare("SELECT COUNT(*) FROM ##media WHERE m_file LIKE ? AND m_gedfile<>?")
 		->execute(array("%{$file_name}", $ged_id))
 		->fetchOne();
 }
@@ -1964,22 +1871,19 @@ function is_media_used_in_other_gedcom($file_name, $ged_id) {
 // functions after performing DDL statements, and these invalidate any
 // existing prepared statement handles in some databases.
 ////////////////////////////////////////////////////////////////////////////////
-function get_site_setting($setting_name, $default=null) {
-	global $TBLPREFIX;
-
-	return WT_DB::prepare(
-		"SELECT setting_value FROM {$TBLPREFIX}site_setting WHERE setting_name=?"
-	)->execute(array($setting_name))->fetchOne($default);
+function get_site_setting($setting_name, $default_value=null) {
+	return
+		WT_DB::prepare(
+			"SELECT setting_value FROM ##site_setting WHERE setting_name=?"
+		)->execute(array($setting_name))->fetchOne($default_value);
 }
 
 function set_site_setting($setting_name, $setting_value) {
-	global $TBLPREFIX;
-
 	if (is_null($setting_value)) {
-		WT_DB::prepare("DELETE FROM {$TBLPREFIX}site_setting WHERE setting_name=?")
+		WT_DB::prepare("DELETE FROM ##site_setting WHERE setting_name=?")
 			->execute(array($setting_name));
 	} else {
-		WT_DB::prepare("REPLACE INTO {$TBLPREFIX}site_setting (setting_name, setting_value) VALUES (?, ?)")
+		WT_DB::prepare("REPLACE INTO ##site_setting (setting_name, setting_value) VALUES (?, ?)")
 			->execute(array($setting_name, $setting_value));
 	}
 }
@@ -1989,21 +1893,17 @@ function set_site_setting($setting_name, $setting_value) {
 ////////////////////////////////////////////////////////////////////////////////
 
 function get_all_gedcoms() {
-	global $TBLPREFIX;
-	
 	return
-		WT_DB::prepare("SELECT gedcom_id, gedcom_name FROM {$TBLPREFIX}gedcom")
+		WT_DB::prepare("SELECT gedcom_id, gedcom_name FROM ##gedcom")
 		->fetchAssoc();
 }
 
 function get_gedcom_titles() {
-	global $TBLPREFIX;
-	
 	return
 		WT_DB::prepare(
 			"SELECT g.gedcom_id, g.gedcom_name, COALESCE(gs.setting_value, g.gedcom_name) AS gedcom_title".
-			" FROM {$TBLPREFIX}gedcom g".
-			" LEFT JOIN {$TBLPREFIX}gedcom_setting gs ON (g.gedcom_id=gs.gedcom_id AND gs.setting_name=?)".
+			" FROM ##gedcom g".
+			" LEFT JOIN ##gedcom_setting gs ON (g.gedcom_id=gs.gedcom_id AND gs.setting_name=?)".
 			" ORDER BY 3"
 		)
 		->execute(array('title'))
@@ -2011,15 +1911,13 @@ function get_gedcom_titles() {
 }
 
 function get_gedcom_from_id($ged_id) {
-	global $TBLPREFIX;
-
 	// No need to look up the default gedcom
 	if (defined('WT_GED_ID') && defined('WT_GEDCOM') && $ged_id==WT_GED_ID) {
 		return WT_GEDCOM;
 	}
 
 	return
-		WT_DB::prepare("SELECT gedcom_name FROM {$TBLPREFIX}gedcom WHERE gedcom_id=?")
+		WT_DB::prepare("SELECT gedcom_name FROM ##gedcom WHERE gedcom_id=?")
 		->execute(array($ged_id))
 		->fetchOne();
 }
@@ -2027,8 +1925,6 @@ function get_gedcom_from_id($ged_id) {
 // Convert an (external) gedcom name to an (internal) gedcom ID.
 // Optionally create an entry for it, if it does not exist.
 function get_id_from_gedcom($ged_name, $create=false) {
-	global $TBLPREFIX;
-
 	// No need to look up the default gedcom
 	if (defined('WT_GED_ID') && defined('WT_GEDCOM') && $ged_name==WT_GEDCOM) {
 		return WT_GED_ID;
@@ -2036,7 +1932,7 @@ function get_id_from_gedcom($ged_name, $create=false) {
 
 	if ($create) {
 		try {
-			WT_DB::prepare("INSERT INTO {$TBLPREFIX}gedcom (gedcom_name, import_gedcom, import_offset) VALUES (?, '', 0)")
+			WT_DB::prepare("INSERT INTO ##gedcom (gedcom_name, import_gedcom, import_offset) VALUES (?, '', 0)")
 				->execute(array($ged_name));
 			$ged_id=WT_DB::getInstance()->lastInsertId();
 			require WT_ROOT.'includes/set_gedcom_defaults.php';
@@ -2047,7 +1943,7 @@ function get_id_from_gedcom($ged_name, $create=false) {
 	}
 
 	return
-		WT_DB::prepare("SELECT gedcom_id FROM {$TBLPREFIX}gedcom WHERE gedcom_name=?")
+		WT_DB::prepare("SELECT gedcom_id FROM ##gedcom WHERE gedcom_name=?")
 		->execute(array($ged_name))
 		->fetchOne();
 }
@@ -2057,23 +1953,19 @@ function get_id_from_gedcom($ged_name, $create=false) {
 // Functions to access the WT_GEDCOM_SETTING table
 ////////////////////////////////////////////////////////////////////////////////
 
-function get_gedcom_setting($ged_id, $setting_name) {
-	global $TBLPREFIX;
-
+function get_gedcom_setting($gedcom_id, $setting_name, $default_value=null) {
 	return
-		WT_DB::prepare("SELECT setting_value FROM {$TBLPREFIX}gedcom_setting WHERE gedcom_id=? AND setting_name=?")
-		->execute(array($ged_id, $setting_name))
-		->fetchOne();
+		WT_DB::prepare(
+			"SELECT setting_value FROM ##gedcom_setting WHERE gedcom_id=? AND setting_name=?"
+		)->execute(array($gedcom_id, $setting_name))->fetchOne($default_value);
 }
 
 function set_gedcom_setting($ged_id, $setting_name, $setting_value) {
-	global $TBLPREFIX;
-
 	if (is_null($setting_value)) {
-		WT_DB::prepare("DELETE FROM {$TBLPREFIX}gedcom_setting WHERE gedcom_id=? AND setting_name=?")
+		WT_DB::prepare("DELETE FROM ##gedcom_setting WHERE gedcom_id=? AND setting_name=?")
 			->execute(array($ged_id, $setting_name));
 	} else {
-		WT_DB::prepare("REPLACE INTO {$TBLPREFIX}gedcom_setting (gedcom_id, setting_name, setting_value) VALUES (?, ?, ?)")
+		WT_DB::prepare("REPLACE INTO ##gedcom_setting (gedcom_id, setting_name, setting_value) VALUES (?, ?, ?)")
 			->execute(array($ged_id, $setting_name, $setting_value));
 	}
 }
@@ -2083,58 +1975,50 @@ function set_gedcom_setting($ged_id, $setting_name, $setting_value) {
 ////////////////////////////////////////////////////////////////////////////////
 
 function create_user($username, $realname, $email, $password) {
-	global $TBLPREFIX;
-
 	try {
-		WT_DB::prepare("INSERT INTO {$TBLPREFIX}user (user_name, real_name, email, password) VALUES (?, ?, ?, ?)")
+		WT_DB::prepare("INSERT INTO ##user (user_name, real_name, email, password) VALUES (?, ?, ?, ?)")
 			->execute(array($username, $realname, $email, $password));
 	} catch (PDOException $ex) {
 		// User already exists?
 	}
 	return
-		WT_DB::prepare("SELECT user_id FROM {$TBLPREFIX}user WHERE user_name=?")
+		WT_DB::prepare("SELECT user_id FROM ##user WHERE user_name=?")
 		->execute(array($username))->fetchOne();
 }
 
 function rename_user($old_username, $new_username) {
-	global $TBLPREFIX;
-
-	WT_DB::prepare("UPDATE {$TBLPREFIX}user      SET user_name=?   WHERE user_name  =?")->execute(array($new_username, $old_username));
-	WT_DB::prepare("UPDATE {$TBLPREFIX}favorites SET fv_username=? WHERE fv_username=?")->execute(array($new_username, $old_username));
-	WT_DB::prepare("UPDATE {$TBLPREFIX}news      SET n_username =? WHERE n_username =?")->execute(array($new_username, $old_username));
+	WT_DB::prepare("UPDATE ##user      SET user_name=?   WHERE user_name  =?")->execute(array($new_username, $old_username));
+	WT_DB::prepare("UPDATE ##favorites SET fv_username=? WHERE fv_username=?")->execute(array($new_username, $old_username));
+	WT_DB::prepare("UPDATE ##news      SET n_username =? WHERE n_username =?")->execute(array($new_username, $old_username));
 }
 
 function delete_user($user_id) {
-	global $TBLPREFIX;
-
 	$user_name=get_user_name($user_id);
-	WT_DB::prepare("DELETE {$TBLPREFIX}block_setting FROM {$TBLPREFIX}block_setting JOIN {$TBLPREFIX}block USING (block_id) WHERE user_id=?")->execute(array($user_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}block               WHERE user_id=?"    )->execute(array($user_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}user_gedcom_setting WHERE user_id=?"    )->execute(array($user_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}user_setting        WHERE user_id=?"    )->execute(array($user_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}message             WHERE user_id=?"    )->execute(array($user_name, $user_name));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}user                WHERE user_id=?"    )->execute(array($user_id));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}favorites           WHERE fv_username=?")->execute(array($user_name));
-	WT_DB::prepare("DELETE FROM {$TBLPREFIX}news                WHERE n_username =?")->execute(array($user_name));
+	WT_DB::prepare("DELETE ##block_setting FROM ##block_setting JOIN ##block USING (block_id) WHERE user_id=?")->execute(array($user_id));
+	WT_DB::prepare("DELETE FROM ##block               WHERE user_id=?"    )->execute(array($user_id));
+	WT_DB::prepare("DELETE FROM ##user_gedcom_setting WHERE user_id=?"    )->execute(array($user_id));
+	WT_DB::prepare("DELETE FROM ##user_setting        WHERE user_id=?"    )->execute(array($user_id));
+	WT_DB::prepare("DELETE FROM ##message             WHERE user_id=?"    )->execute(array($user_name, $user_name));
+	WT_DB::prepare("DELETE FROM ##user                WHERE user_id=?"    )->execute(array($user_id));
+	WT_DB::prepare("DELETE FROM ##favorites           WHERE fv_username=?")->execute(array($user_name));
+	WT_DB::prepare("DELETE FROM ##news                WHERE n_username =?")->execute(array($user_name));
 }
 
 function get_all_users($order='ASC', $key='realname') {
-	global $TBLPREFIX;
-
 	if ($key=='username') {
 		return
-			WT_DB::prepare("SELECT user_id, user_name FROM {$TBLPREFIX}user ORDER BY user_name")
+			WT_DB::prepare("SELECT user_id, user_name FROM ##user ORDER BY user_name")
 			->fetchAssoc();
 	} elseif ($key=='realname') {
 		return
-			WT_DB::prepare("SELECT user_id, user_name FROM {$TBLPREFIX}user ORDER BY real_name")
+			WT_DB::prepare("SELECT user_id, user_name FROM ##user ORDER BY real_name")
 			->fetchAssoc();
 	} else {
 		return
 			WT_DB::prepare(
 				"SELECT u.user_id, user_name".
-				" FROM {$TBLPREFIX}user u".
-				" LEFT JOIN {$TBLPREFIX}user_setting us1 ON (u.user_id=us1.user_id AND us1.setting_name=?)".
+				" FROM ##user u".
+				" LEFT JOIN ##user_setting us1 ON (u.user_id=us1.user_id AND us1.setting_name=?)".
 				" ORDER BY us1.setting_value {$order}"
 			)->execute(array($key))
 			->fetchAssoc();
@@ -2142,40 +2026,32 @@ function get_all_users($order='ASC', $key='realname') {
 }
 
 function get_user_count() {
-	global $TBLPREFIX;
-
 	return
-			WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}user")
+			WT_DB::prepare("SELECT COUNT(*) FROM ##user")
 			->fetchOne();
 }
 
 function get_admin_user_count() {
-	global $TBLPREFIX;
-
 	return
-		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}user_setting WHERE setting_name=? AND setting_value=?")
+		WT_DB::prepare("SELECT COUNT(*) FROM ##user_setting WHERE setting_name=? AND setting_value=?")
 		->execute(array('canadmin', 'Y'))
 		->fetchOne();
 }
 
 function get_non_admin_user_count() {
-	global $TBLPREFIX;
-
 	return
-		WT_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}user_setting WHERE  setting_name=? AND setting_value<>?")
+		WT_DB::prepare("SELECT COUNT(*) FROM ##user_setting WHERE  setting_name=? AND setting_value<>?")
 		->execute(array('canadmin', 'Y'))
 		->fetchOne();
 }
 
 // Get a list of logged-in users
 function get_logged_in_users() {
-	global $TBLPREFIX;
-
 	return
 		WT_DB::prepare(
 			"SELECT u.user_id, user_name".
-			" FROM {$TBLPREFIX}user u".
-			" JOIN {$TBLPREFIX}user_setting us USING (user_id)".
+			" FROM ##user u".
+			" JOIN ##user_setting us USING (user_id)".
 			" WHERE setting_name=? AND setting_value=?"
 		)
 		->execute(array('loggedin', 'Y'))
@@ -2184,26 +2060,14 @@ function get_logged_in_users() {
 
 // Get a list of logged-in users who haven't been active recently
 function get_idle_users($time) {
-	global $TBLPREFIX, $DBTYPE;
-
-	// Convert string column to numeric
-	switch ($DBTYPE) {
-	case 'mysql':
-		$expr='CAST(us2.setting_value AS UNSIGNED)';
-		break;
-	default:
-		$expr='us2.setting_value';
-		break;
-	}
-
 	return
 		WT_DB::prepare(
 			"SELECT u.user_id, user_name".
-			" FROM {$TBLPREFIX}user u".
-			" JOIN {$TBLPREFIX}user_setting us1 USING (user_id)".
-			" JOIN {$TBLPREFIX}user_setting us2 USING (user_id)".
+			" FROM ##user u".
+			" JOIN ##user_setting us1 USING (user_id)".
+			" JOIN ##user_setting us2 USING (user_id)".
 			" WHERE us1.setting_name=? AND us1.setting_value=? AND us2.setting_name=?".
-			" AND {$expr} BETWEEN 1 AND ?"
+			" AND CAST(us2.setting_value AS UNSIGNED) BETWEEN 1 AND ?"
 		)
 		->execute(array('loggedin', 'Y', 'sessiontime', $time))
 		->fetchAssoc();
@@ -2211,29 +2075,23 @@ function get_idle_users($time) {
 
 // Get the ID for a username
 function get_user_id($username) {
-	global $TBLPREFIX;
-
-	return WT_DB::prepare("SELECT user_id FROM {$TBLPREFIX}user WHERE user_name=?")
+	return WT_DB::prepare("SELECT user_id FROM ##user WHERE user_name=?")
 		->execute(array($username))
 		->fetchOne();
 }
 
 // Get the username for a user ID
 function get_user_name($user_id) {
-	global $TBLPREFIX;
-
-	return WT_DB::prepare("SELECT user_name FROM {$TBLPREFIX}user WHERE user_id=?")
+	return WT_DB::prepare("SELECT user_name FROM ##user WHERE user_id=?")
 		->execute(array($user_id))
 		->fetchOne();
 }
 
 function get_newest_registered_user() {
-	global $TBLPREFIX;
-
 	return WT_DB::prepareLimit(
 		"SELECT u.user_id".
-		" FROM {$TBLPREFIX}user u".
-		" LEFT JOIN {$TBLPREFIX}user_setting us ON (u.user_id=us.user_id AND us.setting_name=?) ".
+		" FROM ##user u".
+		" LEFT JOIN ##user_setting us ON (u.user_id=us.user_id AND us.setting_name=?) ".
 		" ORDER BY us.setting_value DESC",
 		1
 	)->execute(array('reg_timestamp'))
@@ -2241,16 +2099,12 @@ function get_newest_registered_user() {
 }
 
 function set_user_password($user_id, $password) {
-	global $TBLPREFIX;
-
-	WT_DB::prepare("UPDATE {$TBLPREFIX}user SET password=? WHERE user_id=?")
+	WT_DB::prepare("UPDATE ##user SET password=? WHERE user_id=?")
 		->execute(array($password, $user_id));
 }
 
 function get_user_password($user_id) {
-	global $TBLPREFIX;
-
-	return WT_DB::prepare("SELECT password FROM {$TBLPREFIX}user WHERE user_id=?")
+	return WT_DB::prepare("SELECT password FROM ##user WHERE user_id=?")
 		->execute(array($user_id))
 		->fetchOne();
 }
@@ -2259,23 +2113,19 @@ function get_user_password($user_id) {
 // Functions to access the WT_USER_SETTING table
 ////////////////////////////////////////////////////////////////////////////////
 
-function get_user_setting($user_id, $setting_name) {
-	global $TBLPREFIX;
-
+function get_user_setting($user_id, $setting_name, $default_value=null) {
 	return
-		WT_DB::prepare("SELECT setting_value FROM {$TBLPREFIX}user_setting WHERE user_id=? AND setting_name=?")
-		->execute(array($user_id, $setting_name))
-		->fetchOne();
+		WT_DB::prepare(
+			"SELECT setting_value FROM ##user_setting WHERE user_id=? AND setting_name=?"
+		)->execute(array($user_id, $setting_name))->fetchOne($default_value);
 }
 
 function set_user_setting($user_id, $setting_name, $setting_value) {
-	global $TBLPREFIX;
-
 	if (is_null($setting_value)) {
-		WT_DB::prepare("DELETE FROM {$TBLPREFIX}user_setting WHERE user_id=? AND setting_name=?")
+		WT_DB::prepare("DELETE FROM ##user_setting WHERE user_id=? AND setting_name=?")
 			->execute(array($user_id, $setting_name));
 	} else {
-		WT_DB::prepare("REPLACE INTO {$TBLPREFIX}user_setting (user_id, setting_name, setting_value) VALUES (?, ?, ?)")
+		WT_DB::prepare("REPLACE INTO ##user_setting (user_id, setting_name, setting_value) VALUES (?, ?, ?)")
 			->execute(array($user_id, $setting_name, $setting_value));
 	}
 }
@@ -2288,33 +2138,27 @@ function admin_user_exists() {
 // Functions to access the WT_USER_GEDCOM_SETTING table
 ////////////////////////////////////////////////////////////////////////////////
 
-function get_user_gedcom_setting($user_id, $ged_id, $setting_name) {
-	global $TBLPREFIX;
-
+function get_user_gedcom_setting($user_id, $gedcom_id, $setting_name, $default_value=null) {
 	return
-		WT_DB::prepare("SELECT setting_value FROM {$TBLPREFIX}user_gedcom_setting WHERE user_id=? AND gedcom_id=? AND setting_name=?")
-		->execute(array($user_id, $ged_id, $setting_name))
-		->fetchOne();
+		WT_DB::prepare(
+			"SELECT setting_value FROM ##user_gedcom_setting WHERE user_id=? AND gedcom_id=? AND setting_name=?"
+		)->execute(array($user_id, $gedcom_id, $setting_name))->fetchOne($default_value);
 }
 
 function set_user_gedcom_setting($user_id, $ged_id, $setting_name, $setting_value) {
-	global $TBLPREFIX;
-
 	if (is_null($setting_value)) {
-		WT_DB::prepare("DELETE FROM {$TBLPREFIX}user_gedcom_setting WHERE user_id=? AND gedcom_id=? AND setting_name=?")
+		WT_DB::prepare("DELETE FROM ##user_gedcom_setting WHERE user_id=? AND gedcom_id=? AND setting_name=?")
 			->execute(array($user_id, $ged_id, $setting_name));
 	} else {
-		WT_DB::prepare("REPLACE INTO {$TBLPREFIX}user_gedcom_setting (user_id, gedcom_id, setting_name, setting_value) VALUES (?, ?, ?, ?)")
+		WT_DB::prepare("REPLACE INTO ##user_gedcom_setting (user_id, gedcom_id, setting_name, setting_value) VALUES (?, ?, ?, ?)")
 			->execute(array($user_id, $ged_id, $setting_name, $setting_value));
 	}
 }
 
 function get_user_from_gedcom_xref($ged_id, $xref) {
-	global $TBLPREFIX;
-
 	return
 		WT_DB::prepare(
-			"SELECT user_id FROM {$TBLPREFIX}user_gedcom_setting".
+			"SELECT user_id FROM ##user_gedcom_setting".
 			" WHERE gedcom_id=? AND setting_name=? AND setting_value=?"
 		)->execute(array($ged_id, 'gedcomid', $xref))->fetchOne();
 }
@@ -2324,12 +2168,10 @@ function get_user_from_gedcom_xref($ged_id, $xref) {
 ////////////////////////////////////////////////////////////////////////////////
 
 function get_user_blocks($user_id) {
-	global $TBLPREFIX;
-
 	$blocks=array('main'=>array(), 'side'=>array());
 	$rows=WT_DB::prepare(
 		"SELECT location, block_id, module_name".
-		" FROM {$TBLPREFIX}block".
+		" FROM ##block".
 		" WHERE user_id=?".
 		" ORDER BY location, block_order"
 	)->execute(array($user_id))->fetchAll();
@@ -2340,7 +2182,7 @@ function get_user_blocks($user_id) {
 		return $blocks;
 	} else {
 		WT_DB::prepare(
-			"REPLACE INTO {$TBLPREFIX}block (user_id, location, block_order, module_name) VALUES ".
+			"REPLACE INTO ##block (user_id, location, block_order, module_name) VALUES ".
 			"(?, 'main', 0, 'todays_events'),".
 			"(?, 'main', 1, 'user_messages'),".
 			"(?, 'main', 2, 'user_favorites'),".
@@ -2354,12 +2196,10 @@ function get_user_blocks($user_id) {
 }
 
 function get_gedcom_blocks($gedcom_id) {
-	global $TBLPREFIX;
-
 	$blocks=array('main'=>array(), 'side'=>array());
 	$rows=WT_DB::prepare(
 		"SELECT location, block_id, module_name".
-		" FROM {$TBLPREFIX}block".
+		" FROM ##block".
 		" WHERE gedcom_id=?".
 		" ORDER BY location, block_order"
 	)->execute(array($gedcom_id))->fetchAll();
@@ -2370,7 +2210,7 @@ function get_gedcom_blocks($gedcom_id) {
 		return $blocks;
 	} else {
 		WT_DB::prepare(
-			"REPLACE INTO {$TBLPREFIX}block (gedcom_id, location, block_order, module_name) VALUES ".
+			"REPLACE INTO ##block (gedcom_id, location, block_order, module_name) VALUES ".
 			"(?, 'main', 0, 'gedcom_stats'),".
 			"(?, 'main', 1, 'gedcom_news'),".
 			"(?, 'main', 2, 'gedcom_favorites'),".
@@ -2385,55 +2225,36 @@ function get_gedcom_blocks($gedcom_id) {
 }
 
 function get_block_setting($block_id, $setting_name, $default_value=null) {
-	global $TBLPREFIX;
+	return
+		WT_DB::prepare(
+			"SELECT setting_value FROM ##block_setting WHERE block_id=? AND setting_name=?"
+		)->execute(array($block_id, $setting_name))->fetchOne($default_value);
 
-	$value=
-		WT_DB::prepare("SELECT setting_value FROM {$TBLPREFIX}block_setting WHERE block_id=? AND setting_name=?")
-		->execute(array($block_id, $setting_name))
-		->fetchOne();
-
-	if (is_null($value)) {
-		return $default_value;
-	} else {
-		return $value;
 	}
-}
 
 function set_block_setting($block_id, $setting_name, $setting_value) {
-	global $TBLPREFIX;
-
 	if (is_null($setting_value)) {
-		WT_DB::prepare("DELETE FROM {$TBLPREFIX}block_setting WHERE block_id=? AND setting_name=?")
+		WT_DB::prepare("DELETE FROM ##block_setting WHERE block_id=? AND setting_name=?")
 			->execute(array($block_id, $setting_name));
 	} else {
-		WT_DB::prepare("REPLACE INTO {$TBLPREFIX}block_setting (block_id, setting_name, setting_value) VALUES (?, ?, ?)")
+		WT_DB::prepare("REPLACE INTO ##block_setting (block_id, setting_name, setting_value) VALUES (?, ?, ?)")
 			->execute(array($block_id, $setting_name, $setting_value));
 	}
 }
 
 function get_module_setting($module_name, $setting_name, $default_value=null) {
-	global $TBLPREFIX;
-
-	$value=
-		WT_DB::prepare("SELECT setting_value FROM {$TBLPREFIX}module_setting WHERE module_name=? AND setting_name=?")
-		->execute(array($module_name, $setting_name))
-		->fetchOne();
-
-	if (is_null($value)) {
-		return $default_value;
-	} else {
-		return $value;
+	return
+		WT_DB::prepare(
+			"SELECT setting_value FROM ##module_setting WHERE module_name=? AND setting_name=?"
+		)->execute(array($module_name, $setting_name))->fetchOne($default_value);
 	}
-}
 
 function set_module_setting($module_name, $setting_name, $setting_value) {
-	global $TBLPREFIX;
-
 	if (is_null($setting_value)) {
-		WT_DB::prepare("DELETE FROM {$TBLPREFIX}module_setting WHERE module_name=? AND setting_name=?")
+		WT_DB::prepare("DELETE FROM ##module_setting WHERE module_name=? AND setting_name=?")
 			->execute(array($module_name, $setting_name));
 	} else {
-		WT_DB::prepare("REPLACE INTO {$TBLPREFIX}module_setting (module_name, setting_name, setting_value) VALUES (?, ?, ?)")
+		WT_DB::prepare("REPLACE INTO ##module_setting (module_name, setting_name, setting_value) VALUES (?, ?, ?)")
 			->execute(array($module_name, $setting_name, $setting_value));
 	}
 }
@@ -2446,12 +2267,10 @@ function set_module_setting($module_name, $setting_name, $setting_value) {
 * @param string $ged_id gedcom to update
 */
 function update_favorites($xref_from, $xref_to, $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 $ged_name=get_gedcom_from_id($ged_id);
 
 	return
-		WT_DB::prepare("UPDATE {$TBLPREFIX}favorites SET fv_gid=? WHERE fv_gid=? AND fv_file=?")
+		WT_DB::prepare("UPDATE ##favorites SET fv_gid=? WHERE fv_gid=? AND fv_file=?")
 		->execute(array($xref_to, $xref_from, $ged_name))
 		->rowCount();
 }
@@ -2460,12 +2279,10 @@ $ged_name=get_gedcom_from_id($ged_id);
 ////////////////////////////////////////////////////////////////////////////////
 
 function get_autocomplete_INDI($FILTER, $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	// search for ids first and request the exact id from FILTER and ids with one additional digit
 	$sql=
 		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
-		" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
+		" FROM ##individuals, ##name".
 		" WHERE (i_id=? OR i_id LIKE ?)".
 		" AND i_id=n_id AND i_file=n_file AND i_file=?".
 		" ORDER BY i_id";
@@ -2477,7 +2294,7 @@ function get_autocomplete_INDI($FILTER, $ged_id=WT_GED_ID) {
 	if (count($rows) ==0) {
 		$sql=
 			"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
-			" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
+			" FROM ##individuals, ##name".
 			" WHERE n_sort LIKE ?".
 			" AND i_id=n_id AND i_file=n_file AND i_file=?".
 			" ORDER BY n_sort";
@@ -2492,8 +2309,6 @@ function get_autocomplete_INDI($FILTER, $ged_id=WT_GED_ID) {
 }
 
 function get_autocomplete_FAM($FILTER, $ids, $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	$vars=array();
 	if (empty($ids)) {
 		//-- no match : search for FAM id
@@ -2506,7 +2321,7 @@ function get_autocomplete_FAM($FILTER, $ids, $ged_id=WT_GED_ID) {
 		$vars=array_merge($vars, $ids, $ids);
 	}
 	$sql="SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
-			 "FROM {$TBLPREFIX}families ".
+			 "FROM ##families ".
 			 "WHERE {$where} AND f_file=?";
 	$vars[]=$ged_id;
 	return
@@ -2516,8 +2331,6 @@ function get_autocomplete_FAM($FILTER, $ids, $ged_id=WT_GED_ID) {
 }
 
 function get_autocomplete_NOTE($FILTER, $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	$sql="SELECT record_type, xref, gedcom_id, gedcom_data".
 			 " FROM ".WT_RECORD_VIEW.
 			 " WHERE gedcom_data LIKE ? AND record_type='NOTE' AND gedcom_id=?";
@@ -2528,10 +2341,8 @@ function get_autocomplete_NOTE($FILTER, $ged_id=WT_GED_ID) {
 }
 
 function get_autocomplete_SOUR($FILTER, $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
-			 "FROM {$TBLPREFIX}sources ".
+			 "FROM ##sources ".
 			 "WHERE (s_name LIKE ? OR s_id LIKE ?) AND s_file=? ORDER BY s_name";
 	return
 		WT_DB::prepareLimit($sql, WT_AUTOCOMPLETE_LIMIT)
@@ -2540,10 +2351,8 @@ function get_autocomplete_SOUR($FILTER, $ged_id=WT_GED_ID) {
 }
 
 function get_autocomplete_SOUR_TITL($FILTER, $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
-			 "FROM {$TBLPREFIX}sources ".
+			 "FROM ##sources ".
 			 "WHERE s_name LIKE ? AND s_file=? ORDER BY s_name";
 	return
 		WT_DB::prepareLimit($sql, WT_AUTOCOMPLETE_LIMIT)
@@ -2552,11 +2361,9 @@ function get_autocomplete_SOUR_TITL($FILTER, $ged_id=WT_GED_ID) {
 }
 
 function get_autocomplete_INDI_BURI_CEME($FILTER, $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	$sql=
 		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
-		"FROM {$TBLPREFIX}individuals ".
+		"FROM ##individuals ".
 		"WHERE i_gedcom LIKE ? AND i_file=?";
 	return
 		WT_DB::prepareLimit($sql, WT_AUTOCOMPLETE_LIMIT)
@@ -2565,10 +2372,8 @@ function get_autocomplete_INDI_BURI_CEME($FILTER, $ged_id=WT_GED_ID) {
 }
 
 function get_autocomplete_INDI_SOUR_PAGE($FILTER, $OPTION, $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
-			 "FROM {$TBLPREFIX}individuals ".
+			 "FROM ##individuals ".
 			 "WHERE i_gedcom LIKE ? AND i_file=?";
 	return
 		WT_DB::prepareLimit($sql, WT_AUTOCOMPLETE_LIMIT)
@@ -2577,11 +2382,9 @@ function get_autocomplete_INDI_SOUR_PAGE($FILTER, $OPTION, $ged_id=WT_GED_ID) {
 }
 
 function get_autocomplete_FAM_SOUR_PAGE($FILTER, $OPTION, $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	$sql=
 		"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
-		"FROM {$TBLPREFIX}families ".
+		"FROM ##families ".
 		"WHERE f_gedcom LIKE ? AND f_file=?";
 	return
 		WT_DB::prepareLimit($sql, WT_AUTOCOMPLETE_LIMIT)
@@ -2590,8 +2393,6 @@ function get_autocomplete_FAM_SOUR_PAGE($FILTER, $OPTION, $ged_id=WT_GED_ID) {
 }
 
 function get_autocomplete_REPO($FILTER, $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	$sql=
 		"SELECT record_type, xref, gedcom_id, gedcom_data".
 		" FROM ".WT_RECORD_VIEW.
@@ -2603,8 +2404,6 @@ function get_autocomplete_REPO($FILTER, $ged_id=WT_GED_ID) {
 }
 
 function get_autocomplete_REPO_NAME($FILTER, $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	$sql=
 		"SELECT record_type, xref, gedcom_id, gedcom_data".
 		" FROM ".WT_RECORD_VIEW.
@@ -2616,10 +2415,8 @@ function get_autocomplete_REPO_NAME($FILTER, $ged_id=WT_GED_ID) {
 }
 
 function get_autocomplete_OBJE($FILTER, $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	$sql="SELECT m_media ".
-			 "FROM {$TBLPREFIX}media ".
+			 "FROM ##media ".
 			 "WHERE (m_titl LIKE ? OR m_media LIKE ?) AND m_gedfile=?";
 	return
 		WT_DB::prepareLimit($sql, WT_AUTOCOMPLETE_LIMIT)
@@ -2628,10 +2425,8 @@ function get_autocomplete_OBJE($FILTER, $ged_id=WT_GED_ID) {
 }
 
 function get_autocomplete_SURN($FILTER, $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	$sql="SELECT DISTINCT n_surname ".
-			 "FROM {$TBLPREFIX}name ".
+			 "FROM ##name ".
 			 "WHERE n_surname LIKE ? AND n_file=? ORDER BY n_surname";
 	return 
 		WT_DB::prepareLimit($sql, WT_AUTOCOMPLETE_LIMIT)
@@ -2640,10 +2435,8 @@ function get_autocomplete_SURN($FILTER, $ged_id=WT_GED_ID) {
 }
 
 function get_autocomplete_GIVN($FILTER, $ged_id=WT_GED_ID) {
-	global $TBLPREFIX;
-
 	$sql="SELECT DISTINCT n_givn ".
-			 "FROM {$TBLPREFIX}name ".
+			 "FROM ##name ".
 			 "WHERE n_givn LIKE ? AND n_file=? ORDER BY n_givn";
 	return 
 		WT_DB::prepareLimit($sql, WT_AUTOCOMPLETE_LIMIT)
@@ -2652,37 +2445,35 @@ function get_autocomplete_GIVN($FILTER, $ged_id=WT_GED_ID) {
 }
 
 function get_autocomplete_PLAC($FILTER, $ged_id=WT_GED_ID) {
-	global $TBLPREFIX, $DBTYPE;
-
 	$sql=
 		"select p1.p_place".
-		" from {$TBLPREFIX}places p1".
+		" from ##places p1".
 		" where p1.p_place like ? and p1.p_parent_id=0 AND p1.p_file=?".
 		" union ".
 		"select CONCAT(p1.p_place, ', ', p2.p_place)".
-		" from {$TBLPREFIX}places p1".
-		" join {$TBLPREFIX}places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+		" from ##places p1".
+		" join ##places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
 		" where p1.p_place like ? and p2.p_parent_id=0 AND p1.p_file=?".
 		" union ".
 		"select CONCAT(p1.p_place, ', ', p2.p_place, ', ', p3.p_place)".
-		" from {$TBLPREFIX}places p1".
-		" join {$TBLPREFIX}places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
-		" join {$TBLPREFIX}places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
+		" from ##places p1".
+		" join ##places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+		" join ##places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
 		" where p1.p_place like ? and p3.p_parent_id=0 AND p1.p_file=?".
 		" union ".
 		"select CONCAT(p1.p_place, ', ', p2.p_place, ', ', p3.p_place, ', ', p4.p_place)".
-		" from {$TBLPREFIX}places p1".
-		" join {$TBLPREFIX}places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
-		" join {$TBLPREFIX}places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
-		" join {$TBLPREFIX}places p4 ON (p3.p_parent_id=p4.p_id AND p3.p_file=p4.p_file)".
+		" from ##places p1".
+		" join ##places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+		" join ##places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
+		" join ##places p4 ON (p3.p_parent_id=p4.p_id AND p3.p_file=p4.p_file)".
 		" where p1.p_place like ? and p4.p_parent_id=0 AND p1.p_file=?".
 		" union ".
 		"select CONCAT(p1.p_place, ', ', p2.p_place, ', ', p3.p_place, ', ', p4.p_place, ', ', p5.p_place)".
-		" from {$TBLPREFIX}places p1".
-		" join {$TBLPREFIX}places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
-		" join {$TBLPREFIX}places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
-		" join {$TBLPREFIX}places p4 ON (p3.p_parent_id=p4.p_id AND p3.p_file=p4.p_file)".
-		" join {$TBLPREFIX}places p5 ON (p4.p_parent_id=p5.p_id AND p4.p_file=p5.p_file)".
+		" from ##places p1".
+		" join ##places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+		" join ##places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
+		" join ##places p4 ON (p3.p_parent_id=p4.p_id AND p3.p_file=p4.p_file)".
+		" join ##places p5 ON (p4.p_parent_id=p5.p_id AND p4.p_file=p5.p_file)".
 		" where p1.p_place like ? and p5.p_parent_id=0 AND p1.p_file=?";
 
 	return 
