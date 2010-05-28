@@ -1533,6 +1533,15 @@ table.tablesorter thead tr .headerSortDown {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 	background-color: #8dbdd8;
 }
+div.pager {
+	margin-top: -20px;
+	text-align: left;
+}
+div.pager input {
+	width: 50px;
+	text-align: center;
+}
+
 /* styles for FindFacts pop-up */
 #layDefinedTags,#tabDefinedTagsShow {
 	width:450px;
@@ -1606,7 +1615,7 @@ div.faq_title {
 div.faq_body {
 	clear:both;
 	margin: 1em 0;
-	padding: 1em; "
+	padding: 1em;
 }
 .faq_italic {
 	font-style: italic;
