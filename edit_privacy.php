@@ -46,15 +46,12 @@ case 'delete':
 		"DELETE FROM `##default_resn` WHERE default_resn_id=?"
 	)->execute(array(safe_POST('default_resn_id')));
 	break;
-case 'add_xref':
-	WT_DB::prepare(
-		"REPLACE INTO `##default_resn` (gedcom_id, xref, resn) VALUES (?, ?, ?)"
-	)->execute(array(WT_GED_ID, safe_POST('xref'), safe_POST('resn')));
-	break;
-case 'add_tag_type':
-	WT_DB::prepare(
-		"REPLACE INTO `##default_resn` (gedcom_id, tag_type, resn) VALUES (?, ?, ?)"
-	)->execute(array(WT_GED_ID, safe_POST('tag_type'), safe_POST('resn')));
+case 'add':
+	if ((safe_POST('xref') || safe_POST('tag_type')) && safe_POST('resn')) {
+		WT_DB::prepare(
+			"REPLACE INTO `##default_resn` (gedcom_id, xref, tag_type, resn) VALUES (?, ?, ?, ?)"
+		)->execute(array(WT_GED_ID, safe_POST('xref'), safe_POST('tag_type'), safe_POST('resn')));
+	}
 	break;
 case 'update':
 	header('Location: editgedcoms.php');
@@ -68,7 +65,7 @@ $PRIVACY_CONSTANTS=array(
 	'hidden'      =>i18n::translate('Hide even from admin users')
 );
 
-$all_tags=WT_DB::prepare("SELECT fact_type FROM `##fact` WHERE fact_type NOT IN ('FAMC','FAMS','HUSB','WIFE','CHIL') UNION SELECT record_type FROM `##record` WHERE record_type NOT IN ('HEAD','TRLR')")->fetchOneColumn();
+$all_tags=WT_DB::prepare("SELECT fact_type, fact_type FROM `##fact` WHERE fact_type NOT IN ('FAMC','FAMS','HUSB','WIFE','CHIL') UNION SELECT record_type, record_type FROM `##record` WHERE record_type NOT IN ('HEAD','TRLR')")->fetchAssoc();
 foreach ($all_tags as &$tag) {
 	$tag=i18n::translate('%1$s [%2$s]', strip_tags(translate_fact($tag)), $tag);
 }
@@ -337,8 +334,8 @@ if ($action=="update") {
 	<br />
 	<table class="facts_table">
 		<tr>
-			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>" colspan="3">
-				<?php echo i18n::translate('Default privacy restrictions - these apply to records and facts that do not contain an explicit restriction'); ?>
+			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>" colspan="4">
+				<?php echo i18n::translate('Privacy restrictions - these apply to records and facts that do not contain a GEDCOM RESN tag'); ?>
 			</td>
 		</tr>
 <?php
@@ -362,8 +359,14 @@ foreach ($rows as $row) {
 		// I18N: "Record ID I1234 (John DOE)
 		echo i18n::translate('Record ID %1$s (%2$s)', $row->xref, $name);
 	} else {
+		echo '&nbsp;';
+	}
+	echo '</td><td class="optionbox" width="*">';
+	if ($row->tag_type) {
 		// I18N: "Record type SOUR (Source)
 		echo i18n::translate('Record type %1$s (%2$s)', $row->tag_type, translate_fact($row->tag_type));
+	} else {
+		echo '&nbsp;';
 	}
 	echo '</td><td class="optionbox" width="1">';
 	echo $PRIVACY_CONSTANTS[$row->resn];
@@ -372,23 +375,16 @@ foreach ($rows as $row) {
 	echo '</td></tr></form>';
 }
 echo '<form method="post" action="', WT_SCRIPT_NAME, '"><tr><td class="optionbox" width="*">';
-echo '<input type="hidden" name="action" value="add_xref">';
+echo '<input type="hidden" name="action" value="add">';
 echo '<input type="text" class="pedigree_form" name="xref" id="xref" size="6" />';
 print_findindi_link("xref","");
 print_findfamily_link("xref");
 print_findsource_link("xref");
 print_findrepository_link("xref");
 print_findmedia_link("xref", "1media");
+echo '</td><td class="optionbox" width="*">';
+echo select_edit_control('tag_type', $all_tags, '', null, null);
 echo '</td><td class="optionbox" width="1">';
-echo select_edit_control('resn', $PRIVACY_CONSTANTS, null, 'privacy', null);
-echo '</td><td class="optionbox" width="1">';
-echo '<input type="submit" value="', i18n::translate('Add'), '" />';
-echo '</td></tr></form>';
-echo '<form method="post" action="', WT_SCRIPT_NAME, '"><tr><td class="optionbox" width="*">';
-echo '<input type="hidden" name="action" value="add_tag_type">';
-echo select_edit_control('tag_type', $all_tags, null, null, null);
-echo '</td><td class="optionbox" width="1">';
-unset($PRIVACY_CONSTANTS['none']); // The fact default is 'none' - do not need to select it.
 echo select_edit_control('resn', $PRIVACY_CONSTANTS, null, 'privacy', null);
 echo '</td><td class="optionbox" width="1">';
 echo '<input type="submit" value="', i18n::translate('Add'), '" />';
