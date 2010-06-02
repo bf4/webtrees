@@ -218,8 +218,8 @@ function newConnection() {
 function checkChangeTime($pid, $gedrec, $last_time) {
 	$change=WT_DB::prepare(
 		"SELECT UNIX_TIMESTAMP(change_time) AS change_time, user_name".
-		" FROM ##change".
-		" JOIN ##user USING (user_id)".
+		" FROM `##change`".
+		" JOIN `##user` USING (user_id)".
 		" WHERE status<>'rejected' AND gedcom_id=? AND xref=? AND change_time>?".
 		" ORDER BY change_id DESC".
 		" LIMIT 1"
@@ -281,7 +281,7 @@ function replace_gedrec($gid, $ged_id, $gedrec, $chan=true) {
 		$old_gedrec=find_gedcom_record($gid, $ged_id, true);
 		if ($old_gedrec!=$gedrec) {
 			WT_DB::prepare(
-				"INSERT INTO ##change (gedcom_id, xref, old_gedcom, new_gedcom, user_id) VALUES (?, ?, ?, ?, ?)"
+				"INSERT INTO `##change` (gedcom_id, xref, old_gedcom, new_gedcom, user_id) VALUES (?, ?, ?, ?, ?)"
 			)->execute(array(
 				$ged_id,
 				$gid,
@@ -314,7 +314,7 @@ function append_gedrec($gedrec, $ged_id) {
 		$gedrec=preg_replace("/^0 @(.*)@/", "0 @$xref@", $gedrec);
 
 		WT_DB::prepare(
-			"INSERT INTO ##change (gedcom_id, xref, old_gedcom, new_gedcom, user_id) VALUES (?, ?, ?, ?, ?)"
+			"INSERT INTO `##change` (gedcom_id, xref, old_gedcom, new_gedcom, user_id) VALUES (?, ?, ?, ?, ?)"
 		)->execute(array(
 			$ged_id,
 			$xref,
@@ -337,7 +337,7 @@ function append_gedrec($gedrec, $ged_id) {
 //-- the given $xref
 function delete_gedrec($xref, $ged_id) {
 	WT_DB::prepare(
-		"INSERT INTO ##change (gedcom_id, xref, old_gedcom, new_gedcom, user_id) VALUES (?, ?, ?, ?, ?)"
+		"INSERT INTO `##change` (gedcom_id, xref, old_gedcom, new_gedcom, user_id) VALUES (?, ?, ?, ?, ?)"
 	)->execute(array(
 		$ged_id,
 		$xref,
@@ -2110,29 +2110,6 @@ function handle_updates($newged, $levelOverride="no") {
 
 	for($j=0; $j<count($glevels); $j++) {
 
-// BH These following lines destroyed the Shared Note
-// Therefore they have been removed for now
-/*
-		//-- update external note records first
-		if (($islink[$j])&&($tag[$j]=="NOTE")) {
-			if (empty($NOTE[$text[$j]])) {
-				delete_gedrec($text[$j], WT_GED_ID);
-				$text[$j] = '';
-			} else {
-				$noterec = find_gedcom_record($text[$j], WT_GED_ID);
-				$newnote = "0 @$text[$j]@ NOTE\n";
-				$newline = "1 CONC ".rtrim(stripLRMRLM($NOTE[$text[$j]]));
-				$newnote .= breakConts($newline);
-				if (WT_DEBUG) {
-					echo "<pre>$newnote</pre>";
-				}
-				replace_gedrec($text[$j], WT_GED_ID, $newnote);
-			}
-		} //-- end of external note handling code
-*/
-
-		//echo $glevels[$j], ' ', $tag[$j];
-
 		// Look for empty SOUR reference with non-empty sub-records.
 		// This can happen when the SOUR entry is deleted but its sub-records
 		// were incorrectly left intact.
@@ -2262,8 +2239,9 @@ function create_add_form($fact) {
 	$tags = array();
 	
 	// GEDFact_assistant ================================================
-	if ($fact=="CENS" && file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php') ) {
-		require WT_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php';
+	if ($fact=="CENS") {
+		global $TEXT_DIRECTION, $CensDate;
+		$CensDate="yes";
 	}
 	// ==================================================================
 
@@ -2328,8 +2306,9 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	$level1type = $type;
 	
 	// GEDFact_assistant ================================================
-	if ($type=="CENS" && file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php') ) {
-			require WT_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php';
+	if ($type=="CENS") {
+		global $TEXT_DIRECTION, $CensDate;
+		$CensDate="yes";
 	}
 	// ==================================================================
 	

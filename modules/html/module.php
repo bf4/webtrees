@@ -31,6 +31,7 @@ if (!defined('WT_WEBTREES')) {
 }
 
 require_once WT_ROOT.'includes/classes/class_module.php';
+require_once WT_ROOT.'includes/classes/class_stats.php';
 
 class html_WT_Module extends WT_Module implements WT_Module_Block {
 	// Extend class WT_Module
@@ -81,14 +82,9 @@ class html_WT_Module extends WT_Module implements WT_Module_Block {
 		/*
 	 	* Initiate the stats object.
 	 	*/
-		if (get_block_setting($block_id, 'compat')) {
-			require_once WT_ROOT.'includes/classes/class_stats_compat.php';
-			$stats = new stats_compat($GEDCOM);
-		} elseif(get_block_setting($block_id, 'ui')) {
-			require_once WT_ROOT.'includes/classes/class_stats_ui.php';
+		if(get_block_setting($block_id, 'ui')) {
 			$stats = new stats_ui($GEDCOM);
 		} else {
-			require_once WT_ROOT.'includes/classes/class_stats.php';
 			$stats = new stats($GEDCOM);
 		}
 
@@ -159,7 +155,6 @@ class html_WT_Module extends WT_Module implements WT_Module_Block {
 	// Implement class WT_Module_Block
 	public function configureBlock($block_id) {
 		if (safe_POST_bool('save')) {
-			set_block_setting($block_id, 'compat',         safe_POST_bool('compat'));
 			set_block_setting($block_id, 'ui',             safe_POST_bool('ui'));
 			set_block_setting($block_id, 'gedcom',         safe_POST('gedcom'));
 			set_block_setting($block_id, 'title',          $_POST['title']);
@@ -181,12 +176,7 @@ class html_WT_Module extends WT_Module implements WT_Module_Block {
 		}
 
 		require_once WT_ROOT.'includes/functions/functions_edit.php';
-
-		$useCK = file_exists(WT_ROOT.'modules/ckeditor/ckeditor.php');
-		if($useCK){
-			require WT_ROOT.'modules/ckeditor/ckeditor.php';
-		}
-
+		
 		$templates=array(
 			i18n::translate('Keyword examples')=>
 '<table id="keywords" class="sortable list_table center">
@@ -313,14 +303,14 @@ i18n::translate('Narrative description')=>/* I18N: do not translate the #keyword
 			.help_link('index_htmlplus_template')
 			."</td><td class=\"optionbox\">"
 		;
-		if($useCK)
+		if (array_key_exists('ckeditor', WT_Module::getActiveModules()))
 		{
 			print "\t\t\t<script language=\"JavaScript\" type=\"text/javascript\">\n"
 				."\t\t\t<!--\n"
 				."\t\t\t\tfunction loadTemplate(html)\n"
 				."\t\t\t\t{\n"
-				."\t\t\t\t\tvar oEditor = FCKeditorAPI.GetInstance('html');\n"
-				."\t\t\t\t\toEditor.SetHTML(html);\n"
+				."\t\t\t\t\tvar oEditor = CKEDITOR.instances['html'];\n"
+				."\t\t\t\t\toEditor.setData(html);\n"
 				."\t\t\t\t}\n"
 				."\t\t\t-->\n"
 				."\t\t\t</script>\n"
@@ -372,8 +362,7 @@ i18n::translate('Narrative description')=>/* I18N: do not translate the #keyword
 			."<br /><br /></td>"
 			."<td class=\"optionbox\">"
 		;
-		if($useCK)
-		{
+		if (array_key_exists('ckeditor', WT_Module::getActiveModules())) {
 			// use CKeditor module
 			require_once WT_ROOT.'modules/ckeditor/ckeditor.php';
 			$oCKeditor = new CKEditor();
@@ -391,16 +380,6 @@ i18n::translate('Narrative description')=>/* I18N: do not translate the #keyword
 		}
 
 		print "\n\t\t</td>\n\t</tr>\n";
-
-		// compatibility mode
-		$compat=get_block_setting($block_id, 'compat', false);
-		if($compat == 1){$compat = ' checked="checked"';}else{$compat = '';}
-		print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
-			.i18n::translate('Compatibility Mode')
-			.help_link('index_htmlplus_compat')
-			."</td>\n<td class=\"optionbox\"><input type=\"checkbox\" name=\"compat\" value=\"1\"{$compat} /></td>\n"
-			."\t</tr>\n"
-		;
 
 		// extended features
 		$ui=get_block_setting($block_id, 'ui', false);

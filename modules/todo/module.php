@@ -62,7 +62,7 @@ class todo_WT_Module extends WT_Module implements WT_Module_Block {
 			$title.="<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?action=configure&amp;ctype={$ctype}&amp;block_id={$block_id}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 			$title.="<img class=\"adminicon\" src=\"$WT_IMAGE_DIR/".$WT_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
-		$title.=i18n::translate('&quot;To Do&quot; tasks').help_link('todo');
+		$title.=i18n::translate('&quot;To Do&quot; tasks').help_link('todo', $this->getName());
 		$content='';
 
 		require_once WT_ROOT.'js/sorttable.js.htm';
@@ -84,14 +84,14 @@ class todo_WT_Module extends WT_Module implements WT_Module_Block {
 		foreach (get_calendar_events(0, $end_jd, '_TODO', WT_GED_ID) as $todo) {
 			$record=GedcomRecord::getInstance($todo['id']);
 			if ($record && $record->canDisplayDetails()) {
-				$wt_user=get_gedcom_value('_WT_USER', 2, $todo['factrec']);
-				if ($wt_user==WT_USER_NAME || !$wt_user && $show_unassigned || $wt_user && $show_other) {
+				$user_name=get_gedcom_value('_WT_USER', 2, $todo['factrec']);
+				if ($user_name==WT_USER_NAME || !$user_name && $show_unassigned || $user_name && $show_other) {
 					$content.='<tr valign="top">';
 					$content.='<td class="list_value_wrap">'.str_replace('<a', '<a name="'.$todo['date']->MinJD().'"', $todo['date']->Display(false)).'</td>';
 					$name=$record->getListName();
 					$content.='<td class="list_value_wrap" align="'.get_align(WT_GEDCOM).'"><a href="'.encode_url($record->getLinkUrl()).'">'.PrintReady($name).'</a></td>';
 					if ($show_unassigned || $show_other) {
-						$content.='<td class="list_value_wrap">'.$wt_user.'</td>';
+						$content.='<td class="list_value_wrap">'.$user_name.'</td>';
 					}
 					$text=get_gedcom_value('_TODO', 1, $todo['factrec']);
 					$content.='<td class="list_value_wrap" align="'.get_align($text).'">'.PrintReady($text).'</td>';
@@ -146,21 +146,21 @@ class todo_WT_Module extends WT_Module implements WT_Module_Block {
 
 		$show_other=get_block_setting($block_id, 'show_other', true);
 		echo '<tr><td class="descriptionbox wrap width33">';
-		echo i18n::translate('Show other users\' tasks'), help_link('todo_show_other');
+		echo i18n::translate('Show other users\' tasks'), help_link('todo_show_other', $this->getName());
 		echo '</td><td class="optionbox">';
 		echo edit_field_yes_no('show_other', $show_other);
 		echo '</td></tr>';
 
 		$show_unassigned=get_block_setting($block_id, 'show_unassigned', true);
 		echo '<tr><td class="descriptionbox wrap width33">';
-		echo i18n::translate('Show unassigned tasks'), help_link('todo_show_unassigned');
+		echo i18n::translate('Show unassigned tasks'), help_link('todo_show_unassigned', $this->getName());
 		echo '</td><td class="optionbox">';
 		echo edit_field_yes_no('show_other', $show_unassigned);
 		echo '</td></tr>';
 
 		$show_future=get_block_setting($block_id, 'show_future', true);
 		echo '<tr><td class="descriptionbox wrap width33">';
-		echo i18n::translate('Show future tasks'), help_link('todo_show_future');
+		echo i18n::translate('Show future tasks'), help_link('todo_show_future', $this->getName());
 		echo '</td><td class="optionbox">';
 		echo edit_field_yes_no('show_other', $show_future);
 		echo '</td></tr>';

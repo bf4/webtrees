@@ -1004,7 +1004,7 @@ function find_highlighted_object($pid, $ged_id, $indirec) {
 
 	//-- find all of the media items for a person
 	$media=
-		WT_DB::prepare("SELECT m_media, m_file, m_gedrec, mm_gedrec FROM ##media, ##media_mapping WHERE m_media=mm_media AND m_gedfile=mm_gedfile AND m_gedfile=? AND mm_gid=? ORDER BY mm_order")
+		WT_DB::prepare("SELECT m_media, m_file, m_gedrec, mm_gedrec FROM `##media`, `##media_mapping` WHERE m_media=mm_media AND m_gedfile=mm_gedfile AND m_gedfile=? AND mm_gid=? ORDER BY mm_order")
 		->execute(array($ged_id, $pid))
 		->fetchAll(PDO::FETCH_NUM);
 
@@ -2825,7 +2825,7 @@ function get_new_xref($type='INDI', $ged_id=WT_GED_ID, $use_cache=false) {
 	}
 
 	$num=
-		WT_DB::prepare("SELECT next_id FROM ##next_id WHERE record_type=? AND gedcom_id=?")
+		WT_DB::prepare("SELECT next_id FROM `##next_id` WHERE record_type=? AND gedcom_id=?")
 		->execute(array($type, $ged_id))
 		->fetchOne();
 
@@ -2835,7 +2835,7 @@ function get_new_xref($type='INDI', $ged_id=WT_GED_ID, $use_cache=false) {
 
 	if (is_null($num)) {
 		$num = 1;
-		WT_DB::prepare("INSERT INTO ##next_id (gedcom_id, record_type, next_id) VALUES(?, ?, 1)")
+		WT_DB::prepare("INSERT INTO `##next_id` (gedcom_id, record_type, next_id) VALUES(?, ?, 1)")
 			->execute(array($ged_id, $type));
 	}
 
@@ -2854,7 +2854,7 @@ function get_new_xref($type='INDI', $ged_id=WT_GED_ID, $use_cache=false) {
 	$key = $prefix.$num;
 
 	//-- update the next id number in the DB table
-	WT_DB::prepare("UPDATE ##next_id SET next_id=? WHERE record_type=? AND gedcom_id=?")
+	WT_DB::prepare("UPDATE `##next_id` SET next_id=? WHERE record_type=? AND gedcom_id=?")
 		->execute(array($num+1, $type, $ged_id));
 	return $key;
 }
@@ -2958,8 +2958,12 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 		$type .= 'audio';
 	} else if (preg_match('/\.wmv$/i', $fileName)) {
 		$type .= 'wmv';
-	} else $type .= 'other';
-	// $type is now: (url | local) _ (flv | picasa | image | page | audio | other)
+	} else if (strpos($fileName, 'http://maps.google.')===0) {
+		$type .= 'streetview';	
+	} else { 
+		$type .= 'other';
+	}
+	// $type is now: (url | local) _ (flv | picasa | image | page | audio | wmv | streetview |other)
 	$result['type'] = $type;
 
 	// -- Determine the correct URL to open this media file
@@ -2991,6 +2995,11 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 			case 'local_page':
 			// case 'local_other':
 				$url = encode_url($fileName) . "\" rel='clearbox({$LB_URL_WIDTH}, {$LB_URL_HEIGHT}, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
+				break 2;
+			case 'url_streetview':
+				if (WT_SCRIPT_NAME != "media.php") {				
+					echo  '<iframe style="float:left; padding:5px;" width="264" height="176" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="'. $fileName. '&amp;output=svembed"></iframe>';
+				}
 				break 2;
 			}
 		}
@@ -3025,6 +3034,10 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 		case 'local_page':
 			$url = "javascript:;\" onclick=\"var winurl = window.open('".encode_url(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
 			break 2;
+		case 'url_streetview':
+			echo '<iframe style="float:left; padding:5px;" width="264" height="176" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="', $fileName, '&amp;output=svembed"></iframe>';
+			$url = "#";
+			break 2;
 		}
 		if ($USE_MEDIA_VIEWER && $obeyViewerOption) {
 			$url = encode_url('mediaviewer.php?mid='.$mid);
@@ -3037,7 +3050,11 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 		break;
 	}
 	// At this point, $url describes how to handle the image when its thumbnail is clicked
-	$result['url'] = $url;
+	if ($type == 'url_streetview') {
+		$result['url'] = "#";
+	} else {
+		$result['url'] = $url;
+	}
 
 	// -- Determine the correct thumbnail or pseudo-thumbnail
 	$width = '';
@@ -3067,6 +3084,9 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 		case 'url_audio':
 		case 'local_audio':
 			$thumb = isset($WT_IMAGES["media"]["audio"]) ? $WT_IMAGE_DIR.'/'.$WT_IMAGES["media"]["audio"] : 'images/media/audio.png';
+			break;
+		case 'url_streetview':
+			$thumb = null;
 			break;
 		default:
 			$thumb = $thumbName;

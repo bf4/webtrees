@@ -1,14 +1,12 @@
 <?php
 /**
- * Lightbox configuration User Interface.
+ * Module help text.
  *
- * Provides links for administrators to get to other administrative areas of the site
+ * This file is included from the application help_text.php script.
+ * It simply needs to set $title and $text for the help topic $help_topic
  *
  * webtrees: Web based Family History software
  * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,31 +22,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * This Page Is Valid XHTML 1.0 Transitional! > 01 September 2005
- *
- * @package webtrees
- * @subpackage Admin
- * $Id$
+ * @version $Id$
  */
 
-if (!defined('WT_WEBTREES')) {
+if (!defined('WT_WEBTREES') || !defined('WT_SCRIPT_NAME') || WT_SCRIPT_NAME!='help_text.php') {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-
-if (WT_USER_IS_ADMIN) { ?>
-   <tr>
-	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo i18n::translate('Lightbox-Album Configuration'); ?></td>
-   </tr>
-   <tr>
-      <td class="optionbox">
-		<a href="module.php?mod=lightbox&mod_action=lb_editconfig"><?php echo i18n::translate('Manage Lightbox configuration');?>
-		</a><?php echo help_link('LIGHTBOX_CONFIG', $this->getName()); ?>
-	  </td>
-      <td class="optionbox">
-		
-	  </td>
-   </tr>
-
-<?php }
-?>
+switch ($help) {
+case 'index_loggedin':
+	$title=i18n::translate('Logged in users block');
+	$text=i18n::translate('This block will show you the users currently logged in.<br /><br />If you are not an administrator, your view of logged-in users is restricted to those who have elected to be visible while on-line.  For this to work, you must also elect to be visible while on-line.  On-line users who are invisible to you are counted as being anonymous.');
+	break;
+}

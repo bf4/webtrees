@@ -92,8 +92,8 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	if ($TEXT_DIRECTION=="rtl") $iconsStyleAdd="float: left; ";
 
 	$disp=$person->canDisplayDetails();
-
-	$boxID = $pid.".".$personcount.".".$count;
+	$uniqueID = floor(microtime() * 1000000);
+	$boxID = $pid.".".$personcount.".".$count.".".$uniqueID;
 	$mouseAction1 = "onmouseover=\"clear_family_box_timeout('".$boxID."');\" onmouseout=\"family_box_timeout('".$boxID."');\"";
 	$mouseAction2 = " onmouseover=\"expandbox('".$boxID."', $style); return false;\" onmouseout=\"restorebox('".$boxID."', $style); return false;\"";
 	$mouseAction3 = " onmousedown=\"expandbox('".$boxID."', $style); return false;\" onmouseup=\"restorebox('".$boxID."', $style); return false;\"";
@@ -1271,14 +1271,14 @@ function print_privacy_error() {
 function help_link($help_topic, $module='') {
 	global $WT_USE_HELPIMG, $WT_IMAGES, $WT_IMAGE_DIR, $SEARCH_SPIDER;
 
-	if ($SEARCH_SPIDER || !$_SESSION['show_context_help']) {
-		return '';
-	} else {
+//	if ($SEARCH_SPIDER || !$_SESSION['show_context_help']) {
+//		return '';
+//	} else {
 		return
 			'<a class="help" tabindex="0" href="javascript: '.$help_topic.'" onclick="helpPopup(\''.$help_topic.'\',\''.$module.'\'); return false;">&nbsp;'.
 			($WT_USE_HELPIMG ?  '<img src="'.$WT_IMAGE_DIR.'/'.$WT_IMAGES['help']['small'].'" class="icon" width="15" height="15" alt="" />' : i18n::translate('?')).
 			'&nbsp;</a>';
-	}
+//	}
 }
 
 // Embed global variables and constants in a string.

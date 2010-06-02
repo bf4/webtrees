@@ -604,7 +604,7 @@ if (check_media_structure()) {
 		//-- figure out how many levels are in this file
 		$mlevels = preg_split("~[/\\\]~", $filename);
 
-		$statement=WT_DB::prepare("SELECT * FROM ##media WHERE m_file LIKE ?")->execute(array("%{$myFile}"));
+		$statement=WT_DB::prepare("SELECT * FROM `##media` WHERE m_file LIKE ?")->execute(array("%{$myFile}"));
 		while ($row=$statement->fetch(PDO::FETCH_ASSOC)) {
 			$rlevels = preg_split("~[/\\\]~", $row["m_file"]);
 			//-- make sure we only delete a file at the same level of directories
@@ -1094,9 +1094,14 @@ if (check_media_structure()) {
 						//-- Thumbnail field
 						if ($showthumb) {
 							print "\n\t\t\t<td class=\"optionbox $changeClass $TEXT_DIRECTION width10\">";
-							echo '<center><a href="', $mediaInfo['url'], '">';
-							echo '<img src="', $mediaInfo['thumb'], '" align="middle" class="thumbnail" border="none"', $mediaInfo['width'];
-							echo ' alt="', $name, '" /></a></center>';
+							// if Streetview object
+							if (strpos($media["FILE"], 'http://maps.google.')===0) {
+								echo '<iframe style="float:left; padding:5px;" width="264" height="176" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="', $media["FILE"], '&amp;output=svembed"></iframe>';
+							} else {
+								echo '<center><a href="', $mediaInfo['url'], '">';
+								echo '<img src="', $mediaInfo['thumb'], '" align="middle" class="thumbnail" border="none"', $mediaInfo['width'];
+								echo ' alt="', $name, '" /></a></center>';
+							}
 							echo '</td>';
 						}
 

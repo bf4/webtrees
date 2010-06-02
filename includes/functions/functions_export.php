@@ -284,7 +284,7 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
 	$buffer=reformat_record_export($head);
 
 	$recs=
-		WT_DB::prepare("SELECT gedcom_data FROM ##record WHERE created_by IS NULL AND gedcom_id=? AND xref NOT LIKE ? ORDER BY xref")
+		WT_DB::prepare("SELECT gedcom_data FROM `##record` WHERE created_by IS NULL AND gedcom_id=? AND xref NOT LIKE ? ORDER BY xref")
 		->execute(array($ged_id, '%:%'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
@@ -344,7 +344,7 @@ function export_gramps($gedcom, $gedout, $exportOptions) {
 	$geDownloadGedcom->begin_xml();
 
 	$recs=
-		WT_DB::prepare("SELECT i_id, i_gedcom FROM ##individuals WHERE i_file=? AND i_id NOT LIKE ? ORDER BY i_id")
+		WT_DB::prepare("SELECT i_id, i_gedcom FROM `##individuals` WHERE i_file=? AND i_id NOT LIKE ? ORDER BY i_id")
 		->execute(array($ged_id, '%:%'))
 		->fetchAssoc();
 	foreach ($recs as $id=>$rec) {
@@ -354,7 +354,7 @@ function export_gramps($gedcom, $gedout, $exportOptions) {
 	}
 
 	$recs=
-		WT_DB::prepare("SELECT f_id, f_gedcom FROM ##families WHERE f_file=? AND f_id NOT LIKE ? ORDER BY f_id")
+		WT_DB::prepare("SELECT f_id, f_gedcom FROM `##families` WHERE f_file=? AND f_id NOT LIKE ? ORDER BY f_id")
 		->execute(array($ged_id, '%:%'))
 		->fetchAssoc();
 	foreach ($recs as $id=>$rec) {
@@ -364,7 +364,7 @@ function export_gramps($gedcom, $gedout, $exportOptions) {
 	}
 
 	$recs=
-		WT_DB::prepare("SELECT s_id, s_gedcom FROM ##sources WHERE s_file=? AND s_id NOT LIKE ? ORDER BY s_id")
+		WT_DB::prepare("SELECT s_id, s_gedcom FROM `##sources` WHERE s_file=? AND s_id NOT LIKE ? ORDER BY s_id")
 		->execute(array($ged_id, '%:%'))
 		->fetchAssoc();
 	foreach ($recs as $id=>$rec) {
@@ -374,7 +374,7 @@ function export_gramps($gedcom, $gedout, $exportOptions) {
 	}
 
 	$recs=
-		WT_DB::prepare("SELECT m_media, m_gedrec FROM ##media WHERE m_gedfile=? AND m_media NOT LIKE ? ORDER BY m_media")
+		WT_DB::prepare("SELECT m_media, m_gedrec FROM `##media` WHERE m_gedfile=? AND m_media NOT LIKE ? ORDER BY m_media")
 		->execute(array($ged_id, '%:%'))
 		->fetchAssoc();
 	foreach ($recs as $id=>$rec) {

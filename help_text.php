@@ -4115,9 +4115,9 @@ case 'index_gedcom_news':
 	$text=i18n::translate('The News block is like a bulletin board for this GEDCOM.  The site administrator can place important announcements or interesting news messages here.<br /><br />If you have something interesting to display, please contact the site administrator;  he can put your message on this bulletin board.');
 	break;
 
-case 'index_htmlplus_compat':
-	$title=i18n::translate('Advanced HTML compatability mode');
-	$text=i18n::translate('Enable compatibility with older versions of this block.  When checked, both old and new keywords will be recognized and acted upon.<br /><br />For example, the text <b>&#35;TOTAL_FAM&#35;</b> will be recognized as being equivalent to <b>&#35;totalFamilies&#35;</b>, <b>&#35;FIRST_DEATH_PLACE&#35;</b> to <b>&#35;firstDeathPlace&#35;</b>, <b>&#35;TOP10_BIGFAM&#35;</b> to <b>&#35;topTenLargestFamily&#35;</b>, etc.<br /><br />Unless absolutely necessary, you should not use Compatibility mode.');
+case 'index_htmlplus_ui':
+	$title=i18n::translate('Extended Interface');
+	$text=i18n::translate('When the extended interaface is enabled you can call other block using a keyword <b>&#35;callBlock:block_name&#35;</b>, where instead of block_name you should use the real block name. For example, <b>&#35;callBlock:gedcom_stats&#35;</b> displays the GEDCOM statistics block. It is also possible to include other files using a keyword <b>&#35;includeFile:file_name&#35;</b>.');
 	break;
 
 case 'index_htmlplus_content':
@@ -4143,11 +4143,6 @@ case 'index_htmlplus_template':
 case 'index_htmlplus_title':
 	$title=i18n::translate('Advanced HTML title');
 	$text=i18n::translate('This text should be blank or very brief.  When blank, the Advanced HTML block will show on the Index or Portal page as a plain block, just like the HTML block does.  When there is text, the Advanced HTML block will show like all the other blocks, complete with a block title bar containing the text you enter here.');
-	break;
-
-case 'index_loggedin':
-	$title=i18n::translate('Logged in users block');
-	$text=i18n::translate('This block will show you the users currently logged in.<br /><br />If you are not an administrator, your view of logged-in users is restricted to those who have elected to be visible while on-line.  For this to work, you must also elect to be visible while on-line.  On-line users who are invisible to you are counted as being anonymous.');
 	break;
 
 case 'index_login':
@@ -4757,26 +4752,6 @@ case 'timeline_control':
 	$text=i18n::translate('Click the drop down menu to change the speed at which the timeline scrolls.<br/><br/>~Begin Year~<br/>Enter the starting year of the range.<br/><br/>~End Year~<br/>Enter the ending year of the range.<br/><br/>~Search~<br/>Click the Search button to begin searching for events that occurred within the range identified by the Begin Year and End Year fields.');
 	break;
 
-case 'todo':
-	$title=i18n::translate('"To Do" block');
-	$text=i18n::translate('This block helps you keep track of <b>_TODO</b> tasks in the database.<br /><br />To add &quot;To Do&quot; tasks to your records, you may first need amend the GEDCOM configuration so that the <b>_TODO</b> fact is in the list of facts that can be added to the records of individuals, families, sources, and repositories.  Each of these lists, which you will find in the Edit Options section of the GEDCOM configuration, is independent.  The order of the list entries is not important; you can add the new entries at the beginning of each list.');
-	break;
-
-case 'todo_show_future':
-	$title=i18n::translate('Show future tasks');
-	$text=i18n::translate('Show &quot;To Do&quot; tasks that have a date in the future.  Otherwise only items with a date in the past are shown.');
-	break;
-
-case 'todo_show_other':
-	$title=i18n::translate('Show other users\' tasks');
-	$text=i18n::translate('Show &quot;To Do&quot; tasks assigned to other users');
-	break;
-
-case 'todo_show_unassigned':
-	$title=i18n::translate('Show unassigned tasks');
-	$text=i18n::translate('Show &quot;To Do&quot; tasks that are not assigned to any user');
-	break;
-
 case 'upload_media_file':
 	$title=i18n::translate('Media file to upload');
 	$text=i18n::translate('In this field you specify the location and name, on your local computer, of the media file you wish to upload to the server.  You can use the <b>Browse</b> button to search your local computer for the desired file.<br /><br />The uploaded file will have the same name on the server, and it will be uploaded to the directory specified in the <b>Folder on server</b> field.<br /><br />If you do not see the <b>Folder on server</b> field or cannot change it, you do not have sufficient permissions or your GEDCOM configuration has been set to allow no directory levels beyond the default <b>%s</b>.  In this case, the media file will be uploaded to the directory <b>%s</b>.', $MEDIA_DIRECTORY, $MEDIA_DIRECTORY);
@@ -4900,11 +4875,6 @@ case 'view_server_folder':
 case 'welcome_new':
 	$title=i18n::translate('Welcome to your new <b>webtrees</b> website.');
 	$text=i18n::translate('Since you are seeing this page, you have successfully installed webtrees on your server and are ready to begin configuring it to your requirements.<br />This Help page will guide you through the configuration process.  As you enter different fields, this window will provide you with help information about the field you are in.  You may close this window; to open it again click on one of the "?" question marks next to the field label.');
-	break;
-
-case 'yahrzeit':
-	$title=i18n::translate('Yahrzeiten block');
-	$text=i18n::translate('This block shows you Yahrzeiten that are coming up in the near future.<br /><br />Yahrzeiten (singular: Yahrzeit) are anniversaries of a person\'s death.  These anniversaries are observed in the Jewish tradition; they are no longer in common use in other traditions.  «Yahrzeit» can also be spelled «Jahrzeit» or «Yartzeit».<br /><br />The Administrator determines how far ahead the block will look.  You can further refine the block\'s display of upcoming Yahrzeiten through configuration options.');
 	break;
 
 case 'zip':
