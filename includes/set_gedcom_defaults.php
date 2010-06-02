@@ -52,7 +52,7 @@ WT_Module::setDefaultAccess($ged_id);
 // Privacy settings
 ////////////////////////////////////////////////////////////////////////////////
 WT_DB::prepare(
-	"INSERT INTO {$TBLPREFIX}default_resn (gedcom_id, tag_type, resn) VALUES ".
+	"INSERT INTO `##default_resn` (gedcom_id, tag_type, resn) VALUES ".
 	"(?, 'SOUR', 'privacy'),".
 	"(?, 'REPO', 'privacy'),".
 	"(?, 'SUBM', 'confidential'),".

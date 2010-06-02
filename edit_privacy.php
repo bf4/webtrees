@@ -43,17 +43,17 @@ if (!WT_USER_GEDCOM_ADMIN) {
 switch (safe_POST('action')) {
 case 'delete':
 	WT_DB::prepare(
-		"DELETE FROM {$TBLPREFIX}default_resn WHERE default_resn_id=?"
+		"DELETE FROM `##default_resn` WHERE default_resn_id=?"
 	)->execute(array(safe_POST('default_resn_id')));
 	break;
 case 'add_xref':
 	WT_DB::prepare(
-		"REPLACE INTO {$TBLPREFIX}default_resn (gedcom_id, xref, resn) VALUES (?, ?, ?)"
+		"REPLACE INTO `##default_resn` (gedcom_id, xref, resn) VALUES (?, ?, ?)"
 	)->execute(array(WT_GED_ID, safe_POST('xref'), safe_POST('resn')));
 	break;
 case 'add_tag_type':
 	WT_DB::prepare(
-		"REPLACE INTO {$TBLPREFIX}default_resn (gedcom_id, tag_type, resn) VALUES (?, ?, ?)"
+		"REPLACE INTO `##default_resn` (gedcom_id, tag_type, resn) VALUES (?, ?, ?)"
 	)->execute(array(WT_GED_ID, safe_POST('tag_type'), safe_POST('resn')));
 	break;
 case 'update':
@@ -68,7 +68,7 @@ $PRIVACY_CONSTANTS=array(
 	'hidden'      =>i18n::translate('Hide even from admin users')
 );
 
-$all_tags=WT_DB::prepare("SELECT fact_type FROM {$TBLPREFIX}fact WHERE fact_type NOT IN ('FAMC','FAMS','HUSB','WIFE','CHIL') UNION SELECT record_type FROM {$TBLPREFIX}record WHERE record_type NOT IN ('HEAD','TRLR')")->fetchOneColumn();
+$all_tags=WT_DB::prepare("SELECT fact_type FROM `##fact` WHERE fact_type NOT IN ('FAMC','FAMS','HUSB','WIFE','CHIL') UNION SELECT record_type FROM `##record` WHERE record_type NOT IN ('HEAD','TRLR')")->fetchOneColumn();
 foreach ($all_tags as &$tag) {
 	$tag=i18n::translate('%1$s [%2$s]', strip_tags(translate_fact($tag)), $tag);
 }
@@ -344,7 +344,7 @@ if ($action=="update") {
 <?php
 $rows=WT_DB::prepare(
 	"SELECT default_resn_id, tag_type, xref, resn".
-	" FROM {$TBLPREFIX}default_resn".
+	" FROM `##default_resn`".
 	" WHERE gedcom_id=?".
 	" ORDER BY xref, tag_type"
 )->execute(array(WT_GED_ID))->fetchAll();
