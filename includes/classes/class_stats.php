@@ -858,7 +858,7 @@ class stats {
 ///////////////////////////////////////////////////////////////////////////////
 
 	function _mortalityQuery($type='full', $life_dir='ASC', $birth_death='BIRT') {
-		global $SHOW_ID_NUMBERS, $listDir, $TEXT_DIRECTION;
+		global $listDir, $TEXT_DIRECTION;
 		if ($birth_death == 'MARR') {
 			$query_field = "'".str_replace('|', "','", WT_EVENTS_MARR)."'";
 		} else if ($birth_death == 'DIV') {
@@ -938,15 +938,7 @@ class stats {
 				$result=$date->Display(true);
 				break;
 			case 'name':
-				$id='';
-				if ($SHOW_ID_NUMBERS) {
-					if ($listDir=='rtl' || $TEXT_DIRECTION=='rtl') { //do we need $listDir here?
-						$id="&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
-					} else {
-						$id="&nbsp;&nbsp;({$row['d_gid']})";
-					}
-				}
-				$result="<a href=\"".$record->getLinkUrl()."\">".$record->getFullName()."{$id}</a>";
+				$result="<a href=\"".$record->getLinkUrl()."\">".$record->getFullName()."</a>";
 				break;
 			case 'place':
 				$result=format_fact_place(GedcomRecord::getInstance($row['d_gid'])->getFactByType($row['d_fact']), true, true, true);
@@ -1377,7 +1369,7 @@ class stats {
 ///////////////////////////////////////////////////////////////////////////////
 
 	function _longlifeQuery($type='full', $sex='F') {
-		global $SHOW_ID_NUMBERS, $listDir;
+		global $listDir;
 
 		$sex_search = ' 1=1';
 		if ($sex == 'F') {
@@ -1450,15 +1442,7 @@ class stats {
 				$result=floor($row['age']/365.25);
 				break;
 			case 'name':
-				$id = '';
-				if ($SHOW_ID_NUMBERS) {
-					if ($listDir == 'rtl') {
-						$id = "&nbsp;&nbsp;".getRLM()."({$row['id']})".getRLM();
-					} else {
-						$id = "&nbsp;&nbsp;({$row['id']})";
-					}
-				}
-				$result="<a href=\"".encode_url($person->getLinkUrl())."\">".$person->getFullName()."{$id}</a>";
+				$result="<a href=\"".encode_url($person->getLinkUrl())."\">".$person->getFullName()."</a>";
 				break;
 		}
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
@@ -1801,7 +1785,7 @@ class stats {
 ///////////////////////////////////////////////////////////////////////////////
 
 	function _eventQuery($type, $direction, $facts) {
-		global $SHOW_ID_NUMBERS, $listDir;
+		global $listDir;
 		$eventTypes = array(
 			'BIRT'=>i18n::translate('birth'),
 			'DEAT'=>i18n::translate('death'),
@@ -1854,15 +1838,7 @@ class stats {
 				}
 				break;
 			case 'name':
-				$id = '';
-				if ($SHOW_ID_NUMBERS) {
-					if ($listDir == 'rtl') {
-						$id="&nbsp;&nbsp;" . getRLM() . "({$row['id']})" . getRLM();
-					} else {
-						$id="&nbsp;&nbsp;({$row['id']})";
-					}
-				}
-				$result="<a href=\"".encode_url($record->getLinkUrl())."\">".PrintReady($record->getFullName())."{$id}</a>";
+				$result="<a href=\"".encode_url($record->getLinkUrl())."\">".PrintReady($record->getFullName())."</a>";
 				break;
 			case 'place':
 				$result=format_fact_place($record->getFactByType($row['fact']), true, true, true);
@@ -3724,12 +3700,11 @@ class stats_ui extends stats
 		if ($params === null){return '';}
 		if (isset($params[0]) && $params[0] != ''){$block = $params[0];}else{return '';}
 		if ($block=='html') return '#callBlock:html#';
-		ob_start();
 		$class_name = $block.'_WT_Module';
 		$block = new $class_name;
 		$block_id=safe_GET('block_id');
-		$content = $block->getBlock($block_id);
-		return ob_get_clean();
+		$content = $block->getBlock($block_id, false);
+		return $content;
 	}
 
 	function totalUserMessages(){return count(getUserMessages(WT_USER_NAME));}
