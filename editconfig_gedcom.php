@@ -257,7 +257,7 @@ if (safe_POST('action')=='update') {
 		// create the media directory
 		// if NEW_MEDIA_FIREWALL_ROOTDIR is the INDEX_DIRECTORY, PGV will have perms to create it
 		// if PGV is unable to create the directory, tell the user to create it
-		if (($_POST["NEW_USE_MEDIA_FIREWALL"]=='yes') || $USE_MEDIA_FIREWALL) {
+		if ($_POST["NEW_USE_MEDIA_FIREWALL"]==true) {
 			if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY)) {
 				@mkdir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY, WT_PERM_EXE);
 				if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY)) {
@@ -269,7 +269,7 @@ if (safe_POST('action')=='update') {
 	}
 	if (!$errors) {
 		// create the thumbs dir to make sure we have write perms
-		if (($_POST["NEW_USE_MEDIA_FIREWALL"]=='yes') || $USE_MEDIA_FIREWALL) {
+		if ($_POST["NEW_USE_MEDIA_FIREWALL"]==true) {
 			if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs")) {
 				@mkdir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs", WT_PERM_EXE);
 				if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs")) {
@@ -281,7 +281,7 @@ if (safe_POST('action')=='update') {
 	}
 	if (!$errors) {
 		// copy the .htaccess file from INDEX_DIRECTORY to NEW_MEDIA_FIREWALL_ROOTDIR in case it is still in a web-accessible area
-		if (($_POST["NEW_USE_MEDIA_FIREWALL"]=='yes') || $USE_MEDIA_FIREWALL) {
+		if ($_POST["NEW_USE_MEDIA_FIREWALL"]==true) {
 			if ( (file_exists($INDEX_DIRECTORY.".htaccess")) && (is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY)) && (!file_exists($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.".htaccess")) ) {
 				@copy($INDEX_DIRECTORY.".htaccess", $NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.".htaccess");
 				if (!file_exists($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.".htaccess")) {
@@ -296,7 +296,7 @@ if (safe_POST('action')=='update') {
 	}
 	file_put_contents($gedcom_config, $configtext);
 
-	if (($_POST["NEW_USE_MEDIA_FIREWALL"]=='yes') && !$USE_MEDIA_FIREWALL) {
+	if ($_POST["NEW_USE_MEDIA_FIREWALL"]==true ) {
 		AddToLog("Media Firewall enabled", 'config');
 
 		if (!$errors) {
@@ -334,7 +334,7 @@ if (safe_POST('action')=='update') {
 			}
 		}
 
-	} elseif (($_POST["NEW_USE_MEDIA_FIREWALL"]=='no') && $USE_MEDIA_FIREWALL) {
+	} elseif ($_POST["NEW_USE_MEDIA_FIREWALL"]==false) {
 		AddToLog("Media Firewall disabled", 'config');
 
 		if (file_exists($MEDIA_DIRECTORY.".htaccess")) {
@@ -1461,16 +1461,26 @@ print_header(i18n::translate('GEDCOM configuration'));
 			<div id="user-options">
 			  <table class="facts_table">
 				<tr>
-					<td class="descriptionbox wrap width20">
-						<?php echo i18n::translate('Show contextual <b>?</b> help links'), help_link('SHOW_CONTEXT_HELP'); ?>
+					<td class="descriptionbox nowrap">
+						<?php echo i18n::translate('Contextual Help links'), help_link('SHOW_CONTEXT_HELP'); ?>
 					</td>
-					<td class="optionbox">
-						<?php echo edit_field_yes_no('NEW_SHOW_CONTEXT_HELP', $SHOW_CONTEXT_HELP, 'tabindex="'.(++$i).'"'); ?>
+					<td class="optionbox width50">
+						<!--<?php echo edit_field_yes_no('NEW_SHOW_CONTEXT_HELP', $SHOW_CONTEXT_HELP, 'tabindex="'.(++$i).'"'); ?>-->
+						<input type="radio" name="NEW_SHOW_CONTEXT_HELP" value = 'no' <?php if($SHOW_CONTEXT_HELP=false){echo 'checked="checked"';}; ?>>Hide<input type="radio" name="NEW_SHOW_CONTEXT_HELP" value = 'yes' <?php if($SHOW_CONTEXT_HELP=true){echo 'checked="checked"';}; ?>>Show
 					</td>
 				</tr>
 				<tr>
-					<td class="descriptionbox wrap width20">
-						<?php echo i18n::translate('Theme'), help_link('THEME'); ?>
+					<td class="descriptionbox nowrap">
+						<?php echo i18n::translate('Theme dropdown selector for theme changes'), help_link('ALLOW_THEME_DROPDOWN'); ?>
+					</td>
+					<td class="optionbox">
+						<!--<?php echo edit_field_yes_no('NEW_ALLOW_THEME_DROPDOWN', $ALLOW_THEME_DROPDOWN, 'tabindex="'.(++$i).'"'); ?>-->
+						<input type="radio" name="NEW_ALLOW_THEME_DROPDOWN" value = 'no' <?php if($ALLOW_THEME_DROPDOWN=false){echo 'checked="checked"';}; ?>>Hide<input type="radio" name="NEW_ALLOW_THEME_DROPDOWN" value = 'yes' <?php if($ALLOW_THEME_DROPDOWN=true){echo 'checked="checked"';}; ?>>Show
+					</td>
+				</tr>
+				<tr>
+					<td class="descriptionbox nowrap">
+						<?php echo i18n::translate('Default Theme'), help_link('THEME'); ?>
 					</td>
 					<td class="optionbox">
 						<select name="NEW_THEME_DIR" dir="ltr" tabindex="<?php echo ++$i; ?>">
@@ -1482,14 +1492,6 @@ print_header(i18n::translate('GEDCOM configuration'));
 								}
 							?>
 						</select>
-					</td>
-				</tr>
-				<tr>
-					<td class="descriptionbox wrap width20">
-						<?php echo i18n::translate('Display theme dropdown selector for theme changes'), help_link('ALLOW_THEME_DROPDOWN'); ?>
-					</td>
-					<td class="optionbox">
-						<?php echo edit_field_yes_no('NEW_ALLOW_THEME_DROPDOWN', $ALLOW_THEME_DROPDOWN, 'tabindex="'.(++$i).'"'); ?>
 					</td>
 				</tr>
 			 </table>
