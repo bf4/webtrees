@@ -35,6 +35,8 @@ define('WT_SCRIPT_NAME', 'login_register.php');
 require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 
+$REQUIRE_ADMIN_AUTH_REGISTRATION=get_site_setting('REQUIRE_ADMIN_AUTH_REGISTRATION');
+
 $action         =safe_POST('action');
 $user_realname  =safe_POST('user_realname');
 $url            =safe_POST('url',             WT_REGEX_URL, 'index.php');
@@ -153,7 +155,7 @@ switch ($action) {
 
 	case "register" :
 		$_SESSION["good_to_send"] = true;
-		if (!$USE_REGISTRATION_MODULE) {
+		if (!get_site_setting('USE_REGISTRATION_MODULE')) {
 		header("Location: index.php");
 		exit;
 	}
@@ -301,7 +303,7 @@ switch ($action) {
 		}
 
 	case "registernew" :
-		if (!$USE_REGISTRATION_MODULE) {
+		if (!get_site_setting('USE_REGISTRATION_MODULE')) {
 			header("Location: index.php");
 			exit;
 		}
@@ -340,20 +342,20 @@ switch ($action) {
 			else if ($user_password01 == $user_password02) {
 				if ($user_id=create_user($user_name, $user_realname, $user_email, crypt($user_password01))) {
 					set_user_setting($user_id, 'language',            $user_language);
-					set_user_setting($user_id, 'verified',            'no');
-					set_user_setting($user_id, 'verified_by_admin',    $REQUIRE_ADMIN_AUTH_REGISTRATION ? 'no' : 'yes');
+					set_user_setting($user_id, 'verified',             0);
+					set_user_setting($user_id, 'verified_by_admin',    $REQUIRE_ADMIN_AUTH_REGISTRATION);
 					set_user_setting($user_id, 'reg_timestamp',        date('U'));
 					set_user_setting($user_id, 'reg_hashcode',         md5(crypt($user_name)));
 					set_user_setting($user_id, 'contactmethod',        "messaging2");
 					set_user_setting($user_id, 'defaulttab',           $GEDCOM_DEFAULT_TAB);
-					set_user_setting($user_id, 'visibleonline',        'Y');
-					set_user_setting($user_id, 'editaccount',          'Y');
-					set_user_setting($user_id, 'relationship_privacy', $USE_RELATIONSHIP_PRIVACY ? 'Y' : 'N');
+					set_user_setting($user_id, 'visibleonline',        1);
+					set_user_setting($user_id, 'editaccount',          1);
+					set_user_setting($user_id, 'relationship_privacy', $USE_RELATIONSHIP_PRIVACY);
 					set_user_setting($user_id, 'max_relation_path',    $MAX_RELATION_PATH_LENGTH);
-					set_user_setting($user_id, 'auto_accept',          'N');
-					set_user_setting($user_id, 'canadmin',             'N');
-					set_user_setting($user_id, 'loggedin',             'N');
-					set_user_setting($user_id, 'sessiontime',          '0');
+					set_user_setting($user_id, 'auto_accept',          0);
+					set_user_setting($user_id, 'canadmin',             0);
+					set_user_setting($user_id, 'loggedin',             0);
+					set_user_setting($user_id, 'sessiontime',          0);
 					if (!empty($user_gedcomid)) {
 						set_user_gedcom_setting($user_id, $GEDCOM, 'gedcomid', $user_gedcomid);
 						set_user_gedcom_setting($user_id, $GEDCOM, 'rootid',   $user_gedcomid);
@@ -435,7 +437,7 @@ switch ($action) {
 		break;
 
 	case "userverify" :
-		if (!$USE_REGISTRATION_MODULE) {
+		if (!get_site_setting('USE_REGISTRATION_MODULE')) {
 			header("Location: index.php");
 			exit;
 		}
@@ -466,7 +468,7 @@ switch ($action) {
 		break;
 
 	case "verify_hash" :
-		if (!$USE_REGISTRATION_MODULE) {
+		if (!get_site_setting('USE_REGISTRATION_MODULE')) {
 			header("Location: index.php");
 			exit;
 		}
@@ -487,12 +489,12 @@ switch ($action) {
 			$pw_ok = (get_user_password($user_id) == crypt($user_password, get_user_password($user_id)));
 			$hc_ok = (get_user_setting($user_id, 'reg_hashcode') == $user_hashcode);
 			if (($pw_ok) && ($hc_ok)) {
-				set_user_setting($user_id, 'verified', 'yes');
-				set_user_setting($user_id, 'pwrequested', '');
+				set_user_setting($user_id, 'verified', 1);
+				set_user_setting($user_id, 'pwrequested', null);
 				set_user_setting($user_id, 'reg_timestamp', date("U"));
-				set_user_setting($user_id, 'reg_hashcode', '');
+				set_user_setting($user_id, 'reg_hashcode', null);
 				if (!$REQUIRE_ADMIN_AUTH_REGISTRATION) {
-					set_user_setting($user_id, 'verified_by_admin', 'yes');
+					set_user_setting($user_id, 'verified_by_admin', 1);
 				}
 				AddToLog("User verified: ".$user_name, 'auth');
 

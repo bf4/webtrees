@@ -3435,9 +3435,8 @@ class stats {
 ///////////////////////////////////////////////////////////////////////////////
 
 	static function _usersLoggedIn($type='nolist') {
-		global $WT_SESSION_TIME;
 		// Log out inactive users
-		foreach (get_idle_users(time() - $WT_SESSION_TIME) as $user_id=>$user_name) {
+		foreach (get_idle_users(time() - get_site_setting('SESSION_TIME')) as $user_id=>$user_name) {
 			if ($user_id != WT_USER_ID) {
 				userLogout($user_id);
 			}
@@ -3449,7 +3448,7 @@ class stats {
 		$loggedusers = array ();
 		$x = get_logged_in_users();
 		foreach ($x as $user_id=>$user_name) {
-			if (WT_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline') == 'Y') {
+			if (WT_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline')) {
 				$loggedusers[$user_id] = $user_name;
 			} else {
 				$NumAnonymous++;
@@ -3503,9 +3502,7 @@ class stats {
 	}
 
 	static function _usersLoggedInTotal($type='all') {
-		global $WT_SESSION_TIME;
-
-		foreach (get_idle_users(time() - $WT_SESSION_TIME) as $user_id=>$user_name) {
+		foreach (get_idle_users(time() - get_site_setting('SESSION_TIME')) as $user_id=>$user_name) {
 			if ($user_id != WT_USER_ID) {
 				userLogout($user_id);
 			}
@@ -3514,7 +3511,7 @@ class stats {
 		$visible = 0;
 		$x = get_logged_in_users();
 		foreach ($x as $user_id=>$user_name) {
-			if (WT_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline') == 'Y') {$visible++;}else{$anon++;}
+			if (WT_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline')) {$visible++;}else{$anon++;}
 		}
 		if ($type == 'anon') {return $anon;}
 		elseif ($type == 'visible') {return $visible;}
@@ -3557,7 +3554,7 @@ class stats {
 			case 'loggedin':
 				if(is_array($params) && isset($params[0]) && $params[0] != ''){$yes = $params[0];}else{$yes = i18n::translate('Yes');}
 				if(is_array($params) && isset($params[1]) && $params[1] != ''){$no = $params[1];}else{$no = i18n::translate('No');}
-				return (get_user_setting($user_id, 'loggedin') == 'Y')?$yes:$no;
+				return get_user_setting($user_id, 'loggedin') ? $yes : $no;
 		}
 	}
 

@@ -45,10 +45,10 @@ class logged_in_WT_Module extends WT_Module implements WT_Module_Block {
 
 	// Implement class WT_Module_Block
 	public function getBlock($block_id, $template=true) {
-		global $WT_SESSION_TIME, $TEXT_DIRECTION, $THEME_DIR;
+		global $THEME_DIR;
 
 		// Log out inactive users
-		foreach (get_idle_users(time()-$WT_SESSION_TIME) as $user_id=>$user_name) {
+		foreach (get_idle_users(time()-get_site_setting('SESSION_TIME')) as $user_id=>$user_name) {
 			if ($user_id!=WT_USER_ID) {
 				userLogout($user_id);
 			}
@@ -58,7 +58,7 @@ class logged_in_WT_Module extends WT_Module implements WT_Module_Block {
 		$NumAnonymous = 0;
 		$loggedusers = array ();
 		foreach (get_logged_in_users() as $user_id=>$user_name) {
-			if (WT_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline')=='Y') {
+			if (WT_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline')) {
 				$loggedusers[$user_id]=$user_name;
 			} else {
 				$NumAnonymous++;

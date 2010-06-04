@@ -344,9 +344,9 @@ function checkPrivacyByYear($pid) {
 */
 function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 	global $USE_RELATIONSHIP_PRIVACY, $CHECK_MARRIAGE_RELATIONS, $MAX_RELATION_PATH_LENGTH;
-	global $global_facts, $person_privacy, $user_privacy, $HIDE_LIVE_PEOPLE, $GEDCOM, $SHOW_DEAD_PEOPLE, $MAX_ALIVE_AGE, $PRIVACY_BY_YEAR;
+	global $global_facts, $person_privacy, $HIDE_LIVE_PEOPLE, $GEDCOM, $SHOW_DEAD_PEOPLE, $MAX_ALIVE_AGE, $PRIVACY_BY_YEAR;
 	global $PRIVACY_CHECKS, $SHOW_SOURCES, $SHOW_LIVING_NAMES, $INDEX_DIRECTORY;
-	global $GEDCOM;
+
 	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if ($_SESSION["wt_user"]==WT_USER_ID) {
@@ -401,24 +401,6 @@ function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 
 	//-- start of user specific privacy checks
 	if ($pgv_USER_ID) {
-		if (isset($user_privacy[$pgv_USER_NAME]["all"])) {
-			if ($user_privacy[$pgv_USER_NAME]["all"] >= $pgv_USER_ACCESS_LEVEL) {
-				if ($cache_privacy) $privacy_cache[$pkey] = true;
-				return true;
-			} else {
-				if ($cache_privacy) $privacy_cache[$pkey] = false;
-				return false;
-			}
-		}
-		if (isset($user_privacy[$pgv_USER_NAME][$pid])) {
-			if ($user_privacy[$pgv_USER_NAME][$pid] >= $pgv_USER_ACCESS_LEVEL) {
-				if ($cache_privacy) $privacy_cache[$pkey] = true;
-				return true;
-			} else {
-				if ($cache_privacy) $privacy_cache[$pkey] = false;
-				return false;
-			}
-		}
 
 		if (isset($person_privacy[$pid])) {
 			if ($person_privacy[$pid]>=$pgv_USER_ACCESS_LEVEL) {
@@ -458,7 +440,7 @@ function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 			if ($type=="INDI") {
 				$gedrec = find_person_record($pid, $ged_id);
 				$isdead = is_dead($gedrec);
-				if ($USE_RELATIONSHIP_PRIVACY || get_user_setting($pgv_USER_ID, 'relationship_privacy')=="Y") {
+				if ($USE_RELATIONSHIP_PRIVACY || get_user_setting($pgv_USER_ID, 'relationship_privacy')) {
 					if ($isdead) {
 						if ($SHOW_DEAD_PEOPLE>=$pgv_USER_ACCESS_LEVEL) {
 							if ($PRIVACY_BY_YEAR && $SHOW_DEAD_PEOPLE==$pgv_USER_ACCESS_LEVEL) {
@@ -658,30 +640,17 @@ if (!function_exists("showLivingNameById")) {
 * @return boolean return true to show the person's name, return false to keep it private
 */
 function showLivingNameById($pid) {
-	global $GEDCOM;
-	global $SHOW_LIVING_NAMES, $person_privacy, $user_privacy;
+	global $SHOW_LIVING_NAMES, $person_privacy;
 
 	if ($_SESSION["wt_user"]==WT_USER_ID) {
 		// Normal operation
-		$pgv_USER_NAME			= WT_USER_NAME;
-		$pgv_USER_ACCESS_LEVEL	= WT_USER_ACCESS_LEVEL;
+		$pgv_USER_ACCESS_LEVEL = WT_USER_ACCESS_LEVEL;
 	} else {
 		// We're in the middle of a Download -- get overriding information from cache
-		$pgv_USER_NAME			= $_SESSION["pgv_USER_NAME"];
-		$pgv_USER_ACCESS_LEVEL	= $_SESSION["pgv_USER_ACCESS_LEVEL"];
+		$pgv_USER_ACCESS_LEVEL = $_SESSION["pgv_USER_ACCESS_LEVEL"];
 	}
 
 	if (displayDetailsById($pid)) return true;
-	if (!empty($pgv_USER_NAME)) {
-		if (isset($user_privacy[$pgv_USER_NAME]["all"])) {
-			if ($user_privacy[$pgv_USER_NAME]["all"] >= $pgv_USER_ACCESS_LEVEL) return true;
-			else return false;
-		}
-		if (isset($user_privacy[$pgv_USER_NAME][$pid])) {
-			if ($user_privacy[$pgv_USER_NAME][$pid] >= $pgv_USER_ACCESS_LEVEL) return true;
-			else return false;
-		}
-	}
 
 	if (isset($person_privacy[$pid])) {
 		if ($person_privacy[$pid]>=$pgv_USER_ACCESS_LEVEL) return true;
@@ -708,7 +677,6 @@ if (!function_exists("showFact")) {
 * @return boolean return true to show the fact, return false to keep it private
 */
 function showFact($fact, $pid, $type='INDI') {
-	global $GEDCOM;
 	global $global_facts, $person_facts, $SHOW_SOURCES;
 
 	if ($_SESSION["wt_user"]==WT_USER_ID) {
@@ -759,7 +727,6 @@ if (!function_exists("showFactDetails")) {
 * @return boolean return true to show the fact details, return false to keep it private
 */
 function showFactDetails($fact, $pid) {
-	global $GEDCOM;
 	global $global_facts, $person_facts;
 
 	if ($_SESSION["wt_user"]==WT_USER_ID) {
@@ -792,7 +759,7 @@ function showFactDetails($fact, $pid) {
 * @return string the privatized gedcom record
 */
 function privatize_gedcom($gedrec) {
-	global $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
+	global $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
 	global $global_facts, $person_facts;
 
 	if (preg_match('/^0 @('.WT_REGEX_XREF.')@ ('.WT_REGEX_TAG.')(.*)/', $gedrec, $match)) {

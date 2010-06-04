@@ -76,16 +76,21 @@ function edit_field_yes_no($name, $selected='', $extra='') {
 	);
 }
 
+// Print an edit control for a checkbox
+function checkbox($name, $is_checked=false, $extra='') {
+	return '<input type="checkbox" name="'.$name.'" value="1" '.($is_checked ? 'checked="checked" ' : '').$extra.' />';
+}
+
 // Print an edit control for a checkbox, with a hidden field to store one of the two states.
 // By default, a checkbox is either set, or not sent.
-// This gives us a three options, set, unset or not sent.
+// This function gives us a three options, set, unset or not sent.
 // Useful for dynamically generated forms where we don't know what elements are present.
-function checkbox_with_value($name, $is_checked='', $checked_value='1', $unchecked_value='0', $extra='') {
+function two_state_checkbox($name, $is_checked=0, $extra='') {
 	return
-		'<input type="hidden" id="'.$name.'-value" name="'.$name.'-value" value="'.($is_checked?$checked_value:$unchecked_value).'" />'.
-		'<input type="checkbox", name="'.$name.'" value="'.$checked_value.'"'.
+		'<input type="hidden" id="'.$name.'" name="'.$name.'" value="'.($is_checked?1:0).'" />'.
+		'<input type="checkbox" name="'.$name.'-GUI-ONLY" value="1"'.
 		($is_checked ? ' checked="checked"' : '').
-		' onclick="document.getElementById(\''.$name.'-value\').value=(this.checked ? \''.$checked_value.'\' : \''.$unchecked_value.'\');" />';
+		' onclick="document.getElementById(\''.$name.'\').value=(this.checked?1:0);" '.$extra.' />';
 }
 
 // Print a set of edit controls to select languages
@@ -136,7 +141,6 @@ function edit_field_log_frequency($name, $selected='', $extra='') {
 
 // Print an edit control for a contact method field
 function edit_field_contact($name, $selected='', $extra='') {
-	global $WT_STORE_MESSAGES;
 	// Different ways to contact the users
 	$CONTACT_METHODS=array(
 		'messaging' =>i18n::translate('webtrees internal messaging'),
@@ -145,7 +149,7 @@ function edit_field_contact($name, $selected='', $extra='') {
 		'mailto'    =>i18n::translate('Mailto link'),
 		'none'      =>i18n::translate('No contact'),
 	);
-	if (!$WT_STORE_MESSAGES) {
+	if (!get_site_setting('STORE_MESSAGES')) {
 		unset($CONTACT_METHODS['messaging'], $CONTACT_METHODS['messaging2']);
 	}
 	return select_edit_control($name, $CONTACT_METHODS, null, $selected, $extra);
