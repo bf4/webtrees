@@ -795,18 +795,6 @@ try {
 		" AND   r.resn<>'hidden' AND r.deleted_by IS NULL"
 	);
 	$dbh->exec(
-		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}messages (".
-		" m_id      INTEGER AUTO_INCREMENT NOT NULL,".
-		" m_from    VARCHAR(255)           NOT NULL,".
-		" m_to      VARCHAR(32)            NOT NULL,". // TODO: user_id
-		" m_subject VARCHAR(255)           NOT NULL,".
-		" m_body    TEXT                   NOT NULL,".
-		" m_created VARCHAR(255)           NOT NULL,". // TODO: timestamp
-		" PRIMARY KEY     (m_id),".
-		"         KEY ix1 (m_to)".
-		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
-	);
-	$dbh->exec(
 		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}individuals (".
 		" i_id     VARCHAR(20)         NOT NULL,".
 		" i_file   INTEGER             NOT NULL,".
