@@ -761,7 +761,7 @@ function search_indis_custom($join, $where, $order) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
-			load_privacy_file($row['ged_id']);
+			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
 		$list[]=Person::getInstance($row);
@@ -769,7 +769,7 @@ function search_indis_custom($join, $where, $order) {
 	// Switch privacy file if necessary
 	if ($GED_ID!=WT_GED_ID) {
 		$GEDCOM=WT_GEDCOM;
-		load_privacy_file(WT_GED_ID);
+		load_gedcom_settings(WT_GED_ID);
 	}
 	return $list;
 }
@@ -788,7 +788,7 @@ function search_fams_custom($join, $where, $order) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
-			load_privacy_file($row['ged_id']);
+			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
 		$list[]=Family::getInstance($row);
@@ -796,7 +796,7 @@ function search_fams_custom($join, $where, $order) {
 	// Switch privacy file if necessary
 	if ($GED_ID!=WT_GED_ID) {
 		$GEDCOM=WT_GEDCOM;
-		load_privacy_file(WT_GED_ID);
+		load_gedcom_settings(WT_GED_ID);
 	}
 	return $list;
 }
@@ -836,7 +836,7 @@ function search_indis($query, $geds, $match, $skip) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
-			load_privacy_file($row['ged_id']);
+			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
 		$record=Person::getInstance($row);
@@ -855,7 +855,7 @@ function search_indis($query, $geds, $match, $skip) {
 	// Switch privacy file if necessary
 	if ($GED_ID!=WT_GED_ID) {
 		$GEDCOM=WT_GEDCOM;
-		load_privacy_file(WT_GED_ID);
+		load_gedcom_settings(WT_GED_ID);
 	}
 	return $list;
 }
@@ -889,7 +889,7 @@ function search_indis_names($query, $geds, $match) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
-			load_privacy_file($row['ged_id']);
+			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
 		$indi=Person::getInstance($row);
@@ -906,7 +906,7 @@ function search_indis_names($query, $geds, $match) {
 	// Switch privacy file if necessary
 	if ($GED_ID!=WT_GED_ID) {
 		$GEDCOM=WT_GEDCOM;
-		load_privacy_file(WT_GED_ID);
+		load_gedcom_settings(WT_GED_ID);
 	}
 	return $list;
 }
@@ -969,7 +969,7 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
-			load_privacy_file($row['ged_id']);
+			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
 		$indi=Person::getInstance($row);
@@ -980,7 +980,7 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 	// Switch privacy file if necessary
 	if ($GED_ID!=WT_GED_ID) {
 		$GEDCOM=WT_GEDCOM;
-		load_privacy_file(WT_GED_ID);
+		load_gedcom_settings(WT_GED_ID);
 	}
 	return $list;
 }
@@ -1108,7 +1108,7 @@ function search_fams($query, $geds, $match, $skip) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
-			load_privacy_file($row['ged_id']);
+			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
 		$record=Family::getInstance($row);
@@ -1127,7 +1127,7 @@ function search_fams($query, $geds, $match, $skip) {
 	// Switch privacy file if necessary
 	if ($GED_ID!=WT_GED_ID) {
 		$GEDCOM=WT_GEDCOM;
-		load_privacy_file(WT_GED_ID);
+		load_gedcom_settings(WT_GED_ID);
 	}
 	return $list;
 }
@@ -1162,7 +1162,7 @@ function search_fams_names($query, $geds, $match) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
-			load_privacy_file($row['ged_id']);
+			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
 		$indi=Family::getInstance($row);
@@ -1173,7 +1173,7 @@ function search_fams_names($query, $geds, $match) {
 	// Switch privacy file if necessary
 	if ($GED_ID!=WT_GED_ID) {
 		$GEDCOM=WT_GEDCOM;
-		load_privacy_file(WT_GED_ID);
+		load_gedcom_settings(WT_GED_ID);
 	}
 	return $list;
 }
@@ -1213,7 +1213,7 @@ function search_sources($query, $geds, $match, $skip) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
-			load_privacy_file($row['ged_id']);
+			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
 		$record=Source::getInstance($row);
@@ -1232,7 +1232,7 @@ function search_sources($query, $geds, $match, $skip) {
 	// Switch privacy file if necessary
 	if ($GED_ID!=WT_GED_ID) {
 		$GEDCOM=WT_GEDCOM;
-		load_privacy_file(WT_GED_ID);
+		load_gedcom_settings(WT_GED_ID);
 	}
 	return $list;
 }
@@ -1273,7 +1273,7 @@ function search_notes($query, $geds, $match, $skip) {
 		// Switch privacy file if necessary
 		if ($row->gedcom_id!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row->gedcom_id);
-			load_privacy_file($row->gedcom_id);
+			load_gedcom_settings($row->gedcom_id);
 			$GED_ID=$row->gedcom_id;
 		}
 		$record=Note::getInstance($row);
@@ -1292,7 +1292,7 @@ function search_notes($query, $geds, $match, $skip) {
 	// Switch privacy file if necessary
 	if ($GED_ID!=WT_GED_ID) {
 		$GEDCOM=WT_GEDCOM;
-		load_privacy_file(WT_GED_ID);
+		load_gedcom_settings(WT_GED_ID);
 	}
 	return $list;
 }
@@ -1435,6 +1435,7 @@ function delete_gedcom($ged_id) {
 	WT_DB::prepare("DELETE FROM `##sources`             WHERE s_file    =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM `##hit_counter`         WHERE gedcom_id =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM `##change`              WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM `##default_resn`        WHERE gedcom_id =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM `##gedcom`              WHERE gedcom_id =?")->execute(array($ged_id));
 
 	if (get_site_setting('DEFAULT_GEDCOM')==get_gedcom_from_id($ged_id)) {
@@ -1703,7 +1704,7 @@ function get_anniversary_events($jd, $facts='', $ged_id=WT_GED_ID) {
 						} else {
 							$plac='';
 						}
-						if (showFactDetails($row['d_fact'], $row['xref']) && !FactViewRestricted($row['xref'], $factrec)) {
+						if (showFact($row['d_fact'], $row['xref']) && !FactViewRestricted($row['xref'], $factrec)) {
 							$found_facts[]=array(
 								'record'=>$record,
 								'id'=>$row['xref'],
@@ -1785,7 +1786,7 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=WT_GED_ID) {
 					} else {
 						$plac='';
 					}
-					if (showFactDetails($row[7], $row[0]) && !FactViewRestricted($row[0], $factrec)) {
+					if (showFact($row[7], $row[0]) && !FactViewRestricted($row[0], $factrec)) {
 						$found_facts[]=array(
 							'id'=>$row[0],
 							'objtype'=>$row[2],
