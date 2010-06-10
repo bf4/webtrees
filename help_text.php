@@ -2366,49 +2366,9 @@ case 'MEMORY_LIMIT':
 	$text=i18n::translate('The maximum amount of memory that can be consumed by <b>webtrees</b> scripts.  The default is 32 Mb.  Many hosts disable this option in their PHP configuration; changing this value may not actually affect the current maximum memory setting.');
 	break;
 
-case 'META_AUDIENCE':
-	$title=i18n::translate('Audience META tag');
-	$text=i18n::translate('The value to place in the Audience meta tag in the HTML page header.');
-	break;
-
-case 'META_AUTHOR':
-	$title=i18n::translate('Author META tag');
-	$text=i18n::translate('The value to place in the Author meta tag in the HTML page header.  Leave this field empty to use the full name of the Genealogy contact.');
-	break;
-
-case 'META_COPYRIGHT':
-	$title=i18n::translate('Copyright META tag');
-	$text=i18n::translate('The value to place in the Copyright meta tag in the HTML page header.  Leave this field empty to use the full name of the Genealogy contact.');
-	break;
-
 case 'META_DESCRIPTION':
 	$title=i18n::translate('Description META tag');
 	$text=i18n::translate('The value to place in the Description meta tag in the HTML page header.  Leave this field empty to use the title of the currently active database.');
-	break;
-
-case 'META_KEYWORDS':
-	$title=i18n::translate('Keywords META tag');
-	$text=i18n::translate('The value to place in the Keywords meta tag in the HTML page header.  Some search engines will use the Keywords meta tag to help index your page.<br /><br />The Most Common Surnames list that appears in the GEDCOM Statistics block on your Home Page can also be added to anything you enter here.');
-	break;
-
-case 'META_PAGE_TOPIC':
-	$title=i18n::translate('Page-topic META tag');
-	$text=i18n::translate('The value to place in the Page-topic meta tag in the HTML page header.  Leave this field empty to use the title of the currently active database.');
-	break;
-
-case 'META_PAGE_TYPE':
-	$title=i18n::translate('Page-type META tag');
-	$text=i18n::translate('The value to place in the Page-type meta tag in the HTML page header.');
-	break;
-
-case 'META_PUBLISHER':
-	$title=i18n::translate('Publisher META tag');
-	$text=i18n::translate('The value to place in the Publisher meta tag in the HTML page header.  Leave this field empty to use the full name of the Genealogy contact.');
-	break;
-
-case 'META_REVISIT':
-	$title=i18n::translate('How often should crawlers revisit META tag');
-	$text=i18n::translate('The value to place in the Revisit meta tag in the HTML page header.  Some web crawlers ignore this value.');
 	break;
 
 case 'META_ROBOTS':
@@ -2962,11 +2922,6 @@ case 'edit_merge.php':
 	$text=i18n::translate('This page will allow you to merge two GEDCOM records from the same GEDCOM file.<br /><br />This is useful for people who have merged GEDCOMs and now have many people, families, and sources that are the same.<br /><br />The page consists of three steps.<br /><ol><li>You enter two GEDCOM IDs.  The IDs <u>must</u> be of the same type.  You cannot merge an individual and a family or family and source, for example.<br />In the <b>Merge To ID:</b> field enter the ID of the record you want to be the new record after the merge is complete.<br />In the <b>Merge From ID:</b> field enter the ID of the record whose information will be merged into the Merge To ID: record.  This record will be deleted after the Merge.</li><li>You select what facts you want to keep from the two records when they are merged.  Just click the checkboxes next to the ones you want to keep.</li><li>You inspect the results of the merge, just like with all other changes made online.</li></ol>Someone with Accept rights will have to authorize your changes to make them permanent.');
 	break;
 
-case 'edit_privacy.php':
-	$title=i18n::translate('Edit GEDCOM privacy settings');
-	$text=i18n::translate('On this page you can make all the Privacy settings for the selected GEDCOM.<br /><br />You can check under the page title to see that you are editing the correct privacy file.  It is displayed like this: (path/nameofyourgedcom_priv.php)<br /><br />If you need more settings, you can make changes to the privacy file manually. You can read more about this on the <b>webtrees</b> web site.');
-	break;
-	
 case 'editconfig_gedcom.php':
 	$title=i18n::translate('GEDCOM configuration');
 	$text=i18n::translate('Every genealogical database used with <b>webtrees</b> has its own <b>Configuration file</b>.<br /><br />On this form you configure many options such as database title, language, calendar format, email options, logging of database searches, HTML META headers, removal of surnames from the database\'s Frequent Surnames list, etc.<br /><br /><br /><b>More help</b><br />More help is available by clicking the <b>?</b> next to items on the page.<br /><br /><br />See <a href="readme.txt" target="_blank"><b>Readme.txt</b></a> for more information.');

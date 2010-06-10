@@ -226,7 +226,7 @@ case 'importform':
 		}
 	}
 	echo '<br /><br /><input type="checkbox" name="keep_media', $gedcom_id, '" value="1">';
-	echo i18n::translate('If you have created media objects in webtrees, and have edited your gedcom off-line using a program that deletes media objects, then tick this box to merge the current media objects with the new GEDCOM.');
+	echo i18n::translate('If you have created media objects in webtrees, and have edited your gedcom off-line using a program that deletes media objects, then check this box to merge the current media objects with the new GEDCOM.');
 	echo '<br /><br /><input type="submit" value="', i18n::translate('Save'), '" /></form>';
 	echo '</form>';
 	echo '<form name="cancel" method="get" action="', WT_SCRIPT_NAME, '"><input type="submit" value="', i18n::translate('Cancel'), '" /></form>';
@@ -263,10 +263,6 @@ foreach ($gedcoms as $gedcom) {
 			// configuration
 			'<td><a href="editconfig_gedcom.php?ged=', urlencode($gedcom->gedcom_name), '">', i18n::translate('Configuration'), '</a>',
 			help_link('gedcom_configfile'),
-			'</td>',
-			// privacy
-			'<td><a href="edit_privacy.php?ged=', urlencode($gedcom->gedcom_name), '">', i18n::translate('Privacy'), '</a>',
-			help_link('edit_privacy'),
 			'</td>',
 			// export
 			'<td><a href="javascript:" onclick="window.open(\'', encode_url("export_gedcom.php?export={$gedcom->gedcom_name}"), '\', \'_blank\',\'left=50,top=50,width=500,height=500,resizable=1,scrollbars=1\');">', i18n::translate('Export'), '</a>',

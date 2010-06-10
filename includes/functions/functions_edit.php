@@ -294,7 +294,7 @@ function replace_gedrec($gid, $ged_id, $gedrec, $chan=true) {
 					$gedrec = preg_replace("/0 @(.*)@/", "0 @".$oldgid."@", $gedrec);
 					$gid = $oldgid;
 				} else {
-					AddToChangeLog("Warning: $oldgid was changed to $gid");
+					AddToLog("Warning: $oldgid was changed to $gid", 'edit');
 				}
 			}
 		}
@@ -344,7 +344,7 @@ function append_gedrec($gedrec, $ged_id) {
 			WT_USER_ID
 		));
 
-		AddToChangeLog("Appending new $type record $xref");
+		AddToLog("Appending new $type record $xref", 'edit');
 
 		if (WT_USER_AUTO_ACCEPT) {
 			accept_all_changes($xref, WT_GED_ID);
@@ -367,7 +367,7 @@ function delete_gedrec($xref, $ged_id) {
 		WT_USER_ID
 	));
 
-	AddToChangeLog("Deleting gedcom record $xref");
+	AddToLog("Deleting gedcom record $xref", 'edit');
 
 	if (WT_USER_AUTO_ACCEPT) {
 		accept_all_changes($xref, WT_GED_ID);
@@ -381,7 +381,7 @@ function check_gedcom($gedrec, $chan=true) {
 	$ct = preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
 	if ($ct==0) {
 		echo "ERROR 20: Invalid GEDCOM format";
-		AddToChangeLog("ERROR 20: Invalid GEDCOM format.->" . WT_USER_NAME ."<-");
+		AddToLog("ERROR 20: Invalid GEDCOM format:\n".$gedrec, 'edit');
 		if (WT_DEBUG) {
 			echo "<pre>$gedrec</pre>\n";
 			echo debug_print_backtrace();
@@ -499,8 +499,10 @@ function remove_subline($oldrecord, $linenum) {
 function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag="CHIL", $sextag='') {
 	global $pid, $WT_IMAGE_DIR, $WT_IMAGES, $WORD_WRAPPED_NOTES;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept;
-	global $bdm, $TEXT_DIRECTION, $STANDARD_NAME_FACTS, $REVERSED_NAME_FACTS, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
+	global $bdm, $TEXT_DIRECTION, $STANDARD_NAME_FACTS, $REVERSED_NAME_FACTS, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $NO_UPDATE_CHAN;
+
+	$SURNAME_TRADITION=get_gedcom_setting(WT_GED_ID, 'SURNAME_TRADITION');	
 
 	$bdm = ''; // used to copy '1 SOUR' to '2 SOUR' for BIRT DEAT MARR
 	init_calendar_popup();

@@ -67,16 +67,8 @@ if (!defined('WT_WEBTREES')) {
 	</style>
 	<?php }
 	if ($view!="simple") { ?>
-		<?php if (!empty($META_AUTHOR)) { ?><meta name="author" content="<?php echo htmlspecialchars($META_AUTHOR); ?>" /><?php } ?>
-		<?php if (!empty($META_PUBLISHER)) { ?><meta name="publisher" content="<?php echo htmlspecialchars($META_PUBLISHER); ?>" /><?php } ?>
-		<?php if (!empty($META_COPYRIGHT)) { ?><meta name="copyright" content="<?php echo htmlspecialchars($META_COPYRIGHT); ?>" /><?php } ?>
-		<meta name="keywords" content="<?php echo htmlspecialchars($META_KEYWORDS); ?>" />
 		<?php if (!empty($META_DESCRIPTION)) {?><meta name="description" content="<?php echo htmlspecialchars($META_DESCRIPTION); ?>" /><?php } ?>
-		<?php if (!empty($META_PAGE_TOPIC)) {?><meta name="page-topic" content="<?php echo htmlspecialchars($META_PAGE_TOPIC); ?>" /><?php } ?>
-		<?php if (!empty($META_AUDIENCE)) {?><meta name="audience" content="<?php echo htmlspecialchars($META_AUDIENCE); ?>" /><?php } ?>
-		<?php if (!empty($META_PAGE_TYPE)) {?><meta name="page-type" content="<?php echo htmlspecialchars($META_PAGE_TYPE); ?>" /><?php } ?>
 		<?php if (!empty($META_ROBOTS)) {?><meta name="robots" content="<?php echo htmlspecialchars($META_ROBOTS); ?>" /><?php } ?>
-		<?php if (!empty($META_REVISIT)) {?><meta name="revisit-after" content="<?php echo htmlspecialchars($META_REVISIT); ?>" /><?php } ?>
 		<meta name="generator" content="<?php echo WT_WEBTREES, ' - ', WT_WEBTREES_URL; ?>" />
 	<?php } ?>
 	<?php echo $javascript; ?>
@@ -132,22 +124,17 @@ function SetCookie(cookieName,cookieValue,nDays)
 					<?php print_user_links(); ?>
 					</b>
 				</td>
-				<?php if (empty($SEARCH_SPIDER)) { ?>
-				<td align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right"; ?>" valign="middle" >
-					<?php print_lang_form(); ?>
-					<?php print_theme_dropdown(); ?>
-				</td>
-				<?php } ?>
-                    <td align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right"; ?>" valign="middle" >
-				<?php if (empty($SEARCH_SPIDER)) { ?>
-					<form action="search.php" method="get">
-						<input type="hidden" name="action" value="general" />
-						<input type="hidden" name="topsearch" value="yes" />
-						<input type="text" name="query" size="12" value="<?php echo i18n::translate('Search')?>" onfocus="if (this.value == '<?php echo i18n::translate('Search')?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php echo i18n::translate('Search')?>';" />
-						<input type="submit" name="search" value="&gt;" />
-					</form>
-				<?php } ?>
-					<?php print_favorite_selector(); ?>
+                <td align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right"; ?>" valign="middle" >
+					<div class="makeMenu" align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right"; ?>" >
+						<?php
+							echo MenuBar::getFavoritesMenu()->getMenuAsList();
+							global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES;
+								if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {
+									echo ' | ', MenuBar::getThemeMenu()->getMenuAsList();
+								}
+							echo ' | ', MenuBar::getLanguageMenu()->getMenuAsList();
+						?>
+					</div>
 				</td>
 			</tr>
 			</table>
@@ -156,10 +143,22 @@ function SetCookie(cookieName,cookieValue,nDays)
 </table>
 <table width="100%">
 	<tr>
-		<td width="75%">
+		<td>
 			<div class="title">
 				<?php print_gedcom_title_link(TRUE); ?>
 			</div>
+		</td>
+        <td align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right"; ?>" valign="middle" >
+			<?php if (empty($SEARCH_SPIDER)) { ?>
+				<form action="search.php" method="post">
+					<input type="hidden" name="action" value="general" />
+					<input type="hidden" name="topsearch" value="yes" />
+					<input type="text" class="formbut" name="query" size="15" value="<?php echo i18n::translate('Search'); ?>"
+						onfocus="if (this.value == '<?php echo i18n::translate('Search'); ?>') this.value=''; focusHandler();"
+						onblur="if (this.value == '') this.value='<?php echo i18n::translate('Search'); ?>';" />
+					<input type="image" src="<?php echo $WT_IMAGE_DIR,"/".$WT_IMAGES['search']['small'];?>" height="17" align="top" title="<?php echo i18n::translate('Search');?>">		
+				</form>
+			<?php } ?>
 		</td>
 	</tr>
 </table>

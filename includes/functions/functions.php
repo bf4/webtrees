@@ -164,23 +164,6 @@ function trim_recursive($var) {
 	}
 }
 
-// Update the variable definitions in a PHP config file, such as config.php
-function update_config(&$text, $var, $value) {
-	// NULL values probably wouldn't hurt, but empty strings are probably better
-	if (is_null($value)) {
-		$value='';
-	}
-	$regex='/^[ \t]*[$]'.$var.'[ \t]*=.*;[ \t]*/m';
-	$assign='$'.$var.'='.var_export($value, true).'; ';
-	if (preg_match($regex, $text)) {
-		// Variable found in file - update it
-		$text=preg_replace($regex, $assign, $text);
-	} else {
-		// Variable not found in file - insert it
-		$text=preg_replace('/^(.*[\r\n]+)([ \t]*[$].*)$/s', '$1'.$assign." // new config variable\n".'$2', $text);
-	}
-}
-
 // Convert a file upload PHP error code into user-friendly text
 function file_upload_error_text($error_code) {
 	switch ($error_code) {
@@ -256,15 +239,7 @@ function load_gedcom_settings($ged_id=WT_GED_ID) {
 	global $MEDIA_FIREWALL_ROOTDIR;       $MEDIA_FIREWALL_ROOTDIR       =get_gedcom_setting($ged_id, 'MEDIA_FIREWALL_ROOTDIR');
 	global $MEDIA_FIREWALL_THUMBS;        $MEDIA_FIREWALL_THUMBS        =get_gedcom_setting($ged_id, 'MEDIA_FIREWALL_THUMBS');
 	global $MEDIA_ID_PREFIX;              $MEDIA_ID_PREFIX              =get_gedcom_setting($ged_id, 'MEDIA_ID_PREFIX');
-	global $META_AUDIENCE;                $META_AUDIENCE                =get_gedcom_setting($ged_id, 'META_AUDIENCE');
-	global $META_AUTHOR;                  $META_AUTHOR                  =get_gedcom_setting($ged_id, 'META_AUTHOR');
-	global $META_COPYRIGHT;               $META_COPYRIGHT               =get_gedcom_setting($ged_id, 'META_COPYRIGHT');
 	global $META_DESCRIPTION;             $META_DESCRIPTION             =get_gedcom_setting($ged_id, 'META_DESCRIPTION');
-	global $META_KEYWORDS;                $META_KEYWORDS                =get_gedcom_setting($ged_id, 'META_KEYWORDS');
-	global $META_PAGE_TOPIC;              $META_PAGE_TOPIC              =get_gedcom_setting($ged_id, 'META_PAGE_TOPIC');
-	global $META_PAGE_TYPE;               $META_PAGE_TYPE               =get_gedcom_setting($ged_id, 'META_PAGE_TYPE');
-	global $META_PUBLISHER;               $META_PUBLISHER               =get_gedcom_setting($ged_id, 'META_PUBLISHER');
-	global $META_REVISIT;                 $META_REVISIT                 =get_gedcom_setting($ged_id, 'META_REVISIT');
 	global $META_ROBOTS;                  $META_ROBOTS                  =get_gedcom_setting($ged_id, 'META_ROBOTS');
 	global $META_TITLE;                   $META_TITLE                   =get_gedcom_setting($ged_id, 'META_TITLE');
 	global $MULTI_MEDIA;                  $MULTI_MEDIA                  =get_gedcom_setting($ged_id, 'MULTI_MEDIA');
@@ -297,7 +272,6 @@ function load_gedcom_settings($ged_id=WT_GED_ID) {
 	global $SHOW_COUNTER;                 $SHOW_COUNTER                 =get_gedcom_setting($ged_id, 'SHOW_COUNTER');
 	global $SHOW_DEAD_PEOPLE;             $SHOW_DEAD_PEOPLE             =get_gedcom_setting($ged_id, 'SHOW_DEAD_PEOPLE');
 	global $SHOW_EMPTY_BOXES;             $SHOW_EMPTY_BOXES             =get_gedcom_setting($ged_id, 'SHOW_EMPTY_BOXES');
-	global $SHOW_EST_LIST_DATES;          $SHOW_EST_LIST_DATES          =get_gedcom_setting($ged_id, 'SHOW_EST_LIST_DATES');
 	global $SHOW_FACT_ICONS;              $SHOW_FACT_ICONS              =get_gedcom_setting($ged_id, 'SHOW_FACT_ICONS');
 	global $SHOW_GEDCOM_RECORD;           $SHOW_GEDCOM_RECORD           =get_gedcom_setting($ged_id, 'SHOW_GEDCOM_RECORD');
 	global $SHOW_HIGHLIGHT_IMAGES;        $SHOW_HIGHLIGHT_IMAGES        =get_gedcom_setting($ged_id, 'SHOW_HIGHLIGHT_IMAGES');
@@ -323,10 +297,7 @@ function load_gedcom_settings($ged_id=WT_GED_ID) {
 	global $SOUR_FACTS_QUICK;             $SOUR_FACTS_QUICK             =get_gedcom_setting($ged_id, 'SOUR_FACTS_QUICK');
 	global $SOUR_FACTS_UNIQUE;            $SOUR_FACTS_UNIQUE            =get_gedcom_setting($ged_id, 'SOUR_FACTS_UNIQUE');
 	global $SPLIT_PLACES;                 $SPLIT_PLACES                 =get_gedcom_setting($ged_id, 'SPLIT_PLACES');
-	global $SUBLIST_TRIGGER_F;            $SUBLIST_TRIGGER_F            =get_gedcom_setting($ged_id, 'SUBLIST_TRIGGER_F');
-	global $SUBLIST_TRIGGER_I;            $SUBLIST_TRIGGER_I            =get_gedcom_setting($ged_id, 'SUBLIST_TRIGGER_I');
 	global $SURNAME_LIST_STYLE;           $SURNAME_LIST_STYLE           =get_gedcom_setting($ged_id, 'SURNAME_LIST_STYLE');
-	global $SURNAME_TRADITION;            $SURNAME_TRADITION            =get_gedcom_setting($ged_id, 'SURNAME_TRADITION');
 	global $THEME_DIR;                    $THEME_DIR                    =get_gedcom_setting($ged_id, 'THEME_DIR');
 	global $THUMBNAIL_WIDTH;              $THUMBNAIL_WIDTH              =get_gedcom_setting($ged_id, 'THUMBNAIL_WIDTH');
 	global $UNDERLINE_NAME_QUOTES;        $UNDERLINE_NAME_QUOTES        =get_gedcom_setting($ged_id, 'UNDERLINE_NAME_QUOTES');
@@ -2317,11 +2288,6 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 				case 'sib': return i18n::translate('great x%d aunt/uncle', $up-4);
 				}
 			case 'it': // Source: Michele Locati
-				switch ($last) {
-				case 'bro': return i18n::translate('great x%d uncle', $up-3);
-				case 'sis': return i18n::translate('great x%d aunt', $up-3);
-				case 'sib': return i18n::translate('great x%d aunt/uncle', $up-3);
-				}
 			case 'en':
 			default:
 				switch ($last) {
@@ -2366,25 +2332,14 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 			//
 			// Need to find out which languages use which rules.
 			switch (WT_LOCALE) {
-			case 'da': // Not confirmed - simply based on existing rules.
 			case 'it': // Source: Michele Locati.
-				switch ($last) {
-				case 'son': // I18N: only used in italian and danish translations
-				            return i18n::translate('great x%d grand-nephew', $down-3);
-				case 'dau': // I18N: only used in italian and danish translations
-				            return i18n::translate('great x%d grand-niece', $down-3);
-				case 'chi': // I18N: only used in italian and danish translations
-				            return i18n::translate('great x%d grand-nephew/niece', $down-3);
-				}
 			case 'en':
 			default:
 				switch ($last) {
-				case 'son': // I18N: used in all translations except italian and danish
+				case 'son': // I18N: if you need a different number for %d, contact the developers, as a code-change is required
 				            return i18n::translate('great x%d nephew', $down-2);
-				case 'dau': // I18N: used in all translations except italian and danish
-				            return i18n::translate('great x%d niece', $down-2);
-				case 'chi': // I18N: used in all translations except italian and danish
-				            return i18n::translate('great x%d nephew/niece', $down-2);
+				case 'dau': return i18n::translate('great x%d niece', $down-2);
+				case 'chi': return i18n::translate('great x%d nephew/niece', $down-2);
 				}
 			}
 		}
@@ -2449,9 +2404,9 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 				}
 			case 'it': // Source: Michele Locati
 				switch ($last) {
-				case 'mot': return i18n::translate('great x%d grandmother', $up-1);
-				case 'fat': return i18n::translate('great x%d grandfather', $up-1);
-				case 'par': return i18n::translate('great x%d grandparent', $up-1);
+				case 'mot': return i18n::translate('great x%d grandmother', $up);
+				case 'fat': return i18n::translate('great x%d grandfather', $up);
+				case 'par': return i18n::translate('great x%d grandparent', $up);
 				}
 			case 'en':
 			default:
@@ -3101,17 +3056,17 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 			require_once WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
 			switch ($type) {
 			case 'url_flv':
-				$url = encode_url('js/jw_player&mod_action=flvVideo&flvVideo='.encrypt($fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
+				$url = encode_url('js/jw_player/flvVideo.php?flvVideo='.($fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
 				break 2;
 			case 'local_flv':
-				$url = encode_url('js/jw_player&mod_action=flvVideo&flvVideo='.encrypt(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
+				$url = encode_url('js/jw_player/flvVideo.php?flvVideo='.(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
 				break 2;
 			case 'url_wmv':
-				$url = encode_url('js/jw_player&mod_action=wmvVideo&wmvVideo='.encrypt($fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
+				$url = encode_url('js/jw_player/wmvVideo.php?wmvVideo='.($fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
 				break 2;
 			case 'local_audio':
 			case 'local_wmv':
-				$url = encode_url('js/jw_player&mod_action=wmvVideo&wmvVideo='.encrypt(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
+				$url = encode_url('js/jw_player/wmvVideo.php?wmvVideo='.(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
 				break 2;
 			case 'url_image':
 			case 'local_image':
@@ -3135,17 +3090,17 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 		// Lightbox is not installed or Lightbox is not appropriate for this media type
 		switch ($type) {
 		case 'url_flv':
-			$url = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('js/jw_player&mod_action=flvVideo&flvVideo='.encrypt($fileName)) . "', 'winflv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winflv.focus();}";
+			$url = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('js/jw_player/flvVideo.php?flvVideo='.($fileName)) . "', 'winflv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winflv.focus();}";
 			break 2;
 		case 'local_flv':
-			$url = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('js/jw_player&mod_action=flvVideo&flvVideo='.encrypt(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)) . "', 'winflv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winflv.focus();}";
+			$url = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('js/jw_player/flvVideo.php?flvVideo='.(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)) . "', 'winflv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winflv.focus();}";
 			break 2;
 		case 'url_wmv':
-			$url = "javascript:;\" onclick=\" var winwmv = window.open('".encode_url('js/jw_player&mod_action=wmvVideo&wmvVideo='.encrypt($fileName)) . "', 'winwmv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winwmv.focus();}";
+			$url = "javascript:;\" onclick=\" var winwmv = window.open('".encode_url('js/jw_player/wmvVideo.php?wmvVideo='.($fileName)) . "', 'winwmv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winwmv.focus();}";
 			break 2;
 		case 'local_wmv':
 		case 'local_audio':
-			$url = "javascript:;\" onclick=\" var winwmv = window.open('".encode_url('js/jw_player&mod_action=wmvVideo&wmvVideo='.encrypt(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)) . "', 'winwmv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winwmv.focus();}";
+			$url = "javascript:;\" onclick=\" var winwmv = window.open('".encode_url('js/jw_player/wmvVideo.php?wmvVideo='.(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)) . "', 'winwmv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winwmv.focus();}";
 			break 2;
 		case 'url_image':
 			$imgsize = findImageSize($fileName);
