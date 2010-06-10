@@ -345,7 +345,7 @@ function checkPrivacyByYear($pid) {
 function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 	global $USE_RELATIONSHIP_PRIVACY, $CHECK_MARRIAGE_RELATIONS, $MAX_RELATION_PATH_LENGTH;
 	global $person_privacy, $HIDE_LIVE_PEOPLE, $GEDCOM, $SHOW_DEAD_PEOPLE, $MAX_ALIVE_AGE, $PRIVACY_BY_YEAR;
-	global $PRIVACY_CHECKS, $SHOW_LIVING_NAMES, $INDEX_DIRECTORY;
+	global $PRIVACY_CHECKS, $SHOW_LIVING_NAMES;
 
 	$ged_id=get_id_from_gedcom($GEDCOM);
 
@@ -657,28 +657,6 @@ function get_last_private_data($gid) {
 
 	if (!isset($pgv_private_records[$gid])) return false;
 	return $pgv_private_records[$gid];
-}
-
-/**
-* get current user's access level
-*
-* checks the current user and returns their privacy access level
-* @return int their access level
-*/
-function getUserAccessLevel($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
-	if ($user_id) {
-		if (userGedcomAdmin($user_id, $ged_id)) {
-			return WT_PRIV_NONE;
-		} else {
-			if (userCanAccess($user_id, $ged_id)) {
-				return WT_PRIV_USER;
-			} else {
-				return WT_PRIV_PUBLIC;
-			}
-		}
-	} else {
-		return WT_PRIV_PUBLIC;
-	}
 }
 
 /**

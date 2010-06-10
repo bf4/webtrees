@@ -38,7 +38,7 @@ define('WT_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
 define('WT_VERSION_TEXT',    trim(WT_VERSION.' '.WT_VERSION_RELEASE));
 define('WT_WEBTREES_URL',    'http://webtrees.net');
 define('WT_WEBTREES_WIKI',   'http://wiki.webtrees.net');
-define('WT_TRANSLATORS_URL', 'https://launchpad.net/webtrees');
+define('WT_TRANSLATORS_URL', 'https://translations.launchpad.net/webtrees');
 
 // Enable debugging output?
 define('WT_DEBUG',      false);
@@ -228,16 +228,11 @@ try {
 	exit;
 }
 
-// We'll tidy these up later.  Some of them are used infrequently.
-$INDEX_DIRECTORY                =get_site_setting('INDEX_DIRECTORY');
-$ALLOW_USER_THEMES              =get_site_setting('ALLOW_USER_THEMES');
-$ALLOW_CHANGE_GEDCOM            =get_site_setting('ALLOW_CHANGE_GEDCOM');
-$SERVER_URL                     =get_site_setting('SERVER_URL');
-
 // If we have a preferred URL (e.g. https instead of http, or www.example.com instead of
 // www.isp.com/~example), then redirect to it.
-if (!empty($SERVER_URL) && $SERVER_URL != WT_SERVER_NAME.WT_SCRIPT_PATH) {
-	header('Location: '.$SERVER_URL);
+$SERVER_URL=get_site_setting('SERVER_URL');
+if ($SERVER_URL && $SERVER_URL != WT_SERVER_NAME.WT_SCRIPT_PATH) {
+	header('Location: '.get_site_setting('SERVER_URL'));
 	exit;
 }
 
@@ -411,7 +406,7 @@ if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='yes') $_SESSION['show_con
 if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='no') $_SESSION['show_context_help'] = false;
 
 if (WT_SCRIPT_NAME!='help_text.php') {
-	if (!get_gedcom_setting(WT_GED_ID, 'imported') && !in_array(WT_SCRIPT_NAME, array('editconfig_gedcom.php', 'help_text.php', 'editgedcoms.php', 'downloadgedcom.php', 'logs.php', 'uploadgedcom.php', 'login.php', 'siteconfig.php', 'admin.php', 'addnewgedcom.php', 'validategedcom.php', 'addmedia.php', 'importgedcom.php', 'client.php', 'edit_privacy.php', 'gedcheck.php', 'useradmin.php', 'export_gedcom.php', 'edit_changes.php', 'import.php'))) {
+	if (!get_gedcom_setting(WT_GED_ID, 'imported') && !in_array(WT_SCRIPT_NAME, array('editconfig_gedcom.php', 'help_text.php', 'editgedcoms.php', 'downloadgedcom.php', 'logs.php', 'login.php', 'siteconfig.php', 'admin.php', 'addmedia.php', 'client.php', 'gedcheck.php', 'useradmin.php', 'export_gedcom.php', 'edit_changes.php', 'import.php'))) {
 		header('Location: editgedcoms.php');
 		exit;
 	}
