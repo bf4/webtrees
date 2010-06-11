@@ -2090,21 +2090,13 @@ function is_media_used_in_other_gedcom($file_name, $ged_id) {
 function get_site_setting($setting_name, $default_value=null) {
 	return
 		WT_DB::prepare(
-			"SELECT SQL_CACHE setting_value FROM `##site_setting` WHERE setting_name=?"
-		)->execute(array($setting_name))->fetchOne($default_value);
+			"SELECT `##get_site_setting`(?, ?)"
+		)->execute(array($setting_name, $default_value))->fetchOne();
 }
 
 function set_site_setting($setting_name, $setting_value) {
-	if (get_site_setting($setting_name)!=$setting_value) {
-		AddToLog('Site setting "'.$setting_name.'" set to "'.$setting_value.'"', 'config');
-	}
-	if (is_null($setting_value)) {
-		WT_DB::prepare("DELETE FROM `##site_setting` WHERE setting_name=?")
-			->execute(array($setting_name));
-	} else {
-		$rowcount=WT_DB::prepare("REPLACE INTO `##site_setting` (setting_name, setting_value) VALUES (?, ?)")
-			->execute(array($setting_name, $setting_value));
-	}
+	WT_DB::prepare("CALL `##set_site_setting`(?, ?)")
+		->execute(array($setting_name, $setting_value));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2136,7 +2128,7 @@ function get_gedcom_from_id($ged_id) {
 	}
 
 	return
-		WT_DB::prepare("SELECT gedcom_name FROM `##gedcom` WHERE gedcom_id=?")
+		WT_DB::prepare("SELECT `##get_gedcom_from_id`(?)")
 		->execute(array($ged_id))
 		->fetchOne();
 }
@@ -2162,9 +2154,8 @@ function get_id_from_gedcom($ged_name, $create=false) {
 	}
 
 	return
-		WT_DB::prepare("SELECT gedcom_id FROM `##gedcom` WHERE gedcom_name=?")
-		->execute(array($ged_name))
-		->fetchOne();
+		WT_DB::prepare("SELECT `##get_id_from_gedcom`(?)")
+		->execute(array($ged_name))->fetchOne();
 }
 
 
@@ -2174,22 +2165,13 @@ function get_id_from_gedcom($ged_name, $create=false) {
 
 function get_gedcom_setting($gedcom_id, $setting_name, $default_value=null) {
 	return
-		WT_DB::prepare(
-			"SELECT SQL_CACHE setting_value FROM `##gedcom_setting` WHERE gedcom_id=? AND setting_name=?"
-		)->execute(array($gedcom_id, $setting_name))->fetchOne($default_value);
+		WT_DB::prepare("SELECT `##get_gedcom_setting`(?, ?, ?)")
+		->execute(array($gedcom_id, $setting_name, $default_value))->fetchOne();
 }
 
 function set_gedcom_setting($ged_id, $setting_name, $setting_value) {
-	if (get_gedcom_setting($ged_id, $setting_name)!=$setting_value) {
-		AddToLog('Gedcom setting "'.$setting_name.'" set to "'.$setting_value.'"', 'config');
-	}
-	if (is_null($setting_value)) {
-		WT_DB::prepare("DELETE FROM `##gedcom_setting` WHERE gedcom_id=? AND setting_name=?")
-			->execute(array($ged_id, $setting_name));
-	} else {
-		WT_DB::prepare("REPLACE INTO `##gedcom_setting` (gedcom_id, setting_name, setting_value) VALUES (?, ?, ?)")
-			->execute(array($ged_id, $setting_name, $setting_value));
-	}
+	WT_DB::prepare("CALL `##set_gedcom_setting`(?, ?, ?)")
+		->execute(array($ged_id, $setting_name, $setting_value));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2256,17 +2238,11 @@ function get_user_count() {
 }
 
 function get_admin_user_count() {
-	return
-		WT_DB::prepare("SELECT SQL_CACHE COUNT(*) FROM `##user_setting` WHERE setting_name=? AND setting_value=?")
-		->execute(array('canadmin', '1'))
-		->fetchOne();
+	return WT_DB::prepare("SELECT `##get_admin_user_count`()")->fetchOne();
 }
 
 function get_non_admin_user_count() {
-	return
-		WT_DB::prepare("SELECT SQL_CACHE COUNT(*) FROM `##user_setting` WHERE  setting_name=? AND setting_value<>?")
-		->execute(array('canadmin', '1'))
-		->fetchOne();
+	return WT_DB::prepare("SELECT `##get_non_admin_user_count`()")->fetchOne();
 }
 
 // Get a list of logged-in users
@@ -2299,16 +2275,16 @@ function get_idle_users($time) {
 
 // Get the ID for a username
 function get_user_id($username) {
-	return WT_DB::prepare("SELECT user_id FROM `##user` WHERE user_name=?")
-		->execute(array($username))
-		->fetchOne();
+	return
+		WT_DB::prepare("SELECT `##get_user_id`(?)")
+		->execute(array($username))->fetchOne();
 }
 
 // Get the username for a user ID
 function get_user_name($user_id) {
-	return WT_DB::prepare("SELECT user_name FROM `##user` WHERE user_id=?")
-		->execute(array($user_id))
-		->fetchOne();
+	return
+		WT_DB::prepare("SELECT `##get_user_name`(?)")
+		->execute(array($user_id))->fetchOne();
 }
 
 function get_newest_registered_user() {
@@ -2339,19 +2315,13 @@ function get_user_password($user_id) {
 
 function get_user_setting($user_id, $setting_name, $default_value=null) {
 	return
-		WT_DB::prepare(
-			"SELECT SQL_CACHE setting_value FROM `##user_setting` WHERE user_id=? AND setting_name=?"
-		)->execute(array($user_id, $setting_name))->fetchOne($default_value);
+		WT_DB::prepare("SELECT `##get_user_setting`(?, ?, ?)")
+		->execute(array($user_id, $setting_name, $default_value))->fetchOne();
 }
 
 function set_user_setting($user_id, $setting_name, $setting_value) {
-	if (is_null($setting_value)) {
-		WT_DB::prepare("DELETE FROM `##user_setting` WHERE user_id=? AND setting_name=?")
-			->execute(array($user_id, $setting_name));
-	} else {
-		WT_DB::prepare("REPLACE INTO `##user_setting` (user_id, setting_name, setting_value) VALUES (?, ?, ?)")
-			->execute(array($user_id, $setting_name, $setting_value));
-	}
+	WT_DB::prepare("CALL `##set_user_setting`(?, ?, ?)")
+		->execute(array($user_id, $setting_name, $setting_value));
 }
 
 function admin_user_exists() {
@@ -2364,19 +2334,13 @@ function admin_user_exists() {
 
 function get_user_gedcom_setting($user_id, $gedcom_id, $setting_name, $default_value=null) {
 	return
-		WT_DB::prepare(
-			"SELECT SQL_CACHE setting_value FROM `##user_gedcom_setting` WHERE user_id=? AND gedcom_id=? AND setting_name=?"
-		)->execute(array($user_id, $gedcom_id, $setting_name))->fetchOne($default_value);
+		WT_DB::prepare("SELECT `##get_user_gedcom_setting`(?, ?, ?, ?)")
+		->execute(array($user_id, $gedcom_id, $setting_name, $default_value))->fetchOne();
 }
 
 function set_user_gedcom_setting($user_id, $ged_id, $setting_name, $setting_value) {
-	if (is_null($setting_value)) {
-		WT_DB::prepare("DELETE FROM `##user_gedcom_setting` WHERE user_id=? AND gedcom_id=? AND setting_name=?")
-			->execute(array($user_id, $ged_id, $setting_name));
-	} else {
-		WT_DB::prepare("REPLACE INTO `##user_gedcom_setting` (user_id, gedcom_id, setting_name, setting_value) VALUES (?, ?, ?, ?)")
-			->execute(array($user_id, $ged_id, $setting_name, $setting_value));
-	}
+	WT_DB::prepare("CALL `##set_user_gedcom_setting`(?, ?, ?, ?)")
+		->execute(array($user_id, $ged_id, $setting_name, $setting_value));
 }
 
 function get_user_from_gedcom_xref($ged_id, $xref) {
@@ -2463,37 +2427,25 @@ function get_gedcom_blocks($gedcom_id) {
 
 function get_block_setting($block_id, $setting_name, $default_value=null) {
 	return
-		WT_DB::prepare(
-			"SELECT SQL_CACHE setting_value FROM `##block_setting` WHERE block_id=? AND setting_name=?"
-		)->execute(array($block_id, $setting_name))->fetchOne($default_value);
+		WT_DB::prepare("SELECT `##get_block_setting`(?, ?, ?)")
+		->execute(array($block_id, $setting_name, $default_value))->fetchOne();
 
 }
 
 function set_block_setting($block_id, $setting_name, $setting_value) {
-	if (is_null($setting_value)) {
-		WT_DB::prepare("DELETE FROM `##block_setting` WHERE block_id=? AND setting_name=?")
-			->execute(array($block_id, $setting_name));
-	} else {
-		WT_DB::prepare("REPLACE INTO `##block_setting` (block_id, setting_name, setting_value) VALUES (?, ?, ?)")
-			->execute(array($block_id, $setting_name, $setting_value));
-	}
+	WT_DB::prepare("CALL `##set_block_setting`(?, ?, ?)")
+		->execute(array($block_id, $setting_name, $setting_value));
 }
 
 function get_module_setting($module_name, $setting_name, $default_value=null) {
 	return
-		WT_DB::prepare(
-			"SELECT SQL_CACHE setting_value FROM `##module_setting` WHERE module_name=? AND setting_name=?"
-		)->execute(array($module_name, $setting_name))->fetchOne($default_value);
+		WT_DB::prepare("SELECT `##get_module_setting`(?, ?, ?)")
+		->execute(array($module_name, $setting_name, $default_value))->fetchOne();
 }
 
 function set_module_setting($module_name, $setting_name, $setting_value) {
-	if (is_null($setting_value)) {
-		WT_DB::prepare("DELETE FROM `##module_setting` WHERE module_name=? AND setting_name=?")
-			->execute(array($module_name, $setting_name));
-	} else {
-		WT_DB::prepare("REPLACE INTO `##module_setting` (module_name, setting_name, setting_value) VALUES (?, ?, ?)")
-			->execute(array($module_name, $setting_name, $setting_value));
-	}
+	WT_DB::prepare("CALL `##set_module_setting`(?, ?, ?)")
+		->execute(array($block_id, $setting_name, $setting_value));
 }
 
 /**

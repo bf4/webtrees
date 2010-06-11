@@ -852,45 +852,16 @@ function update_dates($xref, $ged_id, $gedrec) {
 
 // extract all the remote links from the given record and insert them into the database
 function update_rlinks($xref, $ged_id, $gedrec) {
-	static $sql_insert_rlink=null;
-	if (!$sql_insert_rlink) {
-		$sql_insert_rlink=WT_DB::prepare("INSERT INTO `##remotelinks` (r_gid,r_linkid,r_file) VALUES (?,?,?)");
-	}
-
-	if (preg_match_all("/\n1 RFN (".WT_REGEX_XREF.')/', $gedrec, $matches, PREG_SET_ORDER)) {
-		foreach ($matches as $match) {
-			// Ignore any errors, which may be caused by "duplicates" that differ on case/collation, e.g. "S1" and "s1"
-			try {
-				$sql_insert_rlink->execute(array($xref, $match[1], $ged_id));
-			} catch (PDOException $e) {
-				// We could display a warning here....
-			}
-		}
-	}
+	// This is now included in `##update_links`
 }
 
 // extract all the links from the given record and insert them into the database
 function update_links($xref, $ged_id, $gedrec) {
-	static $sql_insert_link=null;
-	if (!$sql_insert_link) {
-		$sql_insert_link=WT_DB::prepare("INSERT INTO `##link` (l_from,l_to,l_type,l_file) VALUES (?,?,?,?)");
+	$statement=null;
+	if (is_null($statement)) {
+		$statement=WT_DB::prepare("CALL `##update_links`(?, ?, ?)");
 	}
-
-	if (preg_match_all('/^\d+ ('.WT_REGEX_TAG.') @('.WT_REGEX_XREF.')@/m', $gedrec, $matches, PREG_SET_ORDER)) {
-		$data=array();
-		foreach ($matches as $match) {
-			// Include each link once only.
-			if (!in_array($match[1].$match[2], $data)) {
-				$data[]=$match[1].$match[2];
-				// Ignore any errors, which may be caused by "duplicates" that differ on case/collation, e.g. "S1" and "s1"
-				try {
-					$sql_insert_link->execute(array($xref, $match[2], $match[1], $ged_id));
-				} catch (PDOException $e) {
-					// We could display a warning here....
-				}
-			}
-		}
-	}
+	$statement->execute(array($xref, $ged_id, $gedrec));
 }
 
 // extract all the names from the given record and insert them into the database

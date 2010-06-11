@@ -746,19 +746,9 @@ function print_user_links() {
 // Print a link to allow email/messaging contact with a user
 // Optionally specify a method (used for webmaster/genealogy contacts)
 function user_contact_link($user_id) {
-	$method=get_user_setting($user_id, 'contactmethod');
-
-	$fullname=getUserFullName($user_id);
-
-	switch ($method) {
-	case 'none':
-		return '';
-	case 'mailto':
-		$email=getUserEmail($user_id);
-		return '<a href="mailto:'.htmlspecialchars($email).'">'.htmlspecialchars($fullname).'</a>';
-	default:
-		return "<a href='javascript:;' onclick='message(\"".get_user_name($user_id)."\", \"{$method}\");return false;'>{$fullname}</a>";
-	}
+	return WT_DB::prepare(
+		"SELECT `##user_contact_link`(?)"
+	)->execute(array($user_id))->fetchOne();
 }
 
 // Print a menu item to allow email/messaging contact with a user

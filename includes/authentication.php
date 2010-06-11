@@ -154,56 +154,40 @@ function getUserName() {
  * check if given username is an admin
  */
 function userIsAdmin($user_id=WT_USER_ID) {
-	if ($user_id) {
-		return get_user_setting($user_id, 'canadmin');
-	} else {
-		return false;
-	}
+	return
+		WT_DB::prepare("SELECT `##user_is_admin`(?)")
+		->execute(array($user_id))
+		->fetchOne();
 }
 
 /**
  * check if given username is an admin for the given gedcom
  */
 function userGedcomAdmin($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
-	if ($user_id) {
-		return get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin' || userIsAdmin($user_id);
-	} else {
-		return false;
-	}
+	return
+		WT_DB::prepare("SELECT `##user_gedcom_admin`(?, ?)")
+		->execute(array($user_id, $ged_id))
+		->fetchOne();
 }
 
 /**
  * check if the given user has access privileges on this gedcom
  */
 function userCanAccess($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
-	if ($user_id) {
-		if (userIsAdmin($user_id)) {
-			return true;
-		} else {
-			$tmp=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
-			return $tmp=='admin' || $tmp=='accept' || $tmp=='edit' || $tmp=='access';
-		}
-	} else {
-		return false;
-	}
+	return
+		WT_DB::prepare("SELECT `##user_can_access`(?, ?)")
+		->execute(array($user_id, $ged_id))
+		->fetchOne();
 }
 
 /**
  * check if the given user has write privileges for the given gedcom
  */
 function userCanEdit($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
-	global $ALLOW_EDIT_GEDCOM;
-
-	if ($ALLOW_EDIT_GEDCOM && $user_id) {
-		if (userIsAdmin($user_id)) {
-			return true;
-		} else {
-			$tmp=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
-			return $tmp=='admin' || $tmp=='accept' || $tmp=='edit';
-		}
-	} else {
-		return false;
-	}
+	return
+		WT_DB::prepare("SELECT `##user_can_edit`(?, ?)")
+		->execute(array($user_id, $ged_id))
+		->fetchOne();
 }
 
 /**
@@ -215,40 +199,26 @@ function userCanEdit($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
  * @return boolean true if user can accept false if user cannot accept
  */
 function userCanAccept($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
-	global $ALLOW_EDIT_GEDCOM;
-
-	// An admin can always accept changes, even if editing is disabled
-	if (userGedcomAdmin($user_id, $ged_id)) {
-		return true;
-	}
-	if ($ALLOW_EDIT_GEDCOM) {
-		$tmp=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
-		return $tmp=='admin' || $tmp=='accept';
-	} else {
-		return false;
-	}
+	return
+		WT_DB::prepare("SELECT `##user_can_accept`(?, ?)")
+		->execute(array($user_id, $ged_id))
+		->fetchOne();
 }
 
 // Should user's changed automatically be accepted
 function userAutoAccept($user_id=WT_USER_ID) {
-	return get_user_setting($user_id, 'auto_accept');
+	return
+		WT_DB::prepare("SELECT `##user_auto_accept`(?)")
+		->execute(array($user_id))
+		->fetchOne();
 }
 
 // Get current user's access level
 function getUserAccessLevel($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
-	if ($user_id) {
-		if (userGedcomAdmin($user_id, $ged_id)) {
-			return WT_PRIV_NONE;
-		} else {
-			if (userCanAccess($user_id, $ged_id)) {
-				return WT_PRIV_USER;
-			} else {
-				return WT_PRIV_PUBLIC;
-			}
-		}
-	} else {
-		return WT_PRIV_PUBLIC;
-	}
+	return
+		WT_DB::prepare("SELECT `##get_user_access_level`(?, ?)")
+		->execute(array($user_id, $ged_id))
+		->fetchOne();
 }
 
 // Get the full name for a user
@@ -273,37 +243,25 @@ function setUserEmail($user_id, $email) {
 
 // Get the root person for this gedcom
 function getUserRootId($user_id, $ged_id) {
-	if ($user_id) {
-		return get_user_gedcom_setting(WT_USER_ID, WT_GED_ID, 'rootid');
-	} else {
-		return getUserGedcomId($user_id, $ged_id);
-	}
+	return
+		WT_DB::prepare("SELECT `##get_user_root_id`(?, ?)")
+		->execute(array($user_id, $ged_id))
+		->fetchOne();
 }
 
 // Get the user's ID in the given gedcom
 function getUserGedcomId($user_id, $ged_id) {
-	if ($user_id) {
-		return get_user_gedcom_setting(WT_USER_ID, WT_GED_ID, 'gedcomid');
-	} else {
-		return null;
-	}
+	return
+		WT_DB::prepare("SELECT `##get_user_gedcom_id`(?, ?)")
+		->execute(array($user_id, $ged_id))
+		->fetchOne();
 }
 
 /**
  * add a message into the log-file
  */
 function AddToLog($log_message, $log_type='error') {
-	global $argc, $argv;
-
-	WT_DB::prepare(
-		"INSERT INTO `##log` (log_type, log_message, ip_address, user_id, gedcom_id) VALUES (?, ?, ?, ?, ?)"
-	)->execute(array(
-		$log_type,
-		$log_message,
-		$_SERVER['REMOTE_ADDR'],
-		getUserId() ? getUserId() : null,
-		defined('WT_GED_ID') ? WT_GED_ID : null // logs raised before we select the gedcom won't have this.
-	));
+	WT_DB::prepare("CALL `##add_to_log`(?, ?)")->execute(array($log_message, $log_type));
 }
 
 //----------------------------------- AddToSearchLog
