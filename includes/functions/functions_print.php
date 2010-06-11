@@ -774,14 +774,11 @@ function user_contact_menu($user_id) {
 // this function will print appropriate links based on the preferred contact methods for the genealogy
 // contact user and the technical support contact user
 function contact_links($ged_id=WT_GED_ID) {
-	$contact_user_id  =get_gedcom_setting($ged_id, 'CONTACT_USER_ID');
-	$webmaster_user_id=get_gedcom_setting($ged_id, 'WEBMASTER_USER_ID');
-	$supportLink = user_contact_link($webmaster_user_id);
-	if ($webmaster_user_id==$contact_user_id) {
-		$contactLink = $supportLink;
-	} else {
-		$contactLink = user_contact_link($contact_user_id);
-	}
+	list($contactLink, $supportLink)=WT_DB::prepare(
+		"SELECT".
+		" `##user_contact_link`(`##get_gedcom_setting`(?, 'CONTACT_USER_ID', NULL)),".
+		" `##user_contact_link`(`##get_gedcom_setting`(?, 'WEBMASTER_USER_ID', NULL))"
+	)->execute(array(WT_GED_ID, WT_GED_ID))->fetchOneRow(PDO::FETCH_NUM);
 
 	if (!$supportLink && !$contactLink) {
 		return '';
