@@ -754,18 +754,18 @@ function user_contact_link($user_id) {
 // Print a menu item to allow email/messaging contact with a user
 // Optionally specify a method (used for webmaster/genealogy contacts)
 function user_contact_menu($user_id) {
-	$method=get_user_setting($user_id, 'contactmethod');
-
-	$fullname=getUserFullName($user_id);
+	list($method, $fullname, $email, $user_name)=WT_DB::prepare(
+		"SELECT `##get_user_setting`(user_id, 'contactmethod', 'none'), real_name, email, user_name".
+		" FROM `##user` WHERE user_id=?"
+	)->execute(array($user_id))->fetchOneRow(PDO::FETCH_NUM);
 
 	switch ($method) {
 	case 'none':
 		return array();
 	case 'mailto':
-		$email=getUserEmail($user_id);
 		return array('label'=>$fullname, 'labelpos'=>'right', 'class'=>'submenuitem', 'hoverclass'=>'submenuitem_hover', 'link'=>"mailto:{$email}");
 	default:
-		return array('label'=>$fullname, 'labelpos'=>'right', 'class'=>'submenuitem', 'hoverclass'=>'submenuitem_hover', 'link'=>'#', 'onclick'=>"message('".get_user_name($user_id)."', '{$method}');return false;");
+		return array('label'=>$fullname, 'labelpos'=>'right', 'class'=>'submenuitem', 'hoverclass'=>'submenuitem_hover', 'link'=>'#', 'onclick'=>"message('".$user_name."', '{$method}');return false;");
 	}
 }
 
