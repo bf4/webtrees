@@ -1,9 +1,6 @@
 <?php
 /**
- * Core Functions that can be used by any page in PGV
- *
- * The functions in this file are common to all PGV pages and include date conversion
- * routines and sorting functions.
+ * Core Functions
  *
  * webtrees: Web based Family History software
  * Copyright (C) 2010 webtrees development team.
@@ -310,7 +307,6 @@ function load_gedcom_settings($ged_id=WT_GED_ID) {
 	global $WEBMASTER_USER_ID;            $WEBMASTER_USER_ID            =get_gedcom_setting($ged_id, 'WEBMASTER_USER_ID');
 	global $WEBTREES_EMAIL;               $WEBTREES_EMAIL               =get_gedcom_setting($ged_id, 'WEBTREES_EMAIL');
 	global $WELCOME_TEXT_AUTH_MODE;       $WELCOME_TEXT_AUTH_MODE       =get_gedcom_setting($ged_id, 'WELCOME_TEXT_AUTH_MODE');
-	global $WELCOME_TEXT_AUTH_MODE_4;     $WELCOME_TEXT_AUTH_MODE_4     =get_gedcom_setting($ged_id, 'WELCOME_TEXT_AUTH_MODE_4');
 	global $WELCOME_TEXT_CUST_HEAD;       $WELCOME_TEXT_CUST_HEAD       =get_gedcom_setting($ged_id, 'WELCOME_TEXT_CUST_HEAD');
 	global $WORD_WRAPPED_NOTES;           $WORD_WRAPPED_NOTES           =get_gedcom_setting($ged_id, 'WORD_WRAPPED_NOTES');
 	global $ZOOM_BOXES;                   $ZOOM_BOXES                   =get_gedcom_setting($ged_id, 'ZOOM_BOXES');
@@ -550,7 +546,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 							$prev_tags[$fact] = 1;
 						}
 						$subrec = get_sub_record(1, "1 $fact", $famrec, $prev_tags[$fact]);
-						$subrec .= "\n2 _PGVS @$spid@\n2 _PGVFS @$famid@\n";
+						$subrec .= "\n2 _WTS @$spid@\n2 _WTFS @$famid@\n";
 						if ($fact=="EVEN") {
 							$ct = preg_match("/2 TYPE (.*)/", $subrec, $tmatch);
 							if ($ct>0) {
@@ -1896,6 +1892,68 @@ function get_relationship_name($nodes) {
 	return get_relationship_name_from_path($combined_path, $pid1, $pid2);
 }
 
+function cousin_name($n, $sex) {
+	switch ($sex) {
+	case 'M':
+		switch ($n) {
+		case  1: return i18n::translate_c('MALE', 'first cousin');
+		case  2: return i18n::translate_c('MALE', 'second cousin');
+		case  3: return i18n::translate_c('MALE', 'third cousin');
+		case  4: return i18n::translate_c('MALE', 'fourth cousin');
+		case  5: return i18n::translate_c('MALE', 'fifth cousin');
+		case  6: return i18n::translate_c('MALE', 'sixth cousin');
+		case  7: return i18n::translate_c('MALE', 'seventh cousin');
+		case  8: return i18n::translate_c('MALE', 'eighth cousin');
+		case  9: return i18n::translate_c('MALE', 'ninth cousin');
+		case 10: return i18n::translate_c('MALE', 'tenth cousin');
+		case 11: return i18n::translate_c('MALE', 'eleventh cousin');
+		case 12: return i18n::translate_c('MALE', 'twelfth cousin');
+		case 13: return i18n::translate_c('MALE', 'thirteenth cousin');
+		case 14: return i18n::translate_c('MALE', 'fourteenth cousin');
+		case 15: return i18n::translate_c('MALE', 'fifteenth cousin');
+		default: return i18n::translate_c('MALE', '%d x cousin', $n);
+		}
+	case 'F':
+		switch ($n) {
+		case  1: return i18n::translate_c('FEMALE', 'first cousin');
+		case  2: return i18n::translate_c('FEMALE', 'second cousin');
+		case  3: return i18n::translate_c('FEMALE', 'third cousin');
+		case  4: return i18n::translate_c('FEMALE', 'fourth cousin');
+		case  5: return i18n::translate_c('FEMALE', 'fifth cousin');
+		case  6: return i18n::translate_c('FEMALE', 'sixth cousin');
+		case  7: return i18n::translate_c('FEMALE', 'seventh cousin');
+		case  8: return i18n::translate_c('FEMALE', 'eighth cousin');
+		case  9: return i18n::translate_c('FEMALE', 'ninth cousin');
+		case 10: return i18n::translate_c('FEMALE', 'tenth cousin');
+		case 11: return i18n::translate_c('FEMALE', 'eleventh cousin');
+		case 12: return i18n::translate_c('FEMALE', 'twelfth cousin');
+		case 13: return i18n::translate_c('FEMALE', 'thirteenth cousin');
+		case 14: return i18n::translate_c('FEMALE', 'fourteenth cousin');
+		case 15: return i18n::translate_c('FEMALE', 'fifteenth cousin');
+		default: return i18n::translate_c('FEMALE', '%d x cousin', $n);
+		}
+	case 'U':
+		switch ($n) {
+		case  1: return i18n::translate_c('MALE/FEMALE', 'first cousin');
+		case  2: return i18n::translate_c('MALE/FEMALE', 'second cousin');
+		case  3: return i18n::translate_c('MALE/FEMALE', 'third cousin');
+		case  4: return i18n::translate_c('MALE/FEMALE', 'fourth cousin');
+		case  5: return i18n::translate_c('MALE/FEMALE', 'fifth cousin');
+		case  6: return i18n::translate_c('MALE/FEMALE', 'sixth cousin');
+		case  7: return i18n::translate_c('MALE/FEMALE', 'seventh cousin');
+		case  8: return i18n::translate_c('MALE/FEMALE', 'eighth cousin');
+		case  9: return i18n::translate_c('MALE/FEMALE', 'ninth cousin');
+		case 10: return i18n::translate_c('MALE/FEMALE', 'tenth cousin');
+		case 11: return i18n::translate_c('MALE/FEMALE', 'eleventh cousin');
+		case 12: return i18n::translate_c('MALE/FEMALE', 'twelfth cousin');
+		case 13: return i18n::translate_c('MALE/FEMALE', 'thirteenth cousin');
+		case 14: return i18n::translate_c('MALE/FEMALE', 'fourteenth cousin');
+		case 15: return i18n::translate_c('MALE/FEMALE', 'fifteenth cousin');
+		default: return i18n::translate_c('MALE/FEMALE', '%d x cousin', $n);
+		}
+	}
+}
+
 function get_relationship_name_from_path($path, $pid1, $pid2) {
 	if (!preg_match('/^(mot|fat|par|hus|wif|spo|son|dau|chi|bro|sis|sib)*$/', $path)) {
 		// TODO: Update all the "3 RELA " values in class_person
@@ -2011,7 +2069,7 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 	case 'sibchi': return i18n::translate_c('sibling\'s child', 'nephew/niece');
 	case 'sibdau': return i18n::translate_c('sibling\'s daughter', 'niece');
 	case 'sibson': return i18n::translate_c('sibling\'s son', 'nephew');
-	case 'sibspo': return i18n::translate_c('sibling\'s wife', 'brother/sister-in-law');
+	case 'sibspo': return i18n::translate_c('sibling\'s spouse', 'brother/sister-in-law');
 	case 'sischi': return i18n::translate_c('sister\'s child', 'nephew/niece');
 	case 'sisdau': return i18n::translate_c('sister\'s daughter', 'niece');
 	case 'sishus': return i18n::translate_c('sister\'s husband', 'brother-in-law');
@@ -2203,18 +2261,18 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 	case 'parbrowif': return i18n::translate_c('parent\'s brother\'s wife', 'aunt');
 	case 'parsishus': return i18n::translate_c('parent\'s sister\'s husband', 'uncle');
 
-	case 'motbroson': return i18n::translate_c('mother\'s brother\'s son', 'cousin');
-	case 'motbrodau': return i18n::translate_c('mother\'s brother\'s daughter', 'cousin');
-	case 'motbrochi': return i18n::translate_c('mother\'s brother\'s child', 'cousin');
-	case 'fatbroson': return i18n::translate_c('father\'s brother\'s son', 'cousin');
-	case 'fatbrodau': return i18n::translate_c('father\'s brother\'s daughter', 'cousin');
-	case 'fatbrochi': return i18n::translate_c('father\'s brother\'s child', 'cousin');
-	case 'motsisson': return i18n::translate_c('mother\'s sister\'s son', 'cousin');
-	case 'motsisdau': return i18n::translate_c('mother\'s sister\'s daughter', 'cousin');
-	case 'motsischi': return i18n::translate_c('mother\'s sister\'s child', 'cousin');
-	case 'fatsisson': return i18n::translate_c('father\'s sister\'s son', 'cousin');
-	case 'fatsisdau': return i18n::translate_c('father\'s sister\'s daughter', 'cousin');
-	case 'fatsischi': return i18n::translate_c('father\'s sister\'s child', 'cousin');
+	case 'motbroson': return i18n::translate_c('mother\'s brother\'s son',      'first cousin');
+	case 'motbrodau': return i18n::translate_c('mother\'s brother\'s daughter', 'first cousin');
+	case 'motbrochi': return i18n::translate_c('mother\'s brother\'s child',    'first cousin');
+	case 'fatbroson': return i18n::translate_c('father\'s brother\'s son',      'first cousin');
+	case 'fatbrodau': return i18n::translate_c('father\'s brother\'s daughter', 'first cousin');
+	case 'fatbrochi': return i18n::translate_c('father\'s brother\'s child',    'first cousin');
+	case 'motsisson': return i18n::translate_c('mother\'s sister\'s son',       'first cousin');
+	case 'motsisdau': return i18n::translate_c('mother\'s sister\'s daughter',  'first cousin');
+	case 'motsischi': return i18n::translate_c('mother\'s sister\'s child',     'first cousin');
+	case 'fatsisson': return i18n::translate_c('father\'s sister\'s son',       'first cousin');
+	case 'fatsisdau': return i18n::translate_c('father\'s sister\'s daughter',  'first cousin');
+	case 'fatsischi': return i18n::translate_c('father\'s sister\'s child',     'first cousin');
 
 	}
 
@@ -2518,31 +2576,39 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 			break;
 		case 'en': // See: http://en.wikipedia.org/wiki/File:CousinTree.svg
 		default:
-			if ($up==$down) {
+			$removed=abs($down-$up);
+			switch ($removed) {
+			case 0:
 				switch ($last) {
-				case 'son': return i18n::translate_c('MALE', '%s cousin',   i18n::ordinal_word($up-1));
-				case 'dau': return i18n::translate_c('FEMALE', '%s cousin', i18n::ordinal_word($up-1));
-				case 'chi': return i18n::translate('%s cousin',             i18n::ordinal_word($up-1));
+				case 'son': return cousin_name($up-1, 'M');
+				case 'dau': return cousin_name($up-1, 'F');
+				case 'chi': return cousin_name($up-1, 'U');
 				}
-			} else {
-				$removed=abs($down-$up);
+			case 1:
 				switch ($last) {
-				case 'son':
-					return i18n::plural(
-						'%1$s male cousin, %2$d time removed', '%1$s male cousin, %2$d times removed',
-						$removed, i18n::ordinal_word(min($up, $down)), $removed
-					);
-				case 'dau':
-					return i18n::plural(
-						'%1$s female cousin, %2$d time removed', '%1$s female cousin, %2$d times removed',
-						$removed, i18n::ordinal_word(min($up, $down)), $removed
-					);
-				case 'chi': return i18n::plural('%1$s cousin, %2$d time removed', '%1$s cousin, %2$d times removed',
-					$removed, i18n::ordinal_word(min($up, $down)), $removed
-					);
+				case 'son': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, once removed', cousin_name($up-1, 'M'));
+				case 'dau': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, once removed', cousin_name($up-1, 'F'));
+				case 'chi': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, once removed', cousin_name($up-1, 'U'));
+				}
+			case 2:
+				switch ($last) {
+				case 'son': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, twice removed', cousin_name($up-1, 'M'));
+				case 'dau': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, twice removed', cousin_name($up-1, 'F'));
+				case 'chi': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, twice removed', cousin_name($up-1, 'U'));
+				}
+			case 3:
+				switch ($last) {
+				case 'son': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, thrice removed', cousin_name($up-1, 'M'));
+				case 'dau': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, thrice removed', cousin_name($up-1, 'F'));
+				case 'chi': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, thrice removed', cousin_name($up-1, 'U'));
+				}
+			default:
+				switch ($last) {
+				case 'son': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */ return i18n::translate('%1$s, %2$d times removed', cousin_name($up-1, 'M'), $removed);
+				case 'dau': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */ return i18n::translate('%1$s, %2$d times removed', cousin_name($up-1, 'F'), $removed);
+				case 'chi': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */ return i18n::translate('%1$s, %2$d times removed', cousin_name($up-1, 'U'), $removed);
 				}
 			}
-			break;
 		}
 	}
 
@@ -2631,7 +2697,7 @@ function filename_decode($filename) {
  * encode a filename
  *
  * windows doesn't use UTF-8 for its file system so we have to encode the filename
- * before it can be used in PGV
+ * before it can be used
  */
 function filename_encode($filename) {
 	if (DIRECTORY_SEPARATOR=='\\')
