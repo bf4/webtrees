@@ -5,9 +5,9 @@
 * See http://www.phpgedview.net/privacy.php for more information on privacy in webtrees
 *
 * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
+* Copyright (C) 2010 webtrees development team.
+*
+* Derived from PhpGedView
 * Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -302,9 +302,9 @@ function checkPrivacyByYear($pid) {
 *          - "REPO" record is a repository
 * @return boolean return true to show the persons details, return false to keep them private
 */
-function displayDetailsById($pid, $type = "INDI") {
+function displayDetailsById($pid, $type='', $gedrec='') {
 	global $USE_RELATIONSHIP_PRIVACY, $CHECK_MARRIAGE_RELATIONS, $MAX_RELATION_PATH_LENGTH;
-	global $person_privacy, $HIDE_LIVE_PEOPLE, $GEDCOM, $SHOW_DEAD_PEOPLE, $MAX_ALIVE_AGE, $PRIVACY_BY_YEAR;
+	global $person_privacy, $person_facts, $global_facts, $HIDE_LIVE_PEOPLE, $GEDCOM, $SHOW_DEAD_PEOPLE, $MAX_ALIVE_AGE, $PRIVACY_BY_YEAR;
 	global $PRIVACY_CHECKS, $SHOW_LIVING_NAMES;
 
 	$ged_id=get_id_from_gedcom($GEDCOM);
@@ -337,13 +337,9 @@ function displayDetailsById($pid, $type = "INDI") {
 	}
 
 	//-- keep a count of how many times we have checked for privacy
-	if (!isset($PRIVACY_CHECKS)) {
-		$PRIVACY_CHECKS = 1;
-	} else {
-		$PRIVACY_CHECKS++;
-	}
+	++$PRIVACY_CHECKS;
 
-	// This setting would better be called "ENABLE_PRIVACY"
+	// This setting would better be called "$ENABLE_PRIVACY"
 	if (!$HIDE_LIVE_PEOPLE) {
 		return true;
 	}
@@ -354,7 +350,18 @@ function displayDetailsById($pid, $type = "INDI") {
 	}
 
 	// Need to examine the raw gedcom record
-	$gedrec = find_person_record($pid, $ged_id);
+	if (!$type) {
+		$type=gedcom_record_type($pid, $ged_id);
+	}
+	if (!$gedrec) {
+		switch ($type) {
+		case 'INDI': $gedrec=find_person_record($pid, $ged_id); break;
+		case 'FAM':  $gedrec=find_family_record($pid, $ged_id); break;
+		case 'SOUR': $gedrec=find_source_record($pid, $ged_id); break;
+		case 'OBJE': $gedrec=find_media_record ($pid, $ged_id); break;
+		default:     $gedrec=find_other_record ($pid, $ged_id); break;
+		}
+	}
 
 	// Does this record have a RESN?
 	if (strpos($gedrec, "\n1 RESN none")) {
@@ -392,7 +399,8 @@ function displayDetailsById($pid, $type = "INDI") {
 			$relationship=get_relationship($pgv_USER_GEDCOM_ID, $pid, $CHECK_MARRIAGE_RELATIONS, $path_length);
 			return $relationship!==false;
 		}
-		break;
+		// No restriction found - show living people to authenticated users only:
+		return WT_PRIV_USER>=$pgv_USER_ACCESS_LEVEL;
 	case 'FAM':
 		// Hide a family if either spouse is private
 		$parents=find_parents($pid);
@@ -414,13 +422,13 @@ function displayDetailsById($pid, $type = "INDI") {
 		break;
 	}
 
-	// SOUR, REPO, SUBM, SUBN, etc. are controlled by global tag settings
+	// Level 1 tags (except INDI and FAM) can be controlled by global tag settings
 	if (isset($global_facts[$type])) {
-		return $pgv_USER_ACCESS_LEVEL>$global_facts[$fact];
+		return $global_facts[$type]>=$pgv_USER_ACCESS_LEVEL;
 	}
 	
-	// No restriction found - use global access level:
-	return $pgv_USER_CAN_ACCESS;
+	// No restriction found - must be public:
+	return true;
 }
 }
 
@@ -451,11 +459,7 @@ function showLivingNameById($pid) {
 		$pgv_USER_ACCESS_LEVEL = $_SESSION["pgv_USER_ACCESS_LEVEL"];
 	}
 
-	if (displayDetailsById($pid)) return true;
-
-	if ($SHOW_LIVING_NAMES>=$pgv_USER_ACCESS_LEVEL) return true;
-
-	return false;
+	return $SHOW_LIVING_NAMES>=$pgv_USER_ACCESS_LEVEL || displayDetailsById($pid, 'INDI');
 }
 }
 
