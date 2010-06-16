@@ -142,19 +142,19 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR NOT FOUND BEGIN END;
 
 	IF p_pending THEN
-		SET l_gedcom=find_updated_record(p_xref, p_gedcom_id);
+		SET l_gedcom=`##find_updated_record`(p_xref, p_gedcom_id);
 	END IF;
 
 	IF l_gedcom IS NULL THEN
-		SET l_gedcom=find_person_record(p_xref, p_gedcom_id);
+		SET l_gedcom=`##find_person_record`(p_xref, p_gedcom_id);
 		IF l_gedcom IS NULL THEN
-			SET l_gedcom=find_family_record(p_xref, p_gedcom_id);
+			SET l_gedcom=`##find_family_record`(p_xref, p_gedcom_id);
 			IF l_gedcom IS NULL THEN
-				SET l_gedcom=find_source_record(p_xref, p_gedcom_id);
+				SET l_gedcom=`##find_source_record`(p_xref, p_gedcom_id);
 				IF l_gedcom IS NULL THEN
-					SET l_gedcom=find_media_record(p_xref, p_gedcom_id);
+					SET l_gedcom=`##find_media_record`(p_xref, p_gedcom_id);
 					IF l_gedcom IS NULL THEN
-						SET l_gedcom=find_other_record(p_xref, p_gedcom_id);
+						SET l_gedcom=`##find_other_record`(p_xref, p_gedcom_id);
 					END IF;
 				END IF;
 			END IF;
@@ -184,7 +184,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR NOT FOUND BEGIN END;
 
 	SELECT SQL_NO_CACHE m_gedrec INTO l_gedcom
-	FROM `##other`
+	FROM `##media`
 	WHERE m_gedfile=p_gedcom_id AND m_media=p_xref;
 
 	RETURN l_gedcom;

@@ -751,15 +751,10 @@ function fetch_gedcom_record($xref, $ged_id) {
 * @param string $famid the unique gedcom xref id of the family record to retrieve
 * @return string the raw gedcom record is returned
 */
-function find_family_record($xref, $ged_id) {
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT f_gedcom FROM `##families` WHERE f_id=? AND f_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
+function find_family_record($xref, $gedcom_id) {
+	return
+		WT_DB::prepare("SELECT `##find_family_record`(?,?)")
+		->execute(array($xref, $gedcom_id))->fetchOne();
 }
 
 /**
@@ -769,15 +764,10 @@ function find_family_record($xref, $ged_id) {
 * @param string $pid the unique gedcom xref id of the individual record to retrieve
 * @return string the raw gedcom record is returned
 */
-function find_person_record($xref, $ged_id) {
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT i_gedcom FROM `##individuals` WHERE i_id=? AND i_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
+function find_person_record($xref, $gedcom_id) {
+	return
+		WT_DB::prepare("SELECT `##find_person_record`(?,?)")
+		->execute(array($xref, $gedcom_id))->fetchOne();
 }
 
 /**
@@ -787,15 +777,10 @@ function find_person_record($xref, $ged_id) {
 * @param string $sid the unique gedcom xref id of the source record to retrieve
 * @return string the raw gedcom record is returned
 */
-function find_source_record($xref, $ged_id) {
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT s_gedcom FROM `##sources` WHERE s_id=? AND s_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
+function find_source_record($xref, $gedcom_id) {
+	return
+		WT_DB::prepare("SELECT `##find_source_record`(?,?)")
+		->execute(array($xref, $gedcom_id))->fetchOne();
 }
 
 /**
@@ -803,61 +788,27 @@ function find_source_record($xref, $ged_id) {
 * @param string $rid the record id
 * @param string $gedfile the gedcom file id
 */
-function find_other_record($xref, $ged_id) {
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT o_gedcom FROM `##other` WHERE o_id=? AND o_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
+function find_other_record($xref, $gedcom_id) {
+	return
+		WT_DB::prepare("SELECT `##find_other_record`(?,?)")
+		->execute(array($xref, $gedcom_id))->fetchOne();
 }
 
 /**
 * Find a media record by its ID
 * @param string $rid the record id
 */
-function find_media_record($xref, $ged_id) {
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT m_gedrec FROM `##media` WHERE m_media=? AND m_gedfile=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
+function find_media_record($xref, $gedcom_id) {
+	return
+		WT_DB::prepare("SELECT `##find_media_record`(?,?)")
+		->execute(array($xref, $gedcom_id))->fetchOne();
 }
 
 // Find the gedcom data for a record. Optionally include pending changes.
-function find_gedcom_record($xref, $ged_id, $pending=false) {
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT i_gedcom FROM `##individuals` WHERE i_id   =? AND i_file   =? UNION ALL ".
-			"SELECT f_gedcom FROM `##families`    WHERE f_id   =? AND f_file   =? UNION ALL ".
-			"SELECT s_gedcom FROM `##sources`     WHERE s_id   =? AND s_file   =? UNION ALL ".
-			"SELECT m_gedrec FROM `##media`       WHERE m_media=? AND m_gedfile=? UNION ALL ".
-			"SELECT o_gedcom FROM `##other`       WHERE o_id   =? AND o_file   =?"
-		);
-	}
-
-	if ($pending) {
-		// This will return NULL if no record exists, or an empty string if the record has been deleted.
-		$gedcom=find_updated_record($xref, $ged_id);
-	} else {
-		$gedcom=null;
-	}
-	
-	if (is_null($gedcom)) {
-		return
-			$statement
-			->execute(array($xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id))
-			->fetchOne();
-	} else {
-		return $gedcom;
-	}
+function find_gedcom_record($xref, $gedcom_id, $pending=false) {
+	return
+		WT_DB::prepare("SELECT `##find_gedcom_record`(?,?,?)")
+		->execute(array($xref, $gedcom_id, $pending))->fetchOne();
 }
 
 /**
@@ -865,55 +816,25 @@ function find_gedcom_record($xref, $ged_id, $pending=false) {
  * @param string $gid	the id of the record to find
  * @param string $gedfile	the gedcom file to get the record from.. defaults to currently active gedcom
  */
-function find_updated_record($xref, $ged_id) {
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT new_gedcom FROM `##change` WHERE gedcom_id=? AND xref=? AND status='pending' ".
-			"ORDER BY change_id DESC LIMIT 1"
-		);
-	}
-
+function find_updated_record($xref, $gedcom_id) {
 	// This will return NULL if no record exists, or an empty string if the record has been deleted.
-	return $gedcom=$statement->execute(array($ged_id, $xref))->fetchOne();
+	return
+		WT_DB::prepare("SELECT `##find_updated_record`(?,?)")
+		->execute(array($xref, $gedcom_id))->fetchOne();
 }
 
 // Find the type of a gedcom record. Check the cache before querying the database.
 // Returns 'INDI', 'FAM', etc., or null if the record does not exist.
-function gedcom_record_type($xref, $ged_id) {
-	global $gedcom_record_cache;
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=WT_DB::prepare(
-			"SELECT 'INDI' FROM `##individuals` WHERE i_id   =? AND i_file   =? UNION ALL ".
-			"SELECT 'FAM'  FROM `##families`    WHERE f_id   =? AND f_file   =? UNION ALL ".
-			"SELECT 'SOUR' FROM `##sources`     WHERE s_id   =? AND s_file   =? UNION ALL ".
-			"SELECT 'OBJE' FROM `##media`       WHERE m_media=? AND m_gedfile=? UNION ALL ".
-			"SELECT o_type FROM `##other`       WHERE o_id   =? AND o_file   =?"
-		);
-	}
-
-	if (isset($gedcom_record_cache[$xref][$ged_id])) {
-		return $gedcom_record_cache[$xref][$ged_id]->getType();
-	} else {
-		return $statement->execute(array($xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id))->fetchOne();
-	}
+function gedcom_record_type($xref, $gedcom_id) {
+	return
+		WT_DB::prepare("SELECT `##gedcom_record_type`(?,?)")
+		->execute(array($xref, $gedcom_id))->fetchOne();
 }
 
 // Find out if there are any pending changes that a given user may accept
-function exists_pending_change($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
-	if (userCanAccept($user_id, $ged_id)) {
-		return
-			WT_DB::prepare(
-				"SELECT 1".
-				" FROM `##change`".
-				" WHERE status='pending' AND gedcom_id=?"
-			)->execute(array($ged_id))->fetchOne();
-	} else {
-		return false;
-	}
+function exists_pending_change($user_id=WT_USER_ID, $gedcom_id=WT_GED_ID) {
+	WT_DB::prepare("CALL `##exists_pending_change`(?,?)")
+		->execute(array($user_id, $gedcom_id));
 }
 
 /**
@@ -1632,34 +1553,8 @@ function find_rin_id($rin) {
 * @param string $ged  the filename of the gedcom to delete
 */
 function delete_gedcom($ged_id) {
-	// Don't delete the logs.
-	WT_DB::prepare("UPDATE `##log` SET gedcom_id=NULL   WHERE gedcom_id =?")->execute(array($ged_id));
-
-	WT_DB::prepare("DELETE `##block_setting` FROM `##block_setting` JOIN `##block` USING (block_id) WHERE gedcom_id=?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##block`               WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##dates`               WHERE d_file    =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##families`            WHERE f_file    =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##user_gedcom_setting` WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##gedcom_setting`      WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##individuals`         WHERE i_file    =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##link`                WHERE l_file    =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##media`               WHERE m_gedfile =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##media_mapping`       WHERE mm_gedfile=?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##module_privacy`      WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##name`                WHERE n_file    =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##next_id`             WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##other`               WHERE o_file    =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##placelinks`          WHERE pl_file   =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##places`              WHERE p_file    =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##sources`             WHERE s_file    =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##hit_counter`         WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##change`              WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##default_resn`        WHERE gedcom_id =?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##gedcom`              WHERE gedcom_id =?")->execute(array($ged_id));
-
-	if (get_site_setting('DEFAULT_GEDCOM')==get_gedcom_from_id($ged_id)) {
-		set_site_setting('DEFAULT_GEDCOM', '');
-	}
+	WT_DB::prepare("CALL `##delete_gedcom`(?)")
+		->execute(array($gedcom_id));
 }
 
 /**

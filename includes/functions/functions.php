@@ -2949,63 +2949,10 @@ function add_descendancy(&$list, $pid, $parents=false, $generations=-1) {
  * @param string $type	the type of record, defaults to 'INDI'
  * @return string
  */
-function get_new_xref($type='INDI', $ged_id=WT_GED_ID) {
-	global $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX;
-
-	switch ($type) {
-	case "INDI":
-		$prefix = $GEDCOM_ID_PREFIX;
-		break;
-	case "FAM":
-		$prefix = $FAM_ID_PREFIX;
-		break;
-	case "OBJE":
-		$prefix = $MEDIA_ID_PREFIX;
-		break;
-	case "SOUR":
-		$prefix = $SOURCE_ID_PREFIX;
-		break;
-	case "REPO":
-		$prefix = $REPO_ID_PREFIX;
-		break;
-	default:
-		$prefix = $type{0};
-		break;
-	}
-
-	$num=
-		WT_DB::prepare("SELECT next_id FROM `##next_id` WHERE record_type=? AND gedcom_id=?")
-		->execute(array($type, $ged_id))
-		->fetchOne();
-
-	// TODO?  If a gedcom file contains *both* inline and object based media, then
-	// we could be generating an XREF that we will find later.  Need to scan the
-	// entire gedcom for them?
-
-	if (is_null($num)) {
-		$num = 1;
-		WT_DB::prepare("INSERT INTO `##next_id` (gedcom_id, record_type, next_id) VALUES(?, ?, 1)")
-			->execute(array($ged_id, $type));
-	}
-
-	//-- make sure this number has not already been used
-	if ($num>=2147483647 || $num<=0) { // Popular databases are only 32 bits (signed)
-		$num=1;
-	}
-	while (find_gedcom_record($prefix.$num, $ged_id, true)) {
-		++$num;
-		if ($num>=2147483647 || $num<=0) { // Popular databases are only 32 bits (signed)
-			$num=1;
-		}
-	}
-
-	//-- the key is the prefix and the number
-	$key = $prefix.$num;
-
-	//-- update the next id number in the DB table
-	WT_DB::prepare("UPDATE `##next_id` SET next_id=? WHERE record_type=? AND gedcom_id=?")
-		->execute(array($num+1, $type, $ged_id));
-	return $key;
+function get_new_xref($type='INDI', $gedcom_id=WT_GED_ID) {
+	return
+		WT_DB::prepare("SELECT `##get_new_xref`(?,?)")
+		->execute(array($type, $gedcom_id))->fetchOne();
 }
 
 /**
