@@ -833,8 +833,9 @@ function gedcom_record_type($xref, $gedcom_id) {
 
 // Find out if there are any pending changes that a given user may accept
 function exists_pending_change($user_id=WT_USER_ID, $gedcom_id=WT_GED_ID) {
-	WT_DB::prepare("CALL `##exists_pending_change`(?,?)")
-		->execute(array($user_id, $gedcom_id));
+	return
+		WT_DB::prepare("SELECT `##exists_pending_change`(?,?)")
+		->execute(array($user_id, $gedcom_id))->fetchOne();
 }
 
 /**
