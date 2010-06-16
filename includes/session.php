@@ -42,7 +42,7 @@ define('WT_TRANSLATORS_URL', 'https://translations.launchpad.net/webtrees');
 
 // Enable debugging output?
 define('WT_DEBUG',      false);
-define('WT_DEBUG_SQL',  false);
+define('WT_DEBUG_SQL',  true);
 
 // Error reporting
 define('WT_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
@@ -332,6 +332,8 @@ if ($MULTI_MEDIA) {
 	require WT_ROOT.'includes/functions/functions_mediadb.php';
 }
 require WT_ROOT.'includes/functions/functions_date.php';
+
+define('WT_TODAY_JD', server_jd()); // Privacy calculations need to know today's date
 
 if (empty($PEDIGREE_GENERATIONS)) {
 	$PEDIGREE_GENERATIONS=$DEFAULT_PEDIGREE_GENERATIONS;
