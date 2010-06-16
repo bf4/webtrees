@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
+ * @version $Id$
  */
 
 if (!defined('WT_WEBTREES')) {
@@ -111,7 +111,7 @@ class top10_surnames_WT_Module extends WT_Module implements WT_Module_Block {
 			$content=format_surname_tagcloud($all_surnames, 'indilist', true);
 			break;
 		case 'list':
-			uksort($all_surnames,'utf8_strcasecmp');
+			uasort($all_surnames,array('top10_surnames_WT_Module', 'top_surname_sort'));
 			$content=format_surname_list($all_surnames, '2', true);
 			break;
 		case 'table':
