@@ -30,6 +30,326 @@ END //
 DELIMITER ;
 
 /******************************************************************************/
+/* FUNCTION: DELETE_GEDCOM                                                    */
+/******************************************************************************/
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS `##delete_gedcom` //
+CREATE PROCEDURE `##delete_gedcom`(
+	p_gedcom_id INTEGER
+)
+	COMMENT 'includes/functions/functions_db.php:delete_gedcom()'
+	DETERMINISTIC
+	SQL SECURITY DEFINER
+	MODIFIES SQL DATA
+BEGIN
+	/* Don't delete the logs. */
+	UPDATE `##log` SET gedcom_id=NULL WHERE gedcom_id=p_gedcom_id;
+
+	DELETE `##block_setting` FROM `##block_setting` JOIN `##block` USING (block_id) WHERE gedcom_id=p_gedcom_id;
+	DELETE FROM `##block`               WHERE gedcom_id =p_gedcom_id;
+	DELETE FROM `##dates`               WHERE d_file    =p_gedcom_id;
+	DELETE FROM `##families`            WHERE f_file    =p_gedcom_id;
+	DELETE FROM `##user_gedcom_setting` WHERE gedcom_id =p_gedcom_id;
+	DELETE FROM `##gedcom_setting`      WHERE gedcom_id =p_gedcom_id;
+	DELETE FROM `##individuals`         WHERE i_file    =p_gedcom_id;
+	DELETE FROM `##link`                WHERE l_file    =p_gedcom_id;
+	DELETE FROM `##media`               WHERE m_gedfile =p_gedcom_id;
+	DELETE FROM `##media_mapping`       WHERE mm_gedfile=p_gedcom_id;
+	DELETE FROM `##module_privacy`      WHERE gedcom_id =p_gedcom_id;
+	DELETE FROM `##name`                WHERE n_file    =p_gedcom_id;
+	DELETE FROM `##next_id`             WHERE gedcom_id =p_gedcom_id;
+	DELETE FROM `##other`               WHERE o_file    =p_gedcom_id;
+	DELETE FROM `##placelinks`          WHERE pl_file   =p_gedcom_id;
+	DELETE FROM `##places`              WHERE p_file    =p_gedcom_id;
+	DELETE FROM `##sources`             WHERE s_file    =p_gedcom_id;
+	DELETE FROM `##hit_counter`         WHERE gedcom_id =p_gedcom_id;
+	DELETE FROM `##change`              WHERE gedcom_id =p_gedcom_id;
+	DELETE FROM `##default_resn`        WHERE gedcom_id =p_gedcom_id;
+	DELETE FROM `##gedcom`              WHERE gedcom_id =p_gedcom_id;
+
+	IF `##get_site_setting`('DEFAULT_GEDCOM', NULL)=`##get_gedcom_from_id`(p_gedcom_id) THEN
+		CALL `##set_site_setting`('DEFAULT_GEDCOM', '');
+	END IF;
+	
+END //
+DELIMITER ;
+
+/******************************************************************************/
+/* FUNCTION: EXISTS_PENDING_CHANGE                                            */
+/******************************************************************************/
+
+DELIMITER //
+DROP FUNCTION IF EXISTS `##exists_pending_change` //
+CREATE FUNCTION `##exists_pending_change`(
+	p_user_id   INTEGER,
+	p_gedcom_id INTEGER
+) RETURNS     BOOLEAN
+	COMMENT 'includes/functions/functions_db.php:exists_pending_change()'
+	DETERMINISTIC
+	SQL SECURITY DEFINER
+	READS SQL DATA
+BEGIN
+	RETURN `##user_can_accept`(p_user_id, p_gedcom_id) AND EXISTS (
+		SELECT 1 FROM `##change` WHERE status='pending' AND gedcom_id=p_gedcom_id
+	);
+END //
+DELIMITER ;
+
+/******************************************************************************/
+/* FUNCTION: FIND_FAMILY_RECORD                                               */
+/******************************************************************************/
+
+DELIMITER //
+DROP FUNCTION IF EXISTS `##find_family_record` //
+CREATE FUNCTION `##find_family_record`(
+	p_xref      VARCHAR(20),
+	p_gedcom_id INTEGER
+) RETURNS     MEDIUMTEXT
+	COMMENT 'includes/functions/functions_db.php:find_family_record()'
+	DETERMINISTIC
+	SQL SECURITY DEFINER
+	READS SQL DATA
+BEGIN
+	DECLARE l_gedcom MEDIUMTEXT;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND BEGIN END;
+
+	SELECT SQL_NO_CACHE f_gedcom INTO l_gedcom
+	FROM `##families`
+	WHERE f_file=p_gedcom_id AND f_id=p_xref;
+
+	RETURN l_gedcom;
+END //
+DELIMITER ;
+
+/******************************************************************************/
+/* FUNCTION: FIND_GEDCOM_RECORD                                               */
+/******************************************************************************/
+
+DELIMITER //
+DROP FUNCTION IF EXISTS `##find_gedcom_record` //
+CREATE FUNCTION `##find_gedcom_record`(
+	p_xref      VARCHAR(20),
+	p_gedcom_id INTEGER,
+	p_pending   BOOLEAN
+) RETURNS     MEDIUMTEXT
+	COMMENT 'includes/functions/functions_db.php:find_gedcom_record()'
+	DETERMINISTIC
+	SQL SECURITY DEFINER
+	READS SQL DATA
+BEGIN
+	DECLARE l_gedcom MEDIUMTEXT;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND BEGIN END;
+
+	IF p_pending THEN
+		SET l_gedcom=find_updated_record(p_xref, p_gedcom_id);
+	END IF;
+
+	IF l_gedcom IS NULL THEN
+		SET l_gedcom=find_person_record(p_xref, p_gedcom_id);
+		IF l_gedcom IS NULL THEN
+			SET l_gedcom=find_family_record(p_xref, p_gedcom_id);
+			IF l_gedcom IS NULL THEN
+				SET l_gedcom=find_source_record(p_xref, p_gedcom_id);
+				IF l_gedcom IS NULL THEN
+					SET l_gedcom=find_media_record(p_xref, p_gedcom_id);
+					IF l_gedcom IS NULL THEN
+						SET l_gedcom=find_other_record(p_xref, p_gedcom_id);
+					END IF;
+				END IF;
+			END IF;
+		END IF;
+	END IF;
+
+	RETURN l_gedcom;
+END //
+DELIMITER ;
+
+/******************************************************************************/
+/* FUNCTION: FIND_MEDIA_RECORD                                                */
+/******************************************************************************/
+
+DELIMITER //
+DROP FUNCTION IF EXISTS `##find_media_record` //
+CREATE FUNCTION `##find_media_record`(
+	p_xref      VARCHAR(20),
+	p_gedcom_id INTEGER
+) RETURNS     MEDIUMTEXT
+	COMMENT 'includes/functions/functions_db.php:find_media_record()'
+	DETERMINISTIC
+	SQL SECURITY DEFINER
+	READS SQL DATA
+BEGIN
+	DECLARE l_gedcom MEDIUMTEXT;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND BEGIN END;
+
+	SELECT SQL_NO_CACHE m_gedrec INTO l_gedcom
+	FROM `##other`
+	WHERE m_gedfile=p_gedcom_id AND m_media=p_xref;
+
+	RETURN l_gedcom;
+END //
+DELIMITER ;
+
+/******************************************************************************/
+/* FUNCTION: FIND_OTHER_RECORD                                                */
+/******************************************************************************/
+
+DELIMITER //
+DROP FUNCTION IF EXISTS `##find_other_record` //
+CREATE FUNCTION `##find_other_record`(
+	p_xref      VARCHAR(20),
+	p_gedcom_id INTEGER
+) RETURNS     MEDIUMTEXT
+	COMMENT 'includes/functions/functions_db.php:find_other_record()'
+	DETERMINISTIC
+	SQL SECURITY DEFINER
+	READS SQL DATA
+BEGIN
+	DECLARE l_gedcom MEDIUMTEXT;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND BEGIN END;
+
+	SELECT SQL_NO_CACHE o_gedcom INTO l_gedcom
+	FROM `##other`
+	WHERE o_file=p_gedcom_id AND o_id=p_xref;
+
+	RETURN l_gedcom;
+END //
+DELIMITER ;
+
+/******************************************************************************/
+/* FUNCTION: FIND_PERSON_RECORD                                               */
+/******************************************************************************/
+
+DELIMITER //
+DROP FUNCTION IF EXISTS `##find_person_record` //
+CREATE FUNCTION `##find_person_record`(
+	p_xref      VARCHAR(20),
+	p_gedcom_id INTEGER
+) RETURNS     MEDIUMTEXT
+	COMMENT 'includes/functions/functions_db.php:find_person_record()'
+	DETERMINISTIC
+	SQL SECURITY DEFINER
+	READS SQL DATA
+BEGIN
+	DECLARE l_gedcom MEDIUMTEXT;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND BEGIN END;
+
+	SELECT SQL_NO_CACHE i_gedcom INTO l_gedcom
+	FROM `##individuals`
+	WHERE i_file=p_gedcom_id AND i_id=p_xref;
+
+	RETURN l_gedcom;
+END //
+DELIMITER ;
+
+/******************************************************************************/
+/* FUNCTION: FIND_SOURCE_RECORD                                               */
+/******************************************************************************/
+
+DELIMITER //
+DROP FUNCTION IF EXISTS `##find_source_record` //
+CREATE FUNCTION `##find_source_record`(
+	p_xref      VARCHAR(20),
+	p_gedcom_id INTEGER
+) RETURNS     MEDIUMTEXT
+	COMMENT 'includes/functions/functions_db.php:find_source_record()'
+	DETERMINISTIC
+	SQL SECURITY DEFINER
+	READS SQL DATA
+BEGIN
+	DECLARE l_gedcom MEDIUMTEXT;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND BEGIN END;
+
+	SELECT SQL_NO_CACHE s_gedcom INTO l_gedcom
+	FROM `##sources`
+	WHERE s_file=p_gedcom_id AND s_id=p_xref;
+
+	RETURN l_gedcom;
+END //
+DELIMITER ;
+
+/******************************************************************************/
+/* FUNCTION: FIND_UPDATED_RECORD                                              */
+/******************************************************************************/
+
+DELIMITER //
+DROP FUNCTION IF EXISTS `##find_updated_record` //
+CREATE FUNCTION `##find_updated_record`(
+	p_xref      VARCHAR(20),
+	p_gedcom_id INTEGER
+) RETURNS     MEDIUMTEXT
+	COMMENT 'includes/functions/functions_db.php:find_updated_record()'
+	DETERMINISTIC
+	SQL SECURITY DEFINER
+	READS SQL DATA
+BEGIN
+	DECLARE l_gedcom MEDIUMTEXT;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND BEGIN END;
+
+	SELECT SQL_NO_CACHE new_gedcom INTO l_gedcom
+	FROM `##change`
+	WHERE gedcom_id=p_gedcom_id AND xref=p_xref AND status='pending'
+	ORDER BY change_id DESC LIMIT 1;
+
+	RETURN l_gedcom;
+END //
+DELIMITER ;
+
+/******************************************************************************/
+/* FUNCTION: GEDCOM_RECORD_TYPE                                               */
+/******************************************************************************/
+
+DELIMITER //
+DROP FUNCTION IF EXISTS `##gedcom_record_type` //
+CREATE FUNCTION `##gedcom_record_type`(
+	p_xref      VARCHAR(20),
+	p_gedcom_id INTEGER
+) RETURNS     VARCHAR(15)
+	COMMENT 'includes/functions/functions_db.php:gedcom_record_type()'
+	DETERMINISTIC
+	SQL SECURITY DEFINER
+	READS SQL DATA
+BEGIN
+	DECLARE l_type VARCHAR(15);
+	DECLARE CONTINUE HANDLER FOR NOT FOUND BEGIN END;
+
+	SELECT 'INDI' INTO l_type FROM `##individuals`
+	WHERE i_file=p_gedcom_id AND i_id=p_xref;
+
+	IF l_type IS NOT NULL THEN
+		RETURN l_type;
+	END IF;
+
+	SELECT 'FAM' INTO l_type FROM `##families`
+	WHERE f_file=p_gedcom_id AND f_id=p_xref;
+
+	IF l_type IS NOT NULL THEN
+		RETURN l_type;
+	END IF;
+
+	SELECT 'SOUR' INTO l_type FROM `##sources`
+	WHERE s_file=p_gedcom_id AND s_id=p_xref;
+
+	IF l_type IS NOT NULL THEN
+		RETURN l_type;
+	END IF;
+
+	SELECT 'OBJE' INTO l_type FROM `##media`
+	WHERE m_gedfile=p_gedcom_id AND m_media=p_xref;
+
+	IF l_type IS NOT NULL THEN
+		RETURN l_type;
+	END IF;
+
+	SELECT o_type INTO l_type FROM `##other`
+	WHERE o_file=p_gedcom_id AND o_id=p_xref;
+
+	RETURN l_type;
+END //
+DELIMITER ;
+
+/******************************************************************************/
 /* FUNCTION: GET_ADMIN_USER_COUNT                                             */
 /******************************************************************************/
 
@@ -46,7 +366,7 @@ BEGIN
 
 	SELECT SQL_CACHE COUNT(*) INTO l_count
 	FROM `##user_setting`
-	WHERE setting_name='canadmin' AND setting_value IN ('1', 'Y', 'Yes');
+	WHERE setting_name='canadmin' AND setting_value;
 
 	RETURN l_count;
 END //
@@ -189,6 +509,56 @@ END //
 DELIMITER ;
 
 /******************************************************************************/
+/* FUNCTION: GET_NEW_XREF                                                     */
+/******************************************************************************/
+
+DELIMITER //
+DROP FUNCTION IF EXISTS `##get_new_xref` //
+CREATE FUNCTION `##get_new_xref`(
+	p_type      VARCHAR(15),
+	p_gedcom_id INTEGER
+) RETURNS     VARCHAR(20)
+	COMMENT 'includes/functions/functions.php:get_new_xref()'
+	NOT DETERMINISTIC
+	SQL SECURITY DEFINER
+	MODIFIES SQL DATA
+BEGIN
+	DECLARE l_prefix VARCHAR(20);
+	DECLARE l_number DECIMAL(20) DEFAULT 1;
+	CASE p_type
+		WHEN 'INDI' THEN
+			SET l_prefix=`##get_gedcom_setting`(p_gedcom_id, 'GEDCOM_ID_PREFIX', 'I');
+		WHEN 'FAM' THEN
+			SET l_prefix=`##get_gedcom_setting`(p_gedcom_id, 'FAM_ID_PREFIX',    'F');
+		WHEN 'OBJE' THEN
+			SET l_prefix=`##get_gedcom_setting`(p_gedcom_id, 'MEDIA_ID_PREFIX',  'M');
+		WHEN 'SOUR' THEN
+			SET l_prefix=`##get_gedcom_setting`(p_gedcom_id, 'SOURCE_ID_PREFIX', 'S');
+		WHEN 'REPO' THEN
+			SET l_prefix=`##get_gedcom_setting`(p_gedcom_id, 'REPO_ID_PREFIX',   'R');
+		ELSE
+			SET l_prefix=LEFT(p_type, 1);
+	END CASE;
+
+	BEGIN
+		DECLARE CONTINUE HANDLER FOR NOT FOUND BEGIN END;
+		SELECT next_id INTO l_number
+		FROM   `##next_id`
+		WHERE  record_type=p_type AND gedcom_id=p_gedcom_id;
+	END;
+
+	/* Make sure this number is not already used */
+	WHILE find_gedcom_record(CONCAT(l_prefix, l_number), p_gedcom_id, TRUE) DO
+		SET l_number=l_number+1;
+	END WHILE;
+
+	REPLACE INTO `##next_id` (gedcom_id, record_type, next_id) VALUES (p_gedcom_id, p_type, l_number);
+
+	RETURN CONCAT(l_prefix, l_number);
+END //
+DELIMITER ;
+
+/******************************************************************************/
 /* FUNCTION: GET_NON_ADMIN_USER_COUNT                                         */
 /******************************************************************************/
 
@@ -205,7 +575,7 @@ BEGIN
 
 	SELECT SQL_CACHE COUNT(*) INTO l_count
 	FROM `##user_setting`
-	WHERE setting_name='canadmin' AND setting_value NOT IN ('1', 'Y', 'Yes');
+	WHERE setting_name='canadmin' AND setting_value;
 
 	RETURN l_count;
 END //
@@ -425,7 +795,7 @@ DELIMITER //
 DROP FUNCTION IF EXISTS `##get_user_setting` //
 CREATE FUNCTION `##get_user_setting`(
 	p_user_id       INTEGER,
-	p_setting_name  VARCHAR(32 ),
+	p_setting_name  VARCHAR(32),
 	p_default_value VARCHAR(255)
 ) RETURNS         VARCHAR(255)
 	COMMENT 'includes/functions/functions_db.php:get_user_setting()'
@@ -685,7 +1055,7 @@ CREATE FUNCTION `##user_auto_accept`(
 	SQL SECURITY DEFINER
 	READS SQL DATA
 BEGIN
-	RETURN `##get_user_setting`(p_user_id, 'auto_accept', 'N') IN ('1', 'Y', 'YES');
+	RETURN `##get_user_setting`(p_user_id, 'auto_accept', '0');
 END //
 DELIMITER ;
 
@@ -707,7 +1077,7 @@ BEGIN
 	/* A gedcom admin can accept, even if editing has been disabled */
 	RETURN
 		`##user_gedcom_admin`(p_user_id, p_gedcom_id) OR
-		`##get_gedcom_setting`(p_gedcom_id, 'ALLOW_EDIT_GEDCOM', '0') IN ('1', 'Y', 'YES') AND
+		`##get_gedcom_setting`(p_gedcom_id, 'ALLOW_EDIT_GEDCOM', '0') AND
 		`##get_user_gedcom_setting`(p_user_id, p_gedcom_id, 'canedit', 'none') IN ('admin', 'accept');
 END //
 DELIMITER ;
@@ -749,7 +1119,7 @@ CREATE FUNCTION `##user_can_edit`(
 	READS SQL DATA
 BEGIN
 	RETURN
-		`##get_gedcom_setting`(p_gedcom_id, 'ALLOW_EDIT_GEDCOM', '0') IN ('1', 'Y', 'YES') AND (
+		`##get_gedcom_setting`(p_gedcom_id, 'ALLOW_EDIT_GEDCOM', '0') AND (
 			`##user_is_admin`(p_user_id) OR
 			`##get_user_gedcom_setting`(p_user_id, p_gedcom_id, 'canedit', 'none') IN ('admin', 'accept', 'edit')
 		);
@@ -873,7 +1243,7 @@ CREATE FUNCTION `##user_is_admin`(
 	SQL SECURITY DEFINER
 	READS SQL DATA
 BEGIN
-	RETURN `##get_user_setting`(p_user_id, 'canadmin', 'N') IN ('1', 'Y', 'YES');
+	RETURN `##get_user_setting`(p_user_id, 'canadmin', '0');
 END //
 DELIMITER ;
 
