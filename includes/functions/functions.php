@@ -498,27 +498,14 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 			$pos2 = strlen($gedrec);
 		}
 		if (empty($ignore) || strpos($ignore, $fact)===false) {
-			if (!$ApplyPriv || (showFact($fact, $id))) {
+			$subrec = substr($gedrec, $pos1, $pos2-$pos1);
+			if (!$ApplyPriv || canDisplayFact($id, $ged_id, $subrec)) {
 				if (isset($prev_tags[$fact])) {
 					$prev_tags[$fact]++;
 				} else {
 					$prev_tags[$fact] = 1;
 				}
-				$subrec = substr($gedrec, $pos1, $pos2-$pos1);
-				if (!$ApplyPriv || !$hasResn || !FactViewRestricted($id, $subrec)) {
-					if ($fact=="EVEN") {
-						$tt = preg_match("/2 TYPE (.*)/", $subrec, $tmatch);
-						if ($tt>0) {
-							$type = trim($tmatch[1]);
-							if (!$ApplyPriv || (showFact($type, $id))) {
-								$repeats[] = trim($subrec)."\n";
-							}
-						} else
-							$repeats[] = trim($subrec)."\n";
-					} else {
-						$repeats[] = trim($subrec)."\n";
-					}
-				}
+				$repeats[] = trim($subrec)."\n";
 			}
 		}
 	}
@@ -540,27 +527,15 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 			for ($i=0; $i<$ct; $i++) {
 				$fact = trim($match[$i][1]);
 				if (empty($ignore) || strpos($ignore, $fact)===false) {
-					if (!$ApplyPriv || (showFact($fact, $id))) {
+					$subrec = get_sub_record(1, "1 $fact", $famrec, $prev_tags[$fact]);
+					$subrec .= "\n2 _WTS @$spid@\n2 _WTFS @$famid@\n";
+					if (!$ApplyPriv || canDisplayFact($id, $ged_id, $subrec)) {
 						if (isset($prev_tags[$fact])) {
 							$prev_tags[$fact]++;
 						} else {
 							$prev_tags[$fact] = 1;
 						}
-						$subrec = get_sub_record(1, "1 $fact", $famrec, $prev_tags[$fact]);
-						$subrec .= "\n2 _WTS @$spid@\n2 _WTFS @$famid@\n";
-						if ($fact=="EVEN") {
-							$ct = preg_match("/2 TYPE (.*)/", $subrec, $tmatch);
-							if ($ct>0) {
-								$type = trim($tmatch[1]);
-								if (!$ApplyPriv or (showFact($type, $id))) {
-									$repeats[] = trim($subrec)."\n";
-								}
-							} else {
-								$repeats[] = trim($subrec)."\n";
-							}
-						} else {
-							$repeats[] = trim($subrec)."\n";
-						}
+						$repeats[] = trim($subrec)."\n";
 					}
 				}
 			}
@@ -984,9 +959,6 @@ function find_visible_families_in_record($indirec, $tag) {
 function find_highlighted_object($pid, $ged_id, $indirec) {
 	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS, $WT_IMAGE_DIR, $WT_IMAGES, $MEDIA_EXTERNAL;
 
-	if (!showFact("OBJE", $pid)) {
-		return false;
-	}
 	$media = array();
 	$objectA = array();
 	$objectB = array();
@@ -1019,7 +991,7 @@ function find_highlighted_object($pid, $ged_id, $indirec) {
 		->fetchAll(PDO::FETCH_NUM);
 
 	foreach ($media as $i=>$row) {
-		if (displayDetailsById($row[0], 'OBJE') && !FactViewRestricted($row[0], $row[2])) {
+		if (displayDetailsById($row[0], 'OBJE') && canDisplayFact($row[0], $row[1], $row[2])) {
 			$level=0;
 			$ct = preg_match("/(\d+) OBJE/", $row[3], $match);
 			if ($ct>0) {
@@ -2598,37 +2570,94 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 			break;
 		case 'en': // See: http://en.wikipedia.org/wiki/File:CousinTree.svg
 		default:
+			$cousin=min($up, $down);
 			$removed=abs($down-$up);
 			switch ($removed) {
 			case 0:
 				switch ($last) {
-				case 'son': return cousin_name($up-1, 'M');
-				case 'dau': return cousin_name($up-1, 'F');
-				case 'chi': return cousin_name($up-1, 'U');
+				case 'son': return cousin_name($cousin, 'M');
+				case 'dau': return cousin_name($cousin, 'F');
+				case 'chi': return cousin_name($cousin, 'U');
 				}
 			case 1:
-				switch ($last) {
-				case 'son': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, once removed', cousin_name($up-1, 'M'));
-				case 'dau': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, once removed', cousin_name($up-1, 'F'));
-				case 'chi': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, once removed', cousin_name($up-1, 'U'));
+				if ($up>$down) {
+					switch ($last) {
+					case 'son': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s once removed ascending', cousin_name(1, 'M'));
+					case 'dau': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s once removed ascending', cousin_name(1, 'F'));
+					case 'chi': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s once removed ascending', cousin_name(1, 'U'));
+					}
+				} else {
+					switch ($last) {
+					case 'son': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s once removed descending', cousin_name(1, 'M'));
+					case 'dau': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s once removed descending', cousin_name(1, 'F'));
+					case 'chi': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s once removed descending', cousin_name(1, 'U'));
+					}
 				}
 			case 2:
-				switch ($last) {
-				case 'son': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, twice removed', cousin_name($up-1, 'M'));
-				case 'dau': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, twice removed', cousin_name($up-1, 'F'));
-				case 'chi': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, twice removed', cousin_name($up-1, 'U'));
+				if ($up>$down) {
+					switch ($last) {
+					case 'son': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s twice removed ascending', cousin_name(2, 'M'));
+					case 'dau': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s twice removed ascending', cousin_name(2, 'F'));
+					case 'chi': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s twice removed ascending', cousin_name(2, 'U'));
+					}
+				} else {
+					switch ($last) {
+					case 'son': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s twice removed descending', cousin_name(2, 'M'));
+					case 'dau': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s twice removed descending', cousin_name(2, 'F'));
+					case 'chi': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s twice removed descending', cousin_name(2, 'U'));
+					}
 				}
 			case 3:
-				switch ($last) {
-				case 'son': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, thrice removed', cousin_name($up-1, 'M'));
-				case 'dau': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, thrice removed', cousin_name($up-1, 'F'));
-				case 'chi': /* I18N: %s="fifth cousin", etc. */ return i18n::translate('%s, thrice removed', cousin_name($up-1, 'U'));
+				if ($up>$down) {
+					switch ($last) {
+					case 'son': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s thrice removed ascending', cousin_name(3, 'M'));
+					case 'dau': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s thrice removed ascending', cousin_name(3, 'F'));
+					case 'chi': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s thrice removed ascending', cousin_name(3, 'U'));
+					}
+				} else {
+					switch ($last) {
+					case 'son': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s thrice removed descending', cousin_name(3, 'M'));
+					case 'dau': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s thrice removed descending', cousin_name(3, 'F'));
+					case 'chi': /* I18N: %s="fifth cousin", etc. */
+						return i18n::translate('%s thrice removed descending', cousin_name(3, 'U'));
+					}
 				}
 			default:
-				switch ($last) {
-				case 'son': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */ return i18n::translate('%1$s, %2$d times removed', cousin_name($up-1, 'M'), $removed);
-				case 'dau': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */ return i18n::translate('%1$s, %2$d times removed', cousin_name($up-1, 'F'), $removed);
-				case 'chi': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */ return i18n::translate('%1$s, %2$d times removed', cousin_name($up-1, 'U'), $removed);
+				if ($up>$down) {
+					switch ($last) {
+					case 'son': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */
+						return i18n::translate('%1$s %2$d times removed ascending', cousin_name($cousin, 'M'), $removed);
+					case 'dau': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */
+						return i18n::translate('%1$s %2$d times removed ascending', cousin_name($cousin, 'F'), $removed);
+					case 'chi': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */
+						return i18n::translate('%1$s %2$d times removed ascending', cousin_name($cousin, 'U'), $removed);
+					}
+				} else {
+					switch ($last) {
+					case 'son': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */
+						return i18n::translate('%1$s %2$d times removed descending', cousin_name($cousin, 'M'), $removed);
+					case 'dau': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */
+						return i18n::translate('%1$s %2$d times removed descending', cousin_name($cousin, 'F'), $removed);
+					case 'chi': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */
+						return i18n::translate('%1$s %2$d times removed descending', cousin_name($cousin, 'U'), $removed);
+					}
 				}
 			}
 		}
