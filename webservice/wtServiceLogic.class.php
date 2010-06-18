@@ -266,7 +266,7 @@ class wtServiceLogic extends GenealogyService {
 	*/
 	function postDeleteRecord($SID, $RID) {
 		if (!empty($RID)) {
-			if (((empty($_SESSION['readonly']))&& WT_USER_CAN_EDIT)&&(displayDetailsById($RID))) {
+			if (((empty($_SESSION['readonly']))&& WT_USER_CAN_EDIT)&&(canDisplayRecord(WT_GED_ID, find_gedcom_record($RID, WT_GED_ID)))) {
 				addToLog("delete RID=$RID SUCCESS", 'debug');
 				return "delete RID=$RID SUCCESS";
 			} else {
@@ -291,7 +291,7 @@ class wtServiceLogic extends GenealogyService {
 	function postUpdateRecord($SID, $RID, $gedcom) {
 		if (!empty($RID)) {
 			if (!empty($gedcom)) {
-				if (empty($_SESSION['readonly']) && WT_USER_CAN_EDIT && displayDetailsById($RID)) {
+				if (empty($_SESSION['readonly']) && WT_USER_CAN_EDIT && canDisplayRecord(WT_GED_ID, find_gedcom_record($RID, WT_GED_ID))) {
 					$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedcom);
 					$success = replace_gedrec($RID, WT_GED_ID, $gedrec);
 					return 'Gedcom updated.';
