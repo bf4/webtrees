@@ -97,9 +97,6 @@ define('WT_JS_END',   "\n//]]>\n</script>\n");
 // Used in Google charts
 define ('WT_GOOGLE_CHART_ENCODING', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.');
 
-// Maximum number of results in auto-complete fields
-define('WT_AUTOCOMPLETE_LIMIT', 500);
-
 // Privacy constants
 define('WT_PRIV_PUBLIC',  2); // Allows non-authenticated public visitors to view the marked information
 define('WT_PRIV_USER',    1); // Allows authenticated users to access the marked information
@@ -333,11 +330,10 @@ if ($MULTI_MEDIA) {
 }
 require WT_ROOT.'includes/functions/functions_date.php';
 
-define('WT_TODAY_JD', server_jd()); // Privacy calculations need to know today's date
-
-if (empty($PEDIGREE_GENERATIONS)) {
-	$PEDIGREE_GENERATIONS=$DEFAULT_PEDIGREE_GENERATIONS;
-}
+// Use the server date to calculate privacy, etc.
+// Use the client date to show ages, etc. 
+define('WT_SERVER_JD', timestamp_to_jd(time()));
+define('WT_CLIENT_JD', timestamp_to_jd(client_time()));
 
 // Who are we?
 define('WT_USER_ID', getUserId());
