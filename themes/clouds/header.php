@@ -1,12 +1,13 @@
 <?php
 /**
- * Header for colors theme
+ * Header for Clouds theme
  *
  * webtrees: Web based Family History software
  * Copyright (C) 2010 webtrees development team.
  *
- * Derived from PhpGedView
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Derived from PhpGedView Cloudy theme
+ * Original author w.a. bastein http://genealogy.bastein.biz
+ * Copyright (C) 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,9 +32,7 @@ if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-
 global $modules;
-
 // Definitions to simplify logic on pages with right-to-left languages
 // TODO: merge this into the trunk?
 if ($TEXT_DIRECTION=='ltr') {
@@ -112,18 +111,23 @@ flush(); // Allow the browser to start fetching external stylesheets, javascript
 <?php if ($view!='simple') {?>
 
 <!-- begin header section -->
+<div id="rapcontainer">
+
 <div id="header" class="<?php echo $TEXT_DIRECTION; ?>">
-<!-- begin colors code -->
-<table class="header">
+<!-- begin Style code -->
+<table class="header" style="background:url('<?php echo $WT_IMAGE_DIR; ?>/clouds.gif')" >
+
 	<tr>
 		<td align="<?php echo $TEXT_DIRECTION=="ltr"?"left":"right" ?>">
 		<div class="title">
 			<?php print_gedcom_title_link(TRUE);?>
-		</div>
-		</td>
 
 <?php if(empty($SEARCH_SPIDER)) { ?>
-
+		<td valign="middle" align="center">
+		<div class="blanco" style="COLOR: #6699ff;" >
+			<?php print_user_links(); ?>
+		</div>
+		</td>
 		<td align="<?php echo $TEXT_DIRECTION=="ltr"?"right":"left" ?>">
 			<div style="white-space: normal;" align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right" ?>">
 			<form action="search.php" method="post">
@@ -133,15 +137,12 @@ flush(); // Allow the browser to start fetching external stylesheets, javascript
 				<input type="image" src="<?php echo $WT_IMAGE_DIR ?>/go.gif" align="top" title="<?php echo i18n::translate('Search')?>" />
 			</form>
 			</div>
-			<div align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right" ?>">
-				<?php } ?>
-					<?php print_favorite_selector(); ?>
-			</div>
+		<?php } ?>
 		</td>
 	</tr>
 </table>
 </div>
-<!--end colors code -->
+<!--end Style code -->
 <?php include($toplinks);
 } ?>
 <!-- end header section -->

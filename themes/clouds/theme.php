@@ -1,11 +1,12 @@
 <?php
 /**
- * Colors theme
+ * Clouds theme
  *
  * webtrees: Web based Family History software
  * Copyright (C) 2010 webtrees development team.
  *
- * Derived from PhpGedView
+ * Derived from PhpGedView Cloudy theme
+ * Original author w.a. bastein http://genealogy.bastein.biz
  * Copyright (C) 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -32,76 +33,9 @@ if (!defined('WT_WEBTREES')) {
 	exit;
 }
 
-//-- print color theme sub type change dropdown box
-function color_theme_dropdown($style=0) {
-	global $ALLOW_THEME_DROPDOWN, $COLOR_THEME_LIST;
-
-	if ($ALLOW_THEME_DROPDOWN && get_site_setting('ALLOW_USER_THEMES')) {
-		switch ($style) {
-		case 0:
-			return '<div class="color_form">'.MenuBar::getColorMenu($COLOR_THEME_LIST)->getMenuAsDropdown().'</div>';
-		case 1:
-			return '<div class="color_form">'.MenuBar::getColorMenu($COLOR_THEME_LIST)->getMenu().'</div>';
-		}
-	}
-	return '&nbsp;';
-}
-
-/**
- *  Define the default palette to be used.  Set $subColor
- *  to one of the collowing values to determine the default:
- *  
- */
-
-$COLOR_THEME_LIST=array(
-	'aquamarine'      => /* I18N: This is the name of theme color-scheme */ i18n::translate('Aqua Marine'),
-	'ash'             => /* I18N: This is the name of theme color-scheme */ i18n::translate('Ash'),
-	'belgianchocolate'=> /* I18N: This is the name of theme color-scheme */ i18n::translate('Belgian Chocolate'),
-	'bluelagoon'      => /* I18N: This is the name of theme color-scheme */ i18n::translate('Blue Lagoon'),
-	'bluemarine'      => /* I18N: This is the name of theme color-scheme */ i18n::translate('Blue Marine'),
-	'coldday'         => /* I18N: This is the name of theme color-scheme */ i18n::translate('Cold Day'),
-	'greenbeam'       => /* I18N: This is the name of theme color-scheme */ i18n::translate('Green Beam'),
-	'mediterranio'    => /* I18N: This is the name of theme color-scheme */ i18n::translate('Mediterranio'),
-	'mercury'         => /* I18N: This is the name of theme color-scheme */ i18n::translate('Mercury'),
-	'nocturnal'       => /* I18N: This is the name of theme color-scheme */ i18n::translate('Nocturnal'),
-	'olivia'          => /* I18N: This is the name of theme color-scheme */ i18n::translate('Olivia'),
-	'pinkplastic'     => /* I18N: This is the name of theme color-scheme */ i18n::translate('Pink Plastic'),
-	'shinytomato'     => /* I18N: This is the name of theme color-scheme */ i18n::translate('Shiny Tomato'),
-	'tealtop'         => /* I18N: This is the name of theme color-scheme */ i18n::translate('Teal Top'),
-);
-
-if (isset($_GET['themecolor']) && array_key_exists($_GET['themecolor'], $COLOR_THEME_LIST)) {
-	// Request to change color
-	$subColor=$_GET['themecolor'];
-	if (WT_USER_ID) {
-		set_user_setting(WT_USER_ID, 'themecolor', $subColor);
-		set_site_setting('DEFAULT_COLOR_PALETTE', $subColor);
-	}
-	unset($_GET['themecolor']);
-} elseif (isset($_SESSION['themecolor']))  {
-	// Previously selected color
-	$subColor=$_SESSION['themecolor'];
-} else {
-	if (WT_USER_ID) {
-		$subColor=get_user_setting(WT_USER_ID, 'themecolor');
-		if (!array_key_exists($subColor, $COLOR_THEME_LIST)) {
-			$subColor = get_site_setting('DEFAULT_COLOR_PALETTE','ash');
-		}
-	} else {
-		// Default color set here
-		$test_value=get_site_setting('DEFAULT_COLOR_PALETTE');
-		if (empty($test_value)) {
-			set_site_setting('DEFAULT_COLOR_PALETTE','ash');
-		}
-		$subColor=get_site_setting('DEFAULT_COLOR_PALETTE');
-	}
-}
-
-$_SESSION['themecolor']=$subColor;
-
-$theme_name       = "colors";
-$stylesheet       = WT_THEME_DIR . "css/" . $subColor . ".css";
+$theme_name       = "clouds";
 $modules 		  = WT_THEME_DIR . "modules.css";
+$stylesheet       = WT_THEME_DIR . "style.css";
 $print_stylesheet = WT_THEME_DIR . "print.css";			//-- CSS level 2 print stylesheet to use
 $headerfile       = WT_THEME_DIR . "header.php";		//-- Header information for the site
 $rtl_stylesheet   = WT_THEME_DIR . "style_rtl.css";		//-- CSS level 2 stylesheet to use

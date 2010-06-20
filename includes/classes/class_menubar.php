@@ -756,26 +756,6 @@ class MenuBar
 	}
 
 	/**
-	* get the print_preview menu
-	* @return Menu the menu item
-	*/
-	static function getPreviewMenu() {
-		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $QUERY_STRING, $SEARCH_SPIDER;
-		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
-		if (!empty($SEARCH_SPIDER)) {
-			$menu = new Menu("", "", "");
-//			$menu->print_menu = null;
-			return $menu;
-			}
-		//-- main print_preview menu item
-		$menu = new Menu(i18n::translate('Printer-friendly version'), WT_SCRIPT_NAME.normalize_query_string($QUERY_STRING."&amp;view=preview"), "down");
-		if (!empty($WT_IMAGES["printer"]["large"]))
-			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["printer"]["large"]);
-		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_printer");
-		return $menu;
-	}
-
-	/**
 	* get the search menu
 	* @return Menu the menu item
 	*/
@@ -1110,13 +1090,11 @@ class MenuBar
 					case 'FAM':
 					case 'SOUR':
 					case 'OBJE':
-						if (displayDetailsById($fav['gid'], $fav['type'])) {
-							$obj=GedcomRecord::getInstance($fav['gid']);
-							if ($obj) {
-								$submenu=new Menu(PrintReady($obj->getFullName()), encode_url($obj->getLinkUrl()));
-								$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
-								$menu->addSubMenu($submenu);
-							}
+						$obj=GedcomRecord::getInstance($fav['gid']);
+						if ($obj && $obj->canDisplayName()) {
+							$submenu=new Menu(PrintReady($obj->getFullName()), encode_url($obj->getLinkUrl()));
+							$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
+							$menu->addSubMenu($submenu);
 						}
 						break;
 					}
@@ -1144,13 +1122,11 @@ class MenuBar
 				case 'FAM':
 				case 'SOUR':
 				case 'OBJE':
-					if (displayDetailsById($fav['gid'], $fav['type'])) {
-						$obj=GedcomRecord::getInstance($fav['gid']);
-						if ($obj) {
-							$submenu=new Menu(PrintReady($obj->getFullName()), encode_url($obj->getLinkUrl()));
-							$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
-							$menu->addSubMenu($submenu);
-						}
+					$obj=GedcomRecord::getInstance($fav['gid']);
+					if ($obj && $obj->canDisplayName()) {
+						$submenu=new Menu(PrintReady($obj->getFullName()), encode_url($obj->getLinkUrl()));
+						$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
+						$menu->addSubMenu($submenu);
 					}
 					break;
 				}

@@ -933,7 +933,7 @@ function find_visible_families_in_record($indirec, $tag) {
 	$visiblefams = array();
 	// select only those that are visible to current user
 	foreach ($allfams as $key=>$famid) {
-		if (displayDetailsById($famid, "FAM")) {
+		if (canDisplayRecord(WT_GED_ID, find_family_record($famid, WT_GED_ID))) {
 			$visiblefams[] = $famid;
 		}
 	}
@@ -991,7 +991,7 @@ function find_highlighted_object($pid, $ged_id, $indirec) {
 		->fetchAll(PDO::FETCH_NUM);
 
 	foreach ($media as $i=>$row) {
-		if (displayDetailsById($row[0], 'OBJE') && canDisplayFact($row[0], $row[1], $row[2])) {
+		if (canDisplayRecord($ged_id, $row[2]) && canDisplayFact($row[0], $ged_id, $row[3])) {
 			$level=0;
 			$ct = preg_match("/(\d+) OBJE/", $row[3], $match);
 			if ($ct>0) {
@@ -2582,20 +2582,20 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 			case 1:
 				if ($up>$down) {
 					switch ($last) {
-					case 'son': /* I18N: %s="fifth cousin", etc. */
+					case 'son': /* I18N: %s="fifth cousin", etc. http://www.ancestry.com/learn/library/article.aspx?article=2856 */
 						return i18n::translate('%s once removed ascending', cousin_name(1, 'M'));
-					case 'dau': /* I18N: %s="fifth cousin", etc. */
+					case 'dau':
 						return i18n::translate('%s once removed ascending', cousin_name(1, 'F'));
-					case 'chi': /* I18N: %s="fifth cousin", etc. */
+					case 'chi':
 						return i18n::translate('%s once removed ascending', cousin_name(1, 'U'));
 					}
 				} else {
 					switch ($last) {
-					case 'son': /* I18N: %s="fifth cousin", etc. */
+					case 'son': /* I18N: %s="fifth cousin", etc. http://www.ancestry.com/learn/library/article.aspx?article=2856 */
 						return i18n::translate('%s once removed descending', cousin_name(1, 'M'));
-					case 'dau': /* I18N: %s="fifth cousin", etc. */
+					case 'dau':
 						return i18n::translate('%s once removed descending', cousin_name(1, 'F'));
-					case 'chi': /* I18N: %s="fifth cousin", etc. */
+					case 'chi':
 						return i18n::translate('%s once removed descending', cousin_name(1, 'U'));
 					}
 				}
@@ -2604,18 +2604,18 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 					switch ($last) {
 					case 'son': /* I18N: %s="fifth cousin", etc. */
 						return i18n::translate('%s twice removed ascending', cousin_name(2, 'M'));
-					case 'dau': /* I18N: %s="fifth cousin", etc. */
+					case 'dau':
 						return i18n::translate('%s twice removed ascending', cousin_name(2, 'F'));
-					case 'chi': /* I18N: %s="fifth cousin", etc. */
+					case 'chi':
 						return i18n::translate('%s twice removed ascending', cousin_name(2, 'U'));
 					}
 				} else {
 					switch ($last) {
 					case 'son': /* I18N: %s="fifth cousin", etc. */
 						return i18n::translate('%s twice removed descending', cousin_name(2, 'M'));
-					case 'dau': /* I18N: %s="fifth cousin", etc. */
+					case 'dau':
 						return i18n::translate('%s twice removed descending', cousin_name(2, 'F'));
-					case 'chi': /* I18N: %s="fifth cousin", etc. */
+					case 'chi':
 						return i18n::translate('%s twice removed descending', cousin_name(2, 'U'));
 					}
 				}
@@ -2624,18 +2624,18 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 					switch ($last) {
 					case 'son': /* I18N: %s="fifth cousin", etc. */
 						return i18n::translate('%s thrice removed ascending', cousin_name(3, 'M'));
-					case 'dau': /* I18N: %s="fifth cousin", etc. */
+					case 'dau':
 						return i18n::translate('%s thrice removed ascending', cousin_name(3, 'F'));
-					case 'chi': /* I18N: %s="fifth cousin", etc. */
+					case 'chi':
 						return i18n::translate('%s thrice removed ascending', cousin_name(3, 'U'));
 					}
 				} else {
 					switch ($last) {
 					case 'son': /* I18N: %s="fifth cousin", etc. */
 						return i18n::translate('%s thrice removed descending', cousin_name(3, 'M'));
-					case 'dau': /* I18N: %s="fifth cousin", etc. */
+					case 'dau':
 						return i18n::translate('%s thrice removed descending', cousin_name(3, 'F'));
-					case 'chi': /* I18N: %s="fifth cousin", etc. */
+					case 'chi':
 						return i18n::translate('%s thrice removed descending', cousin_name(3, 'U'));
 					}
 				}
@@ -2644,18 +2644,18 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 					switch ($last) {
 					case 'son': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */
 						return i18n::translate('%1$s %2$d times removed ascending', cousin_name($cousin, 'M'), $removed);
-					case 'dau': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */
+					case 'dau':
 						return i18n::translate('%1$s %2$d times removed ascending', cousin_name($cousin, 'F'), $removed);
-					case 'chi': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */
+					case 'chi':
 						return i18n::translate('%1$s %2$d times removed ascending', cousin_name($cousin, 'U'), $removed);
 					}
 				} else {
 					switch ($last) {
 					case 'son': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */
 						return i18n::translate('%1$s %2$d times removed descending', cousin_name($cousin, 'M'), $removed);
-					case 'dau': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */
+					case 'dau':
 						return i18n::translate('%1$s %2$d times removed descending', cousin_name($cousin, 'F'), $removed);
-					case 'chi': /* I18N: %1$s="fifth cousin", etc., %2$d>=4 */
+					case 'chi':
 						return i18n::translate('%1$s %2$d times removed descending', cousin_name($cousin, 'U'), $removed);
 					}
 				}
@@ -2666,26 +2666,28 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 	// Try to the split the relationship into sub-relationships.  e.g. third-cousin's great-uncle's fourth-cousin.
 	// This next block of code is experimental.  If it doesn't work, we can remove it.....
 	if (preg_match('/^(.*)(hus|wif|spo)(.*)/', $path, $match)) {
+		// TODO: need the actual people
+		$dummy=new Person('');
 		if ($match[1]=='') {
 			return i18n::translate(
 				// I18N: A complex relationship, such as "second cousin's great-uncle"
 				'%1$s\'s %2$s',
-				get_relationship_name_from_path($match[2], null, null), /* EEK! we need the INDI, not NULL ... */
-				get_relationship_name_from_path($match[3], null, null)
+				get_relationship_name_from_path($match[2], $dummy, $dummy),
+				get_relationship_name_from_path($match[3], $dummy, $dummy)
 			);
 		} elseif ($match[3]=='') {
 			return i18n::translate(
 				'%1$s\'s %2$s',
-				get_relationship_name_from_path($match[1], null, null),
-				get_relationship_name_from_path($match[2], null, null)
+				get_relationship_name_from_path($match[1], $dummy, $dummy),
+				get_relationship_name_from_path($match[2], $dummy, $dummy)
 			);
 		} else {
 			return i18n::translate(
 				// I18N: A complex relationship, such as "second cousin's great-uncle's third cousin"
 				'%1$s\'s %2$s\'s %3$s',
-				get_relationship_name_from_path($match[1], null, null),
-				get_relationship_name_from_path($match[2], null, null),
-				get_relationship_name_from_path($match[3], null, null)
+				get_relationship_name_from_path($match[1], $dummy, $dummy),
+				get_relationship_name_from_path($match[2], $dummy, $dummy),
+				get_relationship_name_from_path($match[3], $dummy, $dummy)
 			);
 		}
 	}
