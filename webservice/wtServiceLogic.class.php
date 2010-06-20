@@ -785,7 +785,7 @@ class wtServiceLogic extends GenealogyService {
 			return new SOAP_Fault('perform_update_check','Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.');
 		}
 
-		if ($date->MinJD()<server_jd()-180) {
+		if ($date->MinJD()<WT_SERVER_JD-180) {
 			return new SOAP_Fault('checkUpdates', 'You cannot retrieve updates for more than 180 days.');
 		}
 

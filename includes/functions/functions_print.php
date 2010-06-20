@@ -415,8 +415,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	global $WT_IMAGE_DIR, $GEDCOM, $GEDCOM_TITLE, $COMMON_NAMES_THRESHOLD;
 	global $QUERY_STRING, $action, $query, $theme_name;
 	global $FAVICON, $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile;
-	global $WT_IMAGES, $TEXT_DIRECTION, $ONLOADFUNCTION, $REQUIRE_AUTHENTICATION, $ENABLE_RSS, $RSS_FORMAT;
-	global $META_DESCRIPTION, $META_ROBOTS, $META_TITLE;
+	global $WT_IMAGES, $TEXT_DIRECTION, $ONLOADFUNCTION, $REQUIRE_AUTHENTICATION;
 
 	// TODO: Shouldn't this be in session.php?
 	// If not on allowed list, dump the spider onto the redirect page.
@@ -440,30 +439,16 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	}
 	header("Content-Type: text/html; charset=UTF-8");
 
-	if (empty($META_TITLE)) $metaTitle = ' - '.WT_WEBTREES;
-	else $metaTitle = " - ".$META_TITLE.' - '.WT_WEBTREES;
-
-	$title = PrintReady(stripLRMRLM(strip_tags($title.$metaTitle), TRUE));
-
-	if ($view=='simple') {
-		// The simple view needs to work without a database - for use during installation
-		$GEDCOM_TITLE=WT_WEBTREES;
-	} else {
-		$GEDCOM_TITLE = get_gedcom_setting(WT_GED_ID, 'title');
+	$META_DESCRIPTION=get_gedcom_setting(WT_GED_ID, 'META_DESCRIPTION');
+	$META_ROBOTS=get_gedcom_setting(WT_GED_ID, 'META_ROBOTS');
+	$META_TITLE=get_gedcom_setting(WT_GED_ID, 'META_TITLE');
+	if ($META_TITLE) {
+		$title.=' - '.$META_TITLE;
 	}
-	if ($ENABLE_RSS){
-		$applicationType = "application/rss+xml";
-		if ($RSS_FORMAT == "ATOM" || $RSS_FORMAT == "ATOM0.3"){
-			$applicationType = "application/atom+xml";
-		}
-	}
+
 	$javascript = '';
 	$query_string = $QUERY_STRING;
-	if ($view!='preview' && $view!='simple') {
-		$old_META_DESCRIPTION = $META_DESCRIPTION;
-		if (empty($META_DESCRIPTION)) {
-			$META_DESCRIPTION = $GEDCOM_TITLE;
-		}
+	if ($view!='simple') {
 
 /*		$javascript .='<script language="JavaScript" type="text/javascript">
 	<!--
@@ -560,12 +545,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		$bodyOnLoad .= " maxscroll = document.documentElement.scrollLeft;";
 	}
 	$bodyOnLoad .= "\"";
-	if ($view!='preview' && $view!='simple') {
-		require WT_ROOT.$headerfile;
-		$META_DESCRIPTION = $old_META_DESCRIPTION;
-	} else {
-		require WT_ROOT.$headerfile;
-	}
+	require WT_ROOT.$headerfile;
 }
 
 /**

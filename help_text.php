@@ -2121,11 +2121,6 @@ case 'CALENDAR_FORMAT':
 	$text=i18n::translate('Dates can be recorded in various calendars such as Gregorian, Julian, or the Jewish Calendar.  This option allows you to convert dates to a preferred calendar.  For example, you could select Gregorian to convert Julian and Hebrew dates to Gregorian.  The converted date is shown in parentheses after the regular date.<br /><br />Dates are only converted if they are valid for the calendar.  For example, only dates between 22&nbsp;SEP&nbsp;1792 and 31&nbsp;DEC&nbsp;1805 will be converted to the French Republican calendar and only dates after 15&nbsp;OCT&nbsp;1582 will be converted to the Gregorian calendar.<br /><br />Hebrew is the same as Jewish, but using Hebrew characters.  Arabic is the same as Hijri, but using Arabic characters.<br /><br />Note: Since the Jewish and Hijri calendar day starts at dusk, any event taking place from dusk till midnight will display as one day prior to the correct date.  The display of Hebrew and Arabic can be problematic in old browsers, which may display text backwards (left to right) or not at all.');
 	break;
 
-case 'CHARACTER_SET':
-	$title=i18n::translate('Character set encoding');
-	$text=i18n::translate('This is the character set of your GEDCOM file.  UTF-8 is the default and should work for almost all sites.  If you export your GEDCOM using IBM Windows encoding, you should put WINDOWS here.<br /><br />NOTE: <b>webtrees</b> can\'t support UNICODE (UTF-16) because the support is missing in PHP.');
-	break;
-
 case 'CHART_BOX_TAGS':
 	$title=i18n::translate('Other facts to show in charts');
 	$text=i18n::translate('This should be a comma or space separated list of facts, in addition to Birth and Death, that you want to appear in chart boxes such as the Pedigree chart.  This list requires you to use fact tags as defined in the GEDCOM 5.5.1 Standard.  For example, if you wanted the occupation to show up in the box, you would add "OCCU" to this field.');
@@ -2184,11 +2179,6 @@ case 'EDIT_AUTOCLOSE':
 case 'ENABLE_AUTOCOMPLETE':
 	$title=i18n::translate('Enable autocomplete');
 	$text=i18n::translate('This option determines whether Autocomplete should be active while information is being entered into certain fields on input forms.  When this option is set to <b>Yes</b>, text input fields for which Autocomplete is possible are indicated by a differently colored background.<br /><br />When Autocomplete is active, <b>webtrees</b> will search its database for possible matches according to what you have already entered.  As you enter more information, the list of possible matches is refined.  When you see the desired input in the list of matches, you can move the mouse cursor to that line of the list and then click the left mouse button to complete the input.<br /><br />The disadvantages of Autocomplete are that it slows the program, entails significant database activity, and also results in more data being sent to the browser.');
-	break;
-
-case 'ENABLE_RSS':
-	$title=i18n::translate('Enable RSS');
-	$text=i18n::translate('This option lets you disable the RSS feature.<br /><br />RSS lets users monitor your site for changes to the Index page without actually visiting your site periodically.  If too many users make use of this feature or if the refresh frequency set by these users is too high, RSS can use up too much bandwidth or server capacity.<br /><br />This <a href=\'http://en.wikipedia.org/wiki/RSS\' target=\'_blank\' title=\'Wikipedia article\'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats.');
 	break;
 
 case 'EXPAND_NOTES':
@@ -2383,7 +2373,7 @@ case 'META_ROBOTS':
 
 case 'META_TITLE':
 	$title=i18n::translate('Add to TITLE header tag');
-	$text=i18n::translate('Anything on this line will be added to the TITLE tag in the HTML page header after the regular page title and before the <b>webtrees</b> credit.');
+	$text=i18n::translate('This text will be appended to each page title.  It will be shown in the browser\'s title bar, bookmarks, etc.');
 	break;
 
 case 'MULTI_MEDIA':
@@ -2544,11 +2534,6 @@ case 'REQUIRE_ADMIN_AUTH_REGISTRATION':
 case 'REQUIRE_AUTHENTICATION':
 	$title=i18n::translate('Require visitor authentication');
 	$text=i18n::translate('Enabling this option will force all visitors to login before they can view any data on the site.');
-	break;
-
-case 'RSS_FORMAT':
-	$title=i18n::translate('RSS Format');
-	$text=i18n::translate('The format to be used as the default feed format for the site. The numeric suffixes <u>do not</u> indicate version: they identify formats.  For example, RSS 2.0 is not newer than RSS 1.0, but a different format. Feed readers should be able to read any format.<br /><br />This <a href=\'http://en.wikipedia.org/wiki/RSS\' target=\'_blank\'title=\'Wikipedia article\'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats.');
 	break;
 
 case 'SAVE_WATERMARK_IMAGE':
@@ -3178,11 +3163,6 @@ case 'add_source':
 case 'add_wife':
 	$title=i18n::translate('Add a new wife');
 	$text=i18n::translate('By clicking this link, you can add a <u>new</u> female person and link this person to the principal individual as a new wife.<br /><br />Just click the link, and you will get a pop up window to add the new person.  Fill out as many boxes as you can and click the <b>Save</b> button.<br /><br />That\'s all.');
-	break;
-
-case 'admin':
-	$title=i18n::translate('Administration');
-	$text=i18n::translate('On this page you will find links to the configuration pages, administration pages, documentation, and log files.<br /><br /><b>Current Server Time:</b>, just below the page title, shows the time of the server on which your site is hosted. This means that if the server is located in New York while you\'re in France, the time shown will be six hours less than your local time, unless, of course, the server is running on Greenwich Mean Time (GMT).  The time shown is the server time when you opened or refreshed this page.<br /><br /><b>WARNING</b><br />When you see a red warning message under the system time, it means that your <i>config.php</i> is still writeable.  After configuring your site, you should, for <b>security</b>, set the permissions of this file back to read-only.  You have to do this <u>manually</u>, since <b>webtrees</b> cannot do this for you.');
 	break;
 
 case 'age_differences':
@@ -4009,11 +3989,6 @@ case 'rootid':
 	$text=i18n::translate('If you want to display a chart with a new starting (root) person, the ID of that new starting person is typed here.<br /><br />If you don\'t know the ID of that person, use the <b>Find ID</b> link.<br /><br /><b>ID NUMBER</b><br />The ID numbers used inside <b>webtrees</b> are <u>not</u> the identification numbers issued by various governments (driving permit or passport numbers, for instance).  The ID number referred to here is simply a number used within the database to uniquely identify each individual; it was assigned by the ancestry program that created the GEDCOM file which was imported into <b>webtrees</b>.');
 	break;
 
-case 'rss_feed':
-	$title=i18n::translate('RSS feed settings');
-	$text=i18n::translate('The ATOM/RSS feed available in <b>webtrees</b> allows anyone to view, using a suitable feed aggregator, the contents of your site\'s Home Page without visiting the site. Most aggregators will pop up a notice letting the user know when something has changed on a page being monitored. This essentially allows anyone to monitor your <b>webtrees</b> site without needing to visit it regularly.<br /><br />The Feed block is used to customize the link to the feed, allowing specific feed types (most readers can deal with most types so this can usually be left at the default), and the specific module you would like in your feed. The language of the feed and the GEDCOM used will be based on the language and GEDCOM active in <b>webtrees</b> when you select the feed.<br /><br />The types of feed that can be generated include ATOM, RSS 2.0, RSS 1.0, RSS 0.92, HTML and JavaScript. The first four types are for feed aggregators, while JavaScript and HTML are meant to enable inclusion of the feeds in other web pages.  Note that the numbers of the RSS feed indicate different styles, not a different version.<br /><br />There is an option to select authentication that will log the user in, and allow the user to view, using a suitable RSS aggregator, any information that he could normally view if logged in. Basic Authentication uses <i>Basic HTTP Authentication</i> to log the user in. Future enhancements might allow <i>Digest Authentication</i>.<br /><br />This <a href=\'http://en.wikipedia.org/wiki/RSS_(file_format)\' target=\'_blank\' alt=\'Wikipedia article\' title=\'Wikipedia article\'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats. <i>Basic HTTP Authentication</i> is discussed in this <a href=\'http://en.wikipedia.org/wiki/Basic_authentication_scheme\' target=\'_blank\' alt=\'Wikipedia article\' title=\'Wikipedia article\'><b>Wikipedia article</b></a>, while <i>Digest Authentication</i> is discussed in this <a href=\'http://en.wikipedia.org/wiki/Digest_access_authentication\' target=\'_blank\' alt=\'Wikipedia article\' title=\'Wikipedia article\'><b>Wikipedia article</b></a>.');
-	break;
-
 case 'search':
 	$title=i18n::translate('Search information');
 	$text=i18n::translate('This search box is small but powerful.  You can have <b>webtrees</b> search almost anything for you. When you click the <b>&gt;</b> or <b>Search</b> button, you will be linked to the Search page to see the results of your search.  You will find extensive help about searching options on the Search page.<ul><li><a href="?help=search.php">Search page</a></li><li><a href="?help=search_enter_terms">Enter search terms</a></li><li><a href="?help=soundex_search">Soundex search</a></li><li><a href="?help=search_replace">Search and replace</a></li></ul>');
@@ -4052,11 +4027,6 @@ case 'showUnknown':
 case 'show_age_marker':
 	$title=i18n::translate('Show age marker');
 	$text=i18n::translate('If you check this box, you will see an Age marker.<br /><br />You can slide this Age marker up or down along the time line.  The sliding Age marker is a nice tool to check the age of a person at a certain event.  You can enable or disable the Age marker individually for each person in the chart.');
-	break;
-
-case 'show_changes':
-	$title=i18n::translate('This record has been updated.  Click here to show changes.');
-	$text=i18n::translate('When you see this message, it means two things:<ol><li>Somebody has made changes to the GEDCOM<br />Records may have been added, deleted, or changed.</li><li>The changes have not yet been accepted by the administrator.<br />Once the changes have been accepted or rejected, you will no longer see this message.</li></ol>You can see what changes have been made when you click the link.  If you notice that a change is not correct, please notify the admin.');
 	break;
 
 case 'show_fact_sources':
@@ -4293,7 +4263,7 @@ default:
 	break;
 }
 
-print_simple_header(i18n::translate('Help for «%s»', htmlspecialchars($title)));
+print_simple_header(i18n::translate('Help for «%s»', htmlspecialchars(strip_tags($title))));
 echo '<div class="helpheader">', htmlspecialchars($title),'</div>';
 echo '<div class="helpcontent">', nl2br($text),'</div>';
 echo '<div class="helpfooter"><br />';
