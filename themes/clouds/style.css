@@ -1,9 +1,11 @@
-/**
-* Copyright (c) 2010 Rob Peters
-*
-* Based on standard theme, which is Copyright (C) 2002 to 2010  PGV Development Team.        
-*
-* $Id: ash.css 8709 2010-06-11 23:35:42Z rob $
+/*
+ * Copyright (c) 2010 Rob Peters
+ *
+ * Derived from PhpGedView Cloudy theme
+ * Original author w.a. bastein http://genealogy.bastein.biz
+ * Copyright (C) 2010  PGV Development Team.  All rights reserved.
+ *
+ * $Id$
 */
 
 .something {
@@ -11,22 +13,34 @@
 }
 
 body {
-font-family: tahoma, arial, helvetica, sans-serif;
-background:#fff;
-font-size: 11px;
+	color: #000066;
+	background-color: #c8e7ff;
+	background-image: url('images/background.jpg');
+	background-attachment: fixed;
+	background-position: top left;
+	background-repeat: repeat-x;
+	font: 11px tahoma, arial, helvetica, sans-serif;
+}
+
+#rapcontainer {
+margin-top: 10px;
+margin-bottom: 10px;
+margin-left:10px;
+margin-right: 10px;
+background-color: #fff;
+border: 1px solid #003399;
 }
 
 * {
 margin:0px;
 padding:0px;
 }
-
+	background:red;
 /*	Color settings for the this theme	*/
 /*	Define Header and Light Text Colors	*/
 
-#header,
-.gedcomtitle {
-background:#34775a;
+#header {
+background:#5d6779;
 color: #ffffff;
 }
 /*	Define Tbl hdrs and Light Text Colors	*/
@@ -44,19 +58,19 @@ color: #ffffff;
 .facts_table h2,
 .facts_table .ltr .descriptionbox a, 
 .blockcontent .facts_label {
-background:#51B389;
-color: #ffffff;
+	background:#95B8E0;
+	color: #003399;
 }
 
 /*	Define TopLink Color				*/
 
 #toplinks {
-background:#52bf90;
+background:#aaccff;
 }
 
 /* Correct icon link problem  */
 .menuitem_hover a:hover, .menuitem_hover_rtl a:hover{
-color: #52bf90;
+color: #2A2B2D;
 }
 
 /*	Define Base Color					*/
@@ -70,19 +84,24 @@ color: #52bf90;
 .person0,  .center .person_box,
 .submenuitem_hover, 
 .submenuitem_hover_rtl {
-background:#d2f4e6;
+	background:#fff;
+}
+
+.submenuitem_hover, 
+.submenuitem_hover_rtl {
+	background:#c8e7ff;
 }
 
 /*	Define Link Color					*/
 
 a {
-color:#333333;
-text-decoration: none;
-}
+	color: #003399;
+	text-decoration: none;
+	}
 
 a.link:link, a.link:visited, a.link:active, a.link:hover, .menuitem a, 
 .nameZoom {
-color:#333333;
+color:#003399;
 }
 
 a:hover { 
@@ -93,27 +112,34 @@ text-decoration: none;
 /*	Define Alert Color					*/
 
 .error, .warning, .red {
-color:#fc6d1d;
+color:#2a2b2d;
 }
 
 .facts_labelred, .facts_valuered {
-border: solid #fc6d1d 2px;
+border: solid red 2px;
 }
+
+/*	Define lite Text Color 				*/
+.descriptionbox {
+color: #fff;
+}
+
+
 
 /*	Define Dark Text Color 				*/
 
 input,button,textarea {
-border-color:#fff #2d2d2d #494949 #fff;
+border-color:#fff #000066 #000066 #fff;
 }
 
 body,
 .subheaders {
-color:#2d2d2d;
+	color:#000066;
 }
 
 #toplinks {
 width:100%;
-height:36px;
+height:26px;
 }
 
 .toplinks_left {
@@ -129,7 +155,7 @@ padding-right: 15px;
 border:none;
 padding-top:1px;
 padding-left:0px;
-padding-right:8pt;
+padding-right:4pt;
 }
 
 /*	Submenu style				*/
@@ -184,6 +210,8 @@ text-align: right;
 /*	End Toplinks Section				 */
 
 /*   Edit Facts */
+
+
 td.descriptionbox div a {
 color: white;
 }
@@ -217,7 +245,7 @@ margin-left:5px;
 
 .title .gedcomtitle {
 text-decoration:none;
-color: #ffffff;
+	color: #003399;
 }
 
 p.center a {
@@ -238,7 +266,7 @@ background: inherit;
 table.header {
 width:100%;
 padding:0 10px;
-margin:8px 0px 0px 0px;
+margin:0px 0px 0px 0px;
 }
 
 div.error {
@@ -251,8 +279,6 @@ color:#f50;
 }
 
 /* Override js/jquery-ui.custom.css            */
-/* Right Side Tab----------------------------------*/
-.ui-state-active, .ui-widget-content .ui-state-active { background: #51B389;}
 
 /* Flyout changes */
 
@@ -268,25 +294,16 @@ color:#f50;
     color: #000;
 }
 
-/* Tabs ----------------------------------*/
-.ui-widget-header { border: 1px solid #fff; background: #51B389 !important;  opacity: 0.67;  filter: alpha(opacity = 67);}
-.ui-widget-content a:hover {color: #f50;}
-.ui-state-active, .ui-widget-content .ui-state-active { border: 0px !important ; }
-.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #ffffff;}
-.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #000000; }
-.ui-tabs-nav li.ui-tabs-selected { background: #fff; }
-
-
-/* Colors specific changes                     */
+/* Style specific changes                     */
 /* Location and behavior of Right Site Tab in/out pin-------*/
 
 /* Navigator and Flyout menu Styles -----------*/
 
-.nav_content #spouse {
-color:  #000;
+.nav_content #spouse{
+color: blue;
 }
 .nav_content .facts_label a{
-color: #ffffff;
+color: blue;
 }
 
 /*	Start Standard Code					*/
@@ -302,10 +319,11 @@ overflow:auto;
 
 #content {
 width:auto;
-background:#FFF;
 margin:3px;
 padding:10px;
+background: #fff;
 }
+
 
 #pid {
 color:#333;
@@ -405,14 +423,14 @@ width:100%;
 }
 
 .blockh1 {
-background-image:url(../images/left1B.gif);
+background-image:url(images/left1B.gif);
 background-repeat: no-repeat;
 width:26px;
 height:24px;
 }
 
 .blockh2 { 
-background-image:url(../images/left2.gif);
+background-image:url(images/left2.gif);
 background-repeat:repeat-x;
 font-size: 13px;
 font-weight:bold;
@@ -422,7 +440,7 @@ line-height:25px;
 }
 
 .blockh3 {
-background-image:url(../images/left3.gif);
+background-image:url(images/left3.gif);
 background-repeat:no-repeat;
 width:8px;
 height:24px;
@@ -441,11 +459,11 @@ overflow:hidden;
 }
 
 #login_block .blockh1 {
-background-image:url(../images/left1G.gif);
+background-image:url(images/left1G.gif);
 }
 
 #logout_block .blockh1 {
-background-image:url(../images/leftR.gif);
+background-image:url(images/leftR.gif);
 }
 
 #index_small_blocks .person_box .pedigree_image_portrait,
@@ -503,7 +521,7 @@ width:99%;
 }
 
 #descendancy_chart ul {
-background-image:url(../images/vline.gif);
+background-image:url(images/vline.gif);
 background-repeat:repeat-y;
 background-position:left top;
 list-style:none;
@@ -522,7 +540,7 @@ padding-bottom: 0px;
 }
 
 #descendancy_chart_rtl ul {
-background-image:url(../images/vline.gif);
+background-image:url(images/vline.gif);
 background-image: url(images/vline.gif);
 background-repeat: repeat-y;
 background-position: right top;
@@ -552,7 +570,7 @@ right:10px;
 }
 
 #ancestry_chart ul {
-background-image:url(../images/vline.gif);
+background-image:url(images/vline.gif);
 background-repeat:repeat-y;
 background-position:left top;
 list-style:none;
@@ -571,7 +589,7 @@ padding-bottom:0px;
 }
 
 #ancestry_chart_rtl ul {
-background-image:url(../images/vline.gif);
+background-image:url(images/vline.gif);
 background-repeat:repeat-y;
 background-position:right top;
 list-style:none;
@@ -657,6 +675,7 @@ border:1px solid #999;
 font-size: 12px;
 font-weight: bold;
 text-align:center;
+color: #fff !important;
 white-space: normal;
 vertical-align:text-top;
 }
@@ -673,6 +692,9 @@ white-space: nowrap;
 }
 
 .list_label_wrap, .list_value_wrap {
+background-color: #ECF5FF;
+border: 1px solid #84BEFF;
+color: #006;
 white-space: normal;
 }
 
@@ -694,10 +716,11 @@ width: 100%;
 }
 
 .facts_label {
-border:1px solid #999;
+border:1px solid #acf;
 font-size: 12px;
 padding:4px;
 width:20%;
+color: #fff !important;
 text-align:center;
 }
 
@@ -710,7 +733,7 @@ text-align:center;
 
 .facts_value {
 background:#fff;
-border:1pt solid #ddd;
+border:1pt solid #acf;
 font-size: 12px;
 padding:4px;
 }
@@ -796,7 +819,9 @@ color:#7af;
 }
 
 .name1 {
+color: #006;
 font-size: 11px;
+color: #006;
 font-weight: bold;
 }
 
@@ -849,8 +874,8 @@ letter-spacing: .2px;
 }
 
 .date {
-color: #333;
-/* font-weight: bold; */
+color: #039;
+font-weight: bold;
 }
 
 .label, .field {
@@ -1173,8 +1198,8 @@ color:#000;
 }
 
 .title {
-font-size: 30px;
-vertical-align:bottom;
+font-size: 20px;
+vertical-align:middle;
 }
 
 .accesskeys {
@@ -1209,11 +1234,13 @@ padding: 3px;
 }
 
 .optionbox {
-border:solid #999 1px;
-font-size: 12px;
+background-color: #ECF5FF;
+border: 1px solid #84BEFF;
+color: #006;
+font: normal normal normal 11px/normal tahoma, arial, helvetica, sans-serif;
+padding: 3px;
 vertical-align: top;
 white-space: normal;
-padding: 3px;
 }
 
 .vmiddle {
@@ -1248,8 +1275,7 @@ margin:2px 0px 0px 5px;
 }
 
 #header td {
-vertical-align:bottom;
-height:4em;
+height:3em;
 }
 
 div.blockhc a:hover {
@@ -1261,6 +1287,10 @@ font-weight:bold;
 }
 .details_label {
 font-weight:bold;
+}
+
+ul {
+list-style: url(images/li.gif);
 }
 
 form .rtl {
@@ -1610,7 +1640,7 @@ padding-top: 12px;
 text-align: center;
 } 
 
-.tag_cloud {
+tag_cloud {
 font-family: tahoma, arial, helvetica, sans-serif;
 }
 .tag_cloud a {
@@ -1719,7 +1749,7 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	padding: 4px;
 }
 table.tablesorter thead tr .header {
-	background-image: url(../images/jquery/bg.gif);
+	background-image: url(images/jquery/bg.gif);
 	background-repeat: no-repeat;
 	background-position: center right;
 	padding-right:20px;
@@ -1735,10 +1765,10 @@ table.tablesorter tbody tr.odd td {
 	background-color:#E7EEF3;
 }
 table.tablesorter thead tr .headerSortUp {
-	background-image: url(../images/jquery/asc.gif);
+	background-image: url(images/jquery/asc.gif);
 }
 table.tablesorter thead tr .headerSortDown {
-	background-image: url(../images/jquery/desc.gif);
+	background-image: url(images/jquery/desc.gif);
 }
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 	background-color: #ccc;
@@ -1832,4 +1862,35 @@ font-style: italic;
 font-weight: bold;
 font-size: 90%;
 padding: 0 10px;
+}
+/* Use CSS menus based on nested <ul> */
+.makeMenu li {
+	display:inline;
+	position:relative;
+	white-space:nowrap;
+}
+
+.makeMenu li ul {
+	display:none;
+	position:absolute;
+	left:0px;
+	background-color:#FFF;
+	border:thin solid #AAA;
+	z-index:999;
+}
+
+.makeMenu li ul li {
+/*	padding: 2px; */
+	display:block;
+	text-align:left;
+}
+
+.makeMenu, .makeMenu li ul {
+	list-style:none;
+	margin:0;
+	padding:1px;
+}
+
+.makeMenu li:hover > ul {
+	display:block;
 }

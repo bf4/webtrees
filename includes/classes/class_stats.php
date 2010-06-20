@@ -1068,7 +1068,7 @@ class stats {
 			$surn_countries=array();
 			$indis = get_indilist_indis(utf8_strtoupper($surname), '', '', false, false, WT_GED_ID);
 			foreach ($indis as $person) {
-				if (preg_match_all('/^2 PLAC (?:.*, *)*(.*)/m', $person->gedrec, $matches)) {
+				if (preg_match_all('/^2 PLAC (?:.*, *)*(.*)/m', $person->getGedcomRecord(), $matches)) {
 					// webtrees uses 3 letter country codes and localised country names, but google uses 2 letter codes.
 					foreach ($matches[1] as $country) {
 						$country=trim($country);
@@ -1436,7 +1436,7 @@ class stats {
 		switch($type) {
 			default:
 			case 'full':
-				if (displayDetailsById($row['id'], 'INDI')) {
+				if ($person->canDisplayName()) {
 					$result=$person->format_list('span', false, $person->getFullName());
 				} else {
 					$result= i18n::translate('This information is private and cannot be shown.');
