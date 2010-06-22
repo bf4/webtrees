@@ -98,10 +98,7 @@ class Person extends GedcomRecord {
 	*/
 	function isDead() {
 		if ($this->isdead==-1) {
-			$this->isdead=is_dead($this->gedrec, $this->ged_id);
-			WT_DB::prepare(
-				"UPDATE `##individuals` SET i_isdead=? WHERE i_id=? AND i_file=?"
-			)->execute(array($this->isdead, $this->xref, $this->ged_id));
+			$this->isdead=WT_DB::prepare("SELECT `##is_dead`(?,?,?)")->execute(array($this->xref, $this->ged_id, $this->gedrec))->fetchOne();
 		}
 		return $this->isdead;
 	}

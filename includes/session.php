@@ -42,7 +42,7 @@ define('WT_TRANSLATORS_URL', 'https://translations.launchpad.net/webtrees');
 
 // Enable debugging output?
 define('WT_DEBUG',      false);
-define('WT_DEBUG_SQL',  true);
+define('WT_DEBUG_SQL',  false);
 
 // Error reporting
 define('WT_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
@@ -212,6 +212,11 @@ try {
 	header('Location: site-unavailable.php');
 	exit;
 }
+
+// Set MySQL global environment variables
+WT_DB::prepare(
+	"SET @WT_SERVER_JD:=`##ymd_to_jd`('@#DGREGORIAN@', YEAR(NOW()), MONTH(NOW()), DAY(NOW()))"
+)->execute(array());
 
 // If we have a preferred URL (e.g. https instead of http, or www.example.com instead of
 // www.isp.com/~example), then redirect to it.
