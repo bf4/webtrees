@@ -69,8 +69,8 @@ function full_rmdir($dir) {
 
 // Vars
 $ajaxdeleted = false;
-$elements = Array();
-$locked_by_context = array("readme.txt", "index.php", "gedcoms.php", 'config.ini.php');
+$elements = array();
+$locked_by_context = array('index.php', 'config.ini.php');
 
 // If we are storing the media in the index directory (this is the
 // default for the media firewall), then don't delete it.
@@ -132,13 +132,7 @@ function warnuser(cbox) {
 		foreach ($entryList as $entry) {
 			//echo $entry, "\n";
 			if ($entry{0} != '.') {
-				if ($ged_id=get_id_from_gedcom($entry)) {
-					print "<li class=\"facts_value\" name=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
-					print "<img src=\"./images/RESN_confidential.gif\" alt=\"\" />&nbsp;&nbsp;";
-					print "<span class=\"name2\">".$entry."</span>";
-					print "&nbsp;&nbsp;".str_replace($path, "", get_gedcom_setting($ged_id, 'config'))."</i>";
-				}
-				else if (in_array($entry, $locked_by_context)) {
+				if (in_array($entry, $locked_by_context)) {
 					print "<li class=\"facts_value\" name=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
 					print "<img src=\"./images/RESN_confidential.gif\" alt=\"\" />&nbsp;&nbsp;";
 					print "<span class=\"name2\">".$entry."</span>";
@@ -147,7 +141,7 @@ function warnuser(cbox) {
 					print "<li class=\"facts_value\" name=\"$entry\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$entry\" >";
 					print "<input type=\"checkbox\" name=\"to_delete[]\" value=\"".$entry."\" />\n";
 					print $entry;
-					$element[] = "li_".$entry;
+					$elements[] = "li_".$entry;
 				}
 				print "</li>";
 			}
@@ -172,7 +166,7 @@ function warnuser(cbox) {
 	new Effect.BlindDown('reorder_list', {duration: 1});
 
 		<?php
-		foreach($element as $key=>$val)
+		foreach($elements as $key=>$val)
 		{
 			print "new Draggable('".$val."', {revert:true});";
 		}

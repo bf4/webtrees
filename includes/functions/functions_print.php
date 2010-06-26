@@ -417,35 +417,25 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	global $FAVICON, $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile;
 	global $WT_IMAGES, $TEXT_DIRECTION, $ONLOADFUNCTION, $REQUIRE_AUTHENTICATION;
 
-	// TODO: Shouldn't this be in session.php?
-	// If not on allowed list, dump the spider onto the redirect page.
-	// This kills recognized spiders in their tracks.
-	// To stop unrecognized spiders, see META_ROBOTS below.
-	if ($SEARCH_SPIDER) {
-		if (
-			!(WT_SCRIPT_NAME=='individual.php' ||
-			WT_SCRIPT_NAME=='indilist.php' ||
-			WT_SCRIPT_NAME=='login.php' ||
-			WT_SCRIPT_NAME=='family.php' ||
-			WT_SCRIPT_NAME=='famlist.php' ||
-			WT_SCRIPT_NAME=='help_text.php' ||
-			WT_SCRIPT_NAME=='source.php' ||
-			WT_SCRIPT_NAME=='search_engine.php' ||
-			WT_SCRIPT_NAME=='index.php')
-		) {
-			header("Location: search_engine.php");
-			exit;
-		}
-	}
 	header("Content-Type: text/html; charset=UTF-8");
 
 	$META_DESCRIPTION=get_gedcom_setting(WT_GED_ID, 'META_DESCRIPTION');
 	$META_ROBOTS=get_gedcom_setting(WT_GED_ID, 'META_ROBOTS');
 	$META_TITLE=get_gedcom_setting(WT_GED_ID, 'META_TITLE');
+
+	// The title often includes the names of records, which may have markup
+	// that cannot be used in the page title.
+	$title=html_entity_decode(strip_tags($title), ENT_QUOTES, 'UTF-8');
+
 	if ($META_TITLE) {
 		$title.=' - '.$META_TITLE;
 	}
-
+	if ($view=='simple') {
+		// The simple view needs to work without a database - for use during installation
+		$GEDCOM_TITLE=WT_WEBTREES;
+	} else {
+		$GEDCOM_TITLE = get_gedcom_setting(WT_GED_ID, 'title');
+	}
 	$javascript = '';
 	$query_string = $QUERY_STRING;
 	if ($view!='simple') {
