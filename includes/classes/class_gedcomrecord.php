@@ -655,7 +655,7 @@ class GedcomRecord {
 				case 1:
 					return '<br /><i>'.$event->getLabel().' '.format_fact_date($event).format_fact_place($event).'</i>';
 				case 2:
-					return '<dt class="label">'.$event->getLabel().'</dt><dd class="field">'.format_fact_date($event).format_fact_place($event).'</dd>';
+					return '<dl><dt class="label">'.$event->getLabel().'</dt><dd class="field">'.format_fact_date($event).format_fact_place($event).'</dd></dl>';
 				}
 			}
 		}
@@ -728,7 +728,7 @@ class GedcomRecord {
 	* @param string $fact
 	* @return Event
 	*/
-	public function &getFactByType($factType) {
+	public function getFactByType($factType) {
 		$this->parseFacts();
 		if (empty($this->facts)) {
 			return null;

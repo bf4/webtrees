@@ -150,7 +150,6 @@ case 'update':
 	set_gedcom_setting(WT_GED_ID, 'DEFAULT_PEDIGREE_GENERATIONS', safe_POST('NEW_DEFAULT_PEDIGREE_GENERATIONS'));
 	set_gedcom_setting(WT_GED_ID, 'DISPLAY_JEWISH_GERESHAYIM',    safe_POST_bool('NEW_DISPLAY_JEWISH_GERESHAYIM'));
 	set_gedcom_setting(WT_GED_ID, 'DISPLAY_JEWISH_THOUSANDS',     safe_POST_bool('NEW_DISPLAY_JEWISH_THOUSANDS'));
-	set_gedcom_setting(WT_GED_ID, 'EDIT_AUTOCLOSE',               safe_POST_bool('NEW_EDIT_AUTOCLOSE'));
 	set_gedcom_setting(WT_GED_ID, 'ENABLE_AUTOCOMPLETE',          safe_POST_bool('NEW_ENABLE_AUTOCOMPLETE'));
 	set_gedcom_setting(WT_GED_ID, 'EXPAND_NOTES',                 safe_POST_bool('NEW_EXPAND_NOTES'));
 	set_gedcom_setting(WT_GED_ID, 'EXPAND_RELATIVES_EVENTS',      safe_POST_bool('NEW_EXPAND_RELATIVES_EVENTS'));
@@ -349,6 +348,7 @@ case 'update':
 			} else {
 				fwrite($fp, $httext);
 				fclose($fp);
+				chmod($whichFile, 0644); // Make sure apache can read this file
 			}
 		}
 	} elseif ($_POST["NEW_USE_MEDIA_FIREWALL"]==false) {
@@ -369,14 +369,11 @@ case 'update':
 			} else {
 				fwrite($fp, $httext);
 				fclose($fp);
+				chmod($whichFile, 0644); // Make sure apache can read this file
 			}
 		}
 
 	}
-
-	//-- delete the cache files for the Home Page blocks
-	require_once WT_ROOT.'includes/index_cache.php';
-	clearCache();
 
 	if (!$errors) {
 		$gednews = getUserNews(WT_GEDCOM);
@@ -1162,6 +1159,7 @@ print_header(i18n::translate('GEDCOM configuration'));
 						</td>
 						<td class="optionbox width60">
 							<select name="NEW_SURNAME_LIST_STYLE" tabindex="<?php echo ++$i; ?>">
+								<option value="style1" <?php if ($SURNAME_LIST_STYLE=="style1") print "selected=\"selected\""; ?>><?php print i18n::translate('list'); ?></option>
 								<option value="style2" <?php if ($SURNAME_LIST_STYLE=="style2") print "selected=\"selected\""; ?>><?php print i18n::translate('table'); ?></option>
 								<option value="style3" <?php if ($SURNAME_LIST_STYLE=="style3") print "selected=\"selected\""; ?>><?php print i18n::translate('tag cloud'); ?></option>
 							</select>
@@ -1698,14 +1696,6 @@ print_header(i18n::translate('GEDCOM configuration'));
 				<tr>
 					<td class="subbar" colspan="2">
 						<?php print i18n::translate('Other settings'); ?>
-					</td>
-				</tr>
-				<tr>
-					<td class="descriptionbox nowrap">
-						<?php echo i18n::translate('Autoclose edit window'), help_link('EDIT_AUTOCLOSE'); ?>
-					</td>
-					<td class="optionbox width60">
-						<?php echo edit_field_yes_no('NEW_EDIT_AUTOCLOSE', get_gedcom_setting(WT_GED_ID, 'EDIT_AUTOCLOSE'), 'tabindex="'.(++$i).'"'); ?>
 					</td>
 				</tr>
 				<tr>

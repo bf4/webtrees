@@ -51,19 +51,14 @@ if (WT_USE_LIGHTBOX) {
 }
 
 echo '<table><tr><td valign="middle">';
-if ($controller->isPrintPreview()) {
-	echo "<h2>", i18n::translate('%s Generation Pedigree Chart', $PEDIGREE_GENERATIONS), ":";
-} else {
-	echo "<h2>", i18n::translate('Pedigree Tree'), ":";
-}
+echo "<h2>", i18n::translate('Pedigree Tree'), ":";
 echo '<br />', PrintReady($controller->name);
 if ($controller->addname!="") {
 	echo '<br />', PrintReady($controller->addname);
 }
 echo '</h2>';
 // -- echo the form to change the number of displayed generations
-if (!$controller->isPrintPreview()) {
-	?>
+?>
 	<script language="JavaScript" type="text/javascript">
 	<!--
 	var pastefield;
@@ -146,12 +141,11 @@ if (!$controller->isPrintPreview()) {
 	if ($show_full==0) {
 		echo '<span class="details2">', i18n::translate('Click on any of the boxes to get more information about that person.'), '</span><br />';
 	}
-} ?>
+?>
 	</td></tr>
 </table>
 <div id="pedigree_chart<?php if ($TEXT_DIRECTION=="rtl") echo '_rtl'; ?>" <?php
-	if ($controller->isPrintPreview()) echo ' style="top: 1px;"';
-	else echo 'style="z-index: 1;"'; ?> >
+	echo 'style="z-index: 1;"'; ?> >
 <?php
 //-- echo the boxes
 $curgen = 1;
@@ -237,7 +231,7 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 
 		if (($curgen==1)&&(!empty($controller->treeid[$i]))&&(count(find_family_ids($controller->treeid[$i]))>0)) $widthadd = 20;
 		if (($curgen >2) && ($curgen < $controller->PEDIGREE_GENERATIONS)) $widthadd = 10;
-		if ($talloffset == 2 && $view!="preview") {
+		if ($talloffset == 2) {
 			echo '<div id="uparrow" dir="';
 			if ($TEXT_DIRECTION=="rtl") echo 'rtl" style="position:absolute; right:';
 			else echo 'ltr" style="position:absolute; left:';
@@ -271,8 +265,8 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 		}
 		else echo "<tr><td width=\"100%\">";
 		if (!isset($controller->treeid[$i])) $controller->treeid[$i] = false;
-		print_pedigree_person($controller->treeid[$i], 1, $controller->show_famlink, $iref, 1);
-		if (($curgen==1) && (count(find_family_ids($controller->treeid[$i]))>0) && $view!="preview") {
+		print_pedigree_person($controller->treeid[$i], 1, $iref, 1);
+		if (($curgen==1) && (count(find_family_ids($controller->treeid[$i]))>0)) {
 			$did = 1;
 			if ($i > ($controller->treesize/2) + ($controller->treesize/4)-1) $did++;
 			if ($talloffset==3) {
@@ -328,23 +322,19 @@ if ($controller->rootPerson->canDisplayDetails()) {
 		else {
 			echo ($linexoffset-10+$controller->pbwidth/2+$vlength/2), "px; top:", ($yoffset+$controller->pbheight/2+10), "px; width:10px; height:10px; \">";
 		}
-		if ($view!="preview") {
-			if ($talloffset < 2) {
-				if ($TEXT_DIRECTION=="rtl") echo "<a href=\"javascript: ", i18n::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow', 1);\" onmouseout=\"swap_image('larrow', 1);\">";
-				else echo "<a href=\"javascript: ", i18n::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow', 0);\" onmouseout=\"swap_image('larrow', 0);\">";
-				if ($TEXT_DIRECTION=="rtl") echo "<img id=\"larrow\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["rarrow"]["other"], "\" border=\"0\" alt=\"\" />";
-				else echo "<img id=\"larrow\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["larrow"]["other"], "\" border=\"0\" alt=\"\" />";
-			}
-			else if ($talloffset==3) {
-				echo "<a href=\"javascript: ", i18n::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('uarrow', 2);\" onmouseout=\"swap_image('uarrow', 2);\">";
-				echo "<img id=\"uarrow\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["uarrow"]["other"], "\" border=\"0\" alt=\"\" />";
-			}
-			else {
-				echo "<a href=\"javascript: ", i18n::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('darrow', 3);\" onmouseout=\"swap_image('darrow', 3);\">";
-				echo "<img id=\"darrow\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["darrow"]["other"], "\" border=\"0\" alt=\"\" />";
-			}
-			echo "</a>";
+		if ($talloffset < 2) {
+			if ($TEXT_DIRECTION=="rtl") echo "<a href=\"javascript: ", i18n::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow', 1);\" onmouseout=\"swap_image('larrow', 1);\">";
+			else echo "<a href=\"javascript: ", i18n::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow', 0);\" onmouseout=\"swap_image('larrow', 0);\">";
+			if ($TEXT_DIRECTION=="rtl") echo "<img id=\"larrow\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["rarrow"]["other"], "\" border=\"0\" alt=\"\" />";
+			else echo "<img id=\"larrow\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["larrow"]["other"], "\" border=\"0\" alt=\"\" />";
+		} else if ($talloffset==3) {
+			echo "<a href=\"javascript: ", i18n::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('uarrow', 2);\" onmouseout=\"swap_image('uarrow', 2);\">";
+			echo "<img id=\"uarrow\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["uarrow"]["other"], "\" border=\"0\" alt=\"\" />";
+		} else {
+			echo "<a href=\"javascript: ", i18n::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('darrow', 3);\" onmouseout=\"swap_image('darrow', 3);\">";
+			echo "<img id=\"darrow\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["darrow"]["other"], "\" border=\"0\" alt=\"\" />";
 		}
+		echo "</a>";
 		echo "\n\t\t</div>";
 		$yoffset += ($controller->pbheight / 2)+10;
 		echo "\n\t\t<div id=\"childbox\" dir=\"";
@@ -418,14 +408,6 @@ $maxyoffset+=30;
 	if (content_div) {
 		content_div.style.height = <?php echo $maxyoffset; ?> + "px";
 	}
-	<?php if ($view=="preview") { ?>
-	pedigree_div = document.getElementById("pedigree_chart");
-	if (pedigree_div) {
-		pedigree_div.style.height = <?php echo $maxyoffset; ?> + "px";
-	}
-	<?php } ?>
 </script>
 <?php
-if ($controller->isPrintPreview()) echo '<br /><br /><br />';
 print_footer();
-?>

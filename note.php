@@ -35,6 +35,8 @@ require WT_ROOT.'includes/functions/functions_print_lists.php';
 // We have finished writing to $_SESSION, so release the lock
 session_write_close();
 
+$nonfacts = array();
+
 $controller=new NoteController();
 $controller->init();
 
@@ -118,7 +120,7 @@ foreach ($notefacts as $fact) {
 print_main_media($controller->nid);
 
 // new fact link
-if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
+if ($controller->userCanEdit()) {
 	print_add_new_fact($controller->nid, $notefacts, 'NOTE');
 	// new media
 	echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, '">';
@@ -155,4 +157,3 @@ if ($controller->note->countLinkedSources()) {
 echo '</td></tr></table>';
 
 print_footer();
-?>

@@ -1245,6 +1245,7 @@ a.showit:hover span {
 
 .tag_cloud {
 	font-family: tahoma, arial, helvetica, sans-serif;
+	text-align: center;
 }
 .tag_cloud a {
 	white-space:nowrap;
@@ -1660,7 +1661,7 @@ div.faq_body {
 	display:none;
 	font-weight: normal;
 	position:absolute;
-	left:0px;
+	right:0px;
 	top:1.1em;
 	background-color:#FFF;
 	border:thin solid #AAA;

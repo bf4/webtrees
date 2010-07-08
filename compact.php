@@ -63,48 +63,46 @@ if ($addname != "") print "<br />" . PrintReady($addname);
 print "</h2>";
 
 // -- print the form
-if ($view != "preview") {
-	?>
-	<script language="JavaScript" type="text/javascript">
-	<!--
-	var pastefield;
-	function paste_id(value) {
-		pastefield.value=value;
-	}
-	//-->
-	</script>
-	<?php
-	echo "\n\t</td><td><form name=\"people\" id=\"people\" method=\"get\" action=\"?\">";
-	echo "\n\t\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t";
-	echo "<tr>";
-
-	// NOTE: Root ID
-	echo "<td class=\"descriptionbox\">";
-	echo i18n::translate('Root Person ID'), help_link('rootid'), "</td>";
-	echo "<td class=\"optionbox vmiddle\">";
-	echo "<input class=\"pedigree_form\" type=\"text\" name=\"rootid\" id=\"rootid\" size=\"3\" value=\"$rootid\" />";
-	print_findindi_link("rootid","");
-	print "</td>";
-
-	// NOTE: submit
-	echo "<td class=\"facts_label03\" rowspan=\"3\">";
-	echo "<input type=\"submit\" value=\"".i18n::translate('View')."\" />";
-	echo "</td>\n</tr>\n";
-
-	if ($SHOW_HIGHLIGHT_IMAGES) {
-		echo "<tr>\n";
-		echo "<td class=\"descriptionbox\">";
-		echo i18n::translate('Show highlight images in people boxes'), help_link('SHOW_HIGHLIGHT_IMAGES');
-		echo "</td>\n";
-		echo "<td class=\"optionbox\">\n";
-		echo "<input name=\"showthumbs\" type=\"checkbox\" value=\"1\"";
-		if ($showthumbs) print " checked=\"checked\"";
-		echo " /></td>\n</tr>\n";
-	}
-
-	echo "</table>";
-	echo "</form>\n";
+?>
+<script language="JavaScript" type="text/javascript">
+<!--
+var pastefield;
+function paste_id(value) {
+	pastefield.value=value;
 }
+//-->
+</script>
+<?php
+echo "\n\t</td><td><form name=\"people\" id=\"people\" method=\"get\" action=\"?\">";
+echo "\n\t\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t";
+echo "<tr>";
+
+// NOTE: Root ID
+echo "<td class=\"descriptionbox\">";
+echo i18n::translate('Root Person ID'), help_link('rootid'), "</td>";
+echo "<td class=\"optionbox vmiddle\">";
+echo "<input class=\"pedigree_form\" type=\"text\" name=\"rootid\" id=\"rootid\" size=\"3\" value=\"$rootid\" />";
+print_findindi_link("rootid","");
+print "</td>";
+
+// NOTE: submit
+echo "<td class=\"facts_label03\" rowspan=\"3\">";
+echo "<input type=\"submit\" value=\"".i18n::translate('View')."\" />";
+echo "</td>\n</tr>\n";
+
+if ($SHOW_HIGHLIGHT_IMAGES) {
+	echo "<tr>\n";
+	echo "<td class=\"descriptionbox\">";
+	echo i18n::translate('Show highlight images in people boxes'), help_link('SHOW_HIGHLIGHT_IMAGES');
+	echo "</td>\n";
+	echo "<td class=\"optionbox\">\n";
+	echo "<input name=\"showthumbs\" type=\"checkbox\" value=\"1\"";
+	if ($showthumbs) print " checked=\"checked\"";
+	echo " /></td>\n</tr>\n";
+}
+
+echo "</table>";
+echo "</form>\n";
 echo "</td></tr></table>";
 
 // process the tree
@@ -393,7 +391,7 @@ function print_td_person($n) {
 
 function print_arrow_person($n, $arrow_dir) {
 	global $treeid;
-	global $view, $showthumbs;
+	global $showthumbs;
 	global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES;
 
 	$pid = $treeid[$n];
@@ -420,7 +418,6 @@ function print_arrow_person($n, $arrow_dir) {
 	if ($pid) {
 		$text .= "<a href=\"?rootid=".$pid;
 		if ($showthumbs) $text .= "&amp;showthumbs=".$showthumbs;
-		if ($view) $text .="&amp;view=".$view;
 		$text .= "\" onmouseover=\"swap_image('arrow$n',".$arrow_swap[$arrow_dir].");\" onmouseout=\"swap_image('arrow$n',".$arrow_swap[$arrow_dir].");\" >";
 		$text .= $arrow_img."</a>";
 	}

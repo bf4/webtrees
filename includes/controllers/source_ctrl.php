@@ -1,31 +1,27 @@
 <?php
-/**
-* Controller for the source page view
-*
-* webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
-* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*
-* @package webtrees
-* @subpackage Charts
-* @version $Id$
-*/
+// Controller for the Source Page
+//
+// webtrees: Web based Family History software
+// Copyright (C) 2010 webtrees development team.
+//
+// Derived from PhpGedView
+// Copyright (C) 2002 to 2010 PGV Development Team.  All rights reserved.
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// @version $Id$
 
 if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -36,33 +32,18 @@ define('WT_SOURCE_CTRL_PHP', '');
 
 require_once WT_ROOT.'includes/functions/functions_print_facts.php';
 require_once WT_ROOT.'includes/controllers/basecontrol.php';
-require_once WT_ROOT.'includes/classes/class_source.php';
 require_once WT_ROOT.'includes/classes/class_menu.php';
+require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
 require_once WT_ROOT.'includes/functions/functions_import.php';
 
-$nonfacts = array();
-/**
-* Main controller class for the source page.
-*/
-class SourceControllerRoot extends BaseController {
+class SourceController extends BaseController {
 	var $sid;
-	/* @var Source */
 	var $source = null;
 	var $uname = "";
 	var $diffsource = null;
 	var $accept_success = false;
 	var $canedit = false;
 
-	/**
-	* constructor
-	*/
-	function SourceRootController() {
-		parent::BaseController();
-	}
-
-	/**
-	* initialize the controller
-	*/
 	function init() {
 		$this->sid = safe_GET_xref('sid');
 
@@ -184,7 +165,7 @@ class SourceControllerRoot extends BaseController {
 	* get edit menut
 	* @return Menu
 	*/
-	function &getEditMenu() {
+	function getEditMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
 		global $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
@@ -196,7 +177,7 @@ class SourceControllerRoot extends BaseController {
 		}
 
 		// edit source menu
-		$menu = new Menu(i18n::translate('Edit Source'));
+		$menu = new Menu(i18n::translate('Edit'));
 		$menu->addOnclick('return edit_source(\''.$this->sid.'\');');
 		if (!empty($WT_IMAGES["edit_source"]["large"])) {
 			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_source"]["large"]);
@@ -204,14 +185,14 @@ class SourceControllerRoot extends BaseController {
 		else if (!empty($WT_IMAGES["edit_source"]["small"])) {
 			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_source"]["small"]);
 		}
-		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
+		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 
 		// edit source / edit_source
 		$submenu = new Menu(i18n::translate('Edit Source'));
 		$submenu->addOnclick('return edit_source(\''.$this->sid.'\');');
 		if (!empty($WT_IMAGES["edit_sour"]["small"]))
-			$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_sour']['small']}");
-		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
+			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 
 		// edit source / edit_raw
@@ -219,8 +200,8 @@ class SourceControllerRoot extends BaseController {
 			$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 			$submenu->addOnclick("return edit_raw('".$this->sid."');");
 			if (!empty($WT_IMAGES["edit_sour"]["small"]))
-				$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_sour']['small']}");
-			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
 
@@ -228,8 +209,8 @@ class SourceControllerRoot extends BaseController {
 		$submenu = new Menu(i18n::translate('Delete this Source'));
 		$submenu->addOnclick("if (confirm('".i18n::translate('Are you sure you want to delete this Source?')."')) return deletesource('".$this->sid."'); else return false;");
 		if (!empty($WT_IMAGES["edit_sour"]["small"]))
-			$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_sour']['small']}");
-		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 
 		if (find_updated_record($this->sid, WT_GED_ID)!==null) {
@@ -243,16 +224,16 @@ class SourceControllerRoot extends BaseController {
 			{
 				$submenu = new Menu(i18n::translate('This record has been updated.  Click here to show changes.'), encode_url("source.php?sid={$this->sid}&show_changes=yes"));
 				if (!empty($WT_IMAGES["edit_sour"]["small"]))
-					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_sour']['small']}");
-				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+					$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
 			else
 			{
 				$submenu = new Menu(i18n::translate('Click here to hide changes.'), encode_url("source.php?sid={$this->sid}&show_changes=no"));
 				if (!empty($WT_IMAGES["edit_sour"]["small"]))
-					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_sour']['small']}");
-				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+					$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
 
@@ -262,12 +243,12 @@ class SourceControllerRoot extends BaseController {
 				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url("source.php?sid={$this->sid}&action=undo"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				if (!empty($WT_IMAGES["edit_sour"]["small"]))
-					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_sour']['small']}");
+					$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
 				$menu->addSubmenu($submenu);
 				$submenu = new Menu(i18n::translate('Accept all changes'), encode_url("source.php?sid={$this->sid}&action=accept"));
 				if (!empty($WT_IMAGES["edit_sour"]["small"]))
-					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_sour']['small']}");
-				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+					$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
 		}
@@ -278,7 +259,7 @@ class SourceControllerRoot extends BaseController {
 	* get the other menu
 	* @return Menu
 	*/
-	function &getOtherMenu() {
+	function getOtherMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $SHOW_GEDCOM_RECORD;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
@@ -346,14 +327,3 @@ class SourceControllerRoot extends BaseController {
 		return $menu;
 	}
 }
-// -- end of class
-//-- load a user extended class if one exists
-if (file_exists(WT_ROOT.'includes/controllers/source_ctrl_user.php')) {
-	require_once WT_ROOT.'includes/controllers/source_ctrl_user.php';
-} else {
-	class SourceController extends SourceControllerRoot
-	{
-	}
-}
-
-?>

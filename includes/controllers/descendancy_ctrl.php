@@ -1,31 +1,27 @@
 <?php
-/**
- * Controller for the Descendancy Page
- *
- * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
- * Copyright (C) 2002 to 2009	PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package webtrees
- * @subpackage Charts
- * @version $Id$
- */
+// Controller for the Descendancy Page
+//
+// webtrees: Web based Family History software
+// Copyright (C) 2010 webtrees development team.
+//
+// Derived from PhpGedView
+// Copyright (C) 2002 to 2009	PGV Development Team.  All rights reserved.
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// @version $Id$
 
 if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -39,31 +35,13 @@ require_once WT_ROOT.'includes/functions/functions_charts.php';
 
 require_once WT_ROOT.'includes/classes/class_person.php';
 
-// -- array of GEDCOM elements that will be found but should not be displayed
-$nonfacts[] = "FAMS";
-$nonfacts[] = "FAMC";
-$nonfacts[] = "MAY";
-$nonfacts[] = "BLOB";
-$nonfacts[] = "CHIL";
-$nonfacts[] = "HUSB";
-$nonfacts[] = "WIFE";
-$nonfacts[] = "RFN";
-$nonfacts[] = "";
-$nonfamfacts[] = "UID";
-$nonfamfacts[] = "";
-/**
- * Main controller class for the individual page.
- */
-class DescendancyControllerRoot extends BaseController {
+class DescendancyController extends BaseController {
 	var $pid = "";
 	var $descPerson = null;
 
 	var $diffindi = null;
 	var $NAME_LINENUM = 1;
 	var $accept_success = false;
-	var $visibility = "visible";
-	var $position = "relative";
-	var $display = "block";
 	var $canedit = false;
 	var $name_count = 0;
 	var $total_names = 0;
@@ -86,12 +64,6 @@ class DescendancyControllerRoot extends BaseController {
 	var $show_cousins;
 
 	/**
-	 * constructor
-	 */
-	function DescendancyRootController() {
-		parent::BaseController();
-	}
-	/**
 	 * Initialization function
 	 */
 	function init() {
@@ -111,7 +83,6 @@ class DescendancyControllerRoot extends BaseController {
 	// This is passed as a global.  A parameter would be better...
 	$show_full=$this->show_full;
 
-	if (!isset($this->view)) $this->view="";
 	if (!isset($this->personcount)) $this->personcount = 1;
 
 	$this->Dbwidth*=$this->box_width/100;
@@ -148,11 +119,6 @@ class DescendancyControllerRoot extends BaseController {
 		exit;
 	}
 	*/
-	if (!$this->isPrintPreview()) {
-		$this->visibility = "hidden";
-		$this->position = "absolute";
-		$this->display = "none";
-	}
 	}
 
 	/**
@@ -197,7 +163,7 @@ function print_child_descendancy(&$person, $depth) {
 		print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" height=\"3\" width=\"3\" border=\"0\" alt=\"\" />";
 		print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["hline"]["other"]."\" height=\"3\" width=\"".($Dindent-3)."\" border=\"0\" alt=\"\" /></td><td>\n";
 	}
-	print_pedigree_person($person->getXref(), 1, $this->view!="preview",'',$personcount);
+	print_pedigree_person($person->getXref(), 1, 0, $personcount);
 	print "</td>";
 
 	// check if child has parents and add an arrow
@@ -283,7 +249,7 @@ function print_family_descendancy(&$person, &$family, $depth) {
 		print "<ul style=\"list-style: none; display: block;\" id=\"".$famid.$personcount."\">";
 		print "<li>";
 		print "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td>";
-		print_pedigree_person($id, 1, $this->view!="preview",''.$personcount);
+		print_pedigree_person($id, 1, 0, $personcount);
 		print "</td>";
 
 		// check if spouse has parents and add an arrow
@@ -330,18 +296,3 @@ function print_family_descendancy(&$person, &$family, $depth) {
 }
 
 }
-
-// -- end of class
-//-- load a user extended class if one exists
-if (file_exists(WT_ROOT.'includes/controllers/descendancy_ctrl_user.php'))
-{
-	require_once WT_ROOT.'includes/controllers/descendancy_ctrl_user.php';
-}
-else
-{
-	class DescendancyController extends DescendancyControllerRoot
-	{
-	}
-}
-
-?>
