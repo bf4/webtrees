@@ -78,7 +78,6 @@ function print_fact(&$eventObj, $noedit=false) {
 	global $WORD_WRAPPED_NOTES;
 	global $TEXT_DIRECTION;
 	global $HIDE_GEDCOM_ERRORS, $SHOW_FACT_ICONS, $SHOW_MEDIA_FILENAME;
-	global $view;
 	global $n_chil, $n_gchi, $n_ggch;
 	global $SEARCH_SPIDER;
 
@@ -151,7 +150,7 @@ function print_fact(&$eventObj, $noedit=false) {
 		if ($fact=="_BIRT_CHIL" and isset($n_chil)) echo "<br />", i18n::translate('#%d', $n_chil++);
 		if ($fact=="_BIRT_GCHI" and isset($n_gchi)) echo "<br />", i18n::translate('#%d', $n_gchi++);
 		if ($fact=="_BIRT_GGCH" and isset($n_ggch)) echo "<br />", i18n::translate('#%d', $n_ggch++);
-		if (!$noedit && WT_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && $eventObj->canEdit()) {
+		if (!$noedit && WT_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $eventObj->canEdit()) {
 			$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
 			$menu->addOnclick("return edit_record('$pid', $linenum);");
 			$menu->addClass("", "", "submenu");
@@ -198,7 +197,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			else if ($factref=='file_size') echo i18n::translate('File Size');
 			else echo $factref;
 		} else echo translate_fact($factref, $label_person);
-		if (!$noedit && WT_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
+		if (!$noedit && WT_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && !FactEditRestricted($pid, $factrec)) {
 			$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
 			$menu->addOnclick("return edit_record('$pid', $linenum);");
 			$menu->addClass("", "", "submenu");
@@ -255,8 +254,8 @@ function print_fact(&$eventObj, $noedit=false) {
 				}
 				echo "</a>";
 			}
-			if ($view!="preview" && $spouse) echo " - ";
-			if ($view!="preview" && empty($SEARCH_SPIDER)) {
+			if ($spouse) echo " - ";
+			if (empty($SEARCH_SPIDER)) {
 				echo "<a href=\"", encode_url("family.php?famid={$pid}"), "\">";
 				echo i18n::translate('View Family');
 				echo "</a>";
@@ -554,7 +553,7 @@ function print_fact_sources($factrec, $level, $return=false) {
 //-- Print the links to multi-media objects
 function print_media_links($factrec, $level, $pid='') {
 	global $MULTI_MEDIA, $TEXT_DIRECTION;
-	global $SEARCH_SPIDER, $view;
+	global $SEARCH_SPIDER;
 	global $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 	global $GEDCOM, $MEDIA_TYPES;
@@ -683,15 +682,13 @@ function print_media_links($factrec, $level, $pid='') {
 					}
 					echo "</a>";
 				}
-				if ($view!="preview" && $spouse && empty($SEARCH_SPIDER)) echo " - ";
-				if ($view != "preview") {
-					$ct = preg_match("/WT_FAMILY_ID: (.*)/", $factrec, $match);
-					if ($ct>0) {
-						$famid = trim($match[1]);
-						if(empty($SEARCH_SPIDER)) {
-							echo "<a href=\"", encode_url("family.php?famid={$famid}"), "\">", i18n::translate('View Family');
-							echo "</a>\n";
-						}
+				if ($spouse && empty($SEARCH_SPIDER)) echo " - ";
+				$ct = preg_match("/WT_FAMILY_ID: (.*)/", $factrec, $match);
+				if ($ct>0) {
+					$famid = trim($match[1]);
+					if(empty($SEARCH_SPIDER)) {
+						echo "<a href=\"", encode_url("family.php?famid={$famid}"), "\">", i18n::translate('View Family');
+						echo "</a>\n";
 					}
 				}
 			}
@@ -830,7 +827,7 @@ function print_address_structure($factrec, $level) {
 }
 
 function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
-	global $view, $RESN_CODES;
+	global $RESN_CODES;
 	global $WT_IMAGE_DIR, $WT_IMAGES;
 
 	if (!canDisplayFact($pid, WT_GED_ID, $factrec)) {
@@ -874,7 +871,7 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 			} else {
 				echo translate_fact($factname, $parent);
 			}
-			if (!$noedit && WT_USER_CAN_EDIT && !FactEditRestricted($pid, $factrec) && $styleadd!="red" && $view!="preview") {
+			if (!$noedit && WT_USER_CAN_EDIT && !FactEditRestricted($pid, $factrec) && $styleadd!="red") {
 				$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
 				$menu->addOnclick("return edit_record('$pid', $linenum);");
 				$menu->addClass("", "", "submenu");
@@ -1084,7 +1081,6 @@ function getSourceStructure($srec) {
  */
 function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $GEDCOM, $RESN_CODES;
-	global $view;
 	global $WT_IMAGE_DIR;
 	global $WT_IMAGES;
 	global $TEXT_DIRECTION;
@@ -1136,7 +1132,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 				echo translate_fact($factname, $parent);
 			}
 		}
-		if (!$noedit && WT_USER_CAN_EDIT && !FactEditRestricted($pid, $factrec) && $styleadd!="change_old" && $view!="preview") {
+		if (!$noedit && WT_USER_CAN_EDIT && !FactEditRestricted($pid, $factrec) && $styleadd!="change_old") {
 			$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
 			$menu->addOnclick("return edit_record('$pid', $linenum);");
 			$menu->addClass("", "", "submenu");
@@ -1332,6 +1328,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		if ($newrec=find_updated_record($rowm["m_media"], $ged_id)) {
 			$row = array();
 			$row['m_media'] = $rowm["m_media"];
+			$row['m_gedfile']=$rowm["m_gedfile"];
 			$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
 			$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
 			if (empty($row['m_titl'])) $row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
@@ -1377,6 +1374,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 				if (!is_null($client)) {
 					$newrec = $client->getRemoteRecord($match[2]);
 					$row['m_media'] = $media_id;
+					$row['m_gedfile']=$ged_id;
 					$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
 					$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
 					if (empty($row['m_titl'])) $row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
@@ -1394,6 +1392,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 				$row = array();
 				$newrec = find_gedcom_record($media_id, $ged_id, true);
 				$row['m_media'] = $media_id;
+				$row['m_gedfile']=$ged_id;
 				$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
 				$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
 				if (empty($row['m_titl'])) $row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
@@ -1421,7 +1420,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
  * @param string $pid	The record id this media item was attached to
  */
 function print_main_media_row($rtype, $rowm, $pid) {
-	global $WT_IMAGE_DIR, $WT_IMAGES, $view, $TEXT_DIRECTION;
+	global $WT_IMAGE_DIR, $WT_IMAGES, $TEXT_DIRECTION;
 	global $GEDCOM, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $SEARCH_SPIDER, $MEDIA_TYPES;
 
@@ -1438,7 +1437,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 
 	$linenum = 0;
 	echo "\n\t\t<tr><td class=\"descriptionbox $styleadd center width20\"><img class=\"icon\" src=\"", $WT_IMAGE_DIR, "/", $WT_IMAGES["media"]["small"], "\" alt=\"\" /><br />", translate_fact('OBJE');
-	if ($rowm['mm_gid']==$pid && WT_USER_CAN_EDIT && (!FactEditRestricted($rowm['m_media'], $rowm['m_gedrec'])) && ($styleadd!="change_old") && ($view!="preview")) {
+	if ($rowm['mm_gid']==$pid && WT_USER_CAN_EDIT && (!FactEditRestricted($rowm['m_media'], $rowm['m_gedrec'])) && ($styleadd!="change_old")) {
 		$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
 		$menu->addOnclick("return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1');");
 		$menu->addClass("", "", "submenu");
@@ -1584,12 +1583,10 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			echo "</a>";
 		}
 		if(empty($SEARCH_SPIDER)) {
-			if ($view!="preview" && $spouse) echo " - ";
-			if ($view!="preview") {
-					$famid = $rowm['mm_gid'];
-					echo "<a href=\"", encode_url("family.php?famid={$famid}"), "\">", i18n::translate('View Family');
-					echo "</a>\n";
-			}
+			if ($spouse) echo " - ";
+			$famid = $rowm['mm_gid'];
+			echo "<a href=\"", encode_url("family.php?famid={$famid}"), "\">", i18n::translate('View Family');
+			echo "</a>\n";
 		}
 		echo "<br />\n";
 	}

@@ -1,31 +1,27 @@
 <?php
-/**
-* Controller for the Individual Page
-*
-* webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
-* Copyright (C) 2002 to 2010 PGV Development Team. All rights reserved.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-*
-* @package webtrees
-* @subpackage Charts
-* @version $Id$
-*/
+// Controller for the Individual Page
+//
+// webtrees: Web based Family History software
+// Copyright (C) 2010 webtrees development team.
+//
+// Derived from PhpGedView
+// Copyright (C) 2002 to 2010 PGV Development Team. All rights reserved.
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// @version $Id$
 
 if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -37,28 +33,16 @@ define('WT_INDIVIDUAL_CTRL_PHP', '');
 require_once WT_ROOT.'includes/functions/functions_print_facts.php';
 require_once WT_ROOT.'includes/controllers/basecontrol.php';
 require_once WT_ROOT.'includes/classes/class_menu.php';
-require_once WT_ROOT.'includes/classes/class_person.php';
-require_once WT_ROOT.'includes/classes/class_family.php';
+require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
 require_once WT_ROOT.'includes/functions/functions_import.php';
 require_once WT_ROOT.'includes/classes/class_module.php';
 
-// -- array of GEDCOM elements that will be found but should not be displayed
-$nonfacts = array("FAMS", "FAMC", "MAY", "BLOB", "CHIL", "HUSB", "WIFE", "RFN", "_WT_OBJE_SORT", "");
-
-$nonfamfacts = array(/*"NCHI",*/ "UID", "");
-
-/**
-* Main controller class for the individual page.
-*/
-class IndividualControllerRoot extends BaseController {
+class IndividualController extends BaseController {
 	var $pid = "";
 	var $default_tab = 0;
 	var $indi = null;
 	var $diffindi = null;
 	var $accept_success = false;
-	var $visibility = "visible";
-	var $position = "relative";
-	var $display = "block";
 	var $canedit = false;
 	var $name_count = 0;
 	var $total_names = 0;
@@ -70,16 +54,6 @@ class IndividualControllerRoot extends BaseController {
 	var $SEX_LINENUM = null;
 	var $globalfacts = null;
 
-	/**
-	* constructor
-	*/
-	function IndividualControllerRoot() {
-		parent::BaseController();
-	}
-
-	/**
-	* Initialization function
-	*/
 	function init() {
 		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB;
 		global $USE_QUICK_UPDATE, $DEFAULT_PIN_STATE, $DEFAULT_SB_CLOSED_STATE, $pid;
@@ -90,8 +64,6 @@ class IndividualControllerRoot extends BaseController {
 		$this->sexarray["U"] = i18n::translate('unknown');
 
 		$this->pid = safe_GET_xref('pid');
-
-		$show_famlink = $this->view!='preview';
 
 		$pid = $this->pid;
 
@@ -149,11 +121,6 @@ class IndividualControllerRoot extends BaseController {
 			exit;
 		}
 		*/
-		if (!$this->isPrintPreview()) {
-			$this->visibility = "hidden";
-			$this->position = "absolute";
-			$this->display = "none";
-		}
 		//-- perform the desired action
 		switch($this->action) {
 			case "addfav":
@@ -291,10 +258,6 @@ class IndividualControllerRoot extends BaseController {
 			}
 			exit;
 		}
-		
-		if (WT_USER_CAN_EDIT) {
-			
-		}
 	}
 	//-- end of init function
 	/**
@@ -407,7 +370,7 @@ class IndividualControllerRoot extends BaseController {
 					if (WT_USE_LIGHTBOX) {
 						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_QUOTES, 'UTF-8')) . "\">" . "\n";
 					} else if (!$USE_MEDIA_VIEWER && $imgsize) {
-						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".encode_url(encrypt($firstmediarec["file"]))."', $imgwidth, $imgheight);\">";
+						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".urlencode($firstmediarec["file"])."', $imgwidth, $imgheight);\">";
 					} else {
 						$result .= "<a href=\"mediaviewer.php?mid={$mid}\">";
 					}
@@ -463,20 +426,21 @@ class IndividualControllerRoot extends BaseController {
 		$dummy=new Person($factrec);
 		$dummy->setPrimaryName(0);
 		echo '<div id="name1">';
-			echo '<dt class="label">', i18n::translate('Name'), '</dt>';
+			echo '<dl><dt class="label">', i18n::translate('Name'), '</dt>';
 			echo '<span class="field">', PrintReady($dummy->getFullName());
-				if (!$this->isPrintPreview() && $this->userCanEdit() && !strpos($factrec, 'WT_OLD')) {
+				if ($this->userCanEdit() && !strpos($factrec, 'WT_OLD') && $this->name_count > 1) {
 					echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" class=\"font9\" onclick=\"edit_name('".$this->pid."', ".$linenum."); return false;\">", i18n::translate('Edit'), "</a> | ";
 					echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$linenum."); return false;\">", i18n::translate('Delete'), "</a>", help_link('delete_name');
 				}
 			echo '</span>';
+			echo '</dl>';
 		echo '</div>';
 		$ct = preg_match_all('/\n2 (\w+) (.*)/', $factrec, $nmatch, PREG_SET_ORDER);
 		for($i=0; $i<$ct; $i++) {
 			echo '<div>';
 				$fact = trim($nmatch[$i][1]);
 				if (($fact!="SOUR")&&($fact!="NOTE")&&($fact!="GIVN")&&($fact!="SURN")) {
-					echo '<dt class="label">', translate_fact($fact, $this->indi), '</dt>';
+					echo '<dl><dt class="label">', translate_fact($fact, $this->indi), '</dt>';
 					echo '<span class="field">';
 						if (isset($nmatch[$i][2])) {
 							$name = trim($nmatch[$i][2]);
@@ -489,6 +453,7 @@ class IndividualControllerRoot extends BaseController {
 							echo PrintReady($name);
 						}
 					echo '</span>';
+					echo '</dl>';
 				}
 			echo '</div>';
 		}
@@ -525,8 +490,7 @@ class IndividualControllerRoot extends BaseController {
 				echo ' class="nameblue"';
 			}
 			echo '>';
-			echo '<dl>';
-				echo '<dt class="label">', i18n::translate('Gender'), '</dt>';
+				echo '<dl><dt class="label">', i18n::translate('Gender'), '</dt>';
 				echo '<span class="field">', $this->sexarray[$sex];
 					if ($sex=='M') {
 						echo Person::sexImage('M', 'small', '', i18n::translate('Male'));
@@ -536,7 +500,7 @@ class IndividualControllerRoot extends BaseController {
 						echo Person::sexImage('U', 'small', '', i18n::translate('unknown'));
 					}
 					if ($this->SEX_COUNT>1) {
-						if ((!$this->isPrintPreview()) && ($this->userCanEdit()) && (strpos($factrec, "WT_OLD")===false)) {
+						if ($this->userCanEdit() && strpos($factrec, "WT_OLD")===false) {
 							if ($event->getLineNumber()=="new") {
 								echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"add_new_record('".$this->pid."', 'SEX'); return false;\">".i18n::translate('Edit')."</a>";
 							} else {
@@ -559,7 +523,7 @@ class IndividualControllerRoot extends BaseController {
 	* get the edit menu
 	* @return Menu
 	*/
-	function &getEditMenu() {
+	function getEditMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
 		global $USE_QUICK_UPDATE;
 		if ($TEXT_DIRECTION=="rtl") {
@@ -667,7 +631,7 @@ class IndividualControllerRoot extends BaseController {
 	* get the "other" menu
 	* @return Menu
 	*/
-	function &getOtherMenu() {
+	function getOtherMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
 		global $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
@@ -1029,18 +993,4 @@ class IndividualControllerRoot extends BaseController {
 // -----------------------------------------------------------------------------
 
 }
-// -- end of class
 
-//-- load a user extended class if one exists
-if (file_exists(WT_ROOT.'includes/controllers/individual_ctrl_user.php'))
-{
-	require_once WT_ROOT.'includes/controllers/individual_ctrl_user.php';
-}
-else
-{
-	class IndividualController extends IndividualControllerRoot
-	{
-	}
-}
-
-?>

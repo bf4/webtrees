@@ -35,6 +35,11 @@ require WT_ROOT.'includes/controllers/individual_ctrl.php';
 
 $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 
+// -- array of GEDCOM elements that will be found but should not be displayed
+$nonfacts = array("FAMS", "FAMC", "MAY", "BLOB", "CHIL", "HUSB", "WIFE", "RFN", "_WT_OBJE_SORT", "");
+
+$nonfamfacts = array(/*"NCHI",*/ "UID", "");
+
 $controller=new IndividualController();
 $controller->init();
 
@@ -78,10 +83,6 @@ function showchanges() {
 }
 <?php } ?>
 
-//]]>
-</script>
-<script type="text/javascript">
-//<![CDATA[
 var tabCache = new Array();
 var pinned = false;
 
@@ -102,14 +103,15 @@ jQuery(document).ready(function(){
 	?>
 	});
 });
-
 //]]>
 </script>
+
 <style type="text/css">
 #pin {
 	float: <?php echo $TEXT_DIRECTION=='rtl'?'left':'right';?>;
 }
 </style>
+
 <div id="indi_main_blocks">
 	<?php
 		if ((empty($SEARCH_SPIDER))&&($controller->accept_success)) echo "<b>", i18n::translate('Changes successfully accepted into database'), "</b><br />";
@@ -216,9 +218,8 @@ foreach ($controller->tabs as $tab) {
 } 
 ?>
 <?php 
-	if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
-		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
-	} ?>
+	$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
+?>
 </div>
 <?php
 if (!$controller->indi->canDisplayDetails()) {
@@ -227,7 +228,6 @@ if (!$controller->indi->canDisplayDetails()) {
 	print "</td></tr></table>";
 } else {
 	if (method_exists($controller, 'getOtherMenu')) {	
-		// echo "&nbsp;";
 		require './sidebar.php';
 		
 		// Initially hide the sidebar controls & pin ======
@@ -288,4 +288,3 @@ if ($SEARCH_SPIDER) {
 } else {
 	print_footer();
 }
-?>

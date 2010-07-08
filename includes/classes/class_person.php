@@ -819,7 +819,7 @@ class Person extends GedcomRecord {
 	* return a new person object for it
 	* @return Person
 	*/
-	function &getUpdatedPerson() {
+	function getUpdatedPerson() {
 		if ($this->getChanged()) {
 			return null;
 		}
@@ -1261,9 +1261,9 @@ class Person extends GedcomRecord {
 					$srec=preg_replace('/^1 .*/', '1 _'.$sEvent->getTag().'_SPOU ', $srec);
 					$srec.="\n".get_sub_record(2, '2 ASSO @'.$this->xref.'@', $srec);
 					switch ($spouse->getSex()) {
-					case 'M': $srec.="\n2 ASSO @".$spouse->getXref()."@\n3 RELA hus";
-					case 'F': $srec.="\n2 ASSO @".$spouse->getXref()."@\n3 RELA wif";
-					case 'U': $srec.="\n2 ASSO @".$spouse->getXref()."@\n3 RELA spo";
+					case 'M': $srec.="\n2 ASSO @".$spouse->getXref()."@\n3 RELA hus"; break;
+					case 'F': $srec.="\n2 ASSO @".$spouse->getXref()."@\n3 RELA wif"; break;
+					case 'U': $srec.="\n2 ASSO @".$spouse->getXref()."@\n3 RELA spo"; break;
 					}
 					$event = new Event($srec, 0);
 					$event->setParentObject($this);

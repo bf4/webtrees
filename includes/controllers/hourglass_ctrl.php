@@ -1,31 +1,27 @@
 <?php
-/**
- * Controller for the Hourglass Page
- *
- * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package webtrees
- * @subpackage Charts
- * @version $Id$
- */
+// Controller for the Hourglass Page
+//
+// webtrees: Web based Family History software
+// Copyright (C) 2010 webtrees development team.
+//
+// Derived from PhpGedView
+// Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// @version $Id$
 
 if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -50,16 +46,11 @@ $nonfacts[] = "RFN";
 $nonfacts[] = "";
 $nonfamfacts[] = "UID";
 $nonfamfacts[] = "";
-/**
- * Main controller class for the individual page.
- */
-class HourglassControllerRoot extends BaseController {
+
+class HourglassController extends BaseController {
 	var $pid = "";
 
 	var $accept_success = false;
-	var $visibility = "visible";
-	var $position = "relative";
-	var $display = "block";
 	var $canedit = false;
 	var $name_count = 0;
 	var $total_names = 0;
@@ -77,12 +68,6 @@ class HourglassControllerRoot extends BaseController {
 	var $arrheight;
 	///////////////////////////////////////
 
-	/**
-	 * constructor
-	 */
-	function HourglassControllerRoot() {
-		parent::BaseController();
-	}
 	/**
 	 * Initialization function
 	 */
@@ -132,12 +117,6 @@ class HourglassControllerRoot extends BaseController {
 		//Checks how many generations of descendency is for the person for formatting purposes
 		$this->dgenerations = $this->max_descendency_generations($this->pid, 0);
 		if ($this->dgenerations<1) $this->dgenerations=1;
-
-		if (!$this->isPrintPreview()) {
-			$this->visibility = "hidden";
-			$this->position = "absolute";
-			$this->display = "none";
-		}
 	}
 
 	/**
@@ -369,12 +348,9 @@ class HourglassControllerRoot extends BaseController {
 				if ($num>0) {
 					print "\n\t\t<div class=\"center\" id=\"childarrow\" dir=\"".$TEXT_DIRECTION."\"";
 					print " style=\"position:absolute; width:".$bwidth."px; \">";
-					if ($this->view!="preview") {
-						print "<a href=\"javascript: ".i18n::translate('Show')."\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow',3);\" onmouseout=\"swap_image('larrow',3);\">";
-						print "<img id=\"larrow\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["darrow"]["other"]."\" border=\"0\" alt=\"\" />";
-						print "</a><br />";
-
-					}
+					print "<a href=\"javascript: ".i18n::translate('Show')."\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow',3);\" onmouseout=\"swap_image('larrow',3);\">";
+					print "<img id=\"larrow\" src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["darrow"]["other"]."\" border=\"0\" alt=\"\" />";
+					print "</a><br />";
 					print "\n\t\t<div id=\"childbox\" dir=\"".$TEXT_DIRECTION."\" style=\"width:".$bwidth."px; height:".$bheight."px; visibility: hidden;\">";
 					print "\n\t\t\t<table class=\"person_box\"><tr><td>";
 
@@ -584,18 +560,3 @@ class HourglassControllerRoot extends BaseController {
 }
 
 }
-
-// -- end of class
-//-- load a user extended class if one exists
-if (file_exists(WT_ROOT.'includes/controllers/hourglass_ctrl_user.php'))
-{
-	require_once WT_ROOT.'includes/controllers/hourglass_ctrl_user.php';
-}
-else
-{
-	class HourglassController extends HourglassControllerRoot
-	{
-	}
-}
-
-?>

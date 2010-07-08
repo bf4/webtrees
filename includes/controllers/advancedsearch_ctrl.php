@@ -1,35 +1,27 @@
 <?php
-
-/**
- * Controller for the Advanced Search Page
- *
- * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
- * Copyright (C) 2002 to 2009	PGV Development Team. All rights reserved.
- *
- * Modifications Copyright (c) 2010 Greg Roach
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *
- * @package webtrees
- * @subpackage Display
- * @version $Id$
- */
+// Controller for the Advanced Search Page
+//
+// webtrees: Web based Family History software
+// Copyright (C) 2010 webtrees development team.
+//
+// Derived from PhpGedView
+// Copyright (C) 2002 to 2009	PGV Development Team. All rights reserved.
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// @version $Id$
 
 if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -40,9 +32,6 @@ define('WT_ADVANCED_SEARCH_PHP', '');
 
 require_once WT_ROOT.'includes/controllers/search_ctrl.php';
 
-/**
- * Main controller class for the search page.
- */
 class AdvancedSearchController extends SearchController {
 
 	var $fields = array();
@@ -372,7 +361,7 @@ class AdvancedSearchController extends SearchController {
 					}
 					else $this->fields[$j] = preg_replace("/^".$parts[0].":/","", $this->fields[$j]);
 				}
-				$sqlwhere .= " AND (FAMC.f_chil LIKE CONCAT('%',i_id,';%'))";
+				$sqlwhere .= " AND (FAMC.f_gedcom LIKE CONCAT('%1 CHIL @',i_id,'@%'))";
 				$subsql = $this->advancedSearch(true,"families","f");
 				$sqlwhere .= " AND ROW(FAMC.f_id, FAMC.f_file) IN (".$subsql.")";
 				$this->fields = $oldfields;
@@ -461,10 +450,3 @@ class AdvancedSearchController extends SearchController {
 		return $ret;
 	}
 }
-// -- end of class
-
-//-- load a user extended class if one exists
-if (file_exists(WT_ROOT.'includes/controllers/advancedsearch_ctrl_user.php')) {
-	require_once WT_ROOT.'includes/controllers/advancedsearch_ctrl_user.php';
-}
-?>

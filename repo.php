@@ -35,6 +35,8 @@ require WT_ROOT.'includes/functions/functions_print_lists.php';
 // We have finished writing to $_SESSION, so release the lock
 session_write_close();
 
+$nonfacts = array();
+
 $controller=new RepositoryController();
 $controller->init();
 
@@ -90,7 +92,7 @@ foreach ($repositoryfacts as $fact) {
 print_main_media($controller->rid);
 
 // new fact link
-if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
+if ($controller->userCanEdit()) {
 	print_add_new_fact($controller->rid, $repositoryfacts, 'REPO');
 	// new media
 	echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, '">';
@@ -112,4 +114,3 @@ if ($controller->repository->countLinkedSources()) {
 echo '</td></tr></table>';
 
 print_footer();
-?>

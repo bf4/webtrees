@@ -205,7 +205,7 @@ function set_perms($path) {
 $starttime = time();
 
 // TODO Determine source and validation requirements for these variables
-$filename=decrypt(safe_REQUEST($_REQUEST, 'filename'));
+$filename=safe_REQUEST($_REQUEST, 'filename');
 $directory=safe_REQUEST($_REQUEST, 'directory', WT_REGEX_NOSCRIPT, $MEDIA_DIRECTORY);
 $movetodir=safe_REQUEST($_REQUEST, 'movetodir');
 $movefile=safe_REQUEST($_REQUEST, 'movefile');
@@ -684,14 +684,17 @@ if (check_media_structure()) {
 					echo i18n::translate('Record %s successfully updated.', $pid), '<br />';
 				}
 
-				// Record changes to the Media object
-				accept_all_changes($xref, WT_GED_ID);
-				$objerec = find_gedcom_record($xref, WT_GED_ID);
-	
 				// Remove media object from gedcom
 				delete_gedrec($xref, WT_GED_ID);
 				echo i18n::translate('Record %s successfully removed from GEDCOM.', $xref), '<br />';
 
+/* I've commented this out, as I have no idea what it is supposed to do.  We've just deleted a
+ * file, so why are we creating a new media object for it???
+ 
+				// Record changes to the Media object
+				accept_all_changes($xref, WT_GED_ID);
+				$objerec = find_gedcom_record($xref, WT_GED_ID);
+	
 				// Add the same file as a new object
 				if ($finalResult && !$removeObject && $objerec!="") {
 					$xref = get_new_xref("OBJE");
@@ -706,6 +709,7 @@ if (check_media_structure()) {
 					}
 					print "<br />";
 				}
+*/
 			}
 		}
 		if ($finalResult) print i18n::translate('Update successful');
@@ -1074,7 +1078,7 @@ if (check_media_structure()) {
 									$tempURL .= $linkToID;
 								}
 							} else {
-								$tempURL .= 'showmediaform&filename='.encrypt($media['FILE']).'&linktoid=new';
+								$tempURL .= 'showmediaform&filename='.urlencode($media['FILE']).'&linktoid=new';
 							}
 							echo "<a href=\"javascript:", i18n::translate('Edit'), "\" onclick=\"window.open('", encode_url($tempURL, false), "', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;\">", i18n::translate('Edit'), "</a><br />";
 
@@ -1096,7 +1100,7 @@ if (check_media_structure()) {
 							if (!$isExternal && $objectCount<2) {
 								$tempURL = "media.php?";
 								if (!empty($filter)) $tempURL.= "filter={$filter}&";
-								$tempURL .= "action=deletefile&showthumb={$showthumb}&sortby={$sortby}&filter={$filter}&subclick={$subclick}&filename=".encrypt($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
+								$tempURL .= "action=deletefile&showthumb={$showthumb}&sortby={$sortby}&filter={$filter}&subclick={$subclick}&filename=".urlencode($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
 								print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this file?')."');\">".i18n::translate('Delete file')."</a><br />";
 							}
 
@@ -1104,7 +1108,7 @@ if (check_media_structure()) {
 							if (!empty($media["XREF"])) {
 								$tempURL = "media.php?";
 								if (!empty($filter)) $tempURL .= "filter={$filter}&";
-								$tempURL .= "action=removeobject&showthumb={$showthumb}&sortby={$sortby}&filter={$filter}&subclick={$subclick}&filename=".encrypt($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
+								$tempURL .= "action=removeobject&showthumb={$showthumb}&sortby={$sortby}&filter={$filter}&subclick={$subclick}&filename=".urlencode($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
 								print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to remove this object from the database?')."');\">".i18n::translate('Remove object')."</a><br />";
 							}
 
@@ -1112,7 +1116,7 @@ if (check_media_structure()) {
 							if ($media["LINKED"]) {
 								$tempURL = "media.php?";
 								if (!empty($filter)) $tempURL .= "filter={$filter}&";
-								$tempURL .= "action=removelinks&showthumb={$showthumb}&sortby={$sortby}&filter={$filter}&subclick={$subclick}&filename=".encrypt($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
+								$tempURL .= "action=removelinks&showthumb={$showthumb}&sortby={$sortby}&filter={$filter}&subclick={$subclick}&filename=".urlencode($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
 							//	print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to remove all links to this object?')."');\">".i18n::translate('Remove links')."</a><br />";
 							}
 
@@ -1134,7 +1138,7 @@ if (check_media_structure()) {
 									$tempURL .= "action=movestandard";
 									$message=i18n::translate('Move to standard directory');
 								}
-								$tempURL .= "&showthumb={$showthumb}&sortby={$sortby}&filename=".encrypt($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile=".$media["GEDFILE"];
+								$tempURL .= "&showthumb={$showthumb}&sortby={$sortby}&filename=".urlencode($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile=".$media["GEDFILE"];
 								print "<a href=\"".encode_url($tempURL)."\">".$message."</a><br />";
 							}
 
@@ -1145,7 +1149,7 @@ if (check_media_structure()) {
 								if ($ext=="jpg" || $ext=="jpeg" || $ext=="gif" || $ext=="png") {
 									$tempURL = "media.php?";
 									if (!empty($filter)) $tempURL .= "filter={$filter}&";
-									$tempURL .= "action=thumbnail&all=no&sortby={$sortby}&level={$level}&directory={$directory}&filename=".encrypt($media["FILE"]).$thumbget;
+									$tempURL .= "action=thumbnail&all=no&sortby={$sortby}&level={$level}&directory={$directory}&filename=".urlencode($media["FILE"]).$thumbget;
 									print "<a href=\"".encode_url($tempURL)."\">".i18n::translate('Create thumbnail')."</a>";
 								}
 							}

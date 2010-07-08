@@ -1,33 +1,27 @@
 <?php
-/**
-* Parses gedcom file and gives access to information about a family.
-*
-* You must supply a $famid value with the identifier for the family.
-*
-* webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
-* Copyright (C) 2002 to 2010 PGV Development Team.  All rights reserved.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*
-* @package webtrees
-* @subpackage Controllers
-* @version $Id$
-*/
+// Controller for the Family Page
+//
+// webtrees: Web based Family History software
+// Copyright (C) 2010 webtrees development team.
+//
+// Derived from PhpGedView
+// Copyright (C) 2002 to 2010 PGV Development Team.  All rights reserved.
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// @version $Id$
 
 if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -38,12 +32,12 @@ define('WT_FAMILY_CTRL_PHP', '');
 
 require_once WT_ROOT.'includes/functions/functions_print_facts.php';
 require_once WT_ROOT.'includes/controllers/basecontrol.php';
-require_once WT_ROOT.'includes/functions/functions_charts.php';
-require_once WT_ROOT.'includes/classes/class_family.php';
 require_once WT_ROOT.'includes/classes/class_menu.php';
+require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
 require_once WT_ROOT.'includes/functions/functions_import.php';
+require_once WT_ROOT.'includes/functions/functions_charts.php';
 
-class FamilyRoot extends BaseController {
+class FamilyController extends BaseController {
 	var $user = null;
 	var $showLivingHusb = true;
 	var $showLivingWife = true;
@@ -58,20 +52,11 @@ class FamilyRoot extends BaseController {
 	var $family = null;
 	var $difffam = null;
 
-	/**
-	* constructor
-	*/
-	function FamilyRoot() {
-		parent::BaseController();
-	}
-
 	function init() {
-		global $Dbwidth, $bwidth, $pbwidth, $pbheight, $bheight, $GEDCOM, $show_famlink;
+		global $Dbwidth, $bwidth, $pbwidth, $pbheight, $bheight, $GEDCOM;
 		$bwidth = $Dbwidth;
 		$pbwidth = $bwidth + 12;
 		$pbheight = $bheight + 14;
-
-		$show_famlink = $this->view!='preview';
 
 		$this->famid = safe_GET_xref('famid');
 
@@ -225,7 +210,7 @@ class FamilyRoot extends BaseController {
 	* get the family page charts menu
 	* @return Menu
 	*/
-	function &getChartsMenu() {
+	function getChartsMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
@@ -304,7 +289,7 @@ class FamilyRoot extends BaseController {
 	* @deprecated This function has been deprecated by the getReportsMenu function in menu.php
 	* @return Menu
 	*/
-	function &getReportsMenu() {
+	function getReportsMenu() {
 	/**
 		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
@@ -331,14 +316,14 @@ class FamilyRoot extends BaseController {
 	/**
 	* get the family page edit menu
 	*/
-	function &getEditMenu() {
+	function getEditMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
 		global $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 
 		// edit_fam menu
-		$menu = new Menu(i18n::translate('Edit Family'));
+		$menu = new Menu(i18n::translate('Edit'));
 		$menu->addOnclick("return edit_family('".$this->getFamilyID()."');");
 		if (!empty($WT_IMAGES["edit_fam"]["large"])) {
 			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["large"]);
@@ -346,33 +331,33 @@ class FamilyRoot extends BaseController {
 		else if (!empty($WT_IMAGES["edit_fam"]["small"])) {
 			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
 		}
-		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
+		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 
 		// edit_fam / edit_fam
 		$submenu = new Menu(i18n::translate('Edit Family'));
 		$submenu->addOnclick("return edit_family('".$this->getFamilyID()."');");
 		if (!empty($WT_IMAGES["edit_fam"]["small"])) {
-			$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
+			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
 		}
-		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 
 		// edit_fam / members
 		$submenu = new Menu(i18n::translate('Change Family Members'));
 		$submenu->addOnclick("return change_family_members('".$this->getFamilyID()."');");
 		if (!empty($WT_IMAGES["edit_fam"]["small"])) {
-			$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
+			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
 		}
-		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 
 		// edit_fam / add child
 		$submenu = new Menu(i18n::translate('Add a child to this family'));
 		$submenu->addOnclick("return addnewchild('".$this->getFamilyID()."');");
 		if (!empty($WT_IMAGES["edit_fam"]["small"])) {
-			$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
+			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
 		}
-		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 
 		// edit_fam / reorder_children
@@ -380,9 +365,9 @@ class FamilyRoot extends BaseController {
 			$submenu = new Menu(i18n::translate('Re-order children'));
 			$submenu->addOnclick("return reorder_children('".$this->getFamilyID()."');");
 			if (!empty($WT_IMAGES["edit_fam"]["small"])) {
-				$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
+				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
 			}
-			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
 
@@ -394,16 +379,16 @@ class FamilyRoot extends BaseController {
 			if (!$this->show_changes) {
 				$submenu = new Menu(i18n::translate('This record has been updated.  Click here to show changes.'), encode_url('family.php?famid='.$this->getFamilyID().'&show_changes=yes'));
 				if (!empty($WT_IMAGES["edit_fam"]["small"])) {
-					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
+					$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
 				}
-				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			} else {
 				$submenu = new Menu(i18n::translate('Click here to hide changes.'), encode_url('family.php?famid='.$this->getFamilyID().'&show_changes=no'));
 				if (!empty($WT_IMAGES["edit_fam"]["small"])) {
-					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
+					$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
 				}
-				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
 
@@ -411,13 +396,13 @@ class FamilyRoot extends BaseController {
 				// edit_fam / accept_all
 				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url("family.php?famid={$this->famid}&action=undo"));
 				if (!empty($WT_IMAGES["edit_fam"]["small"])) {
-					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
+					$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
 				}
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 				$submenu = new Menu(i18n::translate('Accept all changes'), encode_url("family.php?famid={$this->famid}&action=accept"));
 				if (!empty($WT_IMAGES["edit_fam"]["small"])) {
-					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
+					$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
 				}
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
@@ -432,9 +417,9 @@ class FamilyRoot extends BaseController {
 			$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 			$submenu->addOnclick("return edit_raw('".$this->getFamilyID()."');");
 			if (!empty($WT_IMAGES["edit_fam"]["small"])) {
-				$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
+				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
 			}
-			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
 
@@ -442,9 +427,9 @@ class FamilyRoot extends BaseController {
 		$submenu = new Menu(i18n::translate('Delete family'));
 		$submenu->addOnclick("if (confirm('".i18n::translate('Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?')."')) return delete_family('".$this->getFamilyID()."'); else return false;");
 		if (!empty($WT_IMAGES["edit_fam"]["small"])) {
-			$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['edit_fam']['small']}");
+			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
 		}
-		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 
 		//-- get the link for the first submenu and set it as the link for the main menu
@@ -460,7 +445,7 @@ class FamilyRoot extends BaseController {
 	* get the other menu
 	* @return Menu
 	*/
-	function &getOtherMenu() {
+	function getOtherMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $SHOW_GEDCOM_RECORD;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
@@ -513,12 +498,3 @@ class FamilyRoot extends BaseController {
 		return $menu;
 	}
 }
-
-if (file_exists(WT_ROOT.'includes/controllers/family_ctrl_user.php')) {
-	require_once WT_ROOT.'includes/controllers/family_ctrl_user.php';
-} else {
-	class FamilyController extends FamilyRoot {
-	}
-}
-
-?>

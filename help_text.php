@@ -2171,11 +2171,6 @@ case 'DISPLAY_JEWISH_THOUSANDS':
 	$text=i18n::translate('Show Alafim in Hebrew calendars.<br /><br />Setting this to <b>Yes</b> will display the year 1969 as <span lang="he-IL" dir=\'rtl\'>&#1492;\'&#160;&#1514;&#1513;&#1499;&quot;&#1496;</span>&lrm; while setting it to <b>No</b> will display the year as <span lang="he-IL" dir=\'rtl\'>&#1514;&#1513;&#1499;&quot;&#1496;</span>&lrm;.  This has no impact on the Jewish year setting.  The year will display as 5729 regardless of this setting.<br /><br />Note: This setting is similar to the PHP 5.0 Calendar constant CAL_JEWISH_ADD_ALAFIM.');
 	break;
 
-case 'EDIT_AUTOCLOSE':
-	$title=i18n::translate('Autoclose edit window');
-	$text=i18n::translate('This option controls whether or not to automatically close the Edit window after a successful update.');
-	break;
-
 case 'ENABLE_AUTOCOMPLETE':
 	$title=i18n::translate('Enable autocomplete');
 	$text=i18n::translate('This option determines whether Autocomplete should be active while information is being entered into certain fields on input forms.  When this option is set to <b>Yes</b>, text input fields for which Autocomplete is possible are indicated by a differently colored background.<br /><br />When Autocomplete is active, <b>webtrees</b> will search its database for possible matches according to what you have already entered.  As you enter more information, the list of possible matches is refined.  When you see the desired input in the list of matches, you can move the mouse cursor to that line of the list and then click the left mouse button to complete the input.<br /><br />The disadvantages of Autocomplete are that it slows the program, entails significant database activity, and also results in more data being sent to the browser.');
@@ -2247,10 +2242,17 @@ case 'HIDE_GEDCOM_ERRORS':
 	break;
 
 case 'HIDE_LIVE_PEOPLE':
-	$title=i18n::translate('Enable privacy');
-	$text=i18n::translate('This option will enable all privacy settings and hide the details of living people.<br /><br />Living people are defined to be those who do not have an event more recent than the number of years specified in variable $MAX_ALIVE_AGE.  For this purpose, births of children are considered to be such events as well.');
-	break;
-
+        $title=i18n::translate('Enable privacy');
+        $text=i18n::translate('This option will enable all privacy settings and hide the details of living people, as defined or modified on the Privacy tab of each GEDCOM\'s configuration page.');
+        $text .= '<p>';
+		$text .= i18n::plural('Note: "living" is defined (if no death or burial is known) as ending %d year after birth or estimated birth.','Note: "living" is defined (if no death or burial is known) as ending %d years after birth or estimated birth.', get_gedcom_setting(WT_GED_ID, 'MAX_ALIVE_AGE'), get_gedcom_setting(WT_GED_ID, 'MAX_ALIVE_AGE'));
+		$text .= ' ';
+		$text .= i18n::translate('The length of time after birth can be set on the Privacy configuration tab option "Age at which to assume a person is dead".');
+		$text .= ' ';
+		$text .= i18n::translate('The detailed calculation of "estimated birth" can be read at <a href="http://wiki.webtrees.net/Privacy#Estimating_date_of_death">WIKI:Estimating age at death.</a>');
+		$text .= '</p>';
+        break;
+	
 case 'HOME_SITE_TEXT':
 	$title=i18n::translate('Main website text');
 	$text=i18n::translate('The legend used to identify the link to your main Home page.');
@@ -2718,7 +2720,7 @@ case 'SUBLIST_TRIGGER_I':
 
 case 'SURNAME_LIST_STYLE':
 	$title=i18n::translate('Surname list style');
-	$text=i18n::translate('Lists of surnames, as they appear in the Top 10 Surnames block, the Individuals, and the Families, can be shown in different styles.<ul><li><b>Table</b>&nbsp;&nbsp;&nbsp;In this style, the surnames are shown in a table that can be sorted either by surname or by count.</li><li><b>Tagcloud</b>&nbsp;&nbsp;&nbsp;In this style, the surnames are shown in a list, and the font size used for each name depends on the number of occurrences of that name in the database.  The list is not sortable.</li></ul>');
+	$text=i18n::translate('<p>Lists of surnames, as they appear in the Top 10 Surnames block, the Individual lists, and the Family lists, can be shown in different styles.</p><dl><dt>Table</dt><dd>In this style, the surnames are shown in a table that can be sorted either by surname or by count.</dd><dt>Tag cloud</dt><dd>In this style, the surnames are shown in a list, and the font size used for each name depends on the number of occurrences of that name in the database.  The list is not sortable.</dd><dt>List</dt><dd>This is a simple list of names, with a count of each name, in a tabulated format of up to four columns</dd></dl>');
 	break;
 
 case 'SURNAME_TRADITION':
@@ -3235,11 +3237,6 @@ case 'box_width':
 	$text=i18n::translate('Here you can change the box width from 50 percent to 300 percent.  At 100 percent each box is about 270 pixels wide.');
 	break;
 
-case 'cache_life':
-	$title=i18n::translate('Cache file life');
-	$text=i18n::translate('To improve performance, this webtrees Home Page block is saved as a cache file.  You can control how often this block\'s cache file is refreshed.<br /><br /><ul><li><b>-1</b> means that the cache file is never refreshed automatically.  To get a fresh copy, you need to delete all cache files.  You can do this on the Customize Home Page screen.</li><li><b>0</b> (Zero) means that this block is never cached, and every time the block is displayed on the webtrees Home Page, you see a fresh copy.  This setting is used automatically for blocks that change frequently, such as the Logged In Users and the Random Media blocks.</li><li><b>1</b> (One) means that a fresh copy of this block\'s cache file is created daily, <b>2</b> means that a fresh copy is created every two days, <b>7</b> means that a fresh copy is created weekly, etc.</li></ul>');
-	break;
-
 case 'change_indi2id':
 	$title=i18n::translate('Change individual ID to ....');
 	$text=i18n::translate('This tool was designed for users whose Genealogy programs use a different GEDCOM ID for the individuals every time the GEDCOM is exported. For example, the first time the GEDCOM is exported some person\'s ID might be I100 but the next time the GEDCOM is exported that same person\'s ID is changed to I234. These changing IDs make it difficult to administer <b>webtrees</b> because the ID is how people are referenced.<br /><br />Most genealogy programs also use the RIN or REFN tag to give each person a unique identifier that can be used to reference the individual. This tool will replace all of the individual IDs in the GEDCOM file with the whatever field (RIN or REFN) you specify.');
@@ -3263,11 +3260,6 @@ case 'chart_type':
 case 'cleanup_places':
 	$title=i18n::translate('Cleanup places');
 	$text=i18n::translate('<b>webtrees</b> detected that your GEDCOM file uses places on GEDCOM tags that should not have places.<br /><br />Many genealogy programs, such as Family Tree Maker, will create this type of GEDCOM file. <b>webtrees</b> will work with these GEDCOM files, but some invalid places will show up in your place hierarchy. <br /><br />For example, your GEDCOM might have the following encoding<br />1 SSN<br />2 PLAC 123-45-6789<br />1 OCCU<br />2 PLAC Computer Programmer<br /><br />According to the GEDCOM 5.5.1 Standard this should really be shown as<br />1 SSN 123-45-6789<br />1 OCCU Computer Programmer<br /><br />If you select <b>Yes</b>, <b>webtrees</b> will automatically correct these encoding errors.');
-	break;
-
-case 'clear_cache':
-	$title=i18n::translate('Clear cache files');
-	$text=i18n::translate('In order to improve performance, several of the blocks on the <b>webtrees</b> Home Page are saved as cache files in the index directory.  The cache files for most blocks are refreshed once each day, but there may be times when you want to refresh them manually.<br /><br />This button allows you to refresh the cache files when necessary.');
 	break;
 
 case 'clip_download':

@@ -34,6 +34,8 @@ define('WT_SCRIPT_NAME', 'mediaviewer.php');
 require './includes/session.php';
 require_once WT_ROOT.'includes/controllers/media_ctrl.php';
 
+$nonfacts=array();
+
 $controller = new MediaController();
 $controller->init();
 
@@ -182,7 +184,7 @@ function lightboxView(){
 
 // javascript function to open the original imageviewer.php page
 function openImageView(){
-	window.open("imageview.php?filename=<?php print encode_url(encrypt($filename)) ?>", "Image View");
+	window.open("imageview.php?filename=<?php print urlencode($filename) ?>", "Image View");
 	return false;
 }
 // javascript function to open a window with the raw gedcom in it

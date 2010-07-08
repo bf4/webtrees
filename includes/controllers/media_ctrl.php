@@ -1,36 +1,27 @@
 <?php
-/**
-* Controller for the Media Menu
-* Extends the IndividualController class and overrides the getEditMenu() function
-* Menu options are changed to apply to a media object instead of an individual
-*
-* webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
-* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
-*
-* Modifications Copyright (c) 2010 Greg Roach
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*
-*
-* @package webtrees
-* @subpackage Charts
-* @version $Id$
-*/
+// Controller for the Media Menu
+//
+// webtrees: Web based Family History software
+// Copyright (C) 2010 webtrees development team.
+//
+// Derived from PhpGedView
+// Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// @version $Id$
 
 if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -39,12 +30,13 @@ if (!defined('WT_WEBTREES')) {
 
 define('WT_MEDIA_CTRL_PHP', '');
 
-require_once WT_ROOT.'includes/controllers/individual_ctrl.php';
-require_once WT_ROOT.'includes/classes/class_media.php';
+require_once WT_ROOT.'includes/functions/functions_print_facts.php';
+require_once WT_ROOT.'includes/controllers/basecontrol.php';
+require_once WT_ROOT.'includes/classes/class_menu.php';
+require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
 require_once WT_ROOT.'includes/functions/functions_import.php';
 
-class MediaControllerRoot extends IndividualController{
-
+class MediaController extends BaseController{
 	var $mid;
 	var $mediaobject;
 	var $show_changes=true;
@@ -52,7 +44,7 @@ class MediaControllerRoot extends IndividualController{
 	function init() {
 		global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL, $GEDCOM;
 
-		$filename = decrypt(safe_GET('filename'));
+		$filename = safe_GET('filename');
 		$this->mid = safe_GET_xref('mid');
 
 		if ($USE_MEDIA_FIREWALL && empty($filename) && empty($this->mid)) {
@@ -185,7 +177,7 @@ class MediaControllerRoot extends IndividualController{
 	* get the edit menu
 	* @return Menu
 	*/
-	function &getEditMenu() {
+	function getEditMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $TOTAL_NAMES;
 		global $NAME_LINENUM, $SEX_LINENUM;
 		global $SHOW_GEDCOM_RECORD;
@@ -200,20 +192,29 @@ class MediaControllerRoot extends IndividualController{
 		$menu = new Menu(i18n::translate('Edit'));
 		$click_link = "window.open('addmedia.php?action=editmedia&pid={$this->pid}&linktoid={$linktoid}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
 		$menu->addOnclick($click_link);
-		if (!empty($WT_IMAGES["edit_indi"]["small"]))
-			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_indi"]["small"]);
+		if (!empty($WT_IMAGES["edit_media"]["large"])) {
+			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_media"]["large"]);
+		}
+		else if (!empty($WT_IMAGES["edit_media"]["small"])) {
+			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_media"]["small"]);
+		}
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
+		
 		if (WT_USER_CAN_EDIT) {
 			//- plain edit option
-			$submenu = new Menu(i18n::translate('Edit'));
+			$submenu = new Menu(i18n::translate('Edit media'));
 			$click_link = "window.open('addmedia.php?action=editmedia&pid={$this->pid}&linktoid={$linktoid}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
 			$submenu->addOnclick($click_link);
+			if (!empty($WT_IMAGES["edit_media"]["small"]))
+				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_media"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 
 			if ($SHOW_GEDCOM_RECORD || WT_USER_IS_ADMIN) {
 				$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 				$submenu->addOnclick("return edit_raw('".$this->pid."');");
+				if (!empty($WT_IMAGES["edit_media"]["small"]))
+					$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_media"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
@@ -223,6 +224,8 @@ class MediaControllerRoot extends IndividualController{
 				$submenu = new Menu(i18n::translate('Remove object'));
 				$submenu->addLink(encode_url("media.php?action=removeobject&xref=".$this->pid));
 				$submenu->addOnclick("return confirm('".i18n::translate('Are you sure you want to remove this object from the database?')."')");
+				if (!empty($WT_IMAGES["edit_media"]["small"]))
+					$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_media"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
@@ -237,7 +240,9 @@ class MediaControllerRoot extends IndividualController{
 			// GEDFact assistant Add Media Links =======================
 			if (WT_USER_GEDCOM_ADMIN && file_exists(WT_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
 				$submenu->addOnclick("return ilinkitem('".$this->pid."','manage');");
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
+				if (!empty($WT_IMAGES["edit_media"]["small"]))
+					$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_media"]["small"]);
+					$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 				// Do not print ssubmunu
 			} else {
 				$submenu->addOnclick("return ilinkitem('".$this->pid."','person');");
@@ -301,7 +306,7 @@ class MediaControllerRoot extends IndividualController{
 	* get the "other" menu
 	* @return Menu
 	*/
-	function &getOtherMenu() {
+	function getOtherMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $THEME_DIR, $SHOW_GEDCOM_RECORD;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
@@ -451,13 +456,4 @@ class MediaControllerRoot extends IndividualController{
 	}
 
 }
-// -- end of class
-//-- load a user extended class if one exists
-if (file_exists(WT_ROOT.'includes/controllers/media_ctrl_user.php')) {
-	require_once WT_ROOT.'includes/controllers/media_ctrl_user.php';
-} else {
-	class MediaController extends MediaControllerRoot {
-	}
-}
 
-?>

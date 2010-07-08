@@ -1,31 +1,27 @@
 <?php
-/**
- * Controller for the Ancestry Page
- *
- * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
- * Copyright (C) 2002 to 2009	PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package webtrees
- * @subpackage Charts
- * @version $Id$
- */
+// Controller for the Ancestry Page
+//
+// webtrees: Web based Family History software
+// Copyright (C) 2010 webtrees development team.
+//
+// Derived from PhpGedView
+// Copyright (C) 2002 to 2009	PGV Development Team.  All rights reserved.
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// @version $Id$
 
 if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -37,29 +33,10 @@ define('WT_ANCESTRY_CTRL_PHP', '');
 require_once WT_ROOT.'includes/functions/functions_charts.php';
 require_once WT_ROOT.'includes/controllers/basecontrol.php';
 
-// -- array of GEDCOM elements that will be found but should not be displayed
-$nonfacts[] = "FAMS";
-$nonfacts[] = "FAMC";
-$nonfacts[] = "MAY";
-$nonfacts[] = "BLOB";
-$nonfacts[] = "CHIL";
-$nonfacts[] = "HUSB";
-$nonfacts[] = "WIFE";
-$nonfacts[] = "RFN";
-$nonfacts[] = "";
-$nonfamfacts[] = "UID";
-$nonfamfacts[] = "";
-/**
- * Main controller class for the Ancestry page.
- */
-class AncestryControllerRoot extends BaseController {
+class AncestryController extends BaseController {
 	var $pid = "";
-
 	var $user = false;
 	var $accept_success = false;
-	var $visibility = "visible";
-	var $position = "relative";
-	var $display = "block";
 	var $show_cousins;
 	var $rootid;
 	var $name;
@@ -69,12 +46,6 @@ class AncestryControllerRoot extends BaseController {
 	var $show_full;
 	var $cellwidth;
 
-	/**
-	 * constructor
-	 */
-	function AncestryControllerRoot() {
-		parent::BaseController();
-	}
 	/**
 	 * Initialization function
 	 */
@@ -119,12 +90,6 @@ class AncestryControllerRoot extends BaseController {
 
 		if (strlen($this->name)<30) $this->cellwidth="420";
 		else $this->cellwidth=(strlen($this->name)*14);
-
-		if (!$this->isPrintPreview()) {
-			$this->visibility = "hidden";
-			$this->position = "absolute";
-			$this->display = "none";
-		}
 	}
 
 	/**
@@ -149,7 +114,7 @@ class AncestryControllerRoot extends BaseController {
 			print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" height=\"3\" width=\"2\" border=\"0\" alt=\"\" />";
 			print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["hline"]["other"]."\" height=\"3\" width=\"".($Dindent-2)."\" border=\"0\" alt=\"\" /></td><td>\n";
 		}
-		print_pedigree_person($pid, 1, $this->view!="preview");
+		print_pedigree_person($pid, 1);
 		print "</td>";
 		print "<td>";
 		if ($TEXT_DIRECTION=="ltr") {
@@ -206,18 +171,3 @@ class AncestryControllerRoot extends BaseController {
 	}
 
 }
-
-// -- end of class
-//-- load a user extended class if one exists
-if (file_exists(WT_ROOT.'includes/controllers/ancestry_ctrl_user.php'))
-{
-	require_once WT_ROOT.'includes/controllers/ancestry_ctrl_user.php';
-}
-else
-{
-	class AncestryController extends AncestryControllerRoot
-	{
-	}
-}
-
-?>
