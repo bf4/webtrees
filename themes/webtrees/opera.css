@@ -1,7 +1,17 @@
+<<<<<<< .working
 /*
- * @version $Id: opera.css 4197 2008-10-30 12:24:13Z fisharebest $
+ * @version $Id$
  */
 
 #sidebar_pin img, #sidebar_open img {margin-top: 9px!important;}
 .ui-accordion .ui-accordion-header { margin-top: 10px!important; }
 
+=======
+/*
+ * @version $Id$
+ */
+
+#sidebar_pin img, #sidebar_open img {margin-top: 11px!important;}
+.ui-accordion .ui-accordion-header { margin-top: 11px!important; }
+
+>>>>>>> .merge-right.r9091

@@ -49,7 +49,7 @@ class SourceController extends BaseController {
 
 		$sourcerec = find_source_record($this->sid, WT_GED_ID);
 
-		if  (find_updated_record($this->sid, WT_GED_ID)!==null) {
+		if (find_updated_record($this->sid, WT_GED_ID)!==null) {
 			$sourcerec = "0 @".$this->sid."@ SOUR\n";
 		} else if (!$sourcerec) {
 			return false;
@@ -69,37 +69,48 @@ class SourceController extends BaseController {
 
 		//-- perform the desired action
 		switch($this->action) {
-			case "addfav":
-				$this->addFavorite();
-				break;
-			case "accept":
-				if (WT_USER_CAN_ACCEPT) {
-					accept_all_changes($this->sid, WT_GED_ID);
-					$this->show_changes=false;
-					$this->accept_success=true;
-					$indirec = find_source_record($this->sid, WT_GED_ID);
-					//-- check if we just deleted the record and redirect to index
-					if (empty($indirec)) {
-						header("Location: index.php?ctype=gedcom");
-						exit;
-					}
-					$this->source = new Source($indirec);
+		case 'addfav':
+			if (WT_USER_ID && !empty($_REQUEST['gid']) && array_key_exists('user_favorites', WT_Module::getActiveModules())) {
+				$favorite = array(
+					'username' => WT_USER_NAME,
+					'gid'      => $_REQUEST['gid'],
+					'type'     => 'SOUR',
+					'file'     => WT_GEDCOM,
+					'url'      => '',
+					'note'     => '',
+					'title'    => ''
+				);
+				user_favorites_WT_Module::addFavorite($favorite);
+			}
+			break;
+		case 'accept':
+			if (WT_USER_CAN_ACCEPT) {
+				accept_all_changes($this->sid, WT_GED_ID);
+				$this->show_changes=false;
+				$this->accept_success=true;
+				//-- check if we just deleted the record and redirect to index
+				$gedrec = find_source_record($this->sid, WT_GED_ID);
+				if (empty($gedrec)) {
+					header("Location: index.php?ctype=gedcom");
+					exit;
 				}
-				break;
-			case "undo":
-				if (WT_USER_CAN_ACCEPT) {
-					reject_all_changes($this->sid, WT_GED_ID);
-					$this->show_changes=false;
-					$this->accept_success=true;
-					$indirec = find_source_record($this->sid, WT_GED_ID);
-					//-- check if we just deleted the record and redirect to index
-					if (empty($indirec)) {
-						header("Location: index.php?ctype=gedcom");
-						exit;
-					}
-					$this->source = new Source($indirec);
+				$this->source = new Source($gedrec);
+			}
+			break;
+		case 'undo':
+			if (WT_USER_CAN_ACCEPT) {
+				reject_all_changes($this->sid, WT_GED_ID);
+				$this->show_changes=false;
+				$this->accept_success=true;
+				$gedrec = find_source_record($this->sid, WT_GED_ID);
+				//-- check if we just deleted the record and redirect to index
+				if (empty($gedrec)) {
+					header("Location: index.php?ctype=gedcom");
+					exit;
 				}
-				break;
+				$this->source = new Source($gedrec);
+			}
+			break;
 		}
 
 		//-- check for the user
@@ -116,29 +127,6 @@ class SourceController extends BaseController {
 
 		if ($this->show_changes && $this->canedit) {
 			$this->source->diffMerge($this->diffsource);
-		}
-	}
-
-	/**
-	* Add a new favorite for the action user
-	*/
-	function addFavorite() {
-		global $GEDCOM;
-		if (empty($this->uname)) return;
-		if (!empty($_REQUEST["gid"]) && array_key_exists('user_favorites', WT_Module::getActiveModules())) {
-			$gid = strtoupper($_REQUEST["gid"]);
-			$indirec = find_source_record($gid, WT_GED_ID);
-			if ($indirec) {
-				$favorite = array();
-				$favorite["username"] = $this->uname;
-				$favorite["gid"] = $gid;
-				$favorite["type"] = "SOUR";
-				$favorite["file"] = $GEDCOM;
-				$favorite["url"] = "";
-				$favorite["note"] = "";
-				$favorite["title"] = "";
-				user_favorites_WT_Module::addFavorite($favorite);
-			}
 		}
 	}
 
@@ -162,167 +150,96 @@ class SourceController extends BaseController {
 	}
 
 	/**
-	* get edit menut
-	* @return Menu
+	* get edit menu
 	*/
 	function getEditMenu() {
-		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
-		global $SHOW_GEDCOM_RECORD;
-		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
-		else $ff="";
-
-		if (!$this->userCanEdit()) {
-			$tempvar = false;
-			return $tempvar;
+		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $SHOW_GEDCOM_RECORD;
+		if ($TEXT_DIRECTION=="rtl") {
+			$ff="_rtl";
+		} else {
+			$ff="";
 		}
-
-		// edit source menu
+		// edit menu
 		$menu = new Menu(i18n::translate('Edit'));
-		$menu->addOnclick('return edit_source(\''.$this->sid.'\');');
 		if (!empty($WT_IMAGES["edit_source"]["large"])) {
 			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_source"]["large"]);
-		}
-		else if (!empty($WT_IMAGES["edit_source"]["small"])) {
+		} elseif (!empty($WT_IMAGES["edit_source"]["small"])) {
 			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_source"]["small"]);
 		}
-		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
+		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 
-		// edit source / edit_source
-		$submenu = new Menu(i18n::translate('Edit Source'));
-		$submenu->addOnclick('return edit_source(\''.$this->sid.'\');');
-		if (!empty($WT_IMAGES["edit_sour"]["small"]))
+		if (WT_USER_CAN_EDIT) {
+			$submenu = new Menu(i18n::translate('Edit Source'));
+			$submenu->addOnclick('return edit_source(\''.$this->sid.'\');');
 			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-		$menu->addSubmenu($submenu);
-
-		// edit source / edit_raw
-		if ($SHOW_GEDCOM_RECORD || WT_USER_IS_ADMIN) {
-			$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
-			$submenu->addOnclick("return edit_raw('".$this->sid."');");
-			if (!empty($WT_IMAGES["edit_sour"]["small"]))
-				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 			$menu->addSubmenu($submenu);
 		}
 
-		// edit source / delete_source
-		$submenu = new Menu(i18n::translate('Delete this Source'));
-		$submenu->addOnclick("if (confirm('".i18n::translate('Are you sure you want to delete this Source?')."')) return deletesource('".$this->sid."'); else return false;");
-		if (!empty($WT_IMAGES["edit_sour"]["small"]))
-			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-		$menu->addSubmenu($submenu);
-
+		// show/hide changes
 		if (find_updated_record($this->sid, WT_GED_ID)!==null) {
-			// edit_sour / separator
-			$submenu = new Menu();
-			$submenu->isSeparator();
+			if (!$this->show_changes) {
+				$submenu = new Menu(i18n::translate('This record has been updated.  Click here to show changes.'), encode_url("source.php?sid={$this->sid}&show_changes=yes"));
+				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
+			} else {
+				$submenu = new Menu(i18n::translate('Click here to hide changes.'), encode_url("source.php?sid={$this->sid}&show_changes=no"));
+				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
+			}
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 			$menu->addSubmenu($submenu);
 
-			// edit_sour / show/hide changes
-			if (!$this->show_changes)
-			{
-				$submenu = new Menu(i18n::translate('This record has been updated.  Click here to show changes.'), encode_url("source.php?sid={$this->sid}&show_changes=yes"));
-				if (!empty($WT_IMAGES["edit_sour"]["small"]))
-					$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-				$menu->addSubmenu($submenu);
-			}
-			else
-			{
-				$submenu = new Menu(i18n::translate('Click here to hide changes.'), encode_url("source.php?sid={$this->sid}&show_changes=no"));
-				if (!empty($WT_IMAGES["edit_sour"]["small"]))
-					$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-				$menu->addSubmenu($submenu);
-			}
-
-			if (WT_USER_CAN_ACCEPT)
-			{
-				// edit_source / accept_all
+			if (WT_USER_CAN_ACCEPT) {
 				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url("source.php?sid={$this->sid}&action=undo"));
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-				if (!empty($WT_IMAGES["edit_sour"]["small"]))
-					$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
+				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
+				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
 				$menu->addSubmenu($submenu);
 				$submenu = new Menu(i18n::translate('Accept all changes'), encode_url("source.php?sid={$this->sid}&action=accept"));
-				if (!empty($WT_IMAGES["edit_sour"]["small"]))
-					$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
+				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 				$menu->addSubmenu($submenu);
 			}
-		}
-		return $menu;
-	}
 
-	/**
-	* get the other menu
-	* @return Menu
-	*/
-	function getOtherMenu() {
-		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $SHOW_GEDCOM_RECORD;
-
-		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
-		else $ff="";
-
-		if (!$this->source->canDisplayDetails() || (!$SHOW_GEDCOM_RECORD && !array_key_exists('clippings', WT_Module::getActiveModules()))) {
-			$tempvar = false;
-			return $tempvar;
+			$menu->addSeparator();
 		}
 
-			// other menu
-		$menu = new Menu(i18n::translate('Other'));
-		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
-		if ($SHOW_GEDCOM_RECORD)
-		{
-			$menu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['gedcom']['small']}");
-			if ($this->show_changes && $this->userCanEdit())
-			{
-				$menu->addLink("javascript:show_gedcom_record('new');");
+		// edit/view raw gedcom
+		if (WT_USER_IS_ADMIN || $SHOW_GEDCOM_RECORD) {
+			$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
+			$submenu->addOnclick("return edit_raw('".$this->sid."');");
+			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["gedcom"]["small"]);
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
+			$menu->addSubmenu($submenu);
+		} elseif ($SHOW_GEDCOM_RECORD) {
+			$submenu = new Menu(i18n::translate('View GEDCOM Record'));
+			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["gedcom"]["small"]);
+			if ($this->show_changes && WT_USER_CAN_EDIT) {
+				$submenu->addOnclick("return show_gedcom_record('new');");
+			} else {
+				$submenu->addOnclick("return show_gedcom_record();");
 			}
-			else
-			{
-				$menu->addLink("javascript:show_gedcom_record();");
-			}
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
+			$menu->addSubmenu($submenu);
 		}
-		else
-		{
-			if (!empty($WT_IMAGES["clippings"]["small"]))
-				$menu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['clippings']['small']}");
-			$menu->addLink(encode_url("module.php?mod=clippings&mod_action=index&action=add&id={$this->sid}&type=sour"));
+
+		// delete
+		if (WT_USER_CAN_EDIT) {
+			$submenu = new Menu(i18n::translate('Delete this Source'));
+			$submenu->addOnclick("if (confirm('".i18n::translate('Are you sure you want to delete this Source?')."')) return deletesource('".$this->sid."'); else return false;");
+			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_sour"]["small"]);
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
+			$menu->addSubmenu($submenu);
 		}
-		if ($SHOW_GEDCOM_RECORD)
-		{
-				// other / view_gedcom
-				$submenu = new Menu(i18n::translate('View GEDCOM Record'));
-				if ($this->show_changes && $this->userCanEdit())
-				{
-					$submenu->addLink("javascript:show_gedcom_record('new');");
-				}
-				else
-				{
-					$submenu->addLink("javascript:show_gedcom_record();");
-				}
-				$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['gedcom']['small']}");
-				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
-				$menu->addSubmenu($submenu);
-		}
-		if (array_key_exists('clippings', WT_Module::getActiveModules()))
-		{
-				// other / add_to_cart
-				$submenu = new Menu(i18n::translate('Add to Clippings Cart'), encode_url("module.php?mod=clippings&mod_action=index&action=add&id={$this->sid}&type=sour"));
-				if (!empty($WT_IMAGES["clippings"]["small"]))
-					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['clippings']['small']}");
-				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
-				$menu->addSubmenu($submenu);
-		}
-		if ($this->source->canDisplayDetails() && !empty($this->uname))
-		{
-				// other / add_to_my_favorites
-				$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url("source.php?action=addfav&sid={$this->sid}&gid={$this->sid}"));
-				$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['gedcom']['small']}");
-				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
-				$menu->addSubmenu($submenu);
+
+		// add to favorites
+		$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url("source.php?action=addfav&sid={$this->sid}&gid={$this->sid}"));
+		$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["favorites"]["small"]);
+		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
+		$menu->addSubmenu($submenu);
+
+		//-- get the link for the first submenu and set it as the link for the main menu
+		if (isset($menu->submenus[0])) {
+			$link = $menu->submenus[0]->onclick;
+			$menu->addOnclick($link);
 		}
 		return $menu;
 	}

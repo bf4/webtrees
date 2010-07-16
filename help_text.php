@@ -2151,11 +2151,6 @@ case 'CONTACT_USER_ID':
 	$text=i18n::translate('The person to contact about the genealogical data on this site.');
 	break;
 
-case 'DAYS_TO_SHOW_LIMIT':
-	$title=i18n::translate('Upcoming events block day limit');
-	$text=i18n::translate('Enter the maximum number of days to show in Upcoming Events blocks.  This number cannot be greater than 30. If you enter a larger value, 30 will be used.<br /><br />The value you enter here determines how far ahead <b>webtrees</b> looks when searching for upcoming events.  The results of this search, done once daily, are copied into a temporary file.<br /><br />No Upcoming Events blocks on Index or Portal pages can request more days than this value.  The larger you make this, the longer it will take to build the daily database extract, and the longer it will take to display the block, even when you request to display a number of days less than this setting.');
-	break;
-
 case 'DEFAULT_PEDIGREE_GENERATIONS':
 	$title=i18n::translate('Pedigree generations');
 	$text=i18n::translate('Set the default number of generations to display on Descendancy and Pedigree charts.');
@@ -3217,11 +3212,6 @@ case 'apply_privacy':
 	$text=i18n::translate('When this option is checked, the output file will pass through privacy checks according to the selected option.  This can result in the removal of certain information.  The output file will contain only the information that is normally visible to a user with the indicated privilege level.<br /><br />If you only have GEDCOM administrator rights, you cannot specify that the output file should be privatized according to the Site administrator privilege level.');
 	break;
 
-case 'basic_or_all':
-	$title=i18n::translate('Show only births, deaths and marriages?');
-	$text=i18n::translate('This option lets you eliminate some dated events.  For example, Divorce, Cremation, Graduation, Bar Mitzvah, First Communion, etc. should all be dated.<br /><br />When you select <b>Yes</b>, only Births, Deaths, and Marriages will be shown. When you select <b>No</b>, all dated events will be shown.');
-	break;
-
 case 'block_move_right':
 	$title=i18n::translate('Move list entries');
 	$text=i18n::translate('Use these buttons to move an entry from one list to another.<br /><br />Highlight the entry to be moved, and then click a button to move or copy that entry in the direction of the arrow.  Use the <b>&raquo;</b> and <b>&laquo;</b> buttons to move the highlighted entry from the leftmost to the rightmost list or vice-versa.  Use the <b>&gt;</b> and <b>&lt;</b> buttons to move the highlighted entry between the Available Blocks list and the list to its right or left.<br /><br />The entries in the Available Blocks list do not change, regardless of what you do with the Move Right and Move Left buttons.  This is so because the same block can appear several times on the same page.  The HTML block is a good example of why you might want to do this.');
@@ -3280,11 +3270,6 @@ case 'convertSlashes':
 case 'day_month':
 	$title=i18n::translate('View day / View month / View year');
 	$text=i18n::translate('<ul><li>The <b>View Day</b> button will display the events of the chosen date in a list. All years are scanned, so only the day and month can be set here. Changing the year will have no effect.  You can reduce the list by choosing the option <b>Recent years</b> or <b>Living people</b>.<br /><br />Ages in the list will be calculated from the current year.</li><li>The <b>View Month</b> button will display a calendar diagram of the chosen month and year. Here too you can reduce the lists by choosing the option <b>Recent years</b> or <b>Living people</b>.<br /><br />You will get a realistic impression of what a calendar on the wall of your ancestors looked like by choosing a year in the past in combination with <b>Recent years</b>. All ages on the calendar are shown relative to the year in the Year box.</li><li>The <b>View Year</b> button will show you a list of events of the chosen year.  Here too you can reduce the list by choosing the option <b>Recent years</b> or <b>Living people</b>.<br /><br />You can show events for a range of years.  Just type the beginning and ending years of the range, with a dash <b>-</b> between them.  Examples:<br /><b>1992-4</b> for all events from 1992 to 1994<br /><b>1976-1984</b> for all events from 1976 to 1984<br /><br />To see all the events in a given decade or century, you can use <b>?</b> in place of the final digits. For example, <b>197?</b> for all events from 1970 to 1979 or <b>16??</b> for all events from 1600 to 1699.</li></ul>When you want to <b>change the year</b> you <b>have</b> to press one of these three buttons.  All other settings remain as they were.');
-	break;
-
-case 'days_to_show':
-	$title=i18n::translate('Number of days to show');
-	$text=i18n::translate('Enter the number of days to show.  This number cannot be greater than <b>#DAYS_TO_SHOW_LIMIT#</b>.  If you enter a larger value, that limit will be used.<br /><br />The limit shown is set by the administrator in the GEDCOM configuration, Display and Layout section, Hide &amp; Show sub-section.');
 	break;
 
 case 'def_gedcom_date':
@@ -3640,11 +3625,6 @@ case 'index_common_names':
 	$text=i18n::translate('This block displays a list of frequently occurring surnames from this database. A surname must occur at least %s times before it will appear in this list.  The administrator has control over this threshold.<br /><br />When you click on a surname in this list, you will be taken to the Individuals, where you will get more details about that name.', $COMMON_NAMES_THRESHOLD);
 	break;
 
-case 'index_events':
-	$title=i18n::translate('Upcoming events block');
-	$text=i18n::translate('This block shows you anniversaries of events that are coming up in the near future.<br /><br />The administrator determines how far ahead the block will look.  You can further refine the block\'s display of upcoming events through several configuration options.');
-	break;
-
 case 'index_favorites':
 	$title=i18n::translate('GEDCOM favorites block');
 	$text=i18n::translate('The GEDCOM Favorites block is much the same as the "My Favorites" block of My Page. Unlike the My Page configuration, only the administrator or a user with Admin rights can change the list of favorites in this block.<br /><br />The purpose of the GEDCOM Favorites block is to draw the visitor\'s attention to persons of special interest.  This GEDCOM\'s favorites are available for selection from a drop-down list in the header on every page.<br /><br />When you click on one of the listed site favorites, you will be taken to the Individual Information page of that person.');
@@ -3871,7 +3851,27 @@ case 'password':
 	$text=i18n::translate('In this box you type your password.<br /><br /><b>The password is case sensitive.</b>  This means that <b>MyPassword</b> is <u>not</u> the same as <b>mypassword</b> or <b>MYPASSWORD</b>.');
 	break;
 
-case 'phpinfo':
+case 'PGV_WIZARD':
+	$title=i18n::translate('PhpGedView to webtrees transfer wizard');
+	$text =i18n::translate('The PGV to <b>webtrees</b> wizard is an automated process to assist administrators make the move from a PGV installation to a new <b>webtrees</b> one. It will transfer all PGV GEDCOM and other databse information directly to your new <b>webtrees</b> database. The following requirements are necessary:');
+	$text .= '<ul><li>';
+	$text .= i18n::translate('webtrees database must be on the same server as PGV\'s');
+	$text .= '</li><li>';
+	$text .= i18n::translate('PGV must be version 4.2.3, or any SVN up to #6973');
+	$text .= '</li><li>';
+	$text .= i18n::translate('All changes in PGV must be accepted');
+	$text .= '</li><li>';
+	$text .= i18n::translate('You must export your latest GEDCOM data');
+	$text .= '</li><li>';
+	$text .= i18n::translate('The current webtrees admin username must be the same as an existing PGV admin username');
+	$text .= '</li><li>';
+	$text .= i18n::translate('All existing PGV users must have distinct email addresses');
+	$text .= '</li></ul><p>';	
+	$text .= i18n::translate('<b>Important Note:</b> The transfer wizard is not able to assist with moving media items. You will need to set up and move or copy your media configuration and objects separately after the transfer wizard is finished.');
+	$text .= '</p>';	
+	break;
+
+	case 'phpinfo':
 	$title=i18n::translate('PHP information');
 	$text=i18n::translate('This page provides extensive information about the server on which <b>webtrees</b> is being hosted.  Many configuration details about the server\'s software, as it relates to PHP and <b>webtrees</b>, can be viewed.');
 	break;
@@ -3929,11 +3929,6 @@ case 'random_media_start_slide':
 case 'readmefile':
 	$title=i18n::translate('Readme file');
 	$text=i18n::translate('See <a href="readme.txt" target="_blank"><b>Readme.txt</b></a> for more information.');
-	break;
-
-case 'recent_changes':
-	$title=i18n::translate('Recent changes block');
-	$text=i18n::translate('This block shows you the most recent changes to the GEDCOM as recorded by the CHAN GEDCOM tag.');
 	break;
 
 case 'register_comments':
@@ -4056,11 +4051,6 @@ case 'skip_sublist':
 	$text=i18n::translate('The standard setting is that, after you have clicked a letter of the Alphabetical index, you will get a sub-list with surnames.  If you click this link, all individuals with surnames that have the currently selected initial letter will be displayed immediately. Thereafter, the list of individuals will be displayed directly whenever you click on a new initial letter in the Alphabetical list.<br /><br />To reverse this action, click on the Show Surname lists link.');
 	break;
 
-case 'sort_style':
-	$title=i18n::translate('Sort style');
-	$text=i18n::translate('This option controls how the information is sorted.<br /><br />When you select <b>Alphabetically</b>, the information is shown in alphabetical order. When you select <b>By Anniversary</b>, the information is ordered by anniversary, with the most recent anniversaries first.');
-	break;
-
 case 'sortby':
 	$title=i18n::translate('Sequence');
 	$text=i18n::translate('Select the order in which you wish to see the list.');
@@ -4114,11 +4104,6 @@ case 'stat_y':
 case 'stat_z':
 	$title=i18n::translate('Z axis');
 	$text=i18n::translate('The following options are available for the Z axis. These options provide a sub-division of the categories selected for the X axis.<p style=\"padding-left: 25px\"><b>none</b>&nbsp;&nbsp;displays the items as a single column for each X axis category.<br /><b>gender</b>&nbsp;&nbsp;displays the items in 2 columns (male and female) for each X axis category.<br /><b>date periods</b>&nbsp;&nbsp;displays the items in a number of columns related to the time periods set in the next section, for each X axis category.</p>');
-	break;
-
-case 'style':
-	$title=i18n::translate('Presentation style');
-	$text=i18n::translate('This option controls how the information is presented.<br /><br />When you select <b>List</b>, the information is shown in text form, similar to what you see in the various Chart boxes.  This format is well suited to blocks that print on the right side of the page.<br /><br />When you select <b>Table</b>, the information is shown in tabular format, and is more suited to the larger blocks that print on the left side of the page.');
 	break;
 
 case 'talloffset':
@@ -4248,7 +4233,7 @@ default:
 	$title=i18n::translate('Help');
 	$text=i18n::translate('The help text has not been written for this item.');
 	// If we've been called from a module, allow the module to provide the help text
-	$mod=safe_GET('mod', WT_REGEX_ALPHANUM);
+	$mod=safe_GET('mod', '[A-Za-z0-9_]+');
 	if (file_exists(WT_ROOT.'modules/'.$mod.'/help_text.php')) {
 		require WT_ROOT.'modules/'.$mod.'/help_text.php';
 	}
