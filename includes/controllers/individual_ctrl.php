@@ -56,7 +56,7 @@ class IndividualController extends BaseController {
 
 	function init() {
 		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB;
-		global $USE_QUICK_UPDATE, $DEFAULT_PIN_STATE, $DEFAULT_SB_CLOSED_STATE, $pid;
+		global $DEFAULT_PIN_STATE, $DEFAULT_SB_CLOSED_STATE, $pid;
 		global $Fam_Navigator;
 
 		$this->sexarray["M"] = i18n::translate('Male');
@@ -68,13 +68,13 @@ class IndividualController extends BaseController {
 		$pid = $this->pid;
 
 		$this->default_tab = $GEDCOM_DEFAULT_TAB;
-		$indirec = find_person_record($this->pid, WT_GED_ID);
+		$gedrec = find_person_record($this->pid, WT_GED_ID);
 
-		if ($USE_RIN && $indirec==false) {
+		if ($USE_RIN && $gedrec==false) {
 			$this->pid = find_rin_id($this->pid);
-			$indirec = find_person_record($this->pid, WT_GED_ID);
+			$gedrec = find_person_record($this->pid, WT_GED_ID);
 		}
-		if (empty($indirec)) {
+		if (empty($gedrec)) {
 			$ct = preg_match('/(\w+):(.+)/', $this->pid, $match);
 			if ($ct>0) {
 				$servid = trim($match[1]);
@@ -83,10 +83,10 @@ class IndividualController extends BaseController {
 				$service = ServiceClient::getInstance($servid);
 				if ($service != null) {
 					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->pid."@ INDI\n1 RFN ".$this->pid, false);
-					$indirec = $newrec;
+					$gedrec = $newrec;
 				}
 			} else {
-				$indirec = "0 @".$this->pid."@ INDI\n";
+				$gedrec = "0 @".$this->pid."@ INDI\n";
 			}
 		}
 		//-- check for the user
@@ -111,7 +111,7 @@ class IndividualController extends BaseController {
 			$this->default_tab = $_REQUEST['tab'];
 		}
 
-		$this->indi = new Person($indirec, false);
+		$this->indi = new Person($gedrec, false);
 		$this->indi->ged_id=WT_GED_ID; // This record is from a file
 
 		//-- if the person is from another gedcom then forward to the correct site
@@ -123,39 +123,48 @@ class IndividualController extends BaseController {
 		*/
 		//-- perform the desired action
 		switch($this->action) {
-			case "addfav":
-				$this->addFavorite();
-				break;
-			case "accept":
-				if (WT_USER_CAN_ACCEPT) {
-					accept_all_changes($this->pid, WT_GED_ID);
-					$this->show_changes=false;
-					$this->accept_success=true;
-					//-- delete the record from the cache and refresh it
-					$indirec = find_person_record($this->pid, WT_GED_ID);
-					//-- check if we just deleted the record and redirect to index
-					if (empty($indirec)) {
-						header("Location: index.php?ctype=gedcom");
-						exit;
-					}
-					$this->indi = new Person($indirec);
+		case 'addfav':
+			if (WT_USER_ID && !empty($_REQUEST['gid']) && array_key_exists('user_favorites', WT_Module::getActiveModules())) {
+				$favorite = array(
+					'username' => WT_USER_NAME,
+					'gid'      => $_REQUEST['gid'],
+					'type'     => 'INDI',
+					'file'     => WT_GEDCOM,
+					'url'      => '',
+					'note'     => '',
+					'title'    => ''
+				);
+				user_favorites_WT_Module::addFavorite($favorite);
+			}
+			break;
+		case 'accept':
+			if (WT_USER_CAN_ACCEPT) {
+				accept_all_changes($this->pid, WT_GED_ID);
+				$this->show_changes=false;
+				$this->accept_success=true;
+				//-- check if we just deleted the record and redirect to index
+				$gedrec = find_person_record($this->pid, WT_GED_ID);
+				if (empty($gedrec)) {
+					header("Location: index.php?ctype=gedcom");
+					exit;
 				}
-				break;
-			case "undo":
-				if (WT_USER_CAN_ACCEPT) {
-					reject_all_changes($this->pid, WT_GED_ID);
-					$this->show_changes=false;
-					$this->accept_success=true;
-					//-- delete the record from the cache and refresh it
-					$indirec = find_person_record($this->pid, WT_GED_ID);
-					//-- check if we just deleted the record and redirect to index
-					if (empty($indirec)) {
-						header("Location: index.php?ctype=gedcom");
-						exit;
-					}
-					$this->indi = new Person($indirec);
+				$this->indi = new Person($gedrec);
+			}
+			break;
+		case 'undo':
+			if (WT_USER_CAN_ACCEPT) {
+				reject_all_changes($this->pid, WT_GED_ID);
+				$this->show_changes=false;
+				$this->accept_success=true;
+				$gedrec = find_person_record($this->pid, WT_GED_ID);
+				//-- check if we just deleted the record and redirect to index
+				if (empty($gedrec)) {
+					header("Location: index.php?ctype=gedcom");
+					exit;
 				}
-				break;
+				$this->indi = new Person($gedrec);
+			}
+			break;
 		}
 
 		//-- if the user can edit and there are changes then get the new changes
@@ -166,7 +175,7 @@ class IndividualController extends BaseController {
 				//print("jkdsakjhdkjsadkjsakjdhsakd".$newrec);
 				$remoterfn = get_gedcom_value("RFN", 1, $newrec);
 			} else {
-				$remoterfn = get_gedcom_value("RFN", 1, $indirec);
+				$remoterfn = get_gedcom_value("RFN", 1, $gedrec);
 			}
 			// print "remoterfn=".$remoterfn;
 			//-- get an updated record from the web service
@@ -180,12 +189,12 @@ class IndividualController extends BaseController {
 						$serviceClient = ServiceClient::getInstance($servid);
 						if (!is_null($serviceClient)) {
 							if (!empty($newrec)) $mergerec = $serviceClient->mergeGedcomRecord($aliaid, $newrec, true);
-							else $mergerec = $serviceClient->mergeGedcomRecord($aliaid, $indirec, true);
+							else $mergerec = $serviceClient->mergeGedcomRecord($aliaid, $gedrec, true);
 							if ($serviceClient->type=="remote") {
 								$newrec = $mergerec;
 							}
 							else {
-								$indirec = $mergerec;
+								$gedrec = $mergerec;
 							}
 						}
 					}
@@ -194,7 +203,7 @@ class IndividualController extends BaseController {
 			if (!empty($newrec)) {
 				$this->diffindi = new Person($newrec, false);
 				$this->diffindi->setChanged(true);
-				$indirec = $newrec;
+				$gedrec = $newrec;
 			}
 		}
 
@@ -260,27 +269,6 @@ class IndividualController extends BaseController {
 		}
 	}
 	//-- end of init function
-	/**
-	* Add a new favorite for the action user
-	*/
-	function addFavorite() {
-		global $GEDCOM;
-		if (WT_USER_ID && !empty($_REQUEST["gid"]) && array_key_exists('user_favorites', WT_Module::getActiveModules())) {
-			$gid = strtoupper($_REQUEST["gid"]);
-			$indirec = find_person_record($gid, WT_GED_ID);
-			if ($indirec) {
-				$favorite = array();
-				$favorite["username"] = WT_USER_NAME;
-				$favorite["gid"] = $gid;
-				$favorite["type"] = "INDI";
-				$favorite["file"] = $GEDCOM;
-				$favorite["url"] = "";
-				$favorite["note"] = "";
-				$favorite["title"] = "";
-				user_favorites_WT_Module::addFavorite($favorite);
-			}
-		}
-	}
 
 	/**
 	* return the title of this page
@@ -520,32 +508,29 @@ class IndividualController extends BaseController {
 		echo '</div>';
 	}
 	/**
-	* get the edit menu
-	* @return Menu
+	* get edit menu
 	*/
 	function getEditMenu() {
-		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
-		global $USE_QUICK_UPDATE;
+		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") {
 			$ff="_rtl";
 		} else {
 			$ff="";
 		}
-		//-- main edit menu
+		// edit menu
 		$menu = new Menu(i18n::translate('Edit'));
 		if (!empty($WT_IMAGES["edit_indi"]["large"])) {
 			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_indi"]["large"]);
-		}
-		else if (!empty($WT_IMAGES["edit_indi"]["small"])) {
+		} elseif (!empty($WT_IMAGES["edit_indi"]["small"])) {
 			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_indi"]["small"]);
 		}
-		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
+		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 
 		if (WT_USER_CAN_EDIT) {
 			if (count($this->indi->getSpouseFamilyIds())>1) {
 				$submenu = new Menu(i18n::translate('Reorder families'));
 				$submenu->addOnclick("return reorder_families('".$this->pid."');");
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 				$menu->addSubmenu($submenu);
 			}
 
@@ -554,26 +539,27 @@ class IndividualController extends BaseController {
 			if ($this->total_names<2) {
 				$submenu = new Menu(i18n::translate('Edit name'));
 				$submenu->addOnclick("return edit_name('".$this->pid."', $this->NAME_LINENUM);");
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 				$menu->addSubmenu($submenu);
 			}
 
 			$submenu = new Menu(i18n::translate('Add new Name'));
 			$submenu->addOnclick("return add_name('".$this->pid."');");
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 			$menu->addSubmenu($submenu);
 
 			if ($this->SEX_COUNT<2) {
 				$submenu = new Menu(i18n::translate('Edit gender'));
 				if ($this->SEX_LINENUM=="new") $submenu->addOnclick("return add_new_record('".$this->pid."', 'SEX');");
 				else $submenu->addOnclick("return edit_record('".$this->pid."', $this->SEX_LINENUM);");
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 				$menu->addSubmenu($submenu);
 			}
 
 			$menu->addSeparator();
 		}
 
+		// show/hide changes
 		if (find_updated_record($this->pid, WT_GED_ID)!==null) {
 			if (!$this->show_changes) {
 				$label = i18n::translate('This record has been updated.  Click here to show changes.');
@@ -583,31 +569,55 @@ class IndividualController extends BaseController {
 				$link = $this->indi->getLinkUrl()."&show_changes=no";
 			}
 			$submenu = new Menu($label, encode_url($link));
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 			$menu->addSubmenu($submenu);
 
 			if (WT_USER_CAN_ACCEPT) {
 				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url($this->indi->getLinkUrl()."&action=undo"));
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
+				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_indi"]["small"]);
 				$menu->addSubmenu($submenu);
 				$submenu = new Menu(i18n::translate('Accept all changes'), encode_url($this->indi->getLinkUrl()."&action=accept"));
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_indi"]["small"]);
+				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 				$menu->addSubmenu($submenu);
 			}
 
 			$menu->addSeparator();
 		}
 
+		// edit/view raw gedcom
 		if (WT_USER_IS_ADMIN || $this->canShowGedcomRecord()) {
 			$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 			$submenu->addOnclick("return edit_raw('".$this->pid."');");
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_indi"]["small"]);
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
+			$menu->addSubmenu($submenu);
+		} elseif ($SHOW_GEDCOM_RECORD) {
+			$submenu = new Menu(i18n::translate('View GEDCOM Record'));
+			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["gedcom"]["small"]);
+			if ($this->show_changes && WT_USER_CAN_EDIT) {
+				$submenu->addOnclick("return show_gedcom_record('new');");
+			} else {
+				$submenu->addOnclick("return show_gedcom_record();");
+			}
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 			$menu->addSubmenu($submenu);
 		}
 
-		$submenu = new Menu(i18n::translate('Delete this individual'));
-		$submenu->addOnclick("return deleteperson('".$this->pid."');");
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+		// delete
+		if (WT_USER_CAN_EDIT) {
+			$submenu = new Menu(i18n::translate('Delete this individual'));
+			$submenu->addOnclick("return deleteperson('".$this->pid."');");
+			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_indi"]["small"]);
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
+			$menu->addSubmenu($submenu);
+		}
+
+		// add to favorites
+		$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url($this->indi->getLinkUrl()."&action=addfav&gid={$this->pid}"));
+		$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["favorites"]["small"]);
+		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		$menu->addSubmenu($submenu);
 
 		//-- get the link for the first submenu and set it as the link for the main menu
@@ -617,58 +627,7 @@ class IndividualController extends BaseController {
 		}
 		return $menu;
 	}
-	/**
-	* check if we can show the other menu
-	* @return boolean
-	*/
-	function canShowOtherMenu() {
-		global $SHOW_GEDCOM_RECORD;
-		if ($this->indi->canDisplayDetails() && ($SHOW_GEDCOM_RECORD || array_key_exists('clippings', WT_Module::getActiveModules())))
-			return true;
-		return false;
-	}
-	/**
-	* get the "other" menu
-	* @return Menu
-	*/
-	function getOtherMenu() {
-		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
-		global $SHOW_GEDCOM_RECORD;
-		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
-		else $ff="";
-		//-- main other menu item
-		$menu = new Menu(i18n::translate('Other'));
-		if ($SHOW_GEDCOM_RECORD) {
-			if (!empty($WT_IMAGES["gedcom"]["small"])) $menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["gedcom"]["large"]);
-			if ($this->show_changes && WT_USER_CAN_EDIT) $menu->addOnclick("return show_gedcom_record('new');");
-			else $menu->addOnclick("return show_gedcom_record('');");
-		} else {
-			if (!empty($WT_IMAGES["clippings"]["small"])) $menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["clippings"]["small"]);
-			$menu->addLink(encode_url("module.php?mod=clippings&mod_action=index&action=add&id={$this->pid}&type=indi"));
-		}
-		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
-		if ($SHOW_GEDCOM_RECORD) {
-			$submenu = new Menu(i18n::translate('View GEDCOM Record'));
-			if (!empty($WT_IMAGES["gedcom"]["small"])) $submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes && WT_USER_CAN_EDIT) $submenu->addOnclick("return show_gedcom_record('new');");
-			else $submenu->addOnclick("return show_gedcom_record();");
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$menu->addSubmenu($submenu);
-		}
-		if ($this->indi->canDisplayDetails() && array_key_exists('clippings', WT_Module::getActiveModules())) {
-			$submenu = new Menu(i18n::translate('Add to Clippings Cart'), encode_url("module.php?mod=clippings&mod_action=index&action=add&id={$this->pid}&type=indi"));
-			if (!empty($WT_IMAGES["clippings"]["small"])) $submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["clippings"]["small"]);
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$menu->addSubmenu($submenu);
-		}
-		if ($this->indi->canDisplayDetails() && WT_USER_NAME) {
-			$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url($this->indi->getLinkUrl()."&action=addfav&gid={$this->pid}"));
-			if (!empty($WT_IMAGES["favorites"]["small"])) $submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["favorites"]["small"]);
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$menu->addSubmenu($submenu);
-		}
-		return $menu;
-	}
+
 	/**
 	* get global facts
 	* global facts are NAME and SEX

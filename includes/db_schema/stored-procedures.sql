@@ -116,6 +116,10 @@ CREATE PROCEDURE `##delete_gedcom`(
 	COMMENT 'includes/functions/functions_db.php:delete_gedcom()'
 	DETERMINISTIC SQL SECURITY DEFINER MODIFIES SQL DATA
 BEGIN
+	IF `##get_site_setting`('DEFAULT_GEDCOM', NULL)=`##get_gedcom_from_id`(p_gedcom_id) THEN
+		CALL `##set_site_setting`('DEFAULT_GEDCOM', '');
+	END IF;
+	
 	/* Don't delete the logs. */
 	UPDATE `##log` SET gedcom_id:=NULL WHERE gedcom_id=p_gedcom_id;
 
@@ -141,10 +145,6 @@ BEGIN
 	DELETE FROM `##default_resn`        WHERE gedcom_id =p_gedcom_id;
 	DELETE FROM `##gedcom`              WHERE gedcom_id =p_gedcom_id;
 
-	IF `##get_site_setting`('DEFAULT_GEDCOM', NULL)=`##get_gedcom_from_id`(p_gedcom_id) THEN
-		CALL `##set_site_setting`('DEFAULT_GEDCOM', '');
-	END IF;
-	
 END //
 DELIMITER ;
 
