@@ -803,6 +803,12 @@ a:hover .nameZoom {
 	overflow:auto;
 }
 
+img.block{
+	border: none;
+	height: 20px;
+	vertical-align: middle;
+}
+
 #index_main_blocks {
 	clear: none;
 	width: 66%;
@@ -1720,4 +1726,8 @@ div.faq_body {
 
 .makeMenu li:hover > ul {
 	display:block;
+}
+
+.makeMenu li ul {
+        margin-left:-40px;
 }

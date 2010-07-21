@@ -217,7 +217,8 @@ class FamilyController extends BaseController {
 	* @return Menu
 	*/
 	function getChartsMenu() {
-		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
+		global $TEXT_DIRECTION, $WT_IMAGES, $GEDCOM;
+
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 
@@ -239,9 +240,7 @@ class FamilyController extends BaseController {
 
 		// charts menu
 		$menu = new Menu(i18n::translate('Charts'), encode_url('timeline.php?'.$link));
-		if (!empty($WT_IMAGES["timeline"]["small"])) {
-			$menu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['timeline']['small']}");
-		}
+		$menu->addIcon('timeline');
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		// Build a sortable list of submenu items and then sort it in localized name order
 		$menuList = array();
@@ -257,9 +256,7 @@ class FamilyController extends BaseController {
 			case "parentTimeLine":
 				// charts / parents_timeline
 				$submenu = new Menu(i18n::translate('Show couple on timeline chart'), encode_url('timeline.php?'.$link));
-				if (!empty($WT_IMAGES["timeline"]["small"])) {
-					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['timeline']['small']}");
-				}
+				$submenu->addIcon('timeline');
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 				$menu->addSubmenu($submenu);
 				break;
@@ -267,9 +264,7 @@ class FamilyController extends BaseController {
 			case "childTimeLine":
 				// charts / children_timeline
 				$submenu = new Menu(i18n::translate('Show children on timeline chart'), encode_url('timeline.php?'.$this->getChildrenUrlTimeline()));
-				if (!empty($WT_IMAGES["timeline"]["small"])) {
-					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['timeline']['small']}");
-				}
+				$submenu->addIcon('timeline');
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 				$menu->addSubmenu($submenu);
 				break;
@@ -277,9 +272,7 @@ class FamilyController extends BaseController {
 			case "familyTimeLine":
 				// charts / family_timeline
 				$submenu = new Menu(i18n::translate('Show family on timeline chart'), encode_url('timeline.php?'.$link.'&'.$this->getChildrenUrlTimeline($c)));
-				if (!empty($WT_IMAGES["timeline"]["small"])) {
-					$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['timeline']['small']}");
-				}
+				$submenu->addIcon('timeline');
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 				$menu->addSubmenu($submenu);
 				break;
@@ -291,39 +284,11 @@ class FamilyController extends BaseController {
 	}
 
 	/**
-	* get the family page reports menu
-	* @deprecated This function has been deprecated by the getReportsMenu function in menu.php
-	* @return Menu
-	*/
-	function getReportsMenu() {
-	/**
-		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
-		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
-		else $ff="";
-
-		$menu = new Menu(i18n::translate('Reports'), encode_url('reportengine.php?action=setup&report=reports/familygroup.xml&famid='.$this->getFamilyID()));
-		if (!empty($WT_IMAGES["reports"]["small"])) {
-			$menu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['reports']['small']}");
-		}
-		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
-
-		// reports / family_group_report
-		$submenu = new Menu(i18n::translate('Family Group Report'), encode_url('reportengine.php?action=setup&report=reports/familygroup.xml&famid='.$this->getFamilyID()));
-		if (!empty($WT_IMAGES["reports"]["small"])) {
-			$submenu->addIcon("{$WT_IMAGE_DIR}/{$WT_IMAGES['reports']['small']}");
-		}
-		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
-		$menu->addSubmenu($submenu);
-
-		return $menu;
-		**/
-	}
-
-	/**
 	* get edit menu
 	*/
 	function getEditMenu() {
-		global $TEXT_DIRECTION, $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM, $SHOW_GEDCOM_RECORD;
+		global $TEXT_DIRECTION, $WT_IMAGES, $GEDCOM, $SHOW_GEDCOM_RECORD;
+
 		if ($TEXT_DIRECTION=="rtl") {
 			$ff="_rtl";
 		} else {
@@ -331,38 +296,28 @@ class FamilyController extends BaseController {
 		}
 		// edit menu
 		$menu = new Menu(i18n::translate('Edit'));
-		if (!empty($WT_IMAGES["edit_fam"]["large"])) {
-			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["large"]);
-		} elseif (!empty($WT_IMAGES["edit_fam"]["small"])) {
-			$menu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
-		}
-		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
+		$menu->addIcon('edit_fam');
+		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}", 'icon_large_gedcom');
 
 		if (WT_USER_CAN_EDIT) {
 			// edit_fam / edit_fam
 			$submenu = new Menu(i18n::translate('Edit Family'));
 			$submenu->addOnclick("return edit_family('".$this->getFamilyID()."');");
-			if (!empty($WT_IMAGES["edit_fam"]["small"])) {
-				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
-			}
+			$submenu->addIcon('edit_fam');
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 			$menu->addSubmenu($submenu);
 
 			// edit_fam / members
 			$submenu = new Menu(i18n::translate('Change Family Members'));
 			$submenu->addOnclick("return change_family_members('".$this->getFamilyID()."');");
-			if (!empty($WT_IMAGES["edit_fam"]["small"])) {
-				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
-			}
+			$submenu->addIcon('edit_fam');
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 			$menu->addSubmenu($submenu);
 
 			// edit_fam / add child
 			$submenu = new Menu(i18n::translate('Add a child to this family'));
 			$submenu->addOnclick("return addnewchild('".$this->getFamilyID()."');");
-			if (!empty($WT_IMAGES["edit_fam"]["small"])) {
-				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
-			}
+			$submenu->addIcon('edit_fam');
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 			$menu->addSubmenu($submenu);
 
@@ -370,9 +325,7 @@ class FamilyController extends BaseController {
 			if ($this->family->getNumberOfChildren() > 1) {
 				$submenu = new Menu(i18n::translate('Re-order children'));
 				$submenu->addOnclick("return reorder_children('".$this->getFamilyID()."');");
-				if (!empty($WT_IMAGES["edit_fam"]["small"])) {
-					$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
-				}
+				$submenu->addIcon('edit_fam');
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 				$menu->addSubmenu($submenu);
 			}
@@ -383,24 +336,24 @@ class FamilyController extends BaseController {
 		// show/hide changes
 		if (find_updated_record($this->getFamilyID(), WT_GED_ID)!==null) {
 			if (!$this->show_changes) {
-				$submenu = new Menu(i18n::translate('This record has been updated.  Click here to show changes.'), encode_url('family.php?famid='.$this->getFamilyID().'&show_changes=yes'));
-				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
-				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
-				$menu->addSubmenu($submenu);
+				$label = i18n::translate('This record has been updated.  Click here to show changes.');
+				$link = $this->family->getLinkUrl().'&show_changes=yes';
 			} else {
-				$submenu = new Menu(i18n::translate('Click here to hide changes.'), encode_url('family.php?famid='.$this->getFamilyID().'&show_changes=no'));
-				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
+				$label = i18n::translate('Click here to hide changes.');
+				$link = $this->family->getLinkUrl().'&show_changes=no';
 			}
+			$submenu = new Menu($label, encode_url($link));
+			$submenu->addIcon('edit_fam');
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 			$menu->addSubmenu($submenu);
 
 			if (WT_USER_CAN_ACCEPT) {
 				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url("family.php?famid={$this->famid}&action=undo"));
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
-				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
+				$submenu->addIcon('edit_fam');
 				$menu->addSubmenu($submenu);
 				$submenu = new Menu(i18n::translate('Accept all changes'), encode_url("family.php?famid={$this->famid}&action=accept"));
-				$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
+				$submenu->addIcon('edit_fam');
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 				$menu->addSubmenu($submenu);
 			}
@@ -412,12 +365,12 @@ class FamilyController extends BaseController {
 		if (WT_USER_IS_ADMIN || $SHOW_GEDCOM_RECORD) {
 			$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 			$submenu->addOnclick("return edit_raw('".$this->getFamilyID()."');");
-			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
+			$submenu->addIcon('edit_fam');
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 			$menu->addSubmenu($submenu);
 		} elseif ($SHOW_GEDCOM_RECORD) {
 			$submenu = new Menu(i18n::translate('View GEDCOM Record'));
-			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["gedcom"]["small"]);
+			$submenu->addIcon('gedcom');
 			if ($this->show_changes && WT_USER_CAN_EDIT) {
 				$submenu->addOnclick("return show_gedcom_record('new');");
 			} else {
@@ -431,14 +384,14 @@ class FamilyController extends BaseController {
 		if (WT_USER_CAN_EDIT) {
 			$submenu = new Menu(i18n::translate('Delete family'));
 			$submenu->addOnclick("if (confirm('".i18n::translate('Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?')."')) return delete_family('".$this->getFamilyID()."'); else return false;");
-			$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["edit_fam"]["small"]);
+			$submenu->addIcon('edit_fam');
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 			$menu->addSubmenu($submenu);
 		}
 
 		// add to favorites
 		$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url('family.php?action=addfav&famid='.$this->getFamilyID().'&gid='.$this->getFamilyID()));
-		$submenu->addIcon($WT_IMAGE_DIR."/".$WT_IMAGES["favorites"]["small"]);
+		$submenu->addIcon('favorites');
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		$menu->addSubmenu($submenu);
 

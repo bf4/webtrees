@@ -33,11 +33,11 @@ require_once 'includes/controllers/individual_ctrl.php';
 $controller = new IndividualController(); 
 $controller->init(); 
 
-global $USE_THUMBS_MAIN, $mediacnt, $tabno;
+global $USE_THUMBS_MAIN, $tabno;
 global $linkToID;
 global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 
-		global $WT_IMAGE_DIR, $WT_IMAGES, $SHOW_AGE_DIFF;
+		global $WT_IMAGES, $SHOW_AGE_DIFF;
 		global $GEDCOM, $ABBREVIATE_CHART_LABELS;
 		global $show_full; 
 		global $famid;

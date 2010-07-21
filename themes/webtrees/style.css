@@ -76,6 +76,20 @@ ul {
 img {
 	border: none;
 }
+
+legend img {
+	height: 25px;
+	vertical-align: middle;
+	width: 25px;
+}
+
+img.block{
+	border: none;
+	height: 25px;
+	vertical-align: middle;
+}
+
+
 .edit_link:after {
 	content: url(images/small/edit.png);
 }
