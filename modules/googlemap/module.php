@@ -33,7 +33,6 @@ if (!defined('WT_WEBTREES')) {
 }
 
 require_once WT_ROOT.'includes/classes/class_module.php';
-require_once WT_ROOT.'modules/googlemap/googlemap.php';
 
 class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Module_Tab {
 	// Extend WT_Module
@@ -57,6 +56,8 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 		case 'places':
 		case 'places_edit':
 			// TODO: these files should be methods in this class
+			require_once WT_ROOT.'modules/googlemap/googlemap.php';
+			require_once WT_ROOT.'modules/googlemap/defaultconfig.php';
 			require WT_ROOT.'modules/'.$this->getName().'/'.$mod_action.'.php';
 			break;
 		}
@@ -75,6 +76,8 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 	// Implement WT_Module_Tab
 	public function getPreLoadContent() {
 		ob_start();
+		require_once WT_ROOT.'modules/googlemap/googlemap.php';
+		require_once WT_ROOT.'modules/googlemap/defaultconfig.php';
 		setup_map();
 		return ob_get_clean();
 	}
@@ -86,18 +89,20 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 
 	// Implement WT_Module_Tab
 	public function getTabContent() {
-		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $WT_IMAGE_DIR, $WT_IMAGES;
+		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $WT_IMAGES;
 		global $GOOGLEMAP_ENABLED, $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
 		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $SHOW_LIVING_NAMES;
 		global $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD, $GOOGLEMAP_PH_CONTROLS;
 		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
 
 		ob_start();
+		require_once WT_ROOT.'modules/googlemap/googlemap.php';
+		require_once WT_ROOT.'modules/googlemap/defaultconfig.php';
 		?>
 <table border="0" width="100%">
 	<tr>
 		<td><?php 
-		if (!$GOOGLEMAP_ENABLED) {
+		if (!array_key_exists('googlemap', WT_Module::getActiveModules())) {
 			print "<table class=\"facts_table\">\n";
 			print "<tr><td id=\"no_tab8\" colspan=\"2\" class=\"facts_value\">".i18n::translate('GoogleMap module disabled')."</td></tr>\n";
 			if (WT_USER_IS_ADMIN) {
@@ -118,11 +123,11 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 			$tNew = str_replace("&", "&amp;", $tNew);
 			if($SESSION_HIDE_GOOGLEMAP=="true") {
 				print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"".$tNew."&amp;HIDE_GOOGLEMAP=false#".$this->getName()."\">";
-				print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Activate')."\" title=\"".i18n::translate('Activate')."\" />";
+				print "<img src=\"".$WT_IMAGES["plus"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Activate')."\" title=\"".i18n::translate('Activate')."\" />";
 				print " ".i18n::translate('Activate')."</a></span>\n";
 			} else {
 				print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"" .$tNew."&amp;HIDE_GOOGLEMAP=true#".$this->getName()."\">";
-				print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Deactivate')."\" title=\"".i18n::translate('Deactivate')."\" />";
+				print "<img src=\"".$WT_IMAGES["minus"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Deactivate')."\" title=\"".i18n::translate('Deactivate')."\" />";
 				print " ".i18n::translate('Deactivate')."</a></span>\n";
 			}
 
@@ -174,7 +179,7 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 			}
 		}
 		// start
-		print "<img src=\"".$WT_IMAGE_DIR."/".$WT_IMAGES["spacer"]["other"]."\" id=\"marker6\" width=\"1\" height=\"1\" alt=\"\" />";
+		print "<img src=\"".$WT_IMAGES["spacer"]."\" id=\"marker6\" width=\"1\" height=\"1\" alt=\"\" />";
 		// end
 		?>
 		</td>
@@ -188,7 +193,7 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 	public function hasTabContent() {
 		global $GOOGLEMAP_ENABLED, $SEARCH_SPIDER;
 
-		return !$SEARCH_SPIDER && ($GOOGLEMAP_ENABLED || WT_USER_IS_ADMIN);
+		return !$SEARCH_SPIDER && (array_key_exists('googlemap', WT_Module::getActiveModules()) || WT_USER_IS_ADMIN);
 	}
 
 	// Implement WT_Module_Tab

@@ -505,8 +505,8 @@ if ($action == "listusers") {
 	<td class="descriptionbox" style="padding-left:2px"><a href="javascript: <?php echo i18n::translate('Privileges'); ?>" onclick="<?php
 	$k = 1;
 	for ($i=1, $max=count($users)+1; $i<=$max; $i++) echo "expand_layer('user-geds", $i, "'); ";
-	echo " return false;\"><img id=\"user-geds", $k, "_img\" src=\"", $WT_IMAGE_DIR, "/";
-	echo $WT_IMAGES["plus"]["other"];
+	echo " return false;\"><img id=\"user-geds", $k, "_img\" src=\"";
+	echo $WT_IMAGES["plus"];
 	echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 	echo "<div id=\"user-geds", $k, "\" style=\"display:none\">";
 	echo "</div>&nbsp;";
@@ -544,13 +544,13 @@ if ($action == "listusers") {
 		else echo "\t<td class=\"optionbox wrap\">", $user_name;
 		if (get_user_setting($user_id, "comment")) {
 			$tempTitle = PrintReady(get_user_setting($user_id, "comment"));
-			echo "<br /><img class=\"adminicon\" align=\"top\" alt=\"{$tempTitle}\" title=\"{$tempTitle}\" src=\"{$WT_IMAGE_DIR}/{$WT_IMAGES['notes']['small']}\" />";
+			echo "<br /><img class=\"adminicon\" align=\"top\" alt=\"{$tempTitle}\" title=\"{$tempTitle}\" src=\"{$WT_IMAGES['notes']}\" />";
 		}
 		echo "</td>\n";
 		echo "\t<td class=\"optionbox wrap\">", Zend_Locale::getTranslation(get_user_setting($user_id, 'language'), 'language', WT_LOCALE), "</td>\n";
 		echo "\t<td class=\"optionbox\">";
-		echo "<a href=\"javascript: ", i18n::translate('Privileges'), "\" onclick=\"expand_layer('user-geds", $k, "'); return false;\"><img id=\"user-geds", $k, "_img\" src=\"", $WT_IMAGE_DIR, "/";
-		echo $WT_IMAGES["plus"]["other"];
+		echo "<a href=\"javascript: ", i18n::translate('Privileges'), "\" onclick=\"expand_layer('user-geds", $k, "'); return false;\"><img id=\"user-geds", $k, "_img\" src=\"";
+		echo $WT_IMAGES["plus"];
 		echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" />";
 		echo "</a>";
 		echo "<div id=\"user-geds", $k, "\" style=\"display:none\">";
