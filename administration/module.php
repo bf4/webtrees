@@ -24,7 +24,7 @@
  *
  * @package webtrees
  * @subpackage Display
- * @version $Id: module.php 8218 2010-05-09 07:39:07Z greg $
+ * @version $Id$
  * @author Patrick Kellum
  */
 

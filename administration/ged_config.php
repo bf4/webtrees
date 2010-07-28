@@ -26,7 +26,7 @@
  *
  * @package webtrees
  * @subpackage Administration
- * @version $Id: administration.php 8734 2010-06-13 08:06:28Z greg $
+ * @version $Id$
  */
 
 define('WT_SCRIPT_NAME', 'ged_config.php');

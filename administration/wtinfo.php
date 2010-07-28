@@ -24,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: wtinfo.php 8511 2010-05-29 07:10:55Z lucasz $
+ * @version $Id$
  */
 
 define('WT_SCRIPT_NAME', 'wtinfo.php');

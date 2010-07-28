@@ -21,7 +21,7 @@
  *
  * @package webtrees
  * @subpackage Admin
- * @version $Id: siteconfig.php 8934 2010-06-23 21:27:24Z greg $
+ * @version $Id$
  */
 
 define('WT_SCRIPT_NAME', 'site_config.php');

@@ -24,7 +24,7 @@
  *
  * @package webtrees
  * @subpackage Module
- * @version $Id: module_admin.php 8622 2010-06-04 19:03:46Z greg $
+ * @version $Id$
  */
 
 define('WT_SCRIPT_NAME', 'admin_module.php');

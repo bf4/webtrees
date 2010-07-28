@@ -21,7 +21,7 @@
  *
  * @package webtrees
  * @subpackage Admin
- * @version $Id: logs.php 8668 2010-06-08 21:37:07Z greg $
+ * @version $Id$
  */
 
 define('WT_SCRIPT_NAME', 'logs.php');

@@ -25,7 +25,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package webtrees
- * @version $Id: functions.php 9033 2010-07-08 06:43:12Z nigel $
+ * @version $Id$
  */
 
 if (!defined('WT_WEBTREES')) {

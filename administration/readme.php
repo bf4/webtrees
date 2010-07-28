@@ -19,7 +19,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: editgedcoms.php 8673 2010-06-09 06:29:03Z greg $
+ * @version $Id$
  */
 
 define('WT_SCRIPT_NAME', 'readme.php');

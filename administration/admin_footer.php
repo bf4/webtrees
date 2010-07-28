@@ -24,7 +24,7 @@
  *
  * @package webtrees
  * @subpackage Themes
- * @version $Id: footer.php 6879 2010-01-30 11:35:46Z fisharebest $
+ * @version $Id$
  */
 
 if (!defined('WT_WEBTREES')) {
