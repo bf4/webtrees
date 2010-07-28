@@ -38,16 +38,16 @@ require_once WT_ROOT.'includes/functions/functions_import.php';
 require_once WT_ROOT.'includes/classes/class_module.php';
 
 class IndividualController extends BaseController {
-	var $pid = "";
-	var $default_tab = 0;
+	var $pid = '';
 	var $indi = null;
 	var $diffindi = null;
 	var $accept_success = false;
+	var $default_tab = '';
+
 	var $canedit = false;
 	var $name_count = 0;
 	var $total_names = 0;
 	var $SEX_COUNT = 0;
-	var $sexarray = array();
 	var $tabs;
 	var $Fam_Navigator = 'YES';
 	var $NAME_LINENUM = 1;
@@ -55,19 +55,14 @@ class IndividualController extends BaseController {
 	var $globalfacts = null;
 
 	function init() {
-		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB;
+		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM;
 		global $DEFAULT_PIN_STATE, $DEFAULT_SB_CLOSED_STATE, $pid;
 		global $Fam_Navigator;
-
-		$this->sexarray["M"] = i18n::translate('Male');
-		$this->sexarray["F"] = i18n::translate('Female');
-		$this->sexarray["U"] = i18n::translate('unknown');
 
 		$this->pid = safe_GET_xref('pid');
 
 		$pid = $this->pid;
 
-		$this->default_tab = $GEDCOM_DEFAULT_TAB;
 		$gedrec = find_person_record($this->pid, WT_GED_ID);
 
 		if ($USE_RIN && $gedrec==false) {
@@ -89,38 +84,18 @@ class IndividualController extends BaseController {
 				$gedrec = "0 @".$this->pid."@ INDI\n";
 			}
 		}
-		//-- check for the user
+
 		if (WT_USER_ID) {
+			// Start with the user's default tab
 			$this->default_tab=get_user_setting(WT_USER_ID, 'defaulttab');
-		}
-
-		//-- check for a cookie telling what the last tab was when they were last
-		//-- visiting this individual
-		if($this->default_tab == -2)
-		{
-			if (isset($_COOKIE['lasttabs'])) {
-				$ct = preg_match("/".$this->pid."=(\d+)/", $_COOKIE['lasttabs'], $match);
-				if ($ct>0) {
-					$this->default_tab = $match[1]-1;
-				}
-			}
-		}
-
-		//-- set the default tab from a request parameter
-		if (isset($_REQUEST['tab'])) {
-			$this->default_tab = $_REQUEST['tab'];
+		} else {
+			// Start with the gedcom's default tab
+			$this->default_tab=get_gedcom_setting(WT_GED_ID, 'GEDCOM_DEFAULT_TAB');
 		}
 
 		$this->indi = new Person($gedrec, false);
 		$this->indi->ged_id=WT_GED_ID; // This record is from a file
 
-		//-- if the person is from another gedcom then forward to the correct site
-		/*
-		if ($this->indi->isRemote()) {
-			header('Location: '.encode_url(decode_url($this->indi->getLinkUrl()), false));
-			exit;
-		}
-		*/
 		//-- perform the desired action
 		switch($this->action) {
 		case 'addfav':
@@ -268,7 +243,6 @@ class IndividualController extends BaseController {
 			exit;
 		}
 	}
-	//-- end of init function
 
 	/**
 	* return the title of this page
@@ -276,29 +250,12 @@ class IndividualController extends BaseController {
 	*/
 	function getPageTitle() {
 		if ($this->indi) {
-			$name = $this->indi->getFullName();
-			return $name." - ".$this->indi->getXref()." - ".i18n::translate('Individual information');
+			return $this->indi->getFullName();
 		} else {
 			return i18n::translate('Unable to find record with ID');
 		}
 	}
 
-	/**
-	* gets a string used for setting the value of a cookie using javascript
-	*/
-	function getCookieTabString() {
-		$str = "";
-		if (isset($_COOKIE['lasttabs'])) {
-			$parts = explode(':', $_COOKIE['lasttabs']);
-			foreach($parts as $i=>$val) {
-				$inner = explode('=', $val);
-				if (count($inner)>1) {
-					if ($inner[0]!=$this->pid) $str .= $val.":";
-				}
-			}
-		}
-		return $str;
-	}
 	/**
 	* check if we can show the highlighted media object
 	* @return boolean
@@ -426,7 +383,7 @@ class IndividualController extends BaseController {
 		for($i=0; $i<$ct; $i++) {
 			echo '<div>';
 				$fact = trim($nmatch[$i][1]);
-				if (($fact!="SOUR")&&($fact!="NOTE")&&($fact!="GIVN")&&($fact!="SURN")) {
+				if (($fact!="SOUR")&&($fact!="NOTE")&&($fact!="GIVN")&&($fact!="SURN")&&($fact!="SPFX")) {
 					echo '<dl><dt class="label">', translate_fact($fact, $this->indi), '</dt>';
 					echo '<span class="field">';
 						if (isset($nmatch[$i][2])) {
@@ -477,26 +434,30 @@ class IndividualController extends BaseController {
 				echo ' class="nameblue"';
 			}
 			echo '>';
-				echo '<dl><dt class="label">', i18n::translate('Gender'), '</dt>';
-				echo '<span class="field">', $this->sexarray[$sex];
-					if ($sex=='M') {
-						echo Person::sexImage('M', 'small', '', i18n::translate('Male'));
-					} elseif ($sex=='F') {
-						echo Person::sexImage('F', 'small', '', i18n::translate('Female'));
+			echo '<dl><dt class="label">', i18n::translate('Gender'), '</dt>';
+			echo '<span class="field">';
+			switch ($sex) {
+			case 'M':
+				echo i18n::translate('Male'), Person::sexImage('M', 'small', '', i18n::translate('Male'));
+				break;
+			case 'F':
+				echo i18n::translate('Female'), Person::sexImage('F', 'small', '', i18n::translate('Female'));
+				break;
+			case 'U':
+				echo i18n::translate('unknown'), Person::sexImage('U', 'small', '', i18n::translate('unknown'));
+				break;
+			}
+			if ($this->SEX_COUNT>1) {
+				if ($this->userCanEdit() && strpos($factrec, "WT_OLD")===false) {
+					if ($event->getLineNumber()=="new") {
+						echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"add_new_record('".$this->pid."', 'SEX'); return false;\">".i18n::translate('Edit')."</a>";
 					} else {
-						echo Person::sexImage('U', 'small', '', i18n::translate('unknown'));
+							echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"edit_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".i18n::translate('Edit')."</a> | ";
+							echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".i18n::translate('Delete')."</a>\n";
 					}
-					if ($this->SEX_COUNT>1) {
-						if ($this->userCanEdit() && strpos($factrec, "WT_OLD")===false) {
-							if ($event->getLineNumber()=="new") {
-								echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"add_new_record('".$this->pid."', 'SEX'); return false;\">".i18n::translate('Edit')."</a>";
-							} else {
-									echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"edit_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".i18n::translate('Edit')."</a> | ";
-									echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".i18n::translate('Delete')."</a>\n";
-							}
-						}
-					}
-				echo '</span>';
+				}
+			}
+			echo '</span>';
 			echo '</dl>';
 			// -- find sources
 	//		print "&nbsp;&nbsp;&nbsp;";
@@ -523,13 +484,6 @@ class IndividualController extends BaseController {
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}", 'icon_large_gedcom');
 
 		if (WT_USER_CAN_EDIT) {
-			if (count($this->indi->getSpouseFamilyIds())>1) {
-				$submenu = new Menu(i18n::translate('Reorder families'));
-				$submenu->addOnclick("return reorder_families('".$this->pid."');");
-				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
-				$menu->addSubmenu($submenu);
-			}
-
 			//--make sure the totals are correct
 			$this->getGlobalFacts();
 			if ($this->total_names<2) {
@@ -554,6 +508,14 @@ class IndividualController extends BaseController {
 					$submenu->addOnclick("return edit_record('".$this->pid."', $this->SEX_LINENUM);");
 				}
 				$submenu->addIcon('edit_indi');
+				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
+				$menu->addSubmenu($submenu);
+			}
+
+			if (count($this->indi->getSpouseFamilyIds())>1) {
+				$submenu = new Menu(i18n::translate('Reorder families'));
+				$submenu->addOnclick("return reorder_families('".$this->pid."');");
+				$submenu->addIcon('edit_fam');
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 				$menu->addSubmenu($submenu);
 			}
@@ -593,7 +555,7 @@ class IndividualController extends BaseController {
 		if (WT_USER_IS_ADMIN || $this->canShowGedcomRecord()) {
 			$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 			$submenu->addOnclick("return edit_raw('".$this->pid."');");
-			$submenu->addIcon('edit_indi');
+			$submenu->addIcon('gedcom');
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 			$menu->addSubmenu($submenu);
 		} elseif ($SHOW_GEDCOM_RECORD) {

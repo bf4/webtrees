@@ -38,19 +38,19 @@ require_once WT_ROOT.'includes/functions/functions_import.php';
 require_once WT_ROOT.'includes/functions/functions_charts.php';
 
 class FamilyController extends BaseController {
+	var $famid = '';
+	var $family = null;
+	var $difffam = null;
+	var $accept_success = false;
 	var $user = null;
 	var $showLivingHusb = true;
 	var $showLivingWife = true;
 	var $parents = '';
 	var $display = false;
-	var $accept_success = false;
 	var $show_changes = true;
 	var $famrec = '';
 	var $link_relation = 0;
 	var $title = '';
-	var $famid = '';
-	var $family = null;
-	var $difffam = null;
 
 	function init() {
 		global $Dbwidth, $bwidth, $pbwidth, $pbheight, $bheight, $GEDCOM;
@@ -85,23 +85,6 @@ class FamilyController extends BaseController {
 
 		$this->famrec = $this->family->getGedcomRecord();
 		$this->display = $this->family->canDisplayName();
-
-		//-- if the user can edit and there are changes then get the new changes
-		if ($this->show_changes && WT_USER_CAN_EDIT && find_updated_record($this->famid, WT_GED_ID)!==null) {
-			$newrec = find_gedcom_record($this->famid, WT_GED_ID, true);
-			$this->difffam = new Family($newrec);
-			$this->difffam->setChanged(true);
-			$this->family->diffMerge($this->difffam);
-			//$this->famrec = $newrec;
-			//$this->family = new Family($this->famrec);
-		}
-		$this->parents = array('HUSB'=>$this->family->getHusbId(), 'WIFE'=>$this->family->getWifeId());
-
-		//-- check if we can display both parents
-		if ($this->display == false) {
-			$this->showLivingHusb = showLivingNameById($this->parents['HUSB']);
-			$this->showLivingWife = showLivingNameById($this->parents['WIFE']);
-		}
 
 		//-- perform the desired action
 		switch($this->action) {
@@ -151,6 +134,23 @@ class FamilyController extends BaseController {
 			break;
 		}
 
+		//-- if the user can edit and there are changes then get the new changes
+		if ($this->show_changes && WT_USER_CAN_EDIT && find_updated_record($this->famid, WT_GED_ID)!==null) {
+			$newrec = find_gedcom_record($this->famid, WT_GED_ID, true);
+			$this->difffam = new Family($newrec);
+			$this->difffam->setChanged(true);
+			$this->family->diffMerge($this->difffam);
+			//$this->famrec = $newrec;
+			//$this->family = new Family($this->famrec);
+		}
+		$this->parents = array('HUSB'=>$this->family->getHusbId(), 'WIFE'=>$this->family->getWifeId());
+
+		//-- check if we can display both parents
+		if ($this->display == false) {
+			$this->showLivingHusb = showLivingNameById($this->parents['HUSB']);
+			$this->showLivingWife = showLivingNameById($this->parents['WIFE']);
+		}
+
 		//-- make sure we have the true id from the record
 		$ct = preg_match("/0 @(.*)@/", $this->famrec, $match);
 		if ($ct > 0) {
@@ -163,8 +163,6 @@ class FamilyController extends BaseController {
 			print_footer();
 			exit;
 		}
-
-		$this->title=$this->family->getFullName();
 
 		if (empty($this->parents['HUSB']) || empty($this->parents['WIFE'])) {
 			$this->link_relation = 0;
@@ -204,9 +202,13 @@ class FamilyController extends BaseController {
 		return join('&amp;', $children);
 	}
 
+	/**
+	* return the title of this page
+	* @return string the title of the page to go in the <title> tags
+	*/
 	function getPageTitle() {
 		if ($this->family) {
-			return PrintReady($this->title);
+			return $this->family->getFullName();
 		} else {
 			return i18n::translate('Unable to find record with ID');
 		}
@@ -365,7 +367,7 @@ class FamilyController extends BaseController {
 		if (WT_USER_IS_ADMIN || $SHOW_GEDCOM_RECORD) {
 			$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 			$submenu->addOnclick("return edit_raw('".$this->getFamilyID()."');");
-			$submenu->addIcon('edit_fam');
+			$submenu->addIcon('gedcom');
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 			$menu->addSubmenu($submenu);
 		} elseif ($SHOW_GEDCOM_RECORD) {

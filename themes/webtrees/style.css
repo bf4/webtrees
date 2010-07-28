@@ -83,15 +83,14 @@ legend img {
 	width: 25px;
 }
 
-img.block{
+img.block, #biglink img {
 	border: none;
 	height: 25px;
 	vertical-align: middle;
 }
 
-
-.edit_link:after {
-	content: url(images/small/edit.png);
+.edit_link:after  {
+	content: url(images/edit_sm.png);
 }
 
 .button {
@@ -982,6 +981,10 @@ h4 {
 	vertical-align: top;
 	white-space: nowrap;
 	padding: 3px;
+}
+
+.descriptionbox .icon {
+	width: 15px;
 }
 
 /* Style for the optionbox */

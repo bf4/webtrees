@@ -430,12 +430,12 @@ case 'DIVF':
 	break;
 
 case 'DSCR':	
-	$title=translate_fact('Description');
+	$title=translate_fact('DSCR');
 	$text='';
 	break;
 
 case 'EDUC':	
-	$title=translate_fact('Education');
+	$title=translate_fact('EDUC');
 	$text='';
 	break;
 
@@ -2204,11 +2204,6 @@ case 'FAM_FACTS_UNIQUE':
 case 'FAM_ID_PREFIX':
 	$title=i18n::translate('Family ID prefix');
 	$text=i18n::translate('When a new family record is added online in <b>webtrees</b>, a new ID for that family will be generated automatically. The family ID will have this prefix.');
-	break;
-
-case 'FAVICON':
-	$title=i18n::translate('Favorites icon');
-	$text=i18n::translate('Change this to point to the icon you want to display in peoples\' favorites menu when they bookmark your site.');
 	break;
 
 case 'FULL_SOURCES':

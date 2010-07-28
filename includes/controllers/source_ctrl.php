@@ -171,6 +171,8 @@ class SourceController extends BaseController {
 			$submenu->addIcon('edit_sour');
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 			$menu->addSubmenu($submenu);
+
+			$menu->addSeparator();
 		}
 
 		// show/hide changes

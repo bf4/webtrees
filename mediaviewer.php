@@ -66,7 +66,7 @@ if (WT_USE_LIGHTBOX) {
 
 //The next set of code draws the table that displays information about the person
 ?>
-<table width="70%">
+<table width="70%" class="list_table">
 	<tr>
 		<td class="name_head" colspan="2">
 			<?php print PrintReady($controller->mediaobject->getFullName()); ?>
@@ -157,9 +157,9 @@ if (WT_USE_LIGHTBOX) {
 					print_sour_table($controller->mediaobject->fetchLinkedSources(), $controller->mediaobject->getFullName());
 				}
 
-				// Repositories linked to this media object
-				if ($controller->mediaobject->countLinkedMedia()) {
-					print_repo_table($controller->note->fetchLinkedRepositories(), $controller->mediaobject->getFullName());
+				// Notes linked to this media object
+				if ($controller->mediaobject->countLinkedNotes()) {
+					print_note_table($controller->mediaobject->fetchLinkedNotes(), $controller->mediaobject->getFullName());
 				}
 
 			?>
