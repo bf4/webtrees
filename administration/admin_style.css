@@ -1,0 +1,416 @@
+/**
+ * Style for Minimal theme
+ *
+ * Use this stylesheet to customize the display of your site.
+ * To learn more about CSS visit http://www.w3.org/TR/REC-CSS2/
+ *
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * @package webtrees
+ * @subpackage Themes
+ * @version $Id: style.css 8892 2010-06-19 16:35:46Z greg $
+ */
+
+/* general styles /*
+
+.something {
+	/*empty style to make sure that the BODY style is not ignored */
+}
+
+/* jquery-ui custom styles */
+.ui-widget {font-size: 12px;}
+.ui-widget-content a:hover   { color: red; }
+.ui-tabs-nav li.ui-tabs-selected   { background: #f8f8f8; }
+.ui-tabs-nav li.ui-tabs-selected a  { font-weight:600; color: #81A9CB; }
+.ui-tabs-nav li.ui-tabs-selected a:hover  { font-weight:600; color: #81A9CB; }
+.ui-widget-header { padding: 5px; background-color: #B2C7D7;}
+.ui-state-default .ui-icon {	background-image: url(../js/jquery/css/images/ui-icons_666666_256x240.png);	margin-left:20px;}
+.ui-state-default, .ui-widget-content .ui-state-default {padding: 10px 3px; white-space: nowrap;}
+.css_right {	float:right; white-space: nowrap;}
+.ui-icon-carat-2-n-s {background-position:-128px 0;}
+
+body {
+	color: gray;
+	background-color: white;
+	font: 11px tahoma, arial, helvetica, sans-serif;
+}
+
+img {
+	border: none;
+}
+
+a {
+	color: #666666;
+	font-family: tahoma, arial, helvetica, sans-serif;
+	text-decoration: none;
+}
+
+a:hover	{
+	color: black;
+	text-decoration: underline;
+}
+
+h1 {
+	color: #81A9CB;
+	font-size: 18px;
+	font-weight:bold;
+	margin-top:	0;
+}
+
+h2 {
+	color: #81A9CB;
+	font-size: 14px;
+	font-weight:bold;
+	margin-top:	0;
+}
+
+h3 {
+	color: black;
+	font-size: 12px;
+	font-weight:bold;
+}
+
+input, textarea {
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+fieldset {
+	margin: 8px 8px 4px 8px;
+}
+
+legend {
+	color:#81A9CB;
+	font-style: italic;
+	font-weight:bold;
+	padding: 0 5px 5px; align: top;
+}
+
+.icon {
+	border: none;
+	padding-left: 0pt;
+	padding-right: 5pt;
+}
+
+.warning, .red {
+	color: red;
+}
+
+.center {
+	text-align: center;
+}
+
+/* Text direction */
+.ltr {
+	text-align: left;
+}
+
+.rtl {
+	text-align: right;
+	direction: rtl;
+}
+
+/* header styles */
+#admin_head  {
+	height: 70px;
+	margin-bottom: 20px;
+}
+
+#logo {
+	float: left;
+	width: 300px;
+}
+
+#title  {
+	text-align: center;
+	color: #81A9CB;
+	font-size: 18px;
+	font-weight:bold;
+	padding-top: 20px;
+}
+
+#info  {
+	color: gray;
+	font-size: 12px;
+	text-align: right;
+	float: right;
+	width: 300px;
+	padding-top: 10px;
+	margin-bottom: 3px;
+}
+
+#admin_menu {
+/*	margin-left: 15px;*/
+	width: 200px;
+	float: left;
+	position: absolute;
+}
+
+#admin_menu dl {
+	max-height: 150px;
+	overflow-x: auto;
+	margin-top: 0;
+}
+
+#admin_menu dt  {
+	font-size: 12px;
+	font-weight:bold;
+}
+
+#admin_menu dt img {
+	width: 25px;
+	vertical-align: middle;
+}
+
+#admin_menu dd  {
+	font-size: 12px;
+	font-weight: normal;
+	margin-left: 25px;
+}
+
+#admin_menu dd:active {
+	color: #81A9CB;
+	font-weight: bold;
+}
+
+#admin_content {
+	margin-left: 220px;
+/*	padding-left: 15px;*/
+}
+
+#admin_content dt {
+	float: left;
+	width: 300px;
+}
+
+#admin_content dd {
+	color: 	grey;
+	font-size: 14px;
+	font-style: italic;
+	padding-top: 3px;
+}
+
+#admin_footer {
+	float: left;
+	text-align: center;
+	width: 100%
+}
+
+/* config tables */
+ .config {
+	width: 750px;
+}
+
+/* Style for the descriptionbox */
+.descriptionbox  {
+	border-bottom: solid #81a9cb 1px;
+	vertical-align: top;
+	white-space: nowrap;
+	padding: 3px;
+}
+
+/* Style for the optionbox */
+.optionbox {
+	border-bottom: solid #81a9cb 1px;
+	vertical-align: top;
+	white-space: nowrap;
+	padding: 3px;
+}
+
+/* Style for the subbar */
+.subbar {
+	background-color: #d1d9ef;
+	border: solid #81a9cb 1px;
+	font-size: 11px;
+	font-weight: bold;
+	vertical-align: top;
+	white-space: nowrap;
+	padding: 3px;
+}
+
+/* help text pop-ups */
+.help {
+	cursor: help;
+}
+
+.helpcontent {
+	margin-left: 10px;
+	margin-right:10px;
+}
+
+.helpfooter {
+	margin: 10px;
+}
+
+.helpheader {
+	margin: 10px;
+	font-size: 18px;
+	font-weight: bold;
+	color: black;
+}
+
+.helpstart {
+	margin: 10px;
+	font-size: 14px;
+	color: blue;
+	text-decoration: none;
+	font-weight:  bold;
+}
+
+.helptext {
+	font-size: 12px;
+	color: black;
+}
+
+table#list   {
+	background-color: #d1d9ef;
+	border:	1px solid #CCCCCC;
+	border-collapse:collapse;
+	width: 100%
+}
+
+#list img {
+	padding-left: 15px;
+	width: 25px;
+	vertical-align:middle;
+}
+
+.edit_link {
+	white-space: nowrap;
+}
+
+.edit_link:after {
+	content: url(images/edit.png);
+}
+
+.odd {
+background-color: #d1d9ef;
+}
+
+.even {
+background-color: #EEFFEE;
+}
+
+#list_wrapper {
+	font-size: 12px;
+	width: 100%;
+}
+
+#list_length {
+	float: left;
+}
+
+#list_filter {
+	float: right;
+}
+
+#list_info {
+	float: left;
+}
+
+#list_paginate {
+}
+
+#privileges span  {
+	font-size: 80%;
+	white-space: nowrap;
+}
+
+#list .date {
+	font-size: 80%;
+}
+	
+.dataTables_paginate {
+	padding-top: 0;
+}
+
+.dataTables_paginate {
+	float: right;
+	text-align: right;
+}
+
+.paging_full_numbers .fg-button {
+cursor:pointer;
+padding: 2px 6px;
+}
+
+/* General Info page */
+
+#user_info {
+	border: 1px solid grey;
+	width: 400px;
+	float: left;
+	font-size: 12px;
+	padding: 5px;
+}
+
+#user_info a:hover, #admin_menu a:hover, #gedcom_table a:hover {
+	color: red;
+}
+
+/* GEDCOM management */
+
+table#gedcom_table {
+	border-bottom: solid #81a9cb 1px;
+	vertical-align: top;
+	white-space: nowrap;
+	padding: 3px;
+	width: 100%;
+}
+
+table#gedcom_table .gedcom  {
+	font-weight: bold;
+	font-size: 12px;
+	width: 40%;
+}
+
+table#gedcom_table .defaults  {
+	font-weight: bold;
+	font-size: 12px;
+	text-align:center;
+	width: 25%;
+	color:#666666;
+}
+
+table#server {
+	font-size: 12px;
+}
+
+/* PHP Info */
+
+.facts_table, .facts_table_rtl {
+	width: 100%;
+}
+
+.facts_value {
+	border-bottom: solid #81a9cb 1px;
+	text-align:left;
+	padding: 3px;
+}
+
+#phpinfo table.heading  {
+	padding: 3px;
+	text-align:center;
+	width: 100%;
+}
+
+#phpinfo  td {
+}
