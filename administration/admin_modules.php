@@ -27,10 +27,11 @@
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'admin_module.php');
-require '/includes/session.php';
+define('WT_SCRIPT_NAME', 'admin_modules.php');
+require '../includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
-require '/administration/admin_functions.php';
+require 'admin_functions.php';
+
 
 //if (!WT_USER_GEDCOM_ADMIN) {
 //	header("Location: login.php?url=module_admin.php");
@@ -300,7 +301,7 @@ admin_header(i18n::translate('Module administration'));
 	<p><?php echo i18n::translate('Below is the list of all the modules installed in this instance of webtrees.  Modules are installed by placing them in the <i>modules</i> directory.  Here you can set the access level per GEDCOM for each module.  If a module includes tabs for the individual page or menus for the menu bar, you can also set the access level and order of each of them.')?></p>
 	<!-- page tabs -->
 	<div id="tabs">
-		<ul>
+<!--		<ul>
 			<li><a href="#installed_tab"><span><?php echo i18n::translate('All modules')?></span></a></li>
 			<li><a href="#menus_tab"><span><?php echo i18n::translate('Menus')?></span></a></li>
 			<li><a href="#tabs_tab"><span><?php echo i18n::translate('Tabs')?></span></a></li>
@@ -309,16 +310,16 @@ admin_header(i18n::translate('Module administration'));
 			<li><a href="#charts_tab"><span><?php echo i18n::translate('Charts')?></span></a></li>
 			<li><a href="#reports_tab"><span><?php echo i18n::translate('Reports')?></span></a></li>
 			<li><a href="#themes_tab"><span><?php echo i18n::translate('Themes')?></span></a></li>
-		</ul>
+		</ul> -->
 	<!-- installed -->
 	<div id="installed_tab">
 		<form class="tablesorter" method="post" action="admin_modules.php"> 
 			<input type="hidden" name="action" value="update_mods" />
-			<table id="installed_table" class="tablesorter" border="0" cellpadding="0" cellspacing="1">
+			<table id="list" order="0" cellpadding="0" cellspacing="1">
 				<thead>
 				  <tr>
 				  <th><?php echo i18n::translate('Enabled'); ?></th>
-				  <th><?php echo i18n::translate('Configuration'); ?></th>
+				 <!-- <th><?php //echo i18n::translate('Configuration'); ?></th>-->
 				  <th><?php echo i18n::translate('Module Name'); ?></th>
 				  <th><?php echo i18n::translate('Description'); ?></th>
 				  <th><?php echo i18n::translate('Menu'); ?></th>
@@ -336,8 +337,8 @@ admin_header(i18n::translate('Module administration'));
 						$status=WT_DB::prepare(
 							"SELECT status FROM `##module` WHERE module_name=?"
 						)->execute(array($module->getName()))->fetchOne();
-						echo '<tr><td>', two_state_checkbox('status-'.$module->getName(), $status=='enabled'), '</td><td>';
-						if ($module instanceof WT_Module_Config) echo '<a href="', $module->getConfigLink(), '"><img class="adminicon" src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["admin"]["small"], '" border="0" alt="', $module->getName(), '" /></a>'; ?></td>
+						echo '<tr><td>', two_state_checkbox('status-'.$module->getName(), $status=='enabled'), '</td>';
+						//if ($module instanceof WT_Module_Config) echo '<a href="', $module->getConfigLink(), '"><img class="adminicon" src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["admin"]["small"], '" border="0" alt="', $module->getName(), '" /></a>'; ?></td>
 						<td><?php echo $module->getTitle()?></td>
 						<td><?php echo $module->getDescription()?></td>
 						<td><?php if ($module instanceof WT_Module_Menu) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
@@ -355,7 +356,7 @@ admin_header(i18n::translate('Module administration'));
 			</table>
 			<input type="submit" value="<?php echo i18n::translate('Save')?>" />
 		</form>
-		<div id="pager" class="pager">
+<!--		<div id="pager" class="pager">
 			<form>
 				<img src="<?php echo $WT_IMAGE_DIR; ?>/jquery/first.png" class="first"/>
 				<img src="<?php echo $WT_IMAGE_DIR; ?>/jquery/prev.png" class="prev"/>
@@ -371,7 +372,7 @@ admin_header(i18n::translate('Module administration'));
 					<option  value="100">100</option>
 				</select>
 			</form>
-		</div>
+		</div> -->
 	</div>
 	<!-- menus -->
 	<div id="menus_tab">

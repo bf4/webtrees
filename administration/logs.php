@@ -146,7 +146,7 @@ if ($offset<0) {
 $sql2.=" LIMIT {$limit} OFFSET {$offset}";
 $rows=WT_DB::prepare($sql2)->execute($args)->fetchAll();
 
-print_header(i18n::translate('Logs'));
+admin_header(i18n::translate('Logs'));
 
 echo
 	'<br/><form name="logs" method="get" action="'.WT_SCRIPT_NAME.'">',
