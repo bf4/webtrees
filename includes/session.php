@@ -386,7 +386,7 @@ if (isset($_GET['show_context_help'])) {
 } elseif ($SEARCH_SPIDER) {
 	$_SESSION['show_context_help']=false;
 } elseif (!isset($_SESSION['show_context_help'])) {
-	$_SESSION['show_context_help']=get_gedcom_setting(WT_GED_ID, 'SHOW_CONTEXT_HELP');
+	$_SESSION['show_context_help']=get_gedcom_setting(WT_GED_ID, 'SHOW_CONTEXT_HELP', true);
 }
 
 if (!isset($_SESSION['wt_user'])) $_SESSION['wt_user'] = '';
@@ -446,8 +446,7 @@ if (isset($_SESSION['theme_dir'])) {
 	}
 }
 
-
-if (isset($usertheme)) {
+if (isset($usertheme) && file_exists("{$usertheme}theme.php")) {
 	$THEME_DIR = $usertheme;
 } else if (empty($THEME_DIR) || !file_exists("{$THEME_DIR}theme.php")) {
 	$THEME_DIR = 'themes/webtrees/';

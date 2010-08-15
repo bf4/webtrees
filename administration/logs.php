@@ -132,106 +132,86 @@ if (safe_GET('delete', 'yes')=='yes') {
 
 $total_rows=WT_DB::prepare($sql1)->execute($args)->fetchOne();
 
-// Paging
-$limit =safe_GET('limit',  '\d+', 50);
-$offset=safe_GET('offset', '\d+', $total_rows-$limit);
-
-if ($offset+$limit>$total_rows) {
-	$offset=$total_rows-$limit;
-}
-if ($offset<0) {
-	$offset=0;
-}
-
-$sql2.=" LIMIT {$limit} OFFSET {$offset}";
 $rows=WT_DB::prepare($sql2)->execute($args)->fetchAll();
 
 admin_header(i18n::translate('Logs'));
 
 echo
-	'<br/><form name="logs" method="get" action="'.WT_SCRIPT_NAME.'">',
-	'<table class="list_table"><tr>',
-	'<td class="topbottombar" colspan="7">', i18n::translate('Logs'), '</td>',
-	'</tr><tr>',
-	'<td class="descriptionbox" nowrap>',
-	// I18N: %s are both user-input date fields
-	i18n::translate('From %s to %s', '<input name="from" size="8" value="'.htmlspecialchars($from).'" />', '<input name="to" size="8" value="'.htmlspecialchars($to).'" />'),
-	'</td>',
-	'<td class="descriptionbox" nowrap>',
-	i18n::translate('Type'), ' ', select_edit_control('type', array(''=>'', 'auth'=>'auth','config'=>'config','debug'=>'debug','edit'=>'edit','error'=>'error','media'=>'media','search'=>'search'), null, $type, ''),
-	'</td>',
-	'<td class="descriptionbox" nowrap>',
-	i18n::translate('Message'), ' <input name="text" size="12" value="', htmlspecialchars($text), '" /> ',
-	'</td>',
-	'<td class="descriptionbox" nowrap>',
-	i18n::translate('IP address'), ' <input name="ip" size="12" value="', htmlspecialchars($ip), '" /> ',
-	'</td>',
-	'<td class="descriptionbox" nowrap>',
-	i18n::translate('User'), ' <input name="user" size="12" value="', htmlspecialchars($user), '" /> ',
-	'</td>',
-	'<td class="descriptionbox" nowrap>',
-	i18n::translate('Gedcom'), ' <input name="gedc" size="12" value="', htmlspecialchars($gedc), '" ', WT_USER_IS_ADMIN ? '' : 'disabled', '/> ',
-	'</td>',
-	'<td class="descriptionbox" rowspan="2" nowrap valign="middle">',
-	'<input type="submit" value="', i18n::translate('Filter'), '"/> ',
-	'</td>',
-	'</tr><tr>',
-	'<td class="descriptionbox" nowrap colspan="6">',
-	i18n::translate('Results per page'), ' ', select_edit_control('limit', array('10'=>'10', '25'=>'25','50'=>'50','100'=>'100','1000'=>'1000'), null, $limit, ''),
-	'</td></tr></table></form>';
-
+	'<h1>', i18n::translate('Logs'), '</h1>',
+	'<br/>',
+	'<form name="logs" method="get" action="'.WT_SCRIPT_NAME.'">',
+		'<table class="list_table">',
+			'<tr>',
+				'<td class="descriptionbox" nowrap>',
+					// I18N: %s are both user-input date fields
+					i18n::translate('From %s to %s', '<input name="from" size="8" value="'.htmlspecialchars($from).'" />', '<input name="to" size="8" value="'.htmlspecialchars($to).'" />'),
+				'</td>',
+				'<td class="descriptionbox" nowrap>',
+					i18n::translate('Type'), ' ', select_edit_control('type', array(''=>'', 'auth'=>'auth','config'=>'config','debug'=>'debug','edit'=>'edit','error'=>'error','media'=>'media','search'=>'search'), null, $type, ''),
+				'</td>',
+				'<td class="descriptionbox" nowrap>',
+					i18n::translate('Message'), ' <input name="text" size="12" value="', htmlspecialchars($text), '" /> ',
+				'</td>',
+				'<td class="descriptionbox" nowrap>',
+					i18n::translate('IP address'), ' <input name="ip" size="12" value="', htmlspecialchars($ip), '" /> ',
+				'</td>',
+				'<td class="descriptionbox" nowrap>',
+					i18n::translate('User'), ' <input name="user" size="12" value="', htmlspecialchars($user), '" /> ',
+				'</td>',
+				'<td class="descriptionbox" nowrap>',
+					i18n::translate('Gedcom'), ' <input name="gedc" size="12" value="', htmlspecialchars($gedc), '" ', WT_USER_IS_ADMIN ? '' : 'disabled', '/> ',
+				'</td>',
+				'<td class="descriptionbox" rowspan="2" nowrap valign="middle">',
+					'<input type="submit" value="', i18n::translate('Filter'), '"/> ',
+				'</td>',
+			'</tr>',
+		'</table>',
+	'</form>',
+	'<br />';
 if ($rows) {
-	echo
-		'<p align="center">',
-		i18n::translate('Showing results %d to %d of %d', $offset+1, min($offset+$limit, $total_rows), $total_rows);
+echo
+	'<p align="center">',
+		i18n::translate('%d Results', $total_rows);
+		$url=
+			WT_SCRIPT_NAME.'?from='.urlencode($from).
+			'&amp;to='.urlencode($to).
+			'&amp;type='.urlencode($type).
+			'&amp;text='.urlencode($text).
+			'&amp;ip='.urlencode($ip).
+			'&amp;user='.urlencode($user).
+			'&amp;gedc='.urlencode($gedc);
 
-	$url=
-		WT_SCRIPT_NAME.'?from='.urlencode($from).
-		'&amp;to='.urlencode($to).
-		'&amp;type='.urlencode($type).
-		'&amp;text='.urlencode($text).
-		'&amp;ip='.urlencode($ip).
-		'&amp;user='.urlencode($user).
-		'&amp;gedc='.urlencode($gedc).
-		'&amp;limit='.$limit.
-		'&amp;offset=';
-
-	if ($offset>0) {
-		echo ' | <a href="', $url, 0, '">', i18n::translate_c('first page', 'first'), '</a>';
-		echo ' | <a href="', $url, max(0, $offset-$limit), '">', i18n::translate('previous'), '</a>';
-	}
-	if ($offset+$limit<$total_rows) {
-		echo ' | <a href="', $url, min($total_rows-$limit, $offset+$limit), '">', i18n::translate('next'), '</a>';
-		echo ' | <a href="', $url, $total_rows-$limit, '">', i18n::translate('last'), '</a>';
-	}
-	if (WT_USER_IS_ADMIN) {
-		echo ' | <a href="', $url, '&amp;export=yes">', i18n::translate('export'), '</a>';
-		echo ' | <a href="', $url, '&amp;delete=yes" onclick="return confirm(\'', htmlspecialchars(i18n::plural('Permanently delete this %s record?', 'Permanently delete these %s records?', $total_rows, $total_rows)) , '\')">', i18n::translate('delete'), '</a>';
-	}
-
-	echo
-		'</p>',
-		'<table class="list_table"><tr>',
-		'<td class="descriptionbox" nowrap>', i18n::translate('Timestamp'), '</td>',
-		'<td class="descriptionbox" nowrap>', i18n::translate('Type'), '</td>',
-		'<td class="descriptionbox" nowrap>', i18n::translate('Message'), '</td>',
-		'<td class="descriptionbox" nowrap>', i18n::translate('IP address'), '</td>',
-		'<td class="descriptionbox" nowrap>', i18n::translate('User'), '</td>',
-		'<td class="descriptionbox" nowrap>', i18n::translate('GEDCOM'), '</td>',
-		'</tr>';
-
-	foreach ($rows as $row) {
-		echo
-			'<tr valign="top">',
-			'<td class="optionbox">', $row->log_time, '</td>',
-			'<td class="optionbox">', $row->log_type, '</td>',
-			'<td class="optionbox wrap">', nl2br(htmlspecialchars($row->log_message)), '</td>',
-			'<td class="optionbox">', $row->ip_address, '</td>',
-			'<td class="optionbox">', htmlspecialchars($row->user_name), '</td>',
-			'<td class="optionbox">', htmlspecialchars($row->gedcom_name), '</td>',
-			'</tr>';
-	}
-	echo '</table>';
+//		if (WT_USER_IS_ADMIN) {
+			echo '&nbsp;-&nbsp;<a href="', $url, '&amp;export=yes">', i18n::translate('Export'), '</a>';
+			echo ' | <a href="', $url, '&amp;delete=yes" onclick="return confirm(\'', htmlspecialchars(i18n::plural('Permanently delete this %s record?', 'Permanently delete these %s records?', $total_rows, $total_rows)) , '\')">', i18n::translate('Delete'), '</a>';
+//		}
+echo
+	'</p>',
+	'<table id="list">',
+		'<thead>',
+			'<tr>',
+				'<th>', i18n::translate('Timestamp'), '</th>',
+				'<th>', i18n::translate('Type'), '</th>',
+				'<th>', i18n::translate('Message'), '</th>',
+				'<th>', i18n::translate('IP address'), '</th>',
+				'<th>', i18n::translate('User'), '</th>',
+				'<th>', i18n::translate('GEDCOM'), '</th>',
+			'</tr>',
+		'</thead>',
+		'<tbody>';
+			foreach ($rows as $row) {
+				echo
+					'<tr>',
+						'<td>', $row->log_time, '</td>',
+						'<td>', $row->log_type, '</td>',
+						'<td>', nl2br(htmlspecialchars($row->log_message)), '</td>',
+						'<td>', $row->ip_address, '</td>',
+						'<td>', htmlspecialchars($row->user_name), '</td>',
+						'<td>', htmlspecialchars($row->gedcom_name), '</td>',
+					'</tr>';
+			}
+		echo '</tbody>',
+	'</table>';
 }
-
-print_footer();
+include 'admin_footer.php';
+?>

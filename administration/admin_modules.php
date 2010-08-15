@@ -339,15 +339,15 @@ admin_header(i18n::translate('Module administration'));
 						)->execute(array($module->getName()))->fetchOne();
 						echo '<tr><td>', two_state_checkbox('status-'.$module->getName(), $status=='enabled'), '</td>';
 						//if ($module instanceof WT_Module_Config) echo '<a href="', $module->getConfigLink(), '"><img class="adminicon" src="', $WT_IMAGE_DIR, '/', $WT_IMAGES["admin"]["small"], '" border="0" alt="', $module->getName(), '" /></a>'; ?></td>
-						<td><?php echo $module->getTitle()?></td>
-						<td><?php echo $module->getDescription()?></td>
-						<td><?php if ($module instanceof WT_Module_Menu) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
-						<td><?php if ($module instanceof WT_Module_Tab) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
-						<td><?php if ($module instanceof WT_Module_Sidebar) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
-						<td><?php if ($module instanceof WT_Module_Block) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
-						<td><?php if ($module instanceof WT_Module_Chart) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
-						<td><?php if ($module instanceof WT_Module_Report) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
-						<td><?php if ($module instanceof WT_Module_Theme) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
+						<td class="name nowrap"><?php echo $module->getTitle()?></td>
+						<td class="description"><?php echo $module->getDescription()?></td>
+						<td class="yes_no"><?php if ($module instanceof WT_Module_Menu) echo '<img src="images/yes.png"/>'; else echo '<img src="images/delete.png"/>';?></td>
+						<td class="yes_no"><?php if ($module instanceof WT_Module_Tab) echo '<img src="images/yes.png"/>'; else echo '<img src="images/delete.png"/>';?></td>
+						<td class="yes_no"><?php if ($module instanceof WT_Module_Sidebar) echo '<img src="images/yes.png"/>'; else echo '<img src="images/delete.png"/>';?></td>
+						<td class="yes_no"><?php if ($module instanceof WT_Module_Block) echo '<img src="images/yes.png"/>'; else echo '<img src="images/delete.png"/>';?></td>
+						<td class="yes_no"><?php if ($module instanceof WT_Module_Chart) echo '<img src="images/yes.png"/>'; else echo '<img src="images/delete.png"/>';?></td>
+						<td class="yes_no"><?php if ($module instanceof WT_Module_Report) echo '<img src="images/yes.png"/>'; else echo '<img src="images/delete.png"/>';?></td>
+						<td class="yes_no"><?php if ($module instanceof WT_Module_Theme) echo '<img src="images/yes.png"/>'; else echo '<img src="images/delete.png"/>';?></td>
 						</tr>
 					<?php 
 					}

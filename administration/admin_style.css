@@ -36,7 +36,7 @@
 }
 
 /* jquery-ui custom styles */
-.ui-widget {font-size: 12px;}
+.ui-widget {font-size: 12px; font-family: tahoma, arial, helvetica, sans-serif;}
 .ui-widget-content a:hover   { color: red; }
 .ui-tabs-nav li.ui-tabs-selected   { background: #f8f8f8; }
 .ui-tabs-nav li.ui-tabs-selected a  { font-weight:600; color: #81A9CB; }
@@ -110,12 +110,16 @@ legend {
 	padding-right: 5pt;
 }
 
-.warning, .red {
+.warning, .error, .red {
 	color: red;
 }
 
 .center {
 	text-align: center;
+}
+
+.nowrap {
+	white-space: nowrap;
 }
 
 /* Text direction */
@@ -165,7 +169,7 @@ legend {
 }
 
 #admin_menu dl {
-	max-height: 150px;
+	max-height: 180px;
 	overflow-x: auto;
 	margin-top: 0;
 }
@@ -293,6 +297,25 @@ table#list   {
 	vertical-align:middle;
 }
 
+#list .yes_no img {
+	width: 16px;
+	vertical-align:middle;
+}
+
+#list .name {
+	padding-right: 5px;
+}
+
+#list .description {
+	font-size: 10px;
+	color: #666666;
+	width: 35%;
+}
+
+#list .date {
+	font-size: 80%;
+}
+	
 .edit_link {
 	white-space: nowrap;
 }
@@ -334,10 +357,6 @@ background-color: #EEFFEE;
 	white-space: nowrap;
 }
 
-#list .date {
-	font-size: 80%;
-}
-	
 .dataTables_paginate {
 	padding-top: 0;
 }
@@ -414,3 +433,12 @@ table#server {
 
 #phpinfo  td {
 }
+
+/* ReadMe file */
+#readme {font-size: 12px; padding:10px; }
+#readme 	h3 {color: #81A9CB; font-size:14px; font-weight:bold; margin: 14px 0; }
+#readme 	h2 {color: #81A9CB; font-size:14px; font-weight:bold; margin-top:0; }
+#readme	a {color: #81A9CB; font-weight: normal; text-decoration: none;}
+#readme	a:hover {color: #81A9CB;}
+#readme	li {line-height:150%;}
+#readme	.back {color: #81A9CB; float:right;}

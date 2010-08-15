@@ -48,7 +48,7 @@ class gedcom_news_WT_Module extends WT_Module implements WT_Module_Block {
 
 	// Extend class WT_Module
 	public function getDescription() {
-		return i18n::translate('The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child.');
+		return i18n::translate('The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child.');
 	}
 
 	// Implement class WT_Module_Block

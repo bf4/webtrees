@@ -78,7 +78,7 @@ class FamilyController extends BaseController {
 			if (find_updated_record($this->famid, WT_GED_ID)!==null){
 				$this->famrec = "0 @".$this->famid."@ FAM\n";
 				$this->family = new Family($this->famrec);
-			} else if (empty($this->family)){
+			} else if (!$this->family){
 				return false;
 			}
 		}
@@ -181,12 +181,14 @@ class FamilyController extends BaseController {
 
 	function getHusband() {
 		if (!is_null($this->difffam)) return $this->difffam->getHusbId();
-		return $this->parents['HUSB'];
+		if ($this->family) return $this->parents['HUSB'];
+		return null;
 	}
 
 	function getWife() {
 		if (!is_null($this->difffam)) return $this->difffam->getWifeId();
-		return $this->parents['WIFE'];
+		if ($this->family) return $this->parents['WIFE'];
+		return null;
 	}
 
 	function getChildren() {
@@ -221,6 +223,7 @@ class FamilyController extends BaseController {
 	function getChartsMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGES, $GEDCOM;
 
+		if (!$this->family) return null;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 
@@ -291,6 +294,7 @@ class FamilyController extends BaseController {
 	function getEditMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGES, $GEDCOM, $SHOW_GEDCOM_RECORD;
 
+		if (!$this->family) return null;
 		if ($TEXT_DIRECTION=="rtl") {
 			$ff="_rtl";
 		} else {
@@ -302,13 +306,6 @@ class FamilyController extends BaseController {
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}", 'icon_large_gedcom');
 
 		if (WT_USER_CAN_EDIT) {
-			// edit_fam / edit_fam
-			$submenu = new Menu(i18n::translate('Edit Family'));
-			$submenu->addOnclick("return edit_family('".$this->getFamilyID()."');");
-			$submenu->addIcon('edit_fam');
-			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
-			$menu->addSubmenu($submenu);
-
 			// edit_fam / members
 			$submenu = new Menu(i18n::translate('Change Family Members'));
 			$submenu->addOnclick("return change_family_members('".$this->getFamilyID()."');");

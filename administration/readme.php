@@ -26,9 +26,37 @@ define('WT_SCRIPT_NAME', 'readme.php');
 require '../includes/session.php';
 require 'admin_functions.php';
 
+function get_tag($txt,$tag){
+	$offset = 0;
+	$start_tag = "<".$tag;
+	$end_tag = "</".$tag.">";
+	$arr = array();
+	do{
+		$pos = strpos($txt,$start_tag,$offset);
+		if($pos){
+			$str_pos = strpos($txt,">",$pos)+1;
+			$end_pos = strpos($txt,$end_tag,$str_pos);
+			$len = $end_pos - $str_pos;
+			$f_text = substr($txt,$str_pos,$len);
+			$arr[] = $f_text;
+			$offset = $end_pos;
+		}
+	}while($pos);
+	return $arr;
+}
+	
 admin_header(i18n::translate('ReadMe'));
+
 echo '<div id="readme">';
-	include '../readme.html';
+
+$url = '../readme.html';
+$txt = file_get_contents($url);
+$arr = get_tag($txt, "body");
+
+foreach ($arr as $value) {
+	echo $value;
+}
+	
 echo '</div>';
 include 'admin_footer.php';
 ?>

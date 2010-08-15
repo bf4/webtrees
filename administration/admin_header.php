@@ -101,32 +101,36 @@ echo
 		'</dl>',
 		'<dl>',
 			'<dt><a href="ged_admin.php"><img src="images/tree.png" />', i18n::translate('GEDCOMs'), '</a></dt>',
-			'<dd><a href="ged_admin.php">', i18n::translate('Manage GEDCOMs'), '</a></dd>';
-				//-- gedcom list
+			'<dd><a href="ged_admin.php">', i18n::translate('Manage GEDCOMs'), '</a></dd>',
+			'<dd><i>Configure these :</i></dd>';
+			//-- gedcom list
 				$gedcom_titles=get_gedcom_titles();
 				if (get_site_setting('ALLOW_CHANGE_GEDCOM')) {
 					foreach ($gedcom_titles as $gedcom_title) {
-						echo '<dd><a href="', PrintReady(encode_url('ged_config.php?ctype=gedcom&ged='.$gedcom_title->gedcom_name)), '">', PrintReady($gedcom_title->gedcom_title, true),' - configure</a></dd>';
+						echo '<dd>&nbsp;&nbsp;&nbsp;<a href="', PrintReady(encode_url('ged_config.php?ctype=gedcom&ged='.$gedcom_title->gedcom_name)), '">', PrintReady($gedcom_title->gedcom_title, true),'</a></dd>';
 					}
 				}
 		echo '</dl>',
 		'<dl><dt><a href="user_info.php"><img src="images/users.png" />', i18n::translate('Users'), '</a></dt',
-			'<dd><a href="user_info.php">', i18n::translate('Information'), '</a></dd>',
+			'<dd><a href="user_info.php">', i18n::translate('User Statistics'), '</a></dd>',
 			'<dd><a href="user_list.php">', i18n::translate('Manage users'), '</a></dd>',
 			'<dd><a href="user_admin.php?action=createform">', i18n::translate('Add user'), '</a></dd>',
 			'<dd><a href="#">', i18n::translate('Bulk messaging'), '</a></dd>',
 		'</dl>',
 		'<dl><dt><a href="admin_modules.php"><img src="images/modules.png" />', i18n::translate('Modules'), '</a></dt',
 			'<dd><a href="admin_modules.php">', i18n::translate('Manage modules'), '</a></dd>',
-			'<dd><a href="#">', i18n::translate('Tabs - configure'), '</a></dd>',
-			'<dd><a href="#">', i18n::translate('Sidebar - configure'), '</a></dd>',
-			'<dd><a href="#">', i18n::translate('Menus - configure'), '</a></dd>',
-			'<dd><a href="#">', i18n::translate('Google Map - configure'), '</a></dd>',
-			'<dd><a href="#">', i18n::translate('Lightbox - configure'), '</a></dd>',
-			'<dd><a href="#">', i18n::translate('Sitemap - configure'), '</a></dd>',
-		'</dl>',
+			'<dd><a href="#">', i18n::translate('Tabs - manage'), '</a></dd>',
+			'<dd><a href="#">', i18n::translate('Sidebar - manage'), '</a></dd>',
+			'<dd><a href="#">', i18n::translate('Menus - manage'), '</a></dd>',
+			'<dd>----------------------------</dd>';
+			foreach (WT_Module::getInstalledModules() as $module) {
+				$status=WT_DB::prepare("SELECT status FROM `##module` WHERE module_name=?")->execute(array($module->getName()))->fetchOne();
+				if ($module instanceof WT_Module_Config)
+					echo '<dd><a href="../', $module->getConfigLink(), '">', $module->getTitle(), ' - configure</a></dd>';
+			}
+		echo '</dl>',
 		'<dl><dt><a href="user_info.php"><img src="images/media.png" />', i18n::translate('Media'), '</a></dt>',
-			'<dd><a href="#">', i18n::translate('Manage media'), '</a></dd>',
+			'<dd><a href="admin_media.php">', i18n::translate('Manage media'), '</a></dd>',
 			'<dd><a href="#">', i18n::translate('Upload media'), '</a></dd>',
 			'<dd><a href="#">', i18n::translate('Media firewall'), '</a></dd>',
 		'</dl>',

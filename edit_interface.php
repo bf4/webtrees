@@ -1034,7 +1034,7 @@ case 'editsource':
 
 	echo "<table class=\"facts_table\">";
 	$gedlines = explode("\n", $gedrec); // -- find the number of lines in the record
-	$uniquefacts = preg_split("/[, ;:]+/", get_gedcoom_setting(WT_GED_ID, 'SOUR_FACTS_UNIQUE'), -1, PREG_SPLIT_NO_EMPTY);
+	$uniquefacts = preg_split("/[, ;:]+/", get_gedcom_setting(WT_GED_ID, 'SOUR_FACTS_UNIQUE'), -1, PREG_SPLIT_NO_EMPTY);
 	$usedfacts = array();
 	$lines = count($gedlines);
 	if ($lines==1) {
@@ -2085,9 +2085,9 @@ case 'reorder_media_update': // Update sort using popup
 	echo "<br />", i18n::translate('Update successful'), "<br /><br />";
 
 	if ($currtab=="album") {
-		$link = "individual.php?pid=$pid&show_changes=yes&tab=lightbox";
+		$link = "individual.php?pid=$pid&show_changes=yes#lightbox";
 	}else{
-		$link = "individual.php?pid=$pid&show_changes=yes&tab=media";
+		$link = "individual.php?pid=$pid&show_changes=yes#media";
 	}
 	echo WT_JS_START;
 	echo "edit_close('{$link}')";
@@ -2096,6 +2096,7 @@ case 'reorder_media_update': // Update sort using popup
 
 //------------------------------------------------------------------------------
 case 'al_reset_media_update': // Reset sort using Album Page
+    if (isset($_POST['currtab'])) $currtab = $_POST['currtab'];
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	foreach ($lines as $line) {
@@ -2105,13 +2106,13 @@ case 'al_reset_media_update': // Reset sort using Album Page
 	}
 	replace_gedrec($pid, WT_GED_ID, $newgedrec, $update_CHAN);
 	echo "<br />", i18n::translate('Update successful'), "<br /><br />";
-	if (!file_exists(WT_ROOT.'modules/googlemap/defaultconfig.php')) {
-		$tabno = "7";
+	if ($currtab=="album") {
+		$link = "individual.php?pid=$pid&show_changes=yes#lightbox";
 	}else{
-		$tabno = "8";
+		$link = "individual.php?pid=$pid&show_changes=yes#media";
 	}
 	echo WT_JS_START;
-	echo "location.href='individual.php?pid={$pid}&tab={$tabno}'";
+	echo "edit_close('{$link}')";
 	echo WT_JS_END;
 	break;
 
@@ -2121,7 +2122,7 @@ case 'al_reorder_media_update': // Update sort using Album Page
 		phpinfo(INFO_VARIABLES);
 	}
 	if (isset($_REQUEST['order1'])) $order1 = $_REQUEST['order1'];
-
+    if (isset($_POST['currtab'])) $currtab = $_POST['currtab'];
 	function SwapArray($Array){
 		$Values = array();
 		while (list($Key, $Val) = each($Array))
@@ -2145,13 +2146,13 @@ case 'al_reorder_media_update': // Update sort using Album Page
 		echo "<pre>$newgedrec</pre>";
 	}
 	replace_gedrec($pid, WT_GED_ID, $newgedrec, $update_CHAN);
-	if (!file_exists(WT_ROOT.'modules/googlemap/defaultconfig.php')) {
-		$tabno = "7";
-	} else {
-		$tabno = "8";
+	if ($currtab=="album") {
+		$link = "individual.php?pid=$pid&show_changes=yes#lightbox";
+	}else{
+		$link = "individual.php?pid=$pid&show_changes=yes#media";
 	}
 	echo WT_JS_START;
-	echo "location.href='individual.php?pid={$pid}&tab={$tabno}'";
+	echo "edit_close('{$link}')";
 	echo WT_JS_END;
 	break;
 
@@ -2190,7 +2191,7 @@ case 'reorder_children':
 			$i=0;
 			$show_full = 1; // Force details to show for each child
 			foreach ($children as $id=>$child) {
-				echo "<li style=\"cursor:move;margin-bottom:2px;\"";
+				echo "<li style=\"cursor:move; margin-bottom:2px;\"";
 				if (!in_array($id, $ids)) echo " class=\"facts_valueblue\"";
 				echo " id=\"li_$id\" >";
 				print_pedigree_person($id, 2);
@@ -2211,11 +2212,26 @@ case 'reorder_children':
 					}
 				}
 			);
-		<?php echo WT_JS_END; ?>
+		<?php echo WT_JS_END; 
+		if (WT_USER_IS_ADMIN) {
+			echo "<center><table width=93%><tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
+			echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox ", $TEXT_DIRECTION, " wrap\">\n";
+			if ($NO_UPDATE_CHAN) {
+				echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
+			} else {
+				echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+			}
+			echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />\n";
+			$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
+			echo format_fact_date($event, false, true);
+			echo "</td></tr></table></center><br />\n";
+		}
+		?>
 		<button type="submit"><?php echo i18n::translate('Save'); ?></button>
 		<button type="submit" onclick="document.reorder_form.action.value='reorder_children'; document.reorder_form.submit();"><?php echo i18n::translate('Sort by birth dates'); ?></button>
 		<button type="submit" onclick="window.close();"><?php echo i18n::translate('Cancel'); ?></button>
 	</form>
+	<br />
 	<?php
 	break;
 //------------------------------------------------------------------------------
@@ -2493,53 +2509,6 @@ case 'changefamily_update':
 		replace_gedrec($famid, WT_GED_ID, $gedrec, $update_CHAN);
 		$success = true;
 	}
-	break;
-//------------------------------------------------------------------------------
-//-- edit a fact record in a form
-case 'edit_family':
-	init_calendar_popup();
-	echo "<form method=\"post\" action=\"edit_interface.php\" enctype=\"multipart/form-data\">\n";
-	echo "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
-	echo "<input type=\"hidden\" name=\"famid\" value=\"$famid\" />\n";
-	echo "<br /><input type=\"submit\" value=\"", i18n::translate('Save'), "\" /><br />\n";
-	echo "<table class=\"facts_table\">";
-
-	$gedlines = explode("\n", $gedrec); // -- find the number of lines in the record
-	$empty = true;
-	for ($i=$linenum; $i<count($gedlines); $i++) {
-		$fields = explode(' ', $gedlines[$i]);
-		if ((substr($gedlines[$i], 0, 1)<2) && $fields[1]!="HUSB" && $fields[1]!="WIFE" && $fields[1]!="CHIL" && $fields[1]!="CHAN") {
-			$level1type = create_edit_form($gedrec, $i, $level0type);
-			echo "<input type=\"hidden\" name=\"linenum[]\" value=\"$i\" />\n";
-			$empty = false;
-		}
-	}
-	if ($empty) {
-		$linenum=count($gedlines);
-		create_add_form("MARR");
-		echo "<input type=\"hidden\" name=\"linenum[]\" value=\"$i\" />\n";
-	}
-	if (WT_USER_IS_ADMIN) {
-		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
-		if ($NO_UPDATE_CHAN) {
-			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
-		} else {
-			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
-		}
-		echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />\n";
-		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
-		echo format_fact_date($event, false, true);
-		echo "</td></tr>\n";
-	}
-	echo "</table>";
-	print_add_layer("NOTE");
-	print_add_layer("SHARED_NOTE");
-	print_add_layer("OBJE");
-	//-- RESN missing in new structure, RESN can be added to all level 1 tags
-	if (!in_array("RESN", $tags)) print_add_layer("RESN");
-	echo "<br /><input type=\"submit\" value=\"", i18n::translate('Save'), "\" /><br />\n";
-	echo "</form>\n";
 	break;
 //------------------------------------------------------------------------------
 case 'reorder_update':
