@@ -36,7 +36,6 @@ define('WT_WT_SERVICELOGIC_CLASS_PHP', '');
 
 require_once WT_ROOT.'webservice/genealogyService.php';
 require_once WT_ROOT.'includes/functions/functions_edit.php';
-require_once WT_ROOT.'includes/classes/class_gewebservice.php';
 
 class wtServiceLogic extends GenealogyService {
 
@@ -108,12 +107,11 @@ class wtServiceLogic extends GenealogyService {
 	 * @param string $username the username for the user attempting to login
 	 * @param string $password the plain text password to test
 	 * @param string $compression the compression library to use
-	 * @param string $type specifies a raw data type with current valid values of GEDCOM, or GRAMPS
 	 * @return mixed If login sucessful: returns session id, message and compression
 	 *		library that is being used. If login unsucessful: returns a SOAP_Fault
 	 * @todo implement banning
 	 */
-	function postAuthenticate($username, $password, $gedcom_id, $compression,$data_type="GEDCOM") {
+	function postAuthenticate($username, $password, $gedcom_id, $compression) {
 		global $GEDCOM;
 
 		$GEDCOM = $this->default_gedcom($gedcom_id);
@@ -123,11 +121,9 @@ class wtServiceLogic extends GenealogyService {
 		if (empty($username) && !$REQUIRE_AUTHENTICATION) {
 			$_SESSION["GEDCOM"] = $GEDCOM;
 			$_SESSION["compression"] = $compress_method;
-			$_SESSION["data_type"] = $data_type;
 			$_SESSION["readonly"] = true;
 			//soap return
 			$return['SID'] = $sid;
-			$return['data_type'] = $data_type;
 			$return['message'] = 'Logged in as guest';
 			$return['compressionMethod'] = $compress_method;
 			$return['gedcom_id'] = $GEDCOM;
@@ -143,10 +139,8 @@ class wtServiceLogic extends GenealogyService {
 		if (authenticateUser($username, $password)) {
 			$_SESSION["GEDCOM"] = $GEDCOM;
 			$_SESSION["compression"] = $compress_method;
-			$_SESSION["data_type"] = $data_type;
 			if (isset( $_SESSION["readonly"] )) unset($_SESSION["readonly"]);
 			$return['SID'] = $sid;
-			$return['data_type'] = $data_type;
 			$return['message'] = $username . " Logged in sucessfully";
 			$return['compressionMethod'] = $compress_method;
 			$return['gedcom_id'] = $GEDCOM;
@@ -424,11 +418,7 @@ class wtServiceLogic extends GenealogyService {
 	 ***/
 	function postGetFamilyByID($SID, $FID) {
 		global $GEDCOM, $MEDIA_DIRECTORY;
-		if ($data_type="GEDCOM") {
-			$returnType = 'gedcom';
-		} else {
-			$returnType = 'gramps';
-		}
+		$returnType = 'gedcom';
 		if (!empty($FID)) {
 			$xrefs = explode(';', $FID);
 			$success = true;

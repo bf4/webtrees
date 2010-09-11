@@ -98,8 +98,7 @@ class GenealogyService
 				'username' => 'string',
 				'password' => 'string',
 				'gedcom' => 'string',
-				'compression' => 'string', //not implemented
-				'data_type' => 'string'
+				'compression' => 'string' //not implemented
 			),
 			'out' => array(
 				'result' => '{urn:' . $this->__namespace . '}authResult'//declared below
@@ -495,14 +494,11 @@ class GenealogyService
 	* @param string password
 	* @param string gedcom id of the gedcom to use
 	* @param string compression compression lib to use (not implemented)
-	* @param string $type specifies a raw data type with current valid values of GEDCOM, or GRAMPS
 	*/
-	function Authenticate($username, $password, $gedcom, $compression, $data_type="GEDCOM")
+	function Authenticate($username, $password, $gedcom, $compression)
 	{
-		if (empty($data_type)) $data_type='GEDCOM';
-
-		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") Authenticate($username, '****', $gedcom, $compression, $data_type)", 'auth');
-		$result = $this->postAuthenticate($username, $password, $gedcom, $compression, $data_type);
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") Authenticate($username, '****', $gedcom, $compression)", 'auth');
+		$result = $this->postAuthenticate($username, $password, $gedcom, $compression);
 		if($result !== false)
 		{
 			//if everything worked set the session value to true
@@ -520,7 +516,7 @@ class GenealogyService
 	/**
 	* Method to override
 	*/
-	function postAuthenticate($username, $password, $gedcom_id, $compression, $data_type="GEDCOM")
+	function postAuthenticate($username, $password, $gedcom_id, $compression)
 	{
 		return false;
 	}
