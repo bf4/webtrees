@@ -142,12 +142,18 @@ function closeCallback() {
 		jQuery.get('individual.php?pid=<?php echo $controller->pid;?>&action=ajax&pin=false');
 		pinned = false;
 	}
+	// For Google Maps v2 only ---------------------------------------------------------------------
+	/*
 	if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title") == "googlemap") {
 		loadMap();
 		map.setMapType(<?php echo $GOOGLEMAP_MAP_TYPE; ?>);
 		SetMarkersAndBounds();
 		ResizeMap();
 	}
+	*/
+	// For Google Maps v3 only ---------------------------------------------------------------------
+	loadMap();
+	// ---------------------------------------------------------------------------------------------	
 }
 
 function openCallback() {
@@ -162,12 +168,18 @@ function openCallback() {
 			}
 		}
 	});
+	// For Google Maps v2 only ---------------------------------------------------------------------
+	/*
 	if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title") == "googlemap") {
 		loadMap();
 		map.setMapType(<?php echo $GOOGLEMAP_MAP_TYPE; ?>);
 		SetMarkersAndBounds();
 		ResizeMap();
 	}
+	*/
+	// For Google Maps v3 only ---------------------------------------------------------------------
+	loadMap();
+	// ---------------------------------------------------------------------------------------------	
 }
 
 jQuery(document).ready(function() {

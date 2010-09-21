@@ -98,6 +98,7 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 		ob_start();
 		require_once WT_ROOT.'modules/googlemap/googlemap.php';
 		require_once WT_ROOT.'modules/googlemap/defaultconfig.php';
+
 		?>
 <table border="0" width="100%">
 	<tr>
@@ -169,7 +170,7 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 						$famids[] = $family->getXref();
 					}
 					$this->controller->indi->add_family_facts(false);
-					create_indiv_buttons();
+//					create_indiv_buttons();
 					build_indiv_map($this->controller->indi->getIndiFacts(), $famids);
 					print "</div>\n";
 					print "</td>";
@@ -185,6 +186,8 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 		</td>
 	</tr>
 </table>
+
+
 		<?php
 		return '<div id="'.$this->getName().'_content">'.ob_get_clean().'</div>';
 	}
@@ -195,24 +198,17 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 
 		return !$SEARCH_SPIDER && (array_key_exists('googlemap', WT_Module::getActiveModules()) || WT_USER_IS_ADMIN);
 	}
+	
 
 	// Implement WT_Module_Tab
 	public function getJSCallback() {
 		global $GOOGLEMAP_PH_CONTROLS;
 		$out=
-			'if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title")=="'.$this->getName().'") {'.
-			' loadMap();';
-		if ($GOOGLEMAP_PH_CONTROLS) {
-			$out.=
-				' GEvent.addListener(map,"mouseout", function() { map.hideControls(); });'.
-				' GEvent.addListener(map,"mouseover",function() { map.showControls(); });'.
-				' GEvent.trigger    (map,"mouseout");';
-		}
-		$out.=
-			' map.setMapType(GOOGLEMAP_MAP_TYPE);'.
-			' SetMarkersAndBounds();'.
-			' ResizeMap();'.
-			'}';
+			//'if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title")=="'.$this->getName().'") {'.
+				'loadMap();'.
+			//'}'.
+			'';
 		return $out;
 	}
+
 }

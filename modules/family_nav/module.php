@@ -122,6 +122,8 @@ class family_nav_WT_Module extends WT_Module implements WT_Module_Sidebar {
 		}
 		';
 		echo WT_JS_END;
+
+
 		
 	 // Start Family Nav Table ----------------------------
 		echo "<table class=\"nav_content\" cellpadding=\"0\">"; 

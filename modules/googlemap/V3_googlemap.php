@@ -26,9 +26,8 @@
  *
  * @package webtrees
  * @subpackage Module
- * $Id$
- *
- * @author Brian Holland
+ * $Id: googlemap.php 9140 2010-07-21 16:01:50Z greg $
+ * @author Johan Borkhuis
  */
 
 if (!defined('WT_WEBTREES')) {
@@ -307,20 +306,13 @@ function setup_map() {
 	}
 	?>
 	
+	<!-- <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script> -->
+	<!-- <script src="modules/googlemap/wt_googlemap.js" type="text/javascript"></script> -->
+	
 	<!--  V3 ============ -->
-
 	<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
-	<!--
-	<link type="text/css" href="modules/googlemap/css/wt_v3_googlemap.css" rel="stylesheet" />
-	-->
 	<!--  V3 ============ -->
 	
-	<!--
-	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
-	<script src="modules/googlemap/wt_googlemap.js" type="text/javascript"></script>
-	-->
-	
-<!--
 	<script type="text/javascript">
 	// <![CDATA[
 		if (window.attachEvent) {
@@ -338,8 +330,6 @@ function setup_map() {
 	var startZoomLevel = <?php echo $GOOGLEMAP_MAX_ZOOM;?>;
 	//]]>
 	</script>
--->
-	
 	<?php
 }
 
@@ -361,13 +351,11 @@ function tool_tip_text($marker) {
 // dates & RTL is not OK - adding PrintReady does not solve it
 }
 
-
-
 function create_indiv_buttons() {
 	?>
 	<link type="text/css" href ="modules/googlemap/css/googlemap_style.css" rel="stylesheet" />
 	<script type='text/javascript'>
-
+	<!--
 	function Map_type() {}
 	Map_type.prototype = new GControl();
 
@@ -436,11 +424,10 @@ function create_indiv_buttons() {
 		return new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(2, 2));
 	}
 	var map_type;
-
+	-->
 	</script>
 	<?php
 }
-
 
 function build_indiv_map($indifacts, $famids) {
 	global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
@@ -451,8 +438,8 @@ function build_indiv_map($indifacts, $famids) {
 
 	$zoomLevel = $GOOGLEMAP_MAX_ZOOM;
 	$placelocation=WT_DB::table_exists("##placelocation");
-	//-- sort the facts into date order
-	sort_facts($indifacts); 
+	//-- sort the facts
+	//sort_facts($indifacts); facts should already be sorted
 	$i = 0;
 	foreach ($indifacts as $key => $value) {
 			$fact = $value->getTag();
@@ -585,9 +572,8 @@ function build_indiv_map($indifacts, $famids) {
 										$match2[1] = trim($match2[1]);
 										$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.'), $match1[1]);
 										$markers[$i]["lng"]  = str_replace(array('E', 'W', ','), array('', '-', '.'), $match2[1]);
-										if ($ctd > 0) {
+										if ($ctd > 0)
 											$markers[$i]["date"] = $matchd[1];
-										}
 										$markers[$i]["name"] = $smatch[$j][1];
 									} else {
 										if ($placelocation == true) {
@@ -615,14 +601,11 @@ function build_indiv_map($indifacts, $famids) {
 												}
 												$markers[$i]["icon"] = $latlongval["icon"];
 												$markers[$i]["placerec"] = $placerec;
-												if ($zoomLevel > $latlongval["zoom"]) {
-													$zoomLevel = $latlongval["zoom"];
-												}
+												if ($zoomLevel > $latlongval["zoom"]) $zoomLevel = $latlongval["zoom"];
 												$markers[$i]["lati"]     = str_replace(array('N', 'S', ','), array('', '-', '.'), $latlongval["lati"]);
 												$markers[$i]["lng"]      = str_replace(array('E', 'W', ','), array('', '-', '.'), $latlongval["long"]);
-												if ($ctd > 0) {
+												if ($ctd > 0)
 													$markers[$i]["date"] = $matchd[1];
-												}
 												$markers[$i]["name"]   = $smatch[$j][1];
 											}
 										}
@@ -677,12 +660,7 @@ function build_indiv_map($indifacts, $famids) {
 						$multimarker = $multimarker + 1;
 
 				if ($multimarker == 0) {        // Only one location with this long/lati combination
-				
-					// $markers[$j]["placed"] = "yes";
-					// === NOTE for V3 api, following line is changed from "yes" to "no" to aid identifying multi-event locations ======
 					$markers[$j]["placed"] = "no";
-					// =================================================================================================================
-		
 					if (($markers[$j]["lati"] == NULL) || ($markers[$j]["lng"] == NULL) || (($markers[$j]["lati"] == "0") && ($markers[$j]["lng"] == "0"))) { 
 						echo "var Marker{$j}_flag = new GIcon();\n";
 						echo "	Marker{$j}_flag.image = \"modules/googlemap/images/marker_yellow.png\";\n";
@@ -712,7 +690,7 @@ function build_indiv_map($indifacts, $famids) {
 					if (!empty($markers[$j]["name"])) {
 						$person=Person::getInstance($markers[$j]['name']);
 						if ($person) {
-							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : i18n::translate('Private'), '<\/a>';
+							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : i18n::translate('Private'), '</a>';
 						}
 					}
 					echo "<br />";
@@ -728,7 +706,7 @@ function build_indiv_map($indifacts, $famids) {
 					if (($markers[$j]["lati"] == NULL) || ($markers[$j]["lng"] == NULL) || (($markers[$j]["lati"] == "0") && ($markers[$j]["lng"] == "0"))) {
 						echo "<br /><br />", i18n::translate('This place has no coordinates');
 						if (WT_USER_IS_ADMIN)
-							echo '<br /><a href=\"module.php?mod=googlemap&mod_action=places&display=inactive\">', i18n::translate('Edit geographic location'), '<\/a>';
+							echo '<br /><a href=\"module.php?mod=googlemap&mod_action=places&display=inactive\">', i18n::translate('Edit geographic location'), '</a>';
 						echo "\");\n";
 					}
 					else if (!$GOOGLEMAP_COORD){
@@ -772,7 +750,7 @@ function build_indiv_map($indifacts, $famids) {
 					if (!empty($markers[$j]["name"])) {
 						$person=Person::getInstance($markers[$j]['name']);
 						if ($person) {
-							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : i18n::translate('Private'), '<\/a>';
+							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : i18n::translate('Private'), '</a>';
 						}
 					}
 					echo "<br />";
@@ -798,12 +776,7 @@ function build_indiv_map($indifacts, $famids) {
 						if (($markers[$j]["lati"] == $markers[$k]["lati"]) && ($markers[$j]["lng"] == $markers[$k]["lng"])) {
 							$markers[$k]["placed"] = "yes";
 							$markers[$k]["index"] = $indexcounter;
-							
-							// if ($tabcounter == 4) {
-							// V3 ==============================
-							if ($tabcounter == 10) {  
-							// V3 ==============================
-							
+							if ($tabcounter == 4) {
 								// Use @ because some installations give warnings (but not errors?) about UTF-8
 								$tooltip=@html_entity_decode(strip_tags(tool_tip_text($markers[$k])), ENT_QUOTES, 'UTF-8');
 								echo "\n";
@@ -844,7 +817,7 @@ function build_indiv_map($indifacts, $famids) {
 							if (!empty($markers[$k]["name"])) {
 								$person=Person::getInstance($markers[$k]['name']);
 								if ($person) {
-									echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : i18n::translate('Private'), '<\/a>';
+									echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : i18n::translate('Private'), '</a>';
 								}
 							}
 							echo "<br />";
@@ -883,104 +856,37 @@ function build_indiv_map($indifacts, $famids) {
 		}
 	?>
 	} </script>
-
-<!-- <script> alert ("ALERT 1 = " + jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title"));	</script> -->
-
-	<?php
-	// add $gmarks array to V3_GM_googlemap.js.php -----------------		
-	$gmarks = $markers;
-	
-	// Choose test version required - "v3", "v3a", "v3_next" or "xml" ==============================
-	
-	$gm_version_test = "v3_next";		
-	
-	// v3 ------------------------------------------------------------------------------
-	if ($gm_version_test == "v3") {
- 		echo '<script type="text/javascript" src="modules/googlemap/V3_jquery.min.js"></script>';
-		echo '<script type="text/javascript" src="modules/googlemap/V3_jquery-ui.min.js"></script>';	
-		echo '<link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" />';
-		require_once WT_ROOT.'modules/googlemap/V3_googlemap.js.php';
-		
-	// v3a -----------------------------------------------------------------------------
-	} else if ($gm_version_test == "v3a") {
-		echo '<link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" />';
-		require_once WT_ROOT.'modules/googlemap/V3_googlemap.js.php';
-
-	// v3_next -------------------------------------------------------------------------
-	} else if ($gm_version_test == "v3_next") {
-		require_once WT_ROOT.'modules/googlemap/V3a_googlemap.js.php';
-		echo '<link type="text/css" href="modules/googlemap/css/V3a_googlemap.css" rel="stylesheet" />';
-
-	// xml -----------------------------------------------------------------------------
-	} else if ($gm_version_test == "xml") {
- 		//echo '<script type="text/javascript" src="modules/googlemap/V3_jquery.min.js"></script>';
-		//echo '<script type="text/javascript" src="modules/googlemap/V3_jquery-ui.min.js"></script>';
-		echo '<link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" />';
-		require_once WT_ROOT.'modules/googlemap/xmltest2.html';
-	}
-		
-	// =============================================================================================
-	?>
-
-<!-- <script> alert ("ALERT 2 = " + jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title"));	</script> -->
-
-
-	
-	<?php 
-	// For xmltest2.html only ----------------------------------------------------------------------
-
-	?>
-	
-	<script>
-//	alert ('ALERT 1 = ' + jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title"));	
-//	alert ('ALERT 1a = ' + jQuery("#tabs").tabs('option', 'selected'));
-
-//	loadMap();
-	</script>
-<!--
+				
 	<script type="text/javascript" src="modules/googlemap/V3_jquery.min.js"></script>
 	<script type="text/javascript" src="modules/googlemap/V3_jquery-ui.min.js"></script>
 	
+	<link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" />
+
+<!--
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css"/> 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 -->
-	
-	<!-- <link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" /> -->
-	<!-- <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css"/> -->
-	<!-- <script type="text/javascript" src="modules/googlemap/util.js"></script> -->
+	<?php		
+	// Important this is left in this position =====================
+		// add $gmarks array to V3_GM_googlemap.js.php -----
+		$gmarks = $markers;			
+		require_once WT_ROOT.'modules/googlemap/V3_googlemap.js.php';
+		// require_once WT_ROOT.'modules/googlemap/xmltest2.html';
+	?>		
+		<script>
+			loadMap();
+		</script>
 
-	<?php
-
-	// ---------------------------------------------------------------------------------------------
-	?>
-	
-
-	<?php 
-	// For xmltest2.html only ----------------------------------------------------------------------
-	/*
-	?>
-	<script>	
-	alert ('ALERT 2 = wait for it');	
-	jQuery("#gmtabs").tabs('select', 1);
-	alert ('ALERT 2a = ' + jQuery("#gmtabs").tabs('option', 'selected'));    
-	alert ('ALERT 3 = ' + jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title"));
-	</script>
-	<?php
-	*/
-	// ---------------------------------------------------------------------------------------------
-	?>
-	
-	
-	<?php	
+		<?php
 		echo "<div style=\"overflow: auto; overflow-x: hidden; overflow-y: auto; height: {$GOOGLEMAP_YSIZE}px;\"><table class=\"facts_table\">";
 		$z=0;
 		foreach($markers as $marker) {
 			echo "<tr>";
 			echo "<td class=\"facts_label\">";
-			
-			// echo "<a href=\"javascript:highlight({$marker["index"]}, {$marker["tabindex"]})\">{$marker["fact"]}</a></td>";
-			// V3 ==========================================
+			//echo "<a href=\"javascript:highlight({$marker["index"]}, {$marker["tabindex"]})\">{$marker["fact"]}</a></td>";			
 			echo "<a href=\"javascript:myclick({$z}, {$marker["index"]}, {$marker["tabindex"]})\">{$marker["fact"]}</a></td>";
 			$z++;			
-			// V3 ==========================================
 			
 			echo "<td class=\"{$marker['class']}\" style=\"white-space: normal\">";
 			if (!empty($marker["info"]))
@@ -1007,46 +913,47 @@ function build_indiv_map($indifacts, $famids) {
 		echo "</table></div><br />";
 	}
 	
-
-	// ======= More V3 api stuff which will come later =====================	
 	?>
-    <table id="s_bar" style="display:none;">
+
+    <table border=1 style="display: none;">
       	<tr>
-        	<td valign="top" >
+        	<td valign="top" style="padding-left:5px; width:360px; text-decoration:none; color:#4444ff; background:#aabbd8;">
            		<div id="side_bar"></div>
         	</td>
       	</tr>
     </table>
 
-    <table id="view_type">   
+    <table>   
     	<tr>
-    		<td>
-    			<form id="form1" action="#">     		
-      				<!-- Events:<input 	name= "radio1" type="checkbox" id="theatrebox" onclick="boxclick(this,'theatre')" checked /> &nbsp; -->
-					StreetView:<input name= "radio2" type="checkbox" id="golfbox" onclick="boxclick(this,'golf')" /> &nbsp;     				      				    				
+    		<td style="width: 360px; text-align:center;">
+    			<form style="width: 360px; id="form1" action="#">     		
+      				Event Map:<input 	name= "radio1" type="checkbox" id="theatrebox" onclick="boxclick(this,'theatre')" checked /> &nbsp;
+					Pedigree Map:<input name= "radio2" type="checkbox" id="golfbox" onclick="boxclick(this,'golf')" /> &nbsp;      				
+      				<!-- Other Map:<input type="checkbox" id="infobox" onclick="boxclick(this,'info')" /> -->
+     				
 					<?php
-					// --------- For later use -------------
-					/*					
-					 Other Map:<input type="checkbox" id="infobox" onclick="boxclick(this,'info')" /> 					
+					// ========= For later use =====================
+					/*
       				<b>Pedigree Map:</b><input id="sel2" name="select" type=radio  />
 					&nbsp;&nbsp;
       				Parents: <input type="checkbox" id="parentsbox" onclick="boxclick(this,'gen1')" /> &nbsp;&nbsp;
       				Grandparents: <input type="checkbox" id="gparentsbox" onclick="boxclick(this,'gen2')" /> &nbsp;&nbsp;
       				Great Grandparents: <input type="checkbox" id="ggparentsbox" onclick="boxclick(this,'gen3')" /><br />
       				*/
-
-					?>    				
- 			   	</form>     	
+					?>
+     				
+ 			   	</form> 
+    	
     		</td>
     		<td style="width: 200px;">
     		</td>
     	</tr>
     </table>
-	<?php
-	// =====================================================================
-
+		
+		<?php	
 	
 	echo "\n<br />";
+
 	return $i;
 }
 

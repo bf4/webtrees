@@ -1,0 +1,50 @@
+/*
+* jQuery UI CSS Framework
+* Copyright (c) 2010 AUTHORS.txt (http://jqueryui.com/about)
+* Dual licensed under the MIT (MIT-LICENSE.txt) and GPL (GPL-LICENSE.txt) licenses.
+*/
+
+
+/* Component containers ----------------------------------*/
+/* #gmtabs.ui-widget { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1.1em; } */
+#gmtabs.ui-widget { width: 310px; padding: 0px; font-family: Verdana,Arial,sans-serif; font-size: 0.9em; }
+
+
+/* Tabs ----------------------------------*/
+
+#gmtabs.ui-tabs { margin-right: 2em; margin-bottom: 1em; position: relative; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+
+#gmtabs.ui-tabs .ui-tabs-nav li { list-style: none; float: left; position: relative; top: 1px; margin: 0 .2em 1px 0; border-bottom: 0 !important; padding: 0; white-space: nowrap; }
+#gmtabs.ui-tabs .ui-tabs-nav li a { float: left; padding: .3em .3em; text-decoration: none; }
+#gmtabs.ui-tabs .ui-tabs-nav li.ui-tabs-selected { margin-bottom: 0; padding-bottom: 1px; }
+#gmtabs.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, #gmtabs.ui-tabs .ui-tabs-nav li.ui-state-disabled a, #gmtabs.ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
+#gmtabs.ui-tabs .ui-tabs-nav li a, #gmtabs.ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } 
+#gmtabs.ui-tabs .ui-tabs-panel { display: block;  padding: 0em .3em; background: none; white-space: nowrap; } 
+#gmtabs.ui-tabs .ui-tabs-hide { display: none !important; }
+
+/* .ui-tabs .ui-tabs-hide { display: none !important; } */
+
+/*
+#gmtabs {
+font-size: 11px;
+width:400px;
+height: 300px;
+}
+.tabs {
+width:380px;
+height: 290px;
+ 
+}
+#txt {
+width:360px;
+margin-top: -8px;
+margin-left: -8px;
+background: #ffffcc;
+text-align: center;
+}
+#pano {
+width:360px;
+height: 220px;
+margin-left: -8px;
+}
+*/

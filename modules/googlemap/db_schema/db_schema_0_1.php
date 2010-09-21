@@ -53,6 +53,14 @@ WT_DB::exec(
 	" pl_lati      VARCHAR(30)      NULL,".
 	" pl_zoom      INTEGER          NULL,".
 	" pl_icon      VARCHAR(255)     NULL,".
+//
+	" pl_media      VARCHAR(30)     NULL,".	
+	" sv_long      	VARCHAR(30)     NULL,".
+	" sv_lati      	VARCHAR(30)     NULL,".	
+	" sv_bearing    FLOAT		NOT NULL,".
+	" sv_elevation  FLOAT		NOT NULL,".
+	" sv_zoom		FLOAT		NOT NULL,".
+//	
 	" PRIMARY KEY     (pl_id),".
 	"         KEY ix1 (pl_level),".
 	"         KEY ix2 (pl_long),".

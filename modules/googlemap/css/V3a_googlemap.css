@@ -1,0 +1,141 @@
+/*
+ * webtrees googlemap V3 css
+ *
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package webtrees
+ * @subpackage Module
+ * $Id: wt_v3_jquery_custom.css 9140 2010-07-21 16:01:50Z greg $
+ *
+ * @author Brian Holland
+*/
+
+/* Tabs ----------------------------------*/
+/*
+#gmtabs.ui-tabs { margin-right: 2em; margin-bottom: 1em; position: relative; } 
+
+#gmtabs.ui-tabs .ui-tabs-nav li { list-style: none; float: left; position: relative; top: 1px; margin: 0 .2em 1px 0; border-bottom: 0 !important; padding: 0; white-space: nowrap; }
+#gmtabs.ui-tabs .ui-tabs-nav li a { float: left; padding: .3em .3em; text-decoration: none; }
+#gmtabs.ui-tabs .ui-tabs-nav li.ui-tabs-selected { margin-bottom: 0; padding-bottom: 1px; }
+#gmtabs.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, #gmtabs.ui-tabs .ui-tabs-nav li.ui-state-disabled a, #gmtabs.ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; } 
+#gmtabs.ui-tabs .ui-tabs-nav li a, #gmtabs.ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } 
+#gmtabs.ui-tabs .ui-tabs-panel { display: block;  padding: 0em .3em; background: none; white-space: nowrap; } 
+#gmtabs.ui-tabs .ui-tabs-hide { display: none !important; }
+*/
+
+
+
+
+#iwhead {
+	text-align: center;
+	font-size: 11px;
+	white-space: nowrap;
+	margin-right: -1px; 
+	margin-left: -1px; 
+	margin-top: -1px; 
+	background: #ffffbb;
+	border: 1px solid #bbbbbb;
+	padding-left: .5em;
+	padding-right: .5em;
+	padding-top: .05em;
+	padding-bottom: .2em;
+}
+
+#iwhead a {
+	color: blue;
+}
+
+#iwhead a:hover {
+	color: red;
+}
+
+#iwcontent {
+	background-color: #ddeeff;
+	border: 1px solid #bbbbbb;
+	min-width: 250px;
+	margin-right: 1.5em;
+}
+
+#iwcontent a {
+	color: blue;
+}
+
+#iwcontent a:hover {
+	color: red;
+}
+
+#gmtabs {
+	margin-top: 0em;
+	margin-left: 0.3em;
+	/* font-size: 12px; */
+}
+
+#gmtabs p {
+	margin-top: 0em;
+	font-size: 12px;
+}
+
+#gmtabs p #sp1 {
+	color: #000000;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+.highlt_img {
+	width: 60px;
+	background: #ddeeff;
+	text-align: center;
+}
+.highlt_img img{
+	float: none;
+	border: none;
+}
+
+
+
+
+
+/*  === Elements To be defined later (leave as dislay:none; for now) ==== */ 
+
+/* sidebar */
+#s_bar {
+	display: none;
+	width:370px;
+	border: 1px solid black;
+	margin-bottom: 1em;
+}
+#s_bar td{
+	padding-left:5px;
+	width: 370px;
+	text-decoration:none;
+	color:#4444ff;
+	background:#aabbd8;
+}
+
+/* view_type */
+#view_type {
+	display: block;
+	margin-top: -12px;
+}
+#view_type td {
+	width: 360px;	
+}
+#view_type form{
+	width: 360px;
+	text-align: center;
+}
