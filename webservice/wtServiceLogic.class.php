@@ -116,7 +116,7 @@ class wtServiceLogic extends GenealogyService {
 
 		$GEDCOM = $this->default_gedcom($gedcom_id);
 		$compress_method = $this->setCompression($compression);
-		$sid = session_id();
+		$sid = Zend_Session::getId();
 		//guest auth
 		if (empty($username) && !$REQUIRE_AUTHENTICATION) {
 			$_SESSION["GEDCOM"] = $GEDCOM;
