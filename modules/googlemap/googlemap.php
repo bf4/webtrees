@@ -923,51 +923,6 @@ function build_indiv_map($indifacts, $famids) {
 	?>
 
 <!-- <script> alert ("ALERT 2 = " + jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title"));	</script> -->
-
-
-	
-	<?php 
-	// For xmltest2.html only ----------------------------------------------------------------------
-
-	?>
-	
-	<script>
-//	alert ('ALERT 1 = ' + jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title"));	
-//	alert ('ALERT 1a = ' + jQuery("#tabs").tabs('option', 'selected'));
-
-//	loadMap();
-	</script>
-<!--
-	<script type="text/javascript" src="modules/googlemap/V3_jquery.min.js"></script>
-	<script type="text/javascript" src="modules/googlemap/V3_jquery-ui.min.js"></script>
-	
--->
-	
-	<!-- <link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" /> -->
-	<!-- <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css"/> -->
-	<!-- <script type="text/javascript" src="modules/googlemap/util.js"></script> -->
-
-	<?php
-
-	// ---------------------------------------------------------------------------------------------
-	?>
-	
-
-	<?php 
-	// For xmltest2.html only ----------------------------------------------------------------------
-	/*
-	?>
-	<script>	
-	alert ('ALERT 2 = wait for it');	
-	jQuery("#gmtabs").tabs('select', 1);
-	alert ('ALERT 2a = ' + jQuery("#gmtabs").tabs('option', 'selected'));    
-	alert ('ALERT 3 = ' + jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title"));
-	</script>
-	<?php
-	*/
-	// ---------------------------------------------------------------------------------------------
-	?>
-	
 	
 	<?php	
 		echo "<div style=\"overflow: auto; overflow-x: hidden; overflow-y: auto; height: {$GOOGLEMAP_YSIZE}px;\"><table class=\"facts_table\">";
