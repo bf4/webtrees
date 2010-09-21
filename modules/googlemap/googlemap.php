@@ -27,7 +27,7 @@
  * @package webtrees
  * @subpackage Module
  * $Id$
- * @author Johan Borkhuis
+ * @author Brian Holland
  */
 
 if (!defined('WT_WEBTREES')) {
