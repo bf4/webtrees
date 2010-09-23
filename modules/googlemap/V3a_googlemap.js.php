@@ -216,7 +216,7 @@
           	}
         }
         // == check the checkbox ==
-        document.getElementById(category+"box").checked = true;
+        //document.getElementById(category+"box").checked = true;
         // == close any info window for clarity
         infowindow.close();
     }
@@ -629,8 +629,8 @@
       	
       	
    		// == show or hide the categories initially ==
-   		show("theatre");
-    	hide("golf");
+   		//show("theatre");
+    	//hide("golf");
         //hide("info");
         
         // initially load sidebar (hidden item but THIS IS required)

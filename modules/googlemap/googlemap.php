@@ -308,244 +308,132 @@ function setup_map() {
 	?>
 	
 	<!--  V3 ============ -->
-
 	<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
-	<!--
-	<link type="text/css" href="modules/googlemap/css/wt_v3_googlemap.css" rel="stylesheet" />
-	-->
 	<!--  V3 ============ -->
 	
-	<!--
-	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
-	<script src="modules/googlemap/wt_googlemap.js" type="text/javascript"></script>
-	-->
-	
-<!--
 	<script type="text/javascript">
-	// <![CDATA[
-		if (window.attachEvent) {
-			window.attachEvent("onunload", function() {
-				GUnload();      // Internet Explorer
-			});
-		} else {
-			window.addEventListener("unload", function() {
-				GUnload(); // Firefox and standard browsers
-			}, false);
-		}
-	var GOOGLEMAP_MAP_TYPE =<?php echo $GOOGLEMAP_MAP_TYPE;?>;
-	var minZoomLevel = <?php echo $GOOGLEMAP_MIN_ZOOM;?>;
-	var maxZoomLevel = <?php echo $GOOGLEMAP_MAX_ZOOM;?>;
-	var startZoomLevel = <?php echo $GOOGLEMAP_MAX_ZOOM;?>;
-	//]]>
-	</script>
--->
-	
-	<?php
-}
-
-function tool_tip_text($marker) {
-	$tool_tip=$marker['fact'];
-	if (!empty($marker['info']))
-		$tool_tip.=": {$marker['info']}";
-	if (!empty($marker['name'])) {
-		$person=Person::getInstance($marker['name']);
-		if ($person && $person->canDisplayName()) {
-			$tool_tip.=": ".PrintReady($person->getFullName());
-		}
-	}
-	if (!empty($marker['date'])) {
-		$date=new GedcomDate($marker['date']);
-		$tool_tip.=" - ".$date->Display(false);
-	}
-	return $tool_tip;
-// dates & RTL is not OK - adding PrintReady does not solve it
-}
-
-
-
-function create_indiv_buttons() {
-	?>
-	<link type="text/css" href ="modules/googlemap/css/googlemap_style.css" rel="stylesheet" />
-	<script type='text/javascript'>
-
-	function Map_type() {}
-	Map_type.prototype = new GControl();
-
-	Map_type.prototype.refresh = function()
-	{
-		this.button1.className = 'non_active';
-		if(this.map.getCurrentMapType() != G_NORMAL_MAP)
-			this.button2.className = 'non_active';
-		else
-			this.button2.className = 'active';
-		if(this.map.getCurrentMapType() != G_SATELLITE_MAP)
-			this.button3.className = 'non_active';
-		else
-			this.button3.className = 'active';
-		if(this.map.getCurrentMapType() != G_HYBRID_MAP)
-			this.button4.className = 'non_active';
-		else
-			this.button4.className = 'active';
-		if(this.map.getCurrentMapType() != G_PHYSICAL_MAP)
-			this.button5.className = 'non_active';
-		else
-			this.button5.className = 'active';
-	}
-
-	Map_type.prototype.initialize = function(place_map)
-	{
-		var list 	= document.createElement("ul");
-		list.id	= 'map_type';
-
-		var button1 = document.createElement('li');
-		var button2 = document.createElement('li');
-		var button3 = document.createElement('li');
-		var button4 = document.createElement('li');
-		var button5 = document.createElement('li');
-
-		button1.innerHTML = '<?php echo i18n::translate('Redraw map')?>';
-		button2.innerHTML = '<?php echo i18n::translate('Map')?>';
-		button3.innerHTML = '<?php echo i18n::translate('Satellite')?>';
-		button4.innerHTML = '<?php echo i18n::translate('Hybrid')?>';
-		button5.innerHTML = '<?php echo i18n::translate('Terrain')?>';
-
-		button1.onclick = function() { javascript:ResizeMap(); return false; };
-		button2.onclick = function() { map.setMapType(G_NORMAL_MAP); return false; };
-		button3.onclick = function() { map.setMapType(G_SATELLITE_MAP); return false; };
-		button4.onclick = function() { map.setMapType(G_HYBRID_MAP); return false; };
-		button5.onclick = function() { map.setMapType(G_PHYSICAL_MAP); return false; };
-
-		list.appendChild(button1);
-		list.appendChild(button2);
-		list.appendChild(button3);
-		list.appendChild(button4);
-		list.appendChild(button5);
-
-		this.button1 = button1;
-		this.button2 = button2;
-		this.button3 = button3;
-		this.button4 = button4;
-		this.button5 = button5;
-		this.map = map;
-		map.getContainer().appendChild(list);
-		return list;
-	}
-
-	Map_type.prototype.getDefaultPosition = function()
-	{
-		return new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(2, 2));
-	}
-	var map_type;
-
+		var minZoomLevel = <?php echo $GOOGLEMAP_MIN_ZOOM;?>;
+		var maxZoomLevel = <?php echo $GOOGLEMAP_MAX_ZOOM;?>;
+		var startZoomLevel = <?php echo $GOOGLEMAP_MAX_ZOOM;?>;
 	</script>
 	<?php
 }
-
 
 function build_indiv_map($indifacts, $famids) {
 	global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
 	global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $SHOW_LIVING_NAMES;
 	global $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
-
-	$markers=array();
-
+	
 	$zoomLevel = $GOOGLEMAP_MAX_ZOOM;
+	
+	// Create the markers list array ===============================================================
+	$markers=array();
+	
+	// Add the events to the markers list array=====================================================
 	$placelocation=WT_DB::table_exists("##placelocation");
 	//-- sort the facts into date order
 	sort_facts($indifacts); 
 	$i = 0;
 	foreach ($indifacts as $key => $value) {
-			$fact = $value->getTag();
-			$fact_data=$value->getDetail();
-			$factrec = $value->getGedComRecord();
-			$placerec = null;
-			if ($value->getPlace()!=null) {
-				$placerec = get_sub_record(2, "2 PLAC", $factrec);
-				$addrFound = false;
-			} else {
-				if (preg_match("/\d ADDR (.*)/", $factrec, $match)) {
-					$placerec = get_sub_record(1, "\d ADDR", $factrec);
-					$addrFound = true;
-				}
+		$fact = $value->getTag();
+		$fact_data=$value->getDetail();
+		$factrec = $value->getGedComRecord();
+		$placerec = null;
+		if ($value->getPlace()!=null) {
+			$placerec = get_sub_record(2, "2 PLAC", $factrec);
+			$addrFound = false;
+		} else {
+			if (preg_match("/\d ADDR (.*)/", $factrec, $match)) {
+				$placerec = get_sub_record(1, "\d ADDR", $factrec);
+				$addrFound = true;
 			}
-			if (!empty($placerec)) {
-				$ctla = preg_match("/\d LATI (.*)/", $placerec, $match1);
-				$ctlo = preg_match("/\d LONG (.*)/", $placerec, $match2);
-				$spouserec = get_sub_record(2, "2 _WTS", $factrec);
-				$ctlp = preg_match("/\d _WTS @(.*)@/", $spouserec, $spouseid);
-				if ($ctlp>0) {
-					$useThisItem = canDisplayRecord(WT_GED_ID, find_family_record($spouseid[1], WT_GED_ID));
-				} else {
-					$useThisItem = true;
-				}
-				if (($ctla>0) && ($ctlo>0) && ($useThisItem==true)) {
-					$i = $i + 1;
-					$markers[$i]=array('class'=>'optionbox', 'index'=>'', 'tabindex'=>'', 'placed'=>'no');
-					if ($fact == "EVEN" || $fact=="FACT") {
-						$eventrec = get_sub_record(1, "2 TYPE", $factrec);
-						if (preg_match("/\d TYPE (.*)/", $eventrec, $match3)) {
-							$markers[$i]["fact"]=$match3[1];
-						} else {
-							$markers[$i]["fact"]=translate_fact($fact);
-						}
+		}
+		if (!empty($placerec)) {
+			$ctla = preg_match("/\d LATI (.*)/", $placerec, $match1);
+			$ctlo = preg_match("/\d LONG (.*)/", $placerec, $match2);
+			$spouserec = get_sub_record(2, "2 _WTS", $factrec);
+			$ctlp = preg_match("/\d _WTS @(.*)@/", $spouserec, $spouseid);
+			if ($ctlp>0) {
+				$useThisItem = canDisplayRecord(WT_GED_ID, find_family_record($spouseid[1], WT_GED_ID));
+			} else {
+				$useThisItem = true;
+			}
+			if (($ctla>0) && ($ctlo>0) && ($useThisItem==true)) {
+				$i = $i + 1;
+				$markers[$i]=array('class'=>'optionbox', 'index'=>'', 'tabindex'=>'', 'placed'=>'no');
+				if ($fact == "EVEN" || $fact=="FACT") {
+					$eventrec = get_sub_record(1, "2 TYPE", $factrec);
+					if (preg_match("/\d TYPE (.*)/", $eventrec, $match3)) {
+						$markers[$i]["fact"]=$match3[1];
 					} else {
 						$markers[$i]["fact"]=translate_fact($fact);
 					}
-					if (!empty($fact_data) && $fact_data!='Y')
-						$markers[$i]["info"] = $fact_data;
-					$markers[$i]["placerec"] = $placerec;
-					$match1[1] = trim($match1[1]);
-					$match2[1] = trim($match2[1]);
-					$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.') , $match1[1]);
-					$markers[$i]["lng"] = str_replace(array('E', 'W', ','), array('', '-', '.') , $match2[1]);
-					$ctd = preg_match("/2 DATE (.+)/", $factrec, $match);
-					if ($ctd>0)
-						$markers[$i]["date"] = $match[1];
-					if ($ctlp>0)
-						$markers[$i]["name"]=$spouseid[1];
 				} else {
-					if (($placelocation == true) && ($useThisItem==true) && ($addrFound==false)) {
-						$ctpl = preg_match("/\d PLAC (.*)/", $placerec, $match1);
-						$latlongval = get_lati_long_placelocation($match1[1]);
-						if ((count($latlongval) == 0) && (!empty($GM_DEFAULT_TOP_VALUE))) {
-							$latlongval = get_lati_long_placelocation($match1[1].", ".$GM_DEFAULT_TOP_VALUE);
-							if ((count($latlongval) != 0) && ($latlongval["level"] == 0)) {
-								$latlongval["lati"] = NULL;
-								$latlongval["long"] = NULL;
-							}
+					$markers[$i]["fact"]=translate_fact($fact);
+				}
+				if (!empty($fact_data) && $fact_data!='Y') {
+						$markers[$i]["info"] = $fact_data;
+				}
+				$markers[$i]["placerec"] = $placerec;
+				$match1[1] = trim($match1[1]);
+				$match2[1] = trim($match2[1]);
+				$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.') , $match1[1]);
+				$markers[$i]["lng"] = str_replace(array('E', 'W', ','), array('', '-', '.') , $match2[1]);
+				$ctd = preg_match("/2 DATE (.+)/", $factrec, $match);
+				if ($ctd>0) {
+					$markers[$i]["date"] = $match[1];
+				}
+				if ($ctlp>0) {
+					$markers[$i]["name"]=$spouseid[1];
+				}
+			} else {
+				if (($placelocation == true) && ($useThisItem==true) && ($addrFound==false)) {
+					$ctpl = preg_match("/\d PLAC (.*)/", $placerec, $match1);
+					$latlongval = get_lati_long_placelocation($match1[1]);
+					if ((count($latlongval) == 0) && (!empty($GM_DEFAULT_TOP_VALUE))) {
+						$latlongval = get_lati_long_placelocation($match1[1].", ".$GM_DEFAULT_TOP_VALUE);
+						if ((count($latlongval) != 0) && ($latlongval["level"] == 0)) {
+							$latlongval["lati"] = NULL;
+							$latlongval["long"] = NULL;
 						}
-						if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
-							$i = $i + 1;
-							$markers[$i]=array('class'=>'optionbox', 'index'=>'', 'tabindex'=>'', 'placed'=>'no');
-							if ($fact == "EVEN" || $fact=="FACT") {
-								$eventrec = get_sub_record(1, "2 TYPE", $factrec);
-								if (preg_match("/\d TYPE (.*)/", $eventrec, $match3)) {
-									$markers[$i]["fact"]=$match3[1];
-								} else {
-									$markers[$i]["fact"]=translate_fact($fact);
-								}
+					}
+					if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
+						$i = $i + 1;
+						$markers[$i]=array('class'=>'optionbox', 'index'=>'', 'tabindex'=>'', 'placed'=>'no');
+						if ($fact == "EVEN" || $fact=="FACT") {
+							$eventrec = get_sub_record(1, "2 TYPE", $factrec);
+							if (preg_match("/\d TYPE (.*)/", $eventrec, $match3)) {
+								$markers[$i]["fact"]=$match3[1];
 							} else {
 								$markers[$i]["fact"]=translate_fact($fact);
 							}
-							if (!empty($fact_data) && $fact_data!='Y')
-								$markers[$i]["info"] = $fact_data;
-							$markers[$i]["icon"] = $latlongval["icon"];
-							$markers[$i]["placerec"] = $placerec;
-							if ($zoomLevel > $latlongval["zoom"]) $zoomLevel = $latlongval["zoom"];
-							$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.') , $latlongval["lati"]);
-							$markers[$i]["lng"] = str_replace(array('E', 'W', ','), array('', '-', '.') , $latlongval["long"]);
-							$ctd = preg_match("/2 DATE (.+)/", $factrec, $match);
-							if ($ctd>0)
-								$markers[$i]["date"] = $match[1];
-							if ($ctlp>0)
-								$markers[$i]["name"]=$spouseid[1];
+						} else {
+							$markers[$i]["fact"]=translate_fact($fact);
+						}
+						if (!empty($fact_data) && $fact_data!='Y') {
+							$markers[$i]["info"] = $fact_data;
+						}
+						$markers[$i]["icon"] = $latlongval["icon"];
+						$markers[$i]["placerec"] = $placerec;
+						if ($zoomLevel > $latlongval["zoom"]) {
+							$zoomLevel = $latlongval["zoom"];
+						}
+						$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.') , $latlongval["lati"]);
+						$markers[$i]["lng"] = str_replace(array('E', 'W', ','), array('', '-', '.') , $latlongval["long"]);
+						$ctd = preg_match("/2 DATE (.+)/", $factrec, $match);
+						if ($ctd>0) {
+							$markers[$i]["date"] = $match[1];
+						}
+						if ($ctlp>0) {
+							$markers[$i]["name"]=$spouseid[1];
 						}
 					}
 				}
 			}
+		}	
 	}
 
-	// Add children to the list
+	// Add children to the markers list array ======================================================
 	if (count($famids)>0) {
 		$hparents=false;
 		for($f=0; $f<count($famids); $f++) {
@@ -635,114 +523,37 @@ function build_indiv_map($indifacts, $famids) {
 			}
 		}
 	}
-
+	
+	// Prepare the $markers array for use by the following "required" file/files ===================
 	if ($i == 0) {
+
 		echo "<table class=\"facts_table\">\n";
 		echo "<tr><td colspan=\"2\" class=\"facts_value\">".i18n::translate('No map data for this person');
-		//echo "<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script>";
 		echo "</td></tr>\n";
-		echo "<script type=\"text/javascript\">\n";
-		echo "function ResizeMap ()\n{\n}\n</script>\n";
 		if (WT_USER_IS_ADMIN) {
 			echo "<tr><td align=\"center\" colspan=\"2\">\n";
 			echo "<a href=\"module.php?mod=googlemap&mod_action=editconfig\">", i18n::translate('Manage GoogleMap configuration'), "</a>";
 			echo "</td></tr>\n";
 		}
+
 	} else {
-		?>
-		<script type="text/javascript">
-		function SetMarkersAndBounds () {
-			var bounds = new GLatLngBounds();
-		<?php
-		foreach ($markers as $marker)
-			echo "bounds.extend(new GLatLng({$marker["lati"]}, {$marker["lng"]}));\n";
-		echo "SetBoundaries(bounds);\n";
 
-		echo "var icon = new GIcon();";
-		echo "icon.image = \"http://maps.google.com/intl/pl_ALL/mapfiles/marker.png\";";
-		echo "icon.shadow = \"modules/googlemap/images/shadow50.png\";";
-		echo "icon.iconAnchor = new GPoint(10, 34);";
-		echo "icon.infoWindowAnchor = new GPoint(5, 1);";
-
-		echo "\nmarkers.clear();\n";
 		$indexcounter = 0;
 		for ($j=1; $j<=$i; $j++) {
-			// Use @ because some installations give warnings (but not errors?) about UTF-8
-			$tooltip=@html_entity_decode(strip_tags(tool_tip_text($markers[$j])), ENT_QUOTES, 'UTF-8');
+
 			if ($markers[$j]["placed"] == "no") {
 				$multimarker = -1;
 				// Count nr of locations where the long/lati is identical
 				for($k=$j; $k<=$i; $k++)
 					if (($markers[$j]["lati"] == $markers[$k]["lati"]) && ($markers[$j]["lng"] == $markers[$k]["lng"]))
 						$multimarker = $multimarker + 1;
-
-				if ($multimarker == 0) {        // Only one location with this long/lati combination
-				
-					// $markers[$j]["placed"] = "yes";
-					// === NOTE for V3 api, following line is changed from "yes" to "no" to aid identifying multi-event locations ======
+						
+				// If only one location with this long/lati combination
+				if ($multimarker == 0) {
+					// --- NOTE for V3 api, following line is changed from "yes" to "no" ----------- 
+					// --- This aids in identifying multi-event locations 
 					$markers[$j]["placed"] = "no";
-					// =================================================================================================================
-		
-					if (($markers[$j]["lati"] == NULL) || ($markers[$j]["lng"] == NULL) || (($markers[$j]["lati"] == "0") && ($markers[$j]["lng"] == "0"))) { 
-						echo "var Marker{$j}_flag = new GIcon();\n";
-						echo "	Marker{$j}_flag.image = \"modules/googlemap/images/marker_yellow.png\";\n";
-						echo "	Marker{$j}_flag.shadow = \"modules/googlemap/images/shadow50.png\";\n";
-						echo "	Marker{$j}_flag.iconSize = new GSize(20, 34);\n";
-						echo "	Marker{$j}_flag.shadowSize = new GSize(37, 34);\n";
-						echo "	Marker{$j}_flag.iconAnchor = new GPoint(10, 34);\n";
-						echo "	Marker{$j}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
-						echo "var Marker{$j} = new GMarker(new GLatLng(0, 0), {icon:Marker{$j}_flag, title:\"", addslashes($tooltip), "\"});\n";
-					} else if (empty($markers[$j]["icon"])) {
-						echo "var Marker{$j} = new GMarker(new GLatLng({$markers[$j]["lati"]}, {$markers[$j]["lng"]}), {icon:icon, title:\"", addslashes($tooltip), "\"});\n";
-					} else {
-						echo "var Marker{$j}_flag = new GIcon();\n";
-						echo "    Marker{$j}_flag.image = \"", $markers[$j]["icon"], "\";\n";
-						echo "    Marker{$j}_flag.shadow = \"modules/googlemap/images/flag_shadow.png\";\n";
-						echo "    Marker{$j}_flag.iconSize = new GSize(25, 15);\n";
-						echo "    Marker{$j}_flag.shadowSize = new GSize(35, 45);\n";
-						echo "    Marker{$j}_flag.iconAnchor = new GPoint(1, 45);\n";
-						echo "    Marker{$j}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
-						echo "var Marker{$j} = new GMarker(new GLatLng(", $markers[$j]["lati"], ", ", $markers[$j]["lng"], "), {icon:Marker{$j}_flag, title:\"", addslashes($tooltip), "\"});\n";
-					}
-					echo "GEvent.addListener(Marker{$j}, \"click\", function() {\n";
-					echo "Marker{$j}.openInfoWindowHtml(\"<div class='iwstyle'>";
-					echo PrintReady($markers[$j]["fact"]);
-					if (!empty($markers[$j]['info']))
-						echo ': ', addslashes($markers[$j]['info']);
-					if (!empty($markers[$j]["name"])) {
-						$person=Person::getInstance($markers[$j]['name']);
-						if ($person) {
-							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : i18n::translate('Private'), '<\/a>';
-						}
-					}
-					echo "<br />";
-					if (preg_match("/2 PLAC (.*)/", $markers[$j]["placerec"]) == 0) {
-						print_address_structure_map($markers[$j]["placerec"], 1);
-					} else {
-						echo preg_replace("/\"/", "\\\"", print_fact_place_map($markers[$j]["placerec"]));
-					}
-					if (!empty($markers[$j]["date"])) {
-						$date=new GedcomDate($markers[$j]["date"]);
-						echo "<br />", addslashes($date->Display(true));
-					}
-					if (($markers[$j]["lati"] == NULL) || ($markers[$j]["lng"] == NULL) || (($markers[$j]["lati"] == "0") && ($markers[$j]["lng"] == "0"))) {
-						echo "<br /><br />", i18n::translate('This place has no coordinates');
-						if (WT_USER_IS_ADMIN)
-							echo '<br /><a href=\"module.php?mod=googlemap&mod_action=places&display=inactive\">', i18n::translate('Edit geographic location'), '<\/a>';
-						echo "\");\n";
-					}
-					else if (!$GOOGLEMAP_COORD){
-						echo "\");\n";
-					} else {
-						echo "<br /><br />";
-						if ($markers[$j]["lati"]>'0'){echo "N", str_replace('-', '', $markers[$j]["lati"]);}else{ echo str_replace('-', 'S', $markers[$j]["lati"]);}
-						echo ", ";
-						if ($markers[$j]["lng"]>'0'){echo "E", str_replace('-', '', $markers[$j]["lng"]);}else{ echo str_replace('-', 'W', $markers[$j]["lng"]);}
-						echo "\");\n";
-					}
-					echo "});\n";
-					echo "markers.push(Marker{$j});\n";
-					echo "map.addOverlay(Marker{$j});\n";
+					// -----------------------------------------------------------------------------
 					$markers[$j]["index"] = $indexcounter;
 					$markers[$j]["tabindex"] = 0;
 					$indexcounter = $indexcounter + 1;
@@ -750,196 +561,87 @@ function build_indiv_map($indifacts, $famids) {
 					$tabcounter = 0;
 					$markersindex = 0;
 					$markers[$j]["placed"] = "yes";
-					if (empty($markers[$j]["icon"])) {
-						echo "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(", $markers[$j]["lati"], ", ", $markers[$j]["lng"], "), {icon:icon, title:\"", addslashes($tooltip), "\"});\n";
-					} else {
-						echo "var Marker{$j}_{$markersindex}_flag = new GIcon();\n";
-						echo "    Marker{$j}_{$markersindex}_flag.image = \"", $markers[$j]["icon"], "\";\n";
-						echo "    Marker{$j}_{$markersindex}_flag.shadow = \"modules/googlemap/images/flag_shadow.png\";\n";
-						echo "    Marker{$j}_{$markersindex}_flag.iconSize = new GSize(25, 15);\n";
-						echo "    Marker{$j}_{$markersindex}_flag.shadowSize = new GSize(35, 45);\n";
-						echo "    Marker{$j}_{$markersindex}_flag.iconAnchor = new GPoint(1, 45);\n";
-						echo "    Marker{$j}_{$markersindex}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
-						echo "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(", $markers[$j]["lati"], ", ", $markers[$j]["lng"], "), {icon:Marker{$j}_{$markersindex}_flag, title:\"", addslashes($tooltip), "\"});\n";
-					}
-					echo "var Marker{$j}_{$markersindex}Info = [\n";
 					$markers[$j]["index"] = $indexcounter;
 					$markers[$j]["tabindex"] = $tabcounter;
 					$tabcounter = $tabcounter + 1;
-					echo "new GInfoWindowTab(\"", abbreviate($markers[$j]["fact"]), "\", \"<div class='iwstyle'>", PrintReady($markers[$j]["fact"]);
-					if (!empty($markers[$j]['info']))
-						echo ': ', addslashes($markers[$j]['info']);
-					if (!empty($markers[$j]["name"])) {
-						$person=Person::getInstance($markers[$j]['name']);
-						if ($person) {
-							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : i18n::translate('Private'), '<\/a>';
-						}
-					}
-					echo "<br />";
-					if (preg_match("/2 PLAC (.*)/", $markers[$j]["placerec"]) == 0) {
-						print_address_structure_map($markers[$j]["placerec"], 1);
-					} else {
-						echo preg_replace("/\"/", "\\\"", print_fact_place_map($markers[$j]["placerec"]));
-					}
-					if (!empty($markers[$j]["date"])) {
-						$date=new GedcomDate($markers[$j]["date"]);
-						echo "<br />", addslashes($date->Display(true));
-					}
-					if (!$GOOGLEMAP_COORD){
-						echo "\")";
-					} else {
-						echo "<br /><br />";
-						if ($markers[$j]["lati"]>='0'){echo "N", str_replace('-', '', $markers[$j]["lati"]);}else{ echo str_replace('-', 'S', $markers[$j]["lati"]);}
-						echo ", ";
-						if ($markers[$j]["lng"]>='0'){echo "E", str_replace('-', '', $markers[$j]["lng"]);}else{ echo str_replace('-', 'W', $markers[$j]["lng"]);}
-						echo "\")";
-					}
 					for($k=$j+1; $k<=$i; $k++) {
 						if (($markers[$j]["lati"] == $markers[$k]["lati"]) && ($markers[$j]["lng"] == $markers[$k]["lng"])) {
 							$markers[$k]["placed"] = "yes";
-							$markers[$k]["index"] = $indexcounter;
-							
+							$markers[$k]["index"] = $indexcounter;							
 							// if ($tabcounter == 4) {
 							// V3 ==============================
 							if ($tabcounter == 10) {  
 							// V3 ==============================
-							
-								// Use @ because some installations give warnings (but not errors?) about UTF-8
-								$tooltip=@html_entity_decode(strip_tags(tool_tip_text($markers[$k])), ENT_QUOTES, 'UTF-8');
-								echo "\n";
-								echo "];\n";
-								echo "GEvent.addListener(Marker{$j}_{$markersindex}, \"click\", function(tabToSelect) {\n";
-								echo "if (tabToSelect>0) \n";
-								echo "Marker{$j}_{$markersindex}.openInfoWindowTabsHtml(Marker{$j}_{$markersindex}Info, {selectedTab: tabToSelect});\n";
-								echo "else Marker{$j}_{$markersindex}.openInfoWindowTabsHtml(Marker{$j}_{$markersindex}Info);\n";
-								echo "});\n";
-								echo "markers.push(Marker{$j}_{$markersindex});\n";
-								echo "map.addOverlay(Marker{$j}_{$markersindex});\n";
+
 								$indexcounter = $indexcounter + 1;
 								$tabcounter = 0;
 								$markersindex = $markersindex + 1;
-
-								if (empty($markers[$j]["icon"])) {
-									echo "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(", ($markers[$j]["lati"]-(0.0015*$markersindex)), ", ", ($markers[$j]["lng"]+(0.0025*$markersindex)), "), {icon:icon, title:\"", addslashes($tooltip), "\"});\n";
-								} else {
-									echo "var Marker{$j}_{$markersindex}_flag = new GIcon();\n";
-									echo "    Marker{$j}_{$markersindex}_flag.image = \"", $markers[$j]["icon"], "\";\n";
-									echo "    Marker{$j}_{$markersindex}_flag.shadow = \"modules/googlemap/images/flag_shadow.png\";\n";
-									echo "    Marker{$j}_{$markersindex}_flag.iconSize = new GSize(25, 15);\n";
-									echo "    Marker{$j}_{$markersindex}_flag.shadowSize = new GSize(35, 45);\n";
-									echo "    Marker{$j}_{$markersindex}_flag.iconAnchor = new GPoint(1, 45);\n";
-									echo "    Marker{$j}_{$markersindex}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
-									echo "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(", ($markers[$j]["lati"]-(0.0015*$markersindex)), ", ", ($markers[$j]["lng"]+(0.0025*$markersindex)), "), {icon:Marker{$j}_{$markersindex}_flag, title:\"", addslashes($tooltip), "\"});\n";
-								}
-								echo "var Marker{$j}_{$markersindex}Info = [\n";
-							} else {
-								echo ", \n";
 							}
 							$markers[$k]["index"] = $indexcounter;
 							$markers[$k]["tabindex"] = $tabcounter;
 							$tabcounter = $tabcounter + 1;
-							echo "new GInfoWindowTab(\"", abbreviate($markers[$k]["fact"]), "\", \"<div class='iwstyle'>", $markers[$k]["fact"];
-							if (!empty($markers[$k]['info']))
-								echo ': ', addslashes($markers[$k]['info']);
-							if (!empty($markers[$k]["name"])) {
-								$person=Person::getInstance($markers[$k]['name']);
-								if ($person) {
-									echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : i18n::translate('Private'), '<\/a>';
-								}
-							}
-							echo "<br />";
-							if (preg_match("/2 PLAC (.*)/", $markers[$k]["placerec"]) == 0) {
-								print_address_structure_map($markers[$k]["placerec"], 1);
-							} else {
-								echo preg_replace("/\"/", "\\\"", print_fact_place_map($markers[$k]["placerec"]));
-							}
-							if (!empty($markers[$k]["date"])) {
-								$date=new GedcomDate($markers[$k]["date"]);
-								echo "<br />", addslashes($date->Display(true));
-							}
-							if (!$GOOGLEMAP_COORD){
-								echo "\")";
-							} else {
-								echo "<br /><br />";
-								if ($markers[$j]["lati"]>='0'){echo "N", str_replace('-', '', $markers[$j]["lati"]);}else{ echo str_replace('-', 'S', $markers[$j]["lati"]);}
-								echo ", ";
-								if ($markers[$j]["lng"]>='0'){echo "E", str_replace('-', '', $markers[$j]["lng"]);}else{ echo str_replace('-', 'W', $markers[$j]["lng"]);}
-								echo "\")";
-							}
 						}
 					}
-					echo "\n";
-					echo "];\n";
-					echo "GEvent.addListener(Marker{$j}_{$markersindex}, \"click\", function(tabToSelect) {\n";
-					echo "if (tabToSelect>0) \n";
-					echo "Marker{$j}_{$markersindex}.openInfoWindowTabsHtml(Marker{$j}_{$markersindex}Info, {selectedTab: tabToSelect});\n";
-					echo "else Marker{$j}_{$markersindex}.openInfoWindowTabsHtml(Marker{$j}_{$markersindex}Info);\n";
-					echo "});\n";
-					echo "markers.push(Marker{$j}_{$markersindex});\n";
-					echo "map.addOverlay(Marker{$j}_{$markersindex});\n";
 					$indexcounter = $indexcounter + 1;
 				}
 			}
 		}
-	?>
-	} </script>
 
-<!-- <script> alert ("ALERT 1 = " + jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title"));	</script> -->
+		// add $gmarks array to the required V3_GM_googlemap.js.php ================================		
+		$gmarks = $markers;
 
-	<?php
-	// add $gmarks array to V3_GM_googlemap.js.php -----------------		
-	$gmarks = $markers;
 	
-	// Choose test version required - "v3", "v3a", "v3_next" or "xml" ==============================
+		// *** TEMP TEST CHOICES *** Choose test version required - "v3", "v3a", "v3_next", etc ====
+		$gm_version_test = "v3_next";		
 	
-	$gm_version_test = "v3_next";		
-	
-	// v3 ------------------------------------------------------------------------------
-	if ($gm_version_test == "v3") {
- 		echo '<script type="text/javascript" src="modules/googlemap/V3_jquery.min.js"></script>';
-		echo '<script type="text/javascript" src="modules/googlemap/V3_jquery-ui.min.js"></script>';	
-		echo '<link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" />';
-		require_once WT_ROOT.'modules/googlemap/V3_googlemap.js.php';
+		// v3 ----------------------------------------------------------------------------------
+		if ($gm_version_test == "v3") {
+ 			echo '<script type="text/javascript" src="modules/googlemap/V3_jquery.min.js"></script>';
+			echo '<script type="text/javascript" src="modules/googlemap/V3_jquery-ui.min.js"></script>';	
+			echo '<link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" />';
+			require_once WT_ROOT.'modules/googlemap/V3_googlemap.js.php';
 		
-	// v3a -----------------------------------------------------------------------------
-	} else if ($gm_version_test == "v3a") {
-		echo '<link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" />';
-		require_once WT_ROOT.'modules/googlemap/V3_googlemap.js.php';
+		// v3a ---------------------------------------------------------------------------------
+		} else if ($gm_version_test == "v3a") {
+			echo '<link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" />';
+			require_once WT_ROOT.'modules/googlemap/V3_googlemap.js.php';
 
-	// v3_next -------------------------------------------------------------------------
-	} else if ($gm_version_test == "v3_next") {
-		require_once WT_ROOT.'modules/googlemap/V3a_googlemap.js.php';
-		echo '<link type="text/css" href="modules/googlemap/css/V3a_googlemap.css" rel="stylesheet" />';
+		// v3_next -----------------------------------------------------------------------------
+		} else if ($gm_version_test == "v3_next") {
+			echo '<link type="text/css" href="modules/googlemap/css/V3a_googlemap.css" rel="stylesheet" />';
+			require_once WT_ROOT.'modules/googlemap/V3a_googlemap.js.php';
 
-	// xml -----------------------------------------------------------------------------
-	} else if ($gm_version_test == "xml") {
- 		//echo '<script type="text/javascript" src="modules/googlemap/V3_jquery.min.js"></script>';
-		//echo '<script type="text/javascript" src="modules/googlemap/V3_jquery-ui.min.js"></script>';
-		echo '<link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" />';
-		require_once WT_ROOT.'modules/googlemap/xmltest2.html';
-	}
+		// xml ---------------------------------------------------------------------------------
+		} else if ($gm_version_test == "xml") {
+			echo '<link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" />';
+			require_once WT_ROOT.'modules/googlemap/xmltest2.html';
 		
-	// =============================================================================================
-	?>
+		// xml_next ----------------------------------------------------------------------------	
+		} else if ($gm_version_test == "xml_next") {
+			echo '<link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" />';
+			require_once WT_ROOT.'modules/googlemap/xmltest3.html';
+		}
 
-<!-- <script> alert ("ALERT 2 = " + jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title"));	</script> -->
-	
-	<?php	
+		// *** END TEMP TEST CHOICES ===============================================================
+		?>
+		
+		<!-- <script> loadMap(); </script> -->
+		
+		<?php
+		// Create the normal googlemap sidebar of events and children ==============================
 		echo "<div style=\"overflow: auto; overflow-x: hidden; overflow-y: auto; height: {$GOOGLEMAP_YSIZE}px;\"><table class=\"facts_table\">";
 		$z=0;
 		foreach($markers as $marker) {
 			echo "<tr>";
 			echo "<td class=\"facts_label\">";
-			
-			// echo "<a href=\"javascript:highlight({$marker["index"]}, {$marker["tabindex"]})\">{$marker["fact"]}</a></td>";
-			// V3 ==========================================
+			// V3 ------------------------------------------
 			echo "<a href=\"javascript:myclick({$z}, {$marker["index"]}, {$marker["tabindex"]})\">{$marker["fact"]}</a></td>";
 			$z++;			
-			// V3 ==========================================
-			
+			// ---------------------------------------------			
 			echo "<td class=\"{$marker['class']}\" style=\"white-space: normal\">";
-			if (!empty($marker["info"]))
+			if (!empty($marker["info"])) {
 				echo "<span class=\"field\">{$marker["info"]}</span><br />";
+			}
 			if (!empty($marker["name"])) {
 				$person=Person::getInstance($marker['name']);
 				if ($person) {
@@ -960,27 +662,30 @@ function build_indiv_map($indifacts, $famids) {
 			echo "</tr>";
 		}
 		echo "</table></div><br />";
-	}
+		
+	} // end prepare markers array =================================================================
 	
-
-	// ======= More V3 api stuff which will come later =====================	
+	
+	// ======= More V3 api stuff which will be sorted later ========================================	
 	?>
-    <table id="s_bar" style="display:none;">
-      	<tr>
-        	<td valign="top" >
-           		<div id="side_bar"></div>
-        	</td>
-      	</tr>
-    </table>
+   	<table id="s_bar" style="display:none;">
+   	  	<tr>
+   	    	<td valign="top" style="padding-left:5px; width:360px; text-decoration:none; color:#4444ff; background:#aabbd8;">
+       	   		<div id="side_bar"></div>
+       		</td>
+     		</tr>
+   	</table>
+   	<table>   
+   		<tr>
+   			<td style="width: 360px; text-align:center;">
+   				<form style="width: 360px; id="form1" action="#">
+   				
+      				<!-- Event Map:<input 	name= "radio1" type="checkbox" id="theatrebox" onclick="boxclick(this,'theatre')" checked /> &nbsp; -->
+					Street View Map:<input name= "radio2" type="checkbox" id="golfbox" onclick="boxclick(this,'golf')" /> &nbsp;      				
+      				<!-- Other Map:<input type="checkbox" id="infobox" onclick="boxclick(this,'info')" /> -->
 
-    <table id="view_type">   
-    	<tr>
-    		<td>
-    			<form id="form1" action="#">     		
-      				<!-- Events:<input 	name= "radio1" type="checkbox" id="theatrebox" onclick="boxclick(this,'theatre')" checked /> &nbsp; -->
-					StreetView:<input name= "radio2" type="checkbox" id="golfbox" onclick="boxclick(this,'golf')" /> &nbsp;     				      				    				
 					<?php
-					// --------- For later use -------------
+					// --------- Maybe for later use ---------------
 					/*					
 					 Other Map:<input type="checkbox" id="infobox" onclick="boxclick(this,'info')" /> 					
       				<b>Pedigree Map:</b><input id="sel2" name="select" type=radio  />
@@ -989,20 +694,20 @@ function build_indiv_map($indifacts, $famids) {
       				Grandparents: <input type="checkbox" id="gparentsbox" onclick="boxclick(this,'gen2')" /> &nbsp;&nbsp;
       				Great Grandparents: <input type="checkbox" id="ggparentsbox" onclick="boxclick(this,'gen3')" /><br />
       				*/
+					?>
 
-					?>    				
- 			   	</form>     	
+ 		   		</form> 
     		</td>
     		<td style="width: 200px;">
     		</td>
     	</tr>
-    </table>
+   	</table>  
 	<?php
 	// =====================================================================
-
 	
 	echo "\n<br />";
 	return $i;
-}
+
+} // end build_indiv_map function
 
 ?>

@@ -22,15 +22,26 @@
 
 	
 	//jQuery(function() {
+
 		var BoundsZoom="";
 		var BoundsCenter="";
-    	var myLatlng = new google.maps.LatLng(0, 0);
+    	var myLatlng = new google.maps.LatLng(0, 0);   	
+    	
     	var myOptions = {
-      	zoom: 11,
-      	center: myLatlng,
-      	mapTypeId: google.maps.MapTypeId.TERRAIN
-      	//streetViewControl: true
-    	}
+      		zoom: 11,
+      		center: myLatlng,
+			mapTypeId: google.maps.MapTypeId.TERRAIN,					// ROADMAP, SATELLITE, HYBRID, TERRAIN
+			mapTypeControlOptions: {
+				style: google.maps.MapTypeControlStyle.DROPDOWN_MENU 	// DEFAULT, DROPDOWN_MENU, HORIZONTAL_BAR
+			},
+			navigationControl: true,
+      		navigationControlOptions: {
+   				position: google.maps.ControlPosition.TOP_RIGHT,		// BOTTOM, BOTTOM_LEFT, LEFT, TOP, etc
+   				style: google.maps.NavigationControlStyle.SMALL			// ANDROID, DEFAULT, SMALL, ZOOM_PAN
+      		},
+      		scrollwheel: false
+      		//streetViewControl: true
+    	};
  
     	map = new google.maps.Map(document.getElementById("map_pane"), myOptions);	
     	
