@@ -70,7 +70,7 @@ class stories_WT_Module extends WT_Module implements WT_Module_Block, WT_Module_
 	}
 
 	// Implement class WT_Module_Block
-	public function getBlock($block_id, $template=true) {
+	public function getBlock($block_id, $template=true, $cfg=null) {
 	}
 
 	// Implement class WT_Module_Block
@@ -124,6 +124,11 @@ class stories_WT_Module extends WT_Module implements WT_Module_Block, WT_Module_
 					$html.=i18n::translate('Edit story').'</a></div><br />';
 				}
 			}
+		}
+		if (WT_USER_GEDCOM_ADMIN && !$html) {
+			$html.='<div class="news_title center">'.$this->getTitle().'</div>';
+			$html.='<div><a href="module.php?mod='.$this->getName().'&amp;mod_action=edit&xref='.$this->controller->indi->getXref().'">';
+			$html.=i18n::translate('Add story').'</a>'.help_link('add_story', $this->getName()).'</div><br />';
 		}
 		return $html;		
 	}
@@ -202,7 +207,7 @@ class stories_WT_Module extends WT_Module implements WT_Module_Block, WT_Module_
 					$title='';
 					$story_body='';
 					$gedcom_id=WT_GED_ID;
-					$xref='';
+					$xref=safe_GET('xref', WT_REGEX_XREF);
 				}
 				?>
 				<script language="JavaScript" type="text/javascript">
@@ -249,6 +254,12 @@ class stories_WT_Module extends WT_Module implements WT_Module_Block, WT_Module_
 				echo '</td><td class="optionbox ', $TEXT_DIRECTION, '">';
 				echo '<input type="text" name="xref" id="pid" size="4" value="'.$xref.'" />';
 				print_findindi_link("xref", "pid");
+				if ($xref) {
+					$person=Person::getInstance($xref);
+					if ($person) {
+						echo ' ', $person->format_list('span');
+					}
+				}
 				echo '</td></tr>';
 				$languages=get_block_setting($block_id, 'languages', WT_LOCALE);
 				echo '<tr><td class="descriptionbox wrap width33">';

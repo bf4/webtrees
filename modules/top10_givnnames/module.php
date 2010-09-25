@@ -44,13 +44,20 @@ class top10_givnnames_WT_Module extends WT_Module implements WT_Module_Block {
 	}
 
 	// Implement class WT_Module_Block
-	public function getBlock($block_id, $template=true) {
+	public function getBlock($block_id, $template=true, $cfg=null) {
 		global $TEXT_DIRECTION, $ctype, $WT_IMAGES, $THEME_DIR;
 
 		$num=get_block_setting($block_id, 'num', 10);
 		$infoStyle=get_block_setting($block_id, 'infoStyle', 'table');
 		$showUnknown=get_block_setting($block_id, 'showUnknown', true);
 		$block=get_block_setting($block_id, 'block', false);
+		if ($cfg) {
+			foreach (array('num', 'infoStyle', 'showUnknown', 'block') as $name) {
+				if (array_key_exists($name, $cfg)) {
+					$$name=$cfg[$name];
+				}
+			}
+		}
 
 		require_once WT_ROOT.'includes/classes/class_stats.php';
 		$stats=new Stats(WT_GEDCOM);
@@ -101,7 +108,7 @@ class top10_givnnames_WT_Module extends WT_Module implements WT_Module_Block {
 		$content .=  "</div>";
 
 		if ($template) {
-			if (get_block_setting($block_id, 'block', false)) {
+			if ($block) {
 				require $THEME_DIR.'templates/block_small_temp.php';
 			} else {
 				require $THEME_DIR.'templates/block_main_temp.php';
