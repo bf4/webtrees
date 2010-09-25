@@ -204,7 +204,7 @@ class SOAP_Attachment extends SOAP_Value
 
         $cid = md5(uniqid(time()));
 
-        $this->attributes['href'] = 'cid:' . $cid; 
+        $this->attributes['href'] = 'cid:' . $cid;
 
         $this->options['attachment'] = array('body' => $filedata,
                                 'disposition'     => $filename,
