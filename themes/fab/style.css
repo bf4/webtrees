@@ -101,9 +101,6 @@ img {
 	color: red;
 	font-weight: bold;
 }
-.edit_link:after  {
-	content: url(images/edit_sm.png);
-}
 
 /* Fact labels */
 .label {
@@ -185,14 +182,17 @@ img {
 /* person boxes are used in various charts */
 .person_box {
 	background-color:#DDF;
+	overflow:auto;
 }
 
 .person_boxF {
 	background-color:#FDD;
+	overflow:auto;
 }
 
 .person_boxNN {
 	background-color:#DFD;
+	overflow:auto;
 }
 
 /* index.php */
@@ -1148,4 +1148,38 @@ div.faq_body {
 	font-weight: bold;
 	font-size: 90%;
 	padding: 0 10px;
+}
+
+/*--- edit links ---*/
+
+.edit_link:after { /* used only on the user list */
+	content: " " url(images/edit_sm.png);
+}
+
+td.descriptionbox  a { /* this keeps the tag color the same when it is a link as when not */
+	color: #ffffff;
+	float: left;
+}
+
+.editfacts { /* a container for the following three links */
+	clear: left;
+	padding-top: 15px;
+}
+
+.editlink  {
+	background: url(images/edit_sm.png) no-repeat left center;
+	width: 20px;
+	float: left;
+}
+
+.copylink  {
+	background: url(images/copy.png) no-repeat left center;
+	width: 20px;
+	float: left;
+}
+
+.deletelink  {
+	background: url(images/delete.png) no-repeat left center;
+	width: 20px;
+	float: left;
 }

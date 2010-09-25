@@ -187,6 +187,18 @@ function edit_field_adop($name, $selected='', $extra='') {
 	return select_edit_control($name, $ADOP_CODES, null, $selected, $extra);
 }
 
+// Print an edit control for a ADOP female field
+function edit_field_adop_f($name, $selected='', $extra='') {
+	global $ADOP_CODES_F;
+	return select_edit_control($name, $ADOP_CODES_F, null, $selected, $extra);
+}
+
+// Print an edit control for a ADOP male field
+function edit_field_adop_m($name, $selected='', $extra='') {
+	global $ADOP_CODES_M;
+	return select_edit_control($name, $ADOP_CODES_M, null, $selected, $extra);
+}
+
 // Print an edit control for a PEDI field
 function edit_field_pedi($name, $selected='', $extra='') {
 	global $PEDI_CODES;
@@ -287,6 +299,22 @@ function replace_gedrec($gid, $ged_id, $gedrec, $chan=true) {
 	}
 
 	if (($gedrec = check_gedcom($gedrec, $chan))!==false) {
+		//-- the following block of code checks if the XREF was changed in this record.
+		//-- if it was changed we add a warning to the change log
+		$ct = preg_match("/0 @(.*)@/", $gedrec, $match);
+		if ($ct>0) {
+			$oldgid = $gid;
+			$gid = trim($match[1]);
+			if ($oldgid!=$gid) {
+				if ($gid=="REF" || $gid=="new" || $gid=="NEW") {
+					$gedrec = preg_replace("/0 @(.*)@/", "0 @".$oldgid."@", $gedrec);
+					$gid = $oldgid;
+				} else {
+					AddToLog("Warning: $oldgid was changed to $gid", 'edit');
+				}
+			}
+		}
+
 		$old_gedrec=find_gedcom_record($gid, $ged_id, true);
 		if ($old_gedrec!=$gedrec) {
 			WT_DB::prepare(
@@ -301,7 +329,7 @@ function replace_gedrec($gid, $ged_id, $gedrec, $chan=true) {
 		}
 
 		if (WT_USER_AUTO_ACCEPT) {
-			accept_all_changes($gid, $ged_id);
+			accept_all_changes($gid, WT_GED_ID);
 		}
 		return true;
 	}
@@ -1415,7 +1443,11 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	} else if ($fact=="TEMP") {
 		echo select_edit_control($element_name, $TEMPLE_CODES, i18n::translate('No Temple - Living Ordinance'), $value);
 	}	else if ($fact=="ADOP") {
-		echo edit_field_adop($element_name, $value);
+		switch ($gender) {
+		case 'M': echo edit_field_adop_m($element_name, $value); break;
+		case 'F': echo edit_field_adop_f($element_name, $value); break;
+		default:  echo edit_field_adop  ($element_name, $value); break;
+		}
 	} else if ($fact=="PEDI") {
 		switch ($gender) {
 		case 'M': echo edit_field_pedi_m($element_name, $value); break;

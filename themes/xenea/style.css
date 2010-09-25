@@ -99,10 +99,6 @@ th {
 	width: 60px;
 }
 
-.edit_link:after  {
-	content: url(images/edit_sm.png);
-}
-
 .gedcom_table {
 	border: 1px solid #84BEFF;
 	margin: 0;
@@ -1743,4 +1739,37 @@ div.faq_body {
 
 .makeMenu li ul {
         margin-left:-40px;
+}
+
+/*--- edit links ---*/
+
+.edit_link:after { /* used only on the user list */
+	content: " " url(images/edit_sm.png);
+}
+
+td.descriptionbox  a { /* this keeps the tag color the same when it is a link as when not */
+	color: blue;
+}
+
+.editfacts { /* a container for the following three links */
+	float: left;
+	font-size: 80%;
+}
+
+.editlink  {
+	background: url(images/edit_sm.png) no-repeat left center;
+	width: 20px;
+	float: left;
+}
+
+.copylink  {
+	background: url(images/copy.png) no-repeat left center;
+	width: 20px;
+	float: left;
+}
+
+.deletelink  {
+	background: url(images/delete.png) no-repeat left center;
+	width: 20px;
+	float: left;
 }
