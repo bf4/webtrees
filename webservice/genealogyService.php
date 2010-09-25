@@ -176,8 +176,8 @@ class GenealogyService
 		);
 
 		/**
- 		 * Check updates
- 		 */
+		 * Check updates
+		 */
 		$this->__dispatch_map['checkUpdates'] =
 		array(
 			'in' => array(
@@ -290,7 +290,7 @@ class GenealogyService
 		*/
 		$this->__dispatch_map['getAncestry'] =
 		array(
-			'in'	=>	array(
+			'in' => array(
 				'SID' => 'string', //session ID
 				'rootID' => 'string', //id to start at
 				'generations' => 'int', //# of gens. to go
@@ -306,7 +306,7 @@ class GenealogyService
 		*/
 		$this->__dispatch_map['getDescendants'] =
 		array(
-			'in'	=>	array(
+			'in' => array(
 				'SID' => 'string', //session ID
 				'rootID' => 'string', //id to start at
 				'generations' => 'int', //# of gens. to go
@@ -322,7 +322,7 @@ class GenealogyService
 		*/
 		$this->__dispatch_map['getXref'] =
 		array(
-			'in'	=>	array(
+			'in' => array(
 				'SID' => 'string', //session ID
 				'position' => 'string', // first, last, next, prev, new
 				'type' => 'string' // type of record
@@ -360,8 +360,8 @@ class GenealogyService
 
 		$this->__typedef['GedcomInfo'] =
 		array(
-			'title'		=>	'string',
-			'ID'		=>	'string'
+			'title' => 'string',
+			'ID' => 'string'
 		);
 
 		$this->__typedef['ArrayOfGedcomList'] =
@@ -374,43 +374,43 @@ class GenealogyService
 		// Person complex type
 		$this->__typedef['Person'] =
 		array(
-			'PID'			=>	 'string',
-			'gedcomName'	=>	 'string',
-			'birthDate'		=>	 'string',
-			'birthPlace'	=>	 'string',
-			'deathPlace'	=>	 'string',
-			'deathDate'		=>	 'string',
-			'gender'		=>	 'string',
-			'gedcom'		=>	 'string',
-			'spouseFamilies'=>	 '{urn:' . $this->__namespace . '}ArrayOfIds',
-			'childFamilies'	=>	 '{urn:' . $this->__namespace . '}ArrayOfIds'
+			'PID' => 'string',
+			'gedcomName' => 'string',
+			'birthDate' => 'string',
+			'birthPlace' => 'string',
+			'deathPlace' => 'string',
+			'deathDate' => 'string',
+			'gender' => 'string',
+			'gedcom' => 'string',
+			'spouseFamilies'=> '{urn:' . $this->__namespace . '}ArrayOfIds',
+			'childFamilies' => '{urn:' . $this->__namespace . '}ArrayOfIds'
 		);
 
 		//Source complex type
 		$this->__typedef['Source'] =
 		array(
-			'SCID'          =>	'string',
-			'title'         =>	'string',
-			'published'     =>	'string',
-			'author'        =>	'string',
-			'gedcom'        =>	'string'
+			'SCID'          => 'string',
+			'title'         => 'string',
+			'published'     => 'string',
+			'author'        => 'string',
+			'gedcom'        => 'string'
 
 		);
 
 		// Family complex type
 		$this->__typedef['Family'] =
 		array(
-			'FID'			=>   'string',
-			'HUSBID'        =>   'string',
-	  		'WIFEID'        =>   'string',
-	  		'CHILDREN'		=>   '{urn:' . $this->__namespace . '}ArrayOfIds',
-	  		'gedcom'		=>	 'string'
+			'FID'      => 'string',
+			'HUSBID'   => 'string',
+			'WIFEID'   => 'string',
+			'CHILDREN' => '{urn:' . $this->__namespace . '}ArrayOfIds',
+			'gedcom'   => 'string'
 		);
 
 		$this->__typedef['SearchResult'] =
 		array(
-			'totalResults'	=>	'int',
-			'persons'		=>	'{urn:' . $this->__namespace . '}ArrayOfPerson'
+			'totalResults' => 'int',
+			'persons' => '{urn:' . $this->__namespace . '}ArrayOfPerson'
 		);
 
 		$this->__typedef['Server'] =
@@ -524,7 +524,7 @@ class GenealogyService
 	/**
 	* Switches GEDCOM
 	* @param string gedcom id of the gedcom to use
-	* @return string	returns the id of the currently active gedcom
+	* @return string returns the id of the currently active gedcom
 	*/
 	function changeGedcom($gedcom)
 	{
@@ -1071,4 +1071,3 @@ class GenealogyService
 		}
 	}
 }
-?>
