@@ -143,16 +143,28 @@ function closeCallback() {
 		pinned = false;
 	}
 	// For Google Maps v2 only ---------------------------------------------------------------------
-	/*
-	if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title") == "googlemap") {
-		loadMap();
-		map.setMapType(<?php echo $GOOGLEMAP_MAP_TYPE; ?>);
-		SetMarkersAndBounds();
-		ResizeMap();
-	}
-	*/
+
+	// if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title") == "googlemap") {
+
+		//	loadMap();
+		//	map.setMapType(<?php echo $GOOGLEMAP_MAP_TYPE; ?>);
+		//	SetMarkersAndBounds();
+		//	ResizeMap();
+	// }
+
 	// For Google Maps v3 only ---------------------------------------------------------------------
-	loadMap();
+	//if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title") == "googlemap") {
+		// location.reload();
+		// HomeControl();
+		loadMap();
+		// jQuery.get('modules/googlemap/module.php');
+		
+		//jQuery.get('modules/googlemap/xmltest3.php', function(data) {
+  		//	jQuery('.result').html(data);
+  		//	// alert('Load was performed.');
+		//});
+		
+	//}
 	// ---------------------------------------------------------------------------------------------	
 }
 
@@ -169,16 +181,27 @@ function openCallback() {
 		}
 	});
 	// For Google Maps v2 only ---------------------------------------------------------------------
-	/*
-	if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title") == "googlemap") {
-		loadMap();
-		map.setMapType(<?php echo $GOOGLEMAP_MAP_TYPE; ?>);
-		SetMarkersAndBounds();
-		ResizeMap();
-	}
-	*/
+	
+	// if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title") == "googlemap") {
+		//	HomeControl(document.createElement('DIV'), map);
+		//	loadMap();
+		//	map.setMapType(<?php echo $GOOGLEMAP_MAP_TYPE; ?>);
+		//	SetMarkersAndBounds();
+	// }
+	
 	// For Google Maps v3 only ---------------------------------------------------------------------
-	loadMap();
+	// if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title") == "googlemap") {
+		// setup_map();
+		loadMap();
+		// jQuery.get('modules/googlemap/module.php');
+		
+
+		//jQuery.get(WT_ROOT.'modules/googlemap/xmltest3.php', function(data) {
+  		//	jQuery('.result').html(data);
+  		//	//	alert('Load was performed.');
+		//});
+
+	// }
 	// ---------------------------------------------------------------------------------------------	
 }
 
