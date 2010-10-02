@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<markers>
+<marker class="optionbox" index="0" tabindex="0" placed="no" fact="Birth" icon="" placerec="Miller Farm, Ulnes Walton, Lancashire, England
+" lati="53.6852" lng="-2.7374" date="10 FEB 1889" />
+<marker class="optionbox" index="1" tabindex="0" placed="yes" fact="Census" icon="" placerec="Chorley, Lancashire, England
+" lati="53.64" lng="-2.63" date="31 MAR 1901" />
+<marker class="optionbox" index="2" tabindex="0" placed="no" fact="Marriage" icon="" placerec="Trinity Wesleyan Church, Chorley, Lancashire, England" lati="53.648" lng="-2.6359" date="01 JAN 1914" name="I7" />
+<marker class="optionbox" index="3" tabindex="0" placed="no" fact="Death" icon="" placerec="Hull, Yorkshire, England
+" lati="53.76" lng="-0.32" date="3 SEP 1975" />
+<marker class="optionbox" index="4" tabindex="0" placed="no" fact="Cremation" icon="" placerec="Hull Crematorium, Hull, Yorkshire, England" lati="53.7644" lng="-0.3726" date="8 SEP 1975" />
+<marker index="1" tabindex="1" placed="yes" fact="Son" class="person_box" icon="" placerec="Chorley, Lancashire, England
+" lati="53.64" lng="-2.63" date="6 MAY 1914" name="I21" />
+<marker index="5" tabindex="0" placed="no" fact="Son" class="person_box" icon="" placerec="84 Devonshire Rd, Chorley, Lancashire, England" lati="53.6499" lng="-2.6363" date="27 JAN 1917" name="I2" />
+<marker index="1" tabindex="2" placed="yes" fact="Son" class="person_box" icon="" placerec="Chorley, Lancashire, England
+" lati="53.64" lng="-2.63" date="28 APR 1920" name="I22" />
+<marker index="6" tabindex="0" placed="no" fact="Daughter" class="person_boxF" icon="" placerec="South Promenade, Withernsea, Yorkshire, England
+" lati="53.7280" lng="0.0382" date="05 OCT 1930" name="I23" />
+</markers>

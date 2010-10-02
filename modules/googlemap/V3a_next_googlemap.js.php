@@ -36,6 +36,7 @@
 <script type="text/javascript">
 
 //<![CDATA[
+
     
     // this variable will collect the html which will eventually be placed in the side_bar 
     var side_bar_html = ""; 
@@ -134,20 +135,29 @@
 		if (document.getElementById("golfbox").checked == false) { 
 			// Either events -----------
     		google.maps.event.addListener(marker, 'click', function() {
-    			if (infowindow) {
-    				infowindow.close();
-    			}
+    			infowindow.close();
         		infowindow.setContent(contentString);
-        		infowindow.open(map, marker);       	
-				// Use jquery for tabs --------
-				
+        		infowindow.open(map, marker);
+        		
+             	var panoramaOptions = {
+          			position: marker.position,
+          			navigationControl: false,
+      				linksControl: false,
+   					addressControl: false,
+					pov: {
+						heading: 60,
+						pitch: 5,
+						zoom: 1.1
+					}          	
+        		};
+        		
+				// Use jquery for tabs --------				
 				jQuery("#gmtabs").tabs();
-				// jQuery("#gmtabs").tabs('select', tab); 
+				
 				jQuery('#SV').click(function() {
-       				var panorama = new google.maps.StreetViewPanorama(document.getElementById("pano"),panoramaOptions);  
-            		map.setStreetView(panorama); 
-          		});      
-			
+       				var panorama = new google.maps.StreetViewPanorama(document.getElementById("pano"), panoramaOptions);  
+            		map.setStreetView(panorama); 					
+          		});			
         		// == rebuild the side bar ==
         		//makeSidebar(i);      	
     		});
@@ -156,14 +166,14 @@
 			var message =
 				"Marker: " + (i + 1) + "<br/>" +
 				"LatLng: " + marker.getPosition().toUrlValue(4) + "<br/>";
-			setMarkerMessage(marker, message);
+			setMarkerMessage(marker, message);    		
     	}
 
 	}
 	
 	// == Streetview function when streetview selected =====
 	function setMarkerMessage(marker, message) {
-		google.maps.event.addListener(marker, 'click', function() {			
+		google.maps.event.addListener(marker, 'click', function() {
 			var streetViewDiv = document.createElement('div');
 			streetViewDiv.style.width = "320px";
 			streetViewDiv.style.height = "240px";					
@@ -193,7 +203,7 @@
 	function setMarkerMessage2(marker2, message) {
 			var streetViewDiv2 = document.createElement('div');
 			streetViewDiv2.style.width = "320px";
-			streetViewDiv2.style.height = "240px";
+			streetViewDiv2.style.height = "240px";					
 			var streetViewPanorama2 = new google.maps.StreetViewPanorama(
 				streetViewDiv2,
 				{
@@ -260,13 +270,8 @@
 		if (document.getElementById("golfbox").checked == false) { 
 		
 			// Either events -----------
-			if (infowindow) {
-    			infowindow.close();
-    		}
-			google.maps.event.trigger(gmarkers[i], "click", tab);
-			// Use jquery for tabs -------- 
-			//$("#gmtabs").tabs();
-			//$("#gmtabs").tabs('select', tab); 			
+			infowindow.close();
+			google.maps.event.trigger(gmarkers[i], "click", tab);			
         	// == rebuild the side bar ==
         	// makeSidebar(i);   
         		
@@ -275,7 +280,7 @@
     		// Or streetview -----------    		
 			var message =
 				"Marker: " + gmarkers[i] + "<br>" +
-				"LatLng: " + gmarkers[i].getPosition().toUrlValue(4) + "<br>";
+				"LatLng: " + gmarkers[i].getPosition().toUrlValue(4) + "<br>";			
 			setMarkerMessage2(gmarkers[i], message);
 			
     	}
@@ -349,8 +354,10 @@
   		});
 	}
 
+
+
   	function loadMap() { 
-  	
+jQuery(function() {  	
 		<?php 	
 			global $pid, $PEDIGREE_GENERATIONS, $MAX_PEDIGREE_GENERATIONS, $ENABLE_AUTOCOMPLETE, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $WT_IMAGES, $GEDCOM;
 		?>
@@ -557,17 +564,36 @@
    						}
    					}
      			}
-     		}     
-
-   			var multitabs = [  				
- 			 	'<div id = "gmtabs">', 
-						'<div id="tab-1">',
-    	    				event_tab,
-						'<\/div>',
+     		} 
+     		
+     		var multitabs = [  				
+ 			 	'<div id = "gmtabs">',
+          					'<ul >',
+          						'<li><a href="#tab1" id="EV">Events<\/a><\/li>',
+          						'<li><a href="#tab2" id="SV">Street View<\/a><\/li>',
+          						'<li><a href="#tab3" id="PH">Image<\/a><\/li>',
+          					'<\/ul>',
+          					'<div id="tab1">',
+          						divhead,
+          						event_tab,
+          					'<\/div>',
+          					'<div id="tab2">',
+          						divhead,
+								'<div id="pano"><\/div>',
+          					'<\/div>',
+          					'<div id="tab3">',
+          						divhead,
+          						'<br />Old Photo, Painting, etc.',
+          						'<br />',
+          						'<br />Perhaps these should be eventually stored in the Media Places subdirectory ???',
+          						'<br />',
+          						'<br />This feature to be implemented later.',
+          					'<\/div>',
+          					
   	  			'<\/div>'
    			].join('');
 	
-			   			
+	/*
     		// === Use this variable if a single tab marker ===
     		// If a fact with info or a persons name ---
    		  	if (locations[i][5]) {    		  	
@@ -602,13 +628,13 @@
    				].join('');    		  
    		  	}
     		  	
-
+	*/
    		  	
        		// === If 'placed="yes", (Use multitabs variable, else use singletab variable) ===      		
        		if (locations[i][9] == "yes" ) {
-       			var html = divhead + multitabs;
+       			var html = multitabs;
        		} else {
-       			var html = divhead + singletab;
+       			var html = multitabs;
        		} 
 
       		
@@ -629,6 +655,7 @@
         // initially load sidebar (hidden item but THIS IS required)
         makeSidebar();
    	
+   	});
     }	// end loadMap()
     
 

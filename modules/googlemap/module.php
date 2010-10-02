@@ -205,7 +205,7 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 		global $GOOGLEMAP_PH_CONTROLS;
 		$out=
 			'if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title")=="'.$this->getName().'") {'.
-				'loadMap();'.
+				'loadMap();'.				
 			'}'.
 			'';
 		return $out;

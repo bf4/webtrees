@@ -36,6 +36,19 @@ if (!defined('WT_WEBTREES')) {
 	exit;
 }
 
+/*
+?>
+<script type="text/javascript">
+jQuery(function(){
+	// Tabs
+	jQuery('#tabs').tabs();
+	jQuery('#gmtabs').tabs();
+	jQuery('#SV').tabs();
+});
+</script>
+<?php
+*/
+
 global $SESSION_HIDE_GOOGLEMAP;
 $SESSION_HIDE_GOOGLEMAP = "empty";
 if ((isset($_REQUEST["HIDE_GOOGLEMAP"])) && (empty($SEARCH_SPIDER))) {
@@ -590,9 +603,46 @@ function build_indiv_map($indifacts, $famids) {
 		// add $gmarks array to the required V3_GM_googlemap.js.php ================================		
 		$gmarks = $markers;
 
+		// Convert $gmarks array to xml file =======================================================
+		require_once WT_ROOT.'modules/googlemap/Array-XML.php';		
+		$xml = generate_valid_xml_from_array($gmarks, "markers", "marker");
+		$xml = str_replace('&lt;', '<', $xml);
+		$xml = str_replace('&gt;', '>', $xml);
+		$xml = str_replace('<br /><br />', '', $xml);
+		$xml = str_replace('<br />', '', $xml);
+		$xml = str_replace(' "', '" ', $xml);
+		$xml = str_replace('2 PLAC ', '', $xml);		
+		$temp_xml_filename = WT_ROOT.'modules/googlemap/wt_temp.xml';
+		if (file_exists($temp_xml_filename)) {
+			unlink($temp_xml_filename);
+		}
+		$Content = $xml; 
+		$handle = fopen($temp_xml_filename, 'x+');
+		fwrite($handle, $Content);
+		fclose($handle);		
+		/*
+		if($handle = fopen($filename, 'a')) {
+			if(is_writable($filename)) {
+				if(fwrite($handle, $content) === FALSE) {
+					echo "Cannot write to file $filename";
+					exit;
+				}
+				echo "The file $filename was created and written successfully!";
+				fclose($handle);
+			} else {
+				echo "The file $filename, could not written to!";
+				exit;
+			}
+		} else {
+			echo "The file $filename, could not be created!";
+			exit;
+		}
+		*/
+		// =========================================================================================
+				
 	
 		// *** TEMP TEST CHOICES *** Choose test version required - "v3", "v3a", "v3_next", etc ====
-		$gm_version_test = "v3_next";		
+		$gm_version_test = "v3a";		
 	
 		// v3 ----------------------------------------------------------------------------------
 		if ($gm_version_test == "v3") {
@@ -601,16 +651,25 @@ function build_indiv_map($indifacts, $famids) {
 			echo '<link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" />';
 			require_once WT_ROOT.'modules/googlemap/V3_googlemap.js.php';
 		
-		// v3a ---------------------------------------------------------------------------------
-		} else if ($gm_version_test == "v3a") {
+		// v3_short ---------------------------------------------------------------------------------
+		} else if ($gm_version_test == "v3_short") {
 			echo '<link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" />';
 			require_once WT_ROOT.'modules/googlemap/V3_googlemap.js.php';
+			
+		// v3a -----------------------------------------------------------------------------
+		} else if ($gm_version_test == "v3a") {
+ 			echo '<script type="text/javascript" src="modules/googlemap/V3_jquery.min.js"></script>';
+			echo '<script type="text/javascript" src="modules/googlemap/V3_jquery-ui.min.js"></script>';	
+			echo '<link type="text/css" href="modules/googlemap/css/V3a_googlemap.css" rel="stylesheet" />';
+			require_once WT_ROOT.'modules/googlemap/V3a_next_googlemap.js.php';
+			// == next line needed to "kick the loadMap function ==
+			echo '<script> loadMap(); </script>';
 
-		// v3_next -----------------------------------------------------------------------------
-		} else if ($gm_version_test == "v3_next") {
+		// v3a_short -----------------------------------------------------------------------------
+		} else if ($gm_version_test == "v3a_short") {
 			echo '<link type="text/css" href="modules/googlemap/css/V3a_googlemap.css" rel="stylesheet" />';
 			require_once WT_ROOT.'modules/googlemap/V3a_googlemap.js.php';
-
+			
 		// xml ---------------------------------------------------------------------------------
 		} else if ($gm_version_test == "xml") {
 			echo '<link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" />';
@@ -619,13 +678,14 @@ function build_indiv_map($indifacts, $famids) {
 		// xml_next ----------------------------------------------------------------------------	
 		} else if ($gm_version_test == "xml_next") {
 			echo '<link type="text/css" href="modules/googlemap/V3_jquery_custom.css" rel="stylesheet" />';
-			require_once WT_ROOT.'modules/googlemap/xmltest3.html';
+			require_once WT_ROOT.'modules/googlemap/xmltest3.php';
+
 		}
 
 		// *** END TEMP TEST CHOICES ===============================================================
 		?>
+
 		
-		<!-- <script> loadMap(); </script> -->
 		
 		<?php
 		// Create the normal googlemap sidebar of events and children ==============================
@@ -709,5 +769,6 @@ function build_indiv_map($indifacts, $famids) {
 	return $i;
 
 } // end build_indiv_map function
+
 
 ?>
