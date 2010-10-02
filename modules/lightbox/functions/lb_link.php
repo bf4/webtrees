@@ -41,7 +41,7 @@ if (!defined('WT_WEBTREES')) {
 	 *
 	 * @param string $mediaid
 	 */
-//	function print_link_menu2($mediaid) {
+// function print_link_menu2($mediaid) {
     $mediaid=$media["XREF"];
 		global $TEXT_DIRECTION, $WT_IMAGES;
 		if (!isset($WT_IMAGES['image_link'])) {
@@ -81,7 +81,7 @@ if (!defined('WT_WEBTREES')) {
 		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
 		$menu->addSubMenu($submenu);
 
-		$menu->printMenu();
+		echo $menu->getMenu();
 ?>
 <script language="JavaScript" type="text/javascript">
   function ilinkitem(mediaid, type) {
@@ -91,11 +91,9 @@ if (!defined('WT_WEBTREES')) {
 </script>
 <?php
 
-//	}
+// }
 
 	// Only set link on media that is in the DB
-//	if ($media["XREF"] != "") {
-//		print_link_menu($media2["XREF"]);
-//	}
-
-?>
+// if ($media["XREF"] != "") {
+// print_link_menu($media2["XREF"]);
+// }

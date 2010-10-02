@@ -33,7 +33,7 @@ if (!defined('WT_SCRIPT_NAME')) {
 
 // Identify ourself
 define('WT_WEBTREES',        'webtrees');
-define('WT_VERSION',         '1.0.3');
+define('WT_VERSION',         '1.0.4');
 define('WT_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
 define('WT_VERSION_TEXT',    trim(WT_VERSION.' '.WT_VERSION_RELEASE));
 define('WT_WEBTREES_URL',    'http://webtrees.net');
@@ -276,12 +276,15 @@ if ($SEARCH_SPIDER && !array_key_exists(WT_SCRIPT_NAME , array(
 // Use the Zend_Session object to start the session.
 // This allows all the other Zend Framework components to integrate with the session
 define('WT_SESSION_NAME', 'WT_SESSION');
-Zend_Session::start(array(
+$cfg=array(
 	'name'            => WT_SESSION_NAME,
-	'save_path'       => get_site_setting('SESSION_SAVE_PATH'),
 	'cookie_lifetime' => get_site_setting('SESSION_TIME'),
 	'cookie_path'     => WT_SCRIPT_PATH,
-));
+);
+if (get_site_setting('SESSION_SAVE_PATH')) {
+	$cfg['save_path']=get_site_setting('SESSION_SAVE_PATH');
+}
+Zend_Session::start($cfg);
 
 // Register a session "namespace" to store session data.  This is better than
 // using $_SESSION, as we can avoid clashes with other modules/applications,

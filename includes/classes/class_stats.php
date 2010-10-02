@@ -128,7 +128,7 @@ class stats {
 						$out .= "<td class=\"list_value_wrap\" align=\"{$alignRes}\" valign=\"top\">{$v}</td>";
 						$out .= "</tr>\n";
 					}
-		$out .=	'</table>';
+		$out .= '</table>';
 		return $out;
 	}
 
@@ -3704,17 +3704,9 @@ class stats {
 		$cache[$id]=$rows;
 		return $rows;
 	}
-}
 
-/*
- * This class provides access to additional non-stats features of webtrees
- * for use in the HTML block (Extended interaface enabled).
- */
-class stats_ui extends stats
-{
-///////////////////////////////////////////////////////////////////////////////
-// Favorites                                                                 //
-///////////////////////////////////////////////////////////////////////////////
+	// These functions provide access to additional non-stats features of webtrees
+	// for use in the HTML block.
 
 	static function _getFavorites($isged=true) {
 		global $GEDCOM;
@@ -3739,10 +3731,10 @@ class stats_ui extends stats
 	static function totalGedcomFavorites(){return count(gedcom_favorites_WT_Module::getUserFavorites(WT_GEDCOM));}
 	static function totalUserFavorites(){return count(user_favorites_WT_Module::getUserFavorites(WT_USER_NAME));}
 
-///////////////////////////////////////////////////////////////////////////////
-// Other blocks                                                              //
-// example of use: #callBlock:block_name#                                    //
-///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	// Other blocks                                                              //
+	// example of use: #callBlock:block_name#                                    //
+	///////////////////////////////////////////////////////////////////////////////
 
 	static function callBlock($params=null) {
 		if ($params === null){return '';}
@@ -3769,20 +3761,4 @@ class stats_ui extends stats
 	function totalUserMessages(){return count(getUserMessages(WT_USER_NAME));}
 	function totalUserJournal(){ return count(getUserNews(WT_USER_ID));}
 	function totalGedcomNews(){  return count(getUserNews(WT_GEDCOM));}
-
-///////////////////////////////////////////////////////////////////////////////
-// System                                                                    //
-// Only allowed in GEDCOM Home Page, not user portals for security.          //
-///////////////////////////////////////////////////////////////////////////////
-
-	static function includeFile($params=null) {
-		if(!isset($_GET['ctype']) || $_GET['ctype'] != 'gedcom'){return '';}
-		if($params === null){$params = array();}
-		if(isset($params[0]) && $params[0] != ''){$fn = $params[0];}else{return '';}
-
-		if(!file_exists($fn) || stristr($fn, 'config.php')){return '';}
-		ob_start();
-		include filename_decode(real_path($fn));
-		return trim(ob_get_clean());
-	}
 }

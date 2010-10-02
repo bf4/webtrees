@@ -40,9 +40,9 @@ $INDEX_DIRECTORY=get_site_setting('INDEX_DIRECTORY');
 
 /**
  * find the name of the first GEDCOM file in a zipfile
- * @param string $zipfile	the path and filename
+ * @param string $zipfile the path and filename
  * @param boolean $extract  true = extract and return filename, false = return filename
- * @return string		the path and filename of the gedcom file
+ * @return string the path and filename of the gedcom file
  */
 function GetGEDFromZIP($zipfile, $extract=true) {
 	GLOBAL $INDEX_DIRECTORY;
@@ -142,7 +142,7 @@ case 'update':
 	set_gedcom_setting(WT_GED_ID, 'GEDCOM_DEFAULT_TAB',           safe_POST('NEW_GEDCOM_DEFAULT_TAB'));
 	set_gedcom_setting(WT_GED_ID, 'GEDCOM_ID_PREFIX',             safe_POST('NEW_GEDCOM_ID_PREFIX'));
 	set_gedcom_setting(WT_GED_ID, 'GENERATE_UIDS',                safe_POST_bool('NEW_GENERATE_UIDS'));
-	set_gedcom_setting(WT_GED_ID, 'HIDE_GEDCOM_ERRORS',           safe_POST_bool('NEW_HIDE_GEDCOM_ERRORS'));
+	set_gedcom_setting(WT_GED_ID, 'HIDE_GEDCOM_ERRORS',          !safe_POST_bool('NEW_HIDE_GEDCOM_ERRORS'));
 	set_gedcom_setting(WT_GED_ID, 'HIDE_LIVE_PEOPLE',             safe_POST_bool('NEW_HIDE_LIVE_PEOPLE'));
 	set_gedcom_setting(WT_GED_ID, 'INDI_FACTS_ADD',               safe_POST('NEW_INDI_FACTS_ADD'));
 	set_gedcom_setting(WT_GED_ID, 'INDI_FACTS_QUICK',             safe_POST('NEW_INDI_FACTS_QUICK'));
@@ -1465,7 +1465,7 @@ print_header(i18n::translate('GEDCOM configuration'));
 							<?php echo i18n::translate('GEDCOM errors'), help_link('HIDE_GEDCOM_ERRORS'); ?>
 						</td>
 						<td class="optionbox width60">
-							<?php echo radio_buttons('NEW_HIDE_GEDCOM_ERRORS', array(false=>i18n::translate('hide'),true=>i18n::translate('show')), $HIDE_GEDCOM_ERRORS); ?>
+							<?php echo radio_buttons('NEW_HIDE_GEDCOM_ERRORS', array(false=>i18n::translate('hide'),true=>i18n::translate('show')), !$HIDE_GEDCOM_ERRORS); /* Note: name of object is reverse of description */ ?>
 						</td>
 					</tr>
 					<tr>

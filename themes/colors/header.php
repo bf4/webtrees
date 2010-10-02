@@ -48,6 +48,7 @@ echo
 	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
 	'<html xmlns="http://www.w3.org/1999/xhtml" ', i18n::html_markup(), '>',
 	'<head>',
+	'<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />',
 	'<title>', htmlspecialchars($title), '</title>',
 	'<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />';
 
@@ -70,7 +71,7 @@ echo
 
 
 echo
-	$javascript, $head, 
+	$javascript,
 	'<script type="text/javascript" src="js/jquery/jquery.min.js"></script>',
 	'<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>',
 	'<script type="text/javascript" src="js/jquery/jquery.tablesorter.js"></script>',
@@ -84,29 +85,27 @@ echo
 <?php
 if ($TEXT_DIRECTION=='rtl') { ?>
 	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
-<?php } 
+<?php }
 
 echo
 	'<link rel="stylesheet" href="', $modules, '" type="text/css" />',
 	'<link rel="stylesheet" href="', $stylesheet, '" type="text/css" media="all" />';
-	
-if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
+
+if ($BROWSERTYPE!='other') { ?>
 	<link rel="stylesheet" href="<?php echo $THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
-<?php 
+<?php
 }
-	
-	
-if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) {?> 
-	<link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" /> 
+
+
+if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) {?>
+	<link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" />
 <?php }
-	echo
-	'</head><body id="body" ', $bodyOnLoad, '>';
-flush(); // Allow the browser to start fetching external stylesheets, javascript, etc.
+	echo '</head><body id="body" ', $bodyOnLoad, '>';
 ?>
 
 <!-- Remove header for edit windows -->
 <!-- begin header section -->
-<?php 
+<?php
 if ($view!='simple') {
 	echo
 		'<div id="header" class="', $TEXT_DIRECTION, '">',
@@ -116,7 +115,7 @@ if ($view!='simple') {
 		'<div class="title">';
 	print_gedcom_title_link(TRUE);
 	echo '</div></td><td>';
-	if (empty($SEARCH_SPIDER)) { 
+	if (empty($SEARCH_SPIDER)) {
 		echo '<div style="float:', WT_CSS_REVERSE_ALIGN, ';"><ul class="makeMenu">';
 		if (WT_USER_ID) {
 			echo
@@ -143,21 +142,21 @@ if ($view!='simple') {
 		if ($ALLOW_THEME_DROPDOWN && get_site_setting('ALLOW_USER_THEMES')) {
 			echo ' | ', MenuBar::getThemeMenu()->getMenuAsList();
 		}
-		echo 
+		echo
 			'</span> | <form style="display:inline;" action="search.php" method="get">',
 			'<input type="hidden" name="action" value="general" />',
 			'<input type="hidden" name="topsearch" value="yes" />',
 			'<input type="text" name="query" size="15" value="', i18n::translate('Search'), '" onfocus="if (this.value==\'', i18n::translate('Search'), '\') this.value=\'\'; focusHandler();" onblur="if (this.value==\'\') this.value=\'', i18n::translate('Search'), '\';" />',
 			'<input type="image" src="', WT_THEME_DIR, 'images/go.gif', '" align="top" alt="', i18n::translate('Search'), '" title="', i18n::translate('Search'), '" />',
 			'</form>',
-			'</ui></div>'; 
+			'</ui></div>';
 	}
 
 	echo '</td></tr></table></div>';
 ?>
 <!--end header section -->
 <!--begin menu section -->
-<?php 
+<?php
 	echo
 		'<table id="toplinks"><tr><td class="toplinks_left">',
 		'<table align="', $TEXT_DIRECTION=="ltr"?"left":"right", '">',
@@ -198,7 +197,7 @@ if ($view!='simple') {
 		echo '<td>', $menu->getMenu(), '</td>';
 	}
 	$menus=MenuBar::getModuleMenus();
-	foreach ($menus as $m=>$menu) { 
+	foreach ($menus as $m=>$menu) {
 		if ($menu) {
 			$menu->addLabel('', 'none');
 			echo '<td>', $menu->getMenu(), '</td>';
@@ -210,7 +209,7 @@ if ($view!='simple') {
 		echo '<td>', $menu->getMenu(), '</td>';
 	}
 	echo '</tr></table></td>';
-	if (empty($SEARCH_SPIDER)) { 
+	if (empty($SEARCH_SPIDER)) {
 		echo '<td class="toplinks_right"><div align="', $TEXT_DIRECTION=="rtl"?"left":"right", '">';
 		echo color_theme_dropdown();
 		echo '</div></td>';

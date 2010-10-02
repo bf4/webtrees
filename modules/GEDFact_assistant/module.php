@@ -6,7 +6,7 @@
  * Copyright (C) 2010 webtrees development team.
  *
  * Derived from PhpGedView
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2009 John Finlay
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
  *
  * @package webtrees
  * @subpackage Modules
- * @version $Id$
+ * @version $Id: module.php 8245 2010-05-10 18:35:22Z lucasz $
  */
 
 if (!defined('WT_WEBTREES')) {
@@ -34,42 +34,31 @@ if (!defined('WT_WEBTREES')) {
 
 require_once WT_ROOT.'includes/classes/class_module.php';
 
-class page_menu_WT_Module extends WT_Module implements WT_Module_Menu {
+class GEDFact_assistant_WT_Module extends WT_Module {
 	// Extend WT_Module
 	public function getTitle() {
-		return i18n::translate('Page Menu');
+		return i18n::translate('Census Assistant');
 	}
 
 	// Extend WT_Module
 	public function getDescription() {
-		return i18n::translate('Adds a menu to the menu bar which provides page specific options.');
+		return i18n::translate('Provides a GUI to quickly generate a shared note linked to multiple indis, then automatically creates the census event for all indis linked to the shared note.');
 	}
 
-	// Implement WT_Module_Menu
-	public function defaultMenuOrder() {
-		return 10;
+	// Extend WT_Module
+	public function modAction($mod_action) {
+		switch($mod_action) {
+		case '_CENS/census_3_find':
+			// TODO: these files should be methods in this class
+			require WT_ROOT.'modules/'.$this->getName().'/'.$mod_action.'.php';
+		//	$mod=new _CENS/census_3_find;
+		//	echo $mod->main();
+			break;
+		}
 	}
 
-	// Implement WT_Module_Menu
-	public function getMenu() {
-		global $TEXT_DIRECTION, $controller;
-
-		$menu = null;
-		if (empty($controller)) {
-			return null;
-		}
-		if ($TEXT_DIRECTION == 'rtl') {
-			$ff = '_rtl';
-		} else {
-			$ff = '';
-		}
-		if (WT_USER_CAN_EDIT && method_exists($controller, 'getEditMenu')) {
-			$menu = $controller->getEditMenu();
-			if ($menu) {
-				$menu->addClass('menuitem'.$ff, 'menuitem_hover'.$ff, 'submenu'.$ff, 'icon_large_gedcom');
-				$menu->addLabel($menu->label, 'down');
-			}
-		}
-		return $menu;
-	}
+	// Implement WT_Module_Config
+	//public function getConfigLink() {
+		// return 'module.php?mod='.$this->getName().'&amp;mod_action=_CENS/census_3_find';
+	//}
 }

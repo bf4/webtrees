@@ -47,6 +47,7 @@ echo
 	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
 	'<html xmlns="http://www.w3.org/1999/xhtml" ', i18n::html_markup(), '>',
 	'<head>',
+	'<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />',
 	'<title>', htmlspecialchars($title), '</title>',
 	'<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />';
 
@@ -69,7 +70,7 @@ echo
 
 
 echo
-	$javascript, $head, 
+	$javascript,
 	'<script type="text/javascript" src="js/jquery/jquery.min.js"></script>',
 	'<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>',
 	'<script type="text/javascript" src="js/jquery/jquery.tablesorter.js"></script>',
@@ -83,23 +84,22 @@ echo
 <?php
 if ($TEXT_DIRECTION=='rtl') { ?>
 	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
-<?php } 
+<?php }
 
 echo
 	'<link rel="stylesheet" href="', $modules, '" type="text/css" />',
 	'<link rel="stylesheet" href="', $stylesheet, '" type="text/css" media="all" />';
-	
-if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
+
+if ($BROWSERTYPE!='other') { ?>
 	<link rel="stylesheet" href="<?php echo $THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
-<?php 
+<?php
 }
-	
-	
-if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) {?> 
-	<link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" /> 
+
+
+if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) {?>
+	<link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" />
 <?php }
 	echo '</head><body id="body" ', $bodyOnLoad, '>';
-flush(); // Allow the browser to start fetching external stylesheets, javascript, etc.
 ?>
 
 <!-- begin header section -->
@@ -113,7 +113,7 @@ flush(); // Allow the browser to start fetching external stylesheets, javascript
 		 '<div class="title">';
 	print_gedcom_title_link(TRUE);
 
-if (empty($SEARCH_SPIDER)) { 
+if (empty($SEARCH_SPIDER)) {
 	echo '<td valign="middle" align="center">',
 		 '<div class="blanco" style="COLOR: #6699ff;" >';
 	print_user_links();
@@ -121,13 +121,13 @@ if (empty($SEARCH_SPIDER)) {
 		 '</td>',
 		 '<td align="', $TEXT_DIRECTION=="ltr"?"left":"right", '" valign="middle" >';
 ?>
- 	<div style="white-space: normal;" align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right" ?>">
+	<div style="white-space: normal;" align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right" ?>">
 <?php
 	echo '<form action="search.php" method="post">',
 		 '<input type="hidden" name="action" value="general" />',
 		 '<input type="hidden" name="topsearch" value="yes" />',
 		 '<input type="text" class="formbut" name="query" size="15" value="', i18n::translate('Search'), '" onfocus="if (this.value==\'', i18n::translate('Search'), '\') this.value=\'\'; focusHandler();" onblur="if (this.value==\'\') this.value=\'', i18n::translate('Search'), '\';" />',
-		 '<input type="image" src="', WT_THEME_DIR, 'images/go.gif', '" align="top" alt="', i18n::translate('Search'), '" title="', i18n::translate('Search'), '" />', 
+		 '<input type="image" src="', WT_THEME_DIR, 'images/go.gif', '" align="top" alt="', i18n::translate('Search'), '" title="', i18n::translate('Search'), '" />',
 		 '</form>',
 		 '</div>';
 }
@@ -177,7 +177,7 @@ echo '<table id="toplinks">',
 		echo '<td>', $menu->getMenu(), '</td>';
 	}
 	$menus=MenuBar::getModuleMenus();
-		foreach ($menus as $menu) { 
+		foreach ($menus as $menu) {
 			if ($menu) {
 				$menu->addLabel('', 'none');
 				echo '<td>', $menu->getMenu(), '</td>';

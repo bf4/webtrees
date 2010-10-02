@@ -70,12 +70,12 @@ class todays_events_WT_Module extends WT_Module implements WT_Module_Block {
 			} else {
 				$name = WT_USER_NAME;
 			}
-	  	$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?action=configure&amp;ctype={$ctype}&amp;block_id={$block_id}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-	  	$title .= "<img class=\"adminicon\" src=\"".$WT_IMAGES["admin"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
-  	}
-  	$title.=i18n::translate('On This Day ...').help_link('index_onthisday');
+			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?action=configure&amp;ctype={$ctype}&amp;block_id={$block_id}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+			$title .= "<img class=\"adminicon\" src=\"".$WT_IMAGES["admin"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
+		}
+		$title.=i18n::translate('On This Day ...').help_link('index_onthisday');
 
-  	$content = "";
+		$content = "";
 		switch ($infoStyle) {
 		case 'list':
 			// Output style 1:  Old format, no visible tables, much smaller text.  Better suited to right side of page.
@@ -128,14 +128,14 @@ class todays_events_WT_Module extends WT_Module implements WT_Module_Block {
 		}
 
 		require_once WT_ROOT.'includes/functions/functions_edit.php';
-		
+
 		$filter=get_block_setting($block_id, 'filter', true);
 		echo '<tr><td class="descriptionbox wrap width33">';
 		echo i18n::translate('Show only events of living people?');
 		echo '</td><td class="optionbox">';
 		echo edit_field_yes_no('filter', $filter);
 		echo '</td></tr>';
-		
+
 		$onlyBDM=get_block_setting($block_id, 'onlyBDM', true);
 		echo '<tr><td class="descriptionbox wrap width33">';
 		echo i18n::translate('Show only Births, Deaths, and Marriages?');
@@ -165,4 +165,3 @@ class todays_events_WT_Module extends WT_Module implements WT_Module_Block {
 		echo '</td></tr>';
 	}
 }
-?>

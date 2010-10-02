@@ -275,7 +275,7 @@ function create_possible_place_names ($placename, $level) {
 
 function abbreviate($text) {
 	if (utf8_strlen($text)>13) {
-		if (trim(utf8_substr($text, 10, 1))!="") 
+		if (trim(utf8_substr($text, 10, 1))!="")
 			$desc = utf8_substr($text, 0, 11).".";
 		else $desc = trim(utf8_substr($text, 0, 11));
 	}
@@ -769,6 +769,3 @@ function build_indiv_map($indifacts, $famids) {
 	return $i;
 
 } // end build_indiv_map function
-
-
-?>

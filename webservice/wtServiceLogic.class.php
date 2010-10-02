@@ -108,7 +108,7 @@ class wtServiceLogic extends GenealogyService {
 	 * @param string $password the plain text password to test
 	 * @param string $compression the compression library to use
 	 * @return mixed If login sucessful: returns session id, message and compression
-	 *		library that is being used. If login unsucessful: returns a SOAP_Fault
+	 * library that is being used. If login unsucessful: returns a SOAP_Fault
 	 * @todo implement banning
 	 */
 	function postAuthenticate($username, $password, $gedcom_id, $compression) {
@@ -186,7 +186,7 @@ class wtServiceLogic extends GenealogyService {
 	/**
 	* Switches GEDCOM
 	* @param string gedcom id of the gedcom to use
-	* @return string	returns the id of the currently active gedcom
+	* @return string returns the id of the currently active gedcom
 	*/
 	function postChangeGedcom($gedcom) {
 		global $GEDCOM;
@@ -326,8 +326,8 @@ class wtServiceLogic extends GenealogyService {
 		$fams = find_families_in_record($gedrec, "FAMS");
 		$familyS = array();
 		foreach ($fams as $f=>$famid) {
-//			$famrec = find_family_record($famid, WT_GED_ID);
-	//		$family = $this->createFamily($famid, $famrec, "item");
+			//$famrec = find_family_record($famid, WT_GED_ID);
+			//$family = $this->createFamily($famid, $famrec, "item");
 			$familyS[] = $famid;
 		}
 		$person['spouseFamilies'] = new SOAP_Value('spouseFamilies', '{urn:'.$this->__namespace.'}ArrayOfIds', $familyS);
@@ -335,7 +335,7 @@ class wtServiceLogic extends GenealogyService {
 		$familyC = array();
 		foreach ($famc as $f=>$famid) {
 			$famrec = find_family_record($famid, WT_GED_ID);
-//			$family = $this->createFamily($famid, $famrec, "item");
+			//$family = $this->createFamily($famid, $famrec, "item");
 			$familyC[] = $famid;
 		}
 		$person['childFamilies'] = new SOAP_Value('childFamilies', '{urn:'.$this->__namespace.'}ArrayOfIds', $familyC);
@@ -503,9 +503,9 @@ class wtServiceLogic extends GenealogyService {
 	/**
 	 * Return a gedcom record
 	 * Finds the record with the given ID
-	 * @param string $SID	the session id
-	 * @param string $PID	the gedcom xref id for the record to find
-	 * @return string		the raw gedcom record is returned
+	 * @param string $SID the session id
+	 * @param string $PID the gedcom xref id for the record to find
+	 * @return string the raw gedcom record is returned
 	 */
 	function postGetGedcomRecord($SID, $PID) {
 		global $GEDCOM, $MEDIA_DIRECTORY;
@@ -792,14 +792,14 @@ class wtServiceLogic extends GenealogyService {
 		// get_server_list(); returns array or false;
 		$servers = get_server_list();
 		if (count($servers)>0) {
-	//		addtolog('servers = true');
+			//addtolog('servers = true');
 			// the array to return
 			$results_array = array();
 
 			$count = 0;
 			//Loop through the data and add each server and address to the results_array
 			foreach ($servers as $server) {
-	//			Addtolog('foreach fun!'.$server);
+				//Addtolog('foreach fun!'.$server);
 				if ($count >= $limit && $limit !== 0) {
 					break;
 				}

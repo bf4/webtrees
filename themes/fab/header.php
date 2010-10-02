@@ -44,6 +44,7 @@ echo
 	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
 	'<html xmlns="http://www.w3.org/1999/xhtml" ', i18n::html_markup(), '>',
 	'<head>',
+	'<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />',
 	'<title>', htmlspecialchars($title), '</title>',
 	'<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">',
 	'<link rel="stylesheet" href="', $stylesheet, '" type="text/css" media="all" />';
@@ -66,32 +67,27 @@ echo
 	'<meta name="generator" content="', WT_WEBTREES, ' ', WT_VERSION_TEXT, '" />';
 
 echo
-	$javascript, $head, 
+	$javascript,
 	'<script type="text/javascript" src="js/jquery/jquery.min.js"></script>',
 	'<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>',
 	'<script type="text/javascript" src="js/jquery/jquery.tablesorter.js"></script>',
 	'<script type="text/javascript" src="js/jquery/jquery.tablesorter.pager.js"></script>',
 	'<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />';
-	
-?>
 
-<?php
-if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
-	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
-<?php } ?>
+if ($BROWSERTYPE!='other') {
+	echo '<link type="text/css" href="', WT_THEME_DIR, 'jquery/jquery-ui_theme.css" rel="Stylesheet" />';
+}
 
-<link rel="stylesheet" href="<?php echo $THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
+echo '<link rel="stylesheet" href="',  WT_THEME_DIR, $BROWSERTYPE, '.css" type="text/css" media="all" />';
 
-<?php if ($TEXT_DIRECTION=='rtl') {?>
-	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
-<?php }?>
+if ($TEXT_DIRECTION=='rtl') {
+	echo '<link type="text/css" href="', WT_THEME_DIR, 'jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />';
+}
 
-<?php
 echo
 	'<link type="text/css" href="', WT_THEME_DIR, 'modules.css" rel="Stylesheet" />',
 	'</head>',
 	'<body id="body" ',$bodyOnLoad, '>';
-flush(); // Allow the browser to start fetching external stylesheets, javascript, etc.
 
 echo '<div id="header" class="block">'; // Every page has a header
 if ($view!='simple') {
@@ -125,12 +121,12 @@ if ($view!='simple') {
 				echo '<li><a href="', $LOGIN_URL, '?url=', WT_SCRIPT_PATH, WT_SCRIPT_NAME, decode_url(normalize_query_string($QUERY_STRING.'&amp;ged='.WT_GEDCOM)), '" class="link">', i18n::translate('Login'), '</a></li>';
 			}
 		}
-			echo '<span class="link"> | ', MenuBar::getFavoritesMenu()->getMenuAsList();
-			echo ' | ', MenuBar::getLanguageMenu()->getMenuAsList();
-			global $ALLOW_THEME_DROPDOWN;
-			if ($ALLOW_THEME_DROPDOWN && get_site_setting('ALLOW_USER_THEMES')) {
-				echo ' | ', MenuBar::getThemeMenu()->getMenuAsList();
-			}
+		echo '<span class="link"> | ', MenuBar::getFavoritesMenu()->getMenuAsList();
+		echo ' | ', MenuBar::getLanguageMenu()->getMenuAsList();
+		global $ALLOW_THEME_DROPDOWN;
+		if ($ALLOW_THEME_DROPDOWN && get_site_setting('ALLOW_USER_THEMES')) {
+			echo ' | ', MenuBar::getThemeMenu()->getMenuAsList();
+		}
 		echo
 			'</span> | <form style="display:inline;" action="search.php" method="get">',
 			'<input type="hidden" name="action" value="general" />',
@@ -146,11 +142,11 @@ if ($view!='simple') {
 			MenuBar::getCalendarMenu(),
 			MenuBar::getReportsMenu(),
 			MenuBar::getSearchMenu(),
-			MenuBar::getHelpMenu()
 		);
 		foreach (MenuBar::getModuleMenus() as $menu) {
 			$menu_items[]=$menu;
 		}
+		$menu_items[]=MenuBar::getHelpMenu();
 
 		echo
 			'<div style="float:', WT_CSS_ALIGN, '; clear:', WT_CSS_ALIGN, '; font-size:175%;">',
@@ -171,4 +167,3 @@ if ($view!='simple') {
 	echo '</ul></div>';
 }
 echo '</div><div id="content">';
-flush(); // Allow the browser to format the header/menus while we generate the page

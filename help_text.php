@@ -3414,7 +3414,7 @@ case 'edituser_realname':
 
 case 'edituser_password':
 	$title=i18n::translate('Password');
-	$text=i18n::translate('Passwords must be at least 6 characters long and are case-sensitive, so that "s3CR#t" is different to "S3CR#t".'); 
+	$text=i18n::translate('Passwords must be at least 6 characters long and are case-sensitive, so that "s3CR#t" is different to "S3CR#t".');
 	break;
 
 case 'edituser_rootid':
@@ -3570,11 +3570,6 @@ case 'index_gedcom_news_adm':
 case 'index_gedcom_news':
 	$title=i18n::translate('GEDCOM news block');
 	$text=i18n::translate('The News block is like a bulletin board for this GEDCOM.  The site administrator can place important announcements or interesting news messages here.<br /><br />If you have something interesting to display, please contact the site administrator;  he can put your message on this bulletin board.');
-	break;
-
-case 'index_htmlplus_ui':
-	$title=i18n::translate('Extended Interface');
-	$text=i18n::translate('When the extended interaface is enabled you can call other block using a keyword <b>&#35;callBlock:block_name&#35;</b>, where instead of block_name you should use the real block name. For example, <b>&#35;callBlock:gedcom_stats&#35;</b> displays the GEDCOM statistics block. It is also possible to include other files using a keyword <b>&#35;includeFile:file_name&#35;</b>.');
 	break;
 
 case 'index_htmlplus_content':

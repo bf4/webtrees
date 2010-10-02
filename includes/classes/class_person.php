@@ -1003,7 +1003,7 @@ class Person extends GedcomRecord {
 					}
 					if ($parent->getSex()=='M') {
 						$this->add_parents_facts($parent, $sosa*2); // recursive call for father ancestors
-					}	elseif ($parent->getSex()=='F') {
+					} elseif ($parent->getSex()=='F') {
 						$this->add_parents_facts($parent, $sosa*2+1); // recursive call for mother ancestors
 					}
 				}
@@ -1158,7 +1158,9 @@ class Person extends GedcomRecord {
 							$factrec.="\n2 ASSO @".$spid."@\n3 RELA ".$rela;
 							$event = new Event($factrec, 0);
 							$event->setParentObject($this);
-							$this->indifacts[]=$event;
+							if (!in_array($event, $this->indifacts)) {
+								$this->indifacts[]=$event;
+							}
 							break;
 						}
 					}
@@ -1179,7 +1181,9 @@ class Person extends GedcomRecord {
 							$factrec.="\n2 ASSO @".$spid."@\n3 RELA ".$rela;
 							$event = new Event($factrec, 0);
 							$event->setParentObject($this);
-							$this->indifacts[] = $event;
+							if (!in_array($event, $this->indifacts)) {
+								$this->indifacts[]=$event;
+							}
 						}
 					}
 				}
@@ -1205,7 +1209,9 @@ class Person extends GedcomRecord {
 							$factrec.="\n2 ASSO @".$sfamily->getSpouseId($spid)."@\n3 RELA ".$rela2;
 							$event = new Event($factrec, 0);
 							$event->setParentObject($this);
-							$this->indifacts[] = $event;
+							if (!in_array($event, $this->indifacts)) {
+								$this->indifacts[]=$event;
+							}
 						}
 					}
 				}

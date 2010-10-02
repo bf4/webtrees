@@ -250,7 +250,7 @@ function print_pedigree_person($pid, $style=1, $count=0, $personcount="1") {
 	if ($MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES) {
 		$object = $person->findHighlightedMedia();
 		if (!empty($object)) {
-			$whichFile = thumb_or_main($object);	// Do we send the main image or a thumbnail?
+			$whichFile = thumb_or_main($object); // Do we send the main image or a thumbnail?
 			$size = findImageSize($whichFile);
 			$class = "pedigree_image_portrait";
 			if ($size[0]>$size[1]) $class = "pedigree_image_landscape";
@@ -372,16 +372,14 @@ function print_pedigree_person($pid, $style=1, $count=0, $personcount="1") {
 * Popup pages, because of their different format, should invoke function print_simple_header() instead.
 *
 * @param string $title the title to put in the <TITLE></TITLE> header tags
-* @param string $head
-* @param boolean $use_alternate_styles
 */
-function print_header($title, $head="", $use_alternate_styles=true) {
+function print_header($title) {
 	global $bwidth, $BROWSERTYPE, $SEARCH_SPIDER, $view, $cart;
 	global $GEDCOM, $GEDCOM_TITLE, $QUERY_STRING, $action, $query, $theme_name;
 	global $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile;
 	global $WT_IMAGES, $TEXT_DIRECTION, $ONLOADFUNCTION, $REQUIRE_AUTHENTICATION;
 
-	header("Content-Type: text/html; charset=UTF-8");
+	header('Content-Type: text/html; charset=UTF-8');
 
 	$META_DESCRIPTION=get_gedcom_setting(WT_GED_ID, 'META_DESCRIPTION');
 	$META_ROBOTS=get_gedcom_setting(WT_GED_ID, 'META_ROBOTS');
@@ -394,20 +392,14 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	if ($META_TITLE) {
 		$title.=' - '.$META_TITLE;
 	}
-	if ($view=='simple') {
-		// The simple view needs to work without a database - for use during installation
-		$GEDCOM_TITLE=WT_WEBTREES;
-	} else {
-		$GEDCOM_TITLE = get_gedcom_setting(WT_GED_ID, 'title');
-	}
-	$javascript = '';
+	$GEDCOM_TITLE = get_gedcom_setting(WT_GED_ID, 'title');
 	$query_string = $QUERY_STRING;
-	$javascript.=WT_JS_START.'
+	$javascript=WT_JS_START.'
 		/* setup some javascript variables */
 		var query = "'.$query_string.'";
 		var textDirection = "'.$TEXT_DIRECTION.'";
 		var browserType = "'.$BROWSERTYPE.'";
-		var themeName = "'.strtolower($theme_name).'";
+		var themeName = "'.$theme_name.'";
 		var SCRIPT_NAME = "'.WT_SCRIPT_NAME.'";
 		/* keep the session id when opening new windows */
 		var sessionid = "'.Zend_Session::getId().'";
@@ -476,6 +468,9 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	}
 	$bodyOnLoad .= "\"";
 	require WT_ROOT.$headerfile;
+
+	// Allow the browser to format the header/menus while we generate the page
+	flush();
 }
 
 /**
@@ -486,8 +481,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 * This function should be called by every page before anything is output on popup pages.
 *
 * @param string $title the title to put in the <TITLE></TITLE> header tags
-* @param string $head
-* @param boolean $use_alternate_styles
+
 */
 function print_simple_header($title) {
 	global $view;
@@ -832,7 +826,7 @@ function print_favorite_selector($option=0) {
 				}
 			}
 		}
-		$menu->printMenu();
+		echo $menu->getMenu();
 		break;
 	default:
 		echo '<form class="favorites_form" name="favoriteform" action="', WT_SCRIPT_NAME, '"';
@@ -2260,10 +2254,10 @@ function DumpString($input) {
 					break;
 				}
 			}
-//			$thisLine .= WT_UTF8_LRM;
+			//$thisLine .= WT_UTF8_LRM;
 			$thisLine .= $thisChar;
 		}
-//		echo '&nbsp;&nbsp;UTF8&nbsp;', $thisLine, '<br />';
+		//echo '&nbsp;&nbsp;UTF8&nbsp;', $thisLine, '<br />';
 		echo '&nbsp;&nbsp;UTF8&nbsp;', WT_UTF8_LRO, $thisLine, WT_UTF8_PDF, '<br />';
 
 		// Line 3:  First hexadecimal byte

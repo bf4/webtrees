@@ -55,8 +55,8 @@ class html_WT_Module extends WT_Module implements WT_Module_Block {
 		}
 
 		/*
-	 	* Select GEDCOM
-	 	*/
+		* Select GEDCOM
+		*/
 		$gedcom=get_block_setting($block_id, 'gedcom');
 		switch($gedcom) {
 		case '__current__':
@@ -80,26 +80,22 @@ class html_WT_Module extends WT_Module implements WT_Module_Block {
 		}
 
 		/*
-	 	* Initiate the stats object.
-	 	*/
-		if(get_block_setting($block_id, 'ui')) {
-			$stats = new stats_ui($GEDCOM);
-		} else {
-			$stats = new stats($GEDCOM);
-		}
+		* Initiate the stats object.
+		*/
+		$stats = new stats($GEDCOM);
 
 		/*
-	 	* First Pass.
-	 	* Handle embedded language, fact, global, etc. references
-	 	*   This needs to be done first because the language variables could themselves
-	 	*   contain embedded keywords.
-	 	*/
+		* First Pass.
+		* Handle embedded language, fact, global, etc. references
+		*   This needs to be done first because the language variables could themselves
+		*   contain embedded keywords.
+		*/
 		// Title
 		$title_tmp=embed_globals(get_block_setting($block_id, 'title'));
 		$html =embed_globals(get_block_setting($block_id, 'html'));
 		/*
-	 	* Second Pass.
-	 	*/
+		* Second Pass.
+		*/
 		list($new_tags, $new_values) = $stats->getTags("{$title_tmp} {$html}");
 		// Title
 		if (strstr($title_tmp, '#')){$title_tmp = str_replace($new_tags, $new_values, $title_tmp);}
@@ -107,12 +103,12 @@ class html_WT_Module extends WT_Module implements WT_Module_Block {
 		$html = str_replace($new_tags, $new_values, $html);
 
 		/*
-	 	* Restore Current GEDCOM
-	 	*/
+		* Restore Current GEDCOM
+		*/
 		$GEDCOM = WT_GEDCOM;
 
 		/*
-	 	* Start Of Output
+		* Start Of Output
 		*/
 		$id=$this->getName().$block_id;
 		$title='';
@@ -158,7 +154,6 @@ class html_WT_Module extends WT_Module implements WT_Module_Block {
 	// Implement class WT_Module_Block
 	public function configureBlock($block_id) {
 		if (safe_POST_bool('save')) {
-			set_block_setting($block_id, 'ui',             safe_POST_bool('ui'));
 			set_block_setting($block_id, 'gedcom',         safe_POST('gedcom'));
 			set_block_setting($block_id, 'title',          $_POST['title']);
 			set_block_setting($block_id, 'html',           $_POST['html']);
@@ -179,7 +174,7 @@ class html_WT_Module extends WT_Module implements WT_Module_Block {
 		}
 
 		require_once WT_ROOT.'includes/functions/functions_edit.php';
-		
+
 		$templates=array(
 			i18n::translate('Keyword examples')=>
 			'#getAllTagsTable#',
@@ -381,20 +376,6 @@ class html_WT_Module extends WT_Module implements WT_Module_Block {
 		}
 
 		print "\n\t\t</td>\n\t</tr>\n";
-
-		// extended features
-		$ui=get_block_setting($block_id, 'ui', false);
-		if ($ui == 1) {
-			$ui = ' checked="checked"';
-		} else {
-			$ui = '';
-		}
-		print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
-			.i18n::translate('Extended Interface')
-			.help_link('index_htmlplus_ui')
-			."</td><td class=\"optionbox\"><input type=\"checkbox\" name=\"ui\" value=\"1\"{$ui} /></td>\n"
-			."\t</tr>\n"
-		;
 
 		$show_timestamp=get_block_setting($block_id, 'show_timestamp', false);
 		echo '<tr><td class="descriptionbox wrap width33">';

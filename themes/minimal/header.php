@@ -36,14 +36,15 @@ if (!defined('WT_WEBTREES')) {
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" <?php echo i18n::html_markup(); ?>>
 	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
 		<?php if (isset($_GET["mod_action"]) && $_GET["mod_action"]=="places_edit") { ?>
-			<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> <?php } 
+			<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> <?php }
 		?>
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 		<title><?php echo htmlspecialchars($title); ?></title>
 		<link rel="stylesheet" href="<?php echo $stylesheet; ?>" type="text/css" media="all" />
 		<?php if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) {?> <link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" /> <?php } ?>
-		<?php if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
+		<?php if ($BROWSERTYPE!='other') { ?>
 			<link rel="stylesheet" href="<?php echo WT_THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 		<?php }
 		// Additional css files required (Only if Lightbox installed)
@@ -69,7 +70,6 @@ if (!defined('WT_WEBTREES')) {
 		<meta name="generator" content="<?php echo WT_WEBTREES, ' - ', WT_WEBTREES_URL; ?>" />
 	<?php } ?>
 	<?php echo $javascript; ?>
-	<?php echo $head; //-- additional header information ?>
 	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="js/jquery/jquery.tablesorter.js"></script>

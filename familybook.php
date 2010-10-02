@@ -63,7 +63,7 @@ function print_descendency($person, $count) {
 	}
 
 	$pid=$person->getXref();
-	
+
 	echo "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">";
 	echo "<tr>";
 	echo "<td width=\"".($bwidth-2)."\">";
@@ -189,7 +189,7 @@ function print_person_pedigree($pid, $count) {
 
 function print_family_book($person, $descent) {
 	global $generations, $dgenerations, $firstrun;
-	
+
 	if ($descent==0 || !$person->canDisplayName()) {
 		return;
 	}
@@ -254,7 +254,7 @@ $gencount=0;
 	<?php echo i18n::translate('Root Person ID'), help_link('desc_rootid'); ?>
 </td>
 <td class="optionbox">
-	<input class="pedigree_form" type="text" name="pid" id="pid" size="3" value="<?php echo $pid ?>"	/>
+	<input class="pedigree_form" type="text" name="pid" id="pid" size="3" value="<?php echo $pid; ?>" />
 	<?php print_findindi_link("pid",""); ?>
 </td>
 
@@ -316,7 +316,7 @@ if ($show_spouse) echo " checked=\"checked\""; ?> />
 </td></tr></table>
 
 <?php
-	
+
 echo
 	'<div id="familybook_chart',
 	($TEXT_DIRECTION=="ltr")?"":"_rtl",
