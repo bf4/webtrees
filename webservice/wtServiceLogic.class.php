@@ -107,8 +107,8 @@ class wtServiceLogic extends GenealogyService {
 	 * @param string $username the username for the user attempting to login
 	 * @param string $password the plain text password to test
 	 * @param string $compression the compression library to use
-	 * @return mixed If login sucessful: returns session id, message and compression
-	 * library that is being used. If login unsucessful: returns a SOAP_Fault
+	 * @return mixed If login successful: returns session id, message and compression
+	 * library that is being used. If login unsuccessful: returns a SOAP_Fault
 	 * @todo implement banning
 	 */
 	function postAuthenticate($username, $password, $gedcom_id, $compression) {
@@ -141,7 +141,7 @@ class wtServiceLogic extends GenealogyService {
 			$_SESSION["compression"] = $compress_method;
 			if (isset( $_SESSION["readonly"] )) unset($_SESSION["readonly"]);
 			$return['SID'] = $sid;
-			$return['message'] = $username . " Logged in sucessfully";
+			$return['message'] = $username . " Logged in successfully";
 			$return['compressionMethod'] = $compress_method;
 			$return['gedcom_id'] = $GEDCOM;
 			$return = new SOAP_Value('result', '{urn:'.$this->__namespace.'}authResult', $return);
