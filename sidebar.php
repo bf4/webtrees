@@ -190,18 +190,9 @@ function openCallback() {
 	// }
 	
 	// For Google Maps v3 only ---------------------------------------------------------------------
-	// if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title") == "googlemap") {
-		// setup_map();
+	if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title") == "googlemap") {
 		loadMap();
-		// jQuery.get('modules/googlemap/module.php');
-		
-
-		//jQuery.get(WT_ROOT.'modules/googlemap/xmltest3.php', function(data) {
-  		//	jQuery('.result').html(data);
-  		//	//	alert('Load was performed.');
-		//});
-
-	// }
+	}
 	// ---------------------------------------------------------------------------------------------	
 }
 

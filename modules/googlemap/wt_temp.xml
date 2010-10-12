@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <markers>
-<marker class="optionbox" index="0" tabindex="0" placed="no" fact="Birth" icon="" placerec="Miller Farm, Ulnes Walton, Lancashire, England
-" lati="53.6852" lng="-2.7374" date="10 FEB 1889" />
-<marker class="optionbox" index="1" tabindex="0" placed="yes" fact="Census" icon="" placerec="Chorley, Lancashire, England
-" lati="53.64" lng="-2.63" date="31 MAR 1901" />
-<marker class="optionbox" index="2" tabindex="0" placed="no" fact="Marriage" icon="" placerec="Trinity Wesleyan Church, Chorley, Lancashire, England" lati="53.648" lng="-2.6359" date="01 JAN 1914" name="I7" />
-<marker class="optionbox" index="3" tabindex="0" placed="no" fact="Death" icon="" placerec="Hull, Yorkshire, England
-" lati="53.76" lng="-0.32" date="3 SEP 1975" />
-<marker class="optionbox" index="4" tabindex="0" placed="no" fact="Cremation" icon="" placerec="Hull Crematorium, Hull, Yorkshire, England" lati="53.7644" lng="-0.3726" date="8 SEP 1975" />
-<marker index="1" tabindex="1" placed="yes" fact="Son" class="person_box" icon="" placerec="Chorley, Lancashire, England
-" lati="53.64" lng="-2.63" date="6 MAY 1914" name="I21" />
-<marker index="5" tabindex="0" placed="no" fact="Son" class="person_box" icon="" placerec="84 Devonshire Rd, Chorley, Lancashire, England" lati="53.6499" lng="-2.6363" date="27 JAN 1917" name="I2" />
-<marker index="1" tabindex="2" placed="yes" fact="Son" class="person_box" icon="" placerec="Chorley, Lancashire, England
-" lati="53.64" lng="-2.63" date="28 APR 1920" name="I22" />
-<marker index="6" tabindex="0" placed="no" fact="Daughter" class="person_boxF" icon="" placerec="South Promenade, Withernsea, Yorkshire, England
-" lati="53.7280" lng="0.0382" date="05 OCT 1930" name="I23" />
+<marker class="optionbox" index="0" tabindex="0" placed="yes" fact="Birth" icon="" placerec="Station House, Brinscall, Lancashire, England" lati="53.687911061" lng="-2.565870881" media="" sv_lati="53.687902" sv_long="-2.565948" sv_bearing="64" sv_elevation="-8" sv_zoom="0" date="31 MAY 1887" />
+<marker class="optionbox" index="1" tabindex="0" placed="yes" fact="Census" icon="" placerec="Withnell, Lancashire, England" lati="53.695" lng="-2.556" media="" sv_lati="" sv_long="" sv_bearing="0" sv_elevation="0" sv_zoom="0" date="05 APR 1891" />
+<marker class="optionbox" index="0" tabindex="1" placed="yes" fact="Census" icon="" placerec="Station House, Brinscall, Lancashire, England" lati="53.687911061" lng="-2.565870881" media="" sv_lati="53.687902" sv_long="-2.565948" sv_bearing="64" sv_elevation="-8" sv_zoom="0" date="31 MAR 1901" />
+<marker class="optionbox" index="1" tabindex="1" placed="yes" fact="Census" icon="" placerec="Withnell, Lancashire, England" lati="53.695" lng="-2.556" media="" sv_lati="" sv_long="" sv_bearing="0" sv_elevation="0" sv_zoom="0" date="02 APR 1911" />
+<marker class="optionbox" index="2" tabindex="0" placed="no" fact="Marriage" icon="" placerec="Trinity Wesleyan Church, Chorley, Lancashire, England" lati="53.648" lng="-2.6359" media="" sv_lati="53.648025" sv_long="-2.635901" sv_bearing="13" sv_elevation="-2" sv_zoom="0" date="01 JAN 1914" name="I8" />
+<marker class="optionbox" index="3" tabindex="0" placed="no" fact="Occupation" info="Schoolmaster" icon="" placerec="Withernsea School, Withernsea, Yorkshire, England
+" lati="53.7320" lng="0.0240" media="" sv_lati="53.731482" sv_long="0.024302" sv_bearing="0" sv_elevation="-1" sv_zoom="0" date="1934" />
+<marker class="optionbox" index="4" tabindex="0" placed="yes" fact="Death" icon="" placerec="South Promenade, Withernsea, Yorkshire, England
+" lati="53.7280" lng="0.0382" media="" sv_lati="53.727946" sv_long="0.038342" sv_bearing="312.74" sv_elevation="-0.38" sv_zoom="0" date="24 MAY 1948" />
+<marker index="5" tabindex="0" placed="yes" fact="Son" class="person_box" icon="" placerec="Chorley, Lancashire, England
+" lati="53.636" lng="-2.63" date="6 MAY 1914" name="I21" media="" sv_lati="" sv_long="" sv_bearing="0" sv_elevation="0" sv_zoom="0" />
+<marker index="6" tabindex="0" placed="no" fact="Son" class="person_box" icon="" placerec="84 Devonshire Rd, Chorley, Lancashire, England" lati="53.6499" lng="-2.6363" date="27 JAN 1917" name="I2" media="" sv_lati="53.650008" sv_long="-2.636277" sv_bearing="118" sv_elevation="-3" sv_zoom="0" />
+<marker index="5" tabindex="1" placed="yes" fact="Son" class="person_box" icon="" placerec="Chorley, Lancashire, England
+" lati="53.636" lng="-2.63" date="28 APR 1920" name="I22" media="" sv_lati="" sv_long="" sv_bearing="0" sv_elevation="0" sv_zoom="0" />
+<marker index="4" tabindex="1" placed="yes" fact="Daughter" class="person_boxF" icon="" placerec="South Promenade, Withernsea, Yorkshire, England
+" lati="53.7280" lng="0.0382" date="05 OCT 1930" name="I23" media="" sv_lati="53.727946" sv_long="0.038342" sv_bearing="312.74" sv_elevation="-0.38" sv_zoom="0" />
 </markers>
