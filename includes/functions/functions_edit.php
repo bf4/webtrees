@@ -181,8 +181,20 @@ function edit_field_language($name, $selected='', $extra='') {
 	return select_edit_control($name, i18n::installed_languages(), null, $selected, $extra);
 }
 
+// Print an edit control for a username
+function edit_field_username($name, $selected='', $extra='') {
+	$all_users=WT_DB::prepare(
+		"SELECT user_name, CONCAT_WS(' ', real_name, '-', user_name) FROM `##user` ORDER BY real_name"
+	)->fetchAssoc();
+	// The currently selected user may not exist
+	if ($selected && !array_key_exists($selected, $all_users)) {
+		$all_users[$selected]=$selected;
+	}
+	return select_edit_control($name, $all_users, '-', $selected, $extra);
+}
+
 // Print an edit control for a ADOP field
-function edit_field_adop($name, $selected='', $extra='') {
+function edit_field_adop_u($name, $selected='', $extra='') {
 	global $ADOP_CODES;
 	return select_edit_control($name, $ADOP_CODES, null, $selected, $extra);
 }
@@ -200,7 +212,7 @@ function edit_field_adop_m($name, $selected='', $extra='') {
 }
 
 // Print an edit control for a PEDI field
-function edit_field_pedi($name, $selected='', $extra='') {
+function edit_field_pedi_u($name, $selected='', $extra='') {
 	global $PEDI_CODES;
 	return select_edit_control($name, $PEDI_CODES, '', $selected, $extra);
 }
@@ -1446,30 +1458,20 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		switch ($gender) {
 		case 'M': echo edit_field_adop_m($element_name, $value); break;
 		case 'F': echo edit_field_adop_f($element_name, $value); break;
-		default:  echo edit_field_adop  ($element_name, $value); break;
+		default:  echo edit_field_adop_u($element_name, $value); break;
 		}
 	} else if ($fact=="PEDI") {
 		switch ($gender) {
 		case 'M': echo edit_field_pedi_m($element_name, $value); break;
 		case 'F': echo edit_field_pedi_f($element_name, $value); break;
-		default:  echo edit_field_pedi  ($element_name, $value); break;
+		default:  echo edit_field_pedi_u($element_name, $value); break;
 		}
 	} else if ($fact=="STAT") {
 		echo select_edit_control($element_name, $STATUS_CODES, '', $value);
 	} else if ($fact=="RELA") {
 		echo edit_field_rela($element_name, strtolower($value));
 	} else if ($fact=="_WT_USER") {
-		$text=strtolower($value);
-		echo "<select id=\"", $element_id, "\" name=\"", $element_name, "\" >";
-		echo '<option value=""';
-		if (''==$text) echo ' selected="selected"';
-		echo ">-</option>";
-		foreach (get_all_users('asc', 'username') as $user_id=>$user_name) {
-			echo "<option value=\"", $user_name, "\"";
-			if ($user_name==$text) echo " selected=\"selected\"";
-			echo ">", $user_name, "</option>";
-		}
-		echo "</select>";
+		echo edit_field_username($element_name, $value);
 	} else if ($fact=="RESN") {
 		?>
 		<script type="text/javascript">
@@ -1530,22 +1532,22 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		echo "</select>";
 	} else if (($fact=="NAME" && $upperlevel!='REPO') || $fact=="_MARNM") {
 		// Populated in javascript from sub-tags
-		echo "<input type=\"hidden\" id=\"", $element_id, "\" name=\"", $element_name, "\" onchange=\"updateTextName('", $element_id, "');\" value=\"", PrintReady(htmlspecialchars($value, ENT_COMPAT, 'UTF-8')), "\" />";
-		echo "<span id=\"", $element_id, "_display\">", PrintReady(htmlspecialchars($value, ENT_COMPAT, 'UTF-8')), "</span>";
+		echo "<input type=\"hidden\" id=\"", $element_id, "\" name=\"", $element_name, "\" onchange=\"updateTextName('", $element_id, "');\" value=\"", PrintReady(htmlspecialchars($value)), "\" />";
+		echo "<span id=\"", $element_id, "_display\">", PrintReady(htmlspecialchars($value)), "</span>";
 		echo " <a href=\"#edit_name\" onclick=\"convertHidden('", $element_id, "'); return false;\"> ";
 		if (isset($WT_IMAGES["edit_indi"])) echo "<img src=\"", $WT_IMAGES["edit_indi"], "\" border=\"0\" width=\"20\" alt=\"", i18n::translate('Edit name'), "\" align=\"top\" />";
 		else echo "<span class=\"age\">[", i18n::translate('Edit name'), "]</span>";
 		echo "</a>";
 	} else {
 		// textarea
-		if ($rows>1) echo "<textarea id=\"", $element_id, "\" name=\"", $element_name, "\" rows=\"", $rows, "\" cols=\"", $cols, "\">", PrintReady(htmlspecialchars($value, ENT_COMPAT, 'UTF-8')), "</textarea><br />";
+		if ($rows>1) echo "<textarea id=\"", $element_id, "\" name=\"", $element_name, "\" rows=\"", $rows, "\" cols=\"", $cols, "\">", PrintReady(htmlspecialchars($value)), "</textarea><br />";
 		else {
 			// text
 			// If using GEDFact-assistant window
 			if ($action=="addnewnote_assisted") {
-				echo "<input type=\"text\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8')), "\" style=\"width:4.1em;\" dir=\"ltr\"";
+				echo "<input type=\"text\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", PrintReady(htmlspecialchars($value)), "\" style=\"width:4.1em;\" dir=\"ltr\"";
 			}else{
-				echo "<input type=\"text\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8')), "\" size=\"", $cols, "\" dir=\"ltr\"";
+				echo "<input type=\"text\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", PrintReady(htmlspecialchars($value)), "\" size=\"", $cols, "\" dir=\"ltr\"";
 			}
 			echo " class=\"{$fact}\"";
 			echo " autocomplete=\"off\"";
