@@ -142,29 +142,10 @@ function closeCallback() {
 		jQuery.get('individual.php?pid=<?php echo $controller->pid;?>&action=ajax&pin=false');
 		pinned = false;
 	}
-	// For Google Maps v2 only ---------------------------------------------------------------------
-
-	// if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title") == "googlemap") {
-
-		//	loadMap();
-		//	map.setMapType(<?php echo $GOOGLEMAP_MAP_TYPE; ?>);
-		//	SetMarkersAndBounds();
-		//	ResizeMap();
-	// }
-
 	// For Google Maps v3 only ---------------------------------------------------------------------
-	//if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title") == "googlemap") {
-		// location.reload();
-		// HomeControl();
+	if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title") == "googlemap") {
 		loadMap();
-		// jQuery.get('modules/googlemap/module.php');
-		
-		//jQuery.get('modules/googlemap/xmltest3.php', function(data) {
-  		//	jQuery('.result').html(data);
-  		//	// alert('Load was performed.');
-		//});
-		
-	//}
+	}
 	// ---------------------------------------------------------------------------------------------	
 }
 
@@ -180,14 +161,6 @@ function openCallback() {
 			}
 		}
 	});
-	// For Google Maps v2 only ---------------------------------------------------------------------
-	
-	// if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title") == "googlemap") {
-		//	HomeControl(document.createElement('DIV'), map);
-		//	loadMap();
-		//	map.setMapType(<?php echo $GOOGLEMAP_MAP_TYPE; ?>);
-		//	SetMarkersAndBounds();
-	// }
 	
 	// For Google Maps v3 only ---------------------------------------------------------------------
 	if (jQuery("#tabs li:eq("+jQuery("#tabs").tabs("option", "selected")+") a").attr("title") == "googlemap") {
