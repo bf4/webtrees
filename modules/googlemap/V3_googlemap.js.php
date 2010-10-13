@@ -205,8 +205,8 @@ jQuery(function() {
    					addressControl: false,
 					pov: {
 						heading: sv_dir[i],
-						// pitch: sv_elev[i],
-						pitch: 0,
+						pitch: sv_elev[i],
+						// pitch: 5,
 						zoom: sv_zoom[i]
 					}         	
         		};  
