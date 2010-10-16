@@ -180,13 +180,16 @@ function create_map() {
 		echo "background-image: url('images/loading.gif'); background-position: center; background-repeat: no-repeat; overflow: hidden;\"></div>";
 		?>
 
+		<!--  V2 ============ -->
 		<!-- Start of map scripts -->
 		<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
 		<script src="modules/googlemap/wt_googlemap.js" type="text/javascript"></script>
+		<!--  V2 ============ -->
 		
 		<!--  V3 ============ -->
 		<!-- <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
-		<link type="text/css" href="modules/googlemap/wt_v3_jquery_custom.css" rel="stylesheet" /> -->
+		<script src="modules/googlemap/wt_v3_googlemap.js" type="text/javascript"></script>
+		<link type="text/css" href="modules/googlemap/css/v3_googlemap.css" rel="stylesheet" /> -->
 		<!--  V3 ============ -->
 		
 		<?php
@@ -245,9 +248,11 @@ function create_map() {
 			$latlng = WT_DB::prepare("SELECT pl_id, pl_lati, pl_long, pl_zoom, sv_long, sv_lati, sv_bearing, sv_elevation, sv_zoom FROM ##placelocation WHERE pl_place='{$parent[3]}'")->fetchAll(PDO::FETCH_ASSOC);
 		
     	  	if (!isset($latlng[0])) {
-		    	echo "<br /><br /><br /><br /><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color='red'>";
+		    	echo "<br /><br /><br /><br /><br /><br />";
+		    	echo "<font color='red'>";
 		    	echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If using google Maps Streetview, <br />";
-		    	echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit Geographic place Location First. then return here to position Streetview after.</font>";
+		    	echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit Geographic place Location First. then return here to position Streetview afterwards.";
+		    	echo "</font>";
     	  	} else {
 				$pl_lati = str_replace(array('N', 'S', ','), array('', '-', '.'), $latlng[0]['pl_lati']);	// WT_placelocation lati
 				$pl_long = str_replace(array('E', 'W', ','), array('', '-', '.'), $latlng[0]['pl_long']);	// WT_placelocation long

@@ -113,21 +113,6 @@
     var sv2_elev = null;
     var sv2_zoom = null;
 	var placer = null; 
-
-/*	
-// perform JavaScript after the document is scriptable.
-jQuery(function() {
-	// setup ul.tabs to work as tabs for each div directly under div.panes
-	//jQuery("ul.tabs").tabs("div.panes > div");
-				jQuery("#gmtabs").tabs();
-				// jQuery("ul.tabs").tabs("div.panes > div");
-			
-				jQuery('#SV').click(function() {
-       				var panorama = new google.maps.StreetViewPanorama(document.getElementById("pano"), panoramaOptions);  
-            		// map.setStreetView(panorama);  // **** If you uncomment this, the pegman will appear ****
-          		});	
-});
-*/
 	
 	// var SView = "";
 	// A function to create the marker and set up the event window
@@ -135,7 +120,6 @@ jQuery(function() {
     	var contentString = '<div id="iwcontent">'+html+'<\/div>';
     	
     	// === Decide if marker point is Regular (latlng) or StreetView (sv_point) derived ===
-
 		if (sv_point == "(0, 0)") {
 			placer = latlng;
 		} else {
@@ -153,9 +137,9 @@ jQuery(function() {
         });
         
         // === Store the tab, category and event info as marker properties ===
-        //marker.myindex = index;
+        marker.myindex = index;
         marker.mytab = tab;
-        //marker.myplaced = placed;
+        marker.myplaced = placed;
         marker.mycategory = category;                                 
         marker.myevent = event;
         marker.myaddress = address;     
@@ -192,7 +176,7 @@ jQuery(function() {
        		sv_zoom[i] = parseFloat(gmarkers[i].sv_zoom);    	
 		
 		// == Open infowindow when marker is clicked ==
-		if (document.getElementById("golfbox").checked == false) { 
+		//if (document.getElementById("golfbox").checked == false) { 
 			// Either events -----------
     		google.maps.event.addListener(marker, 'click', function() {
     			infowindow.close();
@@ -209,13 +193,11 @@ jQuery(function() {
 						// pitch: 5,
 						zoom: sv_zoom[i]
 					}         	
-        		};  
+        		};
         		
 				// === Use jquery for tabs ===	
-				
-				//jQuery("#gmtabs").tabs({ selected: 2 });
 				jQuery("#gmtabs").tabs("div.panes > div");
-				
+			
 				jQuery('#EV').click(function() {
             		document.tabLayerEV = eval('document.getElementById("EV")');
             		document.tabLayerEV.style.background = "#ffffff";
@@ -275,7 +257,8 @@ jQuery(function() {
         		// == rebuild the side bar ==
         		//	makeSidebar(i);      	
     		});
-    	} else {
+/*    	
+		} else {
     		// Or streetview -----------
 			var message =
 				"Marker: " + (i + 1) + "<br/>" +
@@ -284,8 +267,10 @@ jQuery(function() {
 				"heading: " + marker.sv_bearing + "<br/>";
 			setMarkerMessage(marker, message);    		
     	}
+*/
 	}
-	
+
+/*
 	// === Streetview function when streetview selected (from marker) ===
 	function setMarkerMessage(marker, message) {
 		google.maps.event.addListener(marker, 'click', function() {
@@ -351,7 +336,7 @@ jQuery(function() {
 			infowindow.open(map, marker2);
 			google.maps.event.trigger(streetViewPanorama2, 'resize')
 	}
-
+*/
 
     // == shows all markers of a particular category, and ensures the checkbox is checked ==
     function show(category) {
@@ -393,17 +378,19 @@ jQuery(function() {
 
 	// == Opens Marker infowindow when corresponding Sidebar item is clicked ==
     function myclick(i, index, tab) { 
-		if (document.getElementById("golfbox").checked == false) { 		
+//		if (document.getElementById("golfbox").checked == false) { 		
 			// Either events -----------
 			infowindow.close();
-			google.maps.event.trigger(gmarkers[i], "click");        		
+			google.maps.event.trigger(gmarkers[i], "click");
+/*
     	} else {   	
     		// Or streetview -----------    		
 			var message =
 				"Marker: " + gmarkers[i] + "<br>" +
 				"LatLng: " + gmarkers[i].getPosition().toUrlValue(4) + "<br>";			
 			setMarkerMessage2(gmarkers[i], message);			
-    	}        
+    	}  
+*/
     }
     
     // == rebuild sidebar (hidden item) when any marker's infowindow is closed ==
@@ -436,8 +423,7 @@ jQuery(function() {
     }
       
 	// Home control ----------------------------------------------------------------
-	/* The HomeControl adds a control to the map that simply
-	 * returns the user to the original map position ... loadMap() function
+	/* returns the user to the original map position ... loadMap() function
 	 * This constructor takes the control DIV as an argument.
 	 */ 
 	function HomeControl(controlDiv, map) {
@@ -475,11 +461,9 @@ jQuery(function() {
 
 
   	function loadMap() { 
-//jQuery(function() {  	
 		<?php 	
 			global $pid, $PEDIGREE_GENERATIONS, $MAX_PEDIGREE_GENERATIONS, $ENABLE_AUTOCOMPLETE, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $WT_IMAGES, $GEDCOM;
 		?>
-
 		
   		// Create the map and mapOptions
 		var mapOptions = {
@@ -607,6 +591,7 @@ jQuery(function() {
 								
 			?>
     			[
+    				// Elements 0-9. Basic parameters 
 					"<?php echo $gmark['fact'].''; ?>", 
     				"<?php echo $gmark['lati']; ?>", 
     				"<?php echo $gmark['lng']; ?>", 
@@ -618,19 +603,19 @@ jQuery(function() {
 					"<?php echo $gmark['tabindex'].''; ?>",
 					"<?php echo $gmark['placed'].''; ?>",
 					
-					// 10. location marker tooltip - extra printable item for marker title.
+					// Element 10. location marker tooltip - extra printable item for marker title.
 					"<?php echo strip_tags(preg_replace('/\"/', '\\\"', print_fact_place_map($gmark['placerec']))); ?>",
 					
-					// 11. 
+					// Element 11. persons Name  
 					"<?php if (!empty($gmark['name'])) { $person=Person::getInstance($gmark['name']); if ($person) { echo $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : i18n::translate('Private'); } } ?>",
 					
-					// 12. Other people's Highlighted image.
+					// Element 12. Other people's Highlighted image.
 					"<?php if (!empty($gmark['name'])) { echo $image2; } else { echo ''; } ?>",
 					
-					// 13. This Individual's Highlighted image.
+					// Element 13. This Individual's Highlighted image.
 					"<?php if (!empty($pid)) { echo $image; } else { echo ''; } ?>",
 					
-					// 14-19 Streetview parameters 
+					// Elements 14-19 Streetview parameters 
 					"<?php if (!empty($gmark['media'])) { echo $gmark['media']; } ?>",
 					"<?php if (!empty($gmark['sv_lati'])) { echo $gmark['sv_lati']; } ?>",
 					"<?php if (!empty($gmark['sv_long'])) { echo $gmark['sv_long']; } ?>",
@@ -792,8 +777,7 @@ jQuery(function() {
         
         // initially load sidebar (hidden item but THIS IS required)
         makeSidebar();
-   	
-//   	});
+
     }	// end loadMap()
     
 
