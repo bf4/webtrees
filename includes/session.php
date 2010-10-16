@@ -236,10 +236,15 @@ if ($SERVER_URL && $SERVER_URL != WT_SERVER_NAME.WT_SCRIPT_PATH) {
 //-- allow user to cancel
 ignore_user_abort(false);
 
+// Request more resources - if we can/want to
 if (!ini_get('safe_mode')) {
-	ini_set('memory_limit', get_site_setting('MEMORY_LIMIT'));
-	if (strpos(ini_get('disable_functions'), 'set_time_limit')===false) {
-		set_time_limit(get_site_setting('MAX_EXECUTION_TIME'));
+	$memory_limit=get_site_setting('MEMORY_LIMIT');
+	if ($memory_limit) {
+		ini_set('memory_limit', $memory_limit);
+	}
+	$max_execution_time=get_site_setting('MAX_EXECUTION_TIME');
+	if ($max_execution_time && strpos(ini_get('disable_functions'), 'set_time_limit')===false) {
+		set_time_limit($max_execution_time);
 	}
 }
 
@@ -287,7 +292,8 @@ session_set_save_handler(
 define('WT_SESSION_NAME', 'WT_SESSION');
 $cfg=array(
 	'name'            => WT_SESSION_NAME,
-	'cookie_lifetime' => get_site_setting('SESSION_TIME'),
+	'cookie_lifetime' => 0,
+	'gc_maxlifetime'  => get_site_setting('SESSION_TIME'),
 	'cookie_path'     => WT_SCRIPT_PATH,
 );
 Zend_Session::start($cfg);
