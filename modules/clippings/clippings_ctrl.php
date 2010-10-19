@@ -34,7 +34,6 @@ if (!defined('WT_WEBTREES')) {
 
 define('WT_CLIPPINGS_CTRL', '');
 
-require_once WT_ROOT.'includes/classes/class_grampsexport.php';
 require_once WT_ROOT.'includes/classes/class_person.php';
 require_once WT_ROOT.'includes/functions/functions.php';
 require_once WT_ROOT.'includes/controllers/basecontrol.php';
@@ -69,7 +68,7 @@ function id_in_cart($id) {
 /**
 * Main controller class for the Clippings page.
 */
-class ClippingsControllerRoot extends BaseController {
+class ClippingsController extends BaseController {
 
 	var $download_data;
 	var $media_list = array();
@@ -82,7 +81,6 @@ class ClippingsControllerRoot extends BaseController {
 	var $conv_slashes;
 	var $privatize_export;
 	var $Zip;
-	var $filetype;
 	var $level1;  // number of levels of ancestors
 	var $level2;
 	var $level3; // number of levels of descendents
@@ -95,8 +93,7 @@ class ClippingsControllerRoot extends BaseController {
 	}
 	//----------------beginning of function definitions for ClippingsControllerRoot
 	function init() {
-		global $SCRIPT_NAME, $HOME_SITE_TEXT, $HOME_SITE_URL, $MEDIA_DIRECTORY;
-		global $GEDCOM, $cart;
+		global $SCRIPT_NAME, $MEDIA_DIRECTORY, $MEDIA_FIREWALL_ROOTDIR, $GEDCOM, $cart;
 
 		if (!isset($_SESSION['exportConvPath'])) $_SESSION['exportConvPath'] = $MEDIA_DIRECTORY;
 		if (!isset($_SESSION['exportConvSlashes'])) $_SESSION['exportConvSlashes'] = 'forward';
@@ -109,19 +106,17 @@ class ClippingsControllerRoot extends BaseController {
 		$this->IncludeMedia = safe_GET('IncludeMedia');
 		$this->conv_path = safe_GET('conv_path', WT_REGEX_NOSCRIPT, $_SESSION['exportConvPath']);
 		$this->conv_slashes = safe_GET('conv_slashes', array('forward', 'backward'), $_SESSION['exportConvSlashes']);
-		$this->privatize_export = safe_GET('privatize_export', array('none', 'visitor', 'user', 'gedadmin', 'admin'));
-		$this->filetype = safe_GET('filetype');
+		$this->privatize_export = safe_GET('privatize_export', array('none', 'visitor', 'user', 'gedadmin'));
 		$this->level1 = safe_GET('level1');
 		$this->level2 = safe_GET('level2');
 		$this->level3 = safe_GET('level3');
-		if (empty($this->filetype)) $this->filetype = "gedcom";
 		$others = safe_GET('others');
 		$item = safe_GET('item');
 		if (!isset($cart)) $cart = $_SESSION['cart'];
 		$this->type = safe_GET('type');
 
 		$this->conv_path = stripLRMRLM($this->conv_path);
-		$_SESSION['exportConvPath'] = $this->conv_path;		// remember this for the next Download
+		$_SESSION['exportConvPath'] = $this->conv_path; // remember this for the next Download
 		$_SESSION['exportConvSlashes'] = $this->conv_slashes;
 
 		if ($this->action == 'add') {
@@ -240,211 +235,140 @@ class ClippingsControllerRoot extends BaseController {
 		} else
 		if ($this->action == 'download') {
 			usort($cart, "same_group");
-			if ($this->filetype == "gedcom") {
-				$media = array ();
-				$mediacount = 0;
-				$ct = count($cart);
-				$filetext = "0 HEAD\n1 SOUR ".WT_WEBTREES."\n2 NAME ".WT_WEBTREES."\n2 VERS ".WT_VERSION_TEXT."\n1 DEST DISKETTE\n1 DATE " . date("j M Y") . "\n2 TIME " . date("H:i:s") . "\n";
-				$filetext .= "1 GEDC\n2 VERS 5.5\n2 FORM LINEAGE-LINKED\n1 CHAR UTF-8\n";
-				$head = find_gedcom_record("HEAD", WT_GED_ID);
-				$placeform = trim(get_sub_record(1, "1 PLAC", $head));
-				if (!empty ($placeform))
-				$filetext .= $placeform . "\n";
-				else
-				$filetext .= "1 PLAC\n2 FORM " . "City, County, State/Province, Country" . "\n";
-				if ($convert == "yes") {
-					$filetext = str_replace("UTF-8", "ANSI", $filetext);
-					$filetext = utf8_decode($filetext);
-				}
+			$media = array ();
+			$mediacount = 0;
+			$ct = count($cart);
+			$filetext = "0 HEAD\n1 SOUR ".WT_WEBTREES."\n2 NAME ".WT_WEBTREES."\n2 VERS ".WT_VERSION_TEXT."\n1 DEST DISKETTE\n1 DATE " . date("j M Y") . "\n2 TIME " . date("H:i:s") . "\n";
+			$filetext .= "1 GEDC\n2 VERS 5.5\n2 FORM LINEAGE-LINKED\n1 CHAR UTF-8\n";
+			$head = find_gedcom_record("HEAD", WT_GED_ID);
+			$placeform = trim(get_sub_record(1, "1 PLAC", $head));
+			if (!empty ($placeform))
+			$filetext .= $placeform . "\n";
+			else
+			$filetext .= "1 PLAC\n2 FORM " . "City, County, State/Province, Country" . "\n";
+			if ($convert == "yes") {
+				$filetext = str_replace("UTF-8", "ANSI", $filetext);
+				$filetext = utf8_decode($filetext);
+			}
 
-				$tempUserID = '#ExPoRt#';
-				if ($this->privatize_export!='none') {
-					// Create a temporary userid
-					$export_user_id = createTempUser($tempUserID, $this->privatize_export, $GEDCOM);	// Create a temporary userid
+			$tempUserID = '#ExPoRt#';
+			if ($this->privatize_export!='none') {
+				// Create a temporary userid
+				$export_user_id = createTempUser($tempUserID, $this->privatize_export, $GEDCOM); // Create a temporary userid
 
-					// Temporarily become this user
-					$_SESSION["org_user"]=$_SESSION["wt_user"];
-					$_SESSION["wt_user"]=$tempUserID;
-				}
+				// Temporarily become this user
+				$_SESSION["org_user"]=$_SESSION["wt_user"];
+				$_SESSION["wt_user"]=$export_user_id;
+			}
 
-				for ($i = 0; $i < $ct; $i++) {
-					$clipping = $cart[$i];
-					if ($clipping['gedcom'] == $GEDCOM) {
-						$record = find_gedcom_record($clipping['id'], WT_GED_ID);
-						$savedRecord = $record;		// Save this for the "does this file exist" check
-						if ($clipping['type']=='obje') $record = convert_media_path($record, $this->conv_path, $this->conv_slashes);
-						$record = privatize_gedcom($record);
-						$record = remove_custom_tags($record, $remove);
-						if ($convert == "yes")
-						$record = utf8_decode($record);
-						switch ($clipping['type']) {
-						case 'indi':
-							$ft = preg_match_all("/1 FAMC @(.*)@/", $record, $match, PREG_SET_ORDER);
-							for ($k = 0; $k < $ft; $k++) {
-								if (!id_in_cart($match[$k][1])) {
-									$record = preg_replace("/1 FAMC @" . $match[$k][1] . "@.*/", "", $record);
-								}
-							}
-							$ft = preg_match_all("/1 FAMS @(.*)@/", $record, $match, PREG_SET_ORDER);
-							for ($k = 0; $k < $ft; $k++) {
-								if (!id_in_cart($match[$k][1])) {
-									$record = preg_replace("/1 FAMS @" . $match[$k][1] . "@.*/", "", $record);
-								}
-							}
-							$ft = preg_match_all("/\d FILE (.*)/", $savedRecord, $match, PREG_SET_ORDER);
-							for ($k = 0; $k < $ft; $k++) {
-								$filename = $MEDIA_DIRECTORY.extract_filename(trim($match[$k][1]));
-								if (file_exists($filename)) {
-									$media[$mediacount] = array (PCLZIP_ATT_FILE_NAME => $filename);
-									$mediacount++;
-								}
-//								$record = preg_replace("|(\d FILE )" . addslashes($match[$k][1]) . "|", "$1" . $filename, $record);
-							}
-							$filetext .= trim($record) . "\n";
-							$filetext .= "1 SOUR @SPGV1@\n";
-							$filetext .= "2 PAGE " . WT_SERVER_NAME.WT_SCRIPT_PATH . "individual.php?pid=" . $clipping['id'] . "\n";
-							$filetext .= "2 DATA\n";
-							$filetext .= "3 TEXT " . i18n::translate('This Individual was downloaded from:') . "\n";
-							$filetext .= "4 CONT " . WT_SERVER_NAME.WT_SCRIPT_PATH . "individual.php?pid=" . $clipping['id'] . "\n";
-							break;
-
-						case 'fam':
-							$ft = preg_match_all("/1 CHIL @(.*)@/", $record, $match, PREG_SET_ORDER);
-							for ($k = 0; $k < $ft; $k++) {
-								if (!id_in_cart($match[$k][1])) {
-									/* if the child is not in the list delete the record of it */
-									$record = preg_replace("/1 CHIL @" . $match[$k][1] . "@.*/", "", $record);
-								}
-							}
-
-							$ft = preg_match_all("/1 HUSB @(.*)@/", $record, $match, PREG_SET_ORDER);
-							for ($k = 0; $k < $ft; $k++) {
-								if (!id_in_cart($match[$k][1])) {
-									/* if the husband is not in the list delete the record of him */
-									$record = preg_replace("/1 HUSB @" . $match[$k][1] . "@.*/", "", $record);
-								}
-							}
-
-							$ft = preg_match_all("/1 WIFE @(.*)@/", $record, $match, PREG_SET_ORDER);
-							for ($k = 0; $k < $ft; $k++) {
-								if (!id_in_cart($match[$k][1])) {
-									/* if the wife is not in the list delete the record of her */
-									$record = preg_replace("/1 WIFE @" . $match[$k][1] . "@.*/", "", $record);
-								}
-							}
-
-							$ft = preg_match_all("/\d FILE (.*)/", $savedRecord, $match, PREG_SET_ORDER);
-							for ($k = 0; $k < $ft; $k++) {
-								$filename = $MEDIA_DIRECTORY.extract_filename(trim($match[$k][1]));
-								if (file_exists($filename)) {
-									$media[$mediacount] = array (PCLZIP_ATT_FILE_NAME => $filename);
-									$mediacount++;
-								}
-//								$record = preg_replace("|(\d FILE )" . addslashes($match[$k][1]) . "|", "$1" . $filename, $record);
-							}
-
-							$filetext .= trim($record) . "\n";
-							$filetext .= "1 SOUR @SPGV1@\n";
-							$filetext .= "2 PAGE " . WT_SERVER_NAME.WT_SCRIPT_PATH . "family.php?famid=" . $clipping['id'] . "\n";
-							$filetext .= "2 DATA\n";
-							$filetext .= "3 TEXT " . i18n::translate('This Family was downloaded from:') . "\n";
-							$filetext .= "4 CONT " . WT_SERVER_NAME.WT_SCRIPT_PATH . "family.php?famid=" . $clipping['id'] . "\n";
-							break;
-
-						case 'source':
-							$ft = preg_match_all("/\d FILE (.*)/", $savedRecord, $match, PREG_SET_ORDER);
-							for ($k = 0; $k < $ft; $k++) {
-								$filename = $MEDIA_DIRECTORY.extract_filename(trim($match[$k][1]));
-								if (file_exists($filename)) {
-									$media[$mediacount] = array (PCLZIP_ATT_FILE_NAME => $filename);
-									$mediacount++;
-								}
-//								$record = preg_replace("|(\d FILE )" . addslashes($match[$k][1]) . "|", "$1" . $filename, $record);
-							}
-							$filetext .= trim($record) . "\n";
-							$filetext .= "1 NOTE " . i18n::translate('This Source was downloaded from:') . "\n";
-							$filetext .= "2 CONT " . WT_SERVER_NAME.WT_SCRIPT_PATH . "source.php?sid=" . $clipping['id'] . "\n";
-							break;
-
-						default:
-							$ft = preg_match_all("/\d FILE (.*)/", $savedRecord, $match, PREG_SET_ORDER);
-							for ($k = 0; $k < $ft; $k++) {
-								$filename = $MEDIA_DIRECTORY.extract_filename(trim($match[$k][1]));
-								if (file_exists($filename)) {
-									$media[$mediacount] = array (PCLZIP_ATT_FILE_NAME => $filename);
-									$mediacount++;
-								}
-//								$record = preg_replace("|(\d FILE )" . addslashes($match[$k][1]) . "|", "$1" . $filename, $record);
-							}
-							$filetext .= trim($record) . "\n";
-							break;
-						}
-					}
-				}
-
-				if ($this->privatize_export!='none') {
-					$_SESSION["wt_user"]=$_SESSION["org_user"];
-					delete_user($export_user_id);
-					AddToLog("deleted dummy user -> {$tempUserID} <-", 'auth');
-				}
-
-				if($this->IncludeMedia == "yes")
-				{
-					$this->media_list = $media;
-				}
-				$filetext .= "0 @SPGV1@ SOUR\n";
-				if ($user_id=get_gedcom_setting(WT_GED_ID, 'CONTACT_EMAIL')) {
-					$filetext .= "1 AUTH " . getUserFullName($user_id) . "\n";
-				}
-				$filetext .= "1 TITL " . $HOME_SITE_TEXT . "\n";
-				$filetext .= "1 ABBR " . $HOME_SITE_TEXT . "\n";
-				$filetext .= "1 PUBL " . $HOME_SITE_URL . "\n";
-				$filetext .= "0 TRLR\n";
-				//-- make sure the preferred line endings are used
-				$filetext = preg_replace("/[\r\n]+/", WT_EOL, $filetext);
-				$this->download_data = $filetext;
-				$this->download_clipping();
-			} else
-			if ($this->filetype == "gramps") {
-				// Sort the clippings cart because the export works better when the cart is sorted
-				usort($cart, "same_group");
-				require_once WT_ROOT.'includes/classes/class_geclippings.php';
-				$gramps_Exp = new GEClippings();
-				$gramps_Exp->begin_xml();
-				$ct = count($cart);
-				usort($cart, "same_group");
-
-				for ($i = 0; $i < $ct; $i++) {
-					$clipping = $cart[$i];
-
+			for ($i = 0; $i < $ct; $i++) {
+				$clipping = $cart[$i];
+				if ($clipping['gedcom'] == $GEDCOM) {
+					$record = find_gedcom_record($clipping['id'], WT_GED_ID);
+					$savedRecord = $record; // Save this for the "does this file exist" check
+					if ($clipping['type']=='obje') $record = convert_media_path($record, $this->conv_path, $this->conv_slashes);
+					$record = privatize_gedcom($record);
+					$record = remove_custom_tags($record, $remove);
+					if ($convert == "yes")
+					$record = utf8_decode($record);
 					switch ($clipping['type']) {
 					case 'indi':
-						$rec = find_person_record($clipping['id'], WT_GED_ID);
-						$rec = remove_custom_tags($rec, $remove);
-						if ($this->privatize_export!='none') $rec = privatize_gedcom($rec);
-						$gramps_Exp->create_person($rec, $clipping['id']);
+						$ft = preg_match_all("/1 FAMC @(.*)@/", $record, $match, PREG_SET_ORDER);
+						for ($k = 0; $k < $ft; $k++) {
+							if (!id_in_cart($match[$k][1])) {
+								$record = preg_replace("/1 FAMC @" . $match[$k][1] . "@.*/", "", $record);
+							}
+						}
+						$ft = preg_match_all("/1 FAMS @(.*)@/", $record, $match, PREG_SET_ORDER);
+						for ($k = 0; $k < $ft; $k++) {
+							if (!id_in_cart($match[$k][1])) {
+								$record = preg_replace("/1 FAMS @" . $match[$k][1] . "@.*/", "", $record);
+							}
+						}
+						$filetext .= trim($record) . "\n";
+						$filetext .= "1 SOUR @WEBTREES@\n";
+						$filetext .= "2 PAGE ".WT_SERVER_NAME.WT_SCRIPT_PATH."individual.php?pid={$clipping['id']}&ged={$clipping['gedcom']}\n";
 						break;
 
 					case 'fam':
-						$rec = find_family_record($clipping['id'], WT_GED_ID);
-						$rec = remove_custom_tags($rec, $remove);
-						if ($this->privatize_export!='none') $rec = privatize_gedcom($rec);
-						$gramps_Exp->create_family($rec, $clipping['id']);
+						$ft = preg_match_all("/1 CHIL @(.*)@/", $record, $match, PREG_SET_ORDER);
+						for ($k = 0; $k < $ft; $k++) {
+							if (!id_in_cart($match[$k][1])) {
+								/* if the child is not in the list delete the record of it */
+								$record = preg_replace("/1 CHIL @" . $match[$k][1] . "@.*/", "", $record);
+							}
+						}
+
+						$ft = preg_match_all("/1 HUSB @(.*)@/", $record, $match, PREG_SET_ORDER);
+						for ($k = 0; $k < $ft; $k++) {
+							if (!id_in_cart($match[$k][1])) {
+								/* if the husband is not in the list delete the record of him */
+								$record = preg_replace("/1 HUSB @" . $match[$k][1] . "@.*/", "", $record);
+							}
+						}
+
+						$ft = preg_match_all("/1 WIFE @(.*)@/", $record, $match, PREG_SET_ORDER);
+						for ($k = 0; $k < $ft; $k++) {
+							if (!id_in_cart($match[$k][1])) {
+								/* if the wife is not in the list delete the record of her */
+								$record = preg_replace("/1 WIFE @" . $match[$k][1] . "@.*/", "", $record);
+							}
+						}
+
+						$filetext .= trim($record) . "\n";
+						$filetext .= "1 SOUR @WEBTREES@\n";
+						$filetext .= "2 PAGE " . WT_SERVER_NAME.WT_SCRIPT_PATH . "family.php?famid={$clipping['id']}&ged={$clipping['gedcom']}\n";
 						break;
 
 					case 'source':
-						$rec = find_source_record($clipping['id'], WT_GED_ID);
-						$rec = remove_custom_tags($rec, $remove);
-						if ($this->privatize_export!='none') $rec = privatize_gedcom($rec);
-						$gramps_Exp->create_source($rec, $clipping['id']);
+						$filetext .= trim($record) . "\n";
+						$filetext .= "1 NOTE " . WT_SERVER_NAME.WT_SCRIPT_PATH . "source.php?sid={$clipping['id']}&ged={$clipping['gedcom']}\n";
+						break;
+
+					default:
+						$ft = preg_match_all("/\n\d FILE (.+)/", $savedRecord, $match, PREG_SET_ORDER);
+						for ($k = 0; $k < $ft; $k++) {
+							$filename = $MEDIA_DIRECTORY.extract_filename($match[$k][1]);
+							if (file_exists($filename)) {
+								$media[$mediacount] = array (PCLZIP_ATT_FILE_NAME => $filename);
+								$mediacount++;
+							} else {
+								$filename = $MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.extract_filename($match[$k][1]);
+								if (file_exists($filename)) {
+									// Don't include firewall directory in zipfile.  It may start ../
+									$media[$mediacount] = array (
+										PCLZIP_ATT_FILE_NAME => $filename,
+										PCLZIP_ATT_FILE_NEW_FULL_NAME => $MEDIA_DIRECTORY.extract_filename($match[$k][1])
+									);
+									$mediacount++;
+								}
+							}
+						}
+						$filetext .= trim($record) . "\n";
 						break;
 					}
 				}
-				$this->download_data = $gramps_Exp->dom->saveXML();
-				if ($convert) $this->download_data = utf8_decode($this->download_data);
-				$this->media_list = $gramps_Exp->get_all_media();
-				$this->download_clipping();
 			}
+
+			if ($this->privatize_export!='none') {
+				$_SESSION["wt_user"]=$_SESSION["org_user"];
+				delete_user($export_user_id);
+				AddToLog("deleted dummy user -> {$tempUserID} <-", 'auth');
+			}
+
+			if($this->IncludeMedia == "yes")
+			{
+				$this->media_list = $media;
+			}
+			$filetext .= "0 @WEBTREES@ SOUR\n1 TITL ".WT_SERVER_NAME.WT_SCRIPT_PATH."\n";
+			if ($user_id=get_gedcom_setting(WT_GED_ID, 'CONTACT_EMAIL')) {
+				$filetext .= "1 AUTH " . getUserFullName($user_id) . "\n";
+			}
+			$filetext .= "0 TRLR\n";
+			//-- make sure the preferred line endings are used
+			$filetext = preg_replace("/[\r\n]+/", WT_EOL, $filetext);
+			$this->download_data = $filetext;
+			$this->download_clipping();
 		}
 	}
 	/**
@@ -454,15 +378,7 @@ class ClippingsControllerRoot extends BaseController {
 	{
 		$INDEX_DIRECTORY=get_site_setting('INDEX_DIRECTORY');
 
-		switch ($this->filetype) {
-		case 'gedcom':
-			$tempFileName = 'clipping'.rand().'.ged';
-			break;
-
-		case 'gramps':
-			$tempFileName = 'clipping'.rand().'.gramps';
-			break;
-		}
+		$tempFileName = 'clipping'.rand().'.ged';
 		$fp = fopen($INDEX_DIRECTORY.$tempFileName, "wb");
 		if($fp)
 		{
@@ -474,7 +390,7 @@ class ClippingsControllerRoot extends BaseController {
 			$fname = $INDEX_DIRECTORY.$zipName;
 			$comment = "Created by ".WT_WEBTREES." ".WT_VERSION_TEXT." on ".date("d M Y").".";
 			$archive = new PclZip($fname);
-			// add the ged/gramps file to the root of the zip file (strip off the index_directory)
+			// add the ged file to the root of the zip file (strip off the index_directory)
 			$this->media_list[]= array (PCLZIP_ATT_FILE_NAME => $INDEX_DIRECTORY.$tempFileName, PCLZIP_ATT_FILE_NEW_FULL_NAME => $tempFileName);
 			$v_list = $archive->create($this->media_list, PCLZIP_OPT_COMMENT, $comment);
 			if ($v_list == 0) print "Error : ".$archive->errorInfo(true)."</td></tr>";
@@ -496,30 +412,14 @@ class ClippingsControllerRoot extends BaseController {
 	 * based on the options he or she selected
 	 */
 	function download_clipping(){
-		if ($this->IncludeMedia == "yes" || $this->Zip == "yes")
-		{
+		if ($this->IncludeMedia == "yes" || $this->Zip == "yes") {
 			header('Content-Type: application/zip');
 			header('Content-Disposition: attachment; filename="clipping.zip"');
 			$this->zip_cart();
+		} else {
+			header('Content-Type: text/plain');
+			header('Content-Disposition: attachment; filename="clipping.ged"');
 		}
-		else
-		{
-			switch ($this->filetype) {
-				case 'gedcom':
-					{
-						header('Content-Type: text/plain');
-						header('Content-Disposition: attachment; filename="clipping.ged"');
-					}
-					break;
-				case 'gramps':
-					{
-						header('Content-Type: text/xml');
-						header('Content-Disposition: attachment; filename="clipping.gramps"');
-					}
-					break;
-			}
-		}
-
 
 		header("Content-length: ".strlen($this->download_data));
 		print_r ($this->download_data);
@@ -534,7 +434,7 @@ class ClippingsControllerRoot extends BaseController {
 		global $cart, $MULTI_MEDIA, $GEDCOM;
 		if (($clipping['id'] == false) || ($clipping['id'] == ""))
 		return false;
-		
+
 		if (!id_in_cart($clipping['id'])) {
 			$clipping['gedcom'] = $GEDCOM;
 			$ged_id=get_id_from_gedcom($GEDCOM);
@@ -750,14 +650,3 @@ class ClippingsControllerRoot extends BaseController {
 		}
 	}
 }
-// -- end of class
-
-//-- load a user extended class if one exists
-if (file_exists(WT_ROOT.'includes/controllers/clippings_ctrl_user.php')) {
-	require_once WT_ROOT.'includes/controllers/clippings_ctrl_user.php';
-} else {
-	class ClippingsController extends ClippingsControllerRoot {
-	}
-}
-
-?>

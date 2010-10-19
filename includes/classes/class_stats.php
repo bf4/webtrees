@@ -128,7 +128,7 @@ class stats {
 						$out .= "<td class=\"list_value_wrap\" align=\"{$alignRes}\" valign=\"top\">{$v}</td>";
 						$out .= "</tr>\n";
 					}
-		$out .=	'</table>';
+		$out .= '</table>';
 		return $out;
 	}
 
@@ -169,28 +169,26 @@ class stats {
 		/*
 		* Parse block tags.
 		*/
-		for($i=0; $i < $c; $i++)
-		{
+		for ($i=0; $i < $c; $i++) {
 			$full_tag = $tags[$i];
 			// Added for new parameter support
 			$params = explode(':', $tags[$i]);
 			if (count($params) > 1) {
 				$tags[$i] = array_shift($params);
 			} else {
-				$params = null;
+				$params = array();
 			}
 
 			// Skip non-tags and non-allowed tags
-			if ($tags[$i][0] == '_' || in_array($tags[$i], self::$_not_allowed)) {continue;}
+			if ($tags[$i][0] == '_' || in_array($tags[$i], self::$_not_allowed)) {
+				continue;
+			}
 
 			// Generate the replacement value for the tag
-			if (method_exists($this, $tags[$i]))
-			{
+			if (method_exists($this, $tags[$i])) {
 				$new_tags[] = "#{$full_tag}#";
-				$new_values[] = $this->$tags[$i]($params);
-			}
-			elseif ($tags[$i] == 'help')
-			{
+				$new_values[] = call_user_func_array(array(__CLASS__, $tags[$i]), $params);
+			} elseif ($tags[$i] == 'help') {
 				// re-merge, just in case
 				$new_tags[] = "#{$full_tag}#";
 				$new_values[] = help_link(join(':', $params));
@@ -281,7 +279,7 @@ class stats {
 
 	function gedcomUpdated() {
 		$row=
-			WT_DB::prepareLimit("SELECT d_year, d_month, d_day FROM `##dates` WHERE d_file=? AND d_fact=? ORDER BY d_julianday1 DESC, d_type", 1)
+			WT_DB::prepare("SELECT d_year, d_month, d_day FROM `##dates` WHERE d_file=? AND d_fact=? ORDER BY d_julianday1 DESC, d_type LIMIT 1")
 			->execute(array($this->_ged_id, 'CHAN'))
 			->fetchOneRow();
 		if ($row) {
@@ -638,13 +636,13 @@ class stats {
 		} else if ($tot_u > 0) {
 			$chd = self::_array_to_extended_encoding(array($tot_u, $tot_f, $tot_m));
 			$chl =
-				i18n::translate('Unknown').' - '.round($tot_u,1).'%|'.
+				i18n::translate_c('unknown people', 'Unknown').' - '.round($tot_u,1).'%|'.
 				i18n::translate('Females').' - '.round($tot_f,1).'%|'.
 				i18n::translate('Males').' - '.round($tot_m,1).'%';
 			$chart_title =
 				i18n::translate('Males').' ['.round($tot_m,1).'%], '.
 				i18n::translate('Females').' ['.round($tot_f,1).'%], '.
-				i18n::translate('Unknown').' ['.round($tot_u,1).'%]';
+				i18n::translate_c('unknown people', 'Unknown').' ['.round($tot_u,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_unknown},{$color_female},{$color_male}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		} else {
 			$chd = self::_array_to_extended_encoding(array($tot_f, $tot_m));
@@ -712,13 +710,13 @@ class stats {
 		} else if ($tot_u > 0) {
 			$chd = self::_array_to_extended_encoding(array($tot_u, $tot_l, $tot_d));
 			$chl =
-				i18n::translate('Unknown').' - '.round($tot_u,1).'%|'.
+				i18n::translate_c('unknown people', 'Unknown').' - '.round($tot_u,1).'%|'.
 				i18n::translate('Living').' - '.round($tot_l,1).'%|'.
 				i18n::translate('Dead').' - '.round($tot_d,1).'%';
 			$chart_title =
 				i18n::translate('Living').' ['.round($tot_l,1).'%], '.
 				i18n::translate('Dead').' ['.round($tot_d,1).'%], '.
-				i18n::translate('Unknown').' ['.round($tot_u,1).'%]';
+				i18n::translate_c('unknown people', 'Unknown').' ['.round($tot_u,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_unknown},{$color_living},{$color_dead}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		} else {
 			$chd = self::_array_to_extended_encoding(array($tot_l, $tot_d));
@@ -887,7 +885,7 @@ class stats {
 			."SELECT d_year, d_type, d_fact, d_gid"
 			." FROM `##dates`"
 			." WHERE d_file={$this->_ged_id} AND d_fact IN ({$query_field}) AND d_julianday1<>0"
-			." ORDER BY d_julianday1 {$life_dir}, d_type"
+			." ORDER BY d_julianday1 {$life_dir}, d_type LIMIT 1"
 		/*//testing - too slow
 			.' SELECT'
 				.' d2.d_year,'
@@ -924,7 +922,7 @@ class stats {
 			.' ORDER BY'
 				." d_julianday1 {$life_dir}, d_type"
 		*/
-		, 1);
+		);
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
 		$record=GedcomRecord::getInstance($row['d_gid']);
@@ -1049,18 +1047,23 @@ class stats {
 	}
 
 	function chartDistribution($chart_shows='world', $chart_type='', $surname='') {
-		global $iso3166, $countries;
-		global $WT_STATS_CHART_COLOR1, $WT_STATS_CHART_COLOR2, $WT_STATS_CHART_COLOR3, $WT_STATS_MAP_X, $WT_STATS_MAP_Y;
+		global $iso3166, $WT_STATS_CHART_COLOR1, $WT_STATS_CHART_COLOR2, $WT_STATS_CHART_COLOR3, $WT_STATS_MAP_X, $WT_STATS_MAP_Y;
 
-		if ($this->totalPlaces()==0) return '';
-
-		// TODO: add translations from *ALL* languages, not just the current one.
-		// TODO (longer term): use a proper geographic database!
-		$country_to_iso3166=array();
-		foreach ($iso3166 as $three=>$two) {
-			$country_to_iso3166[$three]=$two;
-			$country_to_iso3166[$countries[$three]]=$two;
+		if ($this->totalPlaces()==0) {
+			return '';
 		}
+
+		// Get the country names for each language
+		$country_to_iso3166=array();
+		foreach (i18n::installed_languages() as $code=>$lang) {
+			i18n::init($code);
+			$countries=get_all_countries();
+			foreach ($iso3166 as $three=>$two) {
+				$country_to_iso3166[$three]=$two;
+				$country_to_iso3166[$countries[$three]]=$two;
+			}
+		}
+		i18n::init(WT_LOCALE);
 		switch ($chart_type) {
 		case 'surname_distribution_chart':
 			if ($surname=="") $surname = $this->getCommonSurname();
@@ -1126,8 +1129,10 @@ class stats {
 			// webtrees uses 3 letter country codes and localised country names, but google uses 2 letter codes.
 			foreach ($m_countries as $place) {
 				$country=trim($place['country']);
-				if (array_key_exists($country, $country_to_iso3166)) {
+				if (!isset($surn_countries[$country_to_iso3166[$country]])) {
 					$surn_countries[$country_to_iso3166[$country]]=$place['tot'];
+				} else {
+					$surn_countries[$country_to_iso3166[$country]]+=$place['tot'];
 				}
 			}
 			break;
@@ -1141,7 +1146,11 @@ class stats {
 			foreach ($a_countries as $place) {
 				$country=trim($place['country']);
 				if (array_key_exists($country, $country_to_iso3166)) {
-					$surn_countries[$country_to_iso3166[$country]]=$place['tot'];
+					if (!isset($surn_countries[$country_to_iso3166[$country]])) {
+						$surn_countries[$country_to_iso3166[$country]]=$place['tot'];
+					} else {
+						$surn_countries[$country_to_iso3166[$country]]+=$place['tot'];
+					}
 				}
 			}
 			break;
@@ -1171,9 +1180,34 @@ class stats {
 		if (!is_array($countries)) return '';
 		$top10 = array();
 		$i = 1;
-		foreach ($countries as $country) {
-			$place = '<a href="'.encode_url(get_place_url($country['country'])).'" class="list_item">'.PrintReady($country['country']).'</a>';
-			$top10[]="\t<li>".$place." ".PrintReady("[".$country['tot']."]")."</li>\n";
+		// Get the country names for each language
+		$country_names=array();
+		foreach (i18n::installed_languages() as $code=>$lang) {
+			i18n::init($code);
+			foreach (get_all_countries() as $country_code=>$country_name) {
+				$country_names[$country_name]=$country_code;
+			}
+		}
+		i18n::init(WT_LOCALE);
+		$all_db_countries=array();
+		foreach ($countries as $place) {
+			$country=trim($place['country']);
+			if (array_key_exists($country, $country_names)) {
+				if (!isset($all_db_countries[$country_names[$country]][$country])) {
+					$all_db_countries[$country_names[$country]][$country]=$place['tot'];
+				} else {
+					$all_db_countries[$country_names[$country]][$country]+=$place['tot'];
+				}
+			}
+		}
+		$all_countries = get_all_countries();
+		foreach ($all_db_countries as $country_code=>$country) {
+			$top10[]="\t<li>";
+			foreach ($country as $country_name=>$tot) {
+				$place = '<a href="'.encode_url(get_place_url($country_name)).'" class="list_item">'.$all_countries[$country_code].'</a>';
+				$top10[].=$place." ".PrintReady("[".$tot."]");
+			}
+			$top10[].="</li>\n";
 			if ($i++==10) break;
 		}
 		$top10=join("\n", $top10);
@@ -1448,8 +1482,8 @@ class stats {
 				.' death.d_julianday1>birth.d_julianday2 AND'
 				.$sex_search
 			.' ORDER BY'
-				.' age DESC'
-		, 1);
+				.' age DESC LIMIT 1'
+		);
 		if (!isset($rows[0])) {return '';}
 		$row = $rows[0];
 		$person=Person::getInstance($row['id']);
@@ -1483,6 +1517,7 @@ class stats {
 			$sex_search = '';
 		}
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
+		$total=(int)$total;
 		$rows=self::_runSQL(''
 			.' SELECT '
 				.' MAX(death.d_julianday2-birth.d_julianday1) AS age,'
@@ -1505,8 +1540,8 @@ class stats {
 			.' GROUP BY'
 				.' deathdate'
 			.' ORDER BY'
-				.' age DESC'
-		, $total);
+				.' age DESC LIMIT '.$total
+		);
 		if (!isset($rows[0])) {return '';}
 		$top10 = array();
 		foreach ($rows as $row) {
@@ -1554,6 +1589,7 @@ class stats {
 			$sex_search = '';
 		}
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
+		$total=(int)$total;
 		$rows=self::_runSQL(''
 			.' SELECT'
 				.' birth.d_gid AS id,'
@@ -1572,8 +1608,8 @@ class stats {
 			.' GROUP BY'
 				.' id'
 			.' ORDER BY'
-				.' age ASC'
-		, $total);
+				.' age ASC LIMIT '.$total
+		);
 		if (!isset($rows)) {return 0;}
 		$top10 = array();
 		foreach ($rows as $row) {
@@ -1633,7 +1669,7 @@ class stats {
 				.' birth.d_julianday1<>0 AND'
 				.' death.d_julianday1>birth.d_julianday2'
 				.$sex_search
-		, 1);
+		);
 		if (!isset($rows[0])) {return '';}
 		$row = $rows[0];
 		$age = $row['age'];
@@ -1835,8 +1871,8 @@ class stats {
 				." d_fact {$fact_query} AND"
 				.' d_julianday1<>0'
 			.' ORDER BY'
-				." d_julianday1 {$direction}, d_type"
-		, 1);
+				." d_julianday1 {$direction}, d_type LIMIT 1"
+		);
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
 		$record=GedcomRecord::getInstance($row['id']);
@@ -1993,8 +2029,8 @@ class stats {
 				.' married.d_julianday2 > birth.d_julianday1 AND'
 				." i_sex='{$sex}'"
 			.' ORDER BY'
-				." married.d_julianday2-birth.d_julianday1 {$age_dir}"
-		, 1);
+				." married.d_julianday2-birth.d_julianday1 {$age_dir} LIMIT 1"
+		);
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
 		if (isset($row['famid'])) $family=Family::getInstance($row['famid']);
@@ -2174,8 +2210,9 @@ class stats {
 			$query2 = ' wifebirth.d_julianday1 < husbbirth.d_julianday2 AND'
 					 .' wifebirth.d_julianday1 <> 0';
 		}
+		$total=(int)$total;
 		$rows=self::_runSQL(''
-			.' SELECT DISTINCT'
+			.' SELECT'
 				.' fam.f_id AS family,'
 				.$query1
 			.' FROM'
@@ -2194,8 +2231,8 @@ class stats {
 			.' GROUP BY'
 				.' family'
 			.' ORDER BY'
-				." age DESC"
-		,$total);
+				." age DESC LIMIT ".$total
+		);
 		if (!isset($rows[0])) {return '';}
 		$top10 = array();
 		foreach ($rows as $fam) {
@@ -2236,7 +2273,7 @@ class stats {
 		if ($sex == 'F') {$sex_field = 'WIFE';}else{$sex_field = 'HUSB';}
 		if ($age_dir != 'ASC') {$age_dir = 'DESC';}
 		$rows=self::_runSQL(''
-			.' SELECT DISTINCT'
+			.' SELECT'
 				.' parentfamily.l_to AS id,'
 				.' childbirth.d_julianday2-birth.d_julianday1 AS age'
 			.' FROM'
@@ -2259,8 +2296,8 @@ class stats {
 				.' birth.d_julianday1 <> 0 AND'
 				.' childbirth.d_julianday2 > birth.d_julianday1'
 			.' ORDER BY'
-				." age {$age_dir}"
-		, 1);
+				." age {$age_dir} LIMIT 1"
+		);
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
 		if (isset($row['id'])) $person=Person::getInstance($row['id']);
@@ -2714,8 +2751,8 @@ class stats {
 			.' WHERE'
 				." f_file={$this->_ged_id}"
 			.' ORDER BY'
-				.' tot DESC'
-		, 1);
+				.' tot DESC LIMIT 1'
+		);
 		if (!isset($rows[0])) {return '';}
 		$row = $rows[0];
 		$family=Family::getInstance($row['id']);
@@ -2742,6 +2779,7 @@ class stats {
 	function _topTenFamilyQuery($type='list', $params=null) {
 		global $TEXT_DIRECTION;
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
+		$total=(int)$total;
 		$rows=self::_runSQL(''
 			.' SELECT'
 				.' f_numchil AS tot,'
@@ -2751,12 +2789,12 @@ class stats {
 			.' WHERE'
 				." f_file={$this->_ged_id}"
 			.' ORDER BY'
-				.' tot DESC'
-		, $total);
+				.' tot DESC LIMIT '.$total
+		);
 		if (!isset($rows[0])) {return '';}
 		if(count($rows) < $total){$total = count($rows);}
 		$top10 = array();
-		for($c = 0; $c < $total; $c++) {
+		for ($c = 0; $c < $total; $c++) {
 			$family=Family::getInstance($rows[$c]['id']);
 			if ($family->canDisplayDetails()) {
 				if ($type == 'list') {
@@ -2785,6 +2823,7 @@ class stats {
 		if ($params === null) {$params = array();}
 		if (isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		if (isset($params[1])) {$one = $params[1];}else{$one = false;} // each family only once if true
+		$total=(int)$total;
 		$rows=self::_runSQL(''
 			.' SELECT DISTINCT'
 				.' link1.l_from AS family,'
@@ -2812,8 +2851,8 @@ class stats {
 				.' child2.d_julianday2 <> 0 AND'
 				.' child1.d_gid <> child2.d_gid'
 			.' ORDER BY'
-				." age DESC"
-		,$total);
+				." age DESC LIMIT ".$total
+		);
 		if (!isset($rows[0])) {return '';}
 		$top10 = array();
 		if ($one) $dist = array();
@@ -2905,6 +2944,7 @@ class stats {
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $WT_STATS_CHART_COLOR2;}
 		if (isset($params[3]) && $params[3] != '') {$total = strtolower($params[3]);}else{$total = 10;}
 		$sizes = explode('x', $size);
+		$total=(int)$total;
 		$rows=self::_runSQL(''
 			.' SELECT'
 				.' f_numchil AS tot,'
@@ -2914,8 +2954,8 @@ class stats {
 			.' WHERE'
 				." f_file={$this->_ged_id}"
 			.' ORDER BY'
-				.' tot DESC'
-		, $total);
+				.' tot DESC LIMIT '.$total
+		);
 		if (!isset($rows[0])) {return '';}
 		$tot = 0;
 		foreach ($rows as $row) {$tot += $row['tot'];}
@@ -3134,7 +3174,7 @@ class stats {
 		$counts[] = round(4095*$unknown/($max+1));
 		$chd = self::_array_to_extended_encoding($counts);
 		$chm .= 't'.$unknown.',000000,0,'.$i.',11,1';
-		$chxl .= i18n::translate('unknown')."|1:||".i18n::translate('century')."|2:|0|";
+		$chxl .= i18n::translate_c('unknown century', 'Unknown')."|1:||".i18n::translate('century')."|2:|0|";
 		$step = $max+1;
 		for ($d=floor($max+1); $d>0; $d--) {
 			if (($max+1)<($d*10+1) && fmod(($max+1),$d)==0) {
@@ -3158,6 +3198,7 @@ class stats {
 	function _topTenGrandFamilyQuery($type='list', $params=null) {
 		global $TEXT_DIRECTION;
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
+		$total=(int)$total;
 		$rows=self::_runSQL(''
 			.' SELECT'
 				.' COUNT(*) AS tot,'
@@ -3181,8 +3222,8 @@ class stats {
 			.' GROUP BY'
 				.' id'
 			.' ORDER BY'
-				.' tot DESC'
-		, $total);
+				.' tot DESC LIMIT '.$total
+		);
 		if (!isset($rows[0])) {return '';}
 		$top10 = array();
 		foreach ($rows as $row) {
@@ -3405,7 +3446,7 @@ class stats {
 		if ($common) {
 			switch ($type) {
 			case 'table':
-				$lookup=array('M'=>i18n::translate('Male'), 'F'=>i18n::translate('Female'), 'U'=>i18n::translate('unknown'), 'B'=>i18n::translate('All'));
+				$lookup=array('M'=>i18n::translate('Male'), 'F'=>i18n::translate('Female'), 'U'=>i18n::translate_c('unknown gender', 'Unknown'), 'B'=>i18n::translate('All'));
 				return '<table><tr><td colspan="2" class="descriptionbox center">'.$lookup[$sex].'</td></tr><tr><td class="descriptionbox center">'.i18n::translate('Names').'</td><td class="descriptionbox center">'.i18n::translate('Count').'</td></tr>'.join('', $common).'</table>';
 			case 'list':
 				return "<ul>\n".join("\n", $common)."</ul>\n";
@@ -3486,13 +3527,6 @@ class stats {
 ///////////////////////////////////////////////////////////////////////////////
 
 	static function _usersLoggedIn($type='nolist') {
-		// Log out inactive users
-		foreach (get_idle_users(time() - get_site_setting('SESSION_TIME')) as $user_id=>$user_name) {
-			if ($user_id != WT_USER_ID) {
-				userLogout($user_id);
-			}
-		}
-
 		$content = '';
 		// List active users
 		$NumAnonymous = 0;
@@ -3553,11 +3587,6 @@ class stats {
 	}
 
 	static function _usersLoggedInTotal($type='all') {
-		foreach (get_idle_users(time() - get_site_setting('SESSION_TIME')) as $user_id=>$user_name) {
-			if ($user_id != WT_USER_ID) {
-				userLogout($user_id);
-			}
-		}
 		$anon = 0;
 		$visible = 0;
 		$x = get_logged_in_users();
@@ -3605,7 +3634,7 @@ class stats {
 			case 'loggedin':
 				if(is_array($params) && isset($params[0]) && $params[0] != ''){$yes = $params[0];}else{$yes = i18n::translate('Yes');}
 				if(is_array($params) && isset($params[1]) && $params[1] != ''){$no = $params[1];}else{$no = i18n::translate('No');}
-				return get_user_setting($user_id, 'loggedin') ? $yes : $no;
+				return WT_DB::prepare("SELECT 1 FROM `##session` WHERE user_id=? LIMIT 1")->execute(array($user_id))->fetchOne() ? $yes : $no;
 		}
 	}
 
@@ -3694,27 +3723,19 @@ class stats {
 		return $b['match']-$a['match'];
 	}
 
-	static function _runSQL($sql, $count=0) {
+	static function _runSQL($sql) {
 		static $cache = array();
-		$id = md5($sql)."_{$count}";
+		$id = md5($sql);
 		if (isset($cache[$id])) {
 			return $cache[$id];
 		}
-		$rows=WT_DB::prepareLimit($sql, $count)->fetchAll(PDO::FETCH_ASSOC);
+		$rows=WT_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 		$cache[$id]=$rows;
 		return $rows;
 	}
-}
 
-/*
- * This class provides access to additional non-stats features of webtrees
- * for use in the HTML block (Extended interaface enabled).
- */
-class stats_ui extends stats
-{
-///////////////////////////////////////////////////////////////////////////////
-// Favorites												    //
-///////////////////////////////////////////////////////////////////////////////
+	// These functions provide access to additional non-stats features of webtrees
+	// for use in the HTML block.
 
 	static function _getFavorites($isged=true) {
 		global $GEDCOM;
@@ -3739,40 +3760,39 @@ class stats_ui extends stats
 	static function totalGedcomFavorites(){return count(gedcom_favorites_WT_Module::getUserFavorites(WT_GEDCOM));}
 	static function totalUserFavorites(){return count(user_favorites_WT_Module::getUserFavorites(WT_USER_NAME));}
 
-///////////////////////////////////////////////////////////////////////////////
-// Other blocks												    //
-// example of use: #callBlock:block_name#							    //
-///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	// Other blocks                                                              //
+	// example of use: #callBlock:block_name#                                    //
+	///////////////////////////////////////////////////////////////////////////////
 
 	static function callBlock($params=null) {
+		global $ctype;
 		if ($params === null){return '';}
 		if (isset($params[0]) && $params[0] != ''){$block = $params[0];}else{return '';}
-		if ($block=='html') return '#callBlock:html#';
+		$all_blocks=array();
+		foreach (WT_Module::getActiveBlocks() as $name=>$active_block) {
+			if ($ctype=='user' && $active_block->isUserBlock() || $ctype=='gedcom' && $active_block->isGedcomBlock()) {
+				$all_blocks[$name]=$active_block;
+			}
+		}
+		if (!array_key_exists($block, $all_blocks) || $block=='html') return '';
 		$class_name = $block.'_WT_Module';
+		// Build the config array
+		array_shift($params);
+		$cfg = array();
+		foreach ($params as $config) {
+			$bits = explode('=', $config);
+			if(count($bits) < 2){continue;}
+			$v = array_shift($bits);
+			$cfg[$v] = join('=', $bits);
+		}
 		$block = new $class_name;
 		$block_id=safe_GET('block_id');
-		$content = $block->getBlock($block_id, false);
+		$content = $block->getBlock($block_id, false, $cfg);
 		return $content;
 	}
 
 	function totalUserMessages(){return count(getUserMessages(WT_USER_NAME));}
 	function totalUserJournal(){ return count(getUserNews(WT_USER_ID));}
 	function totalGedcomNews(){  return count(getUserNews(WT_GEDCOM));}
-
-///////////////////////////////////////////////////////////////////////////////
-// System													    //
-// Only allowed in GEDCOM Home Page, not user portals for security.			    //
-///////////////////////////////////////////////////////////////////////////////
-
-	static function includeFile($params=null) {
-		if(!isset($_GET['ctype']) || $_GET['ctype'] != 'gedcom'){return '';}
-		if($params === null){$params = array();}
-		if(isset($params[0]) && $params[0] != ''){$fn = $params[0];}else{return '';}
-
-		if(!file_exists($fn) || stristr($fn, 'config.php')){return '';}
-		ob_start();
-		include filename_decode(real_path($fn));
-		return trim(ob_get_clean());
-	}
 }
-?>

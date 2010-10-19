@@ -40,15 +40,16 @@ $displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMA
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" <?php echo i18n::html_markup(); ?>>
 	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
 		<?php if (isset($_GET["mod_action"]) && $_GET["mod_action"]=="places_edit") { ?>
-			<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> <?php } 
+			<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> <?php }
 		?>
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
 		<title><?php echo htmlspecialchars($title); ?></title>
 		<link rel="stylesheet" href="<?php echo $stylesheet; ?>" type="text/css" media="all" />
 		<?php if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) {?> <link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" /> <?php } ?>
-		<?php if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
+		<?php if ($BROWSERTYPE!='other') { ?>
 			<link rel="stylesheet" href="<?php echo $THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 		<?php }
 		// Additional css files required (Only if Lightbox installed)
@@ -74,7 +75,6 @@ $displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMA
 		<meta name="generator" content="<?php echo WT_WEBTREES, ' - ', WT_WEBTREES_URL; ?>" />
 	<?php } ?>
 	<?php echo $javascript; ?>
-	<?php echo $head; //-- additional header information ?>
 	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="js/jquery/jquery.tablesorter.js"></script>
@@ -91,9 +91,9 @@ $displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMA
 <?php if ($view!='simple') {?>
 <div id="header" class="<?php echo $TEXT_DIRECTION; ?>">
 <table width="100%" border="0" cellspacing="0" cellpadding="1" bgcolor="#003399">
-   <tr>
-	  <td>
-	  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-image:url('<?php
+	<tr>
+		<td>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-image:url('<?php
 			if ($TEXT_DIRECTION=="ltr") {
 				echo WT_THEME_DIR,"images/cabeza.jpg'); ";
 				echo "background-position:left top; ";
@@ -102,7 +102,7 @@ $displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMA
 				echo "background-position:right top; ";
 			}
 			?>background-repeat:repeat-y; height:40px;">
-			  <tr>
+			<tr>
 				<td width="10"><img src="<?php echo WT_THEME_DIR; ?>images/pixel.gif" width="1" height="1" alt="" /></td>
 				<td valign="middle"><font color="#FFFFFF" size="5" face="Verdana, Arial, Helvetica, sans-serif">
 				<?php echo PrintReady($GEDCOM_TITLE, true); ?>
@@ -118,109 +118,89 @@ $displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMA
 				</td>
 				<td width="10"><img src="<?php echo WT_THEME_DIR; ?>images/pixel.gif" width="1" height="1" alt="" /></td>
 		<?php } ?>
-			  </tr></table>
+			</tr></table>
 		<?php if (empty($SEARCH_SPIDER)) { ?>
-			  <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#84beff" style="background-image:url('<?php echo WT_THEME_DIR; ?>images/barra.gif');">
-			  <tr>
-				<td width="10"  height="40"><img src="<?php echo WT_THEME_DIR; ?>images/pixel.gif" width="1" height="18" alt="" /></td>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#84beff" style="background-image:url('<?php echo WT_THEME_DIR; ?>images/barra.gif');">
+			<tr>
+				<td width="10" height="40"><img src="<?php echo WT_THEME_DIR; ?>images/pixel.gif" width="1" height="18" alt="" /></td>
 				<td width="115"><div id="favtheme" align="<?php echo $TEXT_DIRECTION=="rtl"?"right":"left" ?>" class="blanco"><?php print_theme_dropdown(1); ?><?php print_favorite_selector(1); ?></div></td>
 				<td><div align="center"><?php print_user_links(); ?></div></td>
 				<td width="120" align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right" ?>" >
-					<div class="makeMenu"><?php echo MenuBar::getLanguageMenu()->getMenuAsList();?></div>
+					<div class="makeMenu"><?php
+						$language_menu=MenuBar::getLanguageMenu();
+						if ($language_menu) {
+							echo $language_menu->getMenuAsList();
+						}
+						?></div>
 					<div id="favdate" class="blanco" align="right" ><?php echo $displayDate; ?></div>
 				</td>
 				<td width="10"><img src="<?php echo WT_THEME_DIR; ?>images/pixel.gif" width="1" height="1" alt="" /></td></tr></table>
-		<?php } 
-$menubar = new MenuBar(); ?>
+		<?php } ?>
 
 <!-- Begin Toplinks menu section" -->
 <table width="100%" border="0" cellspacing="0" cellpadding="4" bgcolor="#FFFFFF" style="border: 1px solid #84beff">
-  <tr>
-    <td>
-      <div align="center">
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-	  <tr>
+	<tr>
+		<td>
+			<div align="center">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+		<tr>
 		<td width="10">
 			&nbsp;
 		</td>
 		<?php
-		$menu = $menubar->getGedcomMenu();
-		if($menu->link != "") {
-			print "\t<td width=\"7%\" valign=\"top\">\n";
-			$menu->printMenu();
-			print "\t</td>\n";
+		$menu=MenuBar::getGedcomMenu();
+		if ($menu) {
+			echo '<td width="7%" valign="top">', $menu->getMenu(), '</td>';
 		}
-		$menu = $menubar->getMyPageMenu();
-		if($menu->link != "") {
-			print "\t<td width=\"7%\" valign=\"top\">\n";
-			$menu->printMenu();
-			print "\t</td>\n";
+		$menu=MenuBar::getMyPageMenu();
+		if ($menu) {
+			echo '<td width="7%" valign="top">', $menu->getMenu(), '</td>';
 		}
-		$menu = $menubar->getChartsMenu();
-		if($menu->link != "") {
-			print "\t<td width=\"7%\" valign=\"top\">\n";
-			$menu->printMenu();
-			print "\t</td>\n";
+		$menu=MenuBar::getChartsMenu();
+		if ($menu) {
+			echo '<td width="7%" valign="top">', $menu->getMenu(), '</td>';
 		}
-		$menu = $menubar->getListsMenu();
-		if($menu->link != "") {
-			print "\t<td width=\"7%\" valign=\"top\">\n";
-			$menu->printMenu();
-			print "\t</td>\n";
+		$menu=MenuBar::getListsMenu();
+		if ($menu) {
+			echo '<td width="7%" valign="top">', $menu->getMenu(), '</td>';
 		}
-		$menu = $menubar->getCalendarMenu();
-		if($menu->link != "") {
-			print "\t<td width=\"7%\" valign=\"top\">\n";
-			$menu->printMenu();
-			print "\t</td>\n";
+		$menu=MenuBar::getCalendarMenu();
+		if ($menu) {
+			echo '<td width="7%" valign="top">', $menu->getMenu(), '</td>';
 		}
-		$menu = $menubar->getReportsMenu();
-		if($menu->link != "") {
-			print "\t<td width=\"7%\" valign=\"top\">\n";
-			$menu->printMenu();
-			print "\t</td>\n";
+		$menu=MenuBar::getReportsMenu();
+		if ($menu) {
+			echo '<td width="7%" valign="top">', $menu->getMenu(), '</td>';
 		}
-		$menu = $menubar->getSearchMenu();
-		if($menu->link != "") {
-			print "\t<td width=\"7%\" valign=\"top\">\n";
-			$menu->printMenu();
-			print "\t</td>\n";
+		$menu=MenuBar::getSearchMenu();
+		if ($menu) {
+			echo '<td width="7%" valign="top">', $menu->getMenu(), '</td>';
 		}
-		$menu = $menubar->getOptionalMenu();
-		if($menu->link != "") {
-			print "\t<td width=\"7%\" valign=\"top\">\n";
-			$menu->printMenu();
-			print "\t</td>\n";
-		}
-		$menus = $menubar->getModuleMenus();
-		foreach($menus as $m=>$menu) {
-			if($menu->link != "") {
-				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu();
-				print "\t</td>\n";
+		$menus=MenuBar::getModuleMenus();
+		foreach ($menus as $menu) {
+			if ($menu) {
+				echo '<td width="7%" valign="top">', $menu->getMenu(), '</td>';
 			}
 		}
-		$menu = $menubar->getHelpMenu();
-		if($menu->link != "") {
-			print "\t<td width=\"7%\" valign=\"top\">\n";
-			$menu->printMenu();
-			print "\t</td>\n";
+		$menu=MenuBar::getHelpMenu();
+		if ($menu) {
+			echo '<td width="7%" valign="top">', $menu->getMenu(), '</td>';
 		}
 		?>
 		<td width="10">
 			&nbsp;
 		</td>
-	  </tr>
-        </table>
-      </div>
-    </td>
-  </tr>
+		</tr>
+		</table>
+		</div>
+		</td>
+	</tr>
 </table>
 </td></tr></table>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-image:url('<?php print WT_THEME_DIR; ?>images/sombra.gif'); height:4px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-image:url('<?php echo WT_THEME_DIR; ?>images/sombra.gif'); height:4px;">
 	<tr>
-		<td><img src="<?php print WT_THEME_DIR; ?>images/pixel.gif" width="1" height="1" alt="" /></td>
+		<td><img src="<?php echo WT_THEME_DIR; ?>images/pixel.gif" width="1" height="1" alt="" /></td>
 	</tr>
 </table>
 <br />
@@ -229,4 +209,4 @@ $menubar = new MenuBar(); ?>
 <?php } ?>
 <!-- end toplinks menu section -->
 <!-- begin content section -->
-<div id="content"
+<div id="content">

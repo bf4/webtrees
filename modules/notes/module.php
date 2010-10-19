@@ -49,7 +49,7 @@ class notes_WT_Module extends WT_Module implements WT_Module_Tab {
 	public function defaultTabOrder() {
 		return 40;
 	}
-	
+
 	protected $noteCount = null;
 
 	// Implement WT_Module_Tab
@@ -92,7 +92,7 @@ if (!$this->controller->indi->canDisplayDetails()) {
 			print_main_notes($factrec->getGedcomRecord(), $i, $this->controller->pid, $factrec->getLineNumber(), true);
 		}
 	}
-	if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".i18n::translate('There are no Notes for this individual.')."</td></tr>\n";
+	if ($this->get_note_count()==0) echo "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".i18n::translate('There are no Notes for this individual.')."</td></tr>\n";
 	//-- New Note Link
 	if ($this->controller->canedit) {
 		?>
@@ -141,7 +141,7 @@ if (!$SHOW_LEVEL2_NOTES) {
 
 	// Implement WT_Module_Tab
 	public function hasTabContent() {
-		return $this->get_note_count()>0;
+		return WT_USER_CAN_EDIT || $this->get_note_count()>0;
 	}
 	// Implement WT_Module_Tab
 	public function canLoadAjax() {
@@ -152,10 +152,10 @@ if (!$SHOW_LEVEL2_NOTES) {
 	public function getPreLoadContent() {
 		return '';
 	}
-	
+
 	// Implement WT_Module_Tab
 	public function getJSCallback() {
 		return '';
 	}
-	
+
 }

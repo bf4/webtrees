@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
+ * @version $Id$
  */
 
 if (!defined('WT_WEBTREES')) {
@@ -40,11 +40,11 @@ class gedcom_stats_WT_Module extends WT_Module implements WT_Module_Block {
 
 	// Extend class WT_Module
 	public function getDescription() {
-		return i18n::translate('The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration.');
+		return i18n::translate('The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration.');
 	}
 
 	// Implement class WT_Module_Block
-	public function getBlock($block_id, $template=true) {
+	public function getBlock($block_id, $template=true, $cfg=null) {
 		global $ctype, $WT_IMAGES, $MULTI_MEDIA, $top10_block_present, $THEME_DIR;
 
 		$show_common_surnames=get_block_setting($block_id, 'show_common_surnames', true);
@@ -65,8 +65,14 @@ class gedcom_stats_WT_Module extends WT_Module implements WT_Module_Block {
 		$stat_most_chil      =get_block_setting($block_id, 'stat_most_chil',       true);
 		$stat_avg_chil       =get_block_setting($block_id, 'stat_avg_chil',        true);
 		$stat_link           =get_block_setting($block_id, 'stat_link',            true);
-
-		$block=get_block_setting($block_id, 'block', false);
+		$block               =get_block_setting($block_id, 'block',                false);
+		if ($cfg) {
+			foreach (array('show_common_surnames', 'stat_indi', 'stat_fam', 'stat_sour', 'stat_other', 'stat_media', 'stat_surname', 'stat_events', 'stat_users', 'stat_first_birth', 'stat_last_birth', 'stat_first_death', 'stat_last_death', 'stat_long_life', 'stat_avg_life', 'stat_most_chil', 'stat_avg_chil', 'stat_link', 'block') as $name) {
+				if (array_key_exists($name, $cfg)) {
+					$$name=$cfg[$name];
+				}
+			}
+		}
 
 		$id=$this->getName().$block_id;
 		$title='';
@@ -94,7 +100,7 @@ class gedcom_stats_WT_Module extends WT_Module implements WT_Module_Block {
 			// I18N: %s = date
 			$content .= i18n::translate('This GEDCOM was created on <b>%s</b>.', $date);
 		}
-		
+
 		$content .= '<br /><table><tr><td valign="top" class="width20"><table cellspacing="1" cellpadding="0">';
 		if ($stat_indi) {
 			$content.='<tr><td class="facts_label">'.i18n::translate('Individuals').'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?surname_sublist=no&ged=".WT_GEDCOM).'">'.$stats->totalIndividuals().'</a></div></td></tr>';

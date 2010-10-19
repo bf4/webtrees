@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
+ * @version $Id$
  */
 
 if (!defined('WT_WEBTREES')) {
@@ -44,13 +44,21 @@ class todays_events_WT_Module extends WT_Module implements WT_Module_Block {
 	}
 
 	// Implement class WT_Module_Block
-	public function getBlock($block_id, $template=true) {
+	public function getBlock($block_id, $template=true, $cfg=null) {
 		global $ctype, $TEXT_DIRECTION, $WT_IMAGES, $THEME_DIR;
 
-		$filter       =get_block_setting($block_id, 'filter', true);
-		$onlyBDM      =get_block_setting($block_id, 'onlyBDM', true);
-		$infoStyle    =get_block_setting($block_id, 'infoStyle', 'table');
-		$sortStyle    =get_block_setting($block_id, 'sortStyle',  'alpha');
+		$filter       =get_block_setting($block_id, 'filter',   true);
+		$onlyBDM      =get_block_setting($block_id, 'onlyBDM',  true);
+		$infoStyle    =get_block_setting($block_id, 'infoStyle','table');
+		$sortStyle    =get_block_setting($block_id, 'sortStyle','alpha');
+		$block        =get_block_setting($block_id, 'block',    true);
+		if ($cfg) {
+			foreach (array('filter', 'onlyBDM', 'infoStyle', 'sortStyle', 'block') as $name) {
+				if (array_key_exists($name, $cfg)) {
+					$$name=$cfg[$name];
+				}
+			}
+		}
 
 		$todayjd=WT_CLIENT_JD;
 
@@ -62,12 +70,12 @@ class todays_events_WT_Module extends WT_Module implements WT_Module_Block {
 			} else {
 				$name = WT_USER_NAME;
 			}
-	  	$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?action=configure&amp;ctype={$ctype}&amp;block_id={$block_id}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-	  	$title .= "<img class=\"adminicon\" src=\"".$WT_IMAGES["admin"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
-  	}
-  	$title.=i18n::translate('On This Day ...').help_link('index_onthisday');
+			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?action=configure&amp;ctype={$ctype}&amp;block_id={$block_id}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+			$title .= "<img class=\"adminicon\" src=\"".$WT_IMAGES["admin"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
+		}
+		$title.=i18n::translate('On This Day ...').help_link('index_onthisday');
 
-  	$content = "";
+		$content = "";
 		switch ($infoStyle) {
 		case 'list':
 			// Output style 1:  Old format, no visible tables, much smaller text.  Better suited to right side of page.
@@ -82,7 +90,7 @@ class todays_events_WT_Module extends WT_Module implements WT_Module_Block {
 		}
 
 		if ($template) {
-			if (get_block_setting($block_id, 'block', true)) {
+			if ($block) {
 				require $THEME_DIR.'templates/block_small_temp.php';
 			} else {
 				require $THEME_DIR.'templates/block_main_temp.php';
@@ -120,14 +128,14 @@ class todays_events_WT_Module extends WT_Module implements WT_Module_Block {
 		}
 
 		require_once WT_ROOT.'includes/functions/functions_edit.php';
-		
+
 		$filter=get_block_setting($block_id, 'filter', true);
 		echo '<tr><td class="descriptionbox wrap width33">';
 		echo i18n::translate('Show only events of living people?');
 		echo '</td><td class="optionbox">';
 		echo edit_field_yes_no('filter', $filter);
 		echo '</td></tr>';
-		
+
 		$onlyBDM=get_block_setting($block_id, 'onlyBDM', true);
 		echo '<tr><td class="descriptionbox wrap width33">';
 		echo i18n::translate('Show only Births, Deaths, and Marriages?');
@@ -151,7 +159,7 @@ class todays_events_WT_Module extends WT_Module implements WT_Module_Block {
 
 		$block=get_block_setting($block_id, 'block', true);
 		echo '<tr><td class="descriptionbox wrap width33">';
-		echo i18n::translate('Add a scrollbar when block contents grow');
+		echo /* I18N: label for a yes/no option */ i18n::translate('Add a scrollbar when block contents grow');
 		echo '</td><td class="optionbox">';
 		echo edit_field_yes_no('block', $block);
 		echo '</td></tr>';

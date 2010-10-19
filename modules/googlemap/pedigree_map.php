@@ -182,10 +182,10 @@ echo PrintReady($controller->getPersonName())."</h2>";
 				</td>
 			</tr>
 		</table>
- 	  </form>
+	  </form>
 	</td></tr>
 </table>
-	
+
 <!-- end of form -->
 
 <!-- count records by type -->
@@ -270,7 +270,7 @@ echo "</table>\n";
 echo "<hr />";
 echo "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\">";
 echo "  <tr>";
-echo "	<td valign=\"top\">";
+echo " <td valign=\"top\">";
 // print summary statistics
 if (isset($curgen)){
 	$total=pow(2,$curgen)-1;
@@ -284,7 +284,7 @@ if (isset($curgen)){
 	echo "</td>\n";
 	echo "  </tr>\n";
 	echo "  <tr>\n";
-	echo "	<td valign=\"top\">\n";
+	echo " <td valign=\"top\">\n";
 	if ($priv) {
 		echo i18n::plural('%s individual is private.', '%s individuals are private.', $priv, $priv), '<br/>';
 	}
@@ -301,7 +301,7 @@ if (isset($curgen)){
 		}
 	}
 }
-echo "	</td>\n";
+echo " </td>\n";
 echo "  </tr>\n";
 echo "</table>\n";
 echo "</div>";
@@ -316,7 +316,7 @@ echo "</div>";
 //<![CDATA[
 
 if (GBrowserIsCompatible()) {
-	
+
 // this variable will collect the html which will eventually be placed in the side_bar
 var side_bar_html = "";
 
@@ -466,8 +466,8 @@ function Map_type() {}
 
 	Map_type.prototype.initialize = function(pm_map)
 	{
-		var list 	= document.createElement("ul");
-		list.id	= 'map_type';
+		var list  = document.createElement("ul");
+		list.id = 'map_type';
 
 		var button1 = document.createElement('li');
 		var button2 = document.createElement('li');
@@ -604,7 +604,7 @@ for ($i=0; $i<($controller->treesize); $i++) {
 		$datamid  .= "</a></span>";
 		$dataright = "<br /><strong>". i18n::translate('Birth:') . "&nbsp;</strong>" .
 				addslashes($bdate->Display(false))."<br />".$bplace;
-	
+
 		$latlongval[$i] = get_lati_long_placelocation($person->getBirthPlace());
 		if ($latlongval[$i] != NULL){
 			$lat[$i] = str_replace(array('N', 'S', ','), array('', '-', '.'), $latlongval[$i]["lati"]);
@@ -667,7 +667,7 @@ for ($i=0; $i<($controller->treesize); $i++) {
 				if ($clustersize != 5) echo "&clustersize=". $clustersize; // ignoring the default of 5
 				echo "' title='" . i18n::translate('Pedigree Map') . "'>" . $dataleft . "</a>" . $datamid . $dataright . "</div>\", \"".$marker_number."\");\n";
 				echo "pm_map.addOverlay(marker);\n";
-	
+
 				if (!$hidelines) {
 					$to_child = (intval(($i-1)/2)); // Draw a line from parent to child
 					if (($to_child > -1) && ($to_child < 127) && (!empty($lat[$to_child]))) {
@@ -776,7 +776,7 @@ document.getElementById("side_bar").innerHTML = side_bar_html;
 		<?php
 	}
 	if ($GOOGLEMAP_PH_WHEEL) echo "pm_map.enableScrollWheelZoom();\n";
-	echo "	pm_map.setMapType($GOOGLEMAP_MAP_TYPE);\n";
+	echo " pm_map.setMapType($GOOGLEMAP_MAP_TYPE);\n";
 	?>
 // End context menu creation
 }

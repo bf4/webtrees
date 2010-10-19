@@ -34,7 +34,7 @@
  * this is not the case (e.g. England prior to 1752), we need to use modified
  * years or the OS/NS notation "4 FEB 1750/51".
  *
- * NOTE: PGV should only be using the GedcomDate class.  The other classes
+ * NOTE: WT should only be using the GedcomDate class.  The other classes
  * are all for internal use only.
  */
 
@@ -355,7 +355,7 @@ class CalendarDate {
 
 	// Convert a date from one calendar to another.
 	function convert_to_cal($calendar) {
-  	switch ($calendar) {
+		switch ($calendar) {
 		case 'gregorian':
 			return new GregorianDate($this);
 		case 'julian':
@@ -400,7 +400,8 @@ class CalendarDate {
 	function Format($format, $qualifier='') {
 		// Don't show exact details for inexact dates
 		if (!$this->d) {
-			$format=str_replace(array('%d', '%j', '%l', '%D', '%N', '%S', '%w', '%z'), '', $format);
+			// The comma is for US "M D, Y" dates
+			$format=preg_replace('/%[djlDNSwz][,]?/', '', $format);
 		}
 		if (!$this->m) {
 			$format=str_replace(array('%F', '%m', '%M', '%n', '%t'), '', $format);
@@ -420,7 +421,7 @@ class CalendarDate {
 			case '':
 			case 'int':
 			case 'est':
-	 		case 'cal': $case='NOMINATIVE'; break;
+			case 'cal': $case='NOMINATIVE'; break;
 			case 'to':
 			case 'abt':
 			case 'from': $case='GENITIVE'; break;
@@ -564,7 +565,7 @@ class CalendarDate {
 	// Convert a decimal number to roman numerals
 	static function NumToRoman($num) {
 		static $lookup=array(1000=>'M', '900'=>'CM', '500'=>'D', 400=>'CD', 100=>'C', 90=>'XC', 50=>'L', 40=>'XL', 10=>'X', 9=>'IX', 5=>'V', 4=>'IV', 1=>'I');
-  	if ($num<1) return $num;
+		if ($num<1) return $num;
 		$roman='';
 		foreach ($lookup as $key=>$value)
 			while ($num>=$key) {
@@ -600,7 +601,7 @@ class CalendarDate {
 		return $tmp;
 	}
 
-	// Create a URL that links this date to the PGV calendar
+	// Create a URL that links this date to the WT calendar
 	function CalendarURL($date_fmt="") {
 		global $DATE_FORMAT;
 		if (empty($date_fmt))
@@ -921,7 +922,7 @@ class HebrewDate extends JewishDate {
 	const GERSHAYIM="״";
 	const GERSH="׳";
 	const ALAFIM="אלפים";
-	
+
 	function FormatDayZeros() {
 		return $this->NumToHebrew($this->d);
 	}
@@ -971,17 +972,17 @@ class HebrewDate extends JewishDate {
 		// Hebrew does not have genitive forms
 		return self::NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
 	}
-	
+
 	static function NUM_TO_MONTH_LOCATIVE($n, $leap_year) {
 		// Hebrew does not have locative forms
 		return self::NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
 	}
-	
+
 	static function NUM_TO_MONTH_INSTRUMENTAL($n, $leap_year) {
 		// Hebrew does not have instrumental forms
 		return self::NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
 	}
-	
+
 	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
 		// TODO: Do these have short names?
 		return self::NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
@@ -1046,8 +1047,8 @@ class HebrewDate extends JewishDate {
 		if ($singleDigitYear == true) {
 			$sb .= self::GERSH; //append single quote
 		} else { // append double quote before last digit
-        	$pos1 = strlen($sb)-2;
- 			$sb = substr($sb, 0, $pos1) . self::GERSHAYIM . substr($sb, $pos1);
+			$pos1 = strlen($sb)-2;
+			$sb = substr($sb, 0, $pos1) . self::GERSHAYIM . substr($sb, $pos1);
 			$sb = str_replace(self::GERSHAYIM . self::GERSHAYIM, self::GERSHAYIM, $sb); //replace double gershayim with single instance
 		}
 		return $sb;
@@ -1141,7 +1142,7 @@ class FrenchRDate extends CalendarDate {
 	}
 	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
 		// TODO: Do these have short names?
-		return $this->NUM_TO_MONTH_NOMINATIVE($n);
+		return self::NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
 	}
 	static function NUM_TO_GEDCOM_MONTH($n, $leap_year) {
 		switch ($n) {
@@ -1374,12 +1375,12 @@ class ArabicDate extends HijriDate {
 		// Arabic does not have locative forms
 		return self::NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
 	}
-	
+
 	static function NUM_TO_MONTH_INSTRUMENTAL($n, $leap_year) {
 		// Arabic does not have instrumental forms
 		return self::NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
 	}
-	
+
 	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
 		// TODO: Do these have short names?
 		return self::NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
@@ -1504,7 +1505,7 @@ class GedcomDate {
 				$cal='@#dfrench r@';
 			} else {
 				if (preg_match('/^(muhar|safar|rabi[at]|juma[at]|rajab|shaab|ramad|shaww|dhuaq|dhuah)$/', $m)) {
-					$cal='@#dhijri@'; // This is a PGV extension
+					$cal='@#dhijri@'; // This is a WT extension
 				} elseif (preg_match('/^\d+( b ?c)|\d\d\d\d \/ \d{1,4}$/', $y)) {
 					$cal='@#djulian@';
 				}
@@ -1527,19 +1528,19 @@ class GedcomDate {
 		case '@#dgregorian@':
 			return new GregorianDate(array($y, $m, $d));
 		case '@#djulian@':
-	 		return new JulianDate(array($y, $m, $d));
+			return new JulianDate(array($y, $m, $d));
 		case '@#dhebrew@':
 			if (WT_LOCALE=='he')
-	 			return new HebrewDate(array($y, $m, $d));
+				return new HebrewDate(array($y, $m, $d));
 			else
-	 			return new JewishDate(array($y, $m, $d));
+				return new JewishDate(array($y, $m, $d));
 		case '@#dhijri@':
 			if (WT_LOCALE=='ar')
 				return new ArabicDate(array($y, $m, $d));
 			else
 				return new HijriDate(array($y, $m, $d));
 		case '@#dfrench r@':
-		 	return new FrenchRDate(array($y, $m, $d));
+			return new FrenchRDate(array($y, $m, $d));
 		case '@#droman@':
 			return new RomanDate(array($y, $m, $d));
 		}
@@ -1771,7 +1772,7 @@ class GedcomDate {
 	}
 
 	// Calculate the gregorian year for a date.  This should NOT be used internally
-	// within PGV - we should keep the code "calendar neutral" to allow support for
+	// within WT - we should keep the code "calendar neutral" to allow support for
 	// jewish/arabic users.  This is only for interfacing with external entities,
 	// such as the ancestry.com search interface or the dated fact icons.
 	function gregorianYear() {
@@ -1787,4 +1788,3 @@ class GedcomDate {
 // Localise a date.  This is a default function, and may be overridden in extras.xx.php
 function DefaultDateLocalisation(&$q1, &$d1, &$q2, &$d2, &$q3) {
 }
-?>

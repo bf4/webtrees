@@ -42,12 +42,12 @@ $directory      =safe_GET('directory', WT_REGEX_NOSCRIPT, $MEDIA_DIRECTORY);
 $multiple       =safe_GET_bool('multiple');
 $showthumb      =safe_GET_bool('showthumb');
 $all            =safe_GET_bool('all');
-$subclick		=safe_GET('subclick');
+$subclick       =safe_GET('subclick');
 $choose         =safe_GET('choose', WT_REGEX_NOSCRIPT, '0all');
 $level          =safe_GET('level', WT_REGEX_INTEGER, 0);
 $language_filter=safe_GET('language_filter');
 $magnify        =safe_GET_bool('magnify');
-$qs				=safe_GET('tags');
+$qs             =safe_GET('tags');
 
 
 
@@ -446,7 +446,7 @@ if ($type == "facts") {
 	echo "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 	echo "<tr><td class=\"list_label $TEXT_DIRECTION\" style=\"padding: 5px; font-weight: normal; white-space: normal;\">";
 	getPreselectedTags($preselDefault, $preselCustom);
-	?> 
+	?>
 	<?php echo WT_JS_START; ?>
 	// A class representing a default tag
 	function DefaultTag(id, name, selected) {
@@ -463,10 +463,10 @@ if ($type == "facts") {
 			row.appendChild(cell=document.createElement("td"));
 			o=null;
 			if(document.all) {
-				 //Old IEs handle the creation of a checkbox already checked, as far as I know, only in this way
-				try { 
-					o=document.createElement("<input type='checkbox' id='tag"+this._counter+"' "+(this.selected?"checked='checked'":"")+" />"); 
-				} catch(e) { 
+				//Old IEs handle the creation of a checkbox already checked, as far as I know, only in this way
+				try {
+					o=document.createElement("<input type='checkbox' id='tag"+this._counter+"' "+(this.selected?"checked='checked'":"")+" />");
+				} catch(e) {
 					o=null;
 				}
 			}
@@ -662,7 +662,7 @@ if ($action=="filter") {
 		echo "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
 		// Get the famrecs with hits on names from the family table
 		// Get the famrecs with hits in the gedcom record from the family table
-		$myfamlist = pgv_array_merge(
+		$myfamlist = wt_array_merge(
 			search_fams_names($filter_array, array(WT_GED_ID), 'AND'),
 			search_fams($filter_array, array(WT_GED_ID), 'AND', true)
 		);
@@ -990,5 +990,3 @@ echo "</div>"; // Close div that centers table
 if ($type!='facts') echo WT_JS_START, 'document.filter', $type, '.filter.focus();', WT_JS_END;
 
 print_simple_footer();
-
-?>

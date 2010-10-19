@@ -64,9 +64,9 @@ class clippings_WT_Module extends WT_Module implements WT_Module_Menu, WT_Module
 	public function defaultMenuOrder() {
 		return 20;
 	}
-	
+
 	// Implement WT_Module_Menu
-	public function getMenu() { 
+	public function getMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGES, $GEDCOM, $SEARCH_SPIDER, $controller;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
@@ -115,7 +115,7 @@ class clippings_WT_Module extends WT_Module implements WT_Module_Menu, WT_Module
 	public function defaultSidebarOrder() {
 		return 50;
 	}
-	
+
 	// Impelement WT_Module_Sidebar
 	public function hasSidebarContent() {
 		return true;
@@ -143,7 +143,7 @@ class clippings_WT_Module extends WT_Module implements WT_Module_Menu, WT_Module
 			$root = null;
 			if ($this->controller->pid && !id_in_cart($this->controller->pid)) {
 				$root = GedcomRecord::getInstance($this->controller->pid);
-				if ($root && $root->canDisplayDetails()) 
+				if ($root && $root->canDisplayDetails())
 					$out .= '<a href="sidebar.php?sb_action=clippings&amp;add='.$root->getXref().'" class="add_cart">
 					<img src="'.$WT_IMAGES['clippings'].'" width="20" /> '.i18n::translate('Add %s to cart', $root->getListName()).'</a>';
 			}
@@ -304,10 +304,10 @@ class clippings_WT_Module extends WT_Module implements WT_Module_Menu, WT_Module
 					$icon='';
 					if ($tag=='INDI') $icon = "indis";
 					if ($tag=='FAM' ) $icon = "sfamily";
-					//	if ($tag=='SOUR') $icon = "source";
-					//	if ($tag=='REPO') $icon = "repository";
-					//	if ($tag=='NOTE') $icon = "notes";
-					//	if ($tag=='OBJE') $icon = "media";
+					//if ($tag=='SOUR') $icon = "source";
+					//if ($tag=='REPO') $icon = "repository";
+					//if ($tag=='NOTE') $icon = "notes";
+					//if ($tag=='OBJE') $icon = "media";
 					if (!empty($icon)) {
 						$out .= '<li>';
 						if (!empty($icon)) {
@@ -324,7 +324,7 @@ class clippings_WT_Module extends WT_Module implements WT_Module_Menu, WT_Module
 							}
 							$out .= '</a>';
 						}
-						$out .= '<a	class="remove_cart" href="sidebar.php?sb_action=clippings&amp;remove='.$i.'">
+						$out .= '<a class="remove_cart" href="sidebar.php?sb_action=clippings&amp;remove='.$i.'">
 						<img src="'. $WT_IMAGES["remove"].'" border="0" alt="'.i18n::translate('Remove').'" title="'.i18n::translate('Remove').'" /></a>';
 						$out .='</li>';
 					}
@@ -407,7 +407,7 @@ class clippings_WT_Module extends WT_Module implements WT_Module_Menu, WT_Module
 		else return $this->getSidebarContent();
 		return $out;
 	}
-	
+
 	public function downloadForm() {
 		global $TEXT_DIRECTION;
 		$controller = $this->controller;
@@ -423,24 +423,13 @@ class clippings_WT_Module extends WT_Module implements WT_Module_Menu, WT_Module
 		<input type="hidden" name="action" value="download" />
 		<table>
 		<tr><td colspan="2" class="topbottombar"><h2>'.i18n::translate('File Information').'</h2></td></tr>
-		<tr>
-		<td class="descriptionbox width50 wrap">'.i18n::translate('File Type').help_link('file_type').'</td>
-		<td class="optionbox">';
-		if ($TEXT_DIRECTION=='ltr') {
-			$out .= '<input type="radio" name="filetype" checked="checked" value="gedcom" />&nbsp;GEDCOM<br/><input type="radio" name="filetype" value="gramps" DISABLED />&nbsp;Gramps XML <!-- GRAMPS doesn\'t work right now -->';
-		} else {
-			$out .= 'GEDCOM&nbsp;'.getLRM().'<input type="radio" name="filetype" checked="checked" value="gedcom" />'.getLRM().'<br />Gramps XML&nbsp;'.getLRM().'<input type="radio" name="filetype" value="gramps" />'.getLRM();
-		}
-		$out .= '
-		</td></tr>
-
 		<tr><td class="descriptionbox width50 wrap">'.i18n::translate('Zip File(s)').help_link('zip').'</td>
 		<td class="optionbox"><input type="checkbox" name="Zip" value="yes" checked="checked" /></td></tr>
 
 		<tr><td class="descriptionbox width50 wrap">'.i18n::translate('Include media (automatically zips files)').help_link('include_media').'</td>
 		<td class="optionbox"><input type="checkbox" name="IncludeMedia" value="yes" checked="checked" /></td></tr>
 		';
-		
+
 		// Determine the Privatize options available to this user
 		if (WT_USER_IS_ADMIN) {
 			$radioPrivatizeNone = 'checked="checked" ';
@@ -473,9 +462,7 @@ class clippings_WT_Module extends WT_Module implements WT_Module_Menu, WT_Module
 		<input type="radio" name="privatize_export" value="none" '.$radioPrivatizeNone.'/>&nbsp;'.i18n::translate('None').'<br />
 		<input type="radio" name="privatize_export" value="visitor" '.$radioPrivatizeVisitor.'/>&nbsp;'.i18n::translate('Visitor').'<br />
 		<input type="radio" name="privatize_export" value="user" '.$radioPrivatizeUser.'/>&nbsp;'.i18n::translate('Authenticated user').'<br />
-		<input type="radio" name="privatize_export" value="gedadmin" '.$radioPrivatizeGedadmin.'/>&nbsp;'.i18n::translate('GEDCOM administrator').'<br />
-		<input type="radio" name="privatize_export" value="admin" '.$radioPrivatizeAdmin.'/>&nbsp;'.i18n::translate('Site administrator').'
-		</td></tr>
+		<input type="radio" name="privatize_export" value="gedadmin" '.$radioPrivatizeGedadmin.'/>&nbsp;'.i18n::translate('GEDCOM administrator').'</td></tr>
 
 		<tr><td class="descriptionbox width50 wrap">'.i18n::translate('Convert from UTF-8 to ANSI (ISO-8859-1)').help_link('utf8_ansi').'</td>
 		<td class="optionbox"><input type="checkbox" name="convert" value="yes" /></td></tr>
@@ -488,7 +475,7 @@ class clippings_WT_Module extends WT_Module implements WT_Module_Menu, WT_Module
 		<input type="button" value="'.i18n::translate('Cancel').'" onclick="cancelDownload();" />
 		<input type="submit" value="'.i18n::translate('Download Now').'" />
 		</form>';
-		
+
 		return $out;
 	}
 

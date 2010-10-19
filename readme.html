@@ -45,11 +45,12 @@
 <hr width="100%">
 <!-- LICENSE -->
 <div style="float:left;"><a name="licence"><h3>LICENSE</h3></a></div><div class="back"><a href="#top">back to top</a></div><div style="clear:both;"></div>
-webtrees: Web based Family History software<br />
+ * <b>webtrees: Web based Family History software</b><br />
  * Copyright (C) 2010 webtrees development team.<br />
  *<br />
- * Derived from PhpGedView<br />
-Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
+ * Derived from PhpGedView - Copyright (C) 2002 to 2010  PGV Development Team.<br />
+ * <br />
+ * All rights reserved.
 <br /><br />
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 <br /><br />
@@ -65,21 +66,21 @@ See the file GPL.txt included with this software for more detailed licensing inf
 	<li>It works from standard GEDCOM files, and is therefore compatible with every major desktop application.</li>
 	<li>It aims to to be efficient and effective by using the right combination of third-party tools, design techniques and open standards.</li>
 </ul>
-<b>webtrees</b> allows you to view and edit your genealogy on your website. It has full editing capabilities, full privacy functions, and supports multimedia like photos and document images. As an on line program, it fosters extended family participation and good ancestral recording habits, as it simplifies the process of collaborating with others working on your family lines. Your latest information is always on your web site and available for others to see, defined by viewing rules you set. For more information and to see working demos, visit http://webtrees.net/ 
+<b>webtrees</b> allows you to view and edit your genealogy on your website. It has full editing capabilities, full privacy functions, and supports multimedia like photos and document images. As an on line program, it fosters extended family participation and good ancestral recording habits, as it simplifies the process of collaborating with others working on your family lines. Your latest information is always on your web site and available for others to see, defined by viewing rules you set. For more information and to see working demos, visit <a href="http://webtrees.net/">http://webtrees.net/ </a>. 
 <br /><br />
 <b>webtrees</b> is Open Source software that has been produced by people from many countries freely donating their time and talents to the project. All service, support, and future development is dependent on the time developers are willing to donate to the project, often at the expense of work, recreation, and family. Beyond the few donations received from users, developers receive no compensation for the time they spend working on the project. There is also no outside source of revenue to support the project. Please consider these circumstances when making support requests and consider volunteering your own time and skills to make the project even stronger and better.
 <br /><br />
 <hr width="100%">
 <!-- SYSTEM REQUIREMENTS -->
 <div style="float:left;"><a name="system"><h3>SYSTEM REQUIREMENTS</h3></a></div><div class="back"><a href="#top">back to top</a></div><div style="clear:both;"></div>
-The following instructions will guide you through a basic installation of <b>webtrees</b>. Initially, we recommend this approach, and that on completion of your new <b>webtrees</b> installation, you confirm your site is working correctly before considering the many advanced configuration options available.
-<br /><br />
+To install <b>webtrees</b>, you need:
+<br />
 <ul>
 	<li>A webserver. Apache and IIS are the most common types. There are no requirements to use a specific type or version.</li>
-	<li>Approximately 65MB of disk space for the application files, plus whatever is needed for your multi-media files, gedcom files and database.</li>
+	<li>Approximately 65MB of disk space for the application files, plus whatever is needed for your multi-media files, GEDCOM files and database.</li>
 	<li>PHP 5.2.3 or later. Note that many web hosts offer *both* PHP4 and PHP5, typically with PHP4 as the default. If this is the case, you can usually switch between the two using a control panel or a configuration file. Refer to your web host&#39;s support documentation for details.</li>
 	 <ul>
-		<li>The PHP/PDO library for MySQL. This is a server configuration option. It is enabled by default on most hosts. See http://php.net/pdo</li>
+		<li>The PHP/PDO library for MySQL. This is a server configuration option. It is enabled by default on most hosts. See <a href="http://php.net/pdo">http://php.net/pdo</a></li>
 		<li>PHP should be configured to allow sufficient server resources (memory and execution time) for the size of your system. Typical requirements are:</li>
 			<ul>
 				<li>Small systems (500 individuals): 16-32MB, 10-20 seconds</li>
@@ -87,15 +88,16 @@ The following instructions will guide you through a basic installation of <b>web
 				<li>Large systems (50000 individuals): 64-128MB, 40-80 seconds</li>
 			</ul>
 	</ul>
-	<li>MySQL 5.0.13 or later. <b>webtrees</b> can share a single database with other applications, by choosing a unique table prefix during configuration. 
-</ul>
+	<li>MySQL 5.0.13 or later. <b>webtrees</b> can share a single database with other applications, by choosing a unique table prefix during configuration.</li>
+	<li>If you are using MySQL 5.1.31 or later, or 5.0.85 or later, the setting MAX_ALLOWED_PACKET must be larger than your largest GEDCOM file. If you run your own server you can set this in my.ini. Otherwise you may need to ask your web-host to increase it. <a href="https://bugs.launchpad.net/webtrees/+bug/622194">This is a known bug</a>.</li>
+	</ul>
 <hr width="100%">
 <!-- INSTALLATION -->
 <div style="float:left;"><a name="install"><h3>INSTALLATION</h3></a></div><div class="back"><a href="#top">back to top</a></div><div style="clear:both;"></div>
 Once you have checked the <a href="#system">SYSTEM REQUIREMENTS</a> above, installing webtrees is really easy.
 <br /><br />
 <ol>
-	<li>Download the latest version of <b>webtrees</b> available from http://launchpad.net/webtrees</li>
+	<li>Download the latest version of <b>webtrees</b> available from <a href="http://launchpad.net/webtrees">http://launchpad.net/webtrees</a></li>
 	<li>Unzip the files and upload them to an empty directory on your web server.</li>
 	<li>Open your web browser and type the URL for your <b>webtrees</b> site (for example, http://www.yourserver.com/webtrees) into the address bar.</li>
 	<li>The <b>webtrees</b> setup wizard will start automatically. This will ask you a few questions about your server, and then generate a configuration file for you. At the end of the setup you will be asked to upload the configuration file to the webserver. This is a security check to make sure only the site owner can configure it.</li>
@@ -113,18 +115,18 @@ So, after installation, you'll be directed to the GEDCOM (family tree) administr
 		<li>TRANSFER your existing PGV data straight into <b>webtrees</b>, using the PGV-to-<b>webtrees</b> wizard described in section 9 below: <a href="#convert">CONVERTING from PHPGEDVIEW</a></li>
 	</ul>
 </ol>
-There are lots of configuration options. You'll probably want to review the privacy settings first. Don't worry too much about all the other options - the defaults are good for most people. If you get stuck, there's lots of built-in help and you can get friendly advice from the <a href="http://webtrees.net/forums">help</a> forum.
+There are <i>lots</i> of configuration options. You'll probably want to review the privacy settings first. Don't worry too much about all the other options - the defaults are good for most people. If you get stuck, there's lots of built-in help and you can get friendly advice from the <a href="http://webtrees.net/forums">help</a> forum.
 <hr width="100%">
+<!-- UPGRADING -->
 <div style="float:left;"><a name="upgrade"><h3>UPGRADING</h3></a></div><div class="back"><a href="#top">back to top</a></div><div style="clear:both;"></div>
-<b>IMPORTANT NOTE: The following instructions do NOT apply to beta versions of <b>webtrees</b>. If you are testing beta versions they will have specific, usually more complex upgrade instructions, often requiring a completely fresh installation. Please read the latest Release Notes for any beta version.</b>
-<br /><br />
-<b>webtrees</b> has been designed to make upgrading to a new version of the software as straightforward as possible. Just follow these simple steps:
+Upgrading <b>webtrees</b> is quick and easy. You are recommened to upgrade whenever a new version is available. 
 <ol>
-	<li>Ensure you first have a good backup of your entire system, including all files and the database.</li>
-	<li>Download the latest version of <b>webtrees</b> available from http://launchpad.net/webtrees</li>
-	<li>Upload the files to your web server, copying all the new files directly over the existing ones.</li>
-	<li>If any other requirements exist for the specific upgrade you are doing, you will be advised on screen as soon as you go to your site URL. This may occasionally include a requirement to re-import your GEDCOM (family tree) file.</li>
+	<li>Now would be a good time to make a <a href="#backup">backup</a>. </li>
+	<li>Download the latest version of <b>webtrees</b> available from <a href="http://launchpad.net/webtrees">http://launchpad.net/webtrees</a></li>
+	<li>Unzip the .ZIP file, and upload the files to your web server, overwriting the existing files.</li>
 </ol>
+<p><i>NOTE for Macintosh users. Step 3 assumes you are using a copy tool that merges directories rather than replaces them. (Merge is standard behaviour on Windows and Linux.) If you use the Macintosh Finder or other similar tool to perform step 3, it will replace  your configuration, media and other directories with the empty/default ones from the installation. This would be very bad (but you did take a backup in step 1, didn't you!). Futher details and recommendations for suitable tools can be found by searching <a href="http://google.com">google.com</a></i></p>
+If you have any problems or questions, help is available on the <a href="http://webtrees.net/forums">webtrees forum</a>.
 <hr width="100%">
 <!-- GEDCOM FILES -->
 <div style="float:left;"><a name="gedcom"><h3>GEDCOM (family tree) FILES</h3></a></div><div class="back"><a href="#top">back to top</a></div><div style="clear:both;"></div>
@@ -145,7 +147,7 @@ When or if you change your genealogy data outside of <b>webtrees</b>, it is not 
 	<li> Go to your <b>webtrees</b> GEDCOM configuration page. On the line relating to this GEDCOM file click either IMPORT or UPLOAD.</li>
 	<li>Take careful note of the media items option (<i>"If you have created media objects in webtrees, and have edited your gedcom off-line using a program that deletes media objects, then tick this box to merge the current media objects with the new GEDCOM."</i>) In most cases you should leave this box <b>UNCHECKED</b>.</li>
 	<li>Click "SAVE". <b>webtrees</b> will validate the GEDCOM again before importing.</li>
-	<li>You can use a ZIP file to upload the GEDCOM, but only if you use the UPLOAD option. The file name can be anything you choose.</li>
+	<li><strike>You can use a ZIP file to upload the GEDCOM, but only if you use the UPLOAD option. The file name can be anything you choose.</strike> NOTE: The ability to upload ZIP files does not currently work. If your GEDCOM file is too large to upload, you should use the IMPORT option.</li>
 </ol>
 <hr width="100%">
 <!-- SECURITY -->
@@ -187,17 +189,15 @@ You will have <b>two</b> data directories:
 <hr width="100%">
 <!-- BACKUP -->
 <div style="float:left;"><a name="backup"><h3>BACKUP</h3></a></div><div class="back"><a href="#top">back to top</a></div><div style="clear:both;"></div>
-It is always important to keep backups of your data away from your web server environment.
+Backups are good. Whatever problem you have, it can always be fixed from a good backup.
 <br /><br />
-Doing this has been made very straightforward in <b>webtrees</b> by its use of database tables for storing all information.
-<br /><br />
-We therefore recommend that you <b>REGULARLY</b> use a database backup tool, such as the export/import options from phpMyAdmin most people have as part of their web server account.
-<br />
-This will safeguard "ALL" your information, not just your family history data, including user profiles and settings, news blocks, favorites, module configurations. 
-<br />
-The only things NOT included are any media items you uploaded to the server. You should also always keep copies of these, by using FTP to download copies of the media folders from your web server.
-<br /><br />
-[<b>NOTE:</b> for beta versions of <b>webtrees</b> there are two files in the webtrees/data folder (<b><i>yourGEDCOM</i>.ged_conf.php</b> and <b><i>yourGEDCOM</i>.ged_priv.php</b>) that you should also backup using FTP. These will be transferred to the database in released versions]
+To make a backup of webtrees, you need to make a copy of the following
+<ol>
+   <li>The files in the webtrees/data directory.</li>
+   <li>The files in the webtrees/media directory.</li>
+   <li>The tables in the database. Freely available tools such as phpMyAdmin allow you to do this in one click.</li> 
+</ol>
+Remember that most web hosting services do NOT backup your data, and this is your responsibility.
 <hr width="100%">
 <!-- CONVERSION -->
 <div style="float:left;"><a name="convert"><h3>CONVERTING from PHPGEDVIEW</h3></a></div><div class="back"><a href="#top">back to top</a></div><div style="clear:both;"></div>
@@ -205,14 +205,14 @@ If you are moving to <b>webtrees</b> from an existing PhpGedView ("PGV") setup, 
 <br /><br />
 The requirements are:
 <ul>
-	<li>The PGV database and index directory must be on the same server as <b>webtrees</b></li>
-	<li>PGV must be version 4.2.3, or any SVN up to #6973 (later versions will probably work too, provided the data structures haven't changed)</li>
+	<li>The PGV database and index directory must be on the same server as <b>webtrees</b>;</li>
+	<li>Your <b>webtrees</b> MySQL database username and password must either be the same as your PGV username and password, or if you created a new user for <b>webtrees</b>, that new user must also have full privileges to access your PGV database;</li>
+	<li>PGV must be version 4.2.3, or any SVN up to #6976 (schema versions 10-14 are supported, later versions will probably work too, provided the data structures haven't changed); </li>
 	<li>All changes in PGV must be accepted (as pending edits will not be transfered)</li>
-	<li>Your new webtrees admin username must be set to an identical, existing PGV admin username</li>
-	<li>All existing PGV users must have distinct email addresses (PGV allows users to delete their email address, or have the same email address as other users;  <b>webtrees</b> requires that all users have their own unique email address)</li>
+	<li>All existing PGV users must have an email address, and it must be unique to that user (PGV allows users to delete their email address, or have the same email address as other users;  <b>webtrees</b> requires that all users have their own unique email address)</li>
 </ul>
-<p><b>Important Note:</b> This transfer wizard is not able to assist with moving media items. You will need to set up and move or copy your media configuration and objects separately after the transfer wizard is finished.'</p>
-<p>Immediately after the PGV-to-<b>webtrees</b> transfer is complete, you should check your GEDCOM and privacy settings to confirm they are as you intended. It will not be necessary to re-import your GEDCOM since the new <b>webtrees</b> database tables have been populated with your PGV data. Due to differences in internal data formats, the following settings are not yet transfered: block configuration, FAQs, HTML blocks, favorites, and news/blog articles.  We hope to add these to the wizard in a future release.</p>
-<p>The transfer wizard is accessed in <b>webtrees</b> from the bottom of the "Manage GEDCOM's" page to which you will be automatically directed once you have completed the initial <b>webtrees</b> installation steps (section 4 above: <a href="#install">INSTALLATION</a>)
+<p><b>Important Note:</b> This transfer wizard is not able to assist with moving media items. You will need to set up and move or copy your media configuration and objects separately after the transfer wizard is finished. If you use the media firewall in PGV and a directory outside of PGV, then duplicating the media configuration in <b>webtrees</b> media folder, and setting the media firewall directory to your PGV folder will make your media available to <b>webtrees</b>.</p>
+<p>After the transfer is complete, you should check your GEDCOM configuration and privacy settings. Due to differences in internal data formats, the following settings are not yet transfered: custom privacy restrictions, block configuration, FAQs, and HTML blocks.  We hope to add these to the wizard in a future release.</p>
+<p>The transfer wizard is accessed in <b>webtrees</b> from the bottom of the "Manage GEDCOM's" page to which you will be automatically directed once you have completed the initial <b>webtrees</b> installation steps (section 4 above: <a href="#install">INSTALLATION</a>).This option is only available on a new, empty <b>webtrees</b> installation; once you have created a GEDCOM (family tree) or added user accounts, it will no longer be available.</p>
 </body>
 </html>

@@ -28,7 +28,7 @@
 
 define('WT_SCRIPT_NAME', 'editnews.php');
 require './includes/session.php';
-		
+
 print_simple_header(i18n::translate('Add/edit journal/news entry'));
 
 if (!WT_USER_ID) {
@@ -56,7 +56,7 @@ if ($action=="compose") {
 				document.messageform.title.focus();
 				return false;
 			}
-			<?php if (!array_key_exists('ckeditor', WT_Module::getActiveModules())) { //will be empty for FCK. FIXME, use FCK API to check for content. 
+			<?php if (!array_key_exists('ckeditor', WT_Module::getActiveModules())) { //will be empty for FCK. FIXME, use FCK API to check for content.
 			?>
 			if (frm.text.value=="") {
 				alert('<?php print i18n::translate('Please enter some text for this News or Journal entry.'); ?>');
@@ -95,7 +95,7 @@ if ($action=="compose") {
 		$oCKeditor->config['DefaultLanguage'] = 'en';
 		$oCKeditor->editor('text', $news["text"]);
 	} else { //use standard textarea
-		 print "<textarea name=\"text\" cols=\"80\" rows=\"10\">".$news["text"]."</textarea>";
+		print "<textarea name=\"text\" cols=\"80\" rows=\"10\">".$news["text"]."</textarea>";
 	}
 	print "<br /></td></tr>\n";
 	print "<tr><td></td><td><input type=\"submit\" value=\"".i18n::translate('Save')."\" /></td></tr>\n";
@@ -122,4 +122,3 @@ if ($action=="compose") {
 print "<center><br /><br /><a href=\"javascript:;\" onclick=\"if (window.opener.refreshpage) window.opener.refreshpage(); window.close();\">".i18n::translate('Close Window')."</a><br /></center>";
 
 print_simple_footer();
-?>

@@ -784,13 +784,13 @@ class Person extends GedcomRecord {
 					if ($mother->getSex()=='M') $label = i18n::translate('Father\'s Family with ');
 					else $label = i18n::translate('Mother\'s Family with ');
 					if (!is_null($father)) $label .= $father->getFullName();
-					else $label .= i18n::translate('unknown');
+					else $label .= i18n::translate('unknown person');
 				}
 				else if ((is_null($wife) || !$wife->equals($mother)) && (is_null($husb)||$husb->equals($father))) {
 					if ($father->getSex()=='F') $label = i18n::translate('Mother\'s Family with ');
 					else $label = i18n::translate('Father\'s Family with ');
 					if (!is_null($mother)) $label .= $mother->getFullName();
-					else $label .= i18n::translate('unknown');
+					else $label .= i18n::translate('unknown person');
 				}
 				if ($label!='Unknown Family') return $label;
 			}
@@ -804,7 +804,7 @@ class Person extends GedcomRecord {
 	*/
 	function getSpouseFamilyLabel($family) {
 		if (is_null($family)) {
-			$spouse=i18n::translate('unknown');
+			$spouse=i18n::translate('unknown person');
 		} else {
 			$husb = $family->getHusband();
 			$wife = $family->getWife();
@@ -813,7 +813,7 @@ class Person extends GedcomRecord {
 			} elseif ($this->equals($wife) && !is_null($husb)) {
 				$spouse = $husb->getFullName();
 			} else {
-				$spouse = i18n::translate('unknown');
+				$spouse = i18n::translate('unknown person');
 			}
 		}
 		// I18N: %s is the spouse name
@@ -1003,7 +1003,7 @@ class Person extends GedcomRecord {
 					}
 					if ($parent->getSex()=='M') {
 						$this->add_parents_facts($parent, $sosa*2); // recursive call for father ancestors
-					}	elseif ($parent->getSex()=='F') {
+					} elseif ($parent->getSex()=='F') {
 						$this->add_parents_facts($parent, $sosa*2+1); // recursive call for mother ancestors
 					}
 				}
@@ -1016,7 +1016,7 @@ class Person extends GedcomRecord {
 					}
 					foreach ($parent->getSpouseFamilies() as $sfamid=>$sfamily) {
 						if ($sfamid==$famid) {
-						 	if ($parent->getSex()=='F') {
+							if ($parent->getSex()=='F') {
 								// show current family marriage only once
 								continue;
 							}
@@ -1132,11 +1132,11 @@ class Person extends GedcomRecord {
 				if ($option=='_NEPH') {
 					$rela='sibchi';
 					$parent_sex = Person::getInstance($except)->getSex();
-					if ($sex=='F') {		   $rela='sibdau';
+					if ($sex=='F') {         $rela='sibdau';
 						if ($parent_sex=='F'){ $rela='sisdau';  $op='_NIE1';}
 						if ($parent_sex=='M'){ $rela='brodau';  $op='_NIE2';}
 					}
-					if ($sex=='M') {		   $rela='sibson';
+					if ($sex=='M')         { $rela='sibson';
 						if ($parent_sex=='F'){ $rela='sisson';  $op='_NEP1';}
 						if ($parent_sex=='M'){ $rela='broson';  $op='_NEP2';}
 					}
@@ -1158,7 +1158,9 @@ class Person extends GedcomRecord {
 							$factrec.="\n2 ASSO @".$spid."@\n3 RELA ".$rela;
 							$event = new Event($factrec, 0);
 							$event->setParentObject($this);
-							$this->indifacts[]=$event;
+							if (!in_array($event, $this->indifacts)) {
+								$this->indifacts[]=$event;
+							}
 							break;
 						}
 					}
@@ -1179,7 +1181,9 @@ class Person extends GedcomRecord {
 							$factrec.="\n2 ASSO @".$spid."@\n3 RELA ".$rela;
 							$event = new Event($factrec, 0);
 							$event->setParentObject($this);
-							$this->indifacts[] = $event;
+							if (!in_array($event, $this->indifacts)) {
+								$this->indifacts[]=$event;
+							}
 						}
 					}
 				}
@@ -1205,7 +1209,9 @@ class Person extends GedcomRecord {
 							$factrec.="\n2 ASSO @".$sfamily->getSpouseId($spid)."@\n3 RELA ".$rela2;
 							$event = new Event($factrec, 0);
 							$event->setParentObject($this);
-							$this->indifacts[] = $event;
+							if (!in_array($event, $this->indifacts)) {
+								$this->indifacts[]=$event;
+							}
 						}
 					}
 				}
@@ -1693,7 +1699,7 @@ class Person extends GedcomRecord {
 			}
 		}
 
-		// Convert 'user-defined' unknowns into PGV unknowns
+		// Convert 'user-defined' unknowns into WT unknowns
 		$full=preg_replace('/\/(_+|\?+|-+)\//',            '/@N.N./', $full);
 		$full=preg_replace('/(?<= |^)(_+|\?+|-+)(?= |$)/', '@P.N.',   $full);
 		$surn=preg_replace('/^(_+|\?+|-+)$/',              '@N.N.',   $surn);
@@ -1760,7 +1766,7 @@ class Person extends GedcomRecord {
 
 			$this->_getAllNames[]=array(
 				'type'=>$type, 'full'=>$full, 'list'=>$list, 'sort'=>$surn.','.$givn,
-				// These extra parts used to populate the pgv_name table and the indi list
+				// These extra parts used to populate the wt_name table and the indi list
 				// For these, we don't want to translate the @N.N. into local text
 				'fullNN'=>$fullNN,
 				'listNN'=>$listNN,
@@ -1784,6 +1790,4 @@ class Person extends GedcomRecord {
 		$this->format_first_major_fact(WT_EVENTS_BIRT, 1).
 		$this->format_first_major_fact(WT_EVENTS_DEAT, 1);
 	}
-
 }
-?>

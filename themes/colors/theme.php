@@ -50,7 +50,7 @@ function color_theme_dropdown($style=0) {
 /**
  *  Define the default palette to be used.  Set $subColor
  *  to one of the collowing values to determine the default:
- *  
+ *
  */
 
 $COLOR_THEME_LIST=array(
@@ -106,6 +106,7 @@ $WT_USE_HELPIMG   = true;
 
 
 //-- variables for image names
+$WT_IMAGES['selected'] = 'images/selected.png';
 $WT_IMAGES['sex_m_9x9'] = 'images/sex_m_9x9.gif';
 $WT_IMAGES['sex_f_9x9'] = 'images/sex_f_9x9.gif';
 $WT_IMAGES['sex_u_9x9'] = 'images/sex_u_9x9.gif';
@@ -156,6 +157,7 @@ $WT_IMAGES['search'] = WT_THEME_DIR.'images/search.gif';
 $WT_IMAGES['sfamily'] = WT_THEME_DIR.'images/sfamily.gif';
 $WT_IMAGES['source'] = WT_THEME_DIR.'images/source.gif';
 $WT_IMAGES['statistic'] = WT_THEME_DIR.'images/statistic.gif';
+$WT_IMAGES['target'] = 'images/buttons/target.gif';
 $WT_IMAGES['timeline'] = WT_THEME_DIR.'images/timeline.gif';
 $WT_IMAGES['tree'] = WT_THEME_DIR.'images/gedcom.gif';
 $WT_IMAGES['wiki'] = WT_THEME_DIR.'images/w_22.png';
@@ -230,7 +232,8 @@ $WT_IMAGES['vline'] = WT_THEME_DIR.'images/vline.gif';
 $WT_IMAGES['webtrees'] = WT_THEME_DIR.'images/webtrees.png';
 $WT_IMAGES['zoomin'] = WT_THEME_DIR.'images/zoomin.gif';
 $WT_IMAGES['zoomout'] = WT_THEME_DIR.'images/zoomout.gif';
-
+$WT_IMAGES['reminder'] = 'images/reminder.gif';
+$WT_IMAGES['children'] = 'images/children.gif';
 
 // - lifespan chart arrows
 $WT_IMAGES['lsltarrow'] = WT_THEME_DIR.'images/lsltarrow.gif';
@@ -240,32 +243,32 @@ $WT_IMAGES['lsuparrow'] = WT_THEME_DIR.'images/lsuparrow.gif';
 
 //-- Variables for the Fan chart
 $fanChart = array(
-	'font'		=> WT_ROOT.'includes/fonts/DejaVuSans.ttf',
-	'size'		=> '7px',
-	'color'		=> '#000000',
-	'bgColor'	=> '#eeeeee',
-	'bgMColor'	=> '#b1cff0',
-	'bgFColor'	=> '#e9daf1'
+	'font' => WT_ROOT.'includes/fonts/DejaVuSans.ttf',
+	'size' => '7px',
+	'color' => '#000000',
+	'bgColor' => '#eeeeee',
+	'bgMColor' => '#b1cff0',
+	'bgFColor' => '#e9daf1'
 );
 
 //-- This section defines variables for the pedigree chart
-$bwidth = 225;		// -- width of boxes on pedigree chart
-$bheight = 78;		// -- height of boxes on pedigree chart
-$baseyoffset = -20;	// -- position the entire pedigree tree relative to the top of the page
-$basexoffset = 10;	// -- position the entire pedigree tree relative to the left of the page
-$bxspacing = 4;		// -- horizontal spacing between boxes on the pedigree chart
-$byspacing = 5;	// -- vertical spacing between boxes on the pedigree chart
-$brborder = 1;		// -- box right border thickness
+$bwidth = 225; // -- width of boxes on pedigree chart
+$bheight = 78; // -- height of boxes on pedigree chart
+$baseyoffset = -20; // -- position the entire pedigree tree relative to the top of the page
+$basexoffset = 10; // -- position the entire pedigree tree relative to the left of the page
+$bxspacing = 4; // -- horizontal spacing between boxes on the pedigree chart
+$byspacing = 5; // -- vertical spacing between boxes on the pedigree chart
+$brborder = 1; // -- box right border thickness
 
 // -- global variables for the descendancy chart
-$Dbaseyoffset = 20;	// -- position the entire descendancy tree relative to the top of the page
-$Dbasexoffset = 20;	// -- position the entire descendancy tree relative to the left of the page
-$Dbxspacing = 0;	// -- horizontal spacing between boxes
-$Dbyspacing = 10;	// -- vertical spacing between boxes
-$Dbwidth = 250;		// -- width of DIV layer boxes
-$Dbheight = 78;		// -- height of DIV layer boxes
-$Dindent = 15;		// -- width to indent descendancy boxes
-$Darrowwidth = 30;	// -- additional width to include for the up arrows
+$Dbaseyoffset = 20; // -- position the entire descendancy tree relative to the top of the page
+$Dbasexoffset = 20; // -- position the entire descendancy tree relative to the left of the page
+$Dbxspacing = 0; // -- horizontal spacing between boxes
+$Dbyspacing = 10; // -- vertical spacing between boxes
+$Dbwidth = 250; // -- width of DIV layer boxes
+$Dbheight = 78; // -- height of DIV layer boxes
+$Dindent = 15; // -- width to indent descendancy boxes
+$Darrowwidth = 30; // -- additional width to include for the up arrows
 
 $CHARTS_CLOSE_HTML = true;                //-- should the charts, pedigree, descendacy, etc close the HTML on the page
 

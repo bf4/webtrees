@@ -129,8 +129,8 @@ echo "<table align='right'>";
 echo "<tr><td colspan='4' align='center' class='descriptionbox'><strong>", i18n::translate('Key to colors used below'), "</strong></td></tr>";
 echo "<tr><td class='facts_value error'>", translate_fact('PLAC'), "</td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", i18n::translate('This place and its coordinates do not exist in the GoogleMap tables.'), "</font></td></tr>";
 echo "<tr><td class='facts_value'><a>", translate_fact('PLAC'), "</a></td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", i18n::translate('This place exists in the GoogleMap tables, but has no coordinates.'), "</font></td></tr>";
-echo "<tr><td class='facts_value'><strong>".i18n::translate('Unknown')."</font></td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", i18n::translate('This place level is blank in your GEDCOM file. It should be added to GoogleMap places as "unknown" with coordinates from its parent level before you add any place to the next level.'), "</font></td></tr>";
-echo "<tr><td class='facts_value'><a>".i18n::translate('Unknown')."</a></td><td class='facts_value' align='center'>N55.0</td><td align='center' class='facts_value'>W75.0</td><td class='facts_value'><font size=\"-2\">", i18n::translate('This place level is blank in your GEDCOM file, but exists as "unknown" in the GoogleMap places table with coordinates. No action required until the missing level can be entered.'), "</font></td></tr>";
+echo "<tr><td class='facts_value'><strong>".i18n::translate('unknown')."</font></td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", i18n::translate('This place level is blank in your GEDCOM file. It should be added to GoogleMap places as "unknown" with coordinates from its parent level before you add any place to the next level.'), "</font></td></tr>";
+echo "<tr><td class='facts_value'><a>".i18n::translate('unknown')."</a></td><td class='facts_value' align='center'>N55.0</td><td align='center' class='facts_value'>W75.0</td><td class='facts_value'><font size=\"-2\">", i18n::translate('This place level is blank in your GEDCOM file, but exists as "unknown" in the GoogleMap places table with coordinates. No action required until the missing level can be entered.'), "</font></td></tr>";
 echo "</table>";
 echo "</td>";
 echo "</tr>";
@@ -180,12 +180,12 @@ case 'go':
 		}
 	}
 	$place_list=preg_grep('/'.$filter.'/', $place_list);
-	
+
 	//sort the array, limit to unique values, and count them
 	$place_parts=array();
 	usort($place_list, "utf8_strcasecmp");
 	$i=count($place_list);
-	
+
 	//calculate maximum no. of levels to display
 	$x=0;
 	$max=0;
@@ -195,7 +195,7 @@ case 'go':
 		if ($parts>$max) $max=$parts;
 	$x++;}
 	$x=0;
-	
+
 	//scripts for edit, add and refresh
 	?>
 	<script language="JavaScript" type="text/javascript">
@@ -204,7 +204,7 @@ case 'go':
 		window.open('module.php?mod=googlemap&mod_action=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50, left=50, width=680, height=550, resizable=1, scrollbars=1');
 		return false;
 	}
-	
+
 	function add_place_location(placeid) {
 		window.open('module.php?mod=googlemap&mod_action=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50, left=50, width=680, height=550, resizable=1, scrollbars=1');
 		return false;
@@ -215,7 +215,7 @@ case 'go':
 	//-->
 	</script>
 	<?php
-	
+
 	//start to produce the display table
 	$cols=0;
 	$span=$max*3+3;
@@ -264,9 +264,9 @@ case 'go':
 		while ($z<$parts) {
 			if ($levels[$z]==' ' || $levels[$z]=='')
 				$levels[$z]="unknown";// GoogleMap module uses "unknown" while GEDCOM uses , ,
-	
+
 			$levels[$z]=rtrim(ltrim($levels[$z]));
-	
+
 			$placelist=create_possible_place_names($levels[$z], $z+1); // add the necessary prefix/postfix values to the place name
 			foreach ($placelist as $key=>$placename) {
 				$row=
@@ -281,14 +281,14 @@ case 'go':
 			if ($row['pl_id']!='') {
 				$id=$row['pl_id'];
 			}
-	
+
 			if ($row['pl_place']!='') {
 				$placestr2=$mapstr_edit.$id."&amp;level=".$level.$mapstr3.$mapstr5.i18n::translate('Zoom=').$row['pl_zoom'].$mapstr6.$row['pl_placerequested'].$mapstr8;
 				if ($row['pl_place']=='unknown')
 					$matched[$x]++;
 			} else {
 				if ($levels[$z]=="unknown") {
-					$placestr2=$mapstr_add.$id."&amp;level=".$level.$mapstr3.$mapstr7."<strong>".rtrim(ltrim(i18n::translate('Unknown')))."</strong>".$mapstr8;$matched[$x]++;
+					$placestr2=$mapstr_add.$id."&amp;level=".$level.$mapstr3.$mapstr7."<strong>".rtrim(ltrim(i18n::translate('unknown')))."</strong>".$mapstr8;$matched[$x]++;
 				} else {
 					$placestr2=$mapstr_add.$id."&amp;place_name=".urlencode($levels[$z])."&amp;level=".$level.$mapstr3.$mapstr7.'<span class="error">'.rtrim(ltrim($levels[$z])).'</span>'.$mapstr8;$matched[$x]++;
 				}
@@ -333,18 +333,17 @@ case 'go':
 		}
 		$x++;
 	}
-	
+
 	// echo final row of table
 	echo "<tr><td colspan=\"2\" class=\"list_label\">", i18n::translate('Total unique places'), ": ", $countrows, "</td></tr></table><br /><br />";
-	break;	
+	break;
 default:
 	// Do not run until user selects a gedcom/place/etc.
 	// Instead, show some useful help info.
 	echo "<p>", i18n::translate('This will list all the places from the selected GEDCOM file. By default this will NOT INCLUDE places that are fully matched between the GEDCOM file and the GoogleMap tables'), "</p><hr />";
-	break;	
+	break;
 }
 
 //echo footers
 echo "<hr />";
 print_footer();
-?>

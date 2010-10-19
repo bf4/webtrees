@@ -33,16 +33,16 @@ define('WT_SCRIPT_NAME', 'mediafirewall.php');
 require './includes/session.php';
 require_once WT_ROOT.'includes/controllers/media_ctrl.php';
 
-// We have finished writing to $_SESSION, so release the lock
-session_write_close();
+// We have finished writing session data, so release the lock
+Zend_Session::writeClose();
 
 $controller = new MediaController();
 $controller->init();
 
-$debug_mediafirewall	= 0; 	// set to 1 if you want to see media firewall values displayed instead of images
-$debug_watermark		= 0; 	// set to 1 if you want to see error messages from the watermark module instead of broken images
-$debug_forceImageRegen	= 0;	// set to 1 if you want to force an image to be regenerated (for debugging only)
-$debug_verboseLogging = 0;		// set to 1 for extra logging details
+$debug_mediafirewall   = 0; // set to 1 if you want to see media firewall values displayed instead of images
+$debug_watermark       = 0; // set to 1 if you want to see error messages from the watermark module instead of broken images
+$debug_forceImageRegen = 0; // set to 1 if you want to force an image to be regenerated (for debugging only)
+$debug_verboseLogging  = 0; // set to 1 for extra logging details
 
 
 // pass in an image type and an error message
@@ -344,7 +344,7 @@ if (empty($controller->pid)) {
 		// only show these files to admin users
 		// bail since current user is not admin
 		// Note: the 404 error status is still in effect.
-//		if (!$debug_mediafirewall) sendErrorAndExit($controller->mediaobject->getFiletype(), i18n::translate('Privacy restrictions prevent you from viewing this item'), $serverFilename);
+		// if (!$debug_mediafirewall) sendErrorAndExit($controller->mediaobject->getFiletype(), i18n::translate('Privacy restrictions prevent you from viewing this item'), $serverFilename);
 	}
 }
 
@@ -553,5 +553,3 @@ header("Content-Length: " . $filesize);
 $fp = fopen($serverFilename, 'rb');
 fpassthru($fp);
 exit;
-
-?>

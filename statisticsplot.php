@@ -466,14 +466,13 @@ function nuch() {
 			}
 			$zstart=$boundary+1;
 		}
-		
 	}
 }
 
 function fill_ydata($z, $x, $val) {
 	global $ydata, $xmax, $xgrenzen, $zmax, $zgrenzen, $xgiven, $zgiven;
-	//--	calculate index $i out of given z value
-	//--	calculate index $j out of given x value
+	//-- calculate index $i out of given z value
+	//-- calculate index $j out of given x value
 	if ($xgiven) $j = $x;
 	else {
 		$j=0;
@@ -814,8 +813,8 @@ function print_sources_stats_chart($type){
 	}
 }
 
-//--	========= start of main program =========
-$action	= safe_REQUEST($_REQUEST, 'action', WT_REGEX_XREF);
+//-- ========= start of main program =========
+$action = safe_REQUEST($_REQUEST, 'action', WT_REGEX_XREF);
 
 if ($action=="update") {
 	$x_as = $_POST["x-as"];
@@ -823,14 +822,14 @@ if ($action=="update") {
 	if (isset($_POST["z-as"])) $z_as = $_POST["z-as"];
 	else $z_as = 300;
 	$xgl = $_POST["xas-grenzen-leeftijden"];
-	$xglm = $_POST["xas-grenzen-leeftijden_m"];
+	$xglm= $_POST["xas-grenzen-leeftijden_m"];
 	$xgm = $_POST["xas-grenzen-maanden"];
 	$xga = $_POST["xas-grenzen-aantallen"];
 	if (isset($_POST["zas-grenzen-periode"])) $zgp = $_POST["zas-grenzen-periode"];
 	else $zgp = 0;
 	$chart_shows = $_POST["chart_shows"];
 	$chart_type  = $_POST["chart_type"];
-	$surname	 = $_POST["SURN"];
+	$surname     = $_POST["SURN"];
 
 	$_SESSION[$GEDCOM."statTicks"]["xasGrLeeftijden"] = $xgl;
 	$_SESSION[$GEDCOM."statTicks"]["xasGrLeeftijden_m"] = $xglm;
@@ -902,38 +901,38 @@ $g_xas = "1,2,3,4,5,6,7,8,9,10,11,12"; //should not be needed. but just for mont
 
 switch ($x_as) {
 case '11':
-	//---------		nr,  type,	  xgiven,	zgiven,	title,				xtitle,		ytitle,	boundaries_x, boundaries-z, function
-	set_params(11, "IND", true, 	false, i18n::translate('Month of birth'),  i18n::translate('month'), 	$y_as, 	$g_xas, 	$zgp, "bimo");
+	//--------- nr, type, xgiven, zgiven, title, xtitle, ytitle, boundaries_x, boundaries-z, function
+	set_params(11, "IND", true, false, i18n::translate('Month of birth'),  i18n::translate('month'), $y_as, $g_xas, $zgp, "bimo");
 	break;
 case '12':
-	set_params(12, "IND", true, 	false, i18n::translate('Month of death'),  i18n::translate('month'), 	$y_as, 	$g_xas, 	$zgp, "demo");
+	set_params(12, "IND", true, false, i18n::translate('Month of death'),  i18n::translate('month'), $y_as, $g_xas, $zgp, "demo");
 	break;
 case '13':
-	set_params(13, "FAM", true, 	false, i18n::translate('Month of marriage'),  i18n::translate('month'), 	$y_as, 	$g_xas, 	$zgp, "mamo");
+	set_params(13, "FAM", true, false, i18n::translate('Month of marriage'),  i18n::translate('month'), $y_as, $g_xas, $zgp, "mamo");
 	break;
 case '14':
-	set_params(14, "FAM", true, 	false, i18n::translate('Month of birth of first child in a relation'), i18n::translate('month'), 	$y_as, 	$g_xas, 	$zgp, "bimo1");
+	set_params(14, "FAM", true, false, i18n::translate('Month of birth of first child in a relation'), i18n::translate('month'), $y_as, $g_xas, $zgp, "bimo1");
 	break;
 case '15':
-	set_params(15, "FAM", true, 	false, i18n::translate('Month of first marriage'), i18n::translate('month'), 	$y_as, 	$g_xas, 	$zgp, "mamo1");
+	set_params(15, "FAM", true, false, i18n::translate('Month of first marriage'), i18n::translate('month'), $y_as, $g_xas, $zgp, "mamo1");
 	break;
 case '16':
-	set_params(16, "FAM", false, 	false, i18n::translate('Months between marriage and first child'), i18n::translate('Months between marriage and birth of first child'), $y_as, $xgm, 	$zgp, "mamam");
+	set_params(16, "FAM", false, false, i18n::translate('Months between marriage and first child'), i18n::translate('Months between marriage and birth of first child'), $y_as, $xgm, $zgp, "mamam");
 	break;
 case '17':
-	set_params(17, "IND", false, 	false, i18n::translate('Age related to birth year'), i18n::translate('age'), 	$y_as, 	$xgl, 	$zgp, "agbi");
+	set_params(17, "IND", false, false, i18n::translate('Age related to birth year'), i18n::translate('age'), $y_as, $xgl, $zgp, "agbi");
 	break;
 case '18':
-	set_params(18, "IND", false, 	false, i18n::translate('Age related to death year'), i18n::translate('age'), 	$y_as, 	$xgl, 	$zgp, "agde");
+	set_params(18, "IND", false, false, i18n::translate('Age related to death year'), i18n::translate('age'), $y_as, $xgl, $zgp, "agde");
 	break;
 case '19':
-	set_params(19, "IND", false, 	false, i18n::translate('Age in year of marriage'), i18n::translate('age'), 	$y_as, 	$xglm, 	$zgp, "agma");
+	set_params(19, "IND", false, false, i18n::translate('Age in year of marriage'), i18n::translate('age'), $y_as, $xglm, $zgp, "agma");
 	break;
 case '20':
-	set_params(20, "IND", false, 	false, i18n::translate('Age in year of first marriage'), i18n::translate('age'), 	$y_as, 	$xglm, 	$zgp, "agma1");
+	set_params(20, "IND", false, false, i18n::translate('Age in year of first marriage'), i18n::translate('age'), $y_as, $xglm, $zgp, "agma1");
 	break;
 case '21':
-	set_params(21, "FAM", false, 	false, i18n::translate('Number of children'), i18n::translate('children'), 	$y_as, 	$xga, 	$zgp, "nuch");  //plot Number of children
+	set_params(21, "FAM", false, false, i18n::translate('Number of children'), i18n::translate('children'), $y_as, $xga, $zgp, "nuch");  //plot Number of children
 	break;
 case '1':
 	echo $stats->chartDistribution($chart_shows, $chart_type, $surname);
@@ -959,4 +958,3 @@ echo "<br /><div class =\"center noprint\">";
 echo "<input type=\"button\" value=\"", i18n::translate('Close Window'), "\" onclick=\"window.close()\" /><br /><br />";
 echo "</div>\n";
 print_simple_footer();
-?>

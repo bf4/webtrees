@@ -45,7 +45,7 @@ require_once WT_ROOT."includes/classes/class_reportbase.php";
 require_once WT_ROOT."library/tcpdf/tcpdf.php";
 
 /**
-* Main PGV Report Class for PDF
+* Main WT Report Class for PDF
 *
 * @package webtrees
 * @subpackage Reports
@@ -78,7 +78,7 @@ class ReportBasePDF extends ReportBase {
 	function setup() {
 		parent::setup();
 
-		// Setup the PDF class with custom size pages because PGV supports more page sizes. If PGV sends an unknown size name then the default would be A4
+		// Setup the PDF class with custom size pages because WT supports more page sizes. If WT sends an unknown size name then the default would be A4
 		$this->pdf = new PDF($this->orientation, parent::unit, array($this->pagew, $this->pageh), self::unicode, $this->charset, self::diskcache);
 
 		// Setup the PDF margins
@@ -99,7 +99,7 @@ class ReportBasePDF extends ReportBase {
 		}
 		$this->pdf->SetCreator($appversion." (".parent::pgv_url.")");
 		// Not implemented yet - ReportBase::setup()
-//		$this->pdf->SetAuthor($this->rauthor);
+		//$this->pdf->SetAuthor($this->rauthor);
 		$this->pdf->SetTitle($this->title);
 		$this->pdf->SetSubject($this->rsubject);
 		$this->pdf->SetKeywords($this->rkeywords);
@@ -239,7 +239,7 @@ class ReportBasePDF extends ReportBase {
 	* @param int $w Image width
 	* @param int $h Image height
 	* @param string $align L:left, C:center, R:right or empty to use x/y
-	* @param string $ln T:same line, N:next line 
+	* @param string $ln T:same line, N:next line
 	* @return ImagePDF
 	*/
 	function createImage($file, $x, $y, $w, $h, $align, $ln) {
@@ -267,7 +267,7 @@ class ReportBasePDF extends ReportBase {
 } //-- end Report
 
 /**
-* PGV Report PDF Class
+* WT Report PDF Class
 *
 * This class inherits from the TCPDF class and is used to generate the PDF document
 * @package webtrees
@@ -320,7 +320,7 @@ class PDF extends TCPDF {
 	* @var int
 	*/
 	public $lastpicpage = 0;
-	
+
 	public $wt_report;
 
 	/**
@@ -518,7 +518,7 @@ class PDF extends TCPDF {
 		$this->SetX($x);
 		return $x;
 	}
-	
+
 	/**
 	* Get the maximum line width to draw from the curren position -PDF
 	* RTL supported
@@ -532,7 +532,7 @@ class PDF extends TCPDF {
 			return ($this->getRemainingWidth() + $m["left"]);
 		}
 	}
-	
+
 	function getFootnotesHeight() {
 		$h=0;
 		foreach($this->printedfootnotes as $element) {
@@ -578,7 +578,7 @@ class PDF extends TCPDF {
 		$this->printedfootnotes[] = $footnote;
 		return false;
 	}
-	
+
 	/**
 	* Used this function instead of AddPage()
 	* This function will make sure that images will not be overwritten
@@ -590,11 +590,11 @@ class PDF extends TCPDF {
 		$this->AddPage();
 	}
 
-	
+
 	/*******************************************
 	* TCPDF protected functions
 	*******************************************/
-	
+
 	/**
 	* Add a page if needed -PDF
 	* @param $height Cell height. Default value: 0
@@ -611,7 +611,7 @@ class PDF extends TCPDF {
 	function getRemainingWidthPDF() {
 		return $this->getRemainingWidth();
 	}
-	
+
 } //-- END PDF
 
 /**
@@ -661,8 +661,8 @@ class CellPDF extends Cell {
 		* Repeted classes would reupdate all their class variables again, Header/Page Header/Footer
 		* This is the bugfree version
 		*/
-		$cX = 0;	// Class Left
-		
+		$cX = 0; // Class Left
+
 		// Set up the text style
 		if (($pdf->getCurrentStyle()) != ($this->styleName)) {
 			$pdf->setCurrentStyle($this->styleName);
@@ -924,10 +924,10 @@ class TextBoxPDF extends TextBox {
 		* Repeted classes would reupdate all their class variables again, Header/Page Header/Footer
 		* This is the bugfree version
 		*/
-		$cH = 0;	// Class Height
-		$cW = 0;	// Class Width
-		$cX = 0;	// Class Left
-		$cY = 0;	// Class Top
+		$cH = 0; // Class Height
+		$cW = 0; // Class Width
+		$cX = 0; // Class Left
+		$cY = 0; // Class Top
 		// Used with line breaks and cell height calculation within this box
 		$pdf->largestFontHeight = 0;
 
@@ -990,14 +990,14 @@ class TextBoxPDF extends TextBox {
 				if ($w > $cWT) {
 					$w = $lw[0];
 				}
-//	Footnote is at the bottom of the page. No need to calculate it's height or wrap the text!
-//	We are changing the margins anyway!
+				// Footnote is at the bottom of the page. No need to calculate it's height or wrap the text!
+				// We are changing the margins anyway!
 				// For anything else but text (images), get the height
 				$eH += $this->elements[$i]->getHeight($pdf);
 			}
-//			else {
-//				$h += $pdf->getFootnotesHeight();
-//			}
+			//else {
+				//$h += $pdf->getFootnotesHeight();
+			//}
 		}
 
 		// Add up what's the final height
@@ -1037,14 +1037,14 @@ class TextBoxPDF extends TextBox {
 		}
 
 		// Setup the border and background color
-		$cS	= "";	// Class Style
-		if ($this->border) $cS = "D";		// D or empty string: Draw (default)
+		$cS = ""; // Class Style
+		if ($this->border) $cS = "D"; // D or empty string: Draw (default)
 		$match = array();
 		// Fill the background
 		if ($this->fill) {
 			if (!empty($this->bgcolor)) {
 				if (preg_match("/#?(..)(..)(..)/", $this->bgcolor, $match)) {
-					$cS .= "F";			// F: Fill the background
+					$cS .= "F"; // F: Fill the background
 					$r = hexdec($match[1]);
 					$g = hexdec($match[2]);
 					$b = hexdec($match[3]);
@@ -1085,7 +1085,7 @@ class TextBoxPDF extends TextBox {
 		}
 		// Save the current page number
 		$cPN = $pdf->getPage();
-		
+
 		// Render the elements (write text, print picture...)
 		foreach($this->elements as $element) {
 			if (is_object($element)) {
@@ -1180,7 +1180,7 @@ class TextPDF extends Text {
 
 	/**
 	* Splits the text into lines if necessary to fit into a giving cell
-	* 
+	*
 	* @param PDF &$pdf
 	* @return array
 	*/
@@ -1306,7 +1306,7 @@ class FootnotePDF extends Footnote {
 		}
 		$temptext = spanLTRRTL($temptext, "BOTH");
 		$pdf->writeHTML($temptext."<br/>", true, false, true, false, "");
-//		$pdf->Write($pdf->getCurrentStyleHeight(), $this->num.". ".$temptext."\n\n"); //@@ indi list of sources
+		//$pdf->Write($pdf->getCurrentStyleHeight(), $this->num.". ".$temptext."\n\n"); //@@ indi list of sources
 	}
 
 	/**
@@ -1316,20 +1316,20 @@ class FootnotePDF extends Footnote {
 	* @return float $h
 	*/
 	function getFootnoteHeight(&$pdf) {
-//		$style = $pdf->getStyle($this->styleName);
-//		$ct = substr_count($this->numText, "\n");
-//		if ($ct > 0) {
-//			$ct += 1;
-//		}
-//		$h = ($style["size"] * $ct);
-//		return $h;
+		//$style = $pdf->getStyle($this->styleName);
+		//$ct = substr_count($this->numText, "\n");
+		//if ($ct > 0) {
+			//$ct += 1;
+		//}
+		//$h = ($style["size"] * $ct);
+		//return $h;
 		return 0;
 	}
 
 	/**
 	* Splits the text into lines to fit into a giving cell
 	* and returns the last lines width
-	* 
+	*
 	* @param PDF &$pdf
 	* @return array
 	*/
@@ -1483,7 +1483,7 @@ class ImagePDF extends Image {
 		} else {
 			$pdf->SetY($this->y);
 		}
-		
+
 		$pdf->Image($this->file, $this->x, $this->y, $this->width, $this->height, "", "", $this->line, false, 72, $this->align);
 		$lastpicpage = $pdf->PageNo();
 		$pdf->lastpicpage = $pdf->getPage();
@@ -1544,5 +1544,3 @@ class LinePDF extends Line {
 		$pdf->Line($this->x1, $this->y1, $this->x2, $this->y2);
 	}
 }
-
-?>

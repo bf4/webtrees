@@ -45,17 +45,17 @@ define('WT_FV_DB_SCHEMA_0_1', '');
 WT_DB::exec(
 	"CREATE TABLE IF NOT EXISTS `##favorites` (".
 	" fv_id       INTEGER AUTO_INCREMENT NOT NULL,".
- 	" fv_username VARCHAR(32)            NOT NULL,".
+	" fv_username VARCHAR(32)            NOT NULL,".
 	" fv_gid      VARCHAR(20)                NULL,".
 	" fv_type     VARCHAR(15)                NULL,".
 	" fv_file     VARCHAR(100)               NULL,".
 	" fv_url      VARCHAR(255)               NULL,".
- 	" fv_title    VARCHAR(255)               NULL,".
+	" fv_title    VARCHAR(255)               NULL,".
 	" fv_note     TEXT                       NULL,".
 	" PRIMARY KEY (fv_id),".
 	"         KEY ix1 (fv_username)".
 	") COLLATE utf8_unicode_ci ENGINE=InnoDB"
 );
 
-// Update the version to indicate sucess
+// Update the version to indicate success
 set_site_setting($schema_name, $next_version);

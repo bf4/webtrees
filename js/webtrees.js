@@ -317,7 +317,7 @@ function edit_record(pid, linenum) {
 }
 
 function edit_raw(pid) {
-	window.open('edit_interface.php?action=editraw&pid='+pid+"&"+sessionname+"="+sessionid+"&accesstime="+accesstime, '_blank', 'top=50,left=50,width=400,height=400,resizable=1,scrollbars=1');
+	window.open('edit_interface.php?action=editraw&pid='+pid+"&"+sessionname+"="+sessionid+"&accesstime="+accesstime, '_blank', 'top=50,left=50,width=510,height=520,resizable=1,scrollbars=1');
 	return false;
 }
 
@@ -536,7 +536,7 @@ function valid_date(datefield) {
 	datestr=datestr.replace(/^([\w ]+)[-/]$/, "AFT $1");
 	datestr=datestr.replace(/^[</-]([\w ]+)$/, "BEF $1");
 	datestr=datestr.replace(/^([\w ]+) ?- ?([\w ]+)$/, "BET $1 AND $2");
-	if (datestr.match(/^=([\d ()/+*-]+)$/)) datestr=eval(RegExp.$1);
+	if (datestr.match(/^=([\d ()\/+*-]+)$/)) datestr=eval(RegExp.$1);
 
 	// Americans frequently enter dates as SEPTEMBER 20, 1999
 	// No need to internationalise this, as this is an english-language issue
@@ -889,7 +889,7 @@ function show_submenu(elementid, parentid, dir) {
 					//if (textDirection=="rtl") element.style.left = (element.offsetLeft-70)+'px';
 				}
 				else {
-					pagewidth = document.body.scrollWidth+document.documentElement.scrollLeft-70;
+					pagewidth = document.body.scrollWidth+document.documentElement.scrollLeft-0;
 					if (textDirection=="rtl") {
 						boxright = element.offsetLeft+element.offsetWidth+10;
 					}

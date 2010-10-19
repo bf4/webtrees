@@ -44,7 +44,7 @@ class review_changes_WT_Module extends WT_Module implements WT_Module_Block {
 	}
 
 	// Implement class WT_Module_Block
-	public function getBlock($block_id, $template=true) {
+	public function getBlock($block_id, $template=true, $cfg=null) {
 		global $ctype, $QUERY_STRING, $WT_IMAGES, $TEXT_DIRECTION, $WEBTREES_EMAIL, $THEME_DIR;
 
 		$changes=WT_DB::prepare(
@@ -57,6 +57,13 @@ class review_changes_WT_Module extends WT_Module implements WT_Module_Block {
 		$days    =get_block_setting($block_id, 'days',     1);
 		$sendmail=get_block_setting($block_id, 'sendmail', true);
 		$block   =get_block_setting($block_id, 'block',    true);
+		if ($cfg) {
+			foreach (array('days', 'sendmail', 'block') as $name) {
+				if (array_key_exists($name, $cfg)) {
+					$$name=$cfg[$name];
+				}
+			}
+		}
 
 		if ($changes) {
 			//-- if the time difference from the last email is greater than 24 hours then send out another email
@@ -186,9 +193,10 @@ class review_changes_WT_Module extends WT_Module implements WT_Module_Block {
 
 		$block=get_block_setting($block_id, 'block', true);
 		echo '<tr><td class="descriptionbox wrap width33">';
-		echo i18n::translate('Add a scrollbar when block contents grow');
+		echo /* I18N: label for a yes/no option */ i18n::translate('Add a scrollbar when block contents grow');
 		echo '</td><td class="optionbox">';
 		echo edit_field_yes_no('block', $block);
 		echo '</td></tr>';
 	}
 }
+?>

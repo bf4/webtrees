@@ -33,7 +33,7 @@ if (!defined('WT_SCRIPT_NAME')) {
 
 // Identify ourself
 define('WT_WEBTREES',        'webtrees');
-define('WT_VERSION',         '1.0.0');
+define('WT_VERSION',         '1.0.5');
 define('WT_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
 define('WT_VERSION_TEXT',    trim(WT_VERSION.' '.WT_VERSION_RELEASE));
 define('WT_WEBTREES_URL',    'http://webtrees.net');
@@ -48,7 +48,7 @@ define('WT_DEBUG_SQL',  false);
 define('WT_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
 
 // Required version of database tables/columns/indexes/etc.
-define('WT_SCHEMA_VERSION', 1);
+define('WT_SCHEMA_VERSION', 3);
 
 // Regular expressions for validating user input, etc.
 define('WT_REGEX_XREF',     '[A-Za-z0-9:_-]+');
@@ -97,6 +97,9 @@ define('WT_JS_END',   "\n//]]>\n</script>\n");
 // Used in Google charts
 define ('WT_GOOGLE_CHART_ENCODING', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.');
 
+// Maximum number of results in auto-complete fields
+define('WT_AUTOCOMPLETE_LIMIT', 500);
+
 // Privacy constants
 define('WT_PRIV_PUBLIC',  2); // Allows non-authenticated public visitors to view the marked information
 define('WT_PRIV_USER',    1); // Allows authenticated users to access the marked information
@@ -121,9 +124,12 @@ require_once 'Zend/Loader/Autoloader.php';
 Zend_Loader_Autoloader::getInstance();
 
 // Check configuration issues that affect various versions of PHP
-if (version_compare(PHP_VERSION, '5.3', '<')) {
-	// magic quotes were deprecated in PHP5.3 and removed in PHP6.0
-	set_magic_quotes_runtime(0);
+if (version_compare(PHP_VERSION, '6.0', '<')) {
+	if (get_magic_quotes_runtime()) {
+		// Magic quotes were deprecated in PHP5.3 and removed in PHP6.0
+		// Disabling them on PHP5.3 will cause a strict-warning, so ignore errors.
+		@set_magic_quotes_runtime(false);
+	}
 	// magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
 	if (get_magic_quotes_gpc() || ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
 		$in = array(&$_GET, &$_POST, &$_REQUEST, &$_COOKIE);
@@ -185,25 +191,29 @@ require WT_ROOT.'includes/classes/class_wt_db.php';
 
 set_error_handler('wt_error_handler');
 
-// Connect to the database
-try {
-	// Load our configuration file, so we can connect to the database
-	if (file_exists(WT_ROOT.'data/config.ini.php')) {
-		$dbconfig=parse_ini_file(WT_ROOT.'data/config.ini.php');
-		// Invalid/unreadable config file?
-		if (!is_array($dbconfig)) {
-			header('Location: site-unavailable.php');
-			exit;
-		}
-	} else {
-		// No config file. Set one up.
-		header('Location: setup.php');
+// Load our configuration file, so we can connect to the database
+if (file_exists(WT_ROOT.'data/config.ini.php')) {
+	$dbconfig=parse_ini_file(WT_ROOT.'data/config.ini.php');
+	// Invalid/unreadable config file?
+	if (!is_array($dbconfig)) {
+		header('Location: site-unavailable.php');
 		exit;
 	}
+} else {
+	// No config file. Set one up.
+	header('Location: setup.php');
+	exit;
+}
+
+require WT_ROOT.'includes/authentication.php';
+
+// Connect to the database
+try {
 	WT_DB::createInstance($dbconfig['dbhost'], $dbconfig['dbport'], $dbconfig['dbname'], $dbconfig['dbuser'], $dbconfig['dbpass']);
 	define('WT_TBLPREFIX', $dbconfig['tblpfx']);
 	unset($dbconfig);
-	WT_DB::exec("SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'");
+	// Some of the FAMILY JOIN HUSBAND JOIN WIFE queries can excede the MAX_JOIN_SIZE setting
+	WT_DB::exec("SET NAMES 'utf8' COLLATE 'utf8_unicode_ci', SQL_BIG_SELECTS=1");
 	try {
 		WT_DB::updateSchema(WT_ROOT.'includes/db_schema/', 'WT_SCHEMA_VERSION', WT_SCHEMA_VERSION);
 	} catch (PDOException $ex) {
@@ -226,14 +236,17 @@ if ($SERVER_URL && $SERVER_URL != WT_SERVER_NAME.WT_SCRIPT_PATH) {
 //-- allow user to cancel
 ignore_user_abort(false);
 
+// Request more resources - if we can/want to
 if (!ini_get('safe_mode')) {
-	ini_set('memory_limit', get_site_setting('MEMORY_LIMIT'));
-	if (strpos(ini_get('disable_functions'), 'set_time_limit')===false) {
-		set_time_limit(get_site_setting('MAX_EXECUTION_TIME'));
+	$memory_limit=get_site_setting('MEMORY_LIMIT');
+	if ($memory_limit) {
+		ini_set('memory_limit', $memory_limit);
+	}
+	$max_execution_time=get_site_setting('MAX_EXECUTION_TIME');
+	if ($max_execution_time && strpos(ini_get('disable_functions'), 'set_time_limit')===false) {
+		set_time_limit($max_execution_time);
 	}
 }
-
-require WT_ROOT.'includes/authentication.php';
 
 // Determine browser type
 $BROWSERTYPE = 'other';
@@ -264,30 +277,36 @@ if ($SEARCH_SPIDER && !array_key_exists(WT_SCRIPT_NAME , array(
 	exit;
 }
 
-// Start the php session
-$session_time=get_site_setting('SESSION_TIME');
-$session_save_path=get_site_setting('SESSION_SAVE_PATH');
+// Store our session data in the database.
+session_set_save_handler(
+	create_function('', 'return true;'), // open
+	create_function('', 'return true;'), // close
+	create_function('$id', 'return WT_DB::prepare("SELECT session_data FROM `##session` WHERE session_id=?")->execute(array($id))->fetchOne();'), // read
+	create_function('$id,$data', 'WT_DB::prepare("REPLACE INTO `##session` (session_id, user_id, ip_address, session_data) VALUES (?,?,?,?)")->execute(array($id, WT_USER_ID, $_SERVER["REMOTE_ADDR"], $data));return true;'), // write
+	create_function('$id', 'WT_DB::prepare("DELETE FROM `##session` WHERE session_id=?")->execute(array($id));return true;'), // destroy
+	create_function('$maxlifetime', 'WT_DB::prepare("DELETE FROM `##session` WHERE session_time < DATE_SUB(NOW(), INTERVAL ? SECOND)")->execute(array($maxlifetime));return true;') // gc
+);
 
-session_name('WTSESSION');
-session_set_cookie_params(date('D M j H:i:s T Y', time()+$session_time), WT_SCRIPT_PATH);
+// Use the Zend_Session object to start the session.
+// This allows all the other Zend Framework components to integrate with the session
+define('WT_SESSION_NAME', 'WT_SESSION');
+$cfg=array(
+	'name'            => WT_SESSION_NAME,
+	'cookie_lifetime' => 0,
+	'gc_maxlifetime'  => get_site_setting('SESSION_TIME'),
+	'cookie_path'     => WT_SCRIPT_PATH,
+);
+Zend_Session::start($cfg);
 
-if ($session_time>0) {
-	session_cache_expire($session_time/60);
-}
-if ($session_save_path) {
-	session_save_path($session_save_path);
-}
-if (isset($MANUAL_SESSION_START) && !empty($SID)) {
-	session_id($SID);
-}
+// Register a session "namespace" to store session data.  This is better than
+// using $_SESSION, as we can avoid clashes with other modules/applications,
+// and problems with servers that have enabled "register_globals".
+$WT_SESSION=new Zend_Session_Namespace('WEBTREES');
 
-session_start();
-unset($session_time, $session_save_path, $MANUAL_SESSION_START, $SID);
-
-if (!$SEARCH_SPIDER && !isset($_SESSION['initiated'])) {
+if (!$SEARCH_SPIDER && !$WT_SESSION->initiated) {
 	// A new session, so prevent session fixation attacks by choosing a new PHPSESSID.
-	session_regenerate_id(true);
-	$_SESSION['initiated']=true;
+	Zend_Session::regenerateId();
+	$WT_SESSION->initiated=true;
 } else {
 	// An existing session
 }
@@ -343,7 +362,7 @@ if ($MULTI_MEDIA) {
 require WT_ROOT.'includes/functions/functions_date.php';
 
 // Use the server date to calculate privacy, etc.
-// Use the client date to show ages, etc. 
+// Use the client date to show ages, etc.
 define('WT_SERVER_JD', timestamp_to_jd(time()));
 define('WT_CLIENT_JD', timestamp_to_jd(client_time()));
 
@@ -424,35 +443,45 @@ if (WT_SCRIPT_NAME!='help_text.php') {
 	}
 }
 
-//-- load the user specific theme
 if (WT_USER_ID) {
 	//-- update the login time every 5 minutes
 	if (!isset($_SESSION['activity_time']) || (time()-$_SESSION['activity_time'])>300) {
 		userUpdateLogin(WT_USER_ID);
 		$_SESSION['activity_time'] = time();
 	}
-
-	$usertheme = get_user_setting(WT_USER_ID, 'theme');
-	if ((!empty($_POST['user_theme']))&&(!empty($_POST['oldusername']))&&($_POST['oldusername']==WT_USER_ID)) $usertheme = $_POST['user_theme'];
-	if ((!empty($usertheme)) && (file_exists($usertheme.'theme.php')))  {
-		$THEME_DIR = $usertheme;
-		} else { $THEME_DIR = "themes/webtrees/"; }
 }
 
-if (isset($_SESSION['theme_dir'])) {
-	$THEME_DIR = $_SESSION['theme_dir'];
-	if (WT_USER_ID) {
-		if (get_user_setting(WT_USER_ID, 'editaccount')) unset($_SESSION['theme_dir']);
+// Set the theme
+if (get_site_setting('ALLOW_USER_THEMES')) {
+	// Requested change of theme?
+	$THEME_DIR=safe_GET('theme', get_theme_names());
+	unset($_GET['theme']);
+	// Last theme used?
+	if (!$THEME_DIR && isset($_SESSION['theme_dir']) && in_array($_SESSION['theme_dir'], get_theme_names())) {
+		$THEME_DIR=$_SESSION['theme_dir'];
 	}
 }
-
-if (isset($usertheme) && file_exists("{$usertheme}theme.php")) {
-	$THEME_DIR = $usertheme;
-} else if (empty($THEME_DIR) || !file_exists("{$THEME_DIR}theme.php")) {
-	$THEME_DIR = 'themes/webtrees/';
+if (!$THEME_DIR) {
+	// User cannot choose (or has not chosen) a theme.
+	// 1) gedcom setting
+	// 2) site setting
+	// 3) webtrees
+	// 4) first one found
+	$THEME_DIR=get_gedcom_setting(WT_GED_ID, 'THEME_DIR');
+	if (!in_array($THEME_DIR, get_theme_names())) {
+		$THEME_DIR=get_site_setting('THEME_DIR', 'themes/webtrees/');
+	}
+	if (!in_array($THEME_DIR, get_theme_names())) {
+		$THEME_DIR='themes/webtrees/';
+	}
+	if (!in_array($THEME_DIR, get_theme_names())) {
+		list($THEME_DIR)=get_theme_names();
+	}
 }
-
 define('WT_THEME_DIR', $THEME_DIR);
+
+// Remember this setting
+$_SESSION['theme_dir']=WT_THEME_DIR;
 
 require WT_ROOT.WT_THEME_DIR.'theme.php';
 

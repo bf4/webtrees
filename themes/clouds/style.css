@@ -19,7 +19,7 @@ body {
 	background-attachment: fixed;
 	background-position: top left;
 	background-repeat: repeat-x;
-	font: 11px tahoma, arial, helvetica, sans-serif;
+	font: 12px tahoma, arial, helvetica, sans-serif;
 }
 
 #rapcontainer {
@@ -35,7 +35,6 @@ border: 1px solid #003399;
 margin:0px;
 padding:0px;
 }
-	background:red;
 /*	Color settings for the this theme	*/
 /*	Define Header and Light Text Colors	*/
 
@@ -155,7 +154,7 @@ white-space: nowrap;
 
 .icon, .adminicon {
 border:none;
-padding-top:1px;
+padding-top:0px;
 padding-left:0px;
 padding-right:4pt;
 }
@@ -212,8 +211,6 @@ text-align: right;
 /*	End Toplinks Section				 */
 
 /*   Edit Facts */
-
-
 td.descriptionbox div a {
 color: white;
 }
@@ -247,7 +244,7 @@ margin-left:5px;
 
 .title .gedcomtitle {
 text-decoration:none;
-	color: #003399;
+color: #003399;
 }
 
 p.center a {
@@ -280,15 +277,6 @@ p.center .warning, tr td.optionbox span.error, span.error {
 color:#f50;
 }
 
-table.width66{
-margin-left: auto;
-margin-right: auto;
-}
-
-.edit_link:after  {
-	content: url(images/edit_sm.png);
-}
-
 /* Override js/jquery-ui.custom.css            */
 
 /* Flyout changes */
@@ -318,23 +306,12 @@ color: #003399;
 }
 
 /*	Start Standard Code					*/
-
-.blockcontent {
-margin-left:auto;
-border:1pt solid #999;
-margin-right:5px;
-margin-bottom:10px;
-font-size: 13px;
-overflow:auto;
-}
-
 #content {
 width:auto;
+background:#FFF;
 margin:3px;
 padding:10px;
-background: #fff;
 }
-
 
 #pid {
 color:#333;
@@ -368,68 +345,31 @@ width:100%;
 color:#333333;
 }
 
-#index_small_blocks .blockheader {
-width:100%;
-caption-side:top;
-margin:0;
-padding:0;
-overflow:hidden;
-}
-
-#index_small_blocks .blockh2 {
-width:auto;
-}
-
-#index_small_blocks .blockhc .help .icon,
-#index_small_blocks .blockhc .adminicon,
-#index_main_blocks .blockh2 .icon,
-#index_main_blocks .blockh2 .adminicon {
-position:relative;
-text-align:right;
-top:3px;
-}
-
-#index_small_blocks .blockcontent {
-width:auto;
-caption-side: right;  
-margin-right:2px;
-}
-
-#index_main_blocks .blockheader {
-caption-side: left;
-}
-
-#index_main_blocks .blockh2,
-#index_small_blocks .blockhc {
-white-space:nowrap;
-overflow:hidden;
-}
-
-#index_main_blocks .blockcontent {
-padding:5px;
-margin-left:0;
-margin-right:2px;
-}
-
 .small_inner_block {
-overflow:auto;
-font-size: 13px; /* changed from 10 to 13 */
-text-decoration:none;
-max-height:420px;
-width:auto;
-padding:0 5px;
+max-height: 200px;
+overflow: auto;
+font: normal 10px tahoma, arial, helvetica, sans-serif;
 }
 
-.normal_inner_block {
-overflow: auto;
+.block {
+color: #030303;
+font: 12px tahoma, arial, helvetica, sans-serif;
+vertical-align: top;
+margin-bottom: 5px;
+padding: 1px;
+}
+
+div.blockcontent {
+border: solid #999 1px;
+margin-left:auto;
+margin-right:2px;  /* changed from auto for right side match to header */
+margin-bottom:10px;
+font-size: 13px;
+overflow:auto;
+padding: 5px;
 }
 
 .blockheader {
-table-layout:fixed;
-height:25px;
-max-height:25px;
-line-height:25px;
-vertical-align:top;
 width:100%;
 }
 
@@ -445,9 +385,6 @@ background-image:url(images/left2.gif);
 background-repeat:repeat-x;
 font-size: 13px;
 font-weight:bold;
-height:24px;
-max-height:24px;
-line-height:25px;
 }
 
 .blockh3 {
@@ -459,14 +396,7 @@ height:24px;
 
 .blockhc {
 padding-right:15px;
-padding-left:5px;
-overflow:hidden;
-}
-
-.blockhc {
-padding-right:15px;
-padding-left:5px;
-overflow:hidden;
+padding-top: 2px;
 }
 
 #login_block .blockh1 {
@@ -700,6 +630,11 @@ vertical-align:top;
 
 .list_label, .list_value {
 white-space: nowrap;
+}
+
+table.width66 {
+margin-left: auto;
+margin-right: auto;
 }
 
 .list_label_wrap, .list_value_wrap {
@@ -1078,10 +1013,10 @@ color:#000;
 .block {
 color: #030303;
 vertical-align: top;
+
 }
 
 .news_box {
-border: 1px solid #000;
 padding: 3pt;
 }
 
@@ -1248,7 +1183,7 @@ padding: 3px;
 background-color: #ECF5FF;
 border: 1px solid #84BEFF;
 color: #006;
-font: normal normal normal 11px/normal tahoma, arial, helvetica, sans-serif;
+font: 11px tahoma, arial, helvetica, sans-serif;
 padding: 3px;
 vertical-align: top;
 white-space: nowrap;
@@ -1285,10 +1220,6 @@ fieldset ol, fieldset li {
 margin:2px 0px 0px 5px;
 }
 
-#header td {
-height:3em;
-}
-
 div.blockhc a:hover {
 background: transparent;
 }
@@ -1299,10 +1230,11 @@ font-weight:bold;
 .details_label {
 font-weight:bold;
 }
-
+/*  removed for IE7 
 ul {
 list-style: url(images/li.gif);
 }
+*/
 
 form .rtl {
 text-align:right;
@@ -1673,10 +1605,15 @@ margin-right:10px;
 clear:both; 
 }
 
+dd {
+display: inline;
+margin: 0;
+}
+
 /* Classes for the INDI page header */
 
 #indi_header h1 {
-	color: #00066;
+	color: #000066;
 	font-size: 2em;
 	padding: 0 .5em;
 	margin: 0.25em 0 0 0;
@@ -1874,6 +1811,7 @@ font-weight: bold;
 font-size: 90%;
 padding: 0 10px;
 }
+
 /* Use CSS menus based on nested <ul> */
 .makeMenu li {
 	display:inline;
@@ -1885,6 +1823,7 @@ padding: 0 10px;
 	display:none;
 	position:absolute;
 	left:0px;
+	top: 1.0em;
 	background-color:#FFF;
 	border:thin solid #AAA;
 	z-index:999;
@@ -1904,4 +1843,41 @@ padding: 0 10px;
 
 .makeMenu li:hover > ul {
 	display:block;
+}
+
+/*--- edit links ---*/
+
+.edit_link:after { /* used only on the user list */
+	content: " " url(images/edit_sm.png);
+}
+
+td.descriptionbox  a { /* this keeps the tag color the same when it is a link as when not */
+	color: #ffffff;
+}
+
+.link_text {
+	visibility : hidden;
+}
+
+.editfacts { /* a container for the following three links */
+	clear: left;
+	padding-top: 15px;
+}
+
+.editlink  {
+	background: url(images/edit_sm.png) no-repeat left center;
+	width: 20px;
+	float: left;
+}
+
+.copylink  {
+	background: url(images/copy.png) no-repeat left center;
+	width: 20px;
+	float: left;
+}
+
+.deletelink  {
+	background: url(images/delete.png) no-repeat left center;
+	width: 20px;
+	float: left;
 }

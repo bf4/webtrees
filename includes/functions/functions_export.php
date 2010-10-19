@@ -36,8 +36,6 @@ if (!defined('WT_WEBTREES')) {
 
 define('WT_FUNCTIONS_EXPORT_PHP', '');
 
-require_once WT_ROOT.'includes/classes/class_gedownloadgedcom.php';
-
 // Tidy up a gedcom record on export, for compatibility/portability
 function reformat_record_export($rec) {
 	global $WORD_WRAPPED_NOTES;
@@ -191,14 +189,8 @@ function createTempUser($userID, $rights, $gedcom) {
 	AddToLog("created dummy user -> {$userID} <- with level {$rights} to GEDCOM {$gedcom}", 'auth');
 
 	// Save things in cache
-	$_SESSION["pgv_GEDCOM"]				= $gedcom;
-	$_SESSION["pgv_GED_ID"]				= $ged_id;
-	$_SESSION["pgv_USER_ID"]			= $userID;
-	$_SESSION["pgv_USER_NAME"]			= 'Not Relevant';
-	$_SESSION["pgv_USER_GEDCOM_ADMIN"]	= userGedcomAdmin   ($_SESSION["pgv_USER_ID"], $_SESSION["pgv_GED_ID"]);
-	$_SESSION["pgv_USER_CAN_ACCESS"]	= userCanAccess     ($_SESSION["pgv_USER_ID"], $_SESSION["pgv_GED_ID"]);
-	$_SESSION["pgv_USER_ACCESS_LEVEL"]	= getUserAccessLevel($_SESSION["pgv_USER_ID"], $_SESSION["pgv_GED_ID"]);
-	$_SESSION["pgv_USER_GEDCOM_ID"]		= get_user_gedcom_setting($_SESSION["pgv_USER_ID"], $_SESSION["pgv_GED_ID"], 'gedcomid');
+	$_SESSION["pgv_GED_ID"]           =$ged_id;
+	$_SESSION["pgv_USER_ACCESS_LEVEL"]=getUserAccessLevel($tempUserID, $ged_id);
 
 	return $tempUserID;
 }
@@ -206,8 +198,8 @@ function createTempUser($userID, $rights, $gedcom) {
 /**
  * remove any custom webtrees tags from the given gedcom record
  * custom tags include _WT_USER and _THUM
- * @param string $gedrec	the raw gedcom record
- * @return string		the updated gedcom record
+ * @param string $gedrec the raw gedcom record
+ * @return string the updated gedcom record
  */
 function remove_custom_tags($gedrec, $remove="no") {
 	if ($remove=="yes") {
@@ -225,15 +217,15 @@ function remove_custom_tags($gedrec, $remove="no") {
 
 /**
  * Convert media path by:
- *	- removing current media directory
- *	- adding a new prefix
- *	- making directory name separators consistent
+ * - removing current media directory
+ * - adding a new prefix
+ * - making directory name separators consistent
  */
 function convert_media_path($rec, $path, $slashes) {
 	global $MEDIA_DIRECTORY;
 
 	$file = get_gedcom_value("FILE", 1, $rec);
-	if (preg_match("~^https?://~i", $file)) return $rec;	// don't modify URLs
+	if (preg_match("~^https?://~i", $file)) return $rec; // don't modify URLs
 
 	$rec = str_replace('FILE '.$MEDIA_DIRECTORY, 'FILE '.trim($path).'/', $rec);
 	$rec = str_replace('\\', '/', $rec);
@@ -243,17 +235,17 @@ function convert_media_path($rec, $path, $slashes) {
 }
 
 /*
- *	Export the database in GEDCOM format
+ * Export the database in GEDCOM format
  *
  *  input parameters:
- *		$gedcom:	GEDCOM to be exported
- *		$gedout:	Handle of output file
- *		$exportOptions:	array of options for this Export operation as follows:
- *			'privatize':	which Privacy rules apply?  (none, visitor, user, GEDCOM admin, site admin)
- *			'toANSI':		should the output be produced in ANSI instead of UTF-8?  (yes, no)
- *			'noCustomTags':	should custom tags be removed?  (yes, no)
- *			'path':			what constant should prefix all media file paths?  (eg: media/  or c:\my pictures\my family
- *			'slashes':		what folder separators apply to media file paths?  (forward, backward)
+ * $gedcom:         GEDCOM to be exported
+ * $gedout:         Handle of output file
+ * $exportOptions:  array of options for this Export operation as follows:
+ *  'privatize':    which Privacy rules apply?  (none, visitor, user, GEDCOM admin, site admin)
+ *  'toANSI':       should the output be produced in ANSI instead of UTF-8?  (yes, no)
+ *  'noCustomTags': should custom tags be removed?  (yes, no)
+ *  'path':         what constant should prefix all media file paths?  (eg: media/  or c:\my pictures\my family
+ *  'slashes':      what folder separators apply to media file paths?  (forward, backward)
  */
 function export_gedcom($gedcom, $gedout, $exportOptions) {
 	global $GEDCOM;
@@ -266,11 +258,11 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
 	$tempUserID = '#ExPoRt#';
 	if ($exportOptions['privatize']!='none') {
 		// Create a temporary userid
-		$export_user_id = createTempUser($tempUserID, $exportOptions['privatize'], $gedcom);	// Create a temporary userid
+		$export_user_id = createTempUser($tempUserID, $exportOptions['privatize'], $gedcom); // Create a temporary userid
 
 		// Temporarily become this user
 		$_SESSION["org_user"]=$_SESSION["wt_user"];
-		$_SESSION["wt_user"]=$tempUserID;
+		$_SESSION["wt_user"]=$export_user_id;
 	}
 
 	$head=gedcom_header($gedcom);
@@ -360,91 +352,6 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
 	}
 
 	fwrite($gedout, $buffer."0 TRLR".WT_EOL);
-
-	if ($exportOptions['privatize']!='none') {
-		$_SESSION["wt_user"]=$_SESSION["org_user"];
-		delete_user($export_user_id);
-		AddToLog("deleted dummy user -> {$tempUserID} <-", 'auth');
-	}
-
-	$GEDCOM = $oldGEDCOM;
-}
-
-/*
- *	Export the database in GRAMPS XML format
- *
- *  input parameters:
- *		$gedcom:	GEDCOM to be exported
- *		$gedout:	Handle of output file
- *		$exportOptions:	array of options for this Export operation as follows:
- *			'privatize':	which Privacy rules apply?  (none, visitor, user, GEDCOM admin, site admin)
- *			'toANSI':		should the output be produced in ANSI instead of UTF-8?  (yes, no)
- *			'noCustomTags':	should custom tags be removed?  (yes, no)
- *			'path':			what constant should prefix all media file paths?  (eg: media/  or c:\my pictures\my family
- *			'slashes':		what folder separators apply to media file paths?  (forward, backward)
- */
-function export_gramps($gedcom, $gedout, $exportOptions) {
-	global $GEDCOM;
-
-	// Temporarily switch to the specified GEDCOM
-	$oldGEDCOM = $GEDCOM;
-	$GEDCOM = $gedcom;
-	$ged_id=get_id_from_gedcom($gedcom);
-
-	$tempUserID = '#ExPoRt#';
-	if ($exportOptions['privatize']!='none') {
-
-		$export_user_id = createTempUser($tempUserID, $exportOptions['privatize'], $gedcom);	// Create a temporary userid
-
-		// Temporarily become this user
-		$_SESSION["org_user"]=$_SESSION["wt_user"];
-		$_SESSION["wt_user"]=$tempUserID;
-	}
-
-	$geDownloadGedcom=new GEDownloadGedcom();
-	$geDownloadGedcom->begin_xml();
-
-	$recs=
-		WT_DB::prepare("SELECT i_id, i_gedcom FROM `##individuals` WHERE i_file=? AND i_id NOT LIKE ? ORDER BY i_id")
-		->execute(array($ged_id, '%:%'))
-		->fetchAssoc();
-	foreach ($recs as $id=>$rec) {
-		$rec = remove_custom_tags($rec, $exportOptions['noCustomTags']);
-		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
-		$geDownloadGedcom->create_person($rec, $id);
-	}
-
-	$recs=
-		WT_DB::prepare("SELECT f_id, f_gedcom FROM `##families` WHERE f_file=? AND f_id NOT LIKE ? ORDER BY f_id")
-		->execute(array($ged_id, '%:%'))
-		->fetchAssoc();
-	foreach ($recs as $id=>$rec) {
-		$rec = remove_custom_tags($rec, $exportOptions['noCustomTags']);
-		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
-		$geDownloadGedcom->create_family($rec, $id);
-	}
-
-	$recs=
-		WT_DB::prepare("SELECT s_id, s_gedcom FROM `##sources` WHERE s_file=? AND s_id NOT LIKE ? ORDER BY s_id")
-		->execute(array($ged_id, '%:%'))
-		->fetchAssoc();
-	foreach ($recs as $id=>$rec) {
-		$rec = remove_custom_tags($rec, $exportOptions['noCustomTags']);
-		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
-		$geDownloadGedcom->create_source($rec, $id);
-	}
-
-	$recs=
-		WT_DB::prepare("SELECT m_media, m_gedrec FROM `##media` WHERE m_gedfile=? AND m_media NOT LIKE ? ORDER BY m_media")
-		->execute(array($ged_id, '%:%'))
-		->fetchAssoc();
-	foreach ($recs as $id=>$rec) {
-		$rec = convert_media_path($rec, $exportOptions['path'], $exportOptions['slashes']);
-		$rec = remove_custom_tags($rec, $exportOptions['noCustomTags']);
-		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
-		$geDownloadGedcom->create_media($rec, $id);
-	}
-	fwrite($gedout,$geDownloadGedcom->dom->saveXML());
 
 	if ($exportOptions['privatize']!='none') {
 		$_SESSION["wt_user"]=$_SESSION["org_user"];

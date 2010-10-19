@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
+ * @version $Id$
  */
 
 if (!defined('WT_WEBTREES')) {
@@ -45,14 +45,22 @@ class upcoming_events_WT_Module extends WT_Module implements WT_Module_Block {
 	}
 
 	// Implement class WT_Module_Block
-	public function getBlock($block_id, $template=true) {
+	public function getBlock($block_id, $template=true, $cfg=null) {
 		global $ctype, $WT_IMAGES, $THEME_DIR;
 
-		$days=get_block_setting($block_id, 'days', 7);
-		$filter=get_block_setting($block_id, 'filter',     true);
-		$onlyBDM=get_block_setting($block_id, 'onlyBDM',    false);
+		$days     =get_block_setting($block_id, 'days',      7);
+		$filter   =get_block_setting($block_id, 'filter',    true);
+		$onlyBDM  =get_block_setting($block_id, 'onlyBDM',   false);
 		$infoStyle=get_block_setting($block_id, 'infoStyle', 'table');
-		$sortStyle=get_block_setting($block_id, 'sortStyle',  'alpha');
+		$sortStyle=get_block_setting($block_id, 'sortStyle', 'alpha');
+		$block    =get_block_setting($block_id, 'block',     true);
+		if ($cfg) {
+			foreach (array('days', 'filter', 'onlyBDM', 'infoStyle', 'sortStyle', 'block') as $name) {
+				if (array_key_exists($name, $cfg)) {
+					$$name=$cfg[$name];
+				}
+			}
+		}
 
 		$startjd=WT_CLIENT_JD+1;
 		$endjd  =WT_CLIENT_JD+$days;
@@ -61,7 +69,7 @@ class upcoming_events_WT_Module extends WT_Module implements WT_Module_Block {
 		$id=$this->getName().$block_id;
 		$title='';
 		if ($ctype=="gedcom" && WT_USER_GEDCOM_ADMIN || $ctype=="user" && WT_USER_ID) {
- 			$title.="<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?action=configure&amp;ctype={$ctype}&amp;block_id={$block_id}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+			$title.="<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?action=configure&amp;ctype={$ctype}&amp;block_id={$block_id}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 			$title.="<img class=\"adminicon\" src=\"".$WT_IMAGES["admin"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 		$title.= i18n::translate('Upcoming Events').help_link('upcoming_events', $this->getName());
@@ -81,7 +89,7 @@ class upcoming_events_WT_Module extends WT_Module implements WT_Module_Block {
 		}
 
 		if ($template) {
-			if (get_block_setting($block_id, 'block', true)) {
+			if ($block) {
 				require $THEME_DIR.'templates/block_small_temp.php';
 			} else {
 				require $THEME_DIR.'templates/block_main_temp.php';
@@ -159,7 +167,7 @@ class upcoming_events_WT_Module extends WT_Module implements WT_Module_Block {
 
 		$block=get_block_setting($block_id, 'block', true);
 		echo '<tr><td class="descriptionbox wrap width33">';
-		echo i18n::translate('Add a scrollbar when block contents grow');
+		echo /* I18N: label for a yes/no option */ i18n::translate('Add a scrollbar when block contents grow');
 		echo '</td><td class="optionbox">';
 		echo edit_field_yes_no('block', $block);
 		echo '</td></tr>';

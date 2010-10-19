@@ -89,10 +89,10 @@ echo
 // Side menu 
 echo
 	'<div id="admin_menu">',
-		'<dl><dt><a href="ged_config.php"><img src="images/admin.png" />', i18n::translate('Administration'), '</a></dt></dl>',
-		'<dl><dt><a href="../index.php?ctype=user"><img src="images/my_page.png" />', i18n::translate('Back to My Page'), '</dt></dl>',	
+		'<dl><dt><img src="images/admin.png" /><a href="ged_config.php">', i18n::translate('Administration'), '</a></dt></dl>',
+		'<dl><dt><img src="images/my_page.png" /><a href="../index.php?ctype=user">', i18n::translate('Back to My Page'), '</dt></dl>',	
 		'<dl>',
-			'<dt><a href="site_config.php"><img src="images/gedcom.png" />', i18n::translate('Site'), '</a></dt>',
+			'<dt><img src="images/gedcom.png" /><a href="site_config.php">', i18n::translate('Site'), '</a></dt>',
 			'<dd><a href="site_config.php">', i18n::translate('Configuration'), '</a></dd>',
 			'<dd><a href="logs.php">', i18n::translate('Logs'), '</a></dd>',
 			'<dd><a href="readme.php">', i18n::translate('README documentation'), '</a></dd>',
@@ -100,7 +100,7 @@ echo
 			'<dd><a href="manageservers.php">', i18n::translate('Manage sites'), '</a></dd>',
 		'</dl>',
 		'<dl>',
-			'<dt><a href="ged_admin.php"><img src="images/tree.png" />', i18n::translate('GEDCOMs'), '</a></dt>',
+			'<dt><img src="images/tree.png" /><a href="ged_admin.php">', i18n::translate('GEDCOMs'), '</a></dt>',
 			'<dd><a href="ged_admin.php">', i18n::translate('Manage GEDCOMs'), '</a></dd>',
 			'<dd><i>Configure these :</i></dd>';
 			//-- gedcom list
@@ -111,13 +111,13 @@ echo
 					}
 				}
 		echo '</dl>',
-		'<dl><dt><a href="user_info.php"><img src="images/users.png" />', i18n::translate('Users'), '</a></dt',
+		'<dl><dt><img src="images/users.png" /><a href="user_info.php">', i18n::translate('Users'), '</a></dt',
 			'<dd><a href="user_info.php">', i18n::translate('User Statistics'), '</a></dd>',
 			'<dd><a href="user_list.php">', i18n::translate('Manage users'), '</a></dd>',
 			'<dd><a href="user_admin.php?action=createform">', i18n::translate('Add user'), '</a></dd>',
 			'<dd><a href="#">', i18n::translate('Bulk messaging'), '</a></dd>',
 		'</dl>',
-		'<dl><dt><a href="admin_modules.php"><img src="images/modules.png" />', i18n::translate('Modules'), '</a></dt',
+		'<dl><dt><img src="images/modules.png" /><a href="admin_modules.php">', i18n::translate('Modules'), '</a></dt',
 			'<dd><a href="admin_modules.php">', i18n::translate('Manage modules'), '</a></dd>',
 			'<dd><a href="#">', i18n::translate('Tabs - manage'), '</a></dd>',
 			'<dd><a href="#">', i18n::translate('Sidebar - manage'), '</a></dd>',
@@ -129,7 +129,7 @@ echo
 					echo '<dd><a href="../', $module->getConfigLink(), '">', $module->getTitle(), ' - configure</a></dd>';
 			}
 		echo '</dl>',
-		'<dl><dt><a href="user_info.php"><img src="images/media.png" />', i18n::translate('Media'), '</a></dt>',
+		'<dl><dt><img src="images/media.png" /><a href="user_info.php">', i18n::translate('Media'), '</a></dt>',
 			'<dd><a href="admin_media.php">', i18n::translate('Manage media'), '</a></dd>',
 			'<dd><a href="#">', i18n::translate('Upload media'), '</a></dd>',
 			'<dd><a href="#">', i18n::translate('Media firewall'), '</a></dd>',

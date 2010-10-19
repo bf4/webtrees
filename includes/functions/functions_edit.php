@@ -45,7 +45,7 @@ require_once WT_ROOT.'includes/functions/functions_import.php';
 // $empty    - if not null, then add an entry ""=>$empty
 // $selected - the currently selected item (if any)
 // $extra    - extra markup for field (e.g. tab key sequence)
-function select_edit_control($name, $values, $empty, $selected, $extra) {
+function select_edit_control($name, $values, $empty, $selected, $extra='') {
 	if (is_null($empty)) {
 		$html='';
 	} else {
@@ -74,7 +74,7 @@ function select_edit_control($name, $values, $empty, $selected, $extra) {
 // $values   - array of value=>display items
 // $selected - the currently selected item (if any)
 // $extra    - extra markup for field (e.g. tab key sequence)
-function radio_buttons($name, $values, $selected, $extra) {
+function radio_buttons($name, $values, $selected, $extra='') {
 	$html='';
 	foreach ($values as $key=>$value) {
 		$uniqueID = $name.floor(microtime() * 1000000);
@@ -93,7 +93,7 @@ function edit_field_yes_no($name, $selected=false, $extra='') {
 		$name, array(false=>i18n::translate('no'),true=>i18n::translate('yes')), $selected, $extra
 	);
 	//return select_edit_control(
-	//	$name, array(true=>i18n::translate('yes'), false=>i18n::translate('no')), null, $selected, $extra
+		//$name, array(true=>i18n::translate('yes'), false=>i18n::translate('no')), null, $selected, $extra
 	//);
 }
 
@@ -181,14 +181,38 @@ function edit_field_language($name, $selected='', $extra='') {
 	return select_edit_control($name, i18n::installed_languages(), null, $selected, $extra);
 }
 
+// Print an edit control for a username
+function edit_field_username($name, $selected='', $extra='') {
+	$all_users=WT_DB::prepare(
+		"SELECT user_name, CONCAT_WS(' ', real_name, '-', user_name) FROM `##user` ORDER BY real_name"
+	)->fetchAssoc();
+	// The currently selected user may not exist
+	if ($selected && !array_key_exists($selected, $all_users)) {
+		$all_users[$selected]=$selected;
+	}
+	return select_edit_control($name, $all_users, '-', $selected, $extra);
+}
+
 // Print an edit control for a ADOP field
-function edit_field_adop($name, $selected='', $extra='') {
+function edit_field_adop_u($name, $selected='', $extra='') {
 	global $ADOP_CODES;
 	return select_edit_control($name, $ADOP_CODES, null, $selected, $extra);
 }
 
+// Print an edit control for a ADOP female field
+function edit_field_adop_f($name, $selected='', $extra='') {
+	global $ADOP_CODES_F;
+	return select_edit_control($name, $ADOP_CODES_F, null, $selected, $extra);
+}
+
+// Print an edit control for a ADOP male field
+function edit_field_adop_m($name, $selected='', $extra='') {
+	global $ADOP_CODES_M;
+	return select_edit_control($name, $ADOP_CODES_M, null, $selected, $extra);
+}
+
 // Print an edit control for a PEDI field
-function edit_field_pedi($name, $selected='', $extra='') {
+function edit_field_pedi_u($name, $selected='', $extra='') {
 	global $PEDI_CODES;
 	return select_edit_control($name, $PEDI_CODES, '', $selected, $extra);
 }
@@ -229,7 +253,7 @@ function edit_field_default_tab($name, $selected='', $extra='') {
 //-- and adds it to the connections file
 //-- it returns the connection identifier
 function newConnection() {
-	return session_name()."\t".session_id()."\n";
+	return WT_SESSION_NAME."\t".Zend_Session::getId()."\n";
 }
 
 /**
@@ -387,7 +411,7 @@ function check_gedcom($gedrec, $chan=true) {
 		echo "ERROR 20: Invalid GEDCOM format";
 		AddToLog("ERROR 20: Invalid GEDCOM format:\n".$gedrec, 'edit');
 		if (WT_DEBUG) {
-			echo "<pre>$gedrec</pre>\n";
+			echo "<pre>$gedrec</pre>";
 			echo debug_print_backtrace();
 		}
 		return false;
@@ -506,20 +530,20 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 	global $bdm, $TEXT_DIRECTION, $STANDARD_NAME_FACTS, $REVERSED_NAME_FACTS, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $NO_UPDATE_CHAN;
 
-	$SURNAME_TRADITION=get_gedcom_setting(WT_GED_ID, 'SURNAME_TRADITION');	
+	$SURNAME_TRADITION=get_gedcom_setting(WT_GED_ID, 'SURNAME_TRADITION');
 
 	$bdm = ''; // used to copy '1 SOUR' to '2 SOUR' for BIRT DEAT MARR
 	init_calendar_popup();
-	echo "<form method=\"post\" name=\"addchildform\" onsubmit=\"return checkform();\">\n";
-	echo "<input type=\"hidden\" name=\"action\" value=\"$nextaction\" />\n";
-	echo "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
-	echo "<input type=\"hidden\" name=\"famid\" value=\"$famid\" />\n";
-	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
-	echo "<input type=\"hidden\" name=\"famtag\" value=\"$famtag\" />\n";
-	echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />\n";
-	echo "<input type=\"hidden\" name=\"goto\" value=\"\" />\n";
+	echo "<form method=\"post\" name=\"addchildform\" onsubmit=\"return checkform();\">";
+	echo "<input type=\"hidden\" name=\"action\" value=\"$nextaction\" />";
+	echo "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />";
+	echo "<input type=\"hidden\" name=\"famid\" value=\"$famid\" />";
+	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />";
+	echo "<input type=\"hidden\" name=\"famtag\" value=\"$famtag\" />";
+	echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
+	echo "<input type=\"hidden\" name=\"goto\" value=\"\" />";
 	if (preg_match('/^add(child|spouse|newparent|newrepository)/', $nextaction)) {
-		echo "<input type=\"submit\" value=\"", i18n::translate('Save and go to new record'), "\" onclick=\"document.addchildform.goto.value='new';\"/>\n";
+		echo "<input type=\"submit\" value=\"", i18n::translate('Save and go to new record'), "\" onclick=\"document.addchildform.goto.value='new';\"/>";
 	}
 	echo "<table class=\"facts_table\">";
 
@@ -767,7 +791,7 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 			add_simple_tag("0 SEX M");
 		} elseif ($famtag=="WIFE" || $sextag=="F") {
 			add_simple_tag("0 SEX F");
-		}	else {
+		} else {
 			add_simple_tag("0 SEX");
 		}
 		$bdm = "BD";
@@ -797,20 +821,20 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 	}
 	if (WT_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">";
 		if ($NO_UPDATE_CHAN) {
-			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
+			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />";
 		} else {
-			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />";
 		}
-		echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />\n";
+		echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />";
 		if (isset($famrec)) {
 			$event = new Event(get_sub_record(1, "1 CHAN", $famrec));
 			echo format_fact_date($event, false, true);
 		}
-		echo "</td></tr>\n";
+		echo "</td></tr>";
 	}
-	echo "</table>\n";
+	echo "</table>";
 	if ($nextaction=='update') { // GEDCOM 5.5.1 spec says NAME doesn't get a OBJE
 		print_add_layer('SOUR');
 		print_add_layer('NOTE');
@@ -821,11 +845,11 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 		print_add_layer('SHARED_NOTE', 1);
 		print_add_layer('OBJE', 1);
 	}
-	echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />\n";
+	echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
 	if (preg_match('/^add(child|spouse|newparent|source)/', $nextaction)) {
-		echo "<input type=\"submit\" value=\"", i18n::translate('Save and go to new record'), "\" onclick=\"document.addchildform.goto.value='new';\"/>\n";
+		echo "<input type=\"submit\" value=\"", i18n::translate('Save and go to new record'), "\" onclick=\"document.addchildform.goto.value='new';\"/>";
 	}
-	echo "</form>\n";
+	echo "</form>";
 	?>
 	<script type="text/javascript">
 	<!--
@@ -1029,10 +1053,10 @@ function print_calendar_popup($id, $asString=false) {
 	if (isset($WT_IMAGES["button_calendar"])) $Link = "<img src=\"".$WT_IMAGES["button_calendar"]."\" name=\"img".$id."\" id=\"img".$id."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	$out = ' ';
-	$out .= "<a href=\"javascript: ".$text."\" onclick=\"cal_toggleDate('caldiv".$id."', '".$id."'); return false;\">";
+	$out .= "<a href=\"javascript: ".$text."\" onclick=\"cal_toggleDate('caldiv".$id."', '".$id."'); return false;\" tabindex=\"-1\">";
 	$out .= $Link;
-	$out .= "</a>\n";
-	$out .= "<div id=\"caldiv".$id."\" style=\"position:absolute;visibility:hidden;background-color:white;layer-background-color:white; z-index: 1000;\"></div>\n";
+	$out .= "</a>";
+	$out .= "<div id=\"caldiv".$id."\" style=\"position:absolute;visibility:hidden;background-color:white;layer-background-color:white; z-index: 1000;\"></div>";
 	if ($asString) return $out;
 	else echo $out;
 }
@@ -1041,7 +1065,7 @@ function print_calendar_popup($id, $asString=false) {
 */
 function print_addnewmedia_link($element_id) {
 	global $WT_IMAGES, $pid;
-	
+
 	$text = i18n::translate('Add a new media item');
 	if (isset($WT_IMAGES["button_addmedia"])) $Link = "<img src=\"".$WT_IMAGES["button_addmedia"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
@@ -1068,7 +1092,7 @@ function print_addnewrepository_link($element_id) {
 */
 function print_addnewnote_link($element_id) {
 	global $WT_IMAGES, $pid;
-	
+
 	$text = i18n::translate('Create a new Shared Note');
 	if (isset($WT_IMAGES["button_addnote"])) $Link = "<img src=\"".$WT_IMAGES["button_addnote"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
@@ -1143,7 +1167,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	global $WT_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
 	global $tags, $emptyfacts, $main_fact, $TEXT_DIRECTION;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
-	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $gender, $linkToID;
+	global $STATUS_CODES, $SPLIT_PLACES, $pid, $gender, $linkToID;
 	global $bdm, $RESN_CODES;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $PREFER_LEVEL2_SOURCES;
 	global $action, $event_add;
@@ -1206,8 +1230,6 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 
 	if (!isset($noClose) || $noClose!="NOCLOSE") $noClose = '';
 	if (!isset($readOnly) || $readOnly!="READONLY") $readOnly = '';
-
-	if (!isset($tabkey)) $tabkey = 1;
 
 	if (empty($linkToID)) $linkToID = $pid;
 
@@ -1312,34 +1334,34 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	if ($fact=="MAP" || $fact=="LATI" || $fact=="LONG") {
 		echo " style=\"display:none;\"";
 	}
-	echo " >\n";
-	
+	echo " >";
+
 	if (in_array($fact, $subnamefacts) || $fact=="LATI" || $fact=="LONG") {
 		echo "<td class=\"optionbox $TEXT_DIRECTION wrap width25\">";
 	}else{
 		echo "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 	}
 
-	
+
 	if (WT_DEBUG) {
-		echo $element_name, "<br />\n";
+		echo $element_name, "<br />";
 	}
-	
+
 
 	// tag name
 	if (!empty($label)) {
 		if ($label=="Note" && $islink){
 			echo i18n::translate('Shared note');
-		}else{
-			 echo $label;
+		} else {
+			echo $label;
 		}
 	} else {
 		if ($fact=="NOTE" && $islink){
 			echo translate_fact('SHARED_NOTE');
 			/*
 			if (file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
-				//	use $label (GEDFact Assistant); 
-			}else{
+				// use $label (GEDFact Assistant);
+			} else {
 				echo i18n::translate('Shared note');
 			}
 			*/
@@ -1347,7 +1369,6 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			echo translate_fact($fact);
 		}
 	}
-	echo "\n";
 
 // help link
 	// If using GEDFact-assistant window
@@ -1380,12 +1401,12 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			//--- cause the DATA to be added
 			echo "<input type=\"hidden\" name=\"text[]\" value=\"\" />";
 		}
-		echo "<input type=\"hidden\" name=\"glevels[]\" value=\"", $level, "\" />\n";
-		echo "<input type=\"hidden\" name=\"islink[]\" value=\"", $islink, "\" />\n";
-		echo "<input type=\"hidden\" name=\"tag[]\" value=\"", $fact, "\" />\n";
+		echo "<input type=\"hidden\" name=\"glevels[]\" value=\"", $level, "\" />";
+		echo "<input type=\"hidden\" name=\"islink[]\" value=\"", $islink, "\" />";
+		echo "<input type=\"hidden\" name=\"tag[]\" value=\"", $fact, "\" />";
 
-		// Shared Notes Debug ------------------------------------------------ 
-		// Please leave until GEDFact assistant/_CENS is released - B.Holland 
+		// Shared Notes Debug ------------------------------------------------
+		// Please leave until GEDFact assistant/_CENS is released - B.Holland
 			// echo "<br />Label = ".$label;
 			// echo "<br />Level = ".$level;
 			// echo "<br />Link  = ".$islink;
@@ -1393,12 +1414,12 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			// echo "<br />Value = ".$value;
 		// End Debug ---------------------------------------------------------
 	}
-	echo "\n</td>";
+	echo "</td>";
 
 	// value
-	echo "<td class=\"optionbox wrap\">\n";
+	echo "<td class=\"optionbox wrap\">";
 	if (WT_DEBUG) {
-		echo $tag, "<br />\n";
+		echo $tag, "<br />";
 	}
 
 	// retrieve linked NOTE
@@ -1419,61 +1440,39 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			echo i18n::translate('Yes');
 		}
 /*
-		// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page && action is ADD a new CENS event 
+		// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page && action is ADD a new CENS event
 		// Then show the add Shared note input field and the GEDFact assisted icon.
-		// If GEDFAct_assistant/_CENS/ module not installed  ... do not show 
+		// If GEDFAct_assistant/_CENS/ module not installed  ... do not show
 		if (file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $fact=="CENS") {
 			$type_pid=GedcomRecord::getInstance($pid);
-			if ($type_pid->getType()=="INDI" && $action=="add" ) { 
+			if ($type_pid->getType()=="INDI" && $action=="add" ) {
 				add_simple_tag("2 SHARED_NOTE", "", "GEDFact Assistant");
 			}
 		}
 		// -----------------------------------------------------------------------------------------------------
 */
-		
-	}
-	else if ($fact=="TEMP") {
-		echo "<select tabindex=\"", $tabkey, "\" name=\"", $element_name, "\" >\n";
-		echo "<option value=''>", i18n::translate('No Temple - Living Ordinance'), "</option>\n";
-		foreach($TEMPLE_CODES as $code=>$temple) {
-			echo "<option value=\"$code\"";
-			if ($code==$value) echo " selected=\"selected\"";
-			echo ">$temple ($code)</option>\n";
+
+	} else if ($fact=="TEMP") {
+		echo select_edit_control($element_name, $TEMPLE_CODES, i18n::translate('No Temple - Living Ordinance'), $value);
+	} else if ($fact=="ADOP") {
+		switch ($gender) {
+		case 'M': echo edit_field_adop_m($element_name, $value); break;
+		case 'F': echo edit_field_adop_f($element_name, $value); break;
+		default:  echo edit_field_adop_u($element_name, $value); break;
 		}
-		echo "</select>\n";
-	}
-	else if ($fact=="ADOP") {
-		echo edit_field_adop($element_name, $value, 'tabindex="'.$tabkey.'"');
 	} else if ($fact=="PEDI") {
-		if ($gender=="F")		echo edit_field_pedi_f($element_name, $value, 'tabindex="'.$tabkey.'"');
-		else if ($gender=="M")	echo edit_field_pedi_m($element_name, $value, 'tabindex="'.$tabkey.'"');
-		else					echo edit_field_pedi($element_name, $value, 'tabindex="'.$tabkey.'"');
+		switch ($gender) {
+		case 'M': echo edit_field_pedi_m($element_name, $value); break;
+		case 'F': echo edit_field_pedi_f($element_name, $value); break;
+		default:  echo edit_field_pedi_u($element_name, $value); break;
+		}
 	} else if ($fact=="STAT") {
-		echo "<select tabindex=\"", $tabkey, "\" name=\"", $element_name, "\" >\n";
-		echo "<option value=''>No special status</option>\n";
-		foreach($STATUS_CODES as $code=>$status) {
-			echo "<option value=\"$code\"";
-			if ($code==$value) echo " selected=\"selected\"";
-			echo ">$status</option>\n";
-		}
-		echo "</select>\n";
-	}
-	else if ($fact=="RELA") {
-		echo edit_field_rela($element_name, strtolower($value), 'tabindex="'.$tabkey.'"');
+		echo select_edit_control($element_name, $STATUS_CODES, '', $value);
+	} else if ($fact=="RELA") {
+		echo edit_field_rela($element_name, strtolower($value));
 	} else if ($fact=="_WT_USER") {
-		$text=strtolower($value);
-		echo "<select tabindex=\"", $tabkey, "\" id=\"", $element_id, "\" name=\"", $element_name, "\" >\n";
-		echo '<option value=""';
-		if (''==$text) echo ' selected="selected"';
-		echo ">-</option>\n";
-		foreach (get_all_users('asc', 'username') as $user_id=>$user_name) {
-			echo "<option value=\"", $user_name, "\"";
-			if ($user_name==$text) echo " selected=\"selected\"";
-			echo ">", $user_name, "</option>\n";
-		}
-		echo "</select>\n";
-	}
-	else if ($fact=="RESN") {
+		echo edit_field_username($element_name, $value);
+	} else if ($fact=="RESN") {
 		?>
 		<script type="text/javascript">
 		<!--
@@ -1489,43 +1488,40 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		//-->
 		</script>
 		<?php
-		echo "<input type=\"hidden\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", $value, "\" />\n";
-		echo "<table><tr valign=\"top\">\n";
+		echo "<input type=\"hidden\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", $value, "\" />";
+		echo "<table><tr valign=\"top\">";
 		foreach ($RESN_CODES as $resn_val => $text) {
 			if ($resn_val=="none") $resnv=""; else $resnv=$resn_val;
-			echo "<td><input tabindex=\"", $tabkey, "\" type=\"radio\" name=\"RESN_radio\" onclick=\"update_RESN_img('", $resn_val, "')\"";
+			echo "<td><input type=\"radio\" name=\"RESN_radio\" onclick=\"update_RESN_img('", $resn_val, "')\"";
 			echo " value=\"", $resnv, "\"";
 			if ($value==$resnv) echo " checked=\"checked\"";
 			echo " /><small>", $text, "</small>";
 			echo "<br />&nbsp;<img id=\"RESN_", $resn_val, "\" src=\"images/RESN_", $resn_val, ".gif\"  alt=\"", $text, "\" title=\"", $text, "\" border=\"0\"";
 			if ($value==$resnv) echo " style=\"display:inline\""; else echo " style=\"display:none\"";
-			echo " /></td>\n";
+			echo " /></td>";
 		}
-		echo "</tr></table>\n";
-	}
-	else if ($fact=="_PRIM" or $fact=="_THUM") {
-		echo "<select tabindex=\"", $tabkey, "\" id=\"", $element_id, "\" name=\"", $element_name, "\" >\n";
-		echo "<option value=\"\"></option>\n";
+		echo "</tr></table>";
+	} else if ($fact=="_PRIM" or $fact=="_THUM") {
+		echo "<select id=\"", $element_id, "\" name=\"", $element_name, "\" >";
+		echo "<option value=\"\"></option>";
 		echo "<option value=\"Y\"";
 		if ($value=="Y") echo " selected=\"selected\"";
-		echo ">", i18n::translate('Yes'), "</option>\n";
+		echo ">", i18n::translate('Yes'), "</option>";
 		echo "<option value=\"N\"";
 		if ($value=="N") echo " selected=\"selected\"";
-		echo ">", i18n::translate('No'), "</option>\n";
-		echo "</select>\n";
-	}
-	else if ($fact=="SEX") {
-		echo "<select tabindex=\"", $tabkey, "\" id=\"", $element_id, "\" name=\"", $element_name, "\">\n<option value=\"M\"";
+		echo ">", i18n::translate('No'), "</option>";
+		echo "</select>";
+	} else if ($fact=="SEX") {
+		echo "<select id=\"", $element_id, "\" name=\"", $element_name, "\"><option value=\"M\"";
 		if ($value=="M") echo " selected=\"selected\"";
-		echo ">", i18n::translate('Male'), "</option>\n<option value=\"F\"";
+		echo ">", i18n::translate('Male'), "</option><option value=\"F\"";
 		if ($value=="F") echo " selected=\"selected\"";
-		echo ">", i18n::translate('Female'), "</option>\n<option value=\"U\"";
+		echo ">", i18n::translate('Female'), "</option><option value=\"U\"";
 		if ($value=="U" || empty($value)) echo " selected=\"selected\"";
-		echo ">", i18n::translate('unknown'), "</option>\n</select>\n";
-	}
-	else if ($fact == "TYPE" && $level == '3') {
+		echo ">", i18n::translate_c('unknown gender', 'Unknown'), "</option></select>";
+	} else if ($fact == "TYPE" && $level == '3') {
 		//-- Build the selector for the Media "TYPE" Fact
-		echo "<select tabindex=\"", $tabkey, "\" name=\"text[]\">";
+		echo "<select name=\"text[]\">";
 		if ($value=='') echo "<option selected=\"selected\" value=\"\" > ", i18n::translate('Choose: '), " </option>";
 		$selectedValue = strtolower($value);
 		foreach ($MEDIA_TYPES as $typeName => $typeValue) {
@@ -1534,25 +1530,24 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			echo "> ", $typeValue, " </option>";
 		}
 		echo "</select>";
-	}
-	else if (($fact=="NAME" && $upperlevel!='REPO') || $fact=="_MARNM") {
+	} else if (($fact=="NAME" && $upperlevel!='REPO') || $fact=="_MARNM") {
 		// Populated in javascript from sub-tags
-		echo "<input type=\"hidden\" id=\"", $element_id, "\" name=\"", $element_name, "\" onchange=\"updateTextName('", $element_id, "');\" value=\"", PrintReady(htmlspecialchars($value, ENT_COMPAT, 'UTF-8')), "\" />";
-		echo "<span id=\"", $element_id, "_display\">", PrintReady(htmlspecialchars($value, ENT_COMPAT, 'UTF-8')), "</span>";
+		echo "<input type=\"hidden\" id=\"", $element_id, "\" name=\"", $element_name, "\" onchange=\"updateTextName('", $element_id, "');\" value=\"", PrintReady(htmlspecialchars($value)), "\" />";
+		echo "<span id=\"", $element_id, "_display\">", PrintReady(htmlspecialchars($value)), "</span>";
 		echo " <a href=\"#edit_name\" onclick=\"convertHidden('", $element_id, "'); return false;\"> ";
 		if (isset($WT_IMAGES["edit_indi"])) echo "<img src=\"", $WT_IMAGES["edit_indi"], "\" border=\"0\" width=\"20\" alt=\"", i18n::translate('Edit name'), "\" align=\"top\" />";
 		else echo "<span class=\"age\">[", i18n::translate('Edit name'), "]</span>";
 		echo "</a>";
 	} else {
 		// textarea
-		if ($rows>1) echo "<textarea tabindex=\"", $tabkey, "\" id=\"", $element_id, "\" name=\"", $element_name, "\" rows=\"", $rows, "\" cols=\"", $cols, "\">", PrintReady(htmlspecialchars($value, ENT_COMPAT, 'UTF-8')), "</textarea><br />\n";
+		if ($rows>1) echo "<textarea id=\"", $element_id, "\" name=\"", $element_name, "\" rows=\"", $rows, "\" cols=\"", $cols, "\">", PrintReady(htmlspecialchars($value)), "</textarea><br />";
 		else {
 			// text
 			// If using GEDFact-assistant window
 			if ($action=="addnewnote_assisted") {
-				echo "<input tabindex=\"", $tabkey, "\" type=\"text\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8')), "\" style=\"width:4.1em;\" dir=\"ltr\"";
+				echo "<input type=\"text\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", PrintReady(htmlspecialchars($value)), "\" style=\"width:4.1em;\" dir=\"ltr\"";
 			}else{
-				echo "<input tabindex=\"", $tabkey, "\" type=\"text\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8')), "\" size=\"", $cols, "\" dir=\"ltr\"";
+				echo "<input type=\"text\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", PrintReady(htmlspecialchars($value)), "\" size=\"", $cols, "\" dir=\"ltr\"";
 			}
 			echo " class=\"{$fact}\"";
 			echo " autocomplete=\"off\"";
@@ -1561,15 +1556,15 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			if ($fact=="LATI") echo " onblur=\"valid_lati_long(this, 'N', 'S');\" onmouseout=\"valid_lati_long(this, 'N', 'S');\"";
 			if ($fact=="LONG") echo " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
 			//if ($fact=="FILE") echo " onchange=\"if (updateFormat) updateFormat(this.value);\"";
-			echo ' ', $readOnly, " />\n";
+			echo ' ', $readOnly, " />";
 		}
 		// split PLAC
 		if ($fact=="PLAC" && $readOnly=='') {
-			echo "<div id=\"", $element_id, "_pop\" style=\"display: inline;\">\n";
+			echo "<div id=\"", $element_id, "_pop\" style=\"display: inline;\">";
 			print_specialchar_link($element_id, false);
 			print_findplace_link($element_id);
-			echo "</div>\n";
-			echo "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"", translate_fact('LATI'), " / ", translate_fact('LONG'), "\" title=\"", translate_fact('LATI'), " / ", translate_fact('LONG'), "\" /></a>";
+			echo "</div>";
+			echo "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"", $WT_IMAGES["target"], "\" border=\"0\" align=\"middle\" alt=\"", translate_fact('LATI'), " / ", translate_fact('LONG'), "\" title=\"", translate_fact('LATI'), " / ", translate_fact('LONG'), "\" /></a>";
 			if ($SPLIT_PLACES) {
 				if (!function_exists("print_place_subfields")) {
 					require WT_ROOT.'includes/functions/functions_places.php';
@@ -1585,7 +1580,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		echo "<script type='text/javascript'>";
 		echo "document.getElementById('", $element_id, "').style.display='none'";
 		echo "</script>";
-		echo "<select tabindex=\"", $tabkey, "\" id=\"", $element_id, "_sel\" onchange=\"document.getElementById('", $element_id, "').value=this.value;\" >\n";
+		echo "<select id=\"", $element_id, "_sel\" onchange=\"document.getElementById('", $element_id, "').value=this.value;\" >";
 		foreach (array("Unknown", "Civil", "Religious", "Partners") as $indexval => $key) {
 			if ($key=="Unknown") echo "<option value=\"\"";
 			else echo "<option value=\"", $key, "\"";
@@ -1593,7 +1588,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			$b=strtolower($value);
 			if (@strpos($a, $b)!==false or @strpos($b, $a)!==false) echo " selected=\"selected\"";
 			$tmp="MARR_".strtoupper($key);
-			echo ">", translate_fact($tmp), "</option>\n";
+			echo ">", translate_fact($tmp), "</option>";
 		}
 		echo "</select>";
 	}
@@ -1682,12 +1677,12 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 				print_editnote_link($value);
 			}
 			// If GEDFact_assistant/_CENS/ module exists && we are on the INDI page and the action is a GEDFact CENS assistant addition.
-			// Then show the add Shared note assisted icon, if not  ... show regular Shared note icons. 
+			// Then show the add Shared note assisted icon, if not  ... show regular Shared note icons.
 			if (file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && ($action=="add" || $action=="edit" ) && $pid) {
 				// Check if a CENS event ---------------------------
 				if ($event_add=="census_add") {
 					$type_pid=GedcomRecord::getInstance($pid);
-					if ($type_pid->getType()=="INDI" ) { 
+					if ($type_pid->getType()=="INDI" ) {
 						echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 						echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 						echo "<a href=\"javascript:ADD;\" onclick=\"addnewnote_assisted(document.getElementById('", $element_id, "'), '", $pid, "' ); return false;\" title=\"".i18n::translate('Create a new Shared Note using Assistant')."\" alt=\"".i18n::translate('Create a new Shared Note using Assistant')."\">";
@@ -1699,17 +1694,17 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			}
 		}
 
-		if ($fact=="OBJE") { 
+		if ($fact=="OBJE") {
 			print_findmedia_link($element_id, "1media");
 		}
 		if ($fact=="OBJE" && !$value) {
 			print_addnewmedia_link($element_id);
 			$value = "new";
 		}
-		
+
 		echo "<br />";
 	}
-	
+
 	// current value
 	if ($TEXT_DIRECTION=="ltr") {
 		if ($fact=="DATE") {
@@ -1747,9 +1742,8 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		if ($fact=="FORM" && $upperlevel=='OBJE') print_autopaste_link($element_id, $FILE_FORM_accept, false, false);
 	}
 
-	if ($noClose != "NOCLOSE") echo "</td></tr>\n";
+	if ($noClose != "NOCLOSE") echo "</td></tr>";
 
-	$tabkey++;
 	return $element_id;
 }
 
@@ -1766,9 +1760,9 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newsource');\"><img id=\"newsource_img\" src=\"", $WT_IMAGES["plus"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new source citation'), "</a>";
 		echo help_link('edit_add_SOUR');
 		echo "<br />";
-		echo "<div id=\"newsource\" style=\"display: none;\">\n";
+		echo "<div id=\"newsource\" style=\"display: none;\">";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
-		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
+		echo "<table class=\"facts_table center $TEXT_DIRECTION\">";
 		// 2 SOUR
 		$source = "SOUR @";
 		add_simple_tag("$level $source");
@@ -1797,15 +1791,15 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso');\"><img id=\"newasso_img\" src=\"", $WT_IMAGES["plus"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new associate'), "</a>";
 			echo help_link('edit_add_ASSO');
 			echo "<br />";
-			echo "<div id=\"newasso\" style=\"display: none;\">\n";
+			echo "<div id=\"newasso\" style=\"display: none;\">";
 		} else {
 			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso2');\"><img id=\"newasso2_img\" src=\"", $WT_IMAGES["plus"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new associate'), "</a>";
 			echo help_link('edit_add_ASSO');
 			echo "<br />";
-			echo "<div id=\"newasso2\" style=\"display: none;\">\n";
+			echo "<div id=\"newasso2\" style=\"display: none;\">";
 		}
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
-		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
+		echo "<table class=\"facts_table center $TEXT_DIRECTION\">";
 		// 2 ASSO
 		add_simple_tag(($level)." ASSO @");
 		// 3 RELA
@@ -1821,10 +1815,10 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		$text = '';
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newnote');\"><img id=\"newnote_img\" src=\"", $WT_IMAGES["plus"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new note'), "</a>";
 		echo help_link('edit_add_NOTE');
-		echo "<br />\n";
-		echo "<div id=\"newnote\" style=\"display: none;\">\n";
+		echo "<br />";
+		echo "<div id=\"newnote\" style=\"display: none;\">";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
-		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
+		echo "<table class=\"facts_table center $TEXT_DIRECTION\">";
 		// 2 NOTE
 		add_simple_tag(($level)." NOTE ".$text);
 		echo "</table></div>";
@@ -1834,10 +1828,10 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		$text = '';
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newshared_note');\"><img id=\"newshared_note_img\" src=\"", $WT_IMAGES["plus"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new shared note'), "</a>";
 		echo help_link('edit_add_SHARED_NOTE');
-		echo "<br />\n";
-		echo "<div id=\"newshared_note\" style=\"display: none;\">\n";
+		echo "<br />";
+		echo "<div id=\"newshared_note\" style=\"display: none;\">";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
-		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
+		echo "<table class=\"facts_table center $TEXT_DIRECTION\">";
 		// 2 SHARED NOTE
 		add_simple_tag(($level)." SHARED_NOTE ");
 
@@ -1848,9 +1842,9 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newobje');\"><img id=\"newobje_img\" src=\"", $WT_IMAGES["plus"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Multimedia object'), "</a>";
 		echo help_link('add_media');
 		echo "<br />";
-		echo "<div id=\"newobje\" style=\"display: none;\">\n";
+		echo "<div id=\"newobje\" style=\"display: none;\">";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
-		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
+		echo "<table class=\"facts_table center $TEXT_DIRECTION\">";
 		add_simple_tag($level." OBJE");
 		echo "</table></div>";
 	}
@@ -1859,10 +1853,10 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		$text = '';
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newresn');\"><img id=\"newresn_img\" src=\"", $WT_IMAGES["plus"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", translate_fact('RESN'), "</a>";
 		echo help_link('RESN');
-		echo "<br />\n";
-		echo "<div id=\"newresn\" style=\"display: none;\">\n";
+		echo "<br />";
+		echo "<div id=\"newresn\" style=\"display: none;\">";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
-		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
+		echo "<table class=\"facts_table center $TEXT_DIRECTION\">";
 		// 2 RESN
 		add_simple_tag(($level)." RESN ".$text);
 		echo "</table></div>";
@@ -2214,7 +2208,7 @@ function linkMedia($mediaid, $linktoid, $level=1, $chan=true) {
 	if ($level!=1) return false; // Level 2 items get linked elsewhere
 	// find Indi, Family, or Source record to link to
 	$gedrec = find_gedcom_record($linktoid, WT_GED_ID, true);
-	
+
 	//-- check if we are re-editing an unaccepted link that is not already in the DB
 	if (strpos($gedrec, "1 OBJE @$mediaid@")!==false) return false;
 
@@ -2236,7 +2230,7 @@ function linkMedia($mediaid, $linktoid, $level=1, $chan=true) {
 * @param $linenum should be ALWAYS set to 'OBJE'.
 * @param int $level Level where the Media Object reference should be removed from (not used)
 * @param boolean $chan Whether or not to update/add the CHAN record
-* 
+*
 * @return  bool success or failure
 */
 function unlinkMedia($linktoid, $linenum, $mediaid, $level=1, $chan=true) {
@@ -2244,7 +2238,7 @@ function unlinkMedia($linktoid, $linenum, $mediaid, $level=1, $chan=true) {
 	if ($level!=1) return false; // Level 2 items get unlinked elsewhere (maybe ??)
 	// find Indi, Family, or Source record to unlink from
 	$gedrec = find_gedcom_record($linktoid, WT_GED_ID, true);
-	
+
 	//-- when deleting/unlinking a media link
 	//-- $linenum comes as an OBJE and the $mediaid to delete should be set
 	if (!is_numeric($linenum)) {
@@ -2264,7 +2258,7 @@ function create_add_form($fact) {
 	global $tags, $FULL_SOURCES;
 
 	$tags = array();
-	
+
 	// GEDFact_assistant ================================================
 	if ($fact=="CENS") {
 		global $TEXT_DIRECTION, $CensDate;
@@ -2331,14 +2325,14 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 
 	$type = trim($fields[1]);
 	$level1type = $type;
-	
+
 	// GEDFact_assistant ================================================
 	if ($type=="CENS") {
 		global $TEXT_DIRECTION, $CensDate;
 		$CensDate="yes";
 	}
 	// ==================================================================
-	
+
 	if (count($fields)>2) {
 		$ct = preg_match("/@.*@/", $fields[2]);
 		$levellink = $ct > 0;
@@ -2366,7 +2360,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	if (preg_match_all('/('.WT_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
 		$expected_subtags['PLAC']=array_merge($match[1], $expected_subtags['PLAC']);
 	}
-	
+
 	$stack=array(0=>$level0type);
 	// Loop on existing tags :
 	while (true) {
@@ -2385,11 +2379,6 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			$text.="\n".$cmatch[1];
 			$i++;
 		}
-
-		// Shared Note -------------
-		//if (eregi("/@N.*@/i", $type)) {
-		//	$type="note";
-		//}
 
 		if ($type=="SOUR") {
 			$inSource = true;

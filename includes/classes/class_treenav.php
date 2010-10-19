@@ -53,7 +53,7 @@ class TreeNav {
 	function __construct($rootid='', $name='nav', $zoom=0) {
 		global $SHOW_PRIVATE_RELATIONSHIPS;
 
-		$SHOW_PRIVATE_RELATIONSHIPS = true;		// Interactive Tree doesn't work if this is "false"
+		$SHOW_PRIVATE_RELATIONSHIPS = true; // Interactive Tree doesn't work if this is "false"
 
 		if ($rootid!='none') {
 			$rootid = check_rootid($rootid);
@@ -173,7 +173,7 @@ class TreeNav {
 			<table>
 				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomIn(); return false;"><img src="<?php print WT_SERVER_NAME.WT_SCRIPT_PATH.$WT_IMAGES['zoomin'];?>" border="0" alt="zoomin" /></a></td></tr>
 				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomOut(); return false;"><img src="<?php print WT_SERVER_NAME.WT_SCRIPT_PATH.$WT_IMAGES['zoomout'];?>" border="0" alt="zoomout" /></a></td></tr>
-				<tr><td <?php if (is_null($this->rootPerson) || WT_SCRIPT_NAME=='treenav.php') print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8');?>'); return false;" title="<?php print i18n::translate('View this tree in the full page interactive tree'); ?>"><img src="<?php print WT_SERVER_NAME.WT_SCRIPT_PATH.$WT_IMAGES['tree'];?>" border="0" alt="" /></a></td></tr>
+				<tr><td <?php if (is_null($this->rootPerson) || WT_SCRIPT_NAME=='treenav.php') print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php echo htmlspecialchars($GEDCOM); ?>'); return false;" title="<?php print i18n::translate('View this tree in the full page interactive tree'); ?>"><img src="<?php print WT_SERVER_NAME.WT_SCRIPT_PATH.$WT_IMAGES['tree'];?>" border="0" alt="" /></a></td></tr>
 				<tr><td><a href="#" onclick="<?php print $this->name; ?>.toggleSpouses('<?php if ($this->rootPerson!=null) print $this->rootPerson->getXref(); ?>'); return false;" title="<?php print i18n::translate('Show or hide multiple spouses'); ?>"><img src="<?php print WT_SERVER_NAME.WT_SCRIPT_PATH.$WT_IMAGES['sfamily']; ?>" border="0" alt="" /></a></td></tr>
 				<tr><td><?php echo help_link('treenav.php'); ?></td></tr>
 				<tr><td><img id="<?php print $this->name; ?>_loading" src="<?php print WT_SERVER_NAME.WT_SCRIPT_PATH; ?>images/loading.gif" style="display: none;" alt="Loading..." /></td></tr>
@@ -287,7 +287,7 @@ class TreeNav {
 
 		?>
 		<span class="name1">
-		<?php $thumb = $this->getThumbnail($person); 
+		<?php $thumb = $this->getThumbnail($person);
 		if (!empty($thumb)) {
 			echo $thumb;
 		} else if ($USE_SILHOUETTE && isset($WT_IMAGES["default_image_U"])) {
@@ -303,12 +303,12 @@ class TreeNav {
 			}
 			else {
 				$thumbnail .= $WT_IMAGES["default_image_U"];
-			} 
+			}
 			$thumbnail .="\" class=\"".$class."\" border=\"none\" alt=\"\" />";
 			echo $thumbnail;
 		} ?>
 		<a href="<?php print $person->getLinkUrl(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><?php print $person->getSexImage().PrintReady($name); ?></a>
-		<img src="<?php print WT_SERVER_NAME.WT_SCRIPT_PATH.$WT_IMAGES["tree"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $person->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />
+		<img src="<?php print WT_SERVER_NAME.WT_SCRIPT_PATH.$WT_IMAGES["tree"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $person->getXref();?>', <?php print $this->name;?>.innerPort, '<?php echo htmlspecialchars($GEDCOM); ?>');" />
 		</span><br />
 		<div class="details1 indent">
 			<?php
@@ -325,7 +325,7 @@ class TreeNav {
 			if (!empty($spouse)) {
 				$name = $spouse->getFullName();
 				?>
-				<?php $thumb = $this->getThumbnail($spouse); 
+				<?php $thumb = $this->getThumbnail($spouse);
 				if (!empty($thumb)) {
 					echo $thumb;
 				} else if ($USE_SILHOUETTE && isset($WT_IMAGES["default_image_U"])) {
@@ -341,13 +341,13 @@ class TreeNav {
 					}
 					else {
 						$thumbnail .= $WT_IMAGES["default_image_U"];
-					} 
+					}
 					$thumbnail .="\" class=\"".$class."\" border=\"none\" alt=\"\" />";
 					echo $thumbnail;
 				} ?>
 				<a href="<?php print $spouse->getLinkUrl(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;">
 				<?php print $spouse->getSexImage().PrintReady($name); ?></a>
-				<img src="<?php print WT_SERVER_NAME.WT_SCRIPT_PATH.$WT_IMAGES["tree"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />
+				<img src="<?php print WT_SERVER_NAME.WT_SCRIPT_PATH.$WT_IMAGES["tree"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php echo htmlspecialchars($GEDCOM); ?>');" />
 				<br />
 				<div class="details1 indent">
 					<?php
@@ -393,9 +393,13 @@ class TreeNav {
 			$fams = $person->getSpouseFamilies();
 			foreach($fams as $famid=>$family) {
 				$children = $family->getChildren();
+				$indichilds = array();
 				foreach($children as $ci=>$child) {
-					$fam = null;
-					$this->drawPersonAllSpouses($child, $gen-1, -1);
+					if (!in_array($child, $indichilds)) {
+						$fam = null;
+						$this->drawPersonAllSpouses($child, $gen-1, -1);
+						$indichilds[]=$child;
+					}
 				}
 			}
 		}
@@ -413,7 +417,7 @@ class TreeNav {
 		if ($MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES) {
 			$object = $person->findHighlightedMedia();
 			if (!empty($object)) {
-				$whichFile = thumb_or_main($object);	// Do we send the main image or a thumbnail?
+				$whichFile = thumb_or_main($object); // Do we send the main image or a thumbnail?
 				$size = findImageSize($whichFile);
 				$class = "pedigree_image_portrait";
 				if ($size[0]>$size[1]) $class = "pedigree_image_landscape";
@@ -680,4 +684,3 @@ class TreeNav {
 		<?php
 	}
 }
-?>

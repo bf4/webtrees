@@ -43,7 +43,7 @@ if (!isset($action)) $action='';
 // following a link after an inactivity logout.
 if (!WT_USER_ID) {
 	if (!empty($ctype) && $ctype=='user') {
-		header('Location: login.php&url=index.php?ctype=user');
+		header('Location: login.php?url=index.php&ctype=user');
 		exit;
 	} else {
 		$ctype = 'gedcom';
@@ -62,8 +62,8 @@ if ($ctype=='user') {
 	$blocks=get_gedcom_blocks(WT_GED_ID);
 }
 
-// We have finished writing to $_SESSION, so release the lock
-session_write_close();
+// We have finished writing session data, so release the lock
+Zend_Session::writeClose();
 
 $all_blocks=WT_Module::getActiveBlocks();
 
@@ -97,6 +97,7 @@ if ($ctype=='user') {
 	$helpindex = 'mypage_portal';
 	print_header(i18n::translate('My Page'));
 } else {
+	$helpindex = 'index_portal';
 	print_header(get_gedcom_setting(WT_GED_ID, 'title'));
 }
 

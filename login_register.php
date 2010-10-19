@@ -156,10 +156,10 @@ switch ($action) {
 	case "register" :
 		$_SESSION["good_to_send"] = true;
 		if (!get_site_setting('USE_REGISTRATION_MODULE')) {
-		header("Location: index.php");
-		exit;
-	}
-	$message = "";
+			header("Location: index.php");
+			exit;
+		}
+		$message = "";
 		if (!$user_name) {
 			$message .= i18n::translate('You must enter a user name.')."<br />";
 			$user_name_false = true;
@@ -273,30 +273,29 @@ switch ($action) {
 					<input type="hidden" name="action" value="register" />
 					<input type="hidden" name="time" value="" />
 					<table class="center facts_table width50">
-					<?php $i = 1;?>
 						<tr><td class="topbottombar" colspan="2"><?php echo i18n::translate('Request new user account'); ?><br /><?php if (strlen($message) > 0) echo $message; ?></td></tr>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Real name'), help_link('new_user_realname'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_realname" value="<?php if (!$user_realname_false) echo $user_realname;?>" tabindex="<?php echo $i++;?>" /> *</td></tr>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Email address'), help_link('edituser_email'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" size="30" name="user_email" value="<?php if (!$user_email_false) echo $user_email;?>" tabindex="<?php echo $i++;?>" /> *</td></tr>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Desired user name'), help_link('username'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_name" value="<?php if (!$user_name_false) echo $user_name;?>" tabindex="<?php echo $i;?>" /> *</td></tr>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Desired password'), help_link('edituser_password'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="password" name="user_password01" value="" tabindex="<?php echo $i++;?>" /> *</td></tr>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Confirm password'), help_link('edituser_conf_password'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="password" name="user_password02" value="" tabindex="<?php echo $i++;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Real name'), help_link('new_user_realname'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_realname" value="<?php if (!$user_realname_false) echo $user_realname;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Email address'), help_link('edituser_email'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" size="30" name="user_email" value="<?php if (!$user_email_false) echo $user_email;?>"  /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Desired user name'), help_link('username'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_name" value="<?php if (!$user_name_false) echo $user_name;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Desired password'), help_link('edituser_password'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="password" name="user_password01" value="" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Confirm password'), help_link('edituser_conf_password'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="password" name="user_password02" value="" /> *</td></tr>
 						<?php
 						echo "<tr><td class=\"descriptionbox wrap ", $TEXT_DIRECTION, "\">";
 						echo i18n::translate('Change language'), help_link('edituser_change_lang');
 						echo '</td><td class="optionbox ', $TEXT_DIRECTION, '">';
-						echo edit_field_language('user_language', WT_LOCALE, $extra='tabindex="'.(++$i).'"');
+						echo edit_field_language('user_language', WT_LOCALE);
 						echo '</td></tr>';
 						if ($REQUIRE_AUTHENTICATION && $SHOW_LIVING_NAMES>=WT_PRIV_PUBLIC) { ?>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('GEDCOM INDI record ID'), help_link('register_gedcomid'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>" valign="top" ><input type="text" size="10" name="user_gedcomid" id="user_gedcomid" value="" tabindex="<?php echo $i++;?>" /><?php print_findindi_link("user_gedcomid",""); ?></td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('GEDCOM INDI record ID'), help_link('register_gedcomid'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>" valign="top" ><input type="text" size="10" name="user_gedcomid" id="user_gedcomid" value="" /><?php print_findindi_link("user_gedcomid",""); ?></td></tr>
 						<?php } ?>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Comments'), help_link('register_comments'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>" valign="top" ><textarea cols="50" rows="5" name="user_comments" tabindex="<?php echo $i++;?>"><?php if (!$user_comments_false) echo $user_comments;?></textarea> *</td></tr>
-						<tr><td class="topbottombar" colspan="2"><input type="submit" value="<?php echo i18n::translate('Request new user account'); ?>" tabindex="<?php echo $i++;?>" /></td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php echo i18n::translate('Comments'), help_link('register_comments'); ?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>" valign="top" ><textarea cols="50" rows="5" name="user_comments"><?php if (!$user_comments_false) echo $user_comments;?></textarea> *</td></tr>
+						<tr><td class="topbottombar" colspan="2"><input type="submit" value="<?php echo i18n::translate('Request new user account'); ?>" /></td></tr>
 						<tr><td align="left" colspan="2" ><?php echo i18n::translate('Fields marked with * are mandatory.');?></td></tr>
 					</table>
 				</form>
 			</div>
 			<script language="JavaScript" type="text/javascript">
-				document.registerform.user_name.focus();
+				document.registerform.user_realname.focus();
 			</script>
 			<?php
 			break;
@@ -345,7 +344,7 @@ switch ($action) {
 				if ($user_id=create_user($user_name, $user_realname, $user_email, crypt($user_password01))) {
 					set_user_setting($user_id, 'language',            $user_language);
 					set_user_setting($user_id, 'verified',             0);
-					set_user_setting($user_id, 'verified_by_admin',    $REQUIRE_ADMIN_AUTH_REGISTRATION);
+					set_user_setting($user_id, 'verified_by_admin',    !$REQUIRE_ADMIN_AUTH_REGISTRATION);
 					set_user_setting($user_id, 'reg_timestamp',        date('U'));
 					set_user_setting($user_id, 'reg_hashcode',         md5(crypt($user_name)));
 					set_user_setting($user_id, 'contactmethod',        "messaging2");
@@ -356,7 +355,6 @@ switch ($action) {
 					set_user_setting($user_id, 'max_relation_path',    $MAX_RELATION_PATH_LENGTH);
 					set_user_setting($user_id, 'auto_accept',          0);
 					set_user_setting($user_id, 'canadmin',             0);
-					set_user_setting($user_id, 'loggedin',             0);
 					set_user_setting($user_id, 'sessiontime',          0);
 					if (!empty($user_gedcomid)) {
 						set_user_gedcom_setting($user_id, $GEDCOM, 'gedcomid', $user_gedcomid);
@@ -400,17 +398,18 @@ switch ($action) {
 
 				$mail_body = "";
 				$mail_body .= i18n::translate('Hello Administrator ...') . "\r\n\r\n";
-				$mail_body .= i18n::translate('A prospective user registered himself with webtrees at %s.', WT_SERVER_NAME.WT_SCRIPT_PATH) . "\r\n\r\n";
+				$mail_body .= i18n::translate('A prospective user has registered with webtrees at %s.', WT_SERVER_NAME.WT_SCRIPT_PATH) . "\r\n\r\n";
 				$mail_body .= i18n::translate('User name') . " " . $user_name . "\r\n";
-				$mail_body .= i18n::translate('Real name') . " " . $user_realname . "\r\n\r\n";
+				$mail_body .= i18n::translate('Real name') . " " . $user_realname . "\r\n";
+				$mail_body .= i18n::translate('Email Address:') . " " . $user_email . "\r\n\r\n";
 				$mail_body .= i18n::translate('Comments').": " . $user_comments . "\r\n\r\n";
-				$mail_body .= i18n::translate('The user received an email with the information necessary to confirm his access request.') . "\r\n\r\n";
-				if ($REQUIRE_ADMIN_AUTH_REGISTRATION) $mail_body .= i18n::translate('You will be informed by email when this prospective user has confirmed his request.  You can then complete the process by activating the user name.  The new user will not be able to login until you activate the account.') . "\r\n";
-				else $mail_body .= i18n::translate('You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part.') . "\r\n";
+				$mail_body .= i18n::translate('The user has been sent an e-mail with the information necessary to confirm the access request') . "\r\n\r\n";
+				if ($REQUIRE_ADMIN_AUTH_REGISTRATION) $mail_body .= i18n::translate('You will be informed by e-mail when this prospective user has confirmed the request.  You can then complete the process by activating the user name.  The new user will not be able to login until you activate the account.') . "\r\n";
+				else $mail_body .= i18n::translate('You will be informed by e-mail when this prospective user has confirmed the request.  After this, the user will be able to login without any action on your part.') . "\r\n";
 
 				$message = array();
 				$message["to"]=get_user_name($webmaster_user_id);
-				$message["from"]=$WEBTREES_EMAIL;
+				$message["from"]=$user_name;
 				$message["subject"] = i18n::translate('New registration at %s', WT_SERVER_NAME.WT_SCRIPT_PATH);
 				$message["body"] = $mail_body;
 				$message["created"] = $time;
@@ -464,7 +463,7 @@ switch ($action) {
 		</form>
 		</div>
 		<script language="JavaScript" type="text/javascript">
-			document.verifyform.user_name.focus();
+			document.verifyform.user_password.focus();
 		</script>
 		<?php
 		break;
@@ -506,7 +505,7 @@ switch ($action) {
 
 				$mail_body = "";
 				$mail_body .= i18n::translate('Hello Administrator ...') . "\r\n\r\n";
-				$mail_body .= i18n::translate('User %s (%s) has confirmed his request for an account.', $user_name, getUserFullName($user_id)) . "\r\n\r\n";
+				$mail_body .= i18n::translate('User %s (%s) has confirmed their request for an account.', $user_name, getUserFullName($user_id)) . "\r\n\r\n";
 				if ($REQUIRE_ADMIN_AUTH_REGISTRATION) $mail_body .= i18n::translate('Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site.') . "\r\n";
 				else $mail_body .= i18n::translate('You do not have to take any action; the user can now login.') . "\r\n";
 
@@ -520,7 +519,7 @@ switch ($action) {
 
 				$message = array();
 				$message["to"]=get_user_name($webmaster_user_id);
-				$message["from"]=$WEBTREES_EMAIL;
+				$message["from"]=$user_name;
 				$message["subject"] = i18n::translate('New user at %s', WT_SERVER_NAME.WT_SCRIPT_PATH);
 				$message["body"] = $mail_body;
 				$message["created"] = $time;

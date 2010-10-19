@@ -47,7 +47,6 @@ class ServiceClient extends GedcomRecord {
 	var $username = "";
 	var $password = "";
 	var $type = "";
-	var $data_type = "";
 	var $client_type = "SOAP"; // whether to use SOAP or PEAR:SOAP by default
 
 	/**
@@ -67,7 +66,6 @@ class ServiceClient extends GedcomRecord {
 		$this->username = get_gedcom_value("_USER", 2, $gedrec);
 		$this->password = get_gedcom_value("_PASS", 2, $gedrec);
 		$this->type = "remote";
-		$this->data_type = "GEDCOM";
 		if (empty($this->url) && empty($this->gedfile))
 			return null;
 	}
@@ -75,7 +73,7 @@ class ServiceClient extends GedcomRecord {
 	/**
 	* check if the service returned an error
 	*/
-	static function isError(&$result) {
+	static function isError($result) {
 		if (PEAR::isError($result) || isset($result->faultcode) || isset($result->message) || get_class($result)=='SOAP_Fault') {
 			return true;
 		}
@@ -123,7 +121,7 @@ class ServiceClient extends GedcomRecord {
 			}
 		}
 		if ($this->soapClient!=null && !$this->isError($this->soapClient)) {
-			$res = $this->soapClient->Authenticate($this->username, $this->password, $this->gedfile, "",$this->data_type);
+			$res = $this->soapClient->Authenticate($this->username, $this->password, $this->gedfile, "");
 			if (!is_object($res)) {
 				return false;
 			}

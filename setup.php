@@ -101,8 +101,8 @@ echo
 	'<head>',
 	'<title>webtrees setup wizard</title>',
 	'<style type="text/css">
-		body { 	color: black; background-color: white; font: 14px tahoma, arial, helvetica, sans-serif;	padding:10px; }
-		a {	color: black; font-weight: normal; text-decoration: none;}
+		body {color: black; background-color: white; font: 14px tahoma, arial, helvetica, sans-serif; padding:10px; }
+		a {color: black; font-weight: normal; text-decoration: none;}
 		a:hover {color: #81A9CB;}
 		h1 {color: #81A9CB; font-weight:normal;}
 		legend {color:#81A9CB; font-style: italic; font-weight:bold; padding: 0 5px 5px; align: top;}
@@ -119,7 +119,7 @@ if (file_exists(WT_DATA_DIR.WT_CONFIG_FILE)) {
 	echo '<p class="good">', i18n::translate('The configuration file has been successfully uploaded to the server.'), '</p>';
 	echo '<p>', i18n::translate('Checking the access permissions...'), '</p>';
 	if (!is_readable(WT_DATA_DIR)) {
-	 	echo '<p class="bad">', i18n::translate('The directory <b>%s</b> does not have read permission.  You must change this.', WT_DATA_DIR), '</p>';
+		echo '<p class="bad">', i18n::translate('The directory <b>%s</b> does not have read permission.  You must change this.', WT_DATA_DIR), '</p>';
 		$error=true;
 	} elseif (!is_writable(WT_DATA_DIR)) {
 		echo '<p class="bad">', i18n::translate('The directory <b>%s</b> does not have write permission.  You must change this.', WT_DATA_DIR), '</p>';
@@ -131,13 +131,13 @@ if (file_exists(WT_DATA_DIR.WT_CONFIG_FILE)) {
 		echo '<p class="bad">', i18n::translate('The directory <b>%s</b> does not have write permission.  You must change this.', WT_MEDIA_DIR), '</p>';
 		$error=true;
 	} elseif (!is_readable(WT_MEDIA_DIR)) {
-	 	echo '<p class="bad">', i18n::translate('The directory <b>%s</b> does not have read permission.  You must change this.', WT_MEDIA_DIR), '</p>';
+		echo '<p class="bad">', i18n::translate('The directory <b>%s</b> does not have read permission.  You must change this.', WT_MEDIA_DIR), '</p>';
 		$error=true;
 	} else {
 		echo '<p class="good">', i18n::translate('The directory <b>%s</b> has read-write permission.  Good.', WT_MEDIA_DIR), '</p>';
 	}
 	if (!is_readable(WT_DATA_DIR.WT_CONFIG_FILE)) {
-	 	echo '<p class="bad">', i18n::translate('The file <b>%s</b> does not have read permission.  You must change this.', WT_DATA_DIR.WT_CONFIG_FILE), '</p>';
+		echo '<p class="bad">', i18n::translate('The file <b>%s</b> does not have read permission.  You must change this.', WT_DATA_DIR.WT_CONFIG_FILE), '</p>';
 		$error=true;
 	} elseif (is_writable(WT_DATA_DIR.WT_CONFIG_FILE) && DIRECTORY_SEPARATOR=='/') {
 		echo '<p class="indifferent">', i18n::translate('The file <b>%s</b> has write permission.  This will work, but for better security, you should make it read only.', WT_DATA_DIR.WT_CONFIG_FILE), '</p>';
@@ -181,10 +181,10 @@ if (empty($_POST['maxcpu']) || empty($_POST['maxmem'])) {
 	}
 	// Recommended extensions
 	foreach (array(
-		'calendar'=>i18n::translate('jewish calendar'),
-		'gd'      =>i18n::translate('creating thumbnails of images'),
-		'dom'     =>i18n::translate('exporting data in xml format'),
-		'xml'     =>i18n::translate('reporting'),
+		'calendar'=>/* I18N: a program feature */ i18n::translate('jewish calendar'),
+		'gd'      =>/* I18N: a program feature */ i18n::translate('creating thumbnails of images'),
+		'dom'     =>/* I18N: a program feature */ i18n::translate('exporting data in xml format'),
+		'xml'     =>/* I18N: a program feature */ i18n::translate('reporting'),
 	) as $extension=>$features) {
 		if (!extension_loaded($extension)) {
 			echo '<p class="bad">', i18n::translate('PHP extension "%1$s" is disabled.  Without it, the following features will not work: %2$s.  Please ask your server\'s administrator to enable it.', $extension, $features), '</p>';
@@ -193,8 +193,8 @@ if (empty($_POST['maxcpu']) || empty($_POST['maxmem'])) {
 	}
 	// Settings
 	foreach (array(
-		'file_uploads'=>i18n::translate('upload files'),
-		'date.timezone'=>i18n::translate('correct date and time in logs and messages'),
+		'file_uploads'=>/* I18N: a program feature */ i18n::translate('file upload capability'),
+		'date.timezone'=>/* I18N: a program feature */ i18n::translate('the correct date and time in logs and messages'),
 	) as $setting=>$features) {
 		if (!ini_get($setting)) {
 			echo '<p class="bad">', i18n::translate('PHP setting "%1$s" is disabled. Without it, the following features will not work: %2$s.  Please ask your server\'s administrator to enable it.', $setting, $features), '</p>';
@@ -205,36 +205,12 @@ if (empty($_POST['maxcpu']) || empty($_POST['maxmem'])) {
 		echo '<p class="good">', i18n::translate('The server configuration is OK.'), '</p>';
 	}
 	echo '<h2>', i18n::translate('Checking server capacity'), '</h2>';
-	// Memory
-	$mem=to_mb(ini_get('memory_limit'));
-	$maxmem=$mem;
-	if (!ini_get('safe_mode')) {
-		for ($i=$mem+1; $i<=1024; ++$i) {
-			ini_set('memory_limit', $i.'M');
-			$newmem=to_mb(ini_get('memory_limit'));
-			if ($newmem>$mem) {
-				$maxmem=$newmem;
-			} else {
-				break;
-			}
-		}
-	}
-	// CPU
-	$cpu=ini_get('max_execution_time');
-	$maxcpu=$cpu;
-	/* Commented out temporarily.  How can we reliably determine the "master value" instead of the "local value"?
-	if (!ini_get('safe_mode')) {
-		for ($i=$cpu+1; $i<=300; ++$i) {
-			set_time_limit('max_execution_time', $i);
-			$newcpu=ini_get('max_execution_time');
-			if ($newcpu>$cpu) {
-				$maxcpu=$newcpu;
-			} else {
-				break;
-			}
-		}
-	}
- */
+	// Previously, we tried to determine the maximum value that we could set for these values.
+	// However, this is unreliable, especially on servers with custom restrictions.
+	// Now, we just show the default values.  These can (hopefully!) be changed using the
+	// site settings page.
+	$maxmem=to_mb(ini_get('memory_limit'));
+	$maxcpu=ini_get('max_execution_time');
 	echo
 		'<p>',
 		i18n::translate('The memory and CPU time requirements depend on the number of individuals in your family tree.'),
@@ -246,14 +222,14 @@ if (empty($_POST['maxcpu']) || empty($_POST['maxmem'])) {
 		i18n::translate('Medium systems (5000 individuals): 32-64MB, 20-40 seconds'),
 		'<br/>',
 		i18n::translate('Large systems (50000 individuals): 64-128MB, 40-80 seconds'),
-		'</p><p class="good">',
+		'</p>',
+		($maxmem<32 || $maxcpu<20) ? '<p class="bad">' : '<p class="good">',
 		i18n::translate('This server\'s memory limit is %dMB and its CPU time limit is %d seconds.', $maxmem, $maxcpu),
+		'</p><p>',
+		i18n::translate('If you try to exceed these limits, you may experience server time-outs and blank pages.'),
+		'</p><p>',
+		i18n::translate('If your server\'s security policy permits it, you will be able to request increased memory or CPU time using the <b>webtrees</b> administration page.  Otherwise, you will need to contact your server\'s administrator.'),
 		'</p>';
-
-	if ($maxmem<32 || $maxcpu<20) {
-		echo '<p class="bad">', i18n::translate('If you try to exceed these limits, you may experience server time-outs and blank pages.'), '</p>';
-	}
-	echo '<p>', i18n::translate('To increase these limits, you should contact your server\'s administrator.'), '</p>';
 	if (!$errors) {
 		echo '<input type="hidden" name="maxcpu" value="'.$maxcpu.'">';
 		echo '<input type="hidden" name="maxmem" value="'.$maxmem.'">';
@@ -266,8 +242,6 @@ if (empty($_POST['maxcpu']) || empty($_POST['maxmem'])) {
 	// Copy these values through to the next step
 	echo '<input type="hidden" name="maxcpu" value="'.$_POST['maxcpu'].'">';
 	echo '<input type="hidden" name="maxmem" value="'.$_POST['maxmem'].'">';
-	@ini_set('max_execution_time', $_POST['maxcpu']);
-	@ini_set('memory_limit', $_POST['maxmem'].'M');
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -400,7 +374,7 @@ if (!$dbname_ok) {
 		'<table border="0"><tr><td>',
 		i18n::translate('Database name'), '</td><td>',
 		'<input type="text" name="dbname" value="', htmlspecialchars($_POST['dbname']), '"></td><td>',
-		 i18n::translate('This is case sensitive. If a database with this name does not already exist webtrees will attempt to create one for you. Success will depend on permissions set for your web server, but you will be notified if this fails.'),
+		i18n::translate('This is case sensitive. If a database with this name does not already exist webtrees will attempt to create one for you. Success will depend on permissions set for your web server, but you will be notified if this fails.'),
 		'</td></tr><tr><td>',
 		i18n::translate('Table prefix'), '</td><td>',
 		'<input type="text" name="tblpfx" value="', htmlspecialchars($_POST['tblpfx']), '"></td><td>',
@@ -548,11 +522,11 @@ if (empty($_POST['wtname']) || empty($_POST['wtuser']) || strlen($_POST['wtpass'
 		'</select></td><td>',
 		i18n::translate('Most servers do not use secure connections.'),
 		'</td></tr><tr><td>',
-		i18n::translate('From email address'), '</td><td>',
+		/* I18N: the "From:" header in an email */ i18n::translate('From email address'), '</td><td>',
 		'<input type="text" name="smtpfrom" size="40" value="', htmlspecialchars($_POST['smtpfrom']), '"', $_POST['smtpuse']=='exernal' ? '' : 'disabled', ' /></td><td>',
 		i18n::translate('This is used in the "From:" header when sending mails.'),
 		'</td></tr><tr><td>',
-		i18n::translate('Sender email address'), '</td><td>',
+		/* I18N: the "Sender:" header in an email */ i18n::translate('Sender email address'), '</td><td>',
 		'<input type="text" name="smtpsender" size="40" value="', htmlspecialchars($_POST['smtpsender']), '"', $_POST['smtpuse']=='exernal' ? '' : 'disabled', ' /></td><td>',
 		i18n::translate('This is used in the "Sender:" header when sending mails.  It is often the same as the "From:" header.'),
 		'</td></tr><tr><td>',
@@ -594,8 +568,6 @@ try {
 		"CREATE TABLE IF NOT EXISTS `{$TBLPREFIX}gedcom` (".
 		" gedcom_id     INTEGER AUTO_INCREMENT                        NOT NULL,".
 		" gedcom_name   VARCHAR(255)                                  NOT NULL,".
-		" import_gedcom LONGBLOB                                      NOT NULL,".
-		" import_offset INTEGER UNSIGNED                              NOT NULL,".
 		" PRIMARY KEY     (gedcom_id),".
 		" UNIQUE  KEY ux1 (gedcom_name)".
 		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
@@ -921,7 +893,7 @@ try {
 		" user_id     INTEGER                    NULL,".
 		" xref        VARCHAR(20)                NULL,".
 		" location    ENUM('main', 'side')       NULL,".
-	 	" block_order INTEGER                NOT NULL,".
+		" block_order INTEGER                NOT NULL,".
 		" module_name VARCHAR(32)            NOT NULL,".
 		" PRIMARY KEY     (block_id),".
 		" FOREIGN KEY fk1 (gedcom_id  ) REFERENCES `{$TBLPREFIX}gedcom` (gedcom_id  ), /* ON DELETE CASCADE */".
@@ -954,6 +926,29 @@ try {
 		" category   ENUM('banned', 'search-engine', 'allowed') NOT NULL,".
 		" comment    VARCHAR(255)                               NOT NULL,".
 		" PRIMARY KEY (ip_address)".
+		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
+	);
+	$dbh->exec(
+		"CREATE TABLE IF NOT EXISTS `{$TBLPREFIX}session` (".
+		" session_id   CHAR(32)    NOT NULL,".
+		" session_time TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,".
+		" user_id      INTEGER     NOT NULL,".
+		" ip_address   VARCHAR(32) NOT NULL,".
+		" session_data MEDIUMBLOB  NOT NULL,".
+		" PRIMARY KEY     (session_id),".
+		"         KEY ix1 (session_time),".
+		"         KEY ix2 (user_id, ip_address)".
+		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
+	);
+	$dbh->exec(
+		"CREATE TABLE IF NOT EXISTS `{$TBLPREFIX}gedcom_chunk` (".
+		" gedcom_chunk_id INTEGER AUTO_INCREMENT NOT NULL,".
+		" gedcom_id       INTEGER                NOT NULL,".
+		" chunk_data      MEDIUMBLOB             NOT NULL,".
+		" imported        BOOLEAN                NOT NULL DEFAULT FALSE,".
+		" PRIMARY KEY     (gedcom_chunk_id),".
+		"         KEY ix1 (gedcom_id, imported),".
+		" FOREIGN KEY fk1 (gedcom_id) REFERENCES `{$TBLPREFIX}gedcom` (gedcom_id) /* ON DELETE CASCADE */".
 		") COLLATE utf8_unicode_ci ENGINE=InnoDB"
 	);
 
@@ -991,19 +986,20 @@ try {
 	);
 	$dbh->exec(
 		"INSERT IGNORE INTO `{$TBLPREFIX}site_setting` (setting_name, setting_value) VALUES ".
-		"('WT_SCHEMA_VERSION',               '1'),".
+		"('WT_SCHEMA_VERSION',               '3'),".
 		"('INDEX_DIRECTORY',                 'data/'),".
 		"('STORE_MESSAGES',                  '1'),".
 		"('USE_REGISTRATION_MODULE',         '1'),".
 		"('REQUIRE_ADMIN_AUTH_REGISTRATION', '1'),".
 		"('ALLOW_USER_THEMES',               '1'),".
 		"('ALLOW_CHANGE_GEDCOM',             '1'),".
-		"('SESSION_SAVE_PATH',               ''),".
 		"('SESSION_TIME',                    '7200'),".
 		"('SERVER_URL',                      ''),".
 		"('LOGIN_URL',                       'login.php'),".
-		"('MEMORY_LIMIT',                    '".addcslashes($_POST['maxmem'], "'")."M'),".
-		"('MAX_EXECUTION_TIME',              '".addcslashes($_POST['maxcpu'], "'")."'),".
+		// Don't set these.  On some servers, trying to set them causes problems.
+		// So, the default behaviour is now to use the defaults.
+		//"('MEMORY_LIMIT',                    '".addcslashes($_POST['maxmem'], "'")."M'),".
+		//"('MAX_EXECUTION_TIME',              '".addcslashes($_POST['maxcpu'], "'")."'),".
 		"('SMTP_ACTIVE',                     '".addcslashes($_POST['smtpuse'], "'")."'),".
 		"('SMTP_HOST',                       '".addcslashes($_POST['smtpserv'], "'")."'),".
 		"('SMTP_HELO',                       '".addcslashes($_POST['smtpsender'], "'")."'),".
@@ -1028,10 +1024,10 @@ try {
 	}
 	echo
 		'<input type="hidden" name="action" value="download">',
-		'<input type="submit" value="'. /* I18N: %s is a filename */ i18n::translate('Download %s', WT_CONFIG_FILE).'" onclick="document.contform.contbtn.disabled=false; return true;">',
+		'<input type="submit" value="'. /* I18N: Button label/action: %s is a filename */ i18n::translate('Download %s', WT_CONFIG_FILE).'" onclick="document.contform.contbtn.disabled=false; return true;">',
 		'</form>',
 		'<p>', i18n::translate('After you have copied this file to the webserver and set the access permissions, click here to continue'), '</p>',
-		'<form name="contform" action="', WT_SCRIPT_NAME, '" method="get" onsubmit="alert(\'', i18n::translate('Reminder: you must copy %s to your webserver', WT_CONFIG_FILE), '\');return true;">',
+		'<form name="contform" action="', WT_SCRIPT_NAME, '" method="get" onsubmit="alert(\'', /* I18N: %s is a filename */ i18n::translate('Reminder: you must copy %s to your webserver', WT_CONFIG_FILE), '\');return true;">',
 		'<input type="submit" name="contbtn" value="'.i18n::translate('Continue').'" disabled>',
 		'</form></body></html>';
 	exit;
@@ -1055,5 +1051,4 @@ function to_mb($str) {
 	if (substr($str, -1, 1)=='G') {
 		return floor(1024*substr($str, 0, strlen($str)-1));
 	}
-	
 }

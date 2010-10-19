@@ -341,7 +341,7 @@ function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
 		$where[]="n_surn <> ''";
 	}
 
-	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_surn";
+	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_surn COLLATE '".i18n::$collation."'";
 
 	$list=array();
 	$rows=WT_DB::prepare($sql)->fetchAll();
@@ -380,7 +380,7 @@ function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
 		$where[]="n_surn <> ''";
 	}
 
-	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_surn";
+	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_surn COLLATE '".i18n::$collation."'";
 
 	$list=array();
 	$rows=WT_DB::prepare($sql)->fetchAll();
@@ -447,7 +447,7 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 		// Match all individuals
 	}
 
-	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY CASE n_surn WHEN '@N.N.' THEN 1 ELSE 0 END, n_surn, CASE n_givn WHEN '@P.N.' THEN 1 ELSE 0 END, n_givn";
+	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY CASE n_surn WHEN '@N.N.' THEN 1 ELSE 0 END, n_surn COLLATE '".i18n::$collation."', CASE n_givn WHEN '@P.N.' THEN 1 ELSE 0 END, n_givn COLLATE '".i18n::$collation."'";
 
 	$list=array();
 	$rows=WT_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
@@ -559,7 +559,7 @@ function fetch_linked_indi($xref, $link, $ged_id) {
 		" JOIN `##link` ON (i_file=l_file AND i_id=l_from)".
 		" LEFT JOIN `##name` ON (i_file=n_file AND i_id=n_id AND n_num=0)".
 		" WHERE i_file=? AND l_type=? AND l_to=?".
-		" ORDER BY n_sort"
+		" ORDER BY n_sort COLLATE '".i18n::$collation."'"
 	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
@@ -575,7 +575,7 @@ function fetch_linked_fam($xref, $link, $ged_id) {
 		" JOIN `##link` ON (f_file=l_file AND f_id=l_from)".
 		" LEFT JOIN `##name` ON (f_file=n_file AND f_id=n_id AND n_num=0)".
 		" WHERE f_file=? AND l_type=? AND l_to=?".
-		" ORDER BY n_sort"
+		" ORDER BY n_sort" // n_sort is not used for families.  Sorting here has no effect???
 	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
@@ -591,7 +591,7 @@ function fetch_linked_note($xref, $link, $ged_id) {
 		" JOIN `##link` ON (o_file=l_file AND o_id=l_from)".
 		" LEFT JOIN `##name` ON (o_file=n_file AND o_id=n_id AND n_num=0)".
 		" WHERE o_file=? AND o_type='NOTE' AND l_type=? AND l_to=?".
-		" ORDER BY n_sort"
+		" ORDER BY n_sort COLLATE '".i18n::$collation."'"
 	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
@@ -607,7 +607,7 @@ function fetch_linked_sour($xref, $link, $ged_id) {
 			" JOIN `##link` ON (s_file=l_file AND s_id=l_from)".
 			" LEFT JOIN `##name` ON (s_file=n_file AND s_id=n_id AND n_num=0)".
 			" WHERE s_file=? AND l_type=? AND l_to=?".
-			" ORDER BY n_sort"
+			" ORDER BY n_sort COLLATE '".i18n::$collation."'"
 		)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
@@ -623,7 +623,7 @@ function fetch_linked_obje($xref, $link, $ged_id) {
 		" JOIN `##link` ON (m_gedfile=l_file AND m_media=l_from)".
 		" LEFT JOIN `##name` ON (m_gedfile=n_file AND m_media=n_id AND n_num=0)".
 		" WHERE m_gedfile=? AND l_type=? AND l_to=?".
-		" ORDER BY n_sort"
+		" ORDER BY n_sort COLLATE '".i18n::$collation."'"
 	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
@@ -837,7 +837,7 @@ function find_gedcom_record($xref, $ged_id, $pending=false) {
 	} else {
 		$gedcom=null;
 	}
-	
+
 	if (is_null($gedcom)) {
 		$gedcom=find_person_record($xref, $ged_id);
 	}
@@ -858,8 +858,8 @@ function find_gedcom_record($xref, $ged_id, $pending=false) {
 
 /**
  * find and return an updated gedcom record
- * @param string $gid	the id of the record to find
- * @param string $gedfile	the gedcom file to get the record from.. defaults to currently active gedcom
+ * @param string $gid the id of the record to find
+ * @param string $gedfile the gedcom file to get the record from.. defaults to currently active gedcom
  */
 function find_updated_record($xref, $ged_id) {
 	static $statement=null;
@@ -1262,7 +1262,7 @@ function search_indis_dates($day, $month, $year, $facts) {
 function search_indis_daterange($start, $end, $facts) {
 	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM `##individuals` JOIN `##dates` ON i_id=d_gid AND i_file=d_file WHERE i_file=? AND d_julianday1 BETWEEN ? AND ?";
 	$vars=array(WT_GED_ID, $start, $end);
-	
+
 	if ($facts) {
 		$facts=explode(',', $facts);
 		foreach ($facts as $key=>$value) {
@@ -1472,7 +1472,7 @@ function search_notes($query, $geds, $match, $skip) {
 	$querysql=array();
 	// Convert the query into a regular expression
 	$queryregex=array();
-	
+
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(utf8_strtoupper($q), '/');
 		$querysql[]="o_gedcom LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".i18n::$collation."'";
@@ -1655,23 +1655,32 @@ function delete_gedcom($ged_id) {
 	WT_DB::prepare("DELETE FROM `##hit_counter`         WHERE gedcom_id =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM `##change`              WHERE gedcom_id =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM `##default_resn`        WHERE gedcom_id =?")->execute(array($ged_id));
+	WT_DB::prepare("DELETE FROM `##gedcom_chunk`        WHERE gedcom_id =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM `##gedcom`              WHERE gedcom_id =?")->execute(array($ged_id));
 }
 
 /**
 * get the top surnames
-* @param int $ged_id	fetch surnames from this gedcom
-* @param int $min	only fetch surnames occuring this many times
+* @param int $ged_id fetch surnames from this gedcom
+* @param int $min only fetch surnames occuring this many times
 * @param int $max only fetch this number of surnames (0=all)
 * @return array
 */
 function get_top_surnames($ged_id, $min, $max) {
 	// Use n_surn, rather than n_surname, as it is used to generate url's for
-	// the inid-list, etc.
-	return
-		WT_DB::prepareLimit("SELECT n_surn, COUNT(n_surn) FROM `##name` WHERE n_file=? AND n_type!=? AND n_surn NOT IN (?, ?, ?, ?) GROUP BY n_surn HAVING COUNT(n_surn)>=".$min." ORDER BY 2 DESC", $max)
-		->execute(array($ged_id, '_MARNM', '@N.N.', '', '?', 'UNKNOWN'))
-		->fetchAssoc();
+	// the indi-list, etc.
+	$max=(int)$max;
+	if ($max==0) {
+		return
+			WT_DB::prepare("SELECT n_surn, COUNT(n_surn) FROM `##name` WHERE n_file=? AND n_type!=? AND n_surn NOT IN (?, ?, ?, ?) GROUP BY n_surn HAVING COUNT(n_surn)>=? ORDER BY 2 DESC")
+			->execute(array($ged_id, '_MARNM', '@N.N.', '', '?', 'UNKNOWN', $min))
+			->fetchAssoc();
+	} else {
+		return
+			WT_DB::prepare("SELECT n_surn, COUNT(n_surn) FROM `##name` WHERE n_file=? AND n_type!=? AND n_surn NOT IN (?, ?, ?, ?) GROUP BY n_surn HAVING COUNT(n_surn)>=? ORDER BY 2 DESC LIMIT ".$max)
+			->execute(array($ged_id, '_MARNM', '@N.N.', '', '?', 'UNKNOWN', $min))
+			->fetchAssoc();
+	}
 }
 
 /**
@@ -2124,7 +2133,7 @@ function get_id_from_gedcom($ged_name, $create=false) {
 
 	if ($create) {
 		try {
-			WT_DB::prepare("INSERT INTO `##gedcom` (gedcom_name, import_gedcom, import_offset) VALUES (?, '', 0)")
+			WT_DB::prepare("INSERT INTO `##gedcom` (gedcom_name) VALUES (?)")
 				->execute(array($ged_name));
 			$ged_id=WT_DB::getInstance()->lastInsertId();
 			require WT_ROOT.'includes/set_gedcom_defaults.php';
@@ -2181,8 +2190,8 @@ function create_user($username, $realname, $email, $password) {
 		->execute(array($username))->fetchOne();
 }
 
-function rename_user($old_username, $new_username) {
-	WT_DB::prepare("UPDATE `##user`      SET user_name=?   WHERE user_name  =?")->execute(array($new_username, $old_username));
+function rename_user($user_id, $new_username) {
+	WT_DB::prepare("UPDATE `##user`      SET user_name=?   WHERE user_id  =?")->execute(array($new_username, $user_id));
 }
 
 function delete_user($user_id) {
@@ -2251,29 +2260,14 @@ function get_non_admin_user_count() {
 
 // Get a list of logged-in users
 function get_logged_in_users() {
+	// If the user is logged in on multiple times, this query would fetch
+	// multiple rows.  fetchAssoc() will eliminate the duplicates
 	return
 		WT_DB::prepare(
-			"SELECT u.user_id, user_name".
+			"SELECT user_id, user_name".
 			" FROM `##user` u".
-			" JOIN `##user_setting` us USING (user_id)".
-			" WHERE setting_name=? AND setting_value=?"
+			" JOIN `##session` USING (user_id)"
 		)
-		->execute(array('loggedin', '1'))
-		->fetchAssoc();
-}
-
-// Get a list of logged-in users who haven't been active recently
-function get_idle_users($time) {
-	return
-		WT_DB::prepare(
-			"SELECT u.user_id, user_name".
-			" FROM `##user` u".
-			" JOIN `##user_setting` us1 USING (user_id)".
-			" JOIN `##user_setting` us2 USING (user_id)".
-			" WHERE us1.setting_name=? AND us1.setting_value=? AND us2.setting_name=?".
-			" AND CAST(us2.setting_value AS UNSIGNED) BETWEEN 1 AND ?"
-		)
-		->execute(array('loggedin', '1', 'sessiontime', $time))
 		->fetchAssoc();
 }
 
@@ -2292,12 +2286,11 @@ function get_user_name($user_id) {
 }
 
 function get_newest_registered_user() {
-	return WT_DB::prepareLimit(
+	return WT_DB::prepare(
 		"SELECT u.user_id".
 		" FROM `##user` u".
 		" LEFT JOIN `##user_setting` us ON (u.user_id=us.user_id AND us.setting_name=?) ".
-		" ORDER BY us.setting_value DESC",
-		1
+		" ORDER BY us.setting_value DESC LIMIT 1"
 	)->execute(array('reg_timestamp'))
 		->fetchOne();
 }
@@ -2371,14 +2364,17 @@ function get_user_from_gedcom_xref($ged_id, $xref) {
 // Functions to access the WT_BLOCK table
 ////////////////////////////////////////////////////////////////////////////////
 
-function get_user_blocks($user_id) {
+function get_user_blocks($user_id, $gedcom_id=WT_GED_ID) {
 	$blocks=array('main'=>array(), 'side'=>array());
 	$rows=WT_DB::prepare(
 		"SELECT location, block_id, module_name".
-		" FROM `##block`".
-		" WHERE user_id=?".
+		" FROM  `##block`".
+		" JOIN  `##module` USING (module_name)".
+		" JOIN  `##module_privacy` USING (module_name)".
+		" WHERE user_id=? AND `##module_privacy`.gedcom_id=?".
+		" AND   status='enabled' AND access_level>=?".
 		" ORDER BY location, block_order"
-	)->execute(array($user_id))->fetchAll();
+	)->execute(array($user_id, $gedcom_id, WT_USER_ACCESS_LEVEL))->fetchAll();
 	foreach ($rows as $row) {
 		$blocks[$row->location][$row->block_id]=$row->module_name;
 	}
@@ -2410,10 +2406,13 @@ function get_gedcom_blocks($gedcom_id) {
 	$blocks=array('main'=>array(), 'side'=>array());
 	$rows=WT_DB::prepare(
 		"SELECT location, block_id, module_name".
-		" FROM `##block`".
+		" FROM  `##block`".
+		" JOIN  `##module` USING (module_name)".
+		" JOIN  `##module_privacy` USING (module_name, gedcom_id)".
 		" WHERE gedcom_id=?".
+		" AND   status='enabled' AND access_level>=?".
 		" ORDER BY location, block_order"
-	)->execute(array($gedcom_id))->fetchAll();
+	)->execute(array($gedcom_id, WT_USER_ACCESS_LEVEL))->fetchAll();
 	foreach ($rows as $row) {
 		$blocks[$row->location][$row->block_id]=$row->module_name;
 	}
@@ -2491,4 +2490,3 @@ function update_favorites($xref_from, $xref_to, $ged_id=WT_GED_ID) {
 		->execute(array($xref_to, $xref_from, $ged_name))
 		->rowCount();
 }
-

@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
+ * @version $Id$
  */
 
 if (!defined('WT_WEBTREES')) {
@@ -35,7 +35,7 @@ require_once WT_ROOT.'includes/classes/class_module.php';
 // Create tables, if not already present
 try {
 	WT_DB::updateSchema('./modules/gedcom_news/db_schema/', 'NB_SCHEMA_VERSION', 1);
-}	 catch (PDOException $ex) {
+} catch (PDOException $ex) {
 	// The schema update scripts should never fail.  If they do, there is no clean recovery.
 	die($ex);
 }
@@ -48,11 +48,11 @@ class gedcom_news_WT_Module extends WT_Module implements WT_Module_Block {
 
 	// Extend class WT_Module
 	public function getDescription() {
-		return i18n::translate('The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child.');
+		return i18n::translate('The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child.');
 	}
 
 	// Implement class WT_Module_Block
-	public function getBlock($block_id, $template=true) {
+	public function getBlock($block_id, $template=true, $cfg=null) {
 		global $WT_IMAGES, $TEXT_DIRECTION, $ctype, $THEME_DIR;
 
 		switch (safe_GET('action')) {
@@ -75,6 +75,13 @@ class gedcom_news_WT_Module extends WT_Module implements WT_Module_Block {
 				$limit=get_block_setting($block_id, 'limit', 'nolimit');
 			}
 		}
+		if ($cfg) {
+			foreach (array('limit', 'flag') as $name) {
+				if (array_key_exists($name, $cfg)) {
+					$$name=$cfg[$name];
+				}
+			}
+		}
 
 		$usernews = getUserNews(WT_GEDCOM);
 
@@ -87,7 +94,8 @@ class gedcom_news_WT_Module extends WT_Module implements WT_Module_Block {
 				$name = WT_USER_NAME;
 			}
 			$title.="<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?action=configure&amp;ctype={$ctype}&amp;block_id={$block_id}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$title.="<img class=\"adminicon\" src=\"".$WT_IMAGES["admin"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";		}
+			$title.="<img class=\"adminicon\" src=\"".$WT_IMAGES["admin"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
+		}
 		$title .= i18n::translate('News');
 		if(WT_USER_GEDCOM_ADMIN) {
 			$title .= help_link('index_gedcom_news_adm');
@@ -114,7 +122,6 @@ class gedcom_news_WT_Module extends WT_Module implements WT_Module_Block {
 					break;
 				}
 			}
-			//		print "<div class=\"person_box\" id=\"{$news['anchor']}\">\n";
 			$content .= "<div class=\"news_box\" id=\"{$news['anchor']}\">\n";
 
 			// Look for $GLOBALS substitutions in the News title

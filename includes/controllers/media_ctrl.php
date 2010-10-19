@@ -59,7 +59,7 @@ class MediaController extends BaseController{
 				$requestedfile = rawurldecode($requestedfile);
 				// make sure the requested file is in the media directory
 				if (strpos($requestedfile, $MEDIA_DIRECTORY) !== false) {
-					// strip off the pgv directory and media directory from the requested url so just the image information is left
+					// strip off the wt directory and media directory from the requested url so just the image information is left
 					$filename = substr($requestedfile, strpos($requestedfile, $MEDIA_DIRECTORY) + strlen($MEDIA_DIRECTORY) - 1);
 					// if user requested a thumbnail, lookup permissions based on the original image
 					$filename = str_replace('/thumbs', '', $filename);
@@ -182,7 +182,7 @@ class MediaController extends BaseController{
 		$menu = new Menu(i18n::translate('Edit'));
 		$menu->addIcon('edit_media');
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}", 'icon_large_gedcom');
-		
+
 		if (WT_USER_CAN_EDIT) {
 			$submenu = new Menu(i18n::translate('Edit media'));
 			$submenu->addOnclick("window.open('addmedia.php?action=editmedia&pid={$this->pid}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')");
@@ -193,10 +193,10 @@ class MediaController extends BaseController{
 			// main link displayed on page
 			if (WT_USER_GEDCOM_ADMIN && file_exists(WT_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
 				$submenu = new Menu(i18n::translate('Manage links'));
-			} else {	
+			} else {
 				$submenu = new Menu(i18n::translate('Set link'));
 			}
-			
+
 			// GEDFact assistant Add Media Links =======================
 			if (WT_USER_GEDCOM_ADMIN && file_exists(WT_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
 				$submenu->addOnclick("return ilinkitem('".$this->pid."','manage');");
@@ -323,7 +323,7 @@ class MediaController extends BaseController{
 
 		$facts = $this->mediaobject->getFacts($ignore);
 		sort_facts($facts);
-//		if ($includeFileName) $facts[] = new Event("1 FILE ".$this->mediaobject->getFilename());
+		//if ($includeFileName) $facts[] = new Event("1 FILE ".$this->mediaobject->getFilename());
 		$mediaType = $this->mediaobject->getMediatype();
 		if (array_key_exists($mediaType, $MEDIA_TYPES)) $facts[] = new Event("1 TYPE ".$MEDIA_TYPES[$mediaType]);
 		else $facts[] = new Event("1 TYPE ".i18n::translate('Other'));
@@ -398,6 +398,4 @@ class MediaController extends BaseController{
 	function getServerFilename() {
 		return $this->mediaobject->getServerFilename();
 	}
-
 }
-

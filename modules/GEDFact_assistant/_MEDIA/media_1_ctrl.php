@@ -28,14 +28,14 @@
  * @subpackage Census Assistant
  * @version $Id$
  */
- 
+
  if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
 global $summary, $theme_name, $TEXT_DIRECTION, $censyear, $censdate;
- 
+
 $pid = safe_get('pid');
 
 // echo $pid;
@@ -73,18 +73,14 @@ if ($pid=="") {
 	echo '<b>', i18n::translate('Family Navigator'), '</b>';
 	echo '</td></tr>';
 	echo '<tr>';
-//	echo '<td class="optionbox wrap" valign="top" align="left" width="50%" >';
-//	echo i18n::translate('Add Family, and Search links');
-//	echo '</td>';
+	//echo '<td class="optionbox wrap" valign="top" align="left" width="50%" >';
+	//echo i18n::translate('Add Family, and Search links');
+	//echo '</td>';
 	echo '<td valign="top" width=400>';
-	//-- Search  and Add Family Members Area ========================================= 
+	//-- Search  and Add Family Members Area =========================================
 		include('modules/GEDFact_assistant/_MEDIA/media_3_search_add.php');
 	echo '</td>';
 	echo '</tr>';
 	echo '</table>';
 
-} // End IF test for Base pid 
-
-?>
-
-
+} // End IF test for Base pid

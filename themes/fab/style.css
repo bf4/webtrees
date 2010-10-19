@@ -101,9 +101,6 @@ img {
 	color: red;
 	font-weight: bold;
 }
-.edit_link:after  {
-	content: url(images/edit_sm.png);
-}
 
 /* Fact labels */
 .label {
@@ -185,14 +182,17 @@ img {
 /* person boxes are used in various charts */
 .person_box {
 	background-color:#DDF;
+	overflow:auto;
 }
 
 .person_boxF {
 	background-color:#FDD;
+	overflow:auto;
 }
 
 .person_boxNN {
 	background-color:#DFD;
+	overflow:auto;
 }
 
 /* index.php */
@@ -938,6 +938,11 @@ dt {
 	clear:both; 
 }
 
+dd {
+	display: inline;
+	margin: 0;
+}
+
 /* Classes for the INDI page header */
 
 #indi_header h1 {
@@ -1143,4 +1148,44 @@ div.faq_body {
 	font-weight: bold;
 	font-size: 90%;
 	padding: 0 10px;
+}
+
+/*--- edit links ---*/
+
+.edit_link:after { /* used only on the user list */
+	content: " " url(images/edit_sm.png);
+}
+
+td.descriptionbox  a { 
+}
+
+.editfacts { /* a container for the following three links */
+	clear: left;
+	padding-top: 15px;
+}
+
+.editfacts  a:hover { 
+	background-color: transparent;
+}
+
+.link_text {
+	visibility : hidden;
+}
+
+.editlink, editlink  {
+	background: url(images/edit_sm.png) no-repeat left center;
+	width: 20px;
+	float: left;
+}
+
+.copylink  {
+	background: url(images/copy.png) no-repeat left center;
+	width: 20px;
+	float: left;
+}
+
+.deletelink  {
+	background: url(images/delete.png) no-repeat left center;
+	width: 20px;
+	float: left;
 }

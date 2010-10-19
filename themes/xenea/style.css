@@ -99,10 +99,6 @@ th {
 	width: 60px;
 }
 
-.edit_link:after  {
-	content: url(images/edit_sm.png);
-}
-
 .gedcom_table {
 	border: 1px solid #84BEFF;
 	margin: 0;
@@ -262,7 +258,6 @@ th {
 	color: #5555FF;
 }
 .tab_active_bottom {
-	background-color: white;
 	border-top: none;
 	border-bottom: none;
 	border-left: none;
@@ -1482,6 +1477,11 @@ dt {
 	clear:both; 
 }
 
+dd {
+	display: inline;
+	margin: 0;
+}
+
 /* Classes for the INDI page header */
 
 #indi_header h1 {
@@ -1738,4 +1738,41 @@ div.faq_body {
 
 .makeMenu li ul {
         margin-left:-40px;
+}
+
+/*--- edit links ---*/
+
+.edit_link:after { /* used only on the user list */
+	content: " " url(images/edit_sm.png);
+}
+
+td.descriptionbox  a { /* this keeps the tag color the same when it is a link as when not */
+	color: blue;
+}
+
+.editfacts { /* a container for the following three links */
+	float: left;
+	padding-top: 5px;
+}
+
+.link_text {
+	visibility : hidden;
+}
+
+.editlink  {
+	background: url(images/edit_sm.png) no-repeat left center;
+	width: 20px;
+	float: left;
+}
+
+.copylink  {
+	background: url(images/copy.png) no-repeat left center;
+	width: 20px;
+	float: left;
+}
+
+.deletelink  {
+	background: url(images/delete.png) no-repeat left center;
+	width: 20px;
+	float: left;
 }

@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
+ * @version $Id$
  */
 
 if (!defined('WT_WEBTREES')) {
@@ -35,7 +35,7 @@ require_once WT_ROOT.'includes/classes/class_module.php';
 // Create tables, if not already present
 try {
 	WT_DB::updateSchema('./modules/user_blog/db_schema/', 'NB_SCHEMA_VERSION', 1);
-}	 catch (PDOException $ex) {
+} catch (PDOException $ex) {
 	// The schema update scripts should never fail.  If they do, there is no clean recovery.
 	die($ex);
 }
@@ -52,7 +52,7 @@ class user_blog_WT_Module extends WT_Module implements WT_Module_Block {
 	}
 
 	// Implement class WT_Module_Block
-	public function getBlock($block_id, $template=true) {
+	public function getBlock($block_id, $template=true, $cfg=null) {
 		global $ctype, $WT_IMAGES, $TEXT_DIRECTION, $THEME_DIR;
 
 		switch (safe_GET('action')) {
@@ -63,7 +63,14 @@ class user_blog_WT_Module extends WT_Module implements WT_Module_Block {
 			}
 			break;
 		}
-
+		$block=get_block_setting($block_id, 'block', true);
+		if ($cfg) {
+			foreach (array('block') as $name) {
+				if (array_key_exists($name, $cfg)) {
+					$$name=$cfg[$name];
+				}
+			}
+		}
 		$usernews = getUserNews(WT_USER_ID);
 
 		$id=$this->getName().$block_id;
@@ -93,7 +100,7 @@ class user_blog_WT_Module extends WT_Module implements WT_Module_Block {
 		}
 
 		if ($template) {
-			if (get_block_setting($block_id, 'block', true)) {
+			if ($block) {
 				require $THEME_DIR.'templates/block_small_temp.php';
 			} else {
 				require $THEME_DIR.'templates/block_main_temp.php';

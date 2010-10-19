@@ -34,21 +34,22 @@ if (!defined('WT_WEBTREES')) {
 
 echo
 	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
-	'<html xmlns="http://www.w3.org/1999/xhtml" ',  i18n::html_markup(), '>',
+	'<html xmlns="http://www.w3.org/1999/xhtml" ', i18n::html_markup(), '>',
 	'<head>',
+	'<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />',
 	'<title>', htmlspecialchars($title), '</title>',
 	'<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />',
 	'<link rel="stylesheet" href="', $stylesheet, '" type="text/css" media="all" />';
 
 
-if (isset($_GET["mod_action"]) && $_GET["mod_action"]=="places_edit") { 
+if (isset($_GET["mod_action"]) && $_GET["mod_action"]=="places_edit") {
 	echo '<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />';
 }
 
 if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) {
 	echo '<link rel="stylesheet" href="', $rtl_stylesheet, '" type="text/css" media="all" />';
 }
-if ($use_alternate_styles && $BROWSERTYPE != "other") {
+if ($BROWSERTYPE!='other') {
 	echo '<link rel="stylesheet" href="', WT_THEME_DIR.$BROWSERTYPE, '.css" type="text/css" media="all" />';
 }
 // Additional css files required (Only if Lightbox installed)
@@ -71,10 +72,8 @@ if ($view!="simple") {
 	}
 	echo '<meta name="generator" content="', WT_WEBTREES, ' - ', WT_WEBTREES_URL, '" />';
 }
-echo $javascript;
-
-echo $head; //-- additional header information
 echo
+	$javascript,
 	'<script type="text/javascript" src="js/jquery/jquery.min.js"></script>',
 	'<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>',
 	'<script type="text/javascript" src="js/jquery/jquery.tablesorter.js"></script>',
@@ -88,32 +87,30 @@ echo
 	'<link type="text/css" href="', WT_THEME_DIR, 'modules.css" rel="Stylesheet" />',
 	'</head>',
 	'<body id="body" ',$bodyOnLoad, '>';
-	
-// begin header section 
+
+// begin header section
 if ($view!='simple') {
 	echo '<div id="header" class="', $TEXT_DIRECTION, '">',
 	'<table width="100%">',
 		'<tr>',
 			'<td><img src="', WT_THEME_DIR, 'images/header.jpg" width="281" height="50" alt="" /></td>',
-			'<td>',
-				'<table width="100%">',
-				'<tr>',
-					'<td align="center" valign="top">',
+			'<td width="100%">',
+					'<div align="center">',
 						'<b>', print_user_links(), '</b>',
-						'<br /><a href="./administration/ged_config.php">Administration</a>',
-					'</td>',
-					'<td align="', $TEXT_DIRECTION=="rtl"?"left":"right", '" valign="middle" >',
-						'<div class="makeMenu" align="', $TEXT_DIRECTION=="rtl"?"left":"right", '" >';
+					'</div>',
+					'<div align="', $TEXT_DIRECTION=="rtl"?"left":"right", '">',
+						'<ul class="makeMenu" align="', $TEXT_DIRECTION=="rtl"?"left":"right", '" >';
 								echo MenuBar::getFavoritesMenu()->getMenuAsList();
 								global $ALLOW_THEME_DROPDOWN;
-									if ($ALLOW_THEME_DROPDOWN && get_site_setting('ALLOW_USER_THEMES')) {
-										echo ' | ', MenuBar::getThemeMenu()->getMenuAsList();
-									}
-								echo ' | ', MenuBar::getLanguageMenu()->getMenuAsList();
-						echo '</div>',
-					'</td>',
-				'</tr>',
-				'</table>',
+								if ($ALLOW_THEME_DROPDOWN && get_site_setting('ALLOW_USER_THEMES')) {
+									echo ' | ', MenuBar::getThemeMenu()->getMenuAsList();
+								}
+								$language_menu=MenuBar::getLanguageMenu();
+								if ($language_menu) {
+									echo ' | ', $language_menu->getMenuAsList();
+								}
+					echo '&nbsp;</ul>',
+					'</div>',
 			'</td>',
 		'</tr>',
 	'</table>'.
@@ -132,87 +129,58 @@ if ($view!='simple') {
 						'<input type="text" name="query" size="15" value="', i18n::translate('Search'), '"',
 							'onfocus="if (this.value==\'', i18n::translate('Search'), '\') this.value=\'\'; focusHandler();"',
 							'onblur="if (this.value==\'\') this.value=\'', i18n::translate('Search'), '\';" />',
-						'<input type="image" src="', $WT_IMAGES['search'], '" width="17" align="top" alt="', i18n::translate('Search'), '" title="', i18n::translate('Search'), '" />',	
+						'<input type="image" src="', $WT_IMAGES['search'], '" width="17" align="top" alt="', i18n::translate('Search'), '" title="', i18n::translate('Search'), '" />',
 					'</form>';
 				}
 			echo '</td>',
 		'</tr>',
 	'</table>';
-	$menubar = new MenuBar();
 
 	echo '<div>',
-		'<img src="', $WT_IMAGES["hline"], '" width="100%" height="3" alt="" />',
-		'<table id="topMenu">',
+		'<img src="', $WT_IMAGES['hline'], '" width="100%" height="3" alt="" />',
+		'<table id="topMenu" width="100%">',
 			'<tr>';
-				$menu = $menubar->getGedcomMenu();
-				if($menu->link != "") {
-					print "\t<td width=\"7%\" valign=\"top\">\n";
-					$menu->printMenu();
-					print "\t</td>\n";
+				$menu=MenuBar::getGedcomMenu();
+				if ($menu) {
+					echo '<td width="1" valign="top">', $menu->getMenu(), '</td>';
 				}
-				$menu = $menubar->getMyPageMenu();
-				if($menu->link != "") {
-					print "\t<td width=\"7%\" valign=\"top\">\n";
-					$menu->printMenu();
-					print "\t</td>\n";
+				$menu=MenuBar::getMyPageMenu();
+				if ($menu) {
+					echo '<td width="1" valign="top">', $menu->getMenu(), '</td>';
 				}
-				$menu = $menubar->getChartsMenu();
-				if($menu->link != "") {
-					print "\t<td width=\"7%\" valign=\"top\">\n";
-					$menu->printMenu();
-					print "\t</td>\n";
+				$menu=MenuBar::getChartsMenu();
+				if ($menu) {
+					echo '<td width="1" valign="top">', $menu->getMenu(), '</td>';
 				}
-				$menu = $menubar->getListsMenu();
-				if($menu->link != "") {
-					print "\t<td width=\"7%\" valign=\"top\">\n";
-					$menu->printMenu();
-					print "\t</td>\n";
+				$menu=MenuBar::getListsMenu();
+				if ($menu) {
+					echo '<td width="1" valign="top">', $menu->getMenu(), '</td>';
 				}
-				$menu = $menubar->getCalendarMenu();
-				if($menu->link != "") {
-					print "\t<td width=\"7%\" valign=\"top\">\n";
-					$menu->printMenu();
-					print "\t</td>\n";
+				$menu=MenuBar::getCalendarMenu();
+				if ($menu) {
+					echo '<td width="1" valign="top">', $menu->getMenu(), '</td>';
 				}
-				$menu = $menubar->getReportsMenu();
-				if($menu->link != "") {
-					print "\t<td width=\"7%\" valign=\"top\">\n";
-					$menu->printMenu();
-					print "\t</td>\n";
+				$menu=MenuBar::getReportsMenu();
+				if ($menu) {
+					echo '<td width="1" valign="top">', $menu->getMenu(), '</td>';
 				}
-
-				$menu = $menubar->getSearchMenu();
-				if($menu->link != "") {
-					print "\t<td width=\"7%\" valign=\"top\">\n";
-					$menu->printMenu();
-					print "\t</td>\n";
+				$menu=MenuBar::getSearchMenu();
+				if ($menu) {
+					echo '<td width="1" valign="top">', $menu->getMenu(), '</td>';
 				}
-
-				$menu = $menubar->getOptionalMenu();
-				if($menu->link != "") {
-					print "\t<td width=\"7%\" valign=\"top\">\n";
-					$menu->printMenu();
-					print "\t</td>\n";
-				}
-
-				$menus = $menubar->getModuleMenus();
-				foreach($menus as $m=>$menu) {
-					if($menu->link != "") {
-						print "\t<td width=\"7%\" valign=\"top\">\n";
-						$menu->printMenu();
-						print "\t</td>\n";
+				$menus=MenuBar::getModuleMenus();
+				foreach ($menus as $m=>$menu) {
+					if ($menu) {
+						echo '<td width="1" valign="top">', $menu->getMenu(), '</td>';
 					}
 				}
-
-				$menu = $menubar->getHelpMenu();
-				if($menu->link != "") {
-					print "\t<td width=\"7%\" valign=\"top\">\n";
-					$menu->printMenu();
-					print "\t</td>\n";
+				$menu=MenuBar::getHelpMenu();
+				if ($menu) {
+					echo '<td width="1" valign="top">', $menu->getMenu(), '</td>';
 				}
 			echo '</tr>',
 		'</table>',
-		'<img align="middle" src="', $WT_IMAGES["hline"], '" width="100%" height="3" alt="" />',
+		'<img align="middle" src="', $WT_IMAGES['hline'], '" width="100%" height="3" alt="" />',
 	'</div>',
 '</div>',
 // end header section -->

@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
+ * @version $Id$
  */
 
 if (!defined('WT_WEBTREES')) {
@@ -44,17 +44,22 @@ class theme_select_WT_Module extends WT_Module implements WT_Module_Block {
 	}
 
 	// Implement class WT_Module_Block
-	public function getBlock($block_id, $template=true) {
+	public function getBlock($block_id, $template=true, $cfg=null) {
 		global $THEME_DIR;
 
 		$id=$this->getName().$block_id;
 		$title=i18n::translate('Change theme').help_link('change_theme');
-		$content='<br /><div class="center theme_form">'.MenuBar::getThemeMenu()->getMenuAsDropdown().'</div><br />';
+		$menu=MenuBar::getThemeMenu();
+		if ($menu) {
+			$content='<br /><div class="center theme_form">'.MenuBar::getThemeMenu()->getMenuAsDropdown().'</div><br />';
 
-		if ($template) {
-			require $THEME_DIR.'templates/block_main_temp.php';
+			if ($template) {
+				require $THEME_DIR.'templates/block_main_temp.php';
+			} else {
+				return $content;
+			}
 		} else {
-			return $content;
+			return '';
 		}
 	}
 

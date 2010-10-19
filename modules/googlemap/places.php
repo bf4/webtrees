@@ -41,9 +41,9 @@ require WT_ROOT.'modules/googlemap/defaultconfig.php';
 
 global $iso3166;
 $action=safe_REQUEST($_REQUEST, 'action');
-if (isset($_REQUEST['parent']))	 $parent=$_REQUEST['parent'];
+if (isset($_REQUEST['parent'])) $parent=$_REQUEST['parent'];
 if (isset($_REQUEST['display'])) $display=$_REQUEST['display'];
-if (isset($_REQUEST['mode']))	 $mode=$_REQUEST['mode'];
+if (isset($_REQUEST['mode'])) $mode=$_REQUEST['mode'];
 if (isset($_REQUEST['deleteRecord'])) $deleteRecord=$_REQUEST['deleteRecord'];
 
 if (!isset($parent)) $parent=0;
@@ -327,8 +327,8 @@ if ($action=="ImportFile") {
 				<select name="localfile">
 					<option></option>
 					<?php foreach($placefiles as $p=>$placefile) { ?>
-					<option value="<?php echo htmlspecialchars($placefile); ?>"><?php 
-						if (substr($placefile, 0, 1)=="/") echo substr($placefile, 1); 
+					<option value="<?php echo htmlspecialchars($placefile); ?>"><?php
+						if (substr($placefile, 0, 1)=="/") echo substr($placefile, 1);
 						else echo $placefile; ?></option>
 					<?php } ?>
 				</select>
@@ -508,7 +508,7 @@ if ($action=="DeleteRecord") {
 		WT_DB::prepare("SELECT 1 FROM `##placelocation` WHERE pl_parent_id=?")
 		->execute(array($deleteRecord))
 		->fetchOne();
-	
+
 	if (!$exists) {
 		WT_DB::prepare("DELETE FROM `##placelocation` WHERE pl_id=?")
 			->execute(array($deleteRecord));
@@ -552,14 +552,14 @@ foreach (array_reverse($where_am_i, true) as $id=>$place) {
 		if ($place != "Unknown") {
 			echo PrintReady($place);
 		} else {
-			echo i18n::translate('Unknown');
+			echo i18n::translate('unknown');
 		}
 	} else {
 		echo "<a href=\"module.php?mod=googlemap&mod_action=places&parent={$id}&display={$display}\">";
 		if ($place != "Unknown") {
 			echo PrintReady($place), "</a>";
 		} else {
-			echo i18n::translate('Unknown'), "</a>";
+			echo i18n::translate('unknown'), "</a>";
 		}
 	}
 	echo " - ";
@@ -591,7 +591,7 @@ foreach ($placelist as $place) {
 	if ($place["place"] != "Unknown")
 			echo PrintReady($place["place"]), "</a></td>";
 		else
-			echo i18n::translate('Unknown'), "</a></td>";
+			echo i18n::translate('unknown'), "</a></td>";
 	echo "<td class=\"optionbox\">{$place['lati']}</td>";
 	echo "<td class=\"optionbox\">{$place['long']}</td>";
 	echo "<td class=\"optionbox\">{$place['zoom']}</td>";
@@ -658,4 +658,3 @@ else {
 	echo i18n::translate('Search Engine Spider Detected'), ": ", $SEARCH_SPIDER;
 	echo "\n</div>\n\t</body>\n</html>";
 }
-?>

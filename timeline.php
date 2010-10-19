@@ -148,7 +148,7 @@ function MM(e) {
 			ageform = document.getElementById('ageform'+personnum);
 			yearform.innerHTML = year+"      "+month+" <?php print utf8_substr(i18n::translate('Month:'), 0, 1);?>   "+day+" <?php print utf8_substr(i18n::translate('Day:'), 0, 1);?>";
 			if (ba*yage>1 || ba*yage<-1 || ba*yage==0)
-				 ageform.innerHTML = (ba*yage)+" <?php print utf8_substr(i18n::translate('years'), 0, 1);?>   "+(ba*mage)+" <?php print utf8_substr(i18n::translate('Month:'), 0, 1);?>   "+(ba*dage)+" <?php print utf8_substr(i18n::translate('Day:'), 0, 1);?>";
+				ageform.innerHTML = (ba*yage)+" <?php print utf8_substr(i18n::translate('years'), 0, 1);?>   "+(ba*mage)+" <?php print utf8_substr(i18n::translate('Month:'), 0, 1);?>   "+(ba*dage)+" <?php print utf8_substr(i18n::translate('Day:'), 0, 1);?>";
 			else ageform.innerHTML = (ba*yage)+" <?php print utf8_substr(i18n::translate('Year:'), 0, 1);?>   "+(ba*mage)+" <?php print utf8_substr(i18n::translate('Month:'), 0, 1);?>   "+(ba*dage)+" <?php print utf8_substr(i18n::translate('Day:'), 0, 1);?>";
 			var line = document.getElementById('ageline'+personnum);
 			temp = newx-oldx;
@@ -280,13 +280,13 @@ $controller->checkPrivacy();
 			} elseif ($indi->getSex()=="F") {
 				echo $indi->getSexImage('large', '', i18n::translate('Female'));
 			} else {
-				echo $indi->getSexImage('large', '', i18n::translate('unknown'));
+				echo $indi->getSexImage('large', '', i18n::translate_c('unknown gender', 'Unknown'));
 			}
 		?>
- 			<a href="individual.php?pid=<?php echo $pid; ?>">&nbsp;<?php echo PrintReady($indi->getFullName()); ?><br /><br />
- 			<?php $addname = $indi->getAddName(); if (strlen($addname) > 0) echo PrintReady($addname); ?>
+			<a href="individual.php?pid=<?php echo $pid; ?>">&nbsp;<?php echo PrintReady($indi->getFullName()); ?><br /><br />
+			<?php $addname = $indi->getAddName(); if (strlen($addname) > 0) echo PrintReady($addname); ?>
 			</a>
-			<input type="hidden" name="pids[<?php echo $p; ?>]" value="<?php echo htmlentities($pid, ENT_COMPAT, 'UTF-8'); ?>" />
+			<input type="hidden" name="pids[<?php echo $p; ?>]" value="<?php echo htmlspecialchars($pid); ?>" />
 				<a href="timeline.php?<?php echo $controller->pidlinks; ?>&amp;scale=<?php echo $controller->scale; ?>&amp;remove=<?php echo $pid;?>" >
 				<span class="details1"><?php echo i18n::translate('Remove person'), help_link('remove_person'); ?></span></a>
 			<?php if (!empty($controller->birthyears[$pid])) { ?>
@@ -301,7 +301,7 @@ $controller->checkPrivacy();
 		} else {
 			print_privacy_error();
 			?>
-			<input type="hidden" name="pids[<?php echo $p; ?>]" value="<?php echo htmlentities($pid, ENT_COMPAT, 'UTF-8'); ?>" />
+			<input type="hidden" name="pids[<?php echo $p; ?>]" value="<?php echo htmlspecialchars($pid); ?>" />
 				<br />
 				<a href="timeline.php?<?php echo $controller->pidlinks; ?>&amp;scale=<?php echo $controller->scale; ?>&amp;remove=<?php echo $pid;?>" >
 				<span class="details1"><?php echo i18n::translate('Remove person'), help_link('remove_person'); ?></span></a>
@@ -434,4 +434,3 @@ if (count($controller->people)>0) {
 </script>
 <?php
 print_footer();
-?>

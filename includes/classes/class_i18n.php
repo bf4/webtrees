@@ -78,11 +78,16 @@ class i18n {
 				$prefs2=array();
 				foreach ($prefs as $pref) {
 					list($l, $q)=explode(';q=', $pref.';q=1.0');
+					$l=preg_replace(
+						array('/-/', '/_[a-z][a-z]$/e'),
+						array ('_', 'strtoupper("$0")'),
+						$l
+					); // en-gb => en_GB
 					$prefs2[$l]=(float)$q;
 				}
-				// Ensure there is a fallback.  en is always available
-				if (!array_key_exists('en', $prefs2)) {
-					$prefs2['en']=0.01;
+				// Ensure there is a fallback.
+				if (!array_key_exists('en_US', $prefs2)) {
+					$prefs2['en_US']=0.01;
 				}
 				arsort($prefs2);
 				foreach (array_keys($prefs2) as $pref) {
@@ -161,7 +166,9 @@ class i18n {
 			if (empty($_SESSION['installed_languages'])) {
 				die('There are no lanuages installed.  You must include at least one xx.mo file in /language/');
 			}
-			uasort($_SESSION['installed_languages'], 'utf8_strcasecmp');
+			// Sort by either language code or language name...
+			//uasort($_SESSION['installed_languages'], 'utf8_strcasecmp');
+			ksort($_SESSION['installed_languages']);
 			return $_SESSION['installed_languages'];
 		}
 	}
@@ -313,7 +320,7 @@ class i18n {
 				// I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged more than 21 years)
 				return i18n::translate('(aged more than %s)', $age);
 			} else {
-				// I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged 43 years)			
+				// I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged 43 years)
 				return i18n::translate('(aged %s)', $age);
 			}
 		} else {

@@ -5,7 +5,7 @@
 // Copyright (C) 2010 webtrees development team.
 //
 // Derived from PhpGedView
-// Copyright (C) 2002 to 2009	PGV Development Team.  All rights reserved.
+// Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -127,7 +127,7 @@ class DescendancyController extends BaseController {
 
 		if (is_null($person)) return;
 		$families = $person->getSpouseFamilies();
-		if ($depth<1) return;
+		if ($depth<2) return;
 		foreach($families as $famid => $family) {
 			print_sosa_family($family->getXref(), "", -1, $label, $person->getXref(), $gpid, $personcount);
 			$personcount++;
@@ -280,7 +280,7 @@ function print_family_descendancy(&$person, &$family, $depth) {
 		}
 		print "</td></tr></table>";
 		print "</li>\r\n";
-		if ($depth>0) foreach ($children as $child) {
+		if ($depth>1) foreach ($children as $child) {
 			$personcount++;
 			$this->print_child_descendancy($child, $depth-1);
 		}
@@ -288,5 +288,4 @@ function print_family_descendancy(&$person, &$family, $depth) {
 		print "</li>\r\n";
 	}
 }
-
 }

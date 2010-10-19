@@ -45,7 +45,7 @@ class random_media_WT_Module extends WT_Module implements WT_Module_Block {
 	}
 
 	// Implement class WT_Module_Block
-	public function getBlock($block_id, $template=true) {
+	public function getBlock($block_id, $template=true, $cfg=null) {
 		global $ctype, $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $WT_IMAGES;
 		global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY;
 		global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $THEME_DIR;;
@@ -88,6 +88,13 @@ class random_media_WT_Module extends WT_Module implements WT_Module_Block {
 			'tombstone'  =>get_block_setting($block_id, 'filter_tombstone', true),
 			'video'      =>get_block_setting($block_id, 'filter_video', false),
 		);
+		if ($cfg) {
+			foreach (array('filter', 'controls', 'start', 'filter_avi', 'filter_bmp', 'filter_gif', 'filter_jpeg', 'filter_mp3', 'filter_ole', 'filter_pcx', 'filter_pdf', 'filter_png', 'filter_tiff', 'filter_wav', 'filter_audio', 'filter_book', 'filter_card', 'filter_certificate', 'filter_coat', 'filter_document', 'filter_electronic', 'filter_fiche', 'filter_film', 'filter_magazine', 'filter_manuscript', 'filter_map', 'filter_newspaper', 'filter_other', 'filter_painting', 'filter_photo', 'filter_tombstone', 'filter_video', 'block') as $name) {
+				if (array_key_exists($name, $cfg)) {
+					$$name=$cfg[$name];
+				}
+			}
+		}
 
 		$medialist = array();
 		$foundlist = array();
@@ -119,9 +126,9 @@ class random_media_WT_Module extends WT_Module implements WT_Module_Block {
 				if (WT_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />";}
 
 				// Filter according to format and type  (Default: unless configured otherwise, don't filter)
-				if (!array_key_exists($medialist[$value]["FORM"], $filters)) {
+				if ($medialist[$value]['FORM']!='' && !array_key_exists($medialist[$value]['FORM'], $filters)) {
 					$disp=false;
-				} elseif (!array_key_exists($medialist[$value]["TYPE"], $filters)) {
+				} elseif ($medialist[$value]['TYPE']!='' && !array_key_exists($medialist[$value]['TYPE'], $filters)) {
 					$disp=false;
 				} elseif (!empty($medialist[$value]["FORM"]) && !$filters[$medialist[$value]["FORM"]]) {
 					$disp=false;
@@ -255,9 +262,9 @@ class random_media_WT_Module extends WT_Module implements WT_Module_Block {
 function openPic(filename, width, height) {
 		height=height+50;
 		screenW = screen.width;
-	 	screenH = screen.height;
-	 	if (width>screenW-100) width=screenW-100;
-	 	if (height>screenH-110) height=screenH-120;
+		screenH = screen.height;
+		if (width>screenW-100) width=screenW-100;
+		if (height>screenH-110) height=screenH-120;
 		if ((filename.search(/\.je?pg$/gi)!=-1)||(filename.search(/\.gif$/gi)!=-1)||(filename.search(/\.png$/gi)!=-1)||(filename.search(/\.bmp$/gi)!=-1))
 			win02 = window.open('imageview.php?filename='+filename,'win02','top=50,left=150,height='+height+',width='+width+',scrollbars=1,resizable=1');
 			// win03.resizeTo(winWidth 2,winHeight 30);

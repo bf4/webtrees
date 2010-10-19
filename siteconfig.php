@@ -37,7 +37,7 @@ if (!WT_USER_IS_ADMIN) {
 switch (safe_POST('action')) {
 case 'update':
 	$data_directory= safe_POST('data_directory');
-	if ($data_directory && is_dir($data_directory) && is_readable($data_directory) && is_writable($data_directory) && file_exists($data_directory.DIRECTORY_SEPARATOR.'config.ini.php') && is_readable($data_directory.DIRECTORY_SEPARATOR.'config.ini.php')) {
+	if ($data_directory && is_dir($data_directory) && is_readable($data_directory) && is_writable($data_directory)) {
 		set_site_setting('INDEX_DIRECTORY', $data_directory);
 	}
 	set_site_setting('STORE_MESSAGES',                  safe_POST('store_messages'));
@@ -45,12 +45,11 @@ case 'update':
 	set_site_setting('REQUIRE_ADMIN_AUTH_REGISTRATION', safe_POST('require_admin_auth_registration'));
 	set_site_setting('ALLOW_USER_THEMES',               safe_POST('allow_user_themes'));
 	set_site_setting('ALLOW_CHANGE_GEDCOM',             safe_POST('allow_change_gedcom'));
-	set_site_setting('SESSION_SAVE_PATH',               safe_POST('session_save_path'));
 	set_site_setting('SESSION_TIME',                    safe_POST('session_time'));
 	set_site_setting('SERVER_URL',                      safe_POST('server_url'));
 	set_site_setting('LOGIN_URL',                       safe_POST('login_url'));
-	set_site_setting('MEMORY_LIMIT',                    safe_POST('memory_limit', '\d+[KMG]?', ini_get('memory_limit')));
-	set_site_setting('MAX_EXECUTION_TIME',              safe_POST('max_execution_time', '\d+', ini_get('max_execution_time')));
+	set_site_setting('MEMORY_LIMIT',                    safe_POST('memory_limit', '\d+[KMG]?'));
+	set_site_setting('MAX_EXECUTION_TIME',              safe_POST('max_execution_time', '\d+'));
 	set_site_setting('SMTP_ACTIVE',                     safe_POST('smtp_active', 'internal|external|disabled', 'internal'));
 	set_site_setting('SMTP_HOST',                       safe_POST('smtp_host'));
 	set_site_setting('SMTP_HELO',                       safe_POST('smtp_helo'));
@@ -100,11 +99,20 @@ echo
 	'<td class="descriptionbox width20 wrap">', i18n::translate('Allow users to select their own theme'), help_link('ALLOW_USER_THEMES'), '</td>',
 	'<td class="optionbox wrap">', edit_field_yes_no('allow_user_themes', get_site_setting('ALLOW_USER_THEMES')), '</td>',
 	'</tr><tr>',
+	'<td class="descriptionbox width20 wrap">', i18n::translate('Default Theme'), help_link('THEME'), '</td>',
+	'<td class="optionbox wrap"><select name="THEME_DIR">';
+$current_themedir=get_site_setting('THEME_DIR', 'themes/webtrees/');
+foreach (get_theme_names() as $themename=>$themedir) {
+	echo '<option value="', $themedir, '"';
+	if ($themedir==$current_themedir) {
+		echo ' selected="selected"';
+	}
+	echo '>', $themename, '</option>';
+}
+echo
+	'</select></tr><tr>',
 	'<td class="descriptionbox width20 wrap">', i18n::translate('Allow GEDCOM switching'), help_link('ALLOW_CHANGE_GEDCOM'), '</td>',
 	'<td class="optionbox wrap">', edit_field_yes_no('allow_change_gedcom', get_site_setting('ALLOW_CHANGE_GEDCOM')), '</td>',
-	'</tr><tr>',
-	'<td class="descriptionbox width20 wrap">', i18n::translate('Session save path'), help_link('SESSION_SAVE_PATH'), '</td>',
-	'<td class="optionbox wrap"><input type="text" name="session_save_path" value="', get_site_setting('SESSION_SAVE_PATH'), '" size="50" /></td>',
 	'</tr><tr>',
 	'<td class="descriptionbox width20 wrap">', i18n::translate('Session timeout'), help_link('SESSION_TIME'), '</td>',
 	'<td class="optionbox wrap"><input type="text" name="session_time" value="', get_site_setting('SESSION_TIME'), '" /></td>',

@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
+ * @version $Id$
  */
 
 if (!defined('WT_WEBTREES')) {
@@ -44,12 +44,19 @@ class top10_pageviews_WT_Module extends WT_Module implements WT_Module_Block {
 	}
 
 	// Implement class WT_Module_Block
-	public function getBlock($block_id, $template=true) {
+	public function getBlock($block_id, $template=true, $cfg=null) {
 		global $ctype, $WT_IMAGES, $SHOW_COUNTER, $TEXT_DIRECTION, $THEME_DIR;
 
 		$count_placement=get_block_setting($block_id, 'count_placement', 'before');
-		$num=get_block_setting($block_id, 'num', 10);
+		$num=(int)get_block_setting($block_id, 'num', 10);
 		$block=get_block_setting($block_id, 'block', false);
+		if ($cfg) {
+			foreach (array('count_placement', 'num', 'block') as $name) {
+				if (array_key_exists($name, $cfg)) {
+					$$name=$cfg[$name];
+				}
+			}
+		}
 
 		$id=$this->getName().$block_id;
 		$title='';
@@ -68,12 +75,11 @@ class top10_pageviews_WT_Module extends WT_Module implements WT_Module_Block {
 			}
 		} else {
 			// load the lines from the file
-			$top10=WT_DB::prepareLimit(
+			$top10=WT_DB::prepare(
 				"SELECT page_parameter, page_count".
 				" FROM `##hit_counter`".
 				" WHERE gedcom_id=? AND page_name IN ('individual.php','family.php','source.php','repo.php','note.php','mediaviewer.php')".
-				" ORDER BY page_count DESC",
-				$num
+				" ORDER BY page_count DESC LIMIT ".$num
 			)->execute(array(WT_GED_ID))->FetchAssoc();
 
 
@@ -156,9 +162,10 @@ class top10_pageviews_WT_Module extends WT_Module implements WT_Module_Block {
 
 		$block=get_block_setting($block_id, 'block', false);
 		echo '<tr><td class="descriptionbox wrap width33">';
-		echo i18n::translate('Add a scrollbar when block contents grow');
+		echo /* I18N: label for a yes/no option */ i18n::translate('Add a scrollbar when block contents grow');
 		echo '</td><td class="optionbox">';
 		echo edit_field_yes_no('block', $block);
 		echo '</td></tr>';
 	}
 }
+?>

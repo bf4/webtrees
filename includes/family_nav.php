@@ -66,9 +66,7 @@ if (isset($_COOKIE['lastclick'])) {
 
 //     Start Family Nav Table ----------------------------
 	echo "<table class=\"facts_table\" width='230' cellpadding=\"0\">";
-		global $WT_IMAGES, $WT_MENUS_AS_LISTS;
-		global $spouselinks, $parentlinks, $DeathYr, $BirthYr;
-		global $TEXT_DIRECTION;
+		global $WT_IMAGES, $spouselinks, $parentlinks, $DeathYr, $BirthYr, $TEXT_DIRECTION;
 
 		$personcount=0;
 		$families = $this->indi->getChildFamilies();
@@ -106,10 +104,7 @@ if (isset($_COOKIE['lastclick'])) {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
-						$menu->printMenu();
-						if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
-						?>
+						<?php echo $menu->getMenu(); ?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>">
 						<?php
@@ -140,10 +135,7 @@ if (isset($_COOKIE['lastclick'])) {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>">
-						<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
-						$menu->printMenu();
-						if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
-						?>
+						<?php echo $menu->getMenu(); ?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
 						<?php
@@ -181,11 +173,9 @@ if (isset($_COOKIE['lastclick'])) {
 						<td class="facts_label<?php print $styleadd; ?>">
 						<?php
 						if ($pid == $child->getXref() ) {
-							print $child->getLabel();
-						}else{
-							if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
-								$menu->printMenu();
-							if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
+							echo $child->getLabel();
+						} else {
+							echo $menu->getMenu();
 						}
 						?>
 						</td>
@@ -254,10 +244,7 @@ if (isset($_COOKIE['lastclick'])) {
 
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
-						$menu->printMenu();
-						if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
-						?>
+						<?php echo $menu->getMenu(); ?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>" >
 						<?php
@@ -296,10 +283,7 @@ if (isset($_COOKIE['lastclick'])) {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
-						$menu->printMenu();
-						if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
-						?>
+						<?php echo $menu->getMenu(); ?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
 						<?php
@@ -333,10 +317,7 @@ if (isset($_COOKIE['lastclick'])) {
 					?>
 					<tr>
 						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
-						$menu->printMenu();
-						if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
-						?>
+							<?php echo $menu->getMenu(); ?>
 						</td>
 						<td align="center" class="<?php print $this->getPersonStyle($child); ?>">
 							<?php
@@ -394,10 +375,7 @@ if (isset($_COOKIE['lastclick'])) {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
-						$menu->printMenu();
-						if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
-						?>
+						<?php echo $menu->getMenu(); ?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>">
 						<?php
@@ -433,10 +411,7 @@ if (isset($_COOKIE['lastclick'])) {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
-						$menu->printMenu();
-						if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
-						?>
+						<?php echo $menu->getMenu(); ?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
 						<?php
@@ -474,10 +449,7 @@ if (isset($_COOKIE['lastclick'])) {
 					?>
 					<tr>
 						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php if ($WT_MENUS_AS_LISTS) echo "<ul>\n";
-						$menu->printMenu();
-						if ($WT_MENUS_AS_LISTS) echo "</ul>\n";
-						?>
+						<?php echo $menu->getMenu(); ?>
 						</td>
 						<td align="center" class="<?php print $this->getPersonStyle($child); ?>">
 							<?php
@@ -572,18 +544,8 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 
 						// Husband ------------------------------
 						if ($husb || $num>0) {
-							if ($TEXT_DIRECTION=="ltr") {
-								$title = i18n::translate('Family book chart').": ".$famid;
-							}else{
-								$title = $famid." :".i18n::translate('Family book chart');
-							}
 							if ($husb) {
 								$person_parent="Yes";
-								if ($TEXT_DIRECTION=="ltr") {
-									$title = i18n::translate('Individual information').": ".$husb->getXref();
-								}else{
-									$title = $husb->getXref()." :".i18n::translate('Individual information');
-								}
 								$parentlinks .= "<a href=\"".encode_url($husb->getLinkUrl()."&amp;tab={$tabno}")."\">";
 								$parentlinks .= "&nbsp;".PrintReady($husb->getFullName());
 								$parentlinks .= "</a>";
@@ -594,18 +556,8 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 
 						// Wife ------------------------------
 						if ($wife || $num>0) {
-							if ($TEXT_DIRECTION=="ltr") {
-								$title = i18n::translate('Family book chart').": ".$famid;
-							}else{
-								$title = $famid." :".i18n::translate('Family book chart');
-							}
 							if ($wife) {
 								$person_parent="Yes";
-								if ($TEXT_DIRECTION=="ltr") {
-									$title = i18n::translate('Individual information').": ".$wife->getXref();
-								}else{
-									$title = $wife->getXref()." :".i18n::translate('Individual information');
-								}
 								$parentlinks .= "<a href=\"".encode_url($wife->getLinkUrl()."&amp;tab={$tabno}")."\">";
 								$parentlinks .= "&nbsp;".PrintReady($wife->getFullName());
 								$parentlinks .= "</a>";
@@ -630,18 +582,8 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 						}else{
 							// Husband -----------------------
 							if ($husb || $num>0) {
-								if ($TEXT_DIRECTION=="ltr") {
-									$title = i18n::translate('Family book chart').": ".$famid;
-								}else{
-									$title = $famid." :".i18n::translate('Family book chart');
-								}
 								if ($husb) {
 									$person_step="Yes";
-									if ($TEXT_DIRECTION=="ltr") {
-										$title = i18n::translate('Individual information').": ".$husb->getXref();
-									}else{
-										$title = $husb->getXref()." :".i18n::translate('Individual information');
-									}
 									$parentlinks .= "<a href=\"".encode_url($husb->getLinkUrl()."&amp;tab={$tabno}")."\">";
 									$parentlinks .= "&nbsp;".PrintReady($husb->getFullName());
 									$parentlinks .= "</a>";
@@ -654,18 +596,8 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 						}else{
 							// Wife ----------------------------
 							if ($wife || $num>0) {
-								if ($TEXT_DIRECTION=="ltr") {
-									$title = i18n::translate('Family book chart').": ".$famid;
-								}else{
-									$title = $famid." :".i18n::translate('Family book chart');
-								}
 								if ($wife) {
 									$person_step="Yes";
-									if ($TEXT_DIRECTION=="ltr") {
-										$title = i18n::translate('Individual information').": ".$wife->getXref();
-									}else{
-										$title = $wife->getXref()." :".i18n::translate('Individual information');
-									}
 									$parentlinks .= "<a href=\"".encode_url($wife->getLinkUrl()."&amp;tab={$tabno}")."\">";
 									$parentlinks .= "&nbsp;".PrintReady($wife->getFullName());
 									$parentlinks .= "</a>";
@@ -686,17 +618,7 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 
 						// Spouse ------------------------------
 						if ($spouse || $num>0) {
-							if ($TEXT_DIRECTION=="ltr") {
-								$title = i18n::translate('Family book chart').": ".$famid;
-							}else{
-								$title = $famid." :".i18n::translate('Family book chart');
-							}
 							if ($spouse) {
-								if ($TEXT_DIRECTION=="ltr") {
-									$title = i18n::translate('Individual information').": ".$spouse->getXref();
-								}else{
-									$title = $spouse->getXref()." :".i18n::translate('Individual information');
-								}
 								$spouselinks .= "<a href=\"".encode_url($spouse->getLinkUrl()."&amp;tab={$tabno}")."\">";
 								$spouselinks .= "&nbsp;".PrintReady($spouse->getFullName());
 								$spouselinks .= "</a>";
@@ -710,7 +632,6 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 						foreach($children as $c=>$child) {
 							if ($child) {
 								$persons="Yes";
-									$title = i18n::translate('Individual information').": ".$child->getXref();
 									$spouselinks .= "<li>";
 									$spouselinks .= "<a href=\"".encode_url($child->getLinkUrl()."&amp;tab={$tabno}")."\">";
 									$spouselinks .= PrintReady($child->getFullName());
@@ -723,18 +644,15 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 				}
 
 				if ($persons != "Yes") {
-					$spouselinks  .= "&nbsp;(".i18n::translate('None').")\n\t\t";
+					$spouselinks  .= "&nbsp;(".i18n::translate('none').")\n\t\t";
 				}
 				if ($person_parent != "Yes") {
-					$parentlinks .= "&nbsp;(".i18n::translate('unknown').")\n\t\t";
+					$parentlinks .= "&nbsp;(".i18n::translate_c('unknown family', 'unknown').")\n\t\t";
 				}
 				if ($person_step != "Yes") {
-					$step_parentlinks .= "&nbsp;(".i18n::translate('unknown').")\n\t\t";
+					$step_parentlinks .= "&nbsp;(".i18n::translate_c('unknown family', 'unknown').")\n\t\t";
 				}
-
 			}
 		}
 	}
 }
-// ==============================================================
-?>

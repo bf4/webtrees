@@ -32,11 +32,8 @@ require './includes/session.php';
 
 header('Content-Type: text/plain; charset=UTF-8');
 
-// We have finished writing to $_SESSION, so release the lock
-session_write_close();
-
-// Maximum number of results in auto-complete fields
-define('WT_AUTOCOMPLETE_LIMIT', 500);
+// We have finished writing session data, so release the lock
+Zend_Session::writeClose();
 
 //-- args
 $FILTER=safe_GET('q', WT_REGEX_UNSAFE); // we can search on '"><& etc.
@@ -189,7 +186,7 @@ function autocomplete_INDI($FILTER, $OPTION) {
 						continue;
 					} elseif ($husb_birth_jd && $wife_birth_jd && $person_death_jd<$husb_birth_jd && $person_death_jd<$wife_birth_jd) {
 						continue;
-					}	elseif ($husb_birth_jd && $person_death_jd<$husb_birth_jd) {
+					} elseif ($husb_birth_jd && $person_death_jd<$husb_birth_jd) {
 						continue;
 					} elseif ($wife_birth_jd && $person_death_jd<$wife_birth_jd) {
 						continue;
@@ -712,7 +709,7 @@ function get_autocomplete_OBJE($FILTER, $ged_id=WT_GED_ID) {
 }
 
 function get_autocomplete_SURN($FILTER, $ged_id=WT_GED_ID) {
-	return 
+	return
 		WT_DB::prepare(
 			"SELECT DISTINCT n_surname".
 			" FROM `##name`".
@@ -724,7 +721,7 @@ function get_autocomplete_SURN($FILTER, $ged_id=WT_GED_ID) {
 }
 
 function get_autocomplete_GIVN($FILTER, $ged_id=WT_GED_ID) {
-	return 
+	return
 		WT_DB::prepare(
 			"SELECT DISTINCT n_givn".
 			" FROM `##name`".
@@ -736,8 +733,7 @@ function get_autocomplete_GIVN($FILTER, $ged_id=WT_GED_ID) {
 }
 
 function get_autocomplete_PLAC($FILTER, $ged_id=WT_GED_ID) {
-
-	return 
+	return
 		WT_DB::prepare(
 		"SELECT p1.p_place".
 		" FROM `##places` p1".

@@ -43,10 +43,10 @@
 	}
 	</script>
 
-	<select id="selcensdate" name="selcensdate" onchange =	"if (this.options[this.selectedIndex].value!='') {
+	<select id="selcensdate" name="selcensdate" onchange = "if (this.options[this.selectedIndex].value!='') {
 							addDate(this.options[this.selectedIndex].value);
 						}">
-		<option id="defdate" name="defdate" value='' SELECTED>Census Date</option>
+		<option id="defdate" name="defdate" value='' SELECTED><?php echo i18n::translate('Census date'); ?></option>
 		<option value=""></option>
 		<option id="UK1911" name="UK1911" class="UK"  value='1911, 3, 02, UK'>UK 1911</option>
 		<option id="UK1901" name="UK1901" class="UK"  value="1901, 2, 31, UK">UK 1901</option>
@@ -77,7 +77,3 @@
 
 	<input type="hidden" id="setctry" name="setctry" value="" />
 	<input type="hidden" id="setyear" name="setyear" value="" />
-
-
-
-

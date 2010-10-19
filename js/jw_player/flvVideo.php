@@ -2,7 +2,7 @@
 /**
  * JW Player module for phpGedView
  *
- * Display flv video media Items using JW Player in PGV
+ * Display flv video media Items using JW Player in webtrees
  *
  * webtrees: Web based Family History software
  * Copyright (C) 2010 webtrees development team.
@@ -49,7 +49,7 @@ $preview="";
 ?>
 
 	<!-- START OF THE PLAYER EMBEDDING TO COPY-PASTE -->
-	<!--	
+	<!--
 	<object id="player" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" name="player" width="400" height="315">
 		<param name="movie" value="player.swf" />
 		<param name="allowfullscreen" value="true" />
@@ -59,21 +59,21 @@ $preview="";
 			type="application/x-shockwave-flash"
 			id="player2"
 			name="player2"
-			src="player.swf" 
-			width="400" 
+			src="player.swf"
+			width="400"
 			height="315"
-			allowscriptaccess="always" 
+			allowscriptaccess="always"
 			allowfullscreen="true"
 			flashvars="file=http://www.youtube.com/watch?v=TF6cnLnEARo"
 		/>
 	</object>
 	-->
 	<!-- END OF THE PLAYER EMBEDDING -->
-	
+
 
 	<div id="container"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</div>
 	<script type="text/javascript">
-		var video 	= "<?php print $flvVideo; ?>";
+		var video   = "<?php print $flvVideo; ?>";
 		var preview = "<?php print $preview; ?>";
 		var s1 = new SWFObject("player.swf","ply","480","365","9","#000000");
 		s1.addParam("allowfullscreen","true");
@@ -81,11 +81,10 @@ $preview="";
 		s1.addParam("stretching","fill");
 		s1.addParam("flashvars","file=" +video+ "&image=" +preview+ "&autostart=true" );
 		s1.write("container");
-  </script> 
+  </script>
 
 
 
 </center>
 </body>
-
 </html>

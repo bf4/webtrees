@@ -83,14 +83,13 @@ legend img {
 	width: 25px;
 }
 
-img.block, #calendar_img, #biglink img {
-	border: none;
+img.block, #calendar_img, #biglink img, #mycart img  {
 	height: 25px;
 	vertical-align: middle;
 }
 
-.edit_link:after  {
-	content: url(images/edit_sm.png);
+#mycart a img  {
+	height: 15px;
 }
 
 .button {
@@ -694,7 +693,7 @@ a:hover .nameZoom {
 
 .blockcontent {
 	margin-left:auto;
-	margin-right:5px;
+	margin-right:auto;
 	margin-bottom:10px;
 	font-size: 13px;
 	overflow:auto;
@@ -724,7 +723,7 @@ a:hover .nameZoom {
 /*-- pedigree chart specific stylesheets --*/
 #pedigree_chart {
 	position: relative;
-	top: -250px;
+	top: -200px;
 	left: 0px;
 }
 
@@ -979,7 +978,6 @@ h4 {
 	background-color: #81a9cb;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	vertical-align: top;
-	white-space: nowrap;
 	padding: 3px;
 }
 
@@ -1445,8 +1443,13 @@ dl {
 dt {
 	float:left; 
 	font-weight:bold;
-	margin-right:10px; 
+	margin-right:10px;
 	clear:both;
+}
+
+dd {
+	display: inline;
+	margin: 0;
 }
 
 #facts_content dd {
@@ -1521,8 +1524,8 @@ dt {
 	width: 45%;
 }
 
-#sex, #mainfacts {
-	vertical-align:	top;
+#sex {
+	margin-top: 3px;
 }
 
 #hitcounter {
@@ -1699,4 +1702,41 @@ div.faq_body {
 
 .makeMenu li:hover > ul {
 	display:block;
+}
+
+/*--- edit links ---*/
+
+.edit_link:after { /* used only on the user list */
+	content: " " url(images/edit_sm.png);
+}
+
+td.descriptionbox  a { /* this keeps the tag color the same when it is a link as when not */
+	color: #ffffff;
+}
+
+.editfacts { /* a container for the following three links */
+	clear: left;
+	padding-top: 15px;
+}
+
+.link_text {
+	visibility : hidden;
+}
+
+.editlink  {
+	background: url(images/edit_sm.png) no-repeat left center;
+	width: 20px;
+	float: left;
+}
+
+.copylink  {
+	background: url(images/copy.png) no-repeat left center;
+	width: 20px;
+	float: left;
+}
+
+.deletelink  {
+	background: url(images/delete.png) no-repeat left center;
+	width: 20px;
+	float: left;
 }

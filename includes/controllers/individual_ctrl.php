@@ -92,7 +92,7 @@ class IndividualController extends BaseController {
 			// Start with the gedcom's default tab
 			$this->default_tab=get_gedcom_setting(WT_GED_ID, 'GEDCOM_DEFAULT_TAB');
 		}
-		
+
 		if (find_person_record($this->pid, WT_GED_ID) || find_updated_record($this->pid, WT_GED_ID)!==null){
 				$this->indi = new Person($gedrec, false);
 				$this->indi->ged_id=WT_GED_ID; // This record is from a file
@@ -199,19 +199,19 @@ class IndividualController extends BaseController {
 		$this->tabs = WT_Module::getActiveTabs();
 		foreach($this->tabs as $mod) {
 			$mod->setController($this);
-			if ($mod->hasTabContent()) {		
+			if ($mod->hasTabContent()) {
 				if (empty($this->default_tab)) {
 					$this->default_tab=$mod->getName();
 				}
 			}
 		}
-		
+
 		if (!isset($_SESSION['WT_pin']) && $DEFAULT_PIN_STATE)
-			 $_SESSION['WT_pin'] = true;
-			 
+			$_SESSION['WT_pin'] = true;
+
 		if (!isset($_SESSION['WT_sb_closed']) && $DEFAULT_SB_CLOSED_STATE)
-			 $_SESSION['WT_sb_closed'] = true;
-			 
+			$_SESSION['WT_sb_closed'] = true;
+
 		//-- handle ajax calls
 		if ($this->action=="ajax") {
 			$tab = 0;
@@ -229,17 +229,17 @@ class IndividualController extends BaseController {
 					echo WT_JS_END;
 				}
 			}
-			
+
 			if (isset($_REQUEST['pin'])) {
 				if ($_REQUEST['pin']=='true') $_SESSION['WT_pin'] = true;
 				else $_SESSION['WT_pin'] = false;
 			}
-			
+
 			if (isset($_REQUEST['sb_closed'])) {
 				if ($_REQUEST['sb_closed']=='true') $_SESSION['WT_sb_closed'] = true;
 				else $_SESSION['WT_sb_closed'] = false;
 			}
-			
+
 			//-- only get the requested tab and then exit
 			if (WT_DEBUG_SQL) {
 				echo WT_DB::getQueryLog();
@@ -300,7 +300,7 @@ class IndividualController extends BaseController {
 		if ($this->canShowHighlightedObject()) {
 			$firstmediarec = $this->indi->findHighlightedMedia();
 			if (!empty($firstmediarec)) {
-				$filename = thumb_or_main($firstmediarec);		// Do we send the main image or a thumbnail?
+				$filename = thumb_or_main($firstmediarec); // Do we send the main image or a thumbnail?
 				if (!$USE_THUMBS_MAIN || $firstmediarec["_THUM"]=='Y') {
 					$class = "image";
 				} else {
@@ -318,13 +318,13 @@ class IndividualController extends BaseController {
 
 					$name = $this->indi->getFullName();
 					if (WT_USE_LIGHTBOX) {
-						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_QUOTES, 'UTF-8')) . "\">" . "\n";
+						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
 					} else if (!$USE_MEDIA_VIEWER && $imgsize) {
 						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".urlencode($firstmediarec["file"])."', $imgwidth, $imgheight);\">";
 					} else {
 						$result .= "<a href=\"mediaviewer.php?mid={$mid}\">";
 					}
-					$result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" title=\"".PrintReady(htmlspecialchars(strip_tags($name), ENT_QUOTES, 'UTF-8'))."\" alt=\"".PrintReady(htmlspecialchars(strip_tags($name), ENT_QUOTES, 'UTF-8'))."\" />";
+					$result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" title=\"".PrintReady(htmlspecialchars(strip_tags($name)))."\" alt=\"".PrintReady(htmlspecialchars(strip_tags($name)))."\" />";
 					$result .= "</a>";
 					return $result;
 				}
@@ -340,7 +340,7 @@ class IndividualController extends BaseController {
 				$result .= $WT_IMAGES["default_image_M"];
 			} else {
 				$result .= $WT_IMAGES["default_image_U"];
-			} 
+			}
 			$result .="\" class=\"".$class."\" border=\"none\" alt=\"\" />";
 			return $result;
 		}
@@ -375,12 +375,12 @@ class IndividualController extends BaseController {
 		$dummy->setPrimaryName(0);
 		echo '<div id="name1">';
 			echo '<dl><dt class="label">', i18n::translate('Name'), '</dt>';
-			echo '<span class="field">', PrintReady($dummy->getFullName());
+			echo '<dd class="field">', PrintReady($dummy->getFullName());
 				if ($this->userCanEdit() && !strpos($factrec, 'WT_OLD') && $this->name_count > 1) {
 					echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" class=\"font9\" onclick=\"edit_name('".$this->pid."', ".$linenum."); return false;\">", i18n::translate('Edit'), "</a> | ";
 					echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$linenum."); return false;\">", i18n::translate('Delete'), "</a>", help_link('delete_name');
 				}
-			echo '</span>';
+			echo '</dd>';
 			echo '</dl>';
 		echo '</div>';
 		$ct = preg_match_all('/\n2 (\w+) (.*)/', $factrec, $nmatch, PREG_SET_ORDER);
@@ -389,7 +389,7 @@ class IndividualController extends BaseController {
 				$fact = trim($nmatch[$i][1]);
 				if (($fact!="SOUR")&&($fact!="NOTE")&&($fact!="GIVN")&&($fact!="SURN")&&($fact!="SPFX")) {
 					echo '<dl><dt class="label">', translate_fact($fact, $this->indi), '</dt>';
-					echo '<span class="field">';
+					echo '<dd class="field">';
 						if (isset($nmatch[$i][2])) {
 							$name = trim($nmatch[$i][2]);
 							$name = preg_replace("'/,'", ",", $name);
@@ -400,7 +400,7 @@ class IndividualController extends BaseController {
 							$name=preg_replace('/(\S*)\*/', '<span class="starredname">\\1</span>', $name);
 							echo PrintReady($name);
 						}
-					echo '</span>';
+					echo '</dd>';
 					echo '</dl>';
 				}
 			echo '</div>';
@@ -439,7 +439,7 @@ class IndividualController extends BaseController {
 			}
 			echo '>';
 			echo '<dl><dt class="label">', i18n::translate('Gender'), '</dt>';
-			echo '<span class="field">';
+			echo '<dd class="field">';
 			switch ($sex) {
 			case 'M':
 				echo i18n::translate('Male'), Person::sexImage('M', 'small', '', i18n::translate('Male'));
@@ -448,7 +448,7 @@ class IndividualController extends BaseController {
 				echo i18n::translate('Female'), Person::sexImage('F', 'small', '', i18n::translate('Female'));
 				break;
 			case 'U':
-				echo i18n::translate('unknown'), Person::sexImage('U', 'small', '', i18n::translate('unknown'));
+				echo i18n::translate_c('unknown gender', 'Unknown'), Person::sexImage('U', 'small', '', i18n::translate_c('unknown gender', 'Unknown'));
 				break;
 			}
 			if ($this->SEX_COUNT>1) {
@@ -461,13 +461,11 @@ class IndividualController extends BaseController {
 					}
 				}
 			}
-			echo '</span>';
+			echo '</dd>';
 			echo '</dl>';
 			// -- find sources
-	//		print "&nbsp;&nbsp;&nbsp;";
 			print_fact_sources($event->getGedComRecord(), 2);
 			//-- find the notes
-	//		print "&nbsp;&nbsp;&nbsp;";
 			print_fact_notes($event->getGedComRecord(), 2);
 		echo '</div>';
 	}
@@ -637,7 +635,7 @@ class IndividualController extends BaseController {
 		$otherfacts = $this->indi->getOtherFacts();
 		return $otherfacts;
 	}
-	
+
 	/**
 	* get the person box stylesheet class
 	* for the given person
@@ -659,7 +657,7 @@ class IndividualController extends BaseController {
 		}
 		return "person_box".$isf;
 	}
-	
+
 	/**
 	* build an array of Person that will be used to build a list
 	* of family members on the close relatives tab
@@ -667,7 +665,7 @@ class IndividualController extends BaseController {
 	* @return array an array of Person that will be used to iterate through on the indivudal.php page
 	*/
 	function buildFamilyList(&$family, $type) {
-		global $PEDI_CODES, $PEDI_CODES_F, $PEDI_CODES_M;
+		global $PEDI_CODES, $PEDI_CODES_F, $PEDI_CODES_M, $WT_IMAGES;
 
 		$people = array();
 		if (!is_object($family)) return $people;
@@ -750,7 +748,7 @@ class IndividualController extends BaseController {
 			if ($sex=="M") {
 				$label = $labels["father"];
 			}
-			if ($husb->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
+			if ($husb->getXref()==$this->pid) $label = "<img src=\"". $WT_IMAGES["selected"]. "\" alt=\"\" />";
 			$husb->setLabel($label);
 		}
 		//-- set the label for the wife
@@ -763,7 +761,7 @@ class IndividualController extends BaseController {
 			if ($sex=="M") {
 				$label = $labels["father"];
 			}
-			if ($wife->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
+			if ($wife->getXref()==$this->pid) $label = "<img src=\"". $WT_IMAGES["selected"]. "\" alt=\"\" />";
 			$wife->setLabel($label);
 		}
 		if ($this->show_changes) {
@@ -780,7 +778,7 @@ class IndividualController extends BaseController {
 					if ($sex=="M") {
 						$label = $labels["father"];
 					}
-					if ($newhusb->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
+					if ($newhusb->getXref()==$this->pid) $label = "<img src=\"". $WT_IMAGES["selected"]. "\" alt=\"\" />";
 					$newhusb->setLabel($label);
 				}
 				else $newhusb = null;
@@ -795,7 +793,7 @@ class IndividualController extends BaseController {
 					if ($sex=="M") {
 						$label = $labels["father"];
 					}
-					if ($newwife->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
+					if ($newwife->getXref()==$this->pid) $label = "<img src=\"". $WT_IMAGES["selected"]. "\" alt=\"\" />";
 					$newwife->setLabel($label);
 				}
 				else $newwife = null;
@@ -849,14 +847,14 @@ class IndividualController extends BaseController {
 					$label = $labels["brother"];
 				}
 				if ($children[$i]->getXref()==$this->pid) {
-					$label = "<img src=\"images/selected.png\" alt=\"\" />";
+					$label = "<img src=\"". $WT_IMAGES["selected"]. "\" alt=\"\" />";
 				}
 				$famcrec = get_sub_record(1, "1 FAMC @".$family->getXref()."@", $children[$i]->getGedcomRecord());
 				$pedi = get_gedcom_value("PEDI", 2, $famcrec, '', false);
 				if ($pedi) {
-					if ($sex=="F" && isset($PEDI_CODES[$pedi]))			$label .= " (".$PEDI_CODES_F[$pedi].")";
-					else if ($sex=="M" && isset($PEDI_CODES[$pedi]))	$label .= " (".$PEDI_CODES_M[$pedi].")";
-					else if (isset($PEDI_CODES[$pedi]))					$label .= " (".$PEDI_CODES[$pedi].")";
+					if ($sex=="F" && isset($PEDI_CODES[$pedi]))      $label .= "<br />(".$PEDI_CODES_F[$pedi].")";
+					else if ($sex=="M" && isset($PEDI_CODES[$pedi])) $label .= "<br />(".$PEDI_CODES_M[$pedi].")";
+					else if (isset($PEDI_CODES[$pedi]))              $label .= "<br />(".$PEDI_CODES[$pedi].")";
 				}
 				$children[$i]->setLabel($label);
 			}
@@ -871,11 +869,11 @@ class IndividualController extends BaseController {
 			if ($sex=="M") {
 				$label = $labels["brother"];
 		}
-			if ($newchildren[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
+			if ($newchildren[$i]->getXref()==$this->pid) $label = "<img src=\"". $WT_IMAGES["selected"]. "\" alt=\"\" />";
 			$pedi = $newchildren[$i]->getChildFamilyPedigree($family->getXref());
-			if ($sex=="F" && isset($PEDI_CODES[$pedi]))			$label .= " (".$PEDI_CODES_F[$pedi].")";
-			else if ($sex=="M" && isset($PEDI_CODES[$pedi]))	$label .= " (".$PEDI_CODES_M[$pedi].")";
-			else if (isset($PEDI_CODES[$pedi]))					$label .= " (".$PEDI_CODES[$pedi].")";
+			if ($sex=="F" && isset($PEDI_CODES[$pedi]))      $label .= "<br />(".$PEDI_CODES_F[$pedi].")";
+			else if ($sex=="M" && isset($PEDI_CODES[$pedi])) $label .= "<br />(".$PEDI_CODES_M[$pedi].")";
+			else if (isset($PEDI_CODES[$pedi]))              $label .= "<br />(".$PEDI_CODES[$pedi].")";
 			$newchildren[$i]->setLabel($label);
 		}
 		$num = count($delchildren);
@@ -888,11 +886,11 @@ class IndividualController extends BaseController {
 			if ($sex=="M") {
 				$label = $labels["brother"];
 			}
-			if ($delchildren[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
+			if ($delchildren[$i]->getXref()==$this->pid) $label = "<img src=\"". $WT_IMAGES["selected"]. "\" alt=\"\" />";
 			$pedi = $delchildren[$i]->getChildFamilyPedigree($family->getXref());
-			if ($sex=="F" && isset($PEDI_CODES[$pedi]))			$label .= " (".$PEDI_CODES_F[$pedi].")";
-			else if ($sex=="M" && isset($PEDI_CODES[$pedi]))	$label .= " (".$PEDI_CODES_M[$pedi].")";
-			else if (isset($PEDI_CODES[$pedi]))					$label .= " (".$PEDI_CODES[$pedi].")";
+			if ($sex=="F" && isset($PEDI_CODES[$pedi]))      $label .= "<br />(".$PEDI_CODES_F[$pedi].")";
+			else if ($sex=="M" && isset($PEDI_CODES[$pedi])) $label .= "<br />(".$PEDI_CODES_M[$pedi].")";
+			else if (isset($PEDI_CODES[$pedi]))              $label .= "<br />(".$PEDI_CODES[$pedi].")";
 			$delchildren[$i]->setLabel($label);
 		}
 		if (!is_null($newhusb)) $people['newhusb'] = $newhusb;
@@ -920,6 +918,4 @@ class IndividualController extends BaseController {
 // -----------------------------------------------------------------------------
 // End GedFact Assistant Functions
 // -----------------------------------------------------------------------------
-
 }
-

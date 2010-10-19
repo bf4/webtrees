@@ -54,7 +54,7 @@ class families_WT_Module extends WT_Module implements WT_Module_Sidebar {
 	public function hasSidebarContent() {
 		return true;
 	}
-	
+
 	// Implement WT_Module_Sidebar
 	public function getSidebarAjaxContent() {
 		$alpha   =safe_GET('alpha'); // All surnames beginning with this letter where "@"=unknown and ","=none
@@ -78,14 +78,14 @@ class families_WT_Module extends WT_Module implements WT_Module_Sidebar {
 		$out = '<script type="text/javascript">
 		<!--
 		var famloadedNames = new Array();
-		
+
 		function searchQ() {
 			var query = jQuery("#sb_fam_name").attr("value");
 			if (query.length>1) {
 				jQuery("#sb_fam_content").load("sidebar.php?sb_action=families&search="+query);
 			}
 		}
-		
+
 		jQuery(document).ready(function(){
 			jQuery("#sb_fam_name").focus(function(){this.select();});
 			jQuery("#sb_fam_name").blur(function(){if (this.value=="") this.value="'.i18n::translate('Search').'";});
@@ -101,7 +101,7 @@ class families_WT_Module extends WT_Module implements WT_Module_Sidebar {
 			jQuery(".sb_fam_surname").live("click", function() {
 				var surname = jQuery(this).attr("title");
 				var alpha = jQuery(this).attr("alt");
-				
+
 				if (!famloadedNames[surname]) {
 					jQuery.ajax({
 					  url: "sidebar.php?sb_action=families&alpha="+alpha+"&surname="+surname,
@@ -159,7 +159,7 @@ class families_WT_Module extends WT_Module implements WT_Module_Sidebar {
 			if (!empty($search)) $out.= $this->search($search);
 			else if (!empty($alpha)) $out.= $this->getAlphaSurnames($alpha, $surname);
 		}
-		
+
 		$out .= '</div></form>';
 		return $out;
 	}
@@ -176,7 +176,7 @@ class families_WT_Module extends WT_Module implements WT_Module_Sidebar {
 				$out .= '</div>';
 			}
 			else
-				$out .= '<div class="name_tree_div"></div>'; 
+				$out .= '<div class="name_tree_div"></div>';
 			$out .= '</li>';
 		}
 		$out .= '</ul>';
@@ -208,14 +208,13 @@ class families_WT_Module extends WT_Module implements WT_Module_Sidebar {
 		if (strlen($query)<2) return '';
 
 		//-- search for INDI names
-		$sql=
-		"SELECT ? AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
-		" FROM `##individuals`, `##name`".
-		" WHERE (i_id LIKE ? OR n_sort LIKE ?)".
-		" AND i_id=n_id AND i_file=n_file AND i_file=?".
-		" ORDER BY n_sort";
-		$rows=
-		WT_DB::prepareLimit($sql, WT_AUTOCOMPLETE_LIMIT)
+		$rows=WT_DB::prepare(
+			"SELECT ? AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
+			" FROM `##individuals`, `##name`".
+			" WHERE (i_id LIKE ? OR n_sort LIKE ?)".
+			" AND i_id=n_id AND i_file=n_file AND i_file=?".
+			" ORDER BY n_sort LIMIT ".WT_AUTOCOMPLETE_LIMIT
+		)
 		->execute(array('INDI', "%{$query}%", "%{$query}%", WT_GED_ID))
 		->fetchAll(PDO::FETCH_ASSOC);
 		$ids = array();
@@ -235,10 +234,8 @@ class families_WT_Module extends WT_Module implements WT_Module_Sidebar {
 			$vars=array_merge($vars, $ids, $ids);
 		}
 
-		$sql="SELECT ? AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_numchil FROM `##families` WHERE {$where} AND f_file=?";
 		$vars[]=WT_GED_ID;
-		$rows=
-		WT_DB::prepareLimit($sql, WT_AUTOCOMPLETE_LIMIT)
+		$rows=WT_DB::prepare("SELECT ? AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_numchil FROM `##families` WHERE {$where} AND f_file=? LIMIT ".WT_AUTOCOMPLETE_LIMIT)
 		->execute($vars)
 		->fetchAll(PDO::FETCH_ASSOC);
 

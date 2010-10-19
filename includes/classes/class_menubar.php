@@ -38,28 +38,12 @@ define('WT_CLASS_MENUBAR_PHP', '');
 require_once WT_ROOT.'includes/classes/class_menu.php';
 require_once WT_ROOT.'includes/classes/class_module.php';
 
-class MenuBar
-{
-	/**
-	* get the home menu
-	* @return Menu the menu item
-	*/
-	static function getHomeMenu() {
-		global $TEXT_DIRECTION, $WT_IMAGES, $HOME_SITE_URL, $HOME_SITE_TEXT;
-		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
-		//-- main home menu item
-		$menu = new Menu($HOME_SITE_TEXT, $HOME_SITE_URL, "down");
-		if (!empty($WT_IMAGES["home"]))
-			$menu->addIcon('home');
-		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_home");
-		return $menu;
-	}
-
+class MenuBar {
 	/**
 	* get the menu with links to the gedcom portals
 	* @return Menu the menu item
 	*/
-	static function getGedcomMenu() {
+	public static function getGedcomMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGES;
 
 		if ($TEXT_DIRECTION=='rtl') $ff='_rtl'; else $ff='';
@@ -93,7 +77,7 @@ class MenuBar
 	* get the mypage menu
 	* @return Menu the menu item
 	*/
-	static function getMyPageMenu() {
+	public static function getMyPageMenu() {
 		global $MEDIA_DIRECTORY, $MULTI_MEDIA;
 		global $TEXT_DIRECTION, $WT_IMAGES;
 		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT;
@@ -103,7 +87,7 @@ class MenuBar
 		$showLayout = ($PEDIGREE_LAYOUT) ? 1 : 0;
 
 		if (!WT_USER_ID) {
-			return new Menu('', '', '');
+			return null;
 		}
 
 		//-- main menu
@@ -139,7 +123,7 @@ class MenuBar
 		if (WT_USER_GEDCOM_ADMIN){
 			$menu->addSeparator();
 			//-- admin submenu
-			$submenu = new Menu(i18n::translate('Admin'), "admin.php");
+			$submenu = new Menu(i18n::translate('Administration'), "admin.php");
 			$submenu->addIcon('admin');
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_admin");
 			$menu->addSubmenu($submenu);
@@ -180,13 +164,11 @@ class MenuBar
 	* get the menu for the charts
 	* @return Menu the menu item
 	*/
-	static function getChartsMenu($rootid='') {
+	public static function getChartsMenu($rootid='') {
 		global $TEXT_DIRECTION, $WT_IMAGES, $SEARCH_SPIDER;
 		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT;
 		global $controller;
-		
-		$style = "top";
-		if ($rootid) $style = "sub";
+
 		if (isset($controller)) {
 			if (!$rootid) {
 				if (isset($controller->pid)) $rootid = $controller->pid;
@@ -196,8 +178,7 @@ class MenuBar
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
-			$menu = new Menu("", "", "");
-			return $menu;
+			return null;
 		}
 
 		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
@@ -206,17 +187,9 @@ class MenuBar
 		//-- main charts menu item
 		$link = "pedigree.php?ged=".WT_GEDCOM."&show_full={$showFull}&talloffset={$showLayout}";
 		if ($rootid) $link .= "&rootid={$rootid}";
-		if ($style=="sub") {
-			$menu = new Menu(i18n::translate('Charts'), encode_url($link));
-			$menu->addIcon('charts');
-			$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff", "", "icon_small_pedigree");
-		}
-		else {
-			// top menubar
-			$menu = new Menu(i18n::translate('Charts'), encode_url($link), "down");
-			$menu->addIcon('charts');
-			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_pedigree");
-		}
+		$menu = new Menu(i18n::translate('Charts'), encode_url($link), "down");
+		$menu->addIcon('charts');
+		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_pedigree");
 
 		// Build a sortable list of submenu items and then sort it in localized name order
 		$menuList = array();
@@ -325,7 +298,7 @@ class MenuBar
 					$menuList["childTimeLine"] = i18n::translate('Show children on timeline chart');
 					$menuList["familyTimeLine"] = i18n::translate('Show family on timeline chart');
 					asort($menuList);
-			
+
 					// Produce the submenus in localized name order
 					foreach($menuList as $menuType => $menuName) {
 						switch ($menuType) {
@@ -338,7 +311,7 @@ class MenuBar
 							$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 							$menu->addSubmenu($submenu);
 							break;
-			
+
 						case "childTimeLine":
 							// charts / children_timeline
 							$submenu = new Menu(i18n::translate('Show children on timeline chart'), encode_url('timeline.php?'.$controller->getChildrenUrlTimeline()));
@@ -348,7 +321,7 @@ class MenuBar
 							$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 							$menu->addSubmenu($submenu);
 							break;
-			
+
 						case "familyTimeLine":
 							// charts / family_timeline
 							$submenu = new Menu(i18n::translate('Show family on timeline chart'), encode_url('timeline.php?pids[0]='.$controller->getHusband().'&pids[1]='.$controller->getWife().'&'.$controller->getChildrenUrlTimeline(2)));
@@ -358,11 +331,11 @@ class MenuBar
 							$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 							$menu->addSubmenu($submenu);
 							break;
-			
+
 						}
 					}
 				}
-				
+
 				break;
 
 			case "lifespan":
@@ -467,9 +440,9 @@ class MenuBar
 	* get the menu for the lists
 	* @return Menu the menu item
 	*/
-	static function getListsMenu($surname="") {
+	public static function getListsMenu($surname="") {
 		global $TEXT_DIRECTION, $WT_IMAGES, $MULTI_MEDIA, $SEARCH_SPIDER, $controller;
-		
+
 		$style = "top";
 		if ($surname) $style = "sub";
 		if (isset($controller)) {
@@ -483,7 +456,7 @@ class MenuBar
 				}
 			}
 		}
-		
+
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
 		if (!empty($SEARCH_SPIDER)) { // Only want the indi list for search engines.
@@ -621,15 +594,14 @@ class MenuBar
 	* get the menu for the calendar
 	* @return Menu the menu item
 	*/
-	static function getCalendarMenu() {
+	public static function getCalendarMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGES, $SEARCH_SPIDER;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if ((!file_exists(WT_ROOT.'calendar.php')) || (!empty($SEARCH_SPIDER))) {
 			$menu = new Menu("", "", "");
-//			$menu->print_menu = null;
 			return $menu;
-			}
+		}
 		//-- main calendar menu item
 		$menu = new Menu(i18n::translate('Calendar'), encode_url('calendar.php?ged='.WT_GEDCOM), "down");
 		$menu->addIcon('calendar');
@@ -656,42 +628,25 @@ class MenuBar
 	* get the reports menu
 	* @return Menu the menu item
 	*/
-	static function getReportsMenu($pid="", $famid="") {
+	public static function getReportsMenu($pid="", $famid="") {
 		global $TEXT_DIRECTION, $WT_IMAGES, $SEARCH_SPIDER, $controller;
 
-		$style = "top";
-		if ($pid || $famid) $style = "sub";
-		if (isset($controller)) {
-			if (!$pid) {
-				if (isset($controller->pid)) $pid = $controller->pid;
-				if (isset($controller->rootid)) $pid = $controller->rootid;
-			}
-			if (!$famid) {
-				if (isset($controller->famid)) $famid = $controller->famid;
-			}
+		$active_reports=WT_Module::getActiveReports();
+		if ($SEARCH_SPIDER || !$active_reports) {
+			return null;
 		}
-		
-		
-		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
-		if ((!file_exists(WT_ROOT.'reportengine.php')) || (!empty($SEARCH_SPIDER))) {
-			$menu = new Menu("", "", "");
-//			$menu->print_menu = null;
-			return $menu;
-			}
 
-		//-- main reports menu item
-		if ($style=="sub") {
-			$menu = new Menu(i18n::translate('Reports'), "#");
-			$menu->addIcon('reports');
-			$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff", "icon_small_reports");
+		if ($TEXT_DIRECTION=="rtl") {
+			$ff="_rtl";
 		} else {
-			// top menubar
-			$menu = new Menu(i18n::translate('Reports'), encode_url('reportengine.php?ged='.WT_GEDCOM), "down");
-			$menu->addIcon('reports');
-			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_reports");
+			$ff="";
 		}
 
-		foreach (WT_Module::getActiveReports() as $report) {
+		$menu = new Menu(i18n::translate('Reports'), encode_url('reportengine.php?ged='.WT_GEDCOM), "down");
+		$menu->addIcon('reports');
+		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_reports");
+
+		foreach ($active_reports as $report) {
 			foreach ($report->getReportMenus() as $submenu) {
 				$menu->addSubmenu($submenu);
 			}
@@ -700,35 +655,16 @@ class MenuBar
 	}
 
 	/**
-	* get the optional site-specific menu
-	* @return Menu the menu item
-	*/
-	static function getOptionalMenu() {
-		global $TEXT_DIRECTION, $WT_IMAGES, $SEARCH_SPIDER;
-
-		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
-		if (!file_exists(WT_ROOT.'includes/extras/optional_menu.php') || !empty($SEARCH_SPIDER)) {
-			$menu = new Menu("", "", "");
-//			$menu->print_menu = null;
-			return $menu;
-		}
-		require WT_ROOT.'includes/extras/optional_menu.php';
-		return $menu;
-	}
-
-	/**
 	* get the search menu
 	* @return Menu the menu item
 	*/
-	static function getSearchMenu() {
+	public static function getSearchMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGES, $SHOW_MULTISITE_SEARCH, $SEARCH_SPIDER;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if ((!file_exists(WT_ROOT.'search.php')) || (!empty($SEARCH_SPIDER))) {
-			$menu = new Menu("", "", "");
-//			$menu->print_menu = null;
-			return $menu;
-			}
+			return null;
+		}
 		//-- main search menu item
 		$menu = new Menu(i18n::translate('Search'), encode_url('search.php?ged='.WT_GEDCOM), "down");
 		$menu->addIcon('search');
@@ -773,7 +709,7 @@ class MenuBar
 	* get an array of module menu objects
 	* @return array
 	*/
-	static function getModuleMenus() {
+	public static function getModuleMenus() {
 		$menus=array();
 		foreach (WT_Module::getActiveMenus() as $module) {
 			$menu=$module->getMenu();
@@ -788,15 +724,13 @@ class MenuBar
 	* get the help menu
 	* @return Menu the menu item
 	*/
-	static function getHelpMenu() {
+	public static function getHelpMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGES, $SEARCH_SPIDER, $QUERY_STRING, $helpindex, $action;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
-			$menu = new Menu("", "", "");
-//			$menu->print_menu = null;
-			return $menu;
-			}
+			return null;
+		}
 		//-- main help menu item
 		$menu = new Menu(i18n::translate('Help'), "#", "down");
 		$menu->addIcon('menu_help');
@@ -835,16 +769,6 @@ class MenuBar
 		$submenu->addIcon('wiki');
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_wiki");
 		$menu->addSubmenu($submenu);
-// These two sub menu items temporarily removed as the WIKI pages do not exist
-//		$submenu = new Menu(i18n::translate('Wiki User\'s Guide'), WT_WEBTREES_WIKI.'/en/index.php?title=Users_Guide" target="_blank');
-//		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_wiki");
-//		$menu->addSubmenu($submenu);
-//
-		if (WT_USER_GEDCOM_ADMIN) {
-//			$submenu = new Menu(i18n::translate('Wiki Administrator\'s Guide'), WT_WEBTREES_WIKI.'/en/index.php?title=Administrators_Guide" target="_blank');
-//			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_wiki");
-//			$menu->addSubmenu($submenu);
-		}
 
 		//-- add contact links to help menu
 		$menu->addSeparator();
@@ -872,34 +796,16 @@ class MenuBar
 	* get the menu with links change to each theme
 	* @return Menu the menu item
 	*/
-	static function getThemeMenu() {
-		global $SEARCH_SPIDER, $ALLOW_THEME_DROPDOWN, $THEME_DIR;
-
-		$current=get_user_setting(WT_USER_ID, 'theme');
-		$all_themes=get_theme_names();
-		if (!array_key_exists($current, $all_themes)) {
-			$current=$THEME_DIR;		
-		}
+	public static function getThemeMenu() {
+		global $SEARCH_SPIDER, $ALLOW_THEME_DROPDOWN;
 
 		if ($ALLOW_THEME_DROPDOWN && !$SEARCH_SPIDER && get_site_setting('ALLOW_USER_THEMES')) {
-			isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
-			$frompage = WT_SCRIPT_NAME.decode_url($tqstring);
-			if (isset($_REQUEST['mod'])) {
-				if (!strstr($frompage, "?")) {
-					if (!strstr($frompage, "%3F")) ;
-					else $frompage .= "?";
-				}
-				if (!strstr($frompage, "&mod") || !strstr($frompage, "?mod")) $frompage .= "&mod=".$_REQUEST['mod'];
-			}
-			if (substr($frompage,-1) == "?") $frompage = substr($frompage,0,-1);
-			if (substr($frompage,-1) == "&") $frompage = substr($frompage,0,-1);
-			// encode frompage address in other case we lost the all variables on theme change
-			$frompage = base64_encode($frompage);
+			$url=WT_SCRIPT_NAME.'?'.get_query_string();
 			$menu=new Menu(i18n::translate('Theme'));
 			$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu', "icon_small_theme");
-			foreach ($all_themes as $themename=>$themedir) {
-				$submenu=new Menu($themename, encode_url("themechange.php?frompage={$frompage}&mytheme={$themedir}"));
-				if ($themedir==$current) {
+			foreach (get_theme_names() as $themename=>$themedir) {
+				$submenu=new Menu($themename, $url.'&amp;theme='.$themedir);
+				if ($themedir==WT_THEME_DIR) {
 					$submenu->addClass('favsubmenuitem_selected', 'favsubmenuitem_hover');
 				} else {
 					$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
@@ -908,14 +814,14 @@ class MenuBar
 			}
 			return $menu;
 		} else {
-			return new Menu('', '');
+			return null;
 		}
 	}
 	/**
 	* get the menu with links change to each color themes subcolor type
 	* @return Menu the menu item
 	*/
-	static function getColorMenu($COLOR_THEME_LIST) {
+	public static function getColorMenu($COLOR_THEME_LIST) {
 		isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
 		$frompage = WT_SCRIPT_NAME.decode_url($tqstring);
 		if (isset($_REQUEST['mod'])) {
@@ -942,7 +848,7 @@ class MenuBar
 	* get the menu with links to change language
 	* @return Menu the menu item
 	*/
-	static function getLanguageMenu() {
+	public static function getLanguageMenu() {
 		global $QUERY_STRING, $WT_IMAGES, $TEXT_DIRECTION;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
@@ -962,14 +868,14 @@ class MenuBar
 		if (count($menu->submenus)>1) {
 			return $menu;
 		} else {
-			return new Menu('', '');
+			return null;
 		}
 	}
 	/**
 	* get the menu with links to the user/gedcom favorites
 	* @return Menu the menu item
 	*/
-	static function getFavoritesMenu() {
+	public static function getFavoritesMenu() {
 		global $REQUIRE_AUTHENTICATION, $GEDCOM, $QUERY_STRING, $WT_IMAGES, $TEXT_DIRECTION;
 		global $SEARCH_SPIDER;
 		global $controller; // Pages with a controller can be added to the favorites
@@ -1082,5 +988,3 @@ class MenuBar
 		return $menu;
 	}
 }
-
-?>

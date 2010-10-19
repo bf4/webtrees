@@ -28,10 +28,10 @@
  * @subpackage Census Assistant
  * @version $Id$
  */
- 
+
 	$text = "xCxAx<table cellpadding=\"0\"><tr><td>" . $text;
 	$text = str_replace("<br />.start_formatted_area.<br />", "</td></tr></table><table cellpadding=\"0\"><tr><td class=\"notecell\">&nbsp;", $text);
-	
+
 		// -- Create View Header Tooltip explanations (Use embolden) -----------
 		$text = str_replace(".b.".'Name',   "<span class=\"note2\" alt=\"".'Full Name or Married name if married'."\"   title=\"".'Full Name or Married name if married'."\">  <b>".'Name'."</span>",   $text);
 		$text = str_replace(".b.".'Relation',   "<span class=\"note1\" alt=\"".'Relationship to Head of Household'."\"   title=\"".'Relationship to Head of Household'."\">  <b>".'Relation'."</span>",   $text);
@@ -78,7 +78,7 @@
 		$text = str_replace(".b.".'Mmth',        "<span class=\"note1\" alt=\"".'Month of marriage - If married during Census Year'."\"         title=\"".'Month of marriage - If married during Census Year'."\">       <b>".'Mmth'."</span>",        $text);
 		$text = str_replace(".b.".'MnsE',        "<span class=\"note1\" alt=\"".'Months employed during Census Year'."\"         title=\"".'Months employed during Census Year'."\">       <b>".'MnsE'."</span>",        $text);
 		$text = str_replace(".b.".'WksU',        "<span class=\"note1\" alt=\"".'Weeks unemployed during Census Year'."\"         title=\"".'Weeks unemployed during Census Year'."\">       <b>".'WksU'."</span>",        $text);
-		$text = str_replace(".b.".'MnsU',        "<span class=\"note1\" alt=\"".'Months unemployed during Census Year'."\"         title=\"".'English spoken?'."\">        <b>".'Eng?'."</span>",         $text);
+		$text = str_replace(".b.".'MnsU',        "<span class=\"note1\" alt=\"".'Months unemployed during Census Year'."\"         title=\"".'Months unemployed during Census Year'."\">        <b>".'MnsU'."</span>",         $text);
 		$text = str_replace(".b.".'Edu', "<span class=\"note1\" alt=\"".'Education - xxx - At School, Cannot Read, Cannot Write'."\"  title=\"".'Education - xxx - At School, Cannot Read, Cannot Write'."\"><b>".'Edu'."</span>", $text);
 		$text = str_replace(".b.".'Home',        "<span class=\"note1\" alt=\"".'Home Ownership - Owned/Rented-Free/Mortgaged-Farm/House-Farm Schedule number'."\"         title=\"".'Home Ownership - Owned/Rented-Free/Mortgaged-Farm/House-Farm Schedule number'."\">       <b>".'Home'."</span>",        $text);
 		$text = str_replace(".b.".'Situ',        "<span class=\"note1\" alt=\"".'Situation - Disease, Infirmaty, Convict, Pauper etc'."\"         title=\"".'Situation - Disease, Infirmaty, Convict, Pauper etc'."\">       <b>".'Situ'."</span>",        $text);
@@ -87,15 +87,13 @@
 
 
 		// Regular Field Highlighting (Use embolden) ------------
-		$text = str_replace(".b.", "<b>", $text); 
-		
+		$text = str_replace(".b.", "<b>", $text);
+
 		// Replace "pipe" with </td><td> ------------------------
 		$text = str_replace("|", "&nbsp;&nbsp;</td><td class=\"notecell\">", $text);
-		
+
 	$text = str_replace(".end_formatted_area.<br />", "</td></tr></table><table cellpadding=\"0\"><tr><td>", $text);
 	$text = str_replace("<br />", "</td></tr><tr><td class=\"notecell\">&nbsp;", $text);
 	$text = $text . "</td></tr></table>";
 	$text = str_replace("xCxAx", $centitl."<br />", $text);
 	$text = str_replace("Notes:", "<b>Notes:</b>", $text);
-
-?>

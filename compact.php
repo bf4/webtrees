@@ -308,7 +308,7 @@ function print_td_person($n) {
 		if ($showthumbs && $MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES) {
 			$object = find_highlighted_object($pid, WT_GED_ID, $indi->getGedcomRecord());
 			if (!empty($object)) {
-				$whichFile = thumb_or_main($object);	// Do we send the main image or a thumbnail?
+				$whichFile = thumb_or_main($object); // Do we send the main image or a thumbnail?
 				$size = findImageSize($whichFile);
 				$class = "pedigree_image_portrait";
 				if ($size[0]>$size[1]) $class = "pedigree_image_landscape";
@@ -318,13 +318,13 @@ function print_td_person($n) {
 				$imgwidth = $imgsize[0]+50;
 				$imgheight = $imgsize[1]+150;
 				if (WT_USE_LIGHTBOX) {
-					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" rev=\"" . $object['mid'] . "::" . WT_GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">" . "\n";
+					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" rev=\"" . $object['mid'] . "::" . WT_GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
 				} else {
 					$text .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
 				}
 				$birth_date=$indi->getBirthDate();
 				$death_date=$indi->getDeathDate();
-				$text .= "<img id=\"box-$pid\" src=\"".$whichFile."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".PrintReady(htmlspecialchars(strip_tags($name), ENT_QUOTES, 'UTF-8'))." - ".strip_tags(html_entity_decode($birth_date->Display(false)." - ".$death_date->Display(false),ENT_QUOTES,'UTF-8'))."\"";
+				$text .= "<img id=\"box-$pid\" src=\"".$whichFile."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".PrintReady(htmlspecialchars(strip_tags($name)))." - ".strip_tags(html_entity_decode($birth_date->Display(false)." - ".$death_date->Display(false)))."\"";
 				if ($imgsize) $text .= " /></a>\n";
 				else $text .= " />\n";
 			} else if ($USE_SILHOUETTE && isset($WT_IMAGES["default_image_U"])) {
@@ -334,19 +334,17 @@ function print_td_person($n) {
 				$text = "<img src=\"";
 				if ($sex == 'F') {
 					$text .= $WT_IMAGES["default_image_F"];
-				}
-				else if ($sex == 'M') {
+				} else if ($sex == 'M') {
 					$text .= $WT_IMAGES["default_image_M"];
-				}
-				else {
+				} else {
 					$text .= $WT_IMAGES["default_image_U"];
-				} 
+				}
 				$text .="\" class=\"".$class."\" border=\"none\" alt=\"\" />";
 			}
 		}
 
 		$text .= "<a class=\"name1\" href=\"individual.php?pid=$pid\" title=\"$title\"> ";
-		$text .= PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8'));
+		$text .= PrintReady(htmlspecialchars(strip_tags($name)));
 		if ($addname) $text .= "<br />" . PrintReady($addname);
 		$text .= "</a>";
 		$text .= "<br />";
@@ -355,7 +353,7 @@ function print_td_person($n) {
 			$text.=$indi->getBirthYear().'-'.$indi->getDeathYear();
 			$age=GedcomDate::GetAgeYears($indi->getBirthDate(), $indi->getDeathDate());
 			if ($age) {
-	 			$text.=" <span class=\"age\">".PrintReady("({$age})")."</span>";
+				$text.=" <span class=\"age\">".PrintReady("({$age})")."</span>";
 			}
 			$text.="</span>";
 		}
@@ -423,4 +421,3 @@ function print_arrow_person($n, $arrow_dir) {
 	else $text = $hideArrow;
 	print $text;
 }
-?>

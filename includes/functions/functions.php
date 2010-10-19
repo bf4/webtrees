@@ -114,7 +114,7 @@ function encode_url($url, $entities=true) {
 	$url = decode_url($url, $entities); // Make sure we don't do any double conversions
 	$url = str_replace(array(' ', '+', '@#', '"', "'"), array('%20', '%2b', '@%23', '%22', '%27'), $url);
 	if ($entities) {
-		$url = htmlspecialchars($url, ENT_COMPAT, 'UTF-8');
+		$url = htmlspecialchars($url);
 	}
 	return $url;
 }
@@ -207,8 +207,6 @@ function load_gedcom_settings($ged_id=WT_GED_ID) {
 	global $GENERATE_UIDS;                $GENERATE_UIDS                =get_gedcom_setting($ged_id, 'GENERATE_UIDS');
 	global $HIDE_GEDCOM_ERRORS;           $HIDE_GEDCOM_ERRORS           =get_gedcom_setting($ged_id, 'HIDE_GEDCOM_ERRORS');
 	global $HIDE_LIVE_PEOPLE;             $HIDE_LIVE_PEOPLE             =get_gedcom_setting($ged_id, 'HIDE_LIVE_PEOPLE');
-	global $HOME_SITE_TEXT;               $HOME_SITE_TEXT               =get_gedcom_setting($ged_id, 'HOME_SITE_TEXT');
-	global $HOME_SITE_URL;                $HOME_SITE_URL                =get_gedcom_setting($ged_id, 'HOME_SITE_URL');
 	global $KEEP_ALIVE_YEARS_BIRTH;       $KEEP_ALIVE_YEARS_BIRTH       =get_gedcom_setting($ged_id, 'KEEP_ALIVE_YEARS_BIRTH');
 	global $KEEP_ALIVE_YEARS_DEATH;       $KEEP_ALIVE_YEARS_DEATH       =get_gedcom_setting($ged_id, 'KEEP_ALIVE_YEARS_DEATH');
 	global $LANGUAGE;                     $LANGUAGE                     =get_gedcom_setting($ged_id, 'LANGUAGE');
@@ -220,7 +218,7 @@ function load_gedcom_settings($ged_id=WT_GED_ID) {
 	global $MEDIA_DIRECTORY;              $MEDIA_DIRECTORY              =get_gedcom_setting($ged_id, 'MEDIA_DIRECTORY');
 	global $MEDIA_DIRECTORY_LEVELS;       $MEDIA_DIRECTORY_LEVELS       =get_gedcom_setting($ged_id, 'MEDIA_DIRECTORY_LEVELS');
 	global $MEDIA_EXTERNAL;               $MEDIA_EXTERNAL               =get_gedcom_setting($ged_id, 'MEDIA_EXTERNAL');
-	global $MEDIA_FIREWALL_ROOTDIR;       $MEDIA_FIREWALL_ROOTDIR       =get_gedcom_setting($ged_id, 'MEDIA_FIREWALL_ROOTDIR');
+	global $MEDIA_FIREWALL_ROOTDIR;       $MEDIA_FIREWALL_ROOTDIR       =get_gedcom_setting($ged_id, 'MEDIA_FIREWALL_ROOTDIR', get_site_setting('INDEX_DIRECTORY'));
 	global $MEDIA_FIREWALL_THUMBS;        $MEDIA_FIREWALL_THUMBS        =get_gedcom_setting($ged_id, 'MEDIA_FIREWALL_THUMBS');
 	global $MEDIA_ID_PREFIX;              $MEDIA_ID_PREFIX              =get_gedcom_setting($ged_id, 'MEDIA_ID_PREFIX');
 	global $MULTI_MEDIA;                  $MULTI_MEDIA                  =get_gedcom_setting($ged_id, 'MULTI_MEDIA');
@@ -299,7 +297,7 @@ function load_gedcom_settings($ged_id=WT_GED_ID) {
 			} else {
 				$person_privacy[$row->xref]=(int)$row->resn;
 			}
-		}	else {
+		} else {
 			$global_facts[$row->tag_type]=(int)$row->resn;
 		}
 	}
@@ -521,11 +519,11 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
  * get gedcom tag value
  *
  * returns the value of a gedcom tag from the given gedcom record
- * @param string $tag	The tag to find, use : to delineate subtags
- * @param int $level	The gedcom line level of the first tag to find, setting level to 0 will cause it to use 1+ the level of the incoming record
- * @param string $gedrec	The gedcom record to get the value from
- * @param int $truncate	Should the value be truncated to a certain number of characters
- * @param boolean $convert	Should data like dates be converted using the configuration settings
+ * @param string $tag The tag to find, use : to delineate subtags
+ * @param int $level The gedcom line level of the first tag to find, setting level to 0 will cause it to use 1+ the level of the incoming record
+ * @param string $gedrec The gedcom record to get the value from
+ * @param int $truncate Should the value be truncated to a certain number of characters
+ * @param boolean $convert Should data like dates be converted using the configuration settings
  * @return string
  */
 function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
@@ -627,7 +625,7 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 				if (utf8_strlen($value)>$truncate) {
 					$value = preg_replace("/\(.+\)/", "", $value);
 					//if (utf8_strlen($value)>$truncate) {
-					//	$value = preg_replace_callback("/([a-zśź]+)/ui", create_function('$matches', 'return utf8_substr($matches[1], 0, 3);'), $value);
+						//$value = preg_replace_callback("/([a-zśź]+)/ui", create_function('$matches', 'return utf8_substr($matches[1], 0, 3);'), $value);
 					//}
 				}
 			}
@@ -670,7 +668,7 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 					} elseif ($value=="F") {
 						$value = utf8_substr(i18n::translate('Female'), 0, 1);
 					} else {
-						$value = utf8_substr(i18n::translate('unknown'), 0, 1);
+						$value = utf8_substr(i18n::translate_c('unknown gender', 'Unknown'), 0, 1);
 					}
 				} else {
 					if (!empty($truncate)) {
@@ -704,8 +702,8 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
  * word wrapped Notes option.  Routine also avoids splitting UTF-8 encoded
  * characters between lines.
  *
- * @param	string	$newline	Input GEDCOM subrecord to be worked on
- * @return	string	$newged		Output string with all necessary CONC and CONT lines
+ * @param string $newline Input GEDCOM subrecord to be worked on
+ * @return string $newged Output string with all necessary CONC and CONT lines
  */
 function breakConts($newline) {
 	global $WORD_WRAPPED_NOTES;
@@ -815,7 +813,7 @@ function find_parents_in_record($famrec) {
  * find and return an array containing the children of the given family record
  * @author John Finlay (yalnifj)
  * @param string $famid the gedcom xref id for the family
- * @param string $me	an xref id of a child to ignore, useful when you want to get a person's
+ * @param string $me an xref id of a child to ignore, useful when you want to get a person's
  * siblings but do want to include them as well
  * @return array
  */
@@ -833,7 +831,7 @@ function find_children($famid, $me='') {
  * find and return an array containing the children of the given family record
  * @author John Finlay (yalnifj)
  * @param string $famrec the gedcom record of the family to search in
- * @param string $me	an xref id of a child to ignore, useful when you want to get a person's
+ * @param string $me an xref id of a child to ignore, useful when you want to get a person's
  * siblings but do want to include them as well
  * @return array
  */
@@ -884,7 +882,7 @@ function find_sfamily_ids($pid) {
  *
  * searches an individual gedcom record and returns an array of the FAMS|C ids
  * @param string $indirec the gedcom record for the person to look in
- * @param string $tag 	The family tag to look for
+ * @param string $tag  The family tag to look for
  * @return array array of family ids
  */
 function find_families_in_record($indirec, $tag) {
@@ -897,7 +895,7 @@ function find_families_in_record($indirec, $tag) {
  *
  * searches an individual gedcom record and returns an array of the FAMS|C ids that are visible
  * @param string $indirec the gedcom record for the person to look in
- * @param string $tag 	The family tag to look for, FAMS or FAMC
+ * @param string $tag  The family tag to look for, FAMS or FAMC
  * @return array array of family ids
  */
 function find_visible_families_in_record($indirec, $tag) {
@@ -977,7 +975,7 @@ function find_highlighted_object($pid, $ged_id, $indirec) {
 				$prim = get_gedcom_value('_PRIM', 1, $row[2]);
 			}
 
-			if ($prim=='N') continue;		// Skip _PRIM N objects
+			if ($prim=='N') continue; // Skip _PRIM N objects
 			$file = check_media_depth($row[1]);
 			$thumb = thumbnail_file($row[1], true, false, $pid);
 			if ($level == 1) {
@@ -985,7 +983,7 @@ function find_highlighted_object($pid, $ged_id, $indirec) {
 					if (empty($objectA)) {
 						$objectA['file'] = $file;
 						$objectA['thumb'] = $thumb;
-						$objectA['_THUM'] = $thum;	// This overrides GEDCOM's "Use main image as thumbnail" option
+						$objectA['_THUM'] = $thum; // This overrides GEDCOM's "Use main image as thumbnail" option
 						$objectA['level'] = $level;
 						$objectA['mid'] = $row[0];
 					}
@@ -993,7 +991,7 @@ function find_highlighted_object($pid, $ged_id, $indirec) {
 					if (empty($objectB)) {
 						$objectB['file'] = $file;
 						$objectB['thumb'] = $thumb;
-						$objectB['_THUM'] = $thum;	// This overrides GEDCOM's "Use main image as thumbnail" option
+						$objectB['_THUM'] = $thum; // This overrides GEDCOM's "Use main image as thumbnail" option
 						$objectB['level'] = $level;
 						$objectB['mid'] = $row[0];
 					}
@@ -1003,7 +1001,7 @@ function find_highlighted_object($pid, $ged_id, $indirec) {
 					if (empty($objectC)) {
 						$objectC['file'] = $file;
 						$objectC['thumb'] = $thumb;
-						$objectC['_THUM'] = $thum;	// This overrides GEDCOM's "Use main image as thumbnail" option
+						$objectC['_THUM'] = $thum; // This overrides GEDCOM's "Use main image as thumbnail" option
 						$objectC['level'] = $level;
 						$objectC['mid'] = $row[0];
 					}
@@ -1011,7 +1009,7 @@ function find_highlighted_object($pid, $ged_id, $indirec) {
 					if (empty($objectD)) {
 						$objectD['file'] = $file;
 						$objectD['thumb'] = $thumb;
-						$objectD['_THUM'] = $thum;	// This overrides GEDCOM's "Use main image as thumbnail" option
+						$objectD['_THUM'] = $thum; // This overrides GEDCOM's "Use main image as thumbnail" option
 						$objectD['level'] = $level;
 						$objectD['mid'] = $row[0];
 					}
@@ -1023,7 +1021,7 @@ function find_highlighted_object($pid, $ged_id, $indirec) {
 	if (!empty($objectA)) return $objectA;
 	if (!empty($objectB)) return $objectB;
 	if (!empty($objectC)) return $objectC;
-//	if (!empty($objectD)) return $objectD;
+	//if (!empty($objectD)) return $objectD;
 
 	return array();
 }
@@ -1194,7 +1192,7 @@ function mediasort($a, $b) {
 			}
 		}
 	}
-	return utf8_strcasecmp($aKey, $bKey, true);		// Case-insensitive compare
+	return utf8_strcasecmp($aKey, $bKey, true); // Case-insensitive compare
 }
 /**
  * sort an array according to the file name
@@ -1215,7 +1213,7 @@ function filesort($a, $b) {
 	} else if (!empty($b["file"])) {
 		$bKey = basename($b["file"]);
 	}
-	return utf8_strcasecmp($aKey, $bKey, true);		// Case-insensitive compare
+	return utf8_strcasecmp($aKey, $bKey, true); // Case-insensitive compare
 }
 
 // Helper function to sort facts.
@@ -1769,7 +1767,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		//echo execution_stats();
 		//echo "-->\n";
 	}
-	
+
 	// Convert "generic" relationships into sex-specific ones.
 	foreach ($resnode['path'] as $n=>$pid) {
 		switch ($resnode['relations'][$n]) {
@@ -1911,7 +1909,7 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 
 	switch ($path) {
 	case '': return i18n::translate('self');
-	
+
 	//  Level One relationships
 	case 'mot': return i18n::translate('mother');
 	case 'fat': return i18n::translate('father');
@@ -1967,7 +1965,7 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 			}
 		}
 		return i18n::translate('sibling');
-	
+
 	// Level Two relationships
 	case 'brochi': return i18n::translate_c('brother\'s child', 'nephew/niece');
 	case 'brodau': return i18n::translate_c('brother\'s daughter', 'niece');
@@ -1976,7 +1974,7 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 	case 'chichi': return i18n::translate_c('child\'s child', 'grandchild');
 	case 'chidau': return i18n::translate_c('child\'s daughter', 'granddaughter');
 	case 'chihus': return i18n::translate_c('child\'s husband', 'son-in-law');
-	case 'chison': return i18n::translate_c('child\'s son',		'grandson');
+	case 'chison': return i18n::translate_c('child\'s son', 'grandson');
 	case 'chispo': return i18n::translate_c('child\'s spouse', 'son/daughter-in-law');
 	case 'chiwif': return i18n::translate_c('child\'s wife', 'daughter-in-law');
 	case 'dauchi': return i18n::translate_c('daughter\'s child', 'grandchild');
@@ -2277,7 +2275,7 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 	case 'parparsishus': return i18n::translate_c('parent\'s parent\'s sister\'s husband',  'great-uncle');
 	case 'fatfatbrodau': return i18n::translate_c('father\'s father\'s brother\'s daughter','first cousin once removed ascending');
 	case 'fatfatbroson': return i18n::translate_c('father\'s father\'s brother\'s son',     'first cousin once removed ascending');
-	case 'fatfatbrochi': return i18n::translate_c('father\'s father\'s brother\'s child',	'first cousin once removed ascending');
+	case 'fatfatbrochi': return i18n::translate_c('father\'s father\'s brother\'s child', 'first cousin once removed ascending');
 	case 'fatfatsisdau': return i18n::translate_c('father\'s father\'s sister\'s daughter', 'first cousin once removed ascending');
 	case 'fatfatsisson': return i18n::translate_c('father\'s father\'s sister\'s son',      'first cousin once removed ascending');
 	case 'fatfatsischi': return i18n::translate_c('father\'s father\'s sister\'s child',    'first cousin once removed ascending');
@@ -2373,9 +2371,9 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 		case 3:
 			switch ($last) {
 			case 'bro':
-				if ($bef_last=='fat')		return i18n::translate_c('great-grandfather\'s brother', 'great-great-uncle');
-				else if ($bef_last=='mot')	return i18n::translate_c('great-grandmother\'s brother', 'great-great-uncle');
-				else						return i18n::translate_c('great-grandparent\'s brother', 'great-great-uncle');
+				if ($bef_last=='fat')      return i18n::translate_c('great-grandfather\'s brother', 'great-great-uncle');
+				else if ($bef_last=='mot') return i18n::translate_c('great-grandmother\'s brother', 'great-great-uncle');
+				else                       return i18n::translate_c('great-grandparent\'s brother', 'great-great-uncle');
 			case 'sis': return i18n::translate('great-great-aunt');
 			case 'sib': return i18n::translate('great-great-aunt/uncle');
 			}
@@ -2383,9 +2381,9 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 		case 4:
 			switch ($last) {
 			case 'bro':
-				if ($bef_last=='fat')		return i18n::translate_c('great-great-grandfather\'s brother', 'great-great-great-uncle');
-				else if ($bef_last=='mot')	return i18n::translate_c('great-great-grandmother\'s brother', 'great-great-great-uncle');
-				else						return i18n::translate_c('great-great-grandparent\'s brother', 'great-great-great-uncle');
+				if ($bef_last=='fat')      return i18n::translate_c('great-great-grandfather\'s brother', 'great-great-great-uncle');
+				else if ($bef_last=='mot') return i18n::translate_c('great-great-grandmother\'s brother', 'great-great-great-uncle');
+				else                       return i18n::translate_c('great-great-grandparent\'s brother', 'great-great-great-uncle');
 			case 'sis': return i18n::translate('great-great-great-aunt');
 			case 'sib': return i18n::translate('great-great-great-aunt/uncle');
 			}
@@ -2393,9 +2391,9 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 		case 5:
 			switch ($last) {
 			case 'bro':
-				if ($bef_last=='fat')		return i18n::translate_c('great-great-great-grandfather\'s brother', 'great x4 uncle');
-				else if ($bef_last=='mot')	return i18n::translate_c('great-great-great-grandmother\'s brother', 'great x4 uncle');
-				else						return i18n::translate_c('great-great-great-grandparent\'s brother', 'great x4 uncle');
+				if ($bef_last=='fat')      return i18n::translate_c('great-great-great-grandfather\'s brother', 'great x4 uncle');
+				else if ($bef_last=='mot') return i18n::translate_c('great-great-great-grandmother\'s brother', 'great x4 uncle');
+				else                       return i18n::translate_c('great-great-great-grandparent\'s brother', 'great x4 uncle');
 			case 'sis': return i18n::translate('great x4 aunt');
 			case 'sib': return i18n::translate('great x4 aunt/uncle');
 			}
@@ -2403,9 +2401,9 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 		case 6:
 			switch ($last) {
 			case 'bro':
-				if ($bef_last=='fat')		return i18n::translate_c('great x4 grandfather\'s brother', 'great x5 uncle');
-				else if ($bef_last=='mot')	return i18n::translate_c('great x4 grandmother\'s brother', 'great x5 uncle');
-				else						return i18n::translate_c('great x4 grandparent\'s brother', 'great x5 uncle');
+				if ($bef_last=='fat')      return i18n::translate_c('great x4 grandfather\'s brother', 'great x5 uncle');
+				else if ($bef_last=='mot') return i18n::translate_c('great x4 grandmother\'s brother', 'great x5 uncle');
+				else                       return i18n::translate_c('great x4 grandparent\'s brother', 'great x5 uncle');
 			case 'sis': return i18n::translate('great x5 aunt');
 			case 'sib': return i18n::translate('great x5 aunt/uncle');
 			}
@@ -2413,9 +2411,9 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 		case 7:
 			switch ($last) {
 			case 'bro':
-				if ($bef_last=='fat')		return i18n::translate_c('great x5 grandfather\'s brother', 'great x6 uncle');
-				else if ($bef_last=='mot')	return i18n::translate_c('great x5 grandmother\'s brother', 'great x6 uncle');
-				else						return i18n::translate_c('great x5 grandparent\'s brother', 'great x6 uncle');
+				if ($bef_last=='fat')      return i18n::translate_c('great x5 grandfather\'s brother', 'great x6 uncle');
+				else if ($bef_last=='mot') return i18n::translate_c('great x5 grandmother\'s brother', 'great x6 uncle');
+				else                       return i18n::translate_c('great x5 grandparent\'s brother', 'great x6 uncle');
 			case 'sis': return i18n::translate('great x6 aunt');
 			case 'sib': return i18n::translate('great x6 aunt/uncle');
 			}
@@ -2423,9 +2421,9 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 		case 8:
 			switch ($last) {
 			case 'bro':
-				if ($bef_last=='fat')		return i18n::translate_c('great x6 grandfather\'s brother', 'great x7 uncle');
-				else if ($bef_last=='mot')	return i18n::translate_c('great x6 grandmother\'s brother', 'great x7 uncle');
-				else						return i18n::translate_c('great x6 grandparent\'s brother', 'great x7 uncle');
+				if ($bef_last=='fat')      return i18n::translate_c('great x6 grandfather\'s brother', 'great x7 uncle');
+				else if ($bef_last=='mot') return i18n::translate_c('great x6 grandmother\'s brother', 'great x7 uncle');
+				else                       return i18n::translate_c('great x6 grandparent\'s brother', 'great x7 uncle');
 			case 'sis': return i18n::translate('great x7 aunt');
 			case 'sib': return i18n::translate('great x7 aunt/uncle');
 			}
@@ -2445,9 +2443,9 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 			case 'pl':
 				switch ($last) {
 				case 'bro':
-					if ($bef_last=='fat')		return i18n::translate_c('great x(%d-1) grandfather\'s brother', 'great x%d uncle', $up-2);
-					else if ($bef_last=='mot')	return i18n::translate_c('great x(%d-1) grandmother\'s brother', 'great x%d uncle', $up-2);
-					else						return i18n::translate_c('great x(%d-1) grandparent\'s brother', 'great x%d uncle', $up-2);
+					if ($bef_last=='fat')      return i18n::translate_c('great x(%d-1) grandfather\'s brother', 'great x%d uncle', $up-2);
+					else if ($bef_last=='mot') return i18n::translate_c('great x(%d-1) grandmother\'s brother', 'great x%d uncle', $up-2);
+					else                       return i18n::translate_c('great x(%d-1) grandparent\'s brother', 'great x%d uncle', $up-2);
 				case 'sis': return i18n::translate('great x%d aunt', $up-2);
 				case 'sib': return i18n::translate('great x%d aunt/uncle', $up-2);
 				}
@@ -2464,7 +2462,7 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 		}
 	}
 	if (preg_match('/^(?:bro|sis|sib)((?:son|dau|chi)+)$/', $path, $match)) {
-	    // direct descendants of siblings
+		// direct descendants of siblings
 		$down=strlen($match[1])/3+1; // Add one, as we count generations from the common ancestor
 		$last=substr($path, -3, 3);
 		$first=substr($path, 0, 3);
@@ -2622,7 +2620,7 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 		}
 	}
 	if (preg_match('/^((?:mot|fat|par)*)$/', $path, $match)) {
-	    // direct ancestors
+		// direct ancestors
 		$up=strlen($match[1])/3;
 		$last=substr($path, -3, 3);
 		switch ($up) {
@@ -2762,7 +2760,7 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 			case 'es': // Source: Wes Groleau (adding doesn't change behavior, but needs to be better researched)
 			default:
 				switch ($last) {
-					
+
 				case 'son': // I18N: if you need a different number for %d, contact the developers, as a code-change is required
 				            return i18n::translate('great x%d grandson',      $up-2);
 				case 'dau': return i18n::translate('great x%d granddaughter', $up-2);
@@ -2772,7 +2770,7 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 		}
 	}
 	if (preg_match('/^((?:mot|fat|par)+)(?:bro|sis|sib)((?:son|dau|chi)+)$/', $path, $match)) {
-	    // cousins in English
+		// cousins in English
 		$up  =strlen($match[1])/3;
 		$down=strlen($match[2])/3;
 		$last=substr($path, -3, 3);
@@ -2905,7 +2903,7 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 			);
 		} elseif ($match[3]=='') {
 			return i18n::translate(
-			    // I18N: A complex relationship, such as "second cousin's wife"
+				// I18N: A complex relationship, such as "second cousin's wife"
 				'%1$s\'s %2$s',
 				get_relationship_name_from_path($match[1], null, null),
 				get_relationship_name_from_path($match[2], null, null)
@@ -2969,21 +2967,24 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
  * @return array and array of theme names and their corresponding directory
  */
 function get_theme_names() {
-	$themes = array();
-	$d = dir("themes");
-	while (false !== ($entry = $d->read())) {
-		if ($entry{0}!="." && $entry!="CVS" && !stristr($entry, "svn") && is_dir(WT_ROOT.'themes/'.$entry) && file_exists(WT_ROOT.'themes/'.$entry.'/theme.php')) {
-			$themefile = implode("", file(WT_ROOT.'themes/'.$entry.'/theme.php'));
-			$tt = preg_match("/theme_name\s*=\s*\"(.*)\";/", $themefile, $match);
-			if ($tt>0)
-				$themename = trim($match[1]);
-			else
-				$themename = "themes/$entry";
-			$themes[$themename] = "themes/$entry/";
+	static $themes;
+	if ($themes===null) {
+		$themes = array();
+		$d = dir(WT_ROOT.'themes');
+		while (false !== ($entry = $d->read())) {
+			if ($entry{0}!="." && $entry!="CVS" && !stristr($entry, "svn") && is_dir(WT_ROOT.'themes/'.$entry) && file_exists(WT_ROOT.'themes/'.$entry.'/theme.php')) {
+				$themefile = implode("", file(WT_ROOT.'themes/'.$entry.'/theme.php'));
+				$tt = preg_match("/theme_name\s*=\s*\"(.*)\";/", $themefile, $match);
+				if ($tt>0)
+					$themename = trim($match[1]);
+				else
+					$themename = "themes/$entry";
+				$themes[$themename] = "themes/$entry/";
+			}
 		}
+		$d->close();
+		uksort($themes, "utf8_strcasecmp");
 	}
-	$d->close();
-	uksort($themes, "utf8_strcasecmp");
 	return $themes;
 }
 
@@ -3053,7 +3054,7 @@ function getfilesize($bytes) {
  * @param array $array1
  * @param array $array2
  */
-function pgv_array_merge($array1, $array2) {
+function wt_array_merge($array1, $array2) {
 	foreach ($array2 as $key=>$value) {
 		$array1[$key] = $value;
 	}
@@ -3110,7 +3111,7 @@ function get_query_string() {
 			}
 		}
 	}
-	$qstring = rtrim($qstring, "&");	// Remove trailing "&"
+	$qstring = rtrim($qstring, "&"); // Remove trailing "&"
 	return encode_url($qstring);
 }
 
@@ -3243,7 +3244,7 @@ function add_descendancy(&$list, $pid, $parents=false, $generations=-1) {
 				}
 				if ($generations == -1 || $list[$pid]->generation+1 < $generations) {
 					foreach($children as $child) {
-						add_descendancy($list, $child->getXref(), $parents, $generations);	// recurse on the childs family
+						add_descendancy($list, $child->getXref(), $parents, $generations); // recurse on the childs family
 					}
 				}
 			}
@@ -3254,7 +3255,7 @@ function add_descendancy(&$list, $pid, $parents=false, $generations=-1) {
 /**
  * get the next available xref
  * calculates the next available XREF id for the given type of record
- * @param string $type	the type of record, defaults to 'INDI'
+ * @param string $type the type of record, defaults to 'INDI'
  * @return string
  */
 function get_new_xref($type='INDI', $ged_id=WT_GED_ID) {
@@ -3359,45 +3360,45 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 	} else if (preg_match('/\.wmv$/i', $fileName)) {
 		$type .= 'wmv';
 	} else if (strpos($fileName, 'http://maps.google.')===0) {
-		$type .= 'streetview';	
-	} else { 
+		$type .= 'streetview';
+	} else {
 		$type .= 'other';
 	}
 	// $type is now: (url | local) _ (flv | picasa | image | page | audio | wmv | streetview |other)
 	$result['type'] = $type;
 
 	// -- Determine the correct URL to open this media file
- 	while (true) {
+	while (true) {
 		if (WT_USE_LIGHTBOX) {
 			// Lightbox is installed
 			require_once WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
 			switch ($type) {
 			case 'url_flv':
-				$url = encode_url('js/jw_player/flvVideo.php?flvVideo='.($fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
+				$url = encode_url('js/jw_player/flvVideo.php?flvVideo='.($fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
 				break 2;
 			case 'local_flv':
-				$url = encode_url('js/jw_player/flvVideo.php?flvVideo='.(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
+				$url = encode_url('js/jw_player/flvVideo.php?flvVideo='.(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
 				break 2;
 			case 'url_wmv':
-				$url = encode_url('js/jw_player/wmvVideo.php?wmvVideo='.($fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
+				$url = encode_url('js/jw_player/wmvVideo.php?wmvVideo='.($fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
 				break 2;
 			case 'local_audio':
 			case 'local_wmv':
-				$url = encode_url('js/jw_player/wmvVideo.php?wmvVideo='.(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
+				$url = encode_url('js/jw_player/wmvVideo.php?wmvVideo='.(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
 				break 2;
 			case 'url_image':
 			case 'local_image':
-				$url = encode_url($fileName) . "\" rel=\"clearbox[general]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
+				$url = encode_url($fileName) . "\" rel=\"clearbox[general]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
 				break 2;
 			case 'url_picasa':
 			case 'url_page':
 			case 'url_other':
 			case 'local_page':
 			// case 'local_other':
-				$url = encode_url($fileName) . "\" rel='clearbox({$LB_URL_WIDTH}, {$LB_URL_HEIGHT}, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
+				$url = encode_url($fileName) . "\" rel='clearbox({$LB_URL_WIDTH}, {$LB_URL_HEIGHT}, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
 				break 2;
 			case 'url_streetview':
-				if (WT_SCRIPT_NAME != "media.php") {				
+				if (WT_SCRIPT_NAME != "media.php") {
 					echo  '<iframe style="float:left; padding:5px;" width="264" height="176" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="'. $fileName. '&amp;output=svembed"></iframe>';
 				}
 				break 2;
@@ -3479,7 +3480,7 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 			$thumb = isset($WT_IMAGES["media_globe"]) ? $WT_IMAGES["media_globe"] : 'images/media/globe.png';
 			break;
 		case 'local_page':
-			$thumb = ($WT_IMAGES["media_doc"]) ? $WT_IMAGES["media_doc"] : 'images/media/doc.gif';
+			$thumb = isset($WT_IMAGES["media_doc"]) ? $WT_IMAGES["media_doc"] : 'images/media/doc.gif';
 			break;
 		case 'url_audio':
 		case 'local_audio':
@@ -3547,8 +3548,8 @@ function pathinfo_utf($path) {
 		$basename=end($tmp);
 		$dirname=substr($path, 0, strlen($path) - strlen($basename) - 1);
 	} else {
-		$basename=$path;		// We have just a file name
-		$dirname='.';       // For compatibility with pathinfo()
+		$basename=$path; // We have just a file name
+		$dirname='.';    // For compatibility with pathinfo()
 	}
 
 	if (strpos($basename, '.')!==false) {
@@ -3567,5 +3568,3 @@ function pathinfo_utf($path) {
 if (file_exists(WT_ROOT.'includes/functions.extra.php')) {
 	require WT_ROOT.'includes/functions.extra.php';
 }
-
-?>

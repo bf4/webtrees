@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
+ * @version $Id$
  */
 
 if (!defined('WT_WEBTREES')) {
@@ -44,7 +44,7 @@ class user_messages_WT_Module extends WT_Module implements WT_Module_Block {
 	}
 
 	// Implement class WT_Module_Block
-	public function getBlock($block_id, $template=true) {
+	public function getBlock($block_id, $template=true, $cfg=null) {
 		global $ctype, $TEXT_DIRECTION, $WT_IMAGES, $THEME_DIR;
 
 		require_once WT_ROOT.'includes/functions/functions_print_facts.php';
@@ -61,7 +61,14 @@ class user_messages_WT_Module extends WT_Module implements WT_Module_Block {
 				deleteMessage($message_id);
 			}
 		}
-
+		$block=get_block_setting($block_id, 'block', true);
+		if ($cfg) {
+			foreach (array('block') as $name) {
+				if (array_key_exists($name, $cfg)) {
+					$$name=$cfg[$name];
+				}
+			}
+		}
 		$usermessages = getUserMessages(WT_USER_ID);
 
 		$id=$this->getName().$block_id;
@@ -72,6 +79,26 @@ class user_messages_WT_Module extends WT_Module implements WT_Module_Block {
 
 		$content = "";
 		$content .= "<form name=\"messageform\" action=\"index.php?ctype={$ctype}\" method=\"get\" onsubmit=\"return confirm('".i18n::translate('Are you sure you want to delete this message?  It cannot be retrieved later.')."');\">";
+		if (get_user_count()>1) {
+			$content .= '<br />'.i18n::translate('Send Message')." <select name=\"touser\">";
+			if (WT_USER_IS_ADMIN) {
+				$content .= "<option value=\"all\">".i18n::translate('Broadcast to all users')."</option>";
+				$content .= "<option value=\"never_logged\">".i18n::translate('Send message to users who have never logged in')."</option>";
+				$content .= "<option value=\"last_6mo\">".i18n::translate('Send message to users who have not logged in for 6 months')."</option>";
+			}
+			foreach (get_all_users() as $user_id=>$user_name) {
+				if ($user_id!=WT_USER_ID && get_user_setting($user_id, 'verified_by_admin') && get_user_setting($user_id, 'contactmethod')!='none') {
+					$content .= "<option value=\"".$user_name."\">".PrintReady(getUserFullName($user_id))." ";
+					if ($TEXT_DIRECTION=="ltr") {
+						$content .= stripLRMRLM(getLRM()." - ".$user_name.getLRM());
+					} else {
+						$content .= stripLRMRLM(getRLM()." - ".$user_name.getRLM());
+					}
+					$content .= "</option>";
+				}
+			}
+			$content .= "</select> <input type=\"button\" value=\"".i18n::translate('Send')."\" onclick=\"message(document.messageform.touser.options[document.messageform.touser.selectedIndex].value, 'messaging2', ''); return false;\" /><br /><br />";
+		}
 		if (count($usermessages)==0) {
 			$content .= i18n::translate('You have no pending messages.')."<br />";
 		} else {
@@ -116,9 +143,9 @@ class user_messages_WT_Module extends WT_Module implements WT_Module_Block {
 				if ($user_id) {
 					$content .= PrintReady(getUserFullName($user_id));
 					if ($TEXT_DIRECTION=="ltr") {
-						$content .= " " . getLRM() . " - ".htmlspecialchars($user_id,ENT_COMPAT,'UTF-8') . getLRM();
+						$content .= " " . getLRM() . " - ".htmlspecialchars(getUserEmail($user_id)) . getLRM();
 					} else {
-						$content .= " " . getRLM() . " - ".htmlspecialchars($user_id,ENT_COMPAT,'UTF-8') . getRLM();
+						$content .= " " . getRLM() . " - ".htmlspecialchars(getUserEmail($user_id)) . getRLM();
 					}
 				} else {
 					$content .= "<a href=\"mailto:".$message["from"]."\">".str_replace("@","@<span style=\"font-size:1px;\"> </span>",$message["from"])."</a>";
@@ -126,7 +153,7 @@ class user_messages_WT_Module extends WT_Module implements WT_Module_Block {
 				$content .= "</td>";
 				$content .= "</tr>";
 				$content .= "<tr><td class=\"list_value_wrap\" colspan=\"5\"><div id=\"message$key\" style=\"display: none;\">";
-				$message["body"] = nl2br(htmlspecialchars($message["body"],ENT_COMPAT,'UTF-8'));
+				$message["body"] = nl2br(htmlspecialchars($message["body"]));
 				$message["body"] = expand_urls($message["body"]);
 
 				$content .= PrintReady($message["body"])."<br /><br />";
@@ -139,32 +166,12 @@ class user_messages_WT_Module extends WT_Module implements WT_Module_Block {
 				$content .= "<a href=\"".encode_url("index.php?action=deletemessage&message_id={$key}")."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this message?  It cannot be retrieved later.')."');\">".i18n::translate('Delete')."</a></div></td></tr>";
 			}
 			$content .= "</table>";
-			$content .= "<input type=\"submit\" value=\"".i18n::translate('Delete Selected Messages')."\" /><br /><br />";
-		}
-		if (get_user_count()>1) {
-			$content .= i18n::translate('Send Message')." <select name=\"touser\">";
-			if (WT_USER_IS_ADMIN) {
-				$content .= "<option value=\"all\">".i18n::translate('Broadcast to all users')."</option>";
-				$content .= "<option value=\"never_logged\">".i18n::translate('Send message to users who have never logged in')."</option>";
-				$content .= "<option value=\"last_6mo\">".i18n::translate('Send message to users who have not logged in for 6 months')."</option>";
-			}
-			foreach (get_all_users() as $user_id=>$user_name) {
-				if ($user_id!=WT_USER_ID && get_user_setting($user_id, 'verified_by_admin')=='yes' && get_user_setting($user_id, 'contactmethod')!='none') {
-					$content .= "<option value=\"".$user_name."\">".PrintReady(getUserFullName($user_id))." ";
-					if ($TEXT_DIRECTION=="ltr") {
-						$content .= stripLRMRLM(getLRM()." - ".$user_name.getLRM());
-					} else {
-						$content .= stripLRMRLM(getRLM()." - ".$user_name.getRLM());
-					}
-					$content .= "</option>";
-				}
-			}
-			$content .= "</select><input type=\"button\" value=\"".i18n::translate('Send')."\" onclick=\"message(document.messageform.touser.options[document.messageform.touser.selectedIndex].value, 'messaging2', ''); return false;\" />";
+			$content .= "<input type=\"submit\" value=\"".i18n::translate('Delete Selected Messages')."\" /><br />";
 		}
 		$content .= "</form>";
 
 		if ($template) {
-			if (get_block_setting($block_id, 'block', true)) {
+			if ($block) {
 				require $THEME_DIR.'templates/block_small_temp.php';
 			} else {
 				require $THEME_DIR.'templates/block_main_temp.php';
@@ -201,7 +208,7 @@ class user_messages_WT_Module extends WT_Module implements WT_Module_Block {
 
 		$block=get_block_setting($block_id, 'block', true);
 		echo '<tr><td class="descriptionbox wrap width33">';
-		echo i18n::translate('Add a scrollbar when block contents grow');
+		echo /* I18N: label for a yes/no option */ i18n::translate('Add a scrollbar when block contents grow');
 		echo '</td><td class="optionbox">';
 		echo edit_field_yes_no('block', $block);
 		echo '</td></tr>';

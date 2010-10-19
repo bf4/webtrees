@@ -49,21 +49,22 @@ class relatives_WT_Module extends WT_Module implements WT_Module_Tab {
 	public function defaultTabOrder() {
 		return 20;
 	}
-	
+
 	function printFamilyHeader($famid, $label) {
 		global $WT_IMAGES, $SEARCH_SPIDER;
-	?>
-		<table>
-			<tr>
-				<td><img src="<?php print $WT_IMAGES["cfamily"]; ?>" border="0" class="icon" alt="" /></td>
-				<td><span class="subheaders"><?php print PrintReady($label); ?></span>
-				<?php if (empty($SEARCH_SPIDER)) { ?>
-					- <a href="family.php?famid=<?php print $famid; ?>"><?php print i18n::translate('View Family'); ?></a>
-				<?php }?>
-				</td>
+
+		echo '<table>
+			<tr>';
+			if (isset($WT_IMAGES["cfamily"])) {
+				echo '<td><img src="', $WT_IMAGES["cfamily"], '" border="0" class="icon" alt="" /></td>';
+			}
+			echo '<td><span class="subheaders">', PrintReady($label), '</span>';
+			if (empty($SEARCH_SPIDER)) {
+				echo ' - <a href="family.php?famid=', $famid, '">', i18n::translate('View Family'), '</a>';
+			 }
+			echo '</td>
 			</tr>
-		</table>
-	<?php
+		</table>';
 	}
 
 	/**
@@ -74,7 +75,7 @@ class relatives_WT_Module extends WT_Module implements WT_Module_Tab {
 	* @return html table rows
 	*/
 	function printParentsRows(&$family, &$people, $type) {
-		global $personcount, $WT_IMAGES;
+		global $personcount, $WT_IMAGES, $SHOW_PEDIGREE_PLACES;
 
 		$elderdate = "";
 		//-- new father/husband
@@ -205,7 +206,27 @@ class relatives_WT_Module extends WT_Module implements WT_Module_Tab {
 							echo $date->Display(false);
 							if (!empty($place)) echo ' -- ';
 						}
-						if (!empty($place)) echo $place;
+						if (!empty($place)) {
+							$html='';
+							$levels = explode(',', $place);
+							$tempURL = "placelist.php?action=show&";
+							foreach(array_reverse($levels) as $pindex=>$ppart) {
+								$ppart = preg_replace("/amp\%3B/", "", trim($ppart));
+								$tempURL .= "parent[{$pindex}]=".PrintReady($ppart).'&';
+							}
+							$tempURL .= 'level='.count($levels);
+							$html .= '<a href="'.encode_url($tempURL).'"> ';
+							for ($level=0; $level<$SHOW_PEDIGREE_PLACES; $level++) {
+								if (!empty($levels[$level])) {
+									if ($level>0) {
+										$html.=", ";
+									}
+									$html.=PrintReady($levels[$level]);
+								}
+							}
+							$html.='</a>';
+							echo $html;
+						}
 					} else if (get_sub_record(1, "1 _NMR", find_family_record($famid, WT_GED_ID))) {
 						$husb = $family->getHusband();
 						$wife = $family->getWife();
@@ -335,7 +356,7 @@ class relatives_WT_Module extends WT_Module implements WT_Module_Tab {
 			<?php
 		}
 	}
-	
+
 	// Implement WT_Module_Tab
 	public function getTabContent() {
 		global $WT_IMAGES, $SHOW_AGE_DIFF, $GEDCOM, $ABBREVIATE_CHART_LABELS, $show_full, $personcount;
@@ -345,7 +366,7 @@ class relatives_WT_Module extends WT_Module implements WT_Module_Tab {
 
 		$saved_ABBREVIATE_CHART_LABELS = $ABBREVIATE_CHART_LABELS;
 		$ABBREVIATE_CHART_LABELS = false; // Override GEDCOM configuration
-		
+
 		ob_start();
 		?>
 		<table class="facts_table"><tr><td style="width:20%; padding:4px"></td><td class="descriptionbox rela">
@@ -518,10 +539,10 @@ class relatives_WT_Module extends WT_Module implements WT_Module_Tab {
 	public function getPreLoadContent() {
 		return '';
 	}
-	
+
 	// Implement WT_Module_Tab
 	public function getJSCallback() {
 		return '';
 	}
-	
+
 }

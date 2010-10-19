@@ -56,14 +56,14 @@
 	.classy1 { font-family: Verdana, Arial, Helvetica, sans-serif; background-color: transparent; color: #000000; font-size: 10px; }
 	-->
 	</style>
-<?php } 
+<?php }
 
 // Various JavaScript variables required --------------------------------- ?>
 <script language="javascript" type="text/javascript">
-	var ifamily			= "<?php echo i18n::translate('Open Family Navigator');		?>";
-	var remove			= "<?php echo i18n::translate('Remove');			?>";
-	var linkExists		= "<?php echo i18n::translate('This link already exists');		?>";
-	var imageDir		= "<?php echo WT_THEME_DIR.'images/';				?>";
+	var ifamily = "<?php echo i18n::translate('Open Family Navigator'); ?>";
+	var remove = "<?php echo i18n::translate('Remove'); ?>";
+	var linkExists = "<?php echo i18n::translate('This link already exists'); ?>";
+	var imageDir = "<?php echo WT_THEME_DIR.'images/'; ?>";
 </script>
 
 <?php
@@ -83,5 +83,3 @@ echo '<script src="modules/GEDFact_assistant/_MEDIA/media_5_input.js" type="text
 		<tbody></tbody>
 		<tr><td></td></tr>
 	</table>
-	
-

@@ -32,12 +32,12 @@
 define('WT_SCRIPT_NAME', 'inverselink.php');
 require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
-	
+
 //-- page parameters and checking
-$linktoid	= safe_GET_xref('linktoid');
-$mediaid	= safe_GET_xref('mediaid');
-$linkto		= safe_GET     ('linkto', array('person', 'source', 'family', 'manage', 'repository', 'note'));
-$action		= safe_GET     ('action', WT_REGEX_ALPHA, 'choose');
+$linktoid = safe_GET_xref('linktoid');
+$mediaid  = safe_GET_xref('mediaid');
+$linkto   = safe_GET     ('linkto', array('person', 'source', 'family', 'manage', 'repository', 'note'));
+$action   = safe_GET     ('action', WT_REGEX_ALPHA, 'choose');
 
 // If GedFAct_assistant/_MEDIA/ installed ======================
 if (WT_USER_IS_ADMIN && $linkto=='manage' && file_exists(WT_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
@@ -137,17 +137,16 @@ if (WT_USER_IS_ADMIN && $linkto=='manage' && file_exists(WT_ROOT.'modules/GEDFac
 			print_findmedia_link("mediaid", "1media");
 			echo "</td></tr>";
 		}
-		
+
 		if (!isset($linktoid)) $linktoid = "";
 		echo '<tr><td class="descriptionbox">';
-		
+
 		if ($linkto == "person") {
 			echo i18n::translate('Enter Individual ID'), "</td>";
 			echo '<td class="optionbox wrap">';
 			if ($linktoid=="") {
-				 echo '<input class="pedigree_form" type="text" name="linktoid" id="linktopid" size="3" value="', $linktoid, '" />';
-				 print_findindi_link("linktopid", "");
-				
+				echo '<input class="pedigree_form" type="text" name="linktoid" id="linktopid" size="3" value="', $linktoid, '" />';
+				print_findindi_link("linktopid", "");
 			} else {
 				$record=Person::getInstance($linktoid);
 				echo '<b>', PrintReady($record->getFullName()), '</b>&nbsp;&nbsp;&nbsp;';
@@ -171,7 +170,7 @@ if (WT_USER_IS_ADMIN && $linkto=='manage' && file_exists(WT_ROOT.'modules/GEDFac
 				if ($TEXT_DIRECTION=="rtl") print getRLM();
 			}
 		}
-		
+
 		if ($linkto == "source") {
 			echo i18n::translate('Source'), "</td>";
 			echo '<td  class="optionbox wrap">';
@@ -191,7 +190,6 @@ if (WT_USER_IS_ADMIN && $linkto=='manage' && file_exists(WT_ROOT.'modules/GEDFac
 			echo '<td  class="optionbox wrap">';
 			if ($linktoid=="") {
 				echo '<input class="pedigree_form" type="text" name="linktoid" id="linktorid" size="3" value="', $linktoid, '" />';
-			//	print_findsource_link("linktosid");
 			} else {
 				$record=Repository::getInstance($linktoid);
 				echo '<b>', PrintReady($record->getFullName()), '</b>&nbsp;&nbsp;&nbsp;';
@@ -200,13 +198,12 @@ if (WT_USER_IS_ADMIN && $linkto=='manage' && file_exists(WT_ROOT.'modules/GEDFac
 				if ($TEXT_DIRECTION=="rtl") print getRLM();
 			}
 		}
-		
+
 		if ($linkto == "note") {
 			echo i18n::translate('Shared note'), "</td>";
 			echo '<td  class="optionbox wrap">';
 			if ($linktoid=="") {
 				echo '<input class="pedigree_form" type="text" name="linktoid" id="linktonid" size="3" value="', $linktoid, '" />';
-			//	print_findsource_link("linktosid");
 			} else {
 				$record=Note::getInstance($linktoid);
 				echo '<b>', PrintReady($record->getFullName()), '</b>&nbsp;&nbsp;&nbsp;';
@@ -215,25 +212,20 @@ if (WT_USER_IS_ADMIN && $linkto=='manage' && file_exists(WT_ROOT.'modules/GEDFac
 				if ($TEXT_DIRECTION=="rtl") print getRLM();
 			}
 		}
-		
+
 		echo '</td></tr>';
 		echo '<tr><td class="topbottombar" colspan="2"><input type="submit" value="', i18n::translate('Set link'), '" /></td></tr>';
 		echo '</table>';
 		echo '</form>';
 		echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close();">', i18n::translate('Close Window'), '</a><br /></center>';
 		print_simple_footer();
-		
 	} elseif ($action == "update" && $paramok) {
 		linkMedia($mediaid, $linktoid);
 		echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close();">', i18n::translate('Close Window'), '</a><br /></center>';
 		print_simple_footer();
-		
 	} else {
 		echo '<center>nothing to do<center>';
 		echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close();">', i18n::translate('Close Window'), '</a><br /></center>';
 		print_simple_footer();
 	}
-
-} 
-
-?>
+}

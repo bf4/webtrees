@@ -98,8 +98,7 @@ class GenealogyService
 				'username' => 'string',
 				'password' => 'string',
 				'gedcom' => 'string',
-				'compression' => 'string', //not implemented
-				'data_type' => 'string'
+				'compression' => 'string' //not implemented
 			),
 			'out' => array(
 				'result' => '{urn:' . $this->__namespace . '}authResult'//declared below
@@ -177,8 +176,8 @@ class GenealogyService
 		);
 
 		/**
- 		 * Check updates
- 		 */
+		 * Check updates
+		 */
 		$this->__dispatch_map['checkUpdates'] =
 		array(
 			'in' => array(
@@ -291,7 +290,7 @@ class GenealogyService
 		*/
 		$this->__dispatch_map['getAncestry'] =
 		array(
-			'in'	=>	array(
+			'in' => array(
 				'SID' => 'string', //session ID
 				'rootID' => 'string', //id to start at
 				'generations' => 'int', //# of gens. to go
@@ -307,7 +306,7 @@ class GenealogyService
 		*/
 		$this->__dispatch_map['getDescendants'] =
 		array(
-			'in'	=>	array(
+			'in' => array(
 				'SID' => 'string', //session ID
 				'rootID' => 'string', //id to start at
 				'generations' => 'int', //# of gens. to go
@@ -323,7 +322,7 @@ class GenealogyService
 		*/
 		$this->__dispatch_map['getXref'] =
 		array(
-			'in'	=>	array(
+			'in' => array(
 				'SID' => 'string', //session ID
 				'position' => 'string', // first, last, next, prev, new
 				'type' => 'string' // type of record
@@ -361,8 +360,8 @@ class GenealogyService
 
 		$this->__typedef['GedcomInfo'] =
 		array(
-			'title'		=>	'string',
-			'ID'		=>	'string'
+			'title' => 'string',
+			'ID' => 'string'
 		);
 
 		$this->__typedef['ArrayOfGedcomList'] =
@@ -375,43 +374,43 @@ class GenealogyService
 		// Person complex type
 		$this->__typedef['Person'] =
 		array(
-			'PID'			=>	 'string',
-			'gedcomName'	=>	 'string',
-			'birthDate'		=>	 'string',
-			'birthPlace'	=>	 'string',
-			'deathPlace'	=>	 'string',
-			'deathDate'		=>	 'string',
-			'gender'		=>	 'string',
-			'gedcom'		=>	 'string',
-			'spouseFamilies'=>	 '{urn:' . $this->__namespace . '}ArrayOfIds',
-			'childFamilies'	=>	 '{urn:' . $this->__namespace . '}ArrayOfIds'
+			'PID' => 'string',
+			'gedcomName' => 'string',
+			'birthDate' => 'string',
+			'birthPlace' => 'string',
+			'deathPlace' => 'string',
+			'deathDate' => 'string',
+			'gender' => 'string',
+			'gedcom' => 'string',
+			'spouseFamilies'=> '{urn:' . $this->__namespace . '}ArrayOfIds',
+			'childFamilies' => '{urn:' . $this->__namespace . '}ArrayOfIds'
 		);
 
 		//Source complex type
 		$this->__typedef['Source'] =
 		array(
-			'SCID'          =>	'string',
-			'title'         =>	'string',
-			'published'     =>	'string',
-			'author'        =>	'string',
-			'gedcom'        =>	'string'
+			'SCID'          => 'string',
+			'title'         => 'string',
+			'published'     => 'string',
+			'author'        => 'string',
+			'gedcom'        => 'string'
 
 		);
 
 		// Family complex type
 		$this->__typedef['Family'] =
 		array(
-			'FID'			=>   'string',
-			'HUSBID'        =>   'string',
-	  		'WIFEID'        =>   'string',
-	  		'CHILDREN'		=>   '{urn:' . $this->__namespace . '}ArrayOfIds',
-	  		'gedcom'		=>	 'string'
+			'FID'      => 'string',
+			'HUSBID'   => 'string',
+			'WIFEID'   => 'string',
+			'CHILDREN' => '{urn:' . $this->__namespace . '}ArrayOfIds',
+			'gedcom'   => 'string'
 		);
 
 		$this->__typedef['SearchResult'] =
 		array(
-			'totalResults'	=>	'int',
-			'persons'		=>	'{urn:' . $this->__namespace . '}ArrayOfPerson'
+			'totalResults' => 'int',
+			'persons' => '{urn:' . $this->__namespace . '}ArrayOfPerson'
 		);
 
 		$this->__typedef['Server'] =
@@ -495,14 +494,11 @@ class GenealogyService
 	* @param string password
 	* @param string gedcom id of the gedcom to use
 	* @param string compression compression lib to use (not implemented)
-	* @param string $type specifies a raw data type with current valid values of GEDCOM, or GRAMPS
 	*/
-	function Authenticate($username, $password, $gedcom, $compression, $data_type="GEDCOM")
+	function Authenticate($username, $password, $gedcom, $compression)
 	{
-		if (empty($data_type)) $data_type='GEDCOM';
-
-		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") Authenticate($username, '****', $gedcom, $compression, $data_type)", 'auth');
-		$result = $this->postAuthenticate($username, $password, $gedcom, $compression, $data_type);
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") Authenticate($username, '****', $gedcom, $compression)", 'auth');
+		$result = $this->postAuthenticate($username, $password, $gedcom, $compression);
 		if($result !== false)
 		{
 			//if everything worked set the session value to true
@@ -520,7 +516,7 @@ class GenealogyService
 	/**
 	* Method to override
 	*/
-	function postAuthenticate($username, $password, $gedcom_id, $compression, $data_type="GEDCOM")
+	function postAuthenticate($username, $password, $gedcom_id, $compression)
 	{
 		return false;
 	}
@@ -528,7 +524,7 @@ class GenealogyService
 	/**
 	* Switches GEDCOM
 	* @param string gedcom id of the gedcom to use
-	* @return string	returns the id of the currently active gedcom
+	* @return string returns the id of the currently active gedcom
 	*/
 	function changeGedcom($gedcom)
 	{
@@ -1075,4 +1071,3 @@ class GenealogyService
 		}
 	}
 }
-?>

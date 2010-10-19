@@ -79,10 +79,9 @@ function gen_spider_session_name($bot_name, $bot_language) {
 // Convert user-friendly such as '123.45.*.*' into SQL '%' wildcards.
 // Note: you may need to blcok IPv6 addresses as well as IPv4 ones.
 try {
-	$banned_ip=WT_DB::prepareLimit(
+	$banned_ip=WT_DB::prepare(
 		"SELECT ip_address, comment FROM `##ip_address`".
-		" WHERE category='banned' AND ? LIKE REPLACE(ip_address, '*', '%')",
-		1
+		" WHERE category='banned' AND ? LIKE REPLACE(ip_address, '*', '%') LIMIT 1"
 	)->execute(array($_SERVER['REMOTE_ADDR']))->fetchOneRow();
 	if ($banned_ip) {
 		$log_msg='session_spider.php blocked IP Address: '.$_SERVER['REMOTE_ADDR'].' by regex: '.$banned_ip->ip_address;
@@ -103,7 +102,7 @@ try {
 // rest of the file.
 
 global $SEARCH_SPIDER;
-$SEARCH_SPIDER = false;		// set empty at start
+$SEARCH_SPIDER = false; // set empty at start
 
 $ua = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
 
@@ -111,7 +110,7 @@ $worms = array(
 	'oBot',
 	'Indy Library',
 	'XXX',
-//	'robotgenius',
+// 'robotgenius',
 	'Super_Ale',
 	'Wget',
 	'DataCha',
@@ -119,21 +118,21 @@ $worms = array(
 	'LWP::Simple',
 	'lwp-trivial',
 	'MJ.*bot',
-//	'ru.*rv',
+// 'ru.*rv',
 	'DotBot',
 	'HTTrack',
 	'AISearchBot',
 	'panscient.com',
 	'Plonebot',
-//	'Mozilla([^\/])|(\/[\D])',	// legitimate Mozilla-based browsers have something like "Mozilla/5.0"
-	'Mozilla[^\/]',		// legitimate Mozilla-based browsers have something like "Mozilla/5.0"
-	'Mozilla\/[^456]',	// legitimate Mozilla-based browsers have something like "Mozilla/5.0"
-	'^Mozilla\/[456]\.0$',	// legitimate Mozilla-based browsers have something following "Mozilla/5.0"
+// 'Mozilla([^\/])|(\/[\D])', // legitimate Mozilla-based browsers have something like "Mozilla/5.0"
+	'Mozilla[^\/]',  // legitimate Mozilla-based browsers have something like "Mozilla/5.0"
+	'Mozilla\/[^456]', // legitimate Mozilla-based browsers have something like "Mozilla/5.0"
+	'^Mozilla\/[456]\.0$', // legitimate Mozilla-based browsers have something following "Mozilla/5.0"
 	'Speedy.*Spider',
-	'KaloogaBot',		// Image search engines have no business searching a Genealogy site
+	'KaloogaBot',  // Image search engines have no business searching a Genealogy site
 	'DBLBot',
-	'TurnitinBot',		// Plagiarism detectors have no business searching a Genealogy site
-	'(Microsoft)|(Internet)|(Explorer)'		// Internet Explorer self-identifies with "MSIE"
+	'TurnitinBot',  // Plagiarism detectors have no business searching a Genealogy site
+	'(Microsoft)|(Internet)|(Explorer)'  // Internet Explorer self-identifies with "MSIE"
 	);
 
 $quitReason = "";
@@ -259,7 +258,7 @@ if(!$real) {
 			$y++;
 			if ($y > 70) break;
 		}
-		else if ($bot_name{$x} == ' ')	{
+		else if ($bot_name{$x} == ' ') {
 			if($valid_char) {
 				$spider_name{$y} = ' ';
 				$valid_char = false;
@@ -267,7 +266,7 @@ if(!$real) {
 				if ($y > 70) break;
 			}
 		}
-		else if ($bot_name{$x} == '.')	{
+		else if ($bot_name{$x} == '.') {
 			if($valid_char) {
 				$spider_name{$y} = '.';
 				$valid_char = true;
@@ -275,25 +274,25 @@ if(!$real) {
 				if ($y > 70) break;
 			}
 		}
-		else if ($bot_name{$x} == ':')	{
+		else if ($bot_name{$x} == ':') {
 			$spider_name{$y} = ':';
 			$valid_char = true;
 			$y++;
 			if ($y > 70) break;
 		}
-		else if ($bot_name{$x} == '/')	{
+		else if ($bot_name{$x} == '/') {
 			$spider_name{$y} = '/';
 			$valid_char = true;
 			$y++;
 			if ($y > 70) break;
 		}
-		else if ($bot_name{$x} == '-')	{
+		else if ($bot_name{$x} == '-') {
 			$spider_name{$y} = '-';
 			$valid_char = true;
 			$y++;
 			if ($y > 70) break;
 		}
-		else if ($bot_name{$x} == '_')	{
+		else if ($bot_name{$x} == '_') {
 			$spider_name{$y} = '_';
 			$valid_char = true;
 			$y++;
@@ -310,22 +309,7 @@ if(!$real) {
 	}
 	// The SEARCH_SPIDER is set to 70 vetted chars, the session to 26 chars.
 	$SEARCH_SPIDER = $spider_name;
-	$bot_session = gen_spider_session_name($spider_name, "");
-	session_id($bot_session);
-}
-
-// stop spiders from accessing certain parts of the site
-$bots_not_allowed = array(
-'/reports/',
-'/includes/',
-'config',
-'clippings',
-'gedrecord.php'
-);
-if ($SEARCH_SPIDER && in_array(WT_SCRIPT_NAME, $bots_not_allowed)) {
-	header("HTTP/1.0 403 Forbidden");
-	print "Sorry, this page is not available for search engine bots.";
-	exit;
+	Zend_Session::setId(gen_spider_session_name($spider_name, ""));
 }
 
 // Manual Search Engine IP Address tagging
@@ -335,10 +319,9 @@ if ($SEARCH_SPIDER && in_array(WT_SCRIPT_NAME, $bots_not_allowed)) {
 //   To return to normal, the admin MUST use a different IP to get to admin
 //   mode or update the table pgv_ip_address directly.
 try {
-	$search_engine=WT_DB::prepareLimit(
+	$search_engine=WT_DB::prepare(
 		"SELECT ip_address, comment FROM `##ip_address`".
-		" WHERE category='search-engine' AND ? LIKE REPLACE(ip_address, '*', '%')",
-		1
+		" WHERE category='search-engine' AND ? LIKE REPLACE(ip_address, '*', '%') LIMIT 1"
 	)->execute(array($_SERVER['REMOTE_ADDR']))->fetchOneRow();
 	if ($search_engine) {
 		if (empty($SEARCH_SPIDER)) {
@@ -349,15 +332,14 @@ try {
 			}
 		}
 		$bot_name = 'MAN'.$_SERVER['REMOTE_ADDR'];
-		$bot_session = gen_spider_session_name($bot_name, '');
-		session_id($bot_session);
+		Zend_Session::setId(gen_spider_session_name($bot_name, ''));
 	}
 } catch (PDOException $ex) {
 	// Initial installation?  Site Down?  Fail silently.
 }
 
 if((empty($SEARCH_SPIDER)) && (!empty($_SESSION['last_spider_name']))) // user following a search engine listing in,
-session_regenerate_id();
+Zend_Session::regenerateId();
 
 if(!empty($SEARCH_SPIDER)) {
 	$spidertime = time();
@@ -401,7 +383,5 @@ if(!empty($SEARCH_SPIDER)) {
 	if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 	$_SESSION['last_spider_lang'] = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 
-	$_SESSION['wt_user'] = "";	// Don't allow search engine into user/admin mode.
+	$_SESSION['wt_user'] = ""; // Don't allow search engine into user/admin mode.
 }
-
-?>

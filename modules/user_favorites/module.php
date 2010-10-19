@@ -35,7 +35,7 @@ require_once WT_ROOT.'includes/classes/class_module.php';
 // Create tables, if not already present
 try {
 	WT_DB::updateSchema('./modules/user_favorites/db_schema/', 'FV_SCHEMA_VERSION', 1);
-}	 catch (PDOException $ex) {
+} catch (PDOException $ex) {
 	// The schema update scripts should never fail.  If they do, there is no clean recovery.
 	die($ex);
 }
@@ -52,7 +52,7 @@ class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 	}
 
 	// Implement class WT_Module_Block
-	public function getBlock($block_id, $template=true) {
+	public function getBlock($block_id, $template=true, $cfg=null) {
 		global $WT_IMAGES, $GEDCOM, $TEXT_DIRECTION, $MEDIA_DIRECTORY, $MULTI_MEDIA, $MEDIA_DIRECTORY_LEVELS, $ctype, $THEME_DIR;
 		global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE, $ENABLE_AUTOCOMPLETE;
 
@@ -119,6 +119,13 @@ class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 		}
 
 		$block=get_block_setting($block_id, 'block', false);
+		if ($cfg) {
+			foreach (array('block') as $name) {
+				if (array_key_exists($name, $cfg)) {
+					$$name=$cfg[$name];
+				}
+			}
+		}
 
 		// Override GEDCOM configuration temporarily
 		if (isset($show_full)) $saveShowFull = $show_full;
@@ -158,8 +165,8 @@ class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 		} else $content = '';
 
 		if ($block) {
-			$style = 2;		// 1 means "regular box", 2 means "wide box"
-			$tableWidth = ($BROWSERTYPE=="msie") ? "95%" : "99%";	// IE needs to have room for vertical scroll bar inside the box
+			$style = 2; // 1 means "regular box", 2 means "wide box"
+			$tableWidth = ($BROWSERTYPE=="msie") ? "95%" : "99%"; // IE needs to have room for vertical scroll bar inside the box
 			$cellSpacing = "1px";
 		} else {
 			$style = 2;
@@ -298,16 +305,16 @@ class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 
 		$block=get_block_setting($block_id, 'block', false);
 		echo '<tr><td class="descriptionbox wrap width33">';
-		echo i18n::translate('Add a scrollbar when block contents grow');
+		echo /* I18N: label for a yes/no option */ i18n::translate('Add a scrollbar when block contents grow');
 		echo '</td><td class="optionbox">';
 		echo edit_field_yes_no('block', $block);
 		echo '</td></tr>';
 	}
-	
+
 	/**
 	 * deleteFavorite
 	 * deletes a favorite in the database
-	 * @param int $fv_id	the id of the favorite to delete
+	 * @param int $fv_id the id of the favorite to delete
 	 */
 	public static function deleteFavorite($fv_id) {
 		return (bool)
@@ -317,7 +324,7 @@ class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 
 	/**
 	 * stores a new favorite in the database
-	 * @param array $favorite	the favorite array of the favorite to add
+	 * @param array $favorite the favorite array of the favorite to add
 	 */
 	public static function addFavorite($favorite) {
 		// -- make sure a favorite is added
@@ -336,11 +343,11 @@ class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 		$sql.=" AND fv_file=? AND fv_username=?";
 		$vars[]=$favorite["file"];
 		$vars[]=$favorite["username"];
-	
+
 		if (WT_DB::prepare($sql)->execute($vars)->fetchOne()) {
 			return false;
 		}
-	
+
 		//-- add the favorite to the database
 		return (bool)
 			WT_DB::prepare("INSERT INTO `##favorites` (fv_username, fv_gid, fv_type, fv_file, fv_url, fv_title, fv_note) VALUES (?, ? ,? ,? ,? ,? ,?)")
@@ -350,14 +357,14 @@ class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 	/**
 	 * Get a user's favorites
 	 * Return an array of a users messages
-	 * @param string $username		the username to get the favorites for
+	 * @param string $username the username to get the favorites for
 	 */
 	public static function getUserFavorites($username) {
 		$rows=
 			WT_DB::prepare("SELECT * FROM `##favorites` WHERE fv_username=?")
 			->execute(array($username))
 			->fetchAll();
-	
+
 		$favorites = array();
 		foreach ($rows as $row) {
 			if (get_id_from_gedcom($row->fv_file)) { // If gedcom exists

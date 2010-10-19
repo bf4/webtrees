@@ -49,8 +49,6 @@ if ($USE_RELATIONSHIP_PRIVACY) {
 	$NODE_CACHE = array();
 }
 
-//-- allow users to overide functions in privacy file
-if (!function_exists("is_dead")) {
 /**
 * check if a person is dead
 *
@@ -80,7 +78,7 @@ function is_dead($indirec, $gedcom_id) {
 	} else {
 		return false;
 	}
-	
+
 	// "1 DEAT Y" or "1 DEAT/2 DATE" or "1 DEAT/2 PLAC"
 	if (preg_match('/\n1 (?:'.WT_EVENTS_DEAT.')(?: Y|(?:\n[2-9].+)*\n2 (DATE|PLAC) )/', $indirec)) {
 		return true;
@@ -185,10 +183,7 @@ function is_dead($indirec, $gedcom_id) {
 	}
 	return false;
 }
-}
 
-//-- allow users to overide functions in privacy file
-if (!function_exists("showLivingNameById")) {
 /**
 * check if the name for a GEDCOM XRef ID should be shown
 *
@@ -218,7 +213,6 @@ function showLivingNameById($pid) {
 
 	return $SHOW_LIVING_NAMES>=$pgv_USER_ACCESS_LEVEL || canDisplayRecord($pgv_GED_ID, find_person_record($pid, $pgv_GED_ID));
 }
-}
 
 
 // Can we display a level 0 record?
@@ -233,24 +227,14 @@ function canDisplayRecord($ged_id, $gedrec) {
 
 	if ($_SESSION["wt_user"]==WT_USER_ID) {
 		// Normal operation
-		$pgv_GEDCOM            = WT_GEDCOM;
 		$pgv_GED_ID            = WT_GED_ID;
-		$pgv_USER_ID           = WT_USER_ID;
-		$pgv_USER_NAME         = WT_USER_NAME;
-		$pgv_USER_GEDCOM_ADMIN = WT_USER_GEDCOM_ADMIN;
-		$pgv_USER_CAN_ACCESS   = WT_USER_CAN_ACCESS;
 		$pgv_USER_ACCESS_LEVEL = WT_USER_ACCESS_LEVEL;
 		$pgv_USER_GEDCOM_ID    = WT_USER_GEDCOM_ID;
 	} else {
 		// We're in the middle of a Download -- get overriding information from cache
-		$pgv_GEDCOM            = $_SESSION["pgv_GEDCOM"];
 		$pgv_GED_ID            = $_SESSION["pgv_GED_ID"];
-		$pgv_USER_ID           = $_SESSION["pgv_USER_ID"];
-		$pgv_USER_NAME         = $_SESSION["pgv_USER_NAME"];
-		$pgv_USER_GEDCOM_ADMIN = $_SESSION["pgv_USER_GEDCOM_ADMIN"];
-		$pgv_USER_CAN_ACCESS   = $_SESSION["pgv_USER_CAN_ACCESS"];
 		$pgv_USER_ACCESS_LEVEL = $_SESSION["pgv_USER_ACCESS_LEVEL"];
-		$pgv_USER_GEDCOM_ID    = $_SESSION["pgv_USER_GEDCOM_ID"];
+		$pgv_USER_GEDCOM_ID    = 0; // dummy users do not have an associated gedcom record
 	}
 
 	if (preg_match('/^0 @('.WT_REGEX_XREF.')@ ('.WT_REGEX_TAG.')/', $gedrec, $match)) {
@@ -295,7 +279,7 @@ function canDisplayRecord($ged_id, $gedrec) {
 	}
 
 	// Privacy rules do not apply to admins
-	if ($pgv_USER_GEDCOM_ADMIN) {
+	if (WT_PRIV_NONE>=$pgv_USER_ACCESS_LEVEL) {
 		return $cache[$cache_key]=true;
 	}
 
@@ -330,8 +314,8 @@ function canDisplayRecord($ged_id, $gedrec) {
 			}
 		}
 		// Consider relationship privacy
-		if ($pgv_USER_GEDCOM_ID && get_user_setting($pgv_USER_ID, 'relationship_privacy', $USE_RELATIONSHIP_PRIVACY)) {
-			$path_length=get_user_setting($pgv_USER_ID, 'max_relation_path', $MAX_RELATION_PATH_LENGTH);
+		if ($pgv_USER_GEDCOM_ID && get_user_setting(WT_USER_ID, 'relationship_privacy', $USE_RELATIONSHIP_PRIVACY)) {
+			$path_length=get_user_setting(WT_USER_ID, 'max_relation_path', $MAX_RELATION_PATH_LENGTH);
 			$relationship=get_relationship($pgv_USER_GEDCOM_ID, $xref, $CHECK_MARRIAGE_RELATIONS, $path_length);
 			return $cache[$cache_key]=($relationship!==false);
 		}
@@ -362,13 +346,24 @@ function canDisplayRecord($ged_id, $gedrec) {
 			return $cache[$cache_key]=false;
 		}
 		break;
+	case 'NOTE':
+		// Hide notes if they are attached to private records
+		$linked_gids=WT_DB::prepare(
+			"SELECT l_from FROM `##link` WHERE l_to=? AND l_file=?"
+		)->execute(array($xref, $ged_id))->fetchOneColumn();
+		foreach ($linked_gids as $linked_gid) {
+			$linked_record=GedcomRecord::getInstance($linked_gid);
+			if (!$linked_record->canDisplayDetails()) {
+				return $cache[$cache_key]=false;
+			}
+		}
 	}
 
 	// Level 1 tags (except INDI and FAM) can be controlled by global tag settings
 	if (isset($global_facts[$type])) {
 		return $cache[$cache_key]=($global_facts[$type]>=$pgv_USER_ACCESS_LEVEL);
 	}
-	
+
 	// No restriction found - must be public:
 	return $cache[$cache_key]=true;
 }
@@ -490,7 +485,6 @@ function privatize_gedcom($gedrec) {
 				if (preg_match('/\n1 SEX [MFU]/', $gedrec, $match)) {
 					$newrec.=$match[0];
 				}
-				$newrec .= "\n1 NOTE ".i18n::translate('Details about this person are private. Personal details will not be included.');
 				break;
 			case 'FAM':
 				$newrec="0 @{$gid}@ FAM";
@@ -502,15 +496,23 @@ function privatize_gedcom($gedrec) {
 						}
 					}
 				}
-				$newrec .= "\n1 NOTE ".i18n::translate('Details about this family are private. Family details will not be included.');
+				break;
+			case 'NOTE':
+				$newrec="0 @{$gid}@ {$type} ".i18n::translate('Private');
 				break;
 			case 'SOUR':
-				$newrec="0 @{$gid}@ SOUR\n1 TITL ".i18n::translate('Private');
+				$newrec="0 @{$gid}@ {$type}\n1 TITL ".i18n::translate('Private');
+				break;
+			case 'REPO':
+			case 'SUBM':
+				$newrec="0 @{$gid}@ {$type}\n1 NAME ".i18n::translate('Private');
+				break;
+			case 'SUBN':
+				$newrec="0 @{$gid}@ {$type}\n1 FAMF ".i18n::translate('Private');
 				break;
 			case 'OBJE':
-				$newrec="0 @{$gid}@ OBJE\n1 NOTE ".i18n::translate('Details about this media are private. Media details will not be included.');
-				break;
 			default:
+				// Other objects have no name/title, so add an inline note
 				$newrec="0 @{$gid}@ {$type}\n1 NOTE ".i18n::translate('Private');
 			}
 			return $newrec;

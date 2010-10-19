@@ -50,7 +50,7 @@ define('WT_AUTHENTICATION_PHP', '');
  * @param string $user_name the username for the user attempting to login
  * @param string $password the plain text password to test
  * @param boolean $basic true if the userName and password were retrived via Basic HTTP authentication. Defaults to false. At this point, this is only used for logging
- * @return the user_id if sucessful, false otherwise
+ * @return the user_id if successful, false otherwise
  */
 function authenticateUser($user_name, $password, $basic=false) {
 	// If we were already logged in, log out first
@@ -62,7 +62,6 @@ function authenticateUser($user_name, $password, $basic=false) {
 		$dbpassword=get_user_password($user_id);
 		if (crypt($password, $dbpassword)==$dbpassword) {
 			if (get_user_setting($user_id, 'verified') && get_user_setting($user_id, 'verified_by_admin') || get_user_setting($user_id, 'canadmin')) {
-				set_user_setting($user_id, 'loggedin', true);
 				//-- reset the user's session
 				$_SESSION = array();
 				$_SESSION['wt_user'] = $user_id;
@@ -102,14 +101,13 @@ function basicHTTPAuthenticateUser() {
 
 /**
  * logs a user out of the system
- * @param string $user_id	logout a specific user
+ * @param string $user_id logout a specific user
  */
 function userLogout($user_id) {
-	set_user_setting($user_id, 'loggedin', false);
 	AddToLog('Logout '.getUserName($user_id), 'auth');
 	// If we are logging ourself out, then end our session too.
 	if (WT_USER_ID==$user_id) {
-		session_destroy();
+		Zend_Session::destroy();
 	}
 }
 
@@ -117,7 +115,7 @@ function userLogout($user_id) {
  * Updates the login time in the database of the given user
  * The login time is used to automatically logout users who have been
  * inactive for the defined session time
- * @param string $username	the username to update the login info for
+ * @param string $username the username to update the login info for
  */
 function userUpdateLogin($user_id) {
 	set_user_setting($user_id, 'sessiontime', time());
@@ -211,7 +209,7 @@ function userCanEdit($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
  *
  * takes a username and checks if the user has write privileges to
  * change the gedcom data and accept changes
- * @param string $username	the username of the user check privileges
+ * @param string $username the username of the user check privileges
  * @return boolean true if user can accept false if user cannot accept
  */
 function userCanAccept($user_id=WT_USER_ID, $ged_id=WT_GED_ID) {
@@ -289,9 +287,9 @@ function getUserGedcomId($user_id, $ged_id) {
 	}
 }
 
-/**
- * add a message into the log-file
- */
+// add a message into the log-file
+// Note that while transfering data from PGV to WT, we delete the WT users and
+// replace with PGV users.  Hence the current user_id is not always available.
 function AddToLog($log_message, $log_type='error') {
 	WT_DB::prepare(
 		"INSERT INTO `##log` (log_type, log_message, ip_address, user_id, gedcom_id) VALUES (?, ?, ?, ?, ?)"
@@ -299,7 +297,7 @@ function AddToLog($log_message, $log_type='error') {
 		$log_type,
 		$log_message,
 		$_SERVER['REMOTE_ADDR'],
-		getUserId() ? getUserId() : null,
+		getUserId() && WT_SCRIPT_NAME!='pgv_to_wt.php' ? getUserId() : null,
 		defined('WT_GED_ID') ? WT_GED_ID : null // logs raised before we select the gedcom won't have this.
 	));
 }
@@ -418,10 +416,11 @@ function addMessage($message) {
 		$subject1 = "[".i18n::translate('webtrees Message').($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
 		if (!$user_id_from) {
 			$email1 = i18n::translate('The following message has been sent to your webtrees user account from ');
-			if (!empty($message["from_name"]))
+			if (!empty($message["from_name"])) {
 				$email1 .= $message["from_name"]."\r\n\r\n".$message["body"];
-			else
+			} else {
 				$email1 .= $from."\r\n\r\n".$message["body"];
+			}
 		} else {
 			$email1 = i18n::translate('The following message has been sent to your webtrees user account from ');
 			$email1 .= $fromFullName."\r\n\r\n".$message["body"];
@@ -436,8 +435,9 @@ function addMessage($message) {
 			else
 				$to = getUserEmail($user_id_to);
 		}
-		if (getUserEmail($user_id_to))
+		if (getUserEmail($user_id_to)) {
 			webtreesMail($to, $from, $subject1, $email1);
+		}
 	}
 
 	i18n::init(WT_LOCALE); // restore language settings if needed
@@ -551,5 +551,3 @@ function getNewsItem($news_id) {
 		return null;
 	}
 }
-
-?>
