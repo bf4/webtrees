@@ -106,7 +106,7 @@ function admin_header($title, $head="", $use_alternate_styles=true) {
  * it searches the themes directory and reads the name from the theme_name variable
  * in the theme.php file.
  * @return array and array of theme names and their corresponding directory
- */
+*/
 function admin_get_theme_names() {
 	$themes = array();
 	$d = dir("../themes");
@@ -129,7 +129,7 @@ function admin_get_theme_names() {
 /**
  * Print a link for a popup help window
  *
- */ 
+*/ 
 function admin_help_link($help_topic, $module='') {
 	global $WT_USE_HELPIMG, $WT_IMAGES, $WT_IMAGE_DIR, $SEARCH_SPIDER;
 
@@ -146,7 +146,7 @@ function admin_help_link($help_topic, $module='') {
 /**
  * find_fact icon
  *
- */
+*/
 function admin_findfact_link($element_id, $ged='', $asString=false) {
 	global $WT_IMAGE_DIR, $WT_IMAGES, $GEDCOM;
 
@@ -159,6 +159,22 @@ function admin_findfact_link($element_id, $ged='', $asString=false) {
 	$out .= "</a>";
 	if ($asString) return $out;
 	echo $out;
+}
+
+/**
+ * find current page URL
+ *
+*/
+function curPageURL() {
+$isHTTPS = (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on");
+$port = (isset($_SERVER["SERVER_PORT"]) && ((!$isHTTPS && $_SERVER["SERVER_PORT"] != "80") || ($isHTTPS && $_SERVER["SERVER_PORT"] != "443")));
+$port = ($port) ? ':'.$_SERVER["SERVER_PORT"] : '';
+$url = ($isHTTPS ? 'https://' : 'http://').$_SERVER["SERVER_NAME"].$port.$_SERVER["REQUEST_URI"];
+return $url;
+}
+
+function curPageName() {
+ return substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
 }
 
 ?>

@@ -69,10 +69,16 @@ a:hover	{
 }
 
 h1 {
-	color: #81A9CB;
+	color: #666666;
 	font-size: 18px;
 	font-weight:bold;
 	margin-top:	0;
+}
+
+h1 img {
+	padding-right:10px;
+	width: 35px;
+	vertical-align: middle;
 }
 
 h2 {
@@ -89,9 +95,11 @@ h3 {
 }
 
 input, textarea {
+	color: black;
 	padding-left: 3px;
 	padding-right: 3px;
 }
+
 
 fieldset {
 	margin: 8px 8px 4px 8px;
@@ -120,6 +128,66 @@ legend {
 
 .nowrap {
 	white-space: nowrap;
+}
+
+.indent {
+	padding-left: 15px;
+}
+
+.current {
+	color: #81A9CB;
+	text-decoration: underline
+}
+
+/* REQUIRED BUTTON STYLES: */		
+button { 
+	position: relative;
+	border: 0; 
+	padding: 0;
+	cursor: pointer;
+	overflow: visible; /* removes extra side padding in IE */
+}
+
+button::-moz-focus-inner {
+	border: none;  /* overrides extra padding in Firefox */
+}
+
+button span { 
+	position: relative;
+	display: block; 
+	white-space: nowrap;	
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	/* Safari and Google Chrome only - fix margins */
+	button span {
+		margin-top: -1px;
+	}
+}
+
+
+/* OPTIONAL BUTTON STYLES for applying custom look and feel: */		
+button.submitBtn { 
+	padding: 0 15px 0 0; 
+	margin-right:5px; 
+	font-size: 1.5em; 
+	text-align: center; 
+	background: transparent url(images/btn_blue_sprite2.gif) no-repeat right -84px; 
+}
+	
+button.submitBtn span {
+	padding: 3px 0 0 15px; 
+	height:37px; 
+	background: transparent url(images/btn_blue_sprite2.gif) no-repeat left top; 
+	color:#fff; 
+}
+	
+button.submitBtn:hover, button.submitBtnHover { /* the redundant class is used to apply the hover state with a script */
+	background-position: right -126px; 
+}
+	
+button.submitBtn:hover span, button.submitBtnHover span {
+	background-position: 0 -42px;
 }
 
 /* Text direction */

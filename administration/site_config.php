@@ -29,9 +29,8 @@ require '../includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 require 'admin_functions.php';
 
-admin_header(i18n::translate('Site configuration'));
+admin_header(i18n::translate('Server configuration'));
 
-	
 switch (safe_POST('action')) {
 case 'update':
 	$data_directory= safe_POST('data_directory');
@@ -165,7 +164,7 @@ echo
 	'<td class="descriptionbox width20 wrap">', i18n::translate('Sender email address'), help_link('SMTP_HELO'), '</td>',
 	'<td class="optionbox wrap"><input type="text" name="smtp_helo" size="50" value="', get_site_setting('SMTP_HELO'), '" ', $smtp_active=='external' ? '' : 'disabled', '/></td>',
 	'</tr><tr>',
-	'<td class="topbottombar" colspan="2"><input type="submit" value="', i18n::translate('Save'), '" /></td>',
+	'<td class="topbottombar" colspan="2"><button type="submit" class="myButton" >', i18n::translate('Save'), '</button></td>',
 	'</tr></table></form>';
 include 'admin_footer.php';
 ?>

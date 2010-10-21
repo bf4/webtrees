@@ -327,8 +327,6 @@ case 'update':
 		exit;
 	}
 }
-
-//admin_header(i18n::translate('GEDCOM configuration'));
 ?>
 <script type="text/javascript">
 //<![CDATA[
@@ -350,9 +348,9 @@ case 'update':
 <form enctype="multipart/form-data" method="post" id="configform" name="configform" action="ged_config.php">
 
 	<?php
-		echo "<h1>", i18n::translate('GEDCOM configuration'), " - ";
+		echo '<h1><img src="images/tree.png">', i18n::translate('GEDCOM configuration'), ' - ';
 		echo PrintReady(get_gedcom_setting(WT_GED_ID, 'title'));
-		echo "</h1>";
+		echo '</h1>';
 	?>
 
 <input type="hidden" name="action" value="update" />
@@ -1696,9 +1694,9 @@ case 'update':
 			<table class="facts_table" border="0">
 				<tr>
 					<td style="padding: 5px" class="topbottombar">
-						<input type="submit" tabindex="<?php echo ++$i; ?>" value="<?php print i18n::translate('Save configuration'); ?>" />
+						<button type="submit" class="submitBtn" tabindex="<?php echo ++$i; ?>" value="<?php echo i18n::translate('Save configuration'); ?>" /><span><?php echo i18n::translate('Save configuration'); ?></span></button>
 						&nbsp;&nbsp;
-						<input type="reset" tabindex="<?php echo ++$i; ?>" value="<?php print i18n::translate('Reset'); ?>" />
+						<button type="reset" class="submitBtn" tabindex="<?php echo ++$i; ?>" value="<?php echo i18n::translate('Reset'); ?>" /><span><?php echo i18n::translate('Reset'); ?></span></button>
 					</td>
 				</tr>
 			</table>

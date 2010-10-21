@@ -62,9 +62,9 @@ jQuery(document).ready(function(){
 		"sPaginationType": "full_numbers"
 	});
 });
-
 </script>
 <?php
+
 echo
 	'</head>',
 	'<body id="body" ',$bodyOnLoad, '>';
@@ -92,12 +92,18 @@ echo
 		'<dl><dt><img src="images/admin.png" /><a href="ged_config.php">', i18n::translate('Administration'), '</a></dt></dl>',
 		'<dl><dt><img src="images/my_page.png" /><a href="../index.php?ctype=user">', i18n::translate('Back to My Page'), '</dt></dl>',	
 		'<dl>',
-			'<dt><img src="images/gedcom.png" /><a href="site_config.php">', i18n::translate('Site'), '</a></dt>',
-			'<dd><a href="site_config.php">', i18n::translate('Configuration'), '</a></dd>',
-			'<dd><a href="logs.php">', i18n::translate('Logs'), '</a></dd>',
-			'<dd><a href="readme.php">', i18n::translate('README documentation'), '</a></dd>',
-			'<dd><a href="wtinfo.php?action=phpinfo">', i18n::translate('PHP information'), '</a></dd>',
-			'<dd><a href="manageservers.php">', i18n::translate('Manage sites'), '</a></dd>',
+			'<dt>';
+			$class=""; if (curPageName()=='siteconfig.php') {$class="current";} 
+				echo '<img src="images/gedcom.png" /><a class="' ,$class, '" href="siteconfig.php">', i18n::translate('Site'), '</a></dt>',
+				'<dd><a class="' ,$class, '" href="siteconfig.php">', i18n::translate('Server configuration'), '</a></dd>';
+			$class=""; if (curPageName()=='logs.php') {$class="current";} 
+				echo '<dd><a class="' ,$class, '" href="logs.php">', i18n::translate('Logs'), '</a></dd>';
+			$class=""; if (curPageName()=='readme.php') {$class="current";} 
+				echo '<dd><a class="' ,$class, '" href="readme.php">', i18n::translate('README documentation'), '</a></dd>';
+			$class=""; if (curPageName()=='wtinfo.php') {$class="current";} 
+				echo '<dd><a class="' ,$class, '" href="wtinfo.php?action=phpinfo">', i18n::translate('PHP information'), '</a></dd>';
+			$class=""; if (curPageName()=='manageservers.php') {$class="current";} 
+				echo '<dd><a class="' ,$class, '" href="manageservers.php">', i18n::translate('Manage sites'), '</a></dd>',
 		'</dl>',
 		'<dl>',
 			'<dt><img src="images/tree.png" /><a href="ged_admin.php">', i18n::translate('GEDCOMs'), '</a></dt>',
@@ -107,21 +113,24 @@ echo
 				$gedcom_titles=get_gedcom_titles();
 				if (get_site_setting('ALLOW_CHANGE_GEDCOM')) {
 					foreach ($gedcom_titles as $gedcom_title) {
-						echo '<dd>&nbsp;&nbsp;&nbsp;<a href="', PrintReady(encode_url('ged_config.php?ctype=gedcom&ged='.$gedcom_title->gedcom_name)), '">', PrintReady($gedcom_title->gedcom_title, true),'</a></dd>';
+						$pagename = curPageName();
+						$class=""; if ($gedcom_title->gedcom_title == PrintReady(get_gedcom_setting(WT_GED_ID, 'title')) && $pagename == 'ged_config.php') {$class="current";} 
+						echo '<dd class="indent"><a class="', $class, '" href="', PrintReady(encode_url('ged_config.php?ctype=gedcom&ged='.$gedcom_title->gedcom_name)), '">', PrintReady($gedcom_title->gedcom_title, true),'</a></dd>';
+						
 					}
 				}
 		echo '</dl>',
-		'<dl><dt><img src="images/users.png" /><a href="user_info.php">', i18n::translate('Users'), '</a></dt',
-			'<dd><a href="user_info.php">', i18n::translate('User Statistics'), '</a></dd>',
+		'<dl><dt><img src="images/users.png" /><a href="user_stats.php">', i18n::translate('Users'), '</a></dt',
+			'<dd><a href="user_stats.php">', i18n::translate('User Statistics'), '</a></dd>',
 			'<dd><a href="user_list.php">', i18n::translate('Manage users'), '</a></dd>',
 			'<dd><a href="user_admin.php?action=createform">', i18n::translate('Add user'), '</a></dd>',
 			'<dd><a href="#">', i18n::translate('Bulk messaging'), '</a></dd>',
 		'</dl>',
 		'<dl><dt><img src="images/modules.png" /><a href="admin_modules.php">', i18n::translate('Modules'), '</a></dt',
 			'<dd><a href="admin_modules.php">', i18n::translate('Manage modules'), '</a></dd>',
-			'<dd><a href="#">', i18n::translate('Tabs - manage'), '</a></dd>',
-			'<dd><a href="#">', i18n::translate('Sidebar - manage'), '</a></dd>',
-			'<dd><a href="#">', i18n::translate('Menus - manage'), '</a></dd>',
+			'<dd class="indent"><a href="#">', i18n::translate('Tabs - manage'), '</a></dd>',
+			'<dd class="indent"><a href="#">', i18n::translate('Sidebar - manage'), '</a></dd>',
+			'<dd class="indent"><a href="#">', i18n::translate('Menus - manage'), '</a></dd>',
 			'<dd>----------------------------</dd>';
 			foreach (WT_Module::getInstalledModules() as $module) {
 				$status=WT_DB::prepare("SELECT status FROM `##module` WHERE module_name=?")->execute(array($module->getName()))->fetchOne();
