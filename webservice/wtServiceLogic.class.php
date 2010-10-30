@@ -394,7 +394,7 @@ class wtServiceLogic extends GenealogyService {
 		$family['WIFEID'] = get_gedcom_value("WIFE", 1, $gedrec, '', false);
 		$CHILDREN = array();
 		$ct = preg_match_all("/1 CHIL @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
-		for($i=0; $i<$ct; $i++) {
+		for ($i=0; $i<$ct; $i++) {
 			$child_id = $match[$i][1];
 			$CHILDREN[] = $child_id;
 		}
@@ -539,7 +539,7 @@ class wtServiceLogic extends GenealogyService {
 
 					if (empty($_REQUEST['keepfile'])) {
 						$ct = preg_match_all("/ FILE (.*)/", $gedrecords, $match, PREG_SET_ORDER);
-						for($i=0; $i<$ct; $i++)
+						for ($i=0; $i<$ct; $i++)
 						{
 							$mediaurl = WT_SERVER_NAME.WT_SCRIPT_PATH.$MEDIA_DIRECTORY.extract_filename($match[$i][1]);
 							$gedrecords = str_replace($match[$i][1], $mediaurl, $gedrecords);
@@ -832,7 +832,7 @@ class wtServiceLogic extends GenealogyService {
 
 		add_ancestors($list, $rootID, false, $generations);
 
-		if (empty($list)){
+		if (empty($list)) {
 			return new SOAP_Fault('Could not retrieve ancestory', 'Server', '',null);
 		} else {
 			$count = 0;
@@ -865,7 +865,7 @@ class wtServiceLogic extends GenealogyService {
 
 		add_descendancy($list, $rootID, false, $generations);
 
-		if (empty($list)){
+		if (empty($list)) {
 			return new SOAP_Fault('Could not retrieve descendancy', 'Server', '',null);
 		} else {
 			$count = 0;
@@ -903,13 +903,13 @@ class wtServiceLogic extends GenealogyService {
 		$myindilist = array();
 		if ($type!="OTHER") {
 			$ct = preg_match_all("/0 @(.*)@ $type/", $fcontents, $match, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
+			for ($i=0; $i<$ct; $i++) {
 				$xref1 = trim($match[$i][1]);
 				$myindilist[$xref1] = $xref1;
 			}
 		} else {
 			$ct = preg_match_all("/0 @(.*)@ (.*)/", $fcontents, $match, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
+			for ($i=0; $i<$ct; $i++) {
 				$xref1 = trim($match[$i][1]);
 				$xtype = trim($match[$i][2]);
 				if (($xtype!="INDI")&&($xtype!="FAM")&&($xtype!="SOUR")) $myindilist[$xref1] = $xref1;
