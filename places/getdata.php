@@ -30,7 +30,7 @@
 
 $localized=@$_GET["localized"];
 $field=@$_GET["field"];
-//print $field."|";
+//echo $field."|";
 $ctry=@$_GET["ctry"];
 $stae=@$_GET["stae"];
 $cnty=@$_GET["cnty"];
@@ -41,7 +41,7 @@ $mapname="";
 if (strpos($field, "PLAC_STAE")!==false) $mapname=$ctry;
 if (strpos($field, "PLAC_CNTY")!==false) $mapname=$ctry."_".$stae;
 if (strpos($field, "PLAC_CITY")!==false) $mapname=$ctry."_".$stae."_".$cnty;
-//print $mapname."|";
+//echo $mapname."|";
 if (empty($mapname)) return;
 $data = "";
 // user map file
@@ -66,7 +66,7 @@ if ($p === false) {
 	$data = preg_replace("/<!--.*?-->\n/is", "", $data);
 	$data = str_replace("\n", "|",$data);
 	$data = trim($data,"|");
-	print $data;
+	echo $data;
 	exit;
 }
 $data = substr($data, $p);
@@ -102,5 +102,4 @@ foreach ($resu as $k=>$v) {
 }
 //$data = str_replace("\n", "|",$data);
 $data = trim($data,"|");
-print $data;
-?>
+echo $data;
