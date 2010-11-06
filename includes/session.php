@@ -48,7 +48,7 @@ define('WT_DEBUG_SQL',  false);
 define('WT_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
 
 // Required version of database tables/columns/indexes/etc.
-define('WT_SCHEMA_VERSION', 3);
+define('WT_SCHEMA_VERSION', 4);
 
 // Regular expressions for validating user input, etc.
 define('WT_REGEX_XREF',     '[A-Za-z0-9:_-]+');
@@ -196,12 +196,12 @@ if (file_exists(WT_ROOT.'data/config.ini.php')) {
 	$dbconfig=parse_ini_file(WT_ROOT.'data/config.ini.php');
 	// Invalid/unreadable config file?
 	if (!is_array($dbconfig)) {
-		header('Location: site-unavailable.php');
+		header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'site-unavailable.php');
 		exit;
 	}
 } else {
 	// No config file. Set one up.
-	header('Location: setup.php');
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'setup.php');
 	exit;
 }
 
@@ -221,7 +221,7 @@ try {
 		die($ex);
 	}
 } catch (PDOException $ex) {
-	header('Location: site-unavailable.php');
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'site-unavailable.php');
 	exit;
 }
 
@@ -268,12 +268,12 @@ if (!empty($_SERVER['HTTP_USER_AGENT'])) {
 require WT_ROOT.'includes/session_spider.php';
 
 // Search engines are only allowed to see certain pages.
-if ($SEARCH_SPIDER && !array_key_exists(WT_SCRIPT_NAME , array(
+if ($SEARCH_SPIDER && !in_array(WT_SCRIPT_NAME , array(
 	'family.php', 'famlist.php', 'index.php', 'indilist.php', 'individual.php',
 	'media.php', 'medialist.php', 'note.php', 'notelist.php', 'repo.php', 'repolist.php',
 	'search_engine.php', 'site-unavailable.php', 'source.php', 'sourcelist.php'
 ))) {
-	header("Location: search_engine.php");
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'search_engine.php');
 	exit;
 }
 
@@ -390,11 +390,12 @@ define('WT_USER_CAN_ACCESS',   WT_USER_CAN_EDIT     || userCanAccess  (WT_USER_I
 define('WT_USER_ACCESS_LEVEL', getUserAccessLevel(WT_USER_ID, WT_GED_ID));
 define('WT_USER_GEDCOM_ID',    getUserGedcomId   (WT_USER_ID, WT_GED_ID));
 define('WT_USER_ROOT_ID',      getUserRootId     (WT_USER_ID, WT_GED_ID));
+define('WT_USER_PATH_LENGTH',  get_user_gedcom_setting(WT_USER_ID, WT_GED_ID, 'RELATIONSHIP_PATH_LENGTH'));
 
 // If we are logged in, and logout=1 has been added to the URL, log out
 if (WT_USER_ID && safe_GET_bool('logout')) {
 	userLogout(WT_USER_ID);
-	header("Location: ".WT_SERVER_NAME.WT_SCRIPT_PATH);
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH);
 	exit;
 }
 
@@ -412,7 +413,7 @@ if (!isset($_SESSION['wt_user'])) $_SESSION['wt_user'] = '';
 
 if (WT_SCRIPT_NAME!='help_text.php') {
 	if (!get_gedcom_setting(WT_GED_ID, 'imported') && !in_array(WT_SCRIPT_NAME, array('editconfig_gedcom.php', 'help_text.php', 'editgedcoms.php', 'downloadgedcom.php', 'logs.php', 'login.php', 'siteconfig.php', 'admin.php', 'addmedia.php', 'client.php', 'gedcheck.php', 'useradmin.php', 'export_gedcom.php', 'edit_changes.php', 'import.php', 'pgv_to_wt.php'))) {
-		header('Location: editgedcoms.php');
+		header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'editgedcoms.php');
 		exit;
 	}
 
@@ -427,7 +428,7 @@ if (WT_SCRIPT_NAME!='help_text.php') {
 			} else {
 				$url=WT_SCRIPT_NAME.'?'.$QUERY_STRING;
 			}
-			header('Location: '.get_site_setting('LOGIN_URL').'?url='.urlencode(WT_SERVER_NAME.WT_SCRIPT_PATH.$url));
+			header('Location: '.get_site_setting('LOGIN_URL').'?url='.rawurlencode($url));
 			exit;
 		}
 	}

@@ -42,11 +42,11 @@ $stats = new stats($GEDCOM);
 function bimo() {
 	global $z_as, $months, $zgrenzen, $stats, $n1;
 
-	if ($z_as == 300){
+	if ($z_as == 300) {
 		$num = $stats->statsBirth(false);
 		foreach ($num as $values) {
 			foreach ($months as $key=>$month) {
-				if($month==$values['d_month']) {
+				if ($month==$values['d_month']) {
 					fill_ydata(0, $key, $values['total']);
 					$n1+=$values['total'];
 				}
@@ -57,7 +57,7 @@ function bimo() {
 		$num = $stats->statsBirth(false, true);
 		foreach ($num as $values) {
 			foreach ($months as $key=>$month) {
-				if($month==$values['d_month']) {
+				if ($month==$values['d_month']) {
 					if ($values['i_sex']=='M') {
 						fill_ydata(0, $key, $values['total']);
 						$n1+=$values['total'];
@@ -76,7 +76,7 @@ function bimo() {
 			$num = $stats->statsBirth(false, false, $zstart, $boundary);
 			foreach ($num as $values) {
 				foreach ($months as $key=>$month) {
-					if($month==$values['d_month']) {
+					if ($month==$values['d_month']) {
 						fill_ydata($boundary, $key, $values['total']);
 						$n1+=$values['total'];
 					}
@@ -99,11 +99,11 @@ echo "not work yet";
 function demo() {
 	global $z_as, $months, $zgrenzen, $stats, $n1;
 
-	if ($z_as == 300){
+	if ($z_as == 300) {
 		$num = $stats->statsDeath(false);
 		foreach ($num as $values) {
 			foreach ($months as $key=>$month) {
-				if($month==$values['d_month']) {
+				if ($month==$values['d_month']) {
 					fill_ydata(0, $key, $values['total']);
 					$n1+=$values['total'];
 				}
@@ -114,7 +114,7 @@ function demo() {
 		$num = $stats->statsDeath(false, true);
 		foreach ($num as $values) {
 			foreach ($months as $key=>$month) {
-				if($month==$values['d_month']) {
+				if ($month==$values['d_month']) {
 					if ($values['i_sex']=='M') {
 						fill_ydata(0, $key, $values['total']);
 						$n1+=$values['total'];
@@ -133,7 +133,7 @@ function demo() {
 			$num = $stats->statsDeath(false, false, $zstart, $boundary);
 			foreach ($num as $values) {
 				foreach ($months as $key=>$month) {
-					if($month==$values['d_month']) {
+					if ($month==$values['d_month']) {
 						fill_ydata($boundary, $key, $values['total']);
 						$n1+=$values['total'];
 					}
@@ -152,7 +152,7 @@ function mamo() {
 		$num = $stats->statsMarr(false, false);
 		foreach ($num as $values) {
 			foreach ($months as $key=>$month) {
-				if($month==$values['d_month']) {
+				if ($month==$values['d_month']) {
 					fill_ydata(0, $key, $values['total']);
 					$n1+=$values['total'];
 				}
@@ -165,7 +165,7 @@ function mamo() {
 			$num = $stats->statsMarr(false, false, $zstart, $boundary);
 			foreach ($num as $values) {
 				foreach ($months as $key=>$month) {
-					if($month==$values['d_month']) {
+					if ($month==$values['d_month']) {
 						fill_ydata($boundary, $key, $values['total']);
 						$n1+=$values['total'];
 					}
@@ -187,7 +187,7 @@ function mamo1() {
 		foreach ($num as $values) {
 			if (!in_array($values['indi'], $indi) && !in_array($values['fams'], $fam)) {
 				foreach ($months as $key=>$month) {
-					if($month==$values['month']) {
+					if ($month==$values['month']) {
 						fill_ydata(0, $key, 1);
 						$n1++;
 					}
@@ -206,7 +206,7 @@ function mamo1() {
 			foreach ($num as $values) {
 				if (!in_array($values['indi'], $indi) && !in_array($values['fams'], $fam)) {
 					foreach ($months as $key=>$month) {
-						if($month==$values['month']) {
+						if ($month==$values['month']) {
 							fill_ydata($boundary, $key, 1);
 							$n1++;
 						}
@@ -233,7 +233,7 @@ echo "not work yet";
 function agbi() {
 	global $z_as, $zgrenzen, $stats, $n1;
 
-	if ($z_as == 300){
+	if ($z_as == 300) {
 		$num = $stats->statsAge(false, 'BIRT');
 		foreach ($num as $values) {
 			foreach ($values as $age_value) {
@@ -277,7 +277,7 @@ function agbi() {
 function agde() {
 	global $z_as, $zgrenzen, $stats, $n1;
 
-	if ($z_as == 300){
+	if ($z_as == 300) {
 		$num = $stats->statsAge(false, 'DEAT');
 		foreach ($num as $values) {
 			foreach ($values as $age_value) {
@@ -321,7 +321,7 @@ function agde() {
 function agma() {
 	global $z_as, $zgrenzen, $stats, $n1;
 
-	if ($z_as == 300){
+	if ($z_as == 300) {
 		$num = $stats->statsMarrAge(false, 'M');
 		foreach ($num as $values) {
 			fill_ydata(0, floor($values['age']/365.25), 1);
@@ -502,12 +502,12 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 	else $stop = count($ydata);
 	$yprocentmax = 0;
 	if ($percentage) {
-		for($i=0; $i<$stop; $i++) {
+		for ($i=0; $i<$stop; $i++) {
 			$ytotal = 0;
 			$ymax = 0;
 			$yprocent = 0;
 			if (isset($ydata[$i])) {
-				for($j=0; $j<count($ydata[$i]); $j++) {
+				for ($j=0; $j<count($ydata[$i]); $j++) {
 					if ($ydata[$i][$j] > $ymax) {
 						$ymax = $ydata[$i][$j];
 					}
@@ -523,16 +523,16 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 		if ($ymax>0) $scalefactor = 100.0/$ymax;
 		else $scalefactor = 0;
 		$datastring = "chd=t:";
-		for($i=0; $i<$stop; $i++) {
+		for ($i=0; $i<$stop; $i++) {
 			if (isset($ydata[$i])) {
-				for($j=0; $j<count($ydata[$i]); $j++){
+				for ($j=0; $j<count($ydata[$i]); $j++) {
 					if ($yt[$i] > 0) {
 						$datastring .= round($ydata[$i][$j]/$yt[$i]*100*$scalefactor, 1);
 					}
 					else {
 						$datastring .= "0";
 					}
-					if (!($j == (count($ydata[$i])-1))){
+					if (!($j == (count($ydata[$i])-1))) {
 						$datastring .= ",";
 					}
 				}
@@ -543,8 +543,8 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 		}
 	}
 	else {
-		for($i=0; $i<$stop; $i++) {
-			for($j=0; $j<count($ydata[$i]); $j++) {
+		for ($i=0; $i<$stop; $i++) {
+			for ($j=0; $j<count($ydata[$i]); $j++) {
 				if ($ydata[$i][$j]>$ymax) {
 					$ymax = $ydata[$i][$j];
 				}
@@ -553,10 +553,10 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 		if ($ymax>0) $scalefactor = 100.0/$ymax;
 		else $scalefactor = 0;
 		$datastring = "chd=t:";
-		for($i=0; $i<$stop; $i++) {
-			for($j=0; $j<count($ydata[$i]); $j++){
+		for ($i=0; $i<$stop; $i++) {
+			for ($j=0; $j<count($ydata[$i]); $j++) {
 				$datastring .= round($ydata[$i][$j]*$scalefactor, 1);
-				if (!($j == (count($ydata[$i])-1))){
+				if (!($j == (count($ydata[$i])-1))) {
 					$datastring .= ",";
 				}
 			}
@@ -567,10 +567,10 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 	}
 	$colors = array("0000FF", "FFA0CB", "9F00FF", "FF7000", "905030", "FF0000", "00FF00", "F0F000");
 	$colorstring = "chco=";
-	for($i=0; $i<$stop; $i++) {
+	for ($i=0; $i<$stop; $i++) {
 		if (isset($colors[$i])) {
 			$colorstring .= $colors[$i];
-			if ($i != ($stop-1)){
+			if ($i != ($stop-1)) {
 				$colorstring .= ",";
 			}
 		}
@@ -579,7 +579,7 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 	$titleLength = strpos($mytitle."\n", "\n");
 	$title = substr($mytitle, 0, $titleLength);
 
-	$imgurl = "http://chart.apis.google.com/chart?cht=bvg&chs=950x300&chf=bg,s,ffffff00|c,s,ffffff00&chtt=".$title."&".$datastring."&".$colorstring."&chbh=";
+	$imgurl = "http://chart.apis.google.com/chart?cht=bvg&amp;chs=950x300&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chtt=".$title."&amp;".$datastring."&amp;".$colorstring."&amp;chbh=";
 	if (count($ydata) > 3) {
 		$imgurl .= "5,1";
 	} elseif (count($ydata) < 2) {
@@ -587,15 +587,15 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 	} else {
 		$imgurl .= "20,3";
 	}
-	$imgurl .= "&chxt=x,x,y,y&chxl=0:|";
-	for($i=0; $i<count($xdata); $i++) {
+	$imgurl .= "&amp;chxt=x,x,y,y&amp;chxl=0:|";
+	for ($i=0; $i<count($xdata); $i++) {
 		$imgurl .= $xdata[$i]."|";
 	}
 
 	$imgurl .= "1:||||".$xtitle."|2:|";
 	$imgurl .= "0|";
-	if ($percentage){
-		for($i=1; $i<11; $i++) {
+	if ($percentage) {
+		for ($i=1; $i<11; $i++) {
 			if ($ymax < 11)
 				$imgurl .= round($ymax*$i/10, 1)."|";
 			else
@@ -605,12 +605,12 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 	}
 	else {
 		if ($ymax < 11) {
-			for($i=1; $i<$ymax+1; $i++) {
+			for ($i=1; $i<$ymax+1; $i++) {
 				$imgurl .= round($ymax*$i/($ymax), 0)."|";
 			}
 		}
 		else {
-			for($i=1; $i<11; $i++) {
+			for ($i=1; $i<11; $i++) {
 				$imgurl .= round($ymax*$i/10, 0)."|";
 			}
 		}
@@ -618,10 +618,10 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 	}
 	//only show legend if y-data is non-2-dimensional
 	if (count($ydata) > 1) {
-		$imgurl .= "&chdl=";
-		for($i=0; $i<count($legend); $i++){
+		$imgurl .= "&amp;chdl=";
+		for ($i=0; $i<count($legend); $i++) {
 			$imgurl .= $legend[$i];
-			if (!($i == (count($legend)-1))){
+			if (!($i == (count($legend)-1))) {
 				$imgurl .= "|";
 			}
 		}
@@ -630,7 +630,7 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 	//$title = strstr($mytitle, '|', true);
 	$title = substr($mytitle, 0, strpos($mytitle, '|'));
 	echo "<center><div class=\"statistics_chart\">";
-	echo "<img src=\"", encode_url($imgurl), "\" width=\"950\" height=\"300\" border=\"0\" alt=\"", $title, "\" title=\"", $title, "\"/>";
+	echo "<img src=\"", $imgurl, "\" width=\"950\" height=\"300\" border=\"0\" alt=\"", $title, "\" title=\"", $title, "\"/>";
 	echo "</div></center><br /><br />";
 }
 
@@ -656,7 +656,7 @@ function calc_axis($xas_grenzen) {
 			$xdata[$i] = $hulpar[$i1];
 			$xgrenzen[$i] = $hulpar[$i1];
 		}
-		else if ($hulpar[$i1]==$hulpar[0]){
+		else if ($hulpar[$i1]==$hulpar[0]) {
 			$xdata[$i]= $hulpar[$i1]."-".$hulpar[$i];
 			$xgrenzen[$i] = $hulpar[$i];
 		}
@@ -773,8 +773,8 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 			$xtitle= $xtitle.i18n::translate(' per time period');
 		}
 		//-- reset the data array
-		for($i=0; $i<$zmax; $i++) {
-			for($j=0; $j<$xmax; $j++) {
+		for ($i=0; $i<$zmax; $i++) {
+			for ($j=0; $j<$xmax; $j++) {
 				$ydata[$i][$j] = 0;
 			}
 		}
@@ -791,7 +791,7 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 	}
 }
 
-function print_sources_stats_chart($type){
+function print_sources_stats_chart($type) {
 	global $stats;
 
 	$params[0] = "700x200";
@@ -858,7 +858,7 @@ if ($action=="update") {
 }
 else {
 	if (!isset($_SESSION[$GEDCOM."statisticsplot"])) {
-		header("Location: statistics.php");
+		header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'statistics.php');
 		exit;
 	}
 	// Recover the saved input variables
@@ -956,5 +956,5 @@ default:
 }
 echo "<br /><div class =\"center noprint\">";
 echo "<input type=\"button\" value=\"", i18n::translate('Close Window'), "\" onclick=\"window.close()\" /><br /><br />";
-echo "</div>\n";
+echo "</div>";
 print_simple_footer();

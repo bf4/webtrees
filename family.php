@@ -38,7 +38,7 @@ $controller->init();
 
 print_header($controller->getPageTitle());
 // completely prevent display if privacy dictates so
-if (!$controller->family){
+if (!$controller->family) {
 	echo "<b>", i18n::translate('Unable to find record with ID'), "</b><br /><br />";
 	print_footer();
 	exit;
@@ -75,7 +75,7 @@ $show_full = "1";
 </script>
 <?php
 if (empty($SEARCH_SPIDER) && $controller->accept_success) {
-	print "<b>".i18n::translate('Changes successfully accepted into database')."</b><br />";
+	echo "<b>".i18n::translate('Changes successfully accepted into database')."</b><br />";
 }
 ?>
 <table align="center" width="95%">
@@ -87,14 +87,14 @@ if (empty($SEARCH_SPIDER) && $controller->accept_success) {
 </table>
 <table align="center" width="95%">
 	<tr valign="top">
-		<td align="left" valign="top" style="width: <?php echo $pbwidth+30 ?>px;"><!--//List of children//-->
-			<?php print_family_children($controller->getFamilyID());?>
+		<td align="left" valign="top" style="width: <?php echo $pbwidth+30; ?>px;"><!--//List of children//-->
+			<?php print_family_children($controller->getFamilyID()); ?>
 		</td>
 		<td> <!--//parents pedigree chart and Family Details//-->
 			<table align="left" width="100%">
 				<tr>
-					<td class="subheaders" valign="top"><?php echo i18n::translate('Parents');?></td>
-					<td class="subheaders" valign="top"><?php echo i18n::translate('Grandparents');?></td>
+					<td class="subheaders" valign="top"><?php echo i18n::translate('Parents'); ?></td>
+					<td class="subheaders" valign="top"><?php echo i18n::translate('Grandparents'); ?></td>
 				</tr>
 				<tr>
 					<td colspan="2">
@@ -118,7 +118,7 @@ if (empty($SEARCH_SPIDER) && $controller->accept_success) {
 				<tr>
 					<td align="left" colspan="2">
 						<br /><hr />
-						<?php print_family_facts($controller->family);?>
+						<?php print_family_facts($controller->family); ?>
 					</td>
 				</tr>
 			</table>
@@ -127,10 +127,10 @@ if (empty($SEARCH_SPIDER) && $controller->accept_success) {
 </table>
 <br />
 <?php
-if(empty($SEARCH_SPIDER))
+if (empty($SEARCH_SPIDER))
 	print_footer();
 else {
-	if($SHOW_SPIDER_TAGLINE)
+	if ($SHOW_SPIDER_TAGLINE)
 		echo i18n::translate('Search Engine Spider Detected').": ".$SEARCH_SPIDER;
-	echo "\n</div>\n\t</body>\n</html>";
+	echo "</div></body></html>";
 }

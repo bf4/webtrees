@@ -79,11 +79,11 @@ function move_file($src, $dest) {
 
 	// sometimes thumbnail files are set to something like "images/media.gif", this ensures we do not move them
 	// check to make sure the src file is in the standard or protected media directories
-	if (preg_match("'^($MEDIA_FIREWALL_ROOTDIR)?$MEDIA_DIRECTORY'", $src)==0){
+	if (preg_match("'^($MEDIA_FIREWALL_ROOTDIR)?$MEDIA_DIRECTORY'", $src)==0) {
 		return false;
 	}
 	// check to make sure the dest file is in the standard or protected media directories
-	if (preg_match("'^($MEDIA_FIREWALL_ROOTDIR)?$MEDIA_DIRECTORY'", $dest)==0){
+	if (preg_match("'^($MEDIA_FIREWALL_ROOTDIR)?$MEDIA_DIRECTORY'", $dest)==0) {
 		return false;
 	}
 
@@ -95,7 +95,7 @@ function move_file($src, $dest) {
 			return false;
 		}
 	}
-	if(!rename($src, $dest)) {
+	if (!rename($src, $dest)) {
 		echo "<div class=\"error\">".i18n::translate('Media file could not be moved.')." [".$src."]</div>";
 		return false;
 	}
@@ -163,7 +163,7 @@ function move_files($path, $protect) {
 */
 function set_perms($path) {
 	global $MEDIA_FIREWALL_ROOTDIR, $MEDIA_DIRECTORY, $starttime;
-	if (preg_match("'^($MEDIA_FIREWALL_ROOTDIR)?$MEDIA_DIRECTORY'", $path."/")==0){
+	if (preg_match("'^($MEDIA_FIREWALL_ROOTDIR)?$MEDIA_DIRECTORY'", $path."/")==0) {
 		return false;
 	}
 	$timelimit=get_site_setting('MAX_EXECUTION_TIME');
@@ -224,14 +224,14 @@ if (isset($_REQUEST['xref'])) $xref = $_REQUEST['xref'];
 if (count($_POST) == 0) $showthumb = true;
 
 $thumbget = "";
-if ($showthumb) $thumbget = "&showthumb=true";
+if ($showthumb) $thumbget = "&amp;showthumb=true";
 
 //-- prevent script from accessing an area outside of the media directory
 //-- and keep level consistency
-if (($level < 0) || ($level > $MEDIA_DIRECTORY_LEVELS)){
+if (($level < 0) || ($level > $MEDIA_DIRECTORY_LEVELS)) {
 	$directory = $MEDIA_DIRECTORY;
 	$level = 0;
-} elseif (preg_match("'^$MEDIA_DIRECTORY'", $directory)==0){
+} elseif (preg_match("'^$MEDIA_DIRECTORY'", $directory)==0) {
 	$directory = $MEDIA_DIRECTORY;
 	$level = 0;
 }
@@ -242,7 +242,7 @@ $thumbdir_fw = get_media_firewall_path($thumbdir);
 
 //-- only allow users with Admin privileges to access script.
 if (!WT_USER_IS_ADMIN || !$ALLOW_EDIT_GEDCOM) {
-	header("Location: login.php?url=media.php");
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'login.php?url='.WT_SCRIPT_NAME);
 	exit;
 }
 
@@ -610,7 +610,7 @@ if (check_media_structure()) {
 			$k=0;
 			$i=count($rlevels)-1;
 			$j=count($mlevels)-1;
-			while($i>=0 && $j>=0) {
+			while ($i>=0 && $j>=0) {
 				if ($rlevels[$i] != $mlevels[$j]) {
 					$match = false;
 					break;
@@ -669,12 +669,12 @@ if (check_media_structure()) {
 		}
 
 		//-- loop through all of the found xrefs and delete any references to them
-		foreach($xrefs as $ind=>$xref) {
+		foreach ($xrefs as $ind=>$xref) {
 			// Remove references to media file from gedcom and database
 			// Check for XREF
 			if ($xref != "") {
 				$links = get_media_relations($xref);
-				foreach($links as $pid=>$type) {
+				foreach ($links as $pid=>$type) {
 					$gedrec = find_gedcom_record($pid, WT_GED_ID, true);
 					$gedrec = remove_subrecord($gedrec, "OBJE", $xref, -1);
 					replace_gedrec($pid, WT_GED_ID, $gedrec);
@@ -701,7 +701,7 @@ if (check_media_structure()) {
 				if ($finalResult && !$removeObject && $objerec!="") {
 					$xref = get_new_xref("OBJE");
 					$objerec = preg_replace("/0 @.*@ OBJE/", "0 @".$xref."@ OBJE", $objerec);
-					if(append_gedrec($objerec, WT_GED_ID)) {
+					if (append_gedrec($objerec, WT_GED_ID)) {
 						echo i18n::translate('Record %s successfully added to GEDCOM.', $xref);
 					} else {
 						$finalResult = false;
@@ -779,18 +779,18 @@ if (check_media_structure()) {
 	?>
 
 	<!-- // NOTE: Row 1 left: Sort sequence -->
-	<tr><td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php echo i18n::translate('Sequence'), help_link('sortby'); ?></td>
+	<tr><td class="descriptionbox wrap width25" <?php echo $legendAlign; ?>><?php echo i18n::translate('Sequence'), help_link('sortby'); ?></td>
 	<td class="optionbox wrap"><select name="sortby">
-		<option value="title" <?php if ($sortby=='title') echo "selected=\"selected\"";?>><?php echo translate_fact('TITL');?></option>
-		<option value="file" <?php if ($sortby=='file') echo "selected=\"selected\"";?>><?php echo translate_fact('FILE');?></option>
+		<option value="title" <?php if ($sortby=='title') echo "selected=\"selected\""; ?>><?php echo translate_fact('TITL'); ?></option>
+		<option value="file" <?php if ($sortby=='file') echo "selected=\"selected\""; ?>><?php echo translate_fact('FILE'); ?></option>
 	</select></td>
 
 	<!-- // NOTE: Row 1 right, Upload media files -->
-	<td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php echo i18n::translate('Upload media files'), help_link('upload_media'); ?></td>
+	<td class="descriptionbox wrap width25" <?php echo $legendAlign; ?>><?php echo i18n::translate('Upload media files'), help_link('upload_media'); ?></td>
 	<td class="optionbox wrap"><?php echo "<a href=\"#\" onclick=\"expand_layer('uploadmedia');\">".i18n::translate('Upload media files')."</a>"; ?></td></tr>
 
 	<!-- // NOTE: Row 2 left: Filter options -->
-	<tr><td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php echo i18n::translate('Filter'), help_link('simple_filter'); ?></td>
+	<tr><td class="descriptionbox wrap width25" <?php echo $legendAlign; ?>><?php echo i18n::translate('Filter'), help_link('simple_filter'); ?></td>
 	<td class="optionbox wrap">
 		<?php
 			// Directory pick list
@@ -800,25 +800,25 @@ if (check_media_structure()) {
 			}
 			if ($MEDIA_DIRECTORY_LEVELS > 0) {
 				$folders = get_media_folders();
-				echo "<span dir=\"ltr\"><select name=\"directory\">\n";
-				foreach($folders as $f) {
+				echo "<span dir=\"ltr\"><select name=\"directory\">";
+				foreach ($folders as $f) {
 					echo "<option value=\"".$f."\"";
 					if ($directory==$f) echo " selected=\"selected\"";
-					echo ">{$f}</option>\n";
+					echo ">{$f}</option>";
 				}
 				echo "</select></span><br />";
 			} else echo "<input name=\"directory\" type=\"hidden\" value=\"ALL\" />";
 		// Text field for filter
 		?>
-		<input type="text" name="filter" value="<?php if($filter) echo $filter;?>" /><br /><input type="submit" name="search" value="<?php echo i18n::translate('Filter');?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="all" value="<?php echo i18n::translate('Display all'); ?>" onclick="this.form.subclick.value=this.name" /></td>
+		<input type="text" name="filter" value="<?php if ($filter) echo $filter; ?>" /><br /><input type="submit" name="search" value="<?php echo i18n::translate('Filter'); ?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="all" value="<?php echo i18n::translate('Display all'); ?>" onclick="this.form.subclick.value=this.name" /></td>
 
 	<!-- // NOTE: Row 2 right: Add media -->
-	<td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php echo i18n::translate('Add media'), help_link('add_media'); ?></td>
+	<td class="descriptionbox wrap width25" <?php echo $legendAlign; ?>><?php echo i18n::translate('Add media'), help_link('add_media'); ?></td>
 	<td class="optionbox wrap"><a href="javascript: <?php echo i18n::translate('Add media'); ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;"> <?php echo i18n::translate('Add a new media item'); ?></a></td></tr>
 
 	<!-- // NOTE: Row 3 left: Show thumbnails -->
 	<tr>
-	<td class="descriptionbox wrap width25" <?php echo $legendAlign;?>>
+	<td class="descriptionbox wrap width25" <?php echo $legendAlign; ?>>
 		<?php echo i18n::translate('Show thumbnails'), help_link('show_thumb'); ?>
 	</td>
 	<td class="optionbox wrap width25">
@@ -828,17 +828,17 @@ if (check_media_structure()) {
 	<!-- // NOTE: Row 3 right: Generate missing thumbnails -->
 	<?php
 		$tempURL = "media.php?";
-		if (!empty($filter)) $tempURL .= "filter={$filter}&";
-		if (!empty($subclick)) $tempURL .= "subclick={$subclick}&";
-		$tempURL .= "action=thumbnail&sortby={$sortby}&all=yes&level={$level}&directory={$directory}".$thumbget;
+		if (!empty($filter)) $tempURL .= 'filter='.rawurlencode($filter).'&amp;';
+		if (!empty($subclick)) $tempURL .= "subclick={$subclick}&amp;";
+		$tempURL .= "action=thumbnail&amp;sortby={$sortby}&amp;all=yes&amp;level={$level}&amp;directory=".rawurlencode($directory).$thumbget;
 		?>
-	<td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php echo i18n::translate('Missing thumbnails'), help_link('gen_missing_thumbs'); ?></td>
-	<td class="optionbox wrap"><a href="<?php echo encode_url($tempURL);?>"><?php echo i18n::translate('Create missing thumbnails');?></a></td></tr>
+	<td class="descriptionbox wrap width25" <?php echo $legendAlign; ?>><?php echo i18n::translate('Missing thumbnails'), help_link('gen_missing_thumbs'); ?></td>
+	<td class="optionbox wrap"><a href="<?php echo $tempURL; ?>"><?php echo i18n::translate('Create missing thumbnails'); ?></a></td></tr>
 	</table>
 </form>
 <script type="text/javascript">
 //<![CDATA[
-jQuery(document).ready(function(){
+jQuery(document).ready(function() {
 // Table pageing
 	jQuery("#media_table")
 		.tablesorter({
@@ -877,17 +877,17 @@ jQuery(document).ready(function(){
 		// Show link to previous folder
 		$levels = explode('/', $directory);
 		$pdir = '';
-		for($i=0; $i<count($levels)-2; $i++) $pdir.=$levels[$i].'/';
+		for ($i=0; $i<count($levels)-2; $i++) $pdir.=$levels[$i].'/';
 		if ($pdir != '') {
-			$uplink = "<a href=\"".encode_url("media.php?directory={$pdir}&sortby={$sortby}&level=".($level-1).$thumbget)."\">";
+			$uplink = "<a href=\"media.php?directory={$pdir}&amp;amp;sortby={$sortby}&amp;amp;level=".($level-1).$thumbget."\">";
 			if ($TEXT_DIRECTION=="rtl") $uplink .= getLRM();
 			$uplink .= $pdir;
 			if ($TEXT_DIRECTION=="rtl") $uplink .= getLRM();
-			$uplink .= "</a>\n";
+			$uplink .= "</a>";
 
-			$uplink2 = "<a href=\"".encode_url("media.php?directory={$pdir}&sortby={$sortby}&level=".($level-1).$thumbget)."\"><img class=\"icon\" src=\"";
+			$uplink2 = "<a href=\"media.php?directory={$pdir}&amp;sortby={$sortby}&amp;level=".($level-1).$thumbget."\"><img class=\"icon\" src=\"";
 			$uplink2 .= $WT_IMAGES["larrow"];
-			$uplink2 .= "\" alt=\"\" /></a>\n";
+			$uplink2 .= "\" alt=\"\" /></a>";
 		}
 		// Start of media directory table
 		echo "<table class=\"list_table width50 $TEXT_DIRECTION\">";
@@ -976,7 +976,7 @@ jQuery(document).ready(function(){
 					echo "<br />";
 			}
 
-			if ( !$USE_MEDIA_FIREWALL && is_dir($MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY) ) {
+			if (!$USE_MEDIA_FIREWALL && is_dir($MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY)) {
 				if ($protected_files > $standard_files) {
 					echo '<div class="error">';
 					echo i18n::translate('The media Firewall is DISABLED but your media may still be located in the Protected Media Directory').'<br />';
@@ -1034,7 +1034,7 @@ jQuery(document).ready(function(){
 						echo "</form>";
 					echo "</td>";
 					echo "<td class=\"descriptionbox $TEXT_DIRECTION\">";
-						echo "<a href=\"".encode_url("media.php?directory={$directory}{$dir}/&sortby={$sortby}&level=".($level+1).$thumbget)."\">";
+						echo "<a href=\"media.php?directory=".rawurlencode($directory.$dir)."/&amp;sortby={$sortby}&amp;level=".($level+1).$thumbget."\">";
 						if ($TEXT_DIRECTION=="rtl") echo getRLM();
 						echo $dir;
 						if ($TEXT_DIRECTION=="rtl") echo getRLM();
@@ -1107,7 +1107,7 @@ jQuery(document).ready(function(){
 							// Edit File
 							$tempURL = "addmedia.php?action=";
 							if ($media["XREF"] != "") {
-								$tempURL .= "editmedia&pid={$media['XREF']}&linktoid=";
+								$tempURL .= "editmedia&amp;pid={$media['XREF']}&amp;linktoid=";
 								if (!$media["LINKED"]) {
 									$tempURL .= "new";
 								} else {
@@ -1115,13 +1115,13 @@ jQuery(document).ready(function(){
 									$tempURL .= $linkToID;
 								}
 							} else {
-								$tempURL .= 'showmediaform&filename='.urlencode($media['FILE']).'&linktoid=new';
+								$tempURL .= 'showmediaform&amp;filename='.rawurlencode($media['FILE']).'&amp;linktoid=new';
 							}
-							echo "<a href=\"javascript:", i18n::translate('Edit'), "\" onclick=\"window.open('", encode_url($tempURL, false), "', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;\">", i18n::translate('Edit'), "</a><br />";
+							echo "<a href=\"javascript:", i18n::translate('Edit'), "\" onclick=\"window.open('", $tempURL, "', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;\">", i18n::translate('Edit'), "</a><br />";
 
 							// Edit Raw
 							if ($media["XREF"] != "") {
-								echo "<a href=\"javascript:".i18n::translate('Edit raw GEDCOM record')."\" onclick=\"return edit_raw('".$media['XREF']."');\">".i18n::translate('Edit raw GEDCOM record')."</a><br />\n";
+								echo "<a href=\"javascript:".i18n::translate('Edit raw GEDCOM record')."\" onclick=\"return edit_raw('".$media['XREF']."');\">".i18n::translate('Edit raw GEDCOM record')."</a><br />";
 							}
 
 							// Delete File
@@ -1136,17 +1136,17 @@ jQuery(document).ready(function(){
 							}
 							if (!$isExternal && $objectCount<2) {
 								$tempURL = "media.php?";
-								if (!empty($filter)) $tempURL.= "filter={$filter}&";
-								$tempURL .= "action=deletefile&showthumb={$showthumb}&sortby={$sortby}&filter={$filter}&subclick={$subclick}&filename=".urlencode($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
-								echo "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this file?')."');\">".i18n::translate('Delete file')."</a><br />";
+								if (!empty($filter)) $tempURL.= "filter=".rawurlencode($filter)."&amp;";
+								$tempURL .= "action=deletefile&amp;showthumb={$showthumb}&amp;sortby={$sortby}&amp;filter={$filter}&amp;subclick={$subclick}&amp;filename=".rawurlencode($media['FILE'])."&amp;directory={$directory}&amp;level={$level}&amp;xref={$media['XREF']}&amp;gedfile={$media['GEDFILE']}";
+								echo "<a href=\"".$tempURL."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this file?')."');\">".i18n::translate('Delete file')."</a><br />";
 							}
 
 							// Remove Object
 							if (!empty($media["XREF"])) {
 								$tempURL = "media.php?";
-								if (!empty($filter)) $tempURL .= "filter={$filter}&";
-								$tempURL .= "action=removeobject&showthumb={$showthumb}&sortby={$sortby}&filter={$filter}&subclick={$subclick}&filename=".urlencode($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
-								echo "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to remove this object from the database?')."');\">".i18n::translate('Remove object')."</a><br />";
+								if (!empty($filter)) $tempURL .= "filter={$filter}&amp;";
+								$tempURL .= "action=removeobjectamp;&showthumb={$showthumb}amp;&sortby={$sortby}amp;&filter={$filter}amp;&subclick={$subclick}amp;&filename=".rawurlencode($media['FILE'])."amp;&directory={$directory}amp;&level={$level}amp;&xref={$media['XREF']}amp;&gedfile={$media['GEDFILE']}";
+								echo "<a href=\"".$tempURL."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to remove this object from the database?')."');\">".i18n::translate('Remove object')."</a><br />";
 							}
 
 							// Remove links
@@ -1174,8 +1174,8 @@ jQuery(document).ready(function(){
 									$tempURL .= "action=movestandard";
 									$message=i18n::translate('Move to standard directory');
 								}
-								$tempURL .= "&showthumb={$showthumb}&sortby={$sortby}&filename=".urlencode($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile=".$media["GEDFILE"];
-								echo "<a href=\"".encode_url($tempURL)."\">".$message."</a><br />";
+								$tempURL .= "&amp;showthumb={$showthumb}&amp;sortby={$sortby}&amp;filename=".rawurlencode($media['FILE'])."&amp;directory=".rawurlencode($directory)."&amp;level={$level}&amp;xref={$media['XREF']}&amp;gedfile=".rawurlencode($media["GEDFILE"]);
+								echo "<a href=\"".$tempURL."\">".$message."</a><br />";
 							}
 
 							// Generate thumbnail
@@ -1184,9 +1184,9 @@ jQuery(document).ready(function(){
 								if ($ct>0) $ext = strtolower(trim($match[1]));
 								if ($ext=="jpg" || $ext=="jpeg" || $ext=="gif" || $ext=="png") {
 									$tempURL = "media.php?";
-									if (!empty($filter)) $tempURL .= "filter={$filter}&";
-									$tempURL .= "action=thumbnail&all=no&sortby={$sortby}&level={$level}&directory={$directory}&filename=".urlencode($media["FILE"]).$thumbget;
-									echo "<a href=\"".encode_url($tempURL)."\">".i18n::translate('Create thumbnail')."</a>";
+									if (!empty($filter)) $tempURL .= "filter={$filter}&amp;";
+									$tempURL .= "action=thumbnail&amp;all=no&amp;sortby={$sortby}&amp;level={$level}&amp;directory=".rawurlencode($directory)."&amp;filename=".rawurlencode($media["FILE"]).$thumbget;
+									echo "<a href=\"".$tempURL."\">".i18n::translate('Create thumbnail')."</a>";
 								}
 							}
 
@@ -1210,7 +1210,7 @@ jQuery(document).ready(function(){
 
 						//-- Thumbnail field
 						if ($showthumb) {
-							echo "\n\t\t\t<td class=\"optionbox $changeClass $TEXT_DIRECTION width10\">";
+							echo "<td class=\"optionbox $changeClass $TEXT_DIRECTION width10\">";
 							// if Streetview object
 							if (strpos($media["FILE"], 'http://maps.google.')===0) {
 								echo '<iframe style="float:left; padding:5px;" width="264" height="176" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="', $media["FILE"], '&amp;output=svembed"></iframe>';
@@ -1223,7 +1223,7 @@ jQuery(document).ready(function(){
 						}
 
 						//-- name and size field
-						echo "\n\t\t\t<td class=\"optionbox $changeClass $TEXT_DIRECTION wrap\">";
+						echo "<td class=\"optionbox $changeClass $TEXT_DIRECTION wrap\">";
 						if ($media["TITL"]!="" && begRTLText($media["TITL"]) && $TEXT_DIRECTION=="ltr") {
 							if (!empty($media["XREF"])) {
 								echo "(".$media["XREF"].")";
@@ -1293,7 +1293,7 @@ jQuery(document).ready(function(){
 							}
 						}
 
-						echo "\n\t\t\t</td></tr>";
+						echo "</td></tr>";
 						break;
 					}
 				}

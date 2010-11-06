@@ -62,7 +62,6 @@ function authenticateUser($user_name, $password, $basic=false) {
 		$dbpassword=get_user_password($user_id);
 		if (crypt($password, $dbpassword)==$dbpassword) {
 			if (get_user_setting($user_id, 'verified') && get_user_setting($user_id, 'verified_by_admin') || get_user_setting($user_id, 'canadmin')) {
-				set_user_setting($user_id, 'loggedin', true);
 				//-- reset the user's session
 				$_SESSION = array();
 				$_SESSION['wt_user'] = $user_id;
@@ -87,7 +86,7 @@ function authenticateUser($user_name, $password, $basic=false) {
  */
 function basicHTTPAuthenticateUser() {
 	$user_id = getUserId();
-	if (empty($user_id)){ //not logged in.
+	if (empty($user_id)) { //not logged in.
 		if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])
 				|| (! authenticateUser($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'], true))) {
 			header('WWW-Authenticate: Basic realm="' . i18n::translate('webtrees Authentication System') . '"');
@@ -105,7 +104,6 @@ function basicHTTPAuthenticateUser() {
  * @param string $user_id logout a specific user
  */
 function userLogout($user_id) {
-	set_user_setting($user_id, 'loggedin', false);
 	AddToLog('Logout '.getUserName($user_id), 'auth');
 	// If we are logging ourself out, then end our session too.
 	if (WT_USER_ID==$user_id) {
@@ -382,7 +380,7 @@ function addMessage($message) {
 			$email1 .= $fromFullName."\r\n\r\n".$message["body"];
 		}
 		if (!isset($message["no_from"])) {
-			if (stristr($from, $WEBTREES_EMAIL)){
+			if (stristr($from, $WEBTREES_EMAIL)) {
 				$from = getUserEmail(get_gedcom_setting(WT_GED_ID, 'WEBMASTER_USER_ID'));
 			}
 			if (!$user_id_from) {

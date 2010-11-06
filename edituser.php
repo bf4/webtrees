@@ -36,7 +36,7 @@ require WT_ROOT.'includes/functions/functions_edit.php';
 
 // prevent users with editing account disabled from being able to edit their account
 if (!get_user_setting(WT_USER_ID, 'editaccount')) {
-	header('Location: index.php?ctype=user');
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH);
 	exit;
 }
 
@@ -94,7 +94,7 @@ if ($form_action=='update') {
 			rename_user(WT_USER_ID, $form_username);
 		}
 		// Reload page to pick up changes such as theme and user_id
-		header('Location: edituser.php');
+		header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.WT_SCRIPT_NAME);
 		exit;
 	}
 } else {
@@ -109,27 +109,27 @@ if ($form_action=='update') {
 <!--
 function checkform(frm) {
 	if (frm.form_username.value=="") {
-		alert("<?php print i18n::translate('You must enter a user name.');?>");
+		alert("<?php echo i18n::translate('You must enter a user name.'); ?>");
 		frm.form_username.focus();
 		return false;
 	}
 	if (frm.form_realname.value=="") {
-		alert("<?php print i18n::translate('You must enter a real name.');?>");
+		alert("<?php echo i18n::translate('You must enter a real name.'); ?>");
 		frm.form_realname.focus();
 		return false;
 	}
 	if (frm.form_email.value.indexOf("@")==-1) {
-		alert("<?php print i18n::translate('You must enter an email address.');?>");
+		alert("<?php echo i18n::translate('You must enter an email address.'); ?>");
 		frm.user_email.focus();
 		return false;
 	}
 	if (frm.form_pass1.value!=frm.form_pass2.value) {
-		alert("<?php print i18n::translate('Passwords do not match.');?>");
+		alert("<?php echo i18n::translate('Passwords do not match.'); ?>");
 		frm.form_pass1.focus();
 		return false;
 	}
 	if (frm.form_pass1.value.length > 0 && frm.form_pass1.value.length < 6) {
-		alert("<?php print i18n::translate('Passwords must contain at least 6 characters.');?>");
+		alert("<?php echo i18n::translate('Passwords must contain at least 6 characters.'); ?>");
 		frm.form_pass1.focus();
 		return false;
 	}
@@ -232,4 +232,3 @@ echo '<tr><td class="topbottombar" colspan="2"><input type="submit" value="', i1
 echo '</table></form>';
 
 print_footer();
-?>

@@ -38,11 +38,8 @@ require './includes/session.php';
 header('Content-Type: text/html; charset=UTF-8');
 
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
-echo '<html xmlns="http://www.w3.org/1999/xhtml" ', i18n::html_markup, '><head>';
+echo '<html xmlns="http://www.w3.org/1999/xhtml" ', i18n::html_markup(), '><head>';
 echo '<link rel="stylesheet" href="', $stylesheet, '" type="text/css" media="all" />';
-if ($rtl_stylesheet && $TEXT_DIRECTION=='rtl') {
-	echo '<link rel="stylesheet" href="', $rtl_stylesheet, '" type="text/css" media="all" />';
-}
 echo '<meta name="robots" content="noindex,follow" />';
 echo '<meta name="generator" content="', WT_WEBTREES, ' - ', WT_WEBTREES_URL, '" />';
 echo '<title>', i18n::translate('Search Engine Spider Detected'), '</title>';
@@ -58,19 +55,18 @@ $all_gedcoms=get_all_gedcoms();
 if (get_site_setting('ALLOW_CHANGE_GEDCOM') && count($all_gedcoms)>1) {
 	foreach ($all_gedcoms as $ged_id=>$gedcom) {
 		$title=i18n::translate('Home page').' - '.PrintReady(get_gedcom_setting($ged_id, 'title'));
-		echo '<a href="', encode_url("index.php?ged={$gedcom}"), '"><b>', $title, '</b></a><br />';
+		echo '<a href="index.php?ged=', rawurlencode($gedcom), '"><b>', $title, '</b></a><br />';
 	}
 	echo '<br />';
 	foreach ($all_gedcoms as $ged_id=>$gedcom) {
 		$title=i18n::translate('Individuals').' - '.PrintReady(get_gedcom_setting($ged_id, 'title'));
-		echo '<a href="', encode_url("indilist.php?ged={$gedcom}"), '"><b>', $title, '</b></a><br />';
+		echo '<a href="indilist.php?ged=', rawurlencode($gedcom), '"><b>', $title, '</b></a><br />';
 	}
 } else {
 	$title=i18n::translate('Home page');
-	echo '<a href="', encode_url("index.php?ged={$GEDCOM}"), '"><b>', $title, '</b></a><br />';
+	echo '<a href="index.php?ged=', rawurlencode($GEDCOM), '"><b>', $title, '</b></a><br />';
 	$title=i18n::translate('Individuals');
-	echo '<a href="', encode_url("indilist.php?ged={$GEDCOM}"), '"><b>', $title, '</b></a><br />';
+	echo '<a href="indilist.php?ged=', rawurlencode($GEDCOM), '"><b>', $title, '</b></a><br />';
 }
 
 echo '</body></html>';
-?>

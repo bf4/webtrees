@@ -52,7 +52,7 @@ if (empty($url)) {
 	// If we came here by means of a URL like http://mysite.com/foo/login.php
 	// we don't have a proper login URL, and session cookies haven't been set yet
 	// We'll re-load the page to properly determine cookie support
-	header("Location: login.php?url=index.php?ctype=user");
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'login.php?url=index.php&ctype=user');
 }
 
 $message='';
@@ -110,7 +110,7 @@ if ($action=='login') {
 		$url .= "&ged=".$ged;
 		$url = str_replace(array("&&", ".php&", ".php?&"), array("&", ".php?", ".php?"), $url);
 
-		header("Location: ".encode_url($url, false));
+		header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.$url);
 		exit;
 	} else {
 		$message = i18n::translate('Unable to authenticate user.');
@@ -146,10 +146,10 @@ if ($type=="full") {
 } else {
 	print_simple_header(i18n::translate('webtrees user login'));
 }
-echo "<div class=\"center\">\n";
+echo "<div class=\"center\">";
 
 echo "<table class=\"center width60 ltr\"><tr><td>";
-switch ($WELCOME_TEXT_AUTH_MODE){
+switch ($WELCOME_TEXT_AUTH_MODE) {
 case 1:
 	echo i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to every visitor who has a user account.<br /><br />If you have a user account, you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your application, the site administrator will activate your account.  You will receive an email when your application has been approved.');
 	break;
@@ -168,30 +168,30 @@ case 4:
 }
 echo '</td></tr></table><br /><br />';
 	?>
-	<form name="loginform" method="post" action="<?php print get_site_setting('LOGIN_URL'); ?>" onsubmit="t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;">
+	<form name="loginform" method="post" action="<?php echo get_site_setting('LOGIN_URL'); ?>" onsubmit="t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;">
 		<input type="hidden" name="action" value="login" />
-		<input type="hidden" name="url" value="<?php print htmlspecialchars($url); ?>" />
-		<input type="hidden" name="ged" value="<?php if (isset($ged)) print htmlspecialchars($ged); else print htmlentities($GEDCOM); ?>" />
-		<input type="hidden" name="pid" value="<?php if (isset($pid)) print htmlspecialchars($pid); ?>" />
-		<input type="hidden" name="type" value="<?php print htmlspecialchars($type); ?>" />
+		<input type="hidden" name="url" value="<?php echo htmlspecialchars($url); ?>" />
+		<input type="hidden" name="ged" value="<?php if (isset($ged)) echo htmlspecialchars($ged); else echo htmlentities($GEDCOM); ?>" />
+		<input type="hidden" name="pid" value="<?php if (isset($pid)) echo htmlspecialchars($pid); ?>" />
+		<input type="hidden" name="type" value="<?php echo htmlspecialchars($type); ?>" />
 		<input type="hidden" name="usertime" value="" />
 		<?php
-		if (!empty($message)) print "<span class='error'><br /><b>$message</b><br /><br /></span>\r\n";
+		if (!empty($message)) echo "<span class='error'><br /><b>$message</b><br /><br /></span>";
 		?>
 		<!--table-->
 		<table class="center facts_table width50">
-			<tr><td class="topbottombar" colspan="2"><?php print i18n::translate('Login'); ?></td></tr>
+			<tr><td class="topbottombar" colspan="2"><?php echo i18n::translate('Login'); ?></td></tr>
 			<tr>
-				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('User name'), help_link('username'); ?></td>
-				<td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" name="username" value="<?php print htmlspecialchars($username); ?>" size="20" class="formField" /></td>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('User name'), help_link('username'); ?></td>
+				<td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="username" value="<?php echo htmlspecialchars($username); ?>" size="20" class="formField" /></td>
 			</tr>
 			<tr>
-				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('Password'), help_link('password'); ?></td>
-				<td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="password" name="password" size="20" class="formField" /></td>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('Password'), help_link('password'); ?></td>
+				<td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="password" name="password" size="20" class="formField" /></td>
 			</tr>
 			<tr>
 				<td class="topbottombar" colspan="2">
-					<input type="submit" value="<?php print i18n::translate('Login'); ?>" />
+					<input type="submit" value="<?php echo i18n::translate('Login'); ?>" />
 					<?php
 					if ($REQUIRE_AUTHENTICATION) {
 						echo help_link('login_buttons_aut');
@@ -205,20 +205,20 @@ echo '</td></tr></table><br /><br />';
 </form><br /><br />
 <?php
 
-if (!isset($_COOKIE[WT_SESSION_NAME])) print "<center><div class=\"error width50\">".i18n::translate('This site uses cookies to keep track of your login status.<br /><br />Cookies do not appear to be enabled in your browser. You must enable cookies for this site before you can login.  You can consult your browser\'s help documentation for information on enabling cookies.')."</div></center><br /><br />";
+if (!isset($_COOKIE[WT_SESSION_NAME])) echo "<center><div class=\"error width50\">".i18n::translate('This site uses cookies to keep track of your login status.<br /><br />Cookies do not appear to be enabled in your browser. You must enable cookies for this site before you can login.  You can consult your browser\'s help documentation for information on enabling cookies.')."</div></center><br /><br />";
 
 if (get_site_setting('USE_REGISTRATION_MODULE')) { ?>
 	<table class="center facts_table width50">
-	<tr><td class="topbottombar" colspan="2"><?php print i18n::translate('Account Information'); ?></td></tr>
-	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('No account?'), help_link('new_user'); ?></td>
-	<td class="optionbox <?php print $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=register"><?php echo i18n::translate('Request new user account'); ?></a></td></tr>
-	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('Lost your password?'), help_link('new_password'); ?></td>
-	<td class="optionbox <?php print $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=pwlost"><?php print i18n::translate('Request new password'); ?></a></td></tr>
+	<tr><td class="topbottombar" colspan="2"><?php echo i18n::translate('Account Information'); ?></td></tr>
+	<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('No account?'), help_link('new_user'); ?></td>
+	<td class="optionbox <?php echo $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=register"><?php echo i18n::translate('Request new user account'); ?></a></td></tr>
+	<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('Lost your password?'), help_link('new_password'); ?></td>
+	<td class="optionbox <?php echo $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=pwlost"><?php echo i18n::translate('Request new password'); ?></a></td></tr>
 	<tr><td class="topbottombar ltr" colspan="2">&nbsp;</td></tr>
 	</table>
 <?php
 }
-print "</div><br /><br />";
+echo "</div><br /><br />";
 ?>
 <script language="JavaScript" type="text/javascript">
 	document.loginform.username.focus();

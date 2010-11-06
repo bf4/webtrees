@@ -31,7 +31,7 @@ require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 
 if (!WT_USER_IS_ADMIN) {
-	header("Location: login.php?url=dir_editor.php");
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'login.php?url='.WT_SCRIPT_NAME);
 	exit;
 }
 
@@ -89,9 +89,9 @@ echo '<p class="center"><input TYPE="button" VALUE="', i18n::translate('Return t
 echo i18n::translate('To delete a file or subdirectory from the data directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.'), '<br /><br />', i18n::translate('Files marked with %s are required for proper operation and cannot be removed.', '<img src="./images/RESN_confidential.gif" alt="" />'), '<br />', i18n::translate('Files marked with %s have important settings or pending change data and should only be deleted if you are sure you know what you are doing.', '<img src="./images/RESN_locked.gif" alt="" />');
 
 //post back
-if(isset($_REQUEST["to_delete"])) {
+if (isset($_REQUEST["to_delete"])) {
 	echo "<span class=\"error\">", i18n::translate('Deleted files:'), "</span><br/>";
-	foreach($_REQUEST["to_delete"] as $k=>$v) {
+	foreach ($_REQUEST["to_delete"] as $k=>$v) {
 		if (is_dir($INDEX_DIRECTORY.$v)) {
 			full_rmdir($INDEX_DIRECTORY.$v);
 		} elseif (file_exists($INDEX_DIRECTORY.$v)) {
@@ -110,7 +110,7 @@ require_once WT_ROOT.'js/scriptaculous.js.htm';
 <!--
 function warnuser(cbox) {
 	if (cbox.checked) {
-		if(!confirm('<?php print i18n::translate('This file contains important information such as language settings or pending change data.  Are you sure you want to delete this file?'); ?>')) cbox.checked = false;
+		if (!confirm('<?php echo i18n::translate('This file contains important information such as language settings or pending change data.  Are you sure you want to delete this file?'); ?>')) cbox.checked = false;
 	}
 }
 //-->
@@ -130,20 +130,19 @@ function warnuser(cbox) {
 		}
 		sort($entryList);
 		foreach ($entryList as $entry) {
-			//echo $entry, "\n";
 			if ($entry{0} != '.') {
 				if (in_array($entry, $locked_by_context)) {
-					print "<li class=\"facts_value\" name=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
-					print "<img src=\"./images/RESN_confidential.gif\" alt=\"\" />&nbsp;&nbsp;";
-					print "<span class=\"name2\">".$entry."</span>";
+					echo "<li class=\"facts_value\" name=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
+					echo "<img src=\"./images/RESN_confidential.gif\" alt=\"\" />&nbsp;&nbsp;";
+					echo "<span class=\"name2\">".$entry."</span>";
 				}
-				else{
-					print "<li class=\"facts_value\" name=\"$entry\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$entry\" >";
-					print "<input type=\"checkbox\" name=\"to_delete[]\" value=\"".$entry."\" />\n";
-					print $entry;
+				else {
+					echo "<li class=\"facts_value\" name=\"$entry\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$entry\" >";
+					echo "<input type=\"checkbox\" name=\"to_delete[]\" value=\"".$entry."\" />";
+					echo $entry;
 					$elements[] = "li_".$entry;
 				}
-				print "</li>";
+				echo "</li>";
 			}
 		}
 		?>
@@ -152,23 +151,23 @@ function warnuser(cbox) {
 		<td valign="top" id="trash" class="facts_value02"><?php
 		$dir->close();
 
-		print "<div style=\"margin-bottom:2px;\">";
-		print "<table><tr><td>";
-		if (isset($WT_IMAGES["trashcan"]["medium"])) print "<img src=\"".$WT_IMAGES["trashcan"]["medium"]."\" align=\"left\" alt=\"\" />";
-		else print "<img src=\"images/trashcan.gif\" align=\"left\" alt=\"\" />";
-		print "</td>";
-		print "<td valign=\"top\"><ul id=\"trashlist\">";
-		print "</ul></td></tr></table>";
-		print "</div>";
+		echo "<div style=\"margin-bottom:2px;\">";
+		echo "<table><tr><td>";
+		if (isset($WT_IMAGES["trashcan"]["medium"])) echo "<img src=\"".$WT_IMAGES["trashcan"]["medium"]."\" align=\"left\" alt=\"\" />";
+		else echo "<img src=\"images/trashcan.gif\" align=\"left\" alt=\"\" />";
+		echo "</td>";
+		echo "<td valign=\"top\"><ul id=\"trashlist\">";
+		echo "</ul></td></tr></table>";
+		echo "</div>";
 
 		?> <script type="text/javascript" language="javascript">
 	<!--
 	new Effect.BlindDown('reorder_list', {duration: 1});
 
 		<?php
-		foreach($elements as $key=>$val)
+		foreach ($elements as $key=>$val)
 		{
-			print "new Draggable('".$val."', {revert:true});";
+			echo "new Draggable('".$val."', {revert:true});";
 		}
 		?>
 
@@ -177,7 +176,7 @@ function warnuser(cbox) {
 	onDrop: function(element)
 	{
 		if (element.attributes.warn) {
-			if (!confirm('<?php print i18n::translate('This file contains important information such as language settings or pending change data.  Are you sure you want to delete this file?'); ?>')) return;
+			if (!confirm('<?php echo i18n::translate('This file contains important information such as language settings or pending change data.  Are you sure you want to delete this file?'); ?>')) return;
 		}
 		$('trashlist').innerHTML +=
 			'<li class="facts_value">'+ element.attributes.name.value +'<input type="hidden" name="to_delete[]" value="'+element.attributes.name.value+'"/></li>' ;
@@ -190,7 +189,7 @@ function ul_clear()
 
 	list = document.getElementById('reorder_list');
 	children = list.childNodes;
-	for(i=0; i<children.length; i++) {
+	for (i=0; i<children.length; i++) {
 		node = children[i];
 		if (node.tagName=='li' || node.tagName=='LI') {
 			//node.className='facts_value';
@@ -201,7 +200,7 @@ function ul_clear()
 
 function removeAll() {
 	var elements = document.getElementsByName('to_delete[]');
-	for(i=0; i<elements.length; i++) {
+	for (i=0; i<elements.length; i++) {
 		node = elements[i];
 		if (!node.attributes.warn) node.checked = true;
 	}
@@ -209,9 +208,9 @@ function removeAll() {
 }
 // -->
 </script>
-		<button type="submit"><?php print i18n::translate('Delete');?></button>
-		<button type="button" onclick="ul_clear(); return false;"><?php print i18n::translate('Cancel');?></button><br /><br />
-		<button type="button" onclick="removeAll(); return false;"><?php print i18n::translate('Remove all nonessential files');?></button>
+		<button type="submit"><?php echo i18n::translate('Delete'); ?></button>
+		<button type="button" onclick="ul_clear(); return false;"><?php echo i18n::translate('Cancel'); ?></button><br /><br />
+		<button type="button" onclick="removeAll(); return false;"><?php echo i18n::translate('Remove all nonessential files'); ?></button>
 		</td>
 	</tr>
 </table>

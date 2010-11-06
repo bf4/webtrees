@@ -60,9 +60,11 @@ a:hover	{
 	color: red;
 	text-decoration: none;
 }
+
 :focus {
   -moz-outline-style: none;
 }
+
 th {
 	font-weight: 100;
 }
@@ -84,12 +86,17 @@ legend img {
 }
 
 img.block, #calendar_img, #biglink img, #mycart img  {
+	border: none;
 	height: 25px;
 	vertical-align: middle;
 }
 
 #mycart a img  {
 	height: 15px;
+}
+
+.optionbox a img, #imgnew_comment_exp {
+	vertical-align: top;
 }
 
 .button {
@@ -905,6 +912,14 @@ input, textarea {
 	padding-right: 3px;
 }
 
+input.image {
+	width: 17px;
+	height: 17px;
+	border: none;
+	padding: 0;
+	vertical-align: top;
+}
+
 select {
 	border-top-color: #84beff;
 	border-left-color: #84beff;
@@ -983,6 +998,7 @@ h4 {
 
 .descriptionbox .icon {
 	width: 15px;
+	vertical-align:middle;
 }
 
 /* Style for the optionbox */
@@ -1739,4 +1755,8 @@ td.descriptionbox  a { /* this keeps the tag color the same when it is a link as
 	background: url(images/delete.png) no-repeat left center;
 	width: 20px;
 	float: left;
+}
+
+.place {
+	padding-top: 5px;
 }

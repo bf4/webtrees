@@ -469,7 +469,7 @@ class GenealogyService
 		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") ServiceInfo", 'auth');
 		$result = $this->postServiceInfo();
 
-		if($result !== false)
+		if ($result !== false)
 		{
 			return $result;
 		}
@@ -499,7 +499,7 @@ class GenealogyService
 	{
 		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") Authenticate($username, '****', $gedcom, $compression)", 'auth');
 		$result = $this->postAuthenticate($username, $password, $gedcom, $compression);
-		if($result !== false)
+		if ($result !== false)
 		{
 			//if everything worked set the session value to true
 			if (!PEAR::isError($result))
@@ -530,7 +530,7 @@ class GenealogyService
 	{
 		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") changeGedcom($gedcom)", 'auth');
 		$result = $this->postChangeGedcom($gedcom);
-		if($result !== false)
+		if ($result !== false)
 		{
 			//if everything worked set the session value to true
 			if (!PEAR::isError($result))
@@ -566,7 +566,7 @@ class GenealogyService
 			return $result;
 		//session id is valid continue the call
 		$result = $this->postGetPersonByID($SID, $PID);
-		if($result !== false)
+		if ($result !== false)
 		{
 			return $result;
 		}
@@ -588,7 +588,7 @@ class GenealogyService
 			return $result;
 		//session id is valid continue the call
 		$result = $this->postGetFamilyByID($SID,$FID);
-		if($result !== false)
+		if ($result !== false)
 		{
 			return $result;
 		}
@@ -610,7 +610,7 @@ class GenealogyService
 			return $result;
 		//session id is valid continue the call
 		$result = $this->postGetSourceByID($SID,$SCID);
-		if($result !== false)
+		if ($result !== false)
 		{
 			return $result;
 		}
@@ -661,7 +661,7 @@ class GenealogyService
 			return $result;
 
 		$result = $this->postGetGedcomRecord($SID, $PID);
-		if($result !== false)
+		if ($result !== false)
 		{
 			return $result;
 		}
@@ -690,7 +690,7 @@ class GenealogyService
 			return $result;
 		//session id is valid continue the call
 		$result = $this->postGetVar($SID, $var);
-		if($result !== false)
+		if ($result !== false)
 		{
 			return $result;
 		}
@@ -721,7 +721,7 @@ class GenealogyService
 
 		$result = $this->postGetAncestry($SID, $rootID, $generations, $returnGedcom);
 
-		if($result !== false)
+		if ($result !== false)
 			return $result;
 
 		return new SOAP_Fault('Unable to retrieve ancestry','Server','',null);
@@ -746,14 +746,14 @@ class GenealogyService
 	{
 		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getDescendants($SID, $rootID, $generations, $returnGedcom)", 'auth');
 		$result = $this->start_session($SID);
-		if($result !== true)
+		if ($result !== true)
 			return $result;
 
-		//if($returnGedcom == 'false') $returnGedcom = false;
+		//if ($returnGedcom == 'false') $returnGedcom = false;
 
 		$result = $this->postGetDescendants($SID, $rootID, $generations, $returnGedcom);
 
-		if($result !== false)
+		if ($result !== false)
 			return $result;
 
 		return new SOAP_Fault('Unable to retrieve descendants','Server','',null);
@@ -784,7 +784,7 @@ class GenealogyService
 
 		$result = $this->postAppendRecord($SID, $gedrec);
 
-		if($result !== false)
+		if ($result !== false)
 		{
 
 			return $result;
@@ -817,7 +817,7 @@ class GenealogyService
 
 		$result = $this->postDeleteRecord($SID, $RID);
 
-		if($result !== false)
+		if ($result !== false)
 		{
 
 			return $result;
@@ -848,7 +848,7 @@ class GenealogyService
 
 		$result = $this->postUpdateRecord($SID,$RID, $gedcom);
 
-		if($result !== false)
+		if ($result !== false)
 		{
 
 			return $result;
@@ -877,12 +877,12 @@ class GenealogyService
 	{
 		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") checkUpdatesByID($SID,$RID,$lastUpdate)", 'auth');
 		$result = $this->start_session($SID);
-		if($result !== true)
+		if ($result !== true)
 			return $result;
 
 		$result = $this->postCheckUpdatesByID($SID,$RID,$lastUpdate);
 
-		if($result !== false)
+		if ($result !== false)
 			return $result;
 		//AddToLog('Unable to complete update check', 'auth');
 		return new SOAP_Fault('Unable to complete update check','Server','',null);
@@ -904,12 +904,12 @@ class GenealogyService
 	{
 		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") checkUpdates($SID,$lastUpdate)", 'auth');
 		$result = $this->start_session($SID);
-		if($result !== true)
+		if ($result !== true)
 			return $result;
 
 		$result = $this->postCheckUpdates($SID,$lastUpdate);
 
-		if($result !== false)
+		if ($result !== false)
 			return $result;
 		//AddToLog('Unable to complete update check', 'auth');
 		return new SOAP_Fault('Unable to complete update check','Server','',null);
@@ -931,12 +931,12 @@ class GenealogyService
 	{
 		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getKnownServers($SID,$limit)", 'auth');
 		$result = $this->start_session($SID);
-		if($result !== true)
+		if ($result !== true)
 			return $result;
 
 		$result = $this->postGetKnownServers($SID,$limit);
 
-		if($result !== false)
+		if ($result !== false)
 			return $result;
 		new SOAP_Fault('Unable to complete get known servers','Server','',null);
 	}
@@ -959,12 +959,12 @@ class GenealogyService
 	{
 		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") search($SID, $query, $start, $maxResults)", 'auth');
 		$result = $this->start_session($SID);
-		if($result !== true)
+		if ($result !== true)
 			return $result;
 
 		$result = $this->postSearch($SID, $query, $start, $maxResults);
 
-		if($result !== false)
+		if ($result !== false)
 			return $result;
 		return new SOAP_Fault('Unable to complete search','Server','',null);
 	}
@@ -986,12 +986,12 @@ class GenealogyService
 	{
 		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getXref($SID, $position, $type)", 'auth');
 		$result = $this->start_session($SID);
-		if($result !== true)
+		if ($result !== true)
 			return $result;
 
 		$result = $this->postGetXref($SID, $position, $type);
 
-		if($result !== false)
+		if ($result !== false)
 			return $result;
 		return new SOAP_Fault('Unable to get XREF','Server','',null);
 	}

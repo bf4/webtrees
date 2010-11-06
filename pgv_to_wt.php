@@ -29,13 +29,13 @@ require WT_ROOT.'includes/functions/functions_edit.php';
 
 // We can only import into an empty system, so deny access if we have already created a gedcom or added users.
 if (WT_GED_ID || get_user_count()>1) {
-	header('Location: index.php');
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH);
 	exit;
 }
 
 // Must be logged in as an admin
 if (!WT_USER_IS_ADMIN) {
-	header('Location: login.php?url='.WT_SCRIPT_NAME);
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'login.php?url='.WT_SCRIPT_NAME);
 	exit;
 }
 
@@ -123,7 +123,7 @@ if ($error || empty($PGV_PATH)) {
 	$pgv_dirs=array();
 	$dir=opendir(realpath('..'));
 	while (($subdir=readdir($dir))!==false) {
-		if (is_dir('../'.$subdir) && preg_match('/pgv|gedview/i', $subdir) && file_exists('../'.$subdir.'/config.php')) {
+		if (preg_match('/pgv|gedview|gene/i', $subdir) && is_dir('../'.$subdir) && file_exists('../'.$subdir.'/config.php')) {
 			$pgv_dirs[]='../'.$subdir;
 		}
 	}
@@ -207,7 +207,7 @@ WT_DB::prepare(
 ////////////////////////////////////////////////////////////////////////////////
 
 if ($PGV_SCHEMA_VERSION>=12) {
-echo '<p>pgv_gedcom => wt_gedcom ...</p>'; ob_flush(); flush(); usleep(50000);
+	echo '<p>pgv_gedcom => wt_gedcom ...</p>'; ob_flush(); flush(); usleep(50000);
 	WT_DB::prepare(
 		"INSERT INTO `##gedcom` (gedcom_id, gedcom_name)".
 		" SELECT gedcom_id, gedcom_name FROM `{$DBNAME}`.`{$TBLPREFIX}gedcom`"
@@ -324,7 +324,7 @@ echo '<p>pgv_gedcom => wt_gedcom ...</p>'; ob_flush(); flush(); usleep(50000);
 		" END".
 		" FROM `{$DBNAME}`.`{$TBLPREFIX}user_setting`".
 		" JOIN `##user` USING (user_id)".
-		" WHERE setting_name NOT IN ('email', 'firstname', 'lastname')"
+		" WHERE setting_name NOT IN ('email', 'firstname', 'lastname', 'loggedin')"
 	)->execute();
 
 	echo '<p>pgv_user_gedcom_setting => wt_user_gedcom_setting ...</p>'; ob_flush(); flush(); usleep(50000);
@@ -447,10 +447,6 @@ echo '<p>pgv_gedcom => wt_gedcom ...</p>'; ob_flush(); flush(); usleep(50000);
 			"  WHEN 'themes/xenea/'       THEN 'themes/xenea/'".
 			"  ELSE 'themes/webtrees/'". // ocean, simplyred/blue/green, standard, wood
 			" END".
-			" FROM `{$DBNAME}`.`{$TBLPREFIX}users`".
-			" JOIN ##user ON (user_name=CONVERT(u_username USING utf8) COLLATE utf8_unicode_ci)".
-			" UNION ALL".
-			" SELECT user_id, 'loggedin', 0".
 			" FROM `{$DBNAME}`.`{$TBLPREFIX}users`".
 			" JOIN ##user ON (user_name=CONVERT(u_username USING utf8) COLLATE utf8_unicode_ci)".
 			" UNION ALL".
@@ -594,7 +590,6 @@ foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
 	@set_gedcom_setting($ged_id, 'AUTO_GENERATE_THUMBS',         $AUTO_GENERATE_THUMBS);
 	@set_gedcom_setting($ged_id, 'CALENDAR_FORMAT',              $CALENDAR_FORMAT);
 	@set_gedcom_setting($ged_id, 'CHART_BOX_TAGS',               $CHART_BOX_TAGS);
-	@set_gedcom_setting($ged_id, 'CHECK_MARRIAGE_RELATIONS',     $CHECK_MARRIAGE_RELATIONS);
 	@set_gedcom_setting($ged_id, 'COMMON_NAMES_ADD',             $COMMON_NAMES_ADD);
 	@set_gedcom_setting($ged_id, 'COMMON_NAMES_REMOVE',          $COMMON_NAMES_REMOVE);
 	@set_gedcom_setting($ged_id, 'COMMON_NAMES_THRESHOLD',       $COMMON_NAMES_THRESHOLD);
@@ -727,6 +722,7 @@ foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
 	@set_gedcom_setting($ged_id, 'USE_GEONAMES',                 $USE_GEONAMES);
 	@set_gedcom_setting($ged_id, 'USE_MEDIA_FIREWALL',           $USE_MEDIA_FIREWALL);
 	@set_gedcom_setting($ged_id, 'USE_MEDIA_VIEWER',             $USE_MEDIA_VIEWER);
+	@set_gedcom_setting($ged_id, 'USE_RELATIONSHIP_PRIVACY',     $USE_RELATIONSHIP_PRIVACY);
 	@set_gedcom_setting($ged_id, 'USE_RIN',                      $USE_RIN);
 	@set_gedcom_setting($ged_id, 'USE_SILHOUETTE',               $USE_SILHOUETTE);
 	@set_gedcom_setting($ged_id, 'USE_THUMBS_MAIN',              $USE_THUMBS_MAIN);
@@ -746,6 +742,28 @@ foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
 	set_gedcom_setting($ged_id, 'pgv_ver',  null);
 	set_gedcom_setting($ged_id, 'imported', 1);
 }
+
+// webtrees 1.0.5 combines user and gedcom settings for relationship privacy
+// into a combined user-gedcom setting, for more granular control
+WT_DB::exec(
+	"INSERT IGNORE INTO `##user_gedcom_setting` (user_id, gedcom_id, setting_name, setting_value)".
+	" SELECT u.user_id, g.gedcom_id, 'RELATIONSHIP_PATH_LENGTH', LEAST(us1.setting_value, gs1.setting_value)".
+	" FROM   `##user` u".
+	" CROSS  JOIN `##gedcom` g".
+	" LEFT   JOIN `##user_setting`   us1 ON (u.user_id  =us1.user_id   AND us1.setting_name='max_relation_path')".
+	" LEFT   JOIN `##user_setting`   us2 ON (u.user_id  =us2.user_id   AND us2.setting_name='relationship_privacy')".
+	" LEFT   JOIN `##gedcom_setting` gs1 ON (g.gedcom_id=gs1.gedcom_id AND gs1.setting_name='MAX_RELATION_PATH_LENGTH')".
+	" LEFT   JOIN `##gedcom_setting` gs2 ON (g.gedcom_id=gs2.gedcom_id AND gs2.setting_name='USE_RELATIONSHIP_PRIVACY')".
+	" WHERE  us2.setting_value AND gs2.setting_value"
+);
+
+WT_DB::exec(
+	"DELETE FROM `##gedcom_setting` WHERE setting_name IN ('MAX_RELATION_PATH_LENGTH', 'USE_RELATIONSHIP_PRIVACY')"
+);
+
+WT_DB::exec(
+	"DELETE FROM `##user_setting` WHERE setting_name IN ('relationship_privacy', 'max_relation_path_length')"
+);
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -987,7 +1005,7 @@ WT_DB::prepare(
 ////////////////////////////////////////////////////////////////////////////////
 
 try {
-	if ($DBNAME.$TBLPREFIX.'placelocation'){
+	if ($DBNAME.$TBLPREFIX.'placelocation') {
 		echo '<p>pgv_placelocation => wt_placelocation ...</p>'; ob_flush(); flush(); usleep(50000);
 		WT_DB::exec(
 		"CREATE TABLE IF NOT EXISTS `##placelocation` (".

@@ -1000,13 +1000,7 @@ case 'RESN':
 		'</li><li><b>'.i18n::translate_c('Restriction status', 'Do not change').'</b><br />'.i18n::translate('This setting has no influence on the visibility of the fact data. It restricts editing rights to site administrators and GEDCOM administrators. If the information applies to the user himself, he can also view and, assuming he has editing rights, edit it.').
 		'</li><li><b>'.i18n::translate_c('Restriction status', 'Privacy').'</b><br />'.i18n::translate('Site administrators and GEDCOM administrators can view and edit the information. If the information applies to the user himself, he can also view and, assuming he has editing rights, edit it. It will be hidden from all other users regardless of their login status.').
 		'</li><li><b>'.i18n::translate_c('Restriction status', 'Confidential').'</b><br />'.i18n::translate('Only site administrators and GEDCOM administrators can view and edit the information. It will be hidden from all other users regardless of their login status.').
-		'</li></ul><br /><table><tr><th></th><th colspan="2">'.i18n::translate('Admin').'</th><th colspan="2">'.i18n::translate('Owner').'</th><th colspan="2">'.i18n::translate('Others').
-		'</th></tr><tr><th></th><th>R</th><th>W</th><th>R</th><th>W</th><th>R</th><th>W</th></tr>'.
-		'<tr><td><img src="images/RESN_none.gif" alt="" /> '.i18n::translate_c('Restriction status', 'None').'</td><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th></tr><tr><td><img src="images/RESN_locked.gif" alt="" /> '.
-		i18n::translate_c('Restriction status', 'Do not change').'</td><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th></tr><tr><td><img src="images/RESN_privacy.gif" alt="" /> '.
-		i18n::translate_c('Restriction status', 'Privacy').'</td><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/checked_qm.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th></tr><tr><td><img src="images/RESN_confidential.gif" alt="" /> '.
-		i18n::translate_c('Restriction status', 'Confidential').'</td><th><img src="images/checked.gif" alt="" /></th><th><img src="images/checked.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th><th><img src="images/forbidden.gif" alt="" /></th></tr></table>'.
-		'<ul><li>R : '.i18n::translate('can read').'</li><li>W : '.i18n::translate('can edit').'</li><li><img src="images/checked_qm.gif" alt="" /> : '.i18n::translate('depends on global privacy settings').'</li></ul>';
+		'</li></ul>';
 	break;
 
 case 'RETI':
@@ -2322,11 +2316,6 @@ case 'MAX_PEDIGREE_GENERATIONS':
 	$text=i18n::translate('Set the maximum number of generations to display on Pedigree charts.');
 	break;
 
-case 'MAX_RELATION_PATH_LENGTH':
-	$title=i18n::translate('Maximum relationship path length');
-	$text=i18n::translate('If the <i>Use relationship privacy</i> option is enabled, logged-in users will only be able to see or edit individuals within this number of relationship steps.<br /><br />This option sets the default for all users who have access to this genealogical database.  The Administrator can override this option for individual users by editing the user\'s account details.');
-	break;
-
 case 'MEDIA_DIRECTORY_LEVELS':
 	$title=i18n::translate('Multimedia directory levels to keep');
 	$text=i18n::translate('A value of 0 will ignore all directories in the file path for the media object.  A value of 1 will retain the first directory containing this image.  Increasing the numbers increases number of parent directories to retain in the path.<br /><br />For example, if you link an image in your GEDCOM with a path like <b>C:\Documents&nbsp;and&nbsp;Settings\User\My&nbsp;Documents\My&nbsp;Pictures\Genealogy\Surname&nbsp;Line\grandpa.jpg</b>, a value of 0 will translate this path to <b>./media/grandpa.jpg</b>.  A value of 1 will translate this to <b>./media/Surname&nbsp;Line/grandpa.jpg</b>, etc.  Most people will only need to use a 0.  However, it is possible that some media objects kept in different directories have identical names and would overwrite each other when this option is set to 0.  Non-zero settings allow you to keep some organization in your media thereby preventing name collisions.');
@@ -2422,6 +2411,16 @@ case 'PEDIGREE_ROOT_ID':
 case 'PEDIGREE_SHOW_GENDER':
 	$title=i18n::translate('Show gender icon on charts');
 	$text=i18n::translate('This option controls whether or not to show the individual\'s gender icon on charts.<br /><br />Since the gender is also indicated by the color of the box, this option doesn\'t conceal the gender. The option simply removes some duplicate information from the box.');
+	break;
+
+case 'RELATIONSHIP_PATH_LENGTH':
+	$title=i18n::translate('Maximum relationship path length');
+	$text=
+		i18n::translate('Where a user is associated to an individual in the database, you can prevent them from accessing the details of distant relations.  You specify the number of relationship steps that the user is allowed to see.  This option only affects access to living people, access to dead people is covered by the global privacy settings.').
+		'<br/><br/>'.
+		i18n::translate('For example, if you specify a path length of 2, the person will be able to see their grandson (child, child), their aunt (parent, sibling), their step-daughter (spouse, child), but not their first cousin (parent, sibling, child).').
+		'<br/><br/>'.
+		i18n::translate('Note: longer path lengths require a lot of calculation, which can make your site run slowly for these users.');
 	break;
 
 case 'SESSION_TIME':
@@ -4087,7 +4086,7 @@ case 'useradmin_auto_accept':
 	break;
 
 case 'useradmin_can_admin':
-	$title=i18n::translate('User can administer check box');
+	$title=i18n::translate('User can administer');
 	$text=i18n::translate('If this box is checked, the user will have the same rights that you have.<dl><dt>These rights include:</dt><dd>Add / Remove / Edit Users</dd><dd>Broadcast messages to all users</dd><dd>Edit Welcome messages</dd><dd>Edit and configure language files</dd><dt></dt><dd>Upgrade <b>webtrees</b></dd><dd>Change program and GEDCOM configurations</dd><dd>Administer the GEDCOMs</dd><dd>Change Privacy settings</dd><dd>And anything else that is not mentioned here.</dd></dl><br />The user <u>cannot</u> change anything on your server outside <b>webtrees</b>.');
 	break;
 
@@ -4104,16 +4103,6 @@ case 'useradmin_editaccount':
 case 'useradmin_gedcomid':
 	$title=i18n::translate('GEDCOM INDI record ID');
 	$text=i18n::translate('The GEDCOM INDI record ID identifies the user.  It has to be set by the administrator.<br /><br />This ID is used as the ID on several pages such as <b>My Individual Record</b> and <b>My Pedigree</b>.<br /><br />You can set the user\'s GEDCOM ID separately for each GEDCOM.  If a user does not have a record in a GEDCOM, you leave that box empty.');
-	break;
-
-case 'useradmin_path_length':
-	$title=i18n::translate('Maximum relationship privacy path length');
-	$text=i18n::translate('If <i>Limit access to related people</i> is enabled, this user will only be able to see or edit living individuals within this number of relationship steps.');
-	break;
-
-case 'useradmin_relation_priv':
-	$title=i18n::translate('Limit access to related people');
-	$text=i18n::translate('If this box is checked, the user will only be allowed access to living people that they are related to.  They will be able to see anyone who is within the relationship path length set by their <i>Max relationship privacy path length</i> setting.  You can require relationship privacy for all of your users by turning on the global option in the GEDCOM privacy settings.<br /><br />This setting requires that the user be associated with a GEDCOM ID before they will be able to see any living people.');
 	break;
 
 case 'useradmin_rootid':

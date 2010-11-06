@@ -76,7 +76,7 @@
       	echo 'type: "poly"';
   	echo '};';  	
   	?>
-
+  	
 	function getMarkerImage(iconColor) {
    		if ((typeof(iconColor)=="undefined") || (iconColor==null)) { 
       		iconColor = "red"; 
@@ -89,7 +89,7 @@
    		} 
    		return gicons[iconColor];
 	}
-
+	
 	function category2color(category) {
    		var color = "red";
    		switch(category) {
@@ -269,75 +269,7 @@
     	}
 */
 	}
-
-/*
-	// === Streetview function when streetview selected (from marker) ===
-	function setMarkerMessage(marker, message) {
-		google.maps.event.addListener(marker, 'click', function() {
-			var streetViewDiv = document.createElement('div');
-			streetViewDiv.style.width = "320px";
-			streetViewDiv.style.height = "240px";					
-			var streetViewPanorama = new  google.maps.StreetViewPanorama(
-				streetViewDiv,
-				{
-					position: marker.getPosition(),
-					navigationControl: false,
-      				linksControl: false,
-      				addressControl: false,
-					pov: {
-						heading: 62,
-						// heading: marker.sv_bearing,
-						pitch: 0,
-						zoom: 1.7
-					//	heading: sv_dir[i],
-					//	pitch: sv_elev[i],
-					//	zoom: sv_zoom[i]
-					}
-							
-				}						
-			);	
-			//map.setStreetView(streetViewPanorama);					
-			infowindow.setContent(streetViewDiv);
-			infowindow.open(map, marker);
-			google.maps.event.trigger(streetViewPanorama, 'resize')
-		});
-	}
 	
-	// === Streetview function when streetview selected (from sidebar) ===
-	function setMarkerMessage2(marker2, message) {
-			var streetViewDiv2 = document.createElement('div');
-			streetViewDiv2.style.width = "320px";
-			streetViewDiv2.style.height = "240px";					
-			var streetViewPanorama2 = new google.maps.StreetViewPanorama(
-				streetViewDiv2,
-				{
-					position: marker2.getPosition(),
-					navigationControl: false,
-      				linksControl: false,
-      				addressControl: false,
-					pov: {
-						heading: 0,
-						// heading: parseFloat(gmarkers[i].sv_bearing), 
-						// heading: marker.sv_bearing,
-						pitch: 0,
-						zoom: 1.2
-						//heading: sv_dir[i],
-						//pitch: sv_elev[i],
-						//zoom: sv_zoom[i]
-   						//heading: sv2_bear,
-    					//pitch: sv2_elev,
-    					//zoom: sv2_zoom
-					}
-							
-				}						
-			);	
-			//map.setStreetView(streetViewPanorama2);					
-			infowindow.setContent(streetViewDiv2);
-			infowindow.open(map, marker2);
-			google.maps.event.trigger(streetViewPanorama2, 'resize')
-	}
-*/
-
     // == shows all markers of a particular category, and ensures the checkbox is checked ==
     function show(category) {
         for (var i=0; i<gmarkers.length; i++) {
@@ -374,30 +306,19 @@
         // == rebuild the side bar ==
        makeSidebar();
        loadMap();
-    }
-
+    }	
+    
 	// == Opens Marker infowindow when corresponding Sidebar item is clicked ==
     function myclick(i, index, tab) { 
-//		if (document.getElementById("golfbox").checked == false) { 		
-			// Either events -----------
-			infowindow.close();
-			google.maps.event.trigger(gmarkers[i], "click");
-/*
-    	} else {   	
-    		// Or streetview -----------    		
-			var message =
-				"Marker: " + gmarkers[i] + "<br>" +
-				"LatLng: " + gmarkers[i].getPosition().toUrlValue(4) + "<br>";			
-			setMarkerMessage2(gmarkers[i], message);			
-    	}  
-*/
+		infowindow.close();
+		google.maps.event.trigger(gmarkers[i], "click");
     }
     
     // == rebuild sidebar (hidden item) when any marker's infowindow is closed ==
     google.maps.event.addListener(infowindow, 'closeclick', function() {
        	makeSidebar();
     });
-
+    
     // == rebuilds the sidebar (hidden item) to match the markers currently displayed ==
     function makeSidebar(x) {
         var html = "";
@@ -421,7 +342,7 @@
         document.getElementById("side_bar").innerHTML = html;
         x=null;
     }
-      
+    
 	// Home control ----------------------------------------------------------------
 	/* returns the user to the original map position ... loadMap() function
 	 * This constructor takes the control DIV as an argument.
@@ -457,9 +378,7 @@
     		loadMap();
   		});
 	}
-
-
-
+	
   	function loadMap() { 
 		<?php 	
 			global $pid, $PEDIGREE_GENERATIONS, $MAX_PEDIGREE_GENERATIONS, $ENABLE_AUTOCOMPLETE, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $WT_IMAGES, $GEDCOM;
@@ -499,6 +418,7 @@
 
   		// Add the markers to the map from the $gmarks array 		
   		var locations = [
+  		
 			<?php foreach($gmarks as $gmark) { 
 						
 				// create thumbnail images of highlighted images ===========================
@@ -587,17 +507,18 @@
 						}
 					} // end of add image
 					
-				}
-								
+				}								
 			?>
+
     			[
     				// Elements 0-9. Basic parameters 
+
 					"<?php echo $gmark['fact'].''; ?>", 
     				"<?php echo $gmark['lati']; ?>", 
     				"<?php echo $gmark['lng']; ?>", 
     				"<?php if (!empty($gmark['date'])) { $date=new GedcomDate($gmark['date']); echo addslashes($date->Display(true)); } else { echo i18n::translate('Date not known'); } ?>", 
     				"<?php if (!empty($gmark['info'])) 	{ echo ''.$gmark['info']; } else { echo NULL; } ?>", 
-    				"<?php if (!empty($gmark['name'])) { $person=Person::getInstance($gmark['name']); if ($person) { echo '<a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : i18n::translate('Private'), '<\/a>'; } } ?>", 
+    				"<?php if (!empty($gmark['name'])) { $person=Person::getInstance($gmark['name']); if ($person) { echo '<a href=\"', $person->getHtmlUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : i18n::translate('Private'), '<\/a>'; } } ?>", 
     				"<?php if (preg_match('/2 PLAC (.*)/', $gmark['placerec']) == 0) { print_address_structure_map($gmark['placerec'], 1); } else { echo preg_replace('/\"/', '\\\"', print_fact_place_map($gmark['placerec'])); } ?>",
 					"<?php echo $gmark['index'].''; ?>", 
 					"<?php echo $gmark['tabindex'].''; ?>",
@@ -623,7 +544,9 @@
 					"<?php if (!empty($gmark['sv_elevation'])) { echo $gmark['sv_elevation']; } ?>",
 					"<?php if (!empty($gmark['sv_zoom'])) { echo $gmark['sv_zoom']; } ?>"
 					// "<?php if (!empty($gmark['sv_point'])) { echo $gmark['sv_point']; } ?>"
-    			], 
+
+    			],
+
     		<?php } ?> 
     	];    	
     	// Fix IE bug reporting one too many in locations.length statement -----
@@ -634,7 +557,6 @@
 		// Set the Marker bounds -----------------------------------------------
     	var bounds = new google.maps.LatLngBounds ();
     	
-
 		// Calculate tabs to be placed for each marker -------------------------
     	var np = new Array();
 		var numtabs = new Array();
@@ -653,36 +575,36 @@
     	} 
 
     	// Loop through all location markers -----------------------------------    	
-        for (var i = 0; i < locations.length; i++) {       	
+        for (var i = 0; i < locations.length; i++) {
         	// obtain the attributes of each marker
-        	var event = locations[i][0];					// Event or Fact
-        	var lat = locations[i][1];						// Latitude
-        	var lng = locations[i][2];						// Longitude
-        	var date = locations[i][3];						// Date of event or fact
-        	var info = locations[i][4];						// info on occupation, or 
-       		var name = locations[i][5];						// Persons name
-       		var address = locations[i][6];					// Address of event or fact
-      		var index = locations[i][7];					// index
-       		var tab = locations[i][8];						// tab index
-       		var placed = locations[i][9];					// Yes indicates multitab item
-       		var name2 = locations[i][11];					// printable name for marker title
-       		var point = new google.maps.LatLng(lat,lng);	// Latitude, Longitude
+        	var event = locations[i][0];							// Event or Fact
+        	var lat = locations[i][1];								// Latitude
+        	var lng = locations[i][2];								// Longitude
+        	var date = locations[i][3];								// Date of event or fact
+        	var info = locations[i][4];								// info on occupation, or 
+       		var name = locations[i][5];								// Persons name
+       		var address = locations[i][6];							// Address of event or fact
+      		var index = locations[i][7];							// index
+       		var tab = locations[i][8];								// tab index
+       		var placed = locations[i][9];							// Yes indicates multitab item
+       		var name2 = locations[i][11];							// printable name for marker title
+       		var point = new google.maps.LatLng(lat,lng);			// Latitude, Longitude
        		       		
-       		var media = locations[i][14];					// media item
-      		var sv_lati = locations[i][15];					// Street View latitude
-       		var sv_long = locations[i][16];					// Street View longitude
-       		var sv_bearing = locations[i][17];				// Street View bearing
-       		var sv_elevation = locations[i][18];			// Street View elevation
-       		var sv_zoom = locations[i][19];					// Street View zoom
+       		var media = locations[i][14];							// media item
+      		var sv_lati = locations[i][15];							// Street View latitude
+       		var sv_long = locations[i][16];							// Street View longitude
+       		var sv_bearing = locations[i][17];						// Street View bearing
+       		var sv_elevation = locations[i][18];					// Street View elevation
+       		var sv_zoom = locations[i][19];							// Street View zoom
        		
-       		var sv_point = new google.maps.LatLng(sv_lati,sv_long);  // StreetView Latitude and Longitide
+       		var sv_point = new google.maps.LatLng(sv_lati,sv_long); // StreetView Latitude and Longitide
        		       		
        		if (document.getElementById("golfbox").checked == false) { 
-       			var category = "theatre";						// Category for future pedigree map use etc
-       			var addr2 = locations[i][10];					// printable address for marker title
+       			var category = "theatre";							// Category for future pedigree map use etc
+       			var addr2 = locations[i][10];						// printable address for marker title
        		} else {
        			var category = "golf";
-       			var addr2 = locations[i][10];					// printable address for marker title
+       			var addr2 = locations[i][10];						// printable address for marker title
        		}
 
        		// === Use this variable if a multitab marker ===
@@ -739,7 +661,8 @@
        								'<br />This feature to be implemented later.',
        							'<\/div>',
        						'<\/div>',
-       				/*		'<div id = "pane4">',
+       				/*		
+       						'<div id = "pane4">',
           						divhead,
           						'<div id = "pane4_text">',
           							'<br />',
@@ -747,7 +670,9 @@
        								'<br />',
        							'<\/div>',
           					'<\/div>',
-         			*/	'<\/div>',
+         			*/	
+
+         				'<\/div>',
          				
   	  			'<\/div>',
   	  		'<\/div>'
@@ -768,19 +693,12 @@
     		map.fitBounds(bounds);
   		
       	}  // end loop through location markers
-      	
-      	
-   		// == show or hide the categories initially ==
-   		//show("theatre");
-    	//hide("golf");
-        //hide("info");
         
         // initially load sidebar (hidden item but THIS IS required)
-        makeSidebar();
+        // makeSidebar();
 
     }	// end loadMap()
-    
-
+	
+  	
 //]]>
 </script>
-

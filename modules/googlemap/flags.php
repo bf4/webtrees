@@ -35,7 +35,7 @@ if (!defined('WT_WEBTREES')) {
 require WT_ROOT.'modules/googlemap/defaultconfig.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 
-global $countries;
+$countries=get_all_countries();
 $action=safe_REQUEST($_REQUEST, 'action');
 
 if (isset($_REQUEST['countrySelected'])) $countrySelected = $_REQUEST['countrySelected'];
@@ -60,7 +60,7 @@ while ($file = readdir($rep)) {
 closedir($rep);
 sort($country);
 
-if($countrySelected == "Countries") {
+if ($countrySelected == "Countries") {
 	$flags = $country;
 }
 else {
@@ -80,12 +80,12 @@ if ($action == "ChangeFlag") {
 	<script type="text/javascript">
 	<!--
 		function edit_close() {
-<?php if($_POST["selcountry"] == "Countries") { ?>
-			window.opener.document.editplaces.icon.value = "places/flags/<?php echo $flags[$_POST["FLAGS"]];?>.gif";
-			window.opener.document.getElementById('flagsDiv').innerHTML = "<img src=\"places/flags/<?php echo $country[$_POST["FLAGS"]];?>.gif\">&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"change_icon();return false;\"><?php echo i18n::translate('Change flag')?></a>&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"remove_icon();return false;\"><?php echo i18n::translate('Remove flag')?></a>";
+<?php if ($_POST["selcountry"] == "Countries") { ?>
+			window.opener.document.editplaces.icon.value = "places/flags/<?php echo $flags[$_POST["FLAGS"]]; ?>.gif";
+			window.opener.document.getElementById('flagsDiv').innerHTML = "<img src=\"places/flags/<?php echo $country[$_POST["FLAGS"]]; ?>.gif\">&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"change_icon();return false;\"><?php echo i18n::translate('Change flag'); ?></a>&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"remove_icon();return false;\"><?php echo i18n::translate('Remove flag'); ?></a>";
 <?php } else { ?>
-			window.opener.document.editplaces.icon.value = "places/<?php echo $countrySelected, "/flags/", $flags[$_POST["FLAGS"]];?>.gif";
-			window.opener.document.getElementById('flagsDiv').innerHTML = "<img src=\"places/<?php echo $countrySelected, "/flags/", $flags[$_POST["FLAGS"]];?>.gif\">&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"change_icon();return false;\"><?php echo i18n::translate('Change flag')?></a>&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"remove_icon();return false;\"><?php echo i18n::translate('Remove flag')?></a>";
+			window.opener.document.editplaces.icon.value = "places/<?php echo $countrySelected, "/flags/", $flags[$_POST["FLAGS"]]; ?>.gif";
+			window.opener.document.getElementById('flagsDiv').innerHTML = "<img src=\"places/<?php echo $countrySelected, "/flags/", $flags[$_POST["FLAGS"]]; ?>.gif\">&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"change_icon();return false;\"><?php echo i18n::translate('Change flag'); ?></a>&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"remove_icon();return false;\"><?php echo i18n::translate('Remove flag'); ?></a>";
 <?php } ?>
 			window.close();
 		}
@@ -135,7 +135,7 @@ else {
 				$rep = opendir('./places/'.$country[$i].'/');
 				while ($file = readdir($rep)) {
 					if (stristr($file, "flags")) {
-						$countryList[$country[$i]] = i18n::translate($countries[$country[$i]]);
+						$countryList[$country[$i]] = $countries[$country[$i]];
 					}
 				}
 				closedir($rep);
@@ -148,10 +148,10 @@ else {
 	}
 ?>
 
-<form method="post" id="flags" name="flags" action="module.php?mod=googlemap&mod_action=flags&countrySelected=<?php echo $countrySelected;?>">
+<form method="post" id="flags" name="flags" action="module.php?mod=googlemap&mod_action=flags&countrySelected=<?php echo $countrySelected; ?>">
 	<input type="hidden" name="action" value="ChangeFlag" />
-	<input type="hidden" name="selcountry" value="<?php echo $countrySelected;?>" />
-	<input id="savebutton" name="save1" type="submit" disabled="true" value="<?php echo i18n::translate('Save');?>" /><br />
+	<input type="hidden" name="selcountry" value="<?php echo $countrySelected; ?>" />
+	<input id="savebutton" name="save1" type="submit" disabled="true" value="<?php echo i18n::translate('Save'); ?>" /><br />
 	<table class="facts_table">
 		<tr>
 			<td class="optionbox" colspan="4">
@@ -172,8 +172,8 @@ else {
 	for ($i = 0; $i < count($flags); $i++) {
 		if ($countrySelected == "Countries") {
 			$tempstr = "<td><input type=\"radio\" dir=\"ltr\" name=\"FLAGS\" value=\"".$i."\" onchange=\"enableButtons();\"><img src=\"places/flags/".$flags[$i].".gif\" alt=\"".$flags[$i]."\"  title=\"";
-			if ($flags[$i]!='blank') $tempstr.=i18n::translate($countries[$flags[$i]]);
-			else $tempstr.=i18n::translate($countries['???']);
+			if ($flags[$i]!='blank') $tempstr.=$countries[$flags[$i]];
+			else $tempstr.=$countries['???'];
 			echo $tempstr, "\">&nbsp;&nbsp;", $flags[$i], "</input></td>\n";
 		}
 		else {
@@ -188,10 +188,9 @@ else {
 ?>
 		</tr>
 	</table>
-	<input id="savebutton" name="save2" type="submit" disabled="true" value="<?php echo i18n::translate('Save');?>" /><br />
+	<input id="savebutton" name="save2" type="submit" disabled="true" value="<?php echo i18n::translate('Save'); ?>" /><br />
 </form>
 <?php
 echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">", i18n::translate('Close Window'), "</a></div><br />\n";
 
 print_simple_footer();
-?>

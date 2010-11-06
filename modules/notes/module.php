@@ -61,22 +61,30 @@ class notes_WT_Module extends WT_Module implements WT_Module_Tab {
 <table class="facts_table">
 <?php
 if (!$this->controller->indi->canDisplayDetails()) {
-	print "<tr><td class=\"facts_value\">";
+	echo "<tr><td class=\"facts_value\">";
 	print_privacy_error();
-	print "</td></tr>";
+	echo "</td></tr>";
 } else {
 	?>
 	<tr>
 		<td></td>
 		<td class="descriptionbox rela"><input id="checkbox_note2"
 			type="checkbox"
-			<?php if ($SHOW_LEVEL2_NOTES) echo " checked=\"checked\""?>
+			<?php if ($SHOW_LEVEL2_NOTES) echo " checked=\"checked\""; ?>
 			onclick="toggleByClassName('TR', 'row_note2');" /> <label
 			for="checkbox_note2"><?php echo i18n::translate('Show all notes'); ?></label>
 			<?php echo help_link('show_fact_sources'); ?>
 		</td>
 	</tr>
 	<?php
+	$globalfacts = $this->controller->getGlobalFacts();
+	foreach ($globalfacts as $key => $event) {
+		$fact = $event->getTag();
+		if ($fact=="NAME") {
+			print_main_notes($event->getGedcomRecord(), 2, $this->controller->pid, $event->getLineNumber(), true);
+		}
+		$FACT_COUNT++;
+	}
 	$otherfacts = $this->controller->getOtherFacts();
 	foreach ($otherfacts as $key => $event) {
 		$fact = $event->getTag();
@@ -92,7 +100,7 @@ if (!$this->controller->indi->canDisplayDetails()) {
 			print_main_notes($factrec->getGedcomRecord(), $i, $this->controller->pid, $factrec->getLineNumber(), true);
 		}
 	}
-	if ($this->get_note_count()==0) echo "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".i18n::translate('There are no Notes for this individual.')."</td></tr>\n";
+	if ($this->get_note_count()==0) echo "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".i18n::translate('There are no Notes for this individual.')."</td></tr>";
 	//-- New Note Link
 	if ($this->controller->canedit) {
 		?>
@@ -157,5 +165,4 @@ if (!$SHOW_LEVEL2_NOTES) {
 	public function getJSCallback() {
 		return '';
 	}
-
 }

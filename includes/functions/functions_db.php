@@ -310,7 +310,7 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Get a list of surnames for indilist.php
+// Get a list of surnames for indilist.php / famlist.php
 // $surn - if set, only fetch people with this surname
 // $salpha - if set, only consider surnames starting with this letter
 // $marnm - if set, include married names
@@ -318,74 +318,41 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
-	$sql="SELECT DISTINCT n_surn, n_surname, n_id FROM `##individuals` JOIN `##name` ON (i_id=n_id AND i_file=n_file)";
-	if ($fams) {
-		$sql.=" JOIN `##link` ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
-	}
-	$where=array("n_file={$ged_id}");
-	if (!$marnm) {
-		$where[]="n_type!='_MARNM'";
-	}
-	if ($surn) {
-		// Match a surname
-		$where[]="n_surn LIKE ".WT_DB::quote("{$surn}")." COLLATE '".i18n::$collation."'";
+	$sql=
+		"SELECT n_surn, n_surname, n_id FROM `##name`".
+		($fams ? " JOIN `##link` ON (n_id=l_from AND n_file=l_file AND l_type='FAMS')" : "").
+		" WHERE n_file={$ged_id}".
+		($marnm ? "" : " AND n_type!='_MARNM'");
+		
+	if ($surn=='@N.N.') {
+		// Unknown surname
+		$sql.=" AND n_surn='@N.N.'";
 	} elseif ($salpha==',') {
-		// Match a surname-less name
-		$where[]="n_surn = ''";
+		// No surname
+		$sql.=" AND n_surn=''";
+	} elseif ($surn) {
+		// Specific surname
+		$sql.=
+			" AND n_surn LIKE ".WT_DB::quote($surn)." COLLATE '".i18n::$collation."'".
+			" ORDER BY n_surn COLLATE '".i18n::$collation."'";
 	} elseif ($salpha) {
-		// Match a surname initial
-		$where[]="n_surn LIKE ".WT_DB::quote("{$salpha}%")." COLLATE '".i18n::$collation."'";
+		// Surname initial
+		$sql.=
+			" AND n_surn LIKE ".WT_DB::quote("{$salpha}%")." COLLATE '".i18n::$collation."'".
+			" ORDER BY n_surn COLLATE '".i18n::$collation."'";
 	} else {
-		// Match all individuals
-		$where[]="n_surn <>'@N.N.'";
-		$where[]="n_surn <> ''";
+		// All surnames
+		$sql.=
+			" AND n_surn NOT IN ('', '@N.N.')".
+			" ORDER BY n_surn COLLATE '".i18n::$collation."'";
 	}
-
-	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_surn COLLATE '".i18n::$collation."'";
 
 	$list=array();
 	$rows=WT_DB::prepare($sql)->fetchAll();
+	// This nested-array structure implements a "DISTINCT" operation more
+	// efficiently than SQL, as there are very many names but few duplicates.
 	foreach ($rows as $row) {
 		$list[utf8_strtoupper($row->n_surn)][$row->n_surname][$row->n_id]=true;
-	}
-	return $list;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// Get a list of surnames for indilist.php
-// $surn - if set, only fetch people with this surname
-// $salpha - if set, only consider surnames starting with this letter
-// $marnm - if set, include married names
-// $ged_id - only consider individuals from this gedcom
-////////////////////////////////////////////////////////////////////////////////
-function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
-	$sql="SELECT DISTINCT n_surn, n_surname, l_to FROM `##individuals` JOIN `##name` ON (i_id=n_id AND i_file=n_file) JOIN `##link` ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
-	$where=array("n_file={$ged_id}");
-	if (!$marnm) {
-		$where[]="n_type!='_MARNM'";
-	}
-
-	if ($surn) {
-		// Match a surname
-		$where[]="n_surn LIKE ".WT_DB::quote("{$surn}")." COLLATE '".i18n::$collation."'";
-	} elseif ($salpha==',') {
-		// Match a surname-less name
-		$where[]="n_surn = ''";
-	} elseif ($salpha) {
-		// Match a surname initial
-		$where[]="n_surn LIKE ".WT_DB::quote("{$salpha}%")." COLLATE '".i18n::$collation."'";
-	} else {
-		// Match all individuals
-		$where[]="n_surn <> '@N.N.'";
-		$where[]="n_surn <> ''";
-	}
-
-	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_surn COLLATE '".i18n::$collation."'";
-
-	$list=array();
-	$rows=WT_DB::prepare($sql)->fetchAll();
-	foreach ($rows as $row) {
-		$list[utf8_strtoupper($row->n_surn)][$row->n_surname][$row->l_to]=true;
 	}
 	return $list;
 }
@@ -1686,7 +1653,7 @@ function get_top_surnames($ged_id, $min, $max) {
 /**
 * get a list of remote servers
 */
-function get_server_list($ged_id=WT_GED_ID){
+function get_server_list($ged_id=WT_GED_ID) {
 	$sitelist = array();
 
 	$rows=WT_DB::prepare("SELECT s_id, s_name, s_gedcom, s_file FROM `##sources` WHERE s_file=? AND s_dbid=? ORDER BY s_name")
@@ -1710,7 +1677,7 @@ function delete_fact($linenum, $pid, $gedrec) {
 	if (!empty($linenum)) {
 		if ($linenum==0) {
 			delete_gedrec($pid, WT_GED_ID);
-			print i18n::translate('GEDCOM record successfully deleted.');
+			echo i18n::translate('GEDCOM record successfully deleted.');
 		} else {
 			$gedlines = explode("\n", $gedrec);
 			// NOTE: The array_pop is used to kick off the last empty element on the array
@@ -2260,29 +2227,14 @@ function get_non_admin_user_count() {
 
 // Get a list of logged-in users
 function get_logged_in_users() {
+	// If the user is logged in on multiple times, this query would fetch
+	// multiple rows.  fetchAssoc() will eliminate the duplicates
 	return
 		WT_DB::prepare(
-			"SELECT u.user_id, user_name".
+			"SELECT user_id, user_name".
 			" FROM `##user` u".
-			" JOIN `##user_setting` us USING (user_id)".
-			" WHERE setting_name=? AND setting_value=?"
+			" JOIN `##session` USING (user_id)"
 		)
-		->execute(array('loggedin', '1'))
-		->fetchAssoc();
-}
-
-// Get a list of logged-in users who haven't been active recently
-function get_idle_users($time) {
-	return
-		WT_DB::prepare(
-			"SELECT u.user_id, user_name".
-			" FROM `##user` u".
-			" JOIN `##user_setting` us1 USING (user_id)".
-			" JOIN `##user_setting` us2 USING (user_id)".
-			" WHERE us1.setting_name=? AND us1.setting_value=? AND us2.setting_name=?".
-			" AND CAST(us2.setting_value AS UNSIGNED) BETWEEN 1 AND ?"
-		)
-		->execute(array('loggedin', '1', 'sessiontime', $time))
 		->fetchAssoc();
 }
 

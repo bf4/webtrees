@@ -35,11 +35,11 @@ $INDEX_DIRECTORY=get_site_setting('INDEX_DIRECTORY');
 $fname=safe_GET('fname');
 
 if (!WT_USER_GEDCOM_ADMIN || !preg_match('/\.zip$/', $fname)) {
-	print i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
+	echo i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
 	exit;
 }
 
-if(ini_get('zlib.output_compression')) @ini_set('zlib.output_compression', 'Off');
+if (ini_get('zlib.output_compression')) @ini_set('zlib.output_compression', 'Off');
 
 header('Pragma: public'); // required
 header('Expires: 0');
@@ -51,4 +51,3 @@ header('Content-length: '.filesize($INDEX_DIRECTORY.$fname));
 header('Content-Transfer-Encoding: binary');
 readfile($INDEX_DIRECTORY.basename($fname));
 exit();
-?>

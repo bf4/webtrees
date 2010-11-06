@@ -110,23 +110,6 @@ function safe_REQUEST($arr, $var, $regex=WT_REGEX_NOSCRIPT, $default=null) {
 	}
 }
 
-function encode_url($url, $entities=true) {
-	$url = decode_url($url, $entities); // Make sure we don't do any double conversions
-	$url = str_replace(array(' ', '+', '@#', '"', "'"), array('%20', '%2b', '@%23', '%22', '%27'), $url);
-	if ($entities) {
-		$url = htmlspecialchars($url);
-	}
-	return $url;
-}
-
-function decode_url($url, $entities=true) {
-	if ($entities) {
-		$url = html_entity_decode($url, ENT_COMPAT, 'UTF-8');
-	}
-	$url = rawurldecode($url); // GEDCOM names can legitimately contain " " and "+"
-	return $url;
-}
-
 function preg_match_recursive($regex, $var) {
 	if (is_scalar($var)) {
 		return preg_match($regex, $var);
@@ -192,7 +175,6 @@ function load_gedcom_settings($ged_id=WT_GED_ID) {
 	global $ALLOW_THEME_DROPDOWN;         $ALLOW_THEME_DROPDOWN         =get_gedcom_setting($ged_id, 'ALLOW_THEME_DROPDOWN');
 	global $CALENDAR_FORMAT;              $CALENDAR_FORMAT              =get_gedcom_setting($ged_id, 'CALENDAR_FORMAT');
 	global $CHART_BOX_TAGS;               $CHART_BOX_TAGS               =get_gedcom_setting($ged_id, 'CHART_BOX_TAGS');
-	global $CHECK_MARRIAGE_RELATIONS;     $CHECK_MARRIAGE_RELATIONS     =get_gedcom_setting($ged_id, 'CHECK_MARRIAGE_RELATIONS');
 	global $CONTACT_USER_ID;              $CONTACT_USER_ID              =get_gedcom_setting($ged_id, 'CONTACT_USER_ID');
 	global $DEFAULT_PEDIGREE_GENERATIONS; $DEFAULT_PEDIGREE_GENERATIONS =get_gedcom_setting($ged_id, 'DEFAULT_PEDIGREE_GENERATIONS');
 	global $DISPLAY_JEWISH_GERESHAYIM;    $DISPLAY_JEWISH_GERESHAYIM    =get_gedcom_setting($ged_id, 'DISPLAY_JEWISH_GERESHAYIM');
@@ -214,7 +196,6 @@ function load_gedcom_settings($ged_id=WT_GED_ID) {
 	global $MAX_ALIVE_AGE;                $MAX_ALIVE_AGE                =get_gedcom_setting($ged_id, 'MAX_ALIVE_AGE');
 	global $MAX_DESCENDANCY_GENERATIONS;  $MAX_DESCENDANCY_GENERATIONS  =get_gedcom_setting($ged_id, 'MAX_DESCENDANCY_GENERATIONS');
 	global $MAX_PEDIGREE_GENERATIONS;     $MAX_PEDIGREE_GENERATIONS     =get_gedcom_setting($ged_id, 'MAX_PEDIGREE_GENERATIONS');
-	global $MAX_RELATION_PATH_LENGTH;     $MAX_RELATION_PATH_LENGTH     =get_gedcom_setting($ged_id, 'MAX_RELATION_PATH_LENGTH');
 	global $MEDIA_DIRECTORY;              $MEDIA_DIRECTORY              =get_gedcom_setting($ged_id, 'MEDIA_DIRECTORY');
 	global $MEDIA_DIRECTORY_LEVELS;       $MEDIA_DIRECTORY_LEVELS       =get_gedcom_setting($ged_id, 'MEDIA_DIRECTORY_LEVELS');
 	global $MEDIA_EXTERNAL;               $MEDIA_EXTERNAL               =get_gedcom_setting($ged_id, 'MEDIA_EXTERNAL');
@@ -270,7 +251,6 @@ function load_gedcom_settings($ged_id=WT_GED_ID) {
 	global $USE_GEONAMES;                 $USE_GEONAMES                 =get_gedcom_setting($ged_id, 'USE_GEONAMES');
 	global $USE_MEDIA_FIREWALL;           $USE_MEDIA_FIREWALL           =get_gedcom_setting($ged_id, 'USE_MEDIA_FIREWALL');
 	global $USE_MEDIA_VIEWER;             $USE_MEDIA_VIEWER             =get_gedcom_setting($ged_id, 'USE_MEDIA_VIEWER');
-	global $USE_RELATIONSHIP_PRIVACY;     $USE_RELATIONSHIP_PRIVACY     =get_gedcom_setting($ged_id, 'USE_RELATIONSHIP_PRIVACY');
 	global $USE_RIN;                      $USE_RIN                      =get_gedcom_setting($ged_id, 'USE_RIN');
 	global $USE_SILHOUETTE;               $USE_SILHOUETTE               =get_gedcom_setting($ged_id, 'USE_SILHOUETTE');
 	global $USE_THUMBS_MAIN;              $USE_THUMBS_MAIN              =get_gedcom_setting($ged_id, 'USE_THUMBS_MAIN');
@@ -318,7 +298,7 @@ function wt_error_handler($errno, $errstr, $errfile, $errline) {
 		if (stristr($errstr, "by reference")==true) {
 			return;
 		}
-		$fmt_msg="\n<br />ERROR {$errno}: {$errstr}<br />\n";
+		$fmt_msg="<br />ERROR {$errno}: {$errstr}<br />";
 		$log_msg="ERROR {$errno}: {$errstr};";
 		// Although debug_backtrace should always exist in PHP5, without this check, PHP sometimes crashes.
 		// Possibly calling it generates an error, which causes infinite recursion??
@@ -344,7 +324,7 @@ function wt_error_handler($errno, $errstr, $errfile, $errline) {
 					$fmt_msg.=" in function <b>".$backtrace[$i+1]['function']."</b>";
 					$log_msg.=" in function ".$backtrace[$i+1]['function'];
 				}
-				$fmt_msg.="<br />\n";
+				$fmt_msg.="<br />";
 			}
 		}
 		echo $fmt_msg;
@@ -369,7 +349,6 @@ function wt_error_handler($errno, $errstr, $errfile, $errline) {
  */
 function get_first_tag($level, $tag, $gedrec, $num=1) {
 	$temp = get_sub_record($level, $level." ".$tag, $gedrec, $num)."\n";
-	$temp = str_replace("\r\n", "\n", $temp);
 	$length = strpos($temp, "\n");
 	if ($length===false) {
 		$length = strlen($temp);
@@ -408,7 +387,7 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 	$pos1=0;
 	$subrec = "";
 	$tag = trim($tag);
-	$searchTarget = "~[\r\n]".$tag."[\s]~";
+	$searchTarget = "~[\n]".$tag."[\s]~";
 	$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 	if ($ct==0) {
 		$tag = preg_replace('/(\w+)/', "_$1", $tag);
@@ -716,7 +695,7 @@ function breakConts($newline) {
 	}
 
 	$newged = "";
-	$newlines = preg_split("/\r?\n/", rtrim(stripLRMRLM($newline)));
+	$newlines = preg_split("/\n/", rtrim(stripLRMRLM($newline)));
 	for ($k=0; $k<count($newlines); $k++) {
 		if ($k>0) {
 			$newlines[$k] = "{$level} CONT ".$newlines[$k];
@@ -1315,7 +1294,7 @@ function sort_facts(&$arr) {
 	$nondated = array();
 	//-- split the array into dated and non-dated arrays
 	$order = 0;
-	foreach($arr as $event) {
+	foreach ($arr as $event) {
 		$event->sortOrder = $order;
 		$order++;
 		if ($event->getValue("DATE")==NULL || !$event->getDate()->isOk()) $nondated[] = $event;
@@ -1333,7 +1312,7 @@ function sort_facts(&$arr) {
 	$j = 0;
 	$k = 0;
 	// while there is anything in the dated array continue merging
-	while($i<$dc) {
+	while ($i<$dc) {
 		// compare each fact by type to merge them in order
 		if ($j<$nc && Event::CompareType($dated[$i], $nondated[$j])>0) {
 			$arr[$k] = $nondated[$j];
@@ -1347,7 +1326,7 @@ function sort_facts(&$arr) {
 	}
 
 	// get anything that might be left in the nondated array
-	while($j<$nc) {
+	while ($j<$nc) {
 		$arr[$k] = $nondated[$j];
 		$j++;
 		$k++;
@@ -1375,12 +1354,16 @@ function gedcomsort($a, $b) {
  * @param int $path_to_find - which path in the relationship to find, 0 is the shortest path, 1 is the next shortest path, etc
  */
 function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignore_cache=false, $path_to_find=0) {
-	global $start_time, $NODE_CACHE, $NODE_CACHE_LENGTH, $USE_RELATIONSHIP_PRIVACY;
+	global $start_time;
+	static $NODE_CACHE, $NODE_CACHE_LENGTH;
+	if (is_null($NODE_CACHE)) {
+		$NODE_CACHE=array();
+	}
 
-	$time_limit=get_site_setting('MAX_EXECUTION_TIME');
+	$time_limit=ini_get('max_execution_time');
 	$indirec = find_gedcom_record($pid2, WT_GED_ID, WT_USER_CAN_EDIT);
 	//-- check the cache
-	if ($USE_RELATIONSHIP_PRIVACY && !$ignore_cache) {
+	if (!$ignore_cache) {
 		if (isset($NODE_CACHE["$pid1-$pid2"])) {
 			if ($NODE_CACHE["$pid1-$pid2"]=="NOT FOUND") return false;
 			if (($maxlength==0)||(count($NODE_CACHE["$pid1-$pid2"]["path"])-1<=$maxlength))
@@ -1484,7 +1467,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		//-- refer to http://www.php.net/manual/en/features.connection-handling.php for more
 		//-- information about why these lines are included
 		if (headers_sent()) {
-			print " ";
+			echo " ";
 			if ($count%100 == 0)
 				flush();
 		}
@@ -1492,7 +1475,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		$end_time = microtime(true);
 		$exectime = $end_time - $start_time;
 		if (($time_limit>1)&&($exectime > $time_limit-1)) {
-			echo "<span class=\"error\">", i18n::translate('The script timed out before a relationship could be found.'), "</span>\n";
+			echo "<span class=\"error\">", i18n::translate('The script timed out before a relationship could be found.'), "</span>";
 			return false;
 		}
 		if (count($p1nodes)==0) {
@@ -1502,11 +1485,6 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				} elseif ($NODE_CACHE_LENGTH<$maxlength) {
 					$NODE_CACHE_LENGTH = $maxlength;
 				}
-			}
-			if (headers_sent()) {
-				//print "\n<!-- Relationship $pid1-$pid2 NOT FOUND | Visited ".count($visited)." nodes | Required $count iterations.<br />\n";
-				//echo execution_stats();
-				//print "-->\n";
 			}
 			$NODE_CACHE["$pid1-$pid2"] = "NOT FOUND";
 			return false;
@@ -1631,9 +1609,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 							}
 						} else
 							$visited[$parents["HUSB"]] = true;
-						if ($USE_RELATIONSHIP_PRIVACY) {
-							$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
-						}
+						$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
 					}
 					if ((!empty($parents["WIFE"]))&&(!isset($visited[$parents["WIFE"]]))) {
 						$node1 = $node;
@@ -1651,9 +1627,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 							}
 						} else
 							$visited[$parents["WIFE"]] = true;
-						if ($USE_RELATIONSHIP_PRIVACY) {
-							$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
-						}
+						$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
 					}
 					$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
 					for ($i=0; $i<$ct; $i++) {
@@ -1674,9 +1648,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 								}
 							} else
 								$visited[$child] = true;
-							if ($USE_RELATIONSHIP_PRIVACY) {
-								$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
-							}
+							$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
 						}
 					}
 				}
@@ -1707,9 +1679,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 								}
 							} else
 								$visited[$parents["HUSB"]] = true;
-							if ($USE_RELATIONSHIP_PRIVACY) {
-								$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
-							}
+							$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
 						}
 						if ((!empty($parents["WIFE"]))&&((!in_arrayr($parents["WIFE"], $node1))||(!isset($visited[$parents["WIFE"]])))) {
 							$node1 = $node;
@@ -1727,9 +1697,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 								}
 							} else
 								$visited[$parents["WIFE"]] = true;
-							if ($USE_RELATIONSHIP_PRIVACY) {
-								$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
-							}
+							$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
 						}
 					}
 					$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
@@ -1752,9 +1720,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 							} else {
 								$visited[$child] = true;
 							}
-							if ($USE_RELATIONSHIP_PRIVACY) {
-								$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
-							}
+							$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
 						}
 					}
 				}
@@ -1762,11 +1728,6 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		}
 		unset($p1nodes[$shortest]);
 	} //-- end while loop
-	if (headers_sent()) {
-		//echo "\n<!-- Relationship $pid1-$pid2 | Visited ".count($visited)." nodes | Required $count iterations.<br />\n";
-		//echo execution_stats();
-		//echo "-->\n";
-	}
 
 	// Convert "generic" relationships into sex-specific ones.
 	foreach ($resnode['path'] as $n=>$pid) {
@@ -3086,10 +3047,10 @@ function get_query_string() {
 		foreach ($_GET as $key => $value) {
 			if ($key != "view") {
 				if (!is_array($value)) {
-					$qstring .= "{$key}={$value}&";
+					$qstring .= "&amp;{$key}={$value}";
 				} else {
 					foreach ($value as $k=>$v) {
-						$qstring .= "{$key}[{$k}]={$v}&";
+						$qstring .= "&amp;{$key}[{$k}]={$v}";
 					}
 				}
 			}
@@ -3099,11 +3060,11 @@ function get_query_string() {
 			foreach ($_POST as $key => $value) {
 				if ($key != "view") {
 					if (!is_array($value)) {
-						$qstring .= "{$key}={$value}&";
+						$qstring .= "&amp;{$key}={$value}";
 					} else {
 						foreach ($value as $k=>$v) {
 							if (!is_array($v)) {
-								$qstring .= "{$key}[{$k}]={$v}&";
+								$qstring .= "&amp;{$key}[{$k}]={$v}";
 							}
 						}
 					}
@@ -3111,8 +3072,8 @@ function get_query_string() {
 			}
 		}
 	}
-	$qstring = rtrim($qstring, "&"); // Remove trailing "&"
-	return encode_url($qstring);
+	$qstring = substr($qstring, 5); // Remove leading "&amp;"
+	return $qstring;
 }
 
 //This function works with a specified generation limit.  It will completely fill
@@ -3173,7 +3134,7 @@ function add_ancestors(&$list, $pid, $children=false, $generations=-1, $show_emp
 				$total_num_skipped++;
 				if ($children) {
 					$childs = $family->getChildren();
-					foreach($childs as $child) {
+					foreach ($childs as $child) {
 						$list[$child->getXref()] = $child;
 						if (isset($list[$id]->generation))
 							$list[$child->getXref()]->generation = $list[$id]->generation;
@@ -3233,7 +3194,7 @@ function add_descendancy(&$list, $pid, $parents=false, $generations=-1) {
 					}
 				}
 				$children = $family->getChildren();
-				foreach($children as $child) {
+				foreach ($children as $child) {
 					if ($child) {
 						$list[$child->getXref()] = $child;
 						if (isset($list[$pid]->generation))
@@ -3243,7 +3204,7 @@ function add_descendancy(&$list, $pid, $parents=false, $generations=-1) {
 					}
 				}
 				if ($generations == -1 || $list[$pid]->generation+1 < $generations) {
-					foreach($children as $child) {
+					foreach ($children as $child) {
 						add_descendancy($list, $child->getXref(), $parents, $generations); // recurse on the childs family
 					}
 				}
@@ -3374,28 +3335,28 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 			require_once WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
 			switch ($type) {
 			case 'url_flv':
-				$url = encode_url('js/jw_player/flvVideo.php?flvVideo='.($fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
+				$url = 'js/jw_player/flvVideo.php?flvVideo='.rawurlencode($fileName) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
 				break 2;
 			case 'local_flv':
-				$url = encode_url('js/jw_player/flvVideo.php?flvVideo='.(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
+				$url = 'js/jw_player/flvVideo.php?flvVideo='.rawurlencode(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
 				break 2;
 			case 'url_wmv':
-				$url = encode_url('js/jw_player/wmvVideo.php?wmvVideo='.($fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
+				$url = 'js/jw_player/wmvVideo.php?wmvVideo='.rawurlencode($fileName) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
 				break 2;
 			case 'local_audio':
 			case 'local_wmv':
-				$url = encode_url('js/jw_player/wmvVideo.php?wmvVideo='.(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
+				$url = 'js/jw_player/wmvVideo.php?wmvVideo='.rawurlencode(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
 				break 2;
 			case 'url_image':
 			case 'local_image':
-				$url = encode_url($fileName) . "\" rel=\"clearbox[general]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
+				$url = $fileName . "\" rel=\"clearbox[general]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
 				break 2;
 			case 'url_picasa':
 			case 'url_page':
 			case 'url_other':
 			case 'local_page':
 			// case 'local_other':
-				$url = encode_url($fileName) . "\" rel='clearbox({$LB_URL_WIDTH}, {$LB_URL_HEIGHT}, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
+				$url = $fileName . "\" rel='clearbox({$LB_URL_WIDTH}, {$LB_URL_HEIGHT}, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
 				break 2;
 			case 'url_streetview':
 				if (WT_SCRIPT_NAME != "media.php") {
@@ -3408,32 +3369,32 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 		// Lightbox is not installed or Lightbox is not appropriate for this media type
 		switch ($type) {
 		case 'url_flv':
-			$url = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('js/jw_player/flvVideo.php?flvVideo='.($fileName)) . "', 'winflv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winflv.focus();}";
+			$url = "javascript:;\" onclick=\" var winflv = window.open('".'js/jw_player/flvVideo.php?flvVideo='.rawurlencode($fileName) . "', 'winflv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winflv.focus();}";
 			break 2;
 		case 'local_flv':
-			$url = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('js/jw_player/flvVideo.php?flvVideo='.(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)) . "', 'winflv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winflv.focus();}";
+			$url = "javascript:;\" onclick=\" var winflv = window.open('".'js/jw_player/flvVideo.php?flvVideo='.rawurlencode(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName) . "', 'winflv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winflv.focus();}";
 			break 2;
 		case 'url_wmv':
-			$url = "javascript:;\" onclick=\" var winwmv = window.open('".encode_url('js/jw_player/wmvVideo.php?wmvVideo='.($fileName)) . "', 'winwmv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winwmv.focus();}";
+			$url = "javascript:;\" onclick=\" var winwmv = window.open('".'js/jw_player/wmvVideo.php?wmvVideo='.rawurlencode($fileName) . "', 'winwmv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winwmv.focus();}";
 			break 2;
 		case 'local_wmv':
 		case 'local_audio':
-			$url = "javascript:;\" onclick=\" var winwmv = window.open('".encode_url('js/jw_player/wmvVideo.php?wmvVideo='.(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)) . "', 'winwmv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winwmv.focus();}";
+			$url = "javascript:;\" onclick=\" var winwmv = window.open('".'js/jw_player/wmvVideo.php?wmvVideo='.rawurlencode(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName) . "', 'winwmv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winwmv.focus();}";
 			break 2;
 		case 'url_image':
 			$imgsize = findImageSize($fileName);
 			$imgwidth = $imgsize[0]+40;
 			$imgheight = $imgsize[1]+150;
-			$url = "javascript:;\" onclick=\"var winimg = window.open('".encode_url($fileName)."', 'winimg', 'width=".$imgwidth.", height=".$imgheight.", left=200, top=200'); if (window.focus) {winimg.focus();}";
+			$url = "javascript:;\" onclick=\"var winimg = window.open('".$fileName."', 'winimg', 'width=".$imgwidth.", height=".$imgheight.", left=200, top=200'); if (window.focus) {winimg.focus();}";
 			break 2;
 		case 'url_picasa':
 		case 'url_page':
 		case 'url_other':
 		case 'local_other';
-			$url = "javascript:;\" onclick=\"var winurl = window.open('".encode_url($fileName)."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
+			$url = "javascript:;\" onclick=\"var winurl = window.open('".$fileName."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
 			break 2;
 		case 'local_page':
-			$url = "javascript:;\" onclick=\"var winurl = window.open('".encode_url(WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName)."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
+			$url = "javascript:;\" onclick=\"var winurl = window.open('".WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
 			break 2;
 		case 'url_streetview':
 			echo '<iframe style="float:left; padding:5px;" width="264" height="176" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="', $fileName, '&amp;output=svembed"></iframe>';
@@ -3441,7 +3402,7 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 			break 2;
 		}
 		if ($USE_MEDIA_VIEWER && $obeyViewerOption) {
-			$url = encode_url('mediaviewer.php?mid='.$mid);
+			$url = 'mediaviewer.php?mid='.$mid;
 		} else {
 			$imgsize = findImageSize($fileName);
 			$imgwidth = $imgsize[0]+40;

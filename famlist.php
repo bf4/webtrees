@@ -206,7 +206,7 @@ if (!$SEARCH_SPIDER) {
 echo '</div>';
 
 if ($showList) {
-	$surns=get_famlist_surns($surname, $alpha, $SHOW_MARRIED_NAMES, WT_GED_ID);
+	$surns=get_indilist_surns($surname, $alpha, $SHOW_MARRIED_NAMES, true, WT_GED_ID);
 	if ($surname_sublist=='yes') {
 		// Show the surname list
 		switch ($SURNAME_LIST_STYLE) {
@@ -268,7 +268,7 @@ if ($showList) {
 				}
 				if ($show_all=='no') {
 					echo '<h2 class="center">';
-					print i18n::translate('Families with surname %s', check_NN($surname));
+					echo i18n::translate('Families with surname %s', check_NN($surname));
 					echo '</h2>';
 				}
 				echo '<div class="alpha_index"><p class="center">';
@@ -288,5 +288,3 @@ if ($showList) {
 }
 
 print_footer();
-
-?>

@@ -34,10 +34,10 @@ require './includes/session.php';
 
 if (!WT_USER_GEDCOM_ADMIN) {
 	if (WT_USER_ID) {
-		header("Location: index.php");
+		header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH);
 		exit;
 	} else {
-		header("Location: login.php?url=admin.php");
+		header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'login.php?url='.WT_SCRIPT_NAME);
 		exit;
 	}
 }
@@ -49,14 +49,14 @@ if (!isset($action)) $action="";
 print_header(i18n::translate('Administration'));
 $pending_changes=WT_DB::prepare("SELECT 1 FROM `##change` WHERE status='pending' LIMIT 1")->fetchOne();
 if ($pending_changes) {
-	$d_wt_changes = "<a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".i18n::translate('Accept / Reject Changes').help_link('edit_changes.php')."</a>\n";
+	$d_wt_changes = "<a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".i18n::translate('Accept / Reject Changes').help_link('edit_changes.php')."</a>";
 } else {
 	$d_wt_changes = '&nbsp;';
 }
 
 $verify_msg = false;
 $warn_msg = false;
-foreach(get_all_users() as $user_id=>$user_name) {
+foreach (get_all_users() as $user_id=>$user_name) {
 	if (!get_user_setting($user_id, 'verified_by_admin') && get_user_setting($user_id, 'verified'))  {
 		$verify_msg = true;
 	}
@@ -73,12 +73,12 @@ echo WT_JS_START, 'function showchanges() {window.location.reload();}', WT_JS_EN
 ?>
 <script type="text/javascript">
 //<![CDATA[
-  jQuery(document).ready(function(){
+  jQuery(document).ready(function() {
     jQuery("#tabs").tabs();
   });
 //]]>
   </script>
-<table class="center <?php echo $TEXT_DIRECTION ?> width90">
+<table class="center <?php echo $TEXT_DIRECTION; ?> width90">
 	<tr>
 		<td colspan="2" class="center"><?php
 		echo '<h2>', WT_WEBTREES, ' ', WT_VERSION_TEXT, '<br />', i18n::translate('Administration'), '</h2>';
@@ -89,12 +89,12 @@ echo WT_JS_START, 'function showchanges() {window.location.reload();}', WT_JS_EN
 		if (WT_USER_IS_ADMIN) {
 			if ($verify_msg) {
 				echo "<br />";
-				echo "<a href=\"".encode_url("useradmin.php?action=listusers&filter=admunver")."\" class=\"error\">".i18n::translate('User accounts awaiting verification by admin')."</a>";
+				echo "<a href=\"useradmin.php?action=listusers&amp;filter=admunver"."\" class=\"error\">".i18n::translate('User accounts awaiting verification by admin')."</a>";
 				echo "<br /><br />";
 			}
 			if ($warn_msg) {
 				echo "<br />";
-				echo "<a href=\"".encode_url("useradmin.php?action=listusers&filter=warnings")."\" class=\"error\" >".i18n::translate('One or more user accounts have warnings')."</a>";
+				echo "<a href=\"useradmin.php?action=listusers&amp;filter=warnings"."\" class=\"error\" >".i18n::translate('One or more user accounts have warnings')."</a>";
 				echo "<br /><br />";
 			}
 		}
@@ -106,20 +106,20 @@ echo WT_JS_START, 'function showchanges() {window.location.reload();}', WT_JS_EN
 	<div id="tabs" class="width100">
 	<!-- Tabs -->
 	<ul>
-		<li><a href="#info"><span><?php echo i18n::translate('Other Administration')?></span></a></li>
+		<li><a href="#info"><span><?php echo i18n::translate('Other Administration'); ?></span></a></li>
 		<?php if (WT_USER_IS_ADMIN) { ?>
-			<li><a href="#site"><span><?php echo i18n::translate('Site administration')?></span></a></li>
+			<li><a href="#site"><span><?php echo i18n::translate('Site administration'); ?></span></a></li>
 		<?php } ?>
-		<li><a href="#gedcom"><span><?php echo i18n::translate('Data and GEDCOM administration')?></span></a></li>
+		<li><a href="#gedcom"><span><?php echo i18n::translate('Data and GEDCOM administration'); ?></span></a></li>
 		<?php
 			$modules = WT_Module::getInstalledModules();
-			if (WT_USER_IS_ADMIN || count($modules)>0) {?>
-				<li><a href="#modules" onclick="window.location='module_admin.php';" ><span><?php echo i18n::translate('Module administration')?></span></a></li>
+			if (WT_USER_IS_ADMIN || count($modules)>0) { ?>
+				<li><a href="#modules" onclick="window.location='module_admin.php';" ><span><?php echo i18n::translate('Module administration'); ?></span></a></li>
 		<?php } ?>
 	</ul>
 	<!-- Other admin -->
 	<div id="info">
-		<table class="center <?php echo $TEXT_DIRECTION ?> width100">
+		<table class="center <?php echo $TEXT_DIRECTION; ?> width100">
 			<tr>
 				<td colspan="2" class="topbottombar" style="text-align:center; "><?php echo i18n::translate('Informational'); ?></td>
 			</tr>
@@ -161,19 +161,19 @@ echo WT_JS_START, 'function showchanges() {window.location.reload();}', WT_JS_EN
 		?>
 		<!-- Site admin -->
 		<div id="site">
-		<table class="center <?php echo $TEXT_DIRECTION ?> width100">
+		<table class="center <?php echo $TEXT_DIRECTION; ?> width100">
 		<tr>
             <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo i18n::translate('Site administration'); ?></td>
 		</tr>
 		<tr>
 			<td class="optionbox width50"><a
-				href="siteconfig.php"><?php echo i18n::translate('Configuration');?></a><?php echo help_link('help_editconfig.php'); ?></td>
+				href="siteconfig.php"><?php echo i18n::translate('Configuration'); ?></a><?php echo help_link('help_editconfig.php'); ?></td>
 			<td class="optionbox width50"><a
-				href="manageservers.php"><?php echo i18n::translate('Manage sites');?></a><?php echo help_link('help_managesites'); ?></td>
+				href="manageservers.php"><?php echo i18n::translate('Manage sites'); ?></a><?php echo help_link('help_managesites'); ?></td>
 		</tr>
 		<tr>
 			<td class="optionbox width50"><a
-				href="useradmin.php"><?php echo i18n::translate('User administration');?></a><?php echo help_link('help_useradmin.php'); ?></td>
+				href="useradmin.php"><?php echo i18n::translate('User administration'); ?></a><?php echo help_link('help_useradmin.php'); ?></td>
 				<td class="optionbox width50"><a href="logs.php"><?php echo i18n::translate('Logs'); ?></a><?php echo help_link('logs.php'); ?></td>
 		</tr>
 		</table>
@@ -182,13 +182,13 @@ echo WT_JS_START, 'function showchanges() {window.location.reload();}', WT_JS_EN
 	} ?>
 	<!-- GEDCOM admin -->
 	<div id="gedcom">
-		<table class="center <?php echo $TEXT_DIRECTION ?> width100">
+		<table class="center <?php echo $TEXT_DIRECTION; ?> width100">
 			<tr>
 			<td colspan="2" class="topbottombar" style="text-align:center; "><?php echo i18n::translate('Data and GEDCOM administration'); ?></td>
 			</tr>
 			<tr>
 				<td class="optionbox width50"><a
-					href="editgedcoms.php"><?php echo i18n::translate('GEDCOM administration');?></a><?php echo help_link('gedcom_administration'); ?></td>
+					href="editgedcoms.php"><?php echo i18n::translate('GEDCOM administration'); ?></a><?php echo help_link('gedcom_administration'); ?></td>
 				<td class="optionbox width50"><a
 					href="edit_merge.php"><?php echo i18n::translate('Merge records'); ?></a><?php echo help_link('help_edit_merge.php'); ?></td>
 			</tr>

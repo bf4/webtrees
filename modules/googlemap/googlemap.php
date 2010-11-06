@@ -52,19 +52,19 @@ jQuery(function(){
 global $SESSION_HIDE_GOOGLEMAP;
 $SESSION_HIDE_GOOGLEMAP = "empty";
 if ((isset($_REQUEST["HIDE_GOOGLEMAP"])) && (empty($SEARCH_SPIDER))) {
-	if(stristr("true", $_REQUEST["HIDE_GOOGLEMAP"])) {
+	if (stristr("true", $_REQUEST["HIDE_GOOGLEMAP"])) {
 		$SESSION_HIDE_GOOGLEMAP = "true";
 	}
-	if(stristr("false", $_REQUEST["HIDE_GOOGLEMAP"])) {
+	if (stristr("false", $_REQUEST["HIDE_GOOGLEMAP"])) {
 		$SESSION_HIDE_GOOGLEMAP = "false";
 	}
 }
 
 // change the session values and store if needed.
-if($SESSION_HIDE_GOOGLEMAP == "true") $_SESSION['hide_googlemap'] = true;
-if($SESSION_HIDE_GOOGLEMAP == "false") $_SESSION['hide_googlemap'] = false;
-if($SESSION_HIDE_GOOGLEMAP == "empty") {
-	if((isset($_SESSION['hide_googlemap'])) && ($_SESSION['hide_googlemap'] == true))
+if ($SESSION_HIDE_GOOGLEMAP == "true") $_SESSION['hide_googlemap'] = true;
+if ($SESSION_HIDE_GOOGLEMAP == "false") $_SESSION['hide_googlemap'] = false;
+if ($SESSION_HIDE_GOOGLEMAP == "empty") {
+	if ((isset($_SESSION['hide_googlemap'])) && ($_SESSION['hide_googlemap'] == true))
 		$SESSION_HIDE_GOOGLEMAP = "true";
 	else
 		$SESSION_HIDE_GOOGLEMAP = "false";
@@ -80,7 +80,7 @@ function print_fact_place_map($factrec) {
 		// reverse the array so that we get the top level first
 		$levels = array_reverse($levels);
 		$retStr .= "<a href=\"placelist.php?action=show&amp;";
-		foreach($levels as $pindex=>$ppart) {
+		foreach ($levels as $pindex=>$ppart) {
 			// routine for replacing ampersands
 			$ppart = preg_replace("/amp\%3B/", "", trim($ppart));
 			$retStr .= "parent[$pindex]=".PrintReady($ppart)."&amp;";
@@ -105,7 +105,7 @@ function print_address_structure_map($factrec, $level) {
 
 	$nlevel = $level+1;
 	$ct = preg_match_all("/$level ADDR(.*)/", $factrec, $omatch, PREG_SET_ORDER);
-	for($i=0; $i<$ct; $i++) {
+	for ($i=0; $i<$ct; $i++) {
 		$arec = get_sub_record($level, "$level ADDR", $factrec, $i+1);
 		$resultText = "";
 		$cn = preg_match("/$nlevel _NAME (.*)/", $arec, $cmatch);
@@ -156,25 +156,25 @@ function print_address_structure_map($factrec, $level) {
 	}
 	$resultText = "<table>";
 	$ct = preg_match_all("/$level PHON (.*)/", $factrec, $omatch, PREG_SET_ORDER);
-	for($i=0; $i<$ct; $i++) {
+	for ($i=0; $i<$ct; $i++) {
 		$resultText .= "<tr><td><span class=\"label\"><b>".translate_fact('PHON').": </b></span></td><td><span class=\"field\">";
 		$resultText .= getLRM() . $omatch[$i][1]. getLRM();
 		$resultText .= "</span></td></tr>";
 	}
 	$ct = preg_match_all("/$level FAX (.*)/", $factrec, $omatch, PREG_SET_ORDER);
-	for($i=0; $i<$ct; $i++) {
+	for ($i=0; $i<$ct; $i++) {
 		$resultText .= "<tr><td><span class=\"label\"><b>".translate_fact('FAX').": </b></span></td><td><span class=\"field\">";
 		$resultText .= getLRM() . $omatch[$i][1] . getLRM();
 		$resultText .= "</span></td></tr>";
 	}
 	$ct = preg_match_all("/$level EMAIL (.*)/", $factrec, $omatch, PREG_SET_ORDER);
-	for($i=0; $i<$ct; $i++) {
+	for ($i=0; $i<$ct; $i++) {
 		$resultText .= "<tr><td><span class=\"label\"><b>".translate_fact('EMAIL').": </b></span></td><td><span class=\"field\">";
 		$resultText .= "<a href=\"mailto:".$omatch[$i][1]."\">".$omatch[$i][1]."</a>";
 		$resultText .= "</span></td></tr>";
 	}
 	$ct = preg_match_all("/$level (WWW|URL) (.*)/", $factrec, $omatch, PREG_SET_ORDER);
-	for($i=0; $i<$ct; $i++) {
+	for ($i=0; $i<$ct; $i++) {
 		$resultText .= "<tr><td><span class=\"label\"><b>".translate_fact('URL').": </b></span></td><td><span class=\"field\">";
 		$resultText .= "<a href=\"".$omatch[$i][2]."\" target=\"_blank\">".$omatch[$i][2]."</a>";
 		$resultText .= "</span></td></tr>";
@@ -287,7 +287,7 @@ function get_lati_long_placelocation ($place) {
 	$parent = explode (",", $place);
 	$parent = array_reverse($parent);
 	$place_id = 0;
-	for($i=0; $i<count($parent); $i++) {
+	for ($i=0; $i<count($parent); $i++) {
 		$parent[$i] = trim($parent[$i]);
 		if (empty($parent[$i])) $parent[$i]="unknown";// GoogleMap module uses "unknown" while GEDCOM uses , ,
 		$placelist = create_possible_place_names($parent[$i], $i+1);
@@ -461,12 +461,12 @@ function build_indiv_map($indifacts, $famids) {
 	// Add children to the markers list array ======================================================
 	if (count($famids)>0) {
 		$hparents=false;
-		for($f=0; $f<count($famids); $f++) {
+		for ($f=0; $f<count($famids); $f++) {
 			if (!empty($famids[$f])) {
 				$famrec = find_gedcom_record($famids[$f], WT_GED_ID, true);
 				if ($famrec) {
 					$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch, PREG_SET_ORDER);
-					for($j=0; $j<$num; $j++) {
+					for ($j=0; $j<$num; $j++) {
 						$person=Person::getInstance($smatch[$j][1]);
 						if ($person->canDisplayDetails()) {
 							$srec = find_person_record($smatch[$j][1], WT_GED_ID);
@@ -560,14 +560,13 @@ function build_indiv_map($indifacts, $famids) {
 	
 	// Prepare the $markers array for use by the following "required" file/files ===================
 	if ($i == 0) {
-
-		echo "<table class=\"facts_table\">\n";
+		echo "<table class=\"facts_table\">";
 		echo "<tr><td colspan=\"2\" class=\"facts_value\">".i18n::translate('No map data for this person');
-		echo "</td></tr>\n";
+		echo "</td></tr>";
 		if (WT_USER_IS_ADMIN) {
-			echo "<tr><td align=\"center\" colspan=\"2\">\n";
+			echo "<tr><td align=\"center\" colspan=\"2\">";
 			echo "<a href=\"module.php?mod=googlemap&mod_action=editconfig\">", i18n::translate('Manage GoogleMap configuration'), "</a>";
-			echo "</td></tr>\n";
+			echo "</td></tr>";
 		}
 
 	} else {
@@ -578,7 +577,7 @@ function build_indiv_map($indifacts, $famids) {
 			if ($markers[$j]["placed"] == "no") {
 				$multimarker = -1;
 				// Count nr of locations where the long/lati is identical
-				for($k=$j; $k<=$i; $k++)
+				for ($k=$j; $k<=$i; $k++)
 					if (($markers[$j]["lati"] == $markers[$k]["lati"]) && ($markers[$j]["lng"] == $markers[$k]["lng"]))
 						$multimarker = $multimarker + 1;
 						
@@ -598,7 +597,7 @@ function build_indiv_map($indifacts, $famids) {
 					$markers[$j]["index"] = $indexcounter;
 					$markers[$j]["tabindex"] = $tabcounter;
 					$tabcounter = $tabcounter + 1;
-					for($k=$j+1; $k<=$i; $k++) {
+					for ($k=$j+1; $k<=$i; $k++) {
 						if (($markers[$j]["lati"] == $markers[$k]["lati"]) && ($markers[$j]["lng"] == $markers[$k]["lng"])) {
 							$markers[$k]["placed"] = "yes";
 							$markers[$k]["index"] = $indexcounter;							
@@ -644,7 +643,12 @@ function build_indiv_map($indifacts, $famids) {
 		
 		// === Include css and js files ============================================================
 		echo '<link type="text/css" href="modules/googlemap/css/v3_googlemap.css" rel="stylesheet" />';
-		require_once WT_ROOT.'modules/googlemap/wt_v3_googlemap.js.php';				
+		require_once WT_ROOT.'modules/googlemap/wt_v3_googlemap.js.php';
+		?>
+		<script>
+		loadMap();
+		</script>
+		<?php
 	
 		// === Create the normal googlemap sidebar of events and children ==========================
 		echo "<div style=\"overflow: auto; overflow-x: hidden; overflow-y: auto; height: {$GOOGLEMAP_YSIZE}px;\"><table class=\"facts_table\">";
@@ -661,7 +665,7 @@ function build_indiv_map($indifacts, $famids) {
 			if (!empty($marker["name"])) {
 				$person=Person::getInstance($marker['name']);
 				if ($person) {
-					echo '<a href="', $person->getLinkUrl(), '">', $person->canDisplayName() ? PrintReady($person->getFullName()) : i18n::translate('Private'), '</a>';
+					echo '<a href="', $person->getHtmlUrl(), '">', $person->canDisplayName() ? PrintReady($person->getFullName()) : i18n::translate('Private'), '</a>';
 				}
 				echo '<br />';
 			}
@@ -721,7 +725,7 @@ function build_indiv_map($indifacts, $famids) {
 	<?php
 	// =====================================================================
 	
-	echo "\n<br />";
+	echo "<br />";
 	return $i;
 
 } // end build_indiv_map function

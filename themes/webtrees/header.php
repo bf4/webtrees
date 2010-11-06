@@ -102,10 +102,13 @@ if ($view!='simple') {
 						'<ul class="makeMenu" align="', $TEXT_DIRECTION=="rtl"?"left":"right", '" >';
 								echo MenuBar::getFavoritesMenu()->getMenuAsList();
 								global $ALLOW_THEME_DROPDOWN;
-									if ($ALLOW_THEME_DROPDOWN && get_site_setting('ALLOW_USER_THEMES')) {
-										echo ' | ', MenuBar::getThemeMenu()->getMenuAsList();
-									}
-								echo ' | ', MenuBar::getLanguageMenu()->getMenuAsList();
+								if ($ALLOW_THEME_DROPDOWN && get_site_setting('ALLOW_USER_THEMES')) {
+									echo ' | ', MenuBar::getThemeMenu()->getMenuAsList();
+								}
+								$language_menu=MenuBar::getLanguageMenu();
+								if ($language_menu) {
+									echo ' | ', $language_menu->getMenuAsList();
+								}
 					echo '&nbsp;</ul>',
 					'</div>',
 			'</td>',
@@ -123,10 +126,10 @@ if ($view!='simple') {
 					echo '<form action="search.php" method="post">',
 						'<input type="hidden" name="action" value="general" />',
 						'<input type="hidden" name="topsearch" value="yes" />',
-						'<input type="text" name="query" size="15" value="', i18n::translate('Search'), '"',
+						'<input type="text" name="query" size="25" value="', i18n::translate('Search'), '"',
 							'onfocus="if (this.value==\'', i18n::translate('Search'), '\') this.value=\'\'; focusHandler();"',
 							'onblur="if (this.value==\'\') this.value=\'', i18n::translate('Search'), '\';" />',
-						'<input type="image" src="', $WT_IMAGES['search'], '" width="17" align="top" alt="', i18n::translate('Search'), '" title="', i18n::translate('Search'), '" />',
+						'<input type="image" class="image" src="', $WT_IMAGES['search'], '" alt="', i18n::translate('Search'), '" title="', i18n::translate('Search'), '" />',
 					'</form>';
 				}
 			echo '</td>',

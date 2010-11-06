@@ -35,7 +35,7 @@ print_simple_header(i18n::translate('Add Local Link'));
 
 //-- only allow users with editing access to this page
 if (!WT_USER_CAN_EDIT) {
-	print i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
+	echo i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
 	print_simple_footer();
 	exit;
 }
@@ -45,20 +45,20 @@ if (isset($_REQUEST['server'])) $server = $_REQUEST['server'];
 if (isset($_REQUEST['indiName'])) $indiName = $_REQUEST['indiName'];
 
 //To use addsearchlink you should have come from a multisearch result link
-if(isset($pid) && isset($server) && isset($indiName))
+if (isset($pid) && isset($server) && isset($indiName))
 {
 ?>
 
 <br/>
-<center><font size="4"><?php echo $indiName ?></font><center><br/>
+<center><font size="4"><?php echo $indiName; ?></font><center><br/>
 <table align="center">
 	<tr>
 		<td>
 			<form method="post" name="addRemoteRelationship" action="addremotelink.php">
 				<input type="hidden" name="action" value="addlink" />
 				<input type="hidden" name="location" value="remote" />
-				<input type="hidden" name="cbExistingServers" value="<?php print $server; ?>" />
-				<input type="hidden" name="txtPID" value="<?php print $pid; ?>" />
+				<input type="hidden" name="cbExistingServers" value="<?php echo $server; ?>" />
+				<input type="hidden" name="txtPID" value="<?php echo $pid; ?>" />
 
 				<table class="facts_table" align="center">
 					<tr>
@@ -72,7 +72,7 @@ if(isset($pid) && isset($server) && isset($indiName))
 						</td>
 						<td class="optionbox"><input type="text" id="pid" name="pid" size="14"/></td>
 						<td class="optionbox" rowspan="2"><br/>
-							<input type="submit" value="<?php echo i18n::translate('Add Link');?>" id="btnSubmit" name="btnSubmit" value="add"/>
+							<input type="submit" value="<?php echo i18n::translate('Add Link'); ?>" id="btnSubmit" name="btnSubmit" value="add"/>
 						</td>
 					</tr>
 					<tr>
@@ -81,13 +81,13 @@ if(isset($pid) && isset($server) && isset($indiName))
 						</td>
 						<td class="optionbox">
 							<select id="cbRelationship" name="cbRelationship">
-								<option value="self" selected><?php echo i18n::translate('Same as current');?></option>
-								<option value="mother"><?php echo i18n::translate('Mother');?></option>
-								<option value="father"><?php echo i18n::translate('Father');?></option>
-								<option value="husband"><?php echo i18n::translate('Husband');?></option>
-								<option value="wife"><?php echo i18n::translate('Wife');?></option>
-								<option value="son"><?php echo i18n::translate('Son');?></option>
-								<option value="daughter"><?php echo i18n::translate('Daughter');?></option>
+								<option value="self" selected><?php echo i18n::translate('Same as current'); ?></option>
+								<option value="mother"><?php echo i18n::translate('Mother'); ?></option>
+								<option value="father"><?php echo i18n::translate('Father'); ?></option>
+								<option value="husband"><?php echo i18n::translate('Husband'); ?></option>
+								<option value="wife"><?php echo i18n::translate('Wife'); ?></option>
+								<option value="son"><?php echo i18n::translate('Son'); ?></option>
+								<option value="daughter"><?php echo i18n::translate('Daughter'); ?></option>
 							</select>
 						</td>
 					</tr>
@@ -98,8 +98,7 @@ if(isset($pid) && isset($server) && isset($indiName))
 </table>
 
 <?php
+} else {
+	echo "<br/><center><b><font color=\"red\">Oh, now you're hacking!</font></b></center><br/>";
 }
-else {
-	print "<br/><center><b><font color=\"red\">Oh, now you're hacking!</font></b></center><br/>";
-}
-print_footer(); ?>
+print_footer();

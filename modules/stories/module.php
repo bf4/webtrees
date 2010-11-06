@@ -276,7 +276,7 @@ class stories_WT_Module extends WT_Module implements WT_Module_Block, WT_Module_
 				exit;
 			}
 		} else {
-			header("Location: index.php");
+			header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH);
 			exit;
 		}
 	}
@@ -297,7 +297,7 @@ class stories_WT_Module extends WT_Module implements WT_Module_Block, WT_Module_
 				"DELETE FROM `##block` WHERE block_id=?"
 			)->execute(array($block_id));
 		} else {
-			header("Location: index.php");
+			header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH);
 			exit;
 		}
 	}
@@ -330,7 +330,7 @@ class stories_WT_Module extends WT_Module implements WT_Module_Block, WT_Module_
 			foreach ($stories as $story) {
 				$indi=Person::getInstance($story->xref);
 				if ($indi) {
-					$name="<a href=\"".$indi->getLinkUrl()."#stories\">".$indi->getFullName()."</a>";
+					$name="<a href=\"".$indi->getHtmlUrl()."#stories\">".$indi->getFullName()."</a>";
 				} else {
 					$name=$story->xref;
 				}
@@ -344,7 +344,7 @@ class stories_WT_Module extends WT_Module implements WT_Module_Block, WT_Module_
 			echo '</table>';
 			print_footer();
 		} else {
-			header("Location: index.php");
+			header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH);
 			exit;
 		}
 	}
@@ -371,7 +371,7 @@ class stories_WT_Module extends WT_Module implements WT_Module_Block, WT_Module_
 			foreach ($stories as $story) {
 				$indi=Person::getInstance($story->xref);
 				if ($indi) {
-					$name="<a href=\"".$indi->getLinkUrl()."#stories\">".$indi->getFullName()."</a>";
+					$name="<a href=\"".$indi->getHtmlUrl()."#stories\">".$indi->getFullName()."</a>";
 				} else {
 					$name=$story->xref;
 				}

@@ -52,7 +52,7 @@ $show_full="1";
 // Gets current clicked tab to set $tabno -----------
 if (isset($_COOKIE['lastclick'])) {
 	$tabno=$_COOKIE['lastclick']-1;
-}else{
+} else {
 	$tabno=0;
 }
 
@@ -60,7 +60,7 @@ if (isset($_COOKIE['lastclick'])) {
 // Debug only -----------------------------------------
 // echo "Lastclick =" . $_COOKIE['lastclick'];
 //echo "<br />";
-//print "TAB =" . $tabno;
+//echo "TAB =" . $tabno;
 
 // =====================================================================
 
@@ -72,7 +72,7 @@ if (isset($_COOKIE['lastclick'])) {
 		$families = $this->indi->getChildFamilies();
 
 		//-- parent families -------------------------------------------------------------
-		foreach($families as $famid=>$family) {
+		foreach ($families as $famid=>$family) {
 			$label = $this->indi->getChildFamilyLabel($family);
 			$people = $this->buildFamilyList($family, "parents");
 			$styleadd = "";
@@ -80,7 +80,7 @@ if (isset($_COOKIE['lastclick'])) {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
-				echo '<a href="', encode_url($family->getLinkUrl()), '">';
+				echo '<a href="', $family->getHtmlUrl(), '">';
 				echo "<b>", i18n::translate('Parents Family'), "</b>";
 				echo "</a>";
 				?>
@@ -88,10 +88,10 @@ if (isset($_COOKIE['lastclick'])) {
 			</tr>
 			<?php
 			if (isset($people["husb"])) {
-				$menu = new Menu("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
+				$menu = new Menu("&nbsp;" . $people["husb"]->getLabel());
 				if ($TEXT_DIRECTION=="ltr") {
 					$menu->addClass("", "", "submenu flyout");
-				}else{
+				} else {
 					$menu->addClass("", "", "submenu flyoutrtl");
 				}
 				$slabel  = "</a>".print_pedigree_person_nav($people["husb"]->getXref(), 2, 0, $personcount++);
@@ -99,19 +99,19 @@ if (isset($_COOKIE['lastclick'])) {
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
-				if (PrintReady($people["husb"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["husb"]->getDeathYear()); }
-				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
+				if (PrintReady($people["husb"]->getDeathYear()) == 0) { $DeathYr = ""; } else { $DeathYr = PrintReady($people["husb"]->getDeathYear()); }
+				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; } else { $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
 				?>
 				<tr>
-					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
+					<td class="facts_label<?php echo $styleadd; ?>" nowrap="nowrap">
 						<?php echo $menu->getMenu(); ?>
 					</td>
-					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>">
+					<td align="center" class="<?php echo $this->getPersonStyle($people["husb"]); ?>">
 						<?php
-						print "<a href=\"".encode_url($people["husb"]->getLinkUrl()."&amp;tab={$tabno}")."\">";
-						print PrintReady($people["husb"]->getFullName());
-						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-						print "</a>";
+						echo "<a href=\"".$people["husb"]->getHtmlUrl()."&amp;tab={$tabno}"."\">";
+						echo PrintReady($people["husb"]->getFullName());
+						echo "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+						echo "</a>";
 						?>
 					</td>
 				</tr>
@@ -119,10 +119,10 @@ if (isset($_COOKIE['lastclick'])) {
 			}
 
 			if (isset($people["wife"])) {
-				$menu = new Menu("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
+				$menu = new Menu("&nbsp;" . $people["wife"]->getLabel());
 				if ($TEXT_DIRECTION=="ltr") {
 					$menu->addClass("", "", "submenu flyout");
-				}else{
+				} else {
 					$menu->addClass("", "", "submenu flyoutrtl");
 				}
 				$slabel  = "</a>".print_pedigree_person_nav($people["wife"]->getXref(), 2, 0, $personcount++);
@@ -130,19 +130,19 @@ if (isset($_COOKIE['lastclick'])) {
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
-				if (PrintReady($people["wife"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["wife"]->getDeathYear()); }
-				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
+				if (PrintReady($people["wife"]->getDeathYear()) == 0) { $DeathYr = ""; } else { $DeathYr = PrintReady($people["wife"]->getDeathYear()); }
+				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; } else { $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
 				?>
 				<tr>
-					<td class="facts_label<?php print $styleadd; ?>">
+					<td class="facts_label<?php echo $styleadd; ?>">
 						<?php echo $menu->getMenu(); ?>
 					</td>
-					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
+					<td align="center" class="<?php echo $this->getPersonStyle($people["wife"]); ?>">
 						<?php
-						print "<a href=\"".encode_url($people["wife"]->getLinkUrl()."&amp;tab={$tabno}")."\">";
-						print PrintReady($people["wife"]->getFullName());
-						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-						print "</a>";
+						echo "<a href=\"".$people["wife"]->getHtmlUrl()."&amp;tab={$tabno}"."\">";
+						echo PrintReady($people["wife"]->getFullName());
+						echo "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+						echo "</a>";
 						?>
 					</td>
 				</tr>
@@ -151,13 +151,13 @@ if (isset($_COOKIE['lastclick'])) {
 
 			if (isset($people["children"])) {
 				$elderdate = $family->getMarriageDate();
-				foreach($people["children"] as $key=>$child) {
-				if ($pid == $child->getXref() ){
-				}else{
-					$menu = new Menu($child->getLabel() . "\n");
+				foreach ($people["children"] as $key=>$child) {
+				if ($pid == $child->getXref()) {
+				} else {
+					$menu = new Menu($child->getLabel());
 					if ($TEXT_DIRECTION=="ltr") {
 						$menu->addClass("", "", "submenu flyout");
-					}else{
+					} else {
 						$menu->addClass("", "", "submenu flyoutrtl");
 					}
 					$slabel  = "</a>".print_pedigree_person_nav($child->getXref(), 2, 0, $personcount++);
@@ -165,12 +165,12 @@ if (isset($_COOKIE['lastclick'])) {
 					$submenu = new Menu($slabel);
 					$menu->addSubMenu($submenu);
 				}
-				if (PrintReady($child->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($child->getDeathYear()); }
-				if (PrintReady($child->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($child->getBirthYear()); }
+				if (PrintReady($child->getDeathYear()) == 0) { $DeathYr = ""; } else { $DeathYr = PrintReady($child->getDeathYear()); }
+				if (PrintReady($child->getBirthYear()) == 0) { $BirthYr = ""; } else { $BirthYr = PrintReady($child->getBirthYear()); }
 
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>">
+						<td class="facts_label<?php echo $styleadd; ?>">
 						<?php
 						if ($pid == $child->getXref() ) {
 							echo $child->getLabel();
@@ -179,16 +179,16 @@ if (isset($_COOKIE['lastclick'])) {
 						}
 						?>
 						</td>
-						<td align="center" class="<?php print $this->getPersonStyle($child); ?>">
+						<td align="center" class="<?php echo $this->getPersonStyle($child); ?>">
 							<?php
 							if ($pid == $child->getXref()) {
-								print PrintReady($child->getFullName());
-								print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-							}else{
-								print "<a href=\"".encode_url($child->getLinkUrl()."&amp;tab={$tabno}")."\">";
-								print PrintReady($child->getFullName());
-								print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-								print "</a>";
+								echo PrintReady($child->getFullName());
+								echo "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+							} else {
+								echo "<a href=\"".$child->getHtmlUrl()."&amp;tab={$tabno}"."\">";
+								echo PrintReady($child->getFullName());
+								echo "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+								echo "</a>";
 							}
 							?>
 						</td>
@@ -200,10 +200,10 @@ if (isset($_COOKIE['lastclick'])) {
 		}
 
 		//-- step families ----------------------------------------------------------------
-		foreach($this->indi->getStepFamilies() as $famid=>$family) {
+		foreach ($this->indi->getStepFamilies() as $famid=>$family) {
 			$label = $this->indi->getStepFamilyLabel($family);
 			$people = $this->buildFamilyList($family, "step");
-			if ($people){
+			if ($people) {
 				echo "<tr><td><br /></td><td></td></tr>";
 			}
 			$styleadd = "";
@@ -212,7 +212,7 @@ if (isset($_COOKIE['lastclick'])) {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
-				echo '<a href="', encode_url($family->getLinkUrl()), '">';
+				echo '<a href="', $family->getHtmlUrl(), '">';
 				echo "<b>", i18n::translate('Step-Parent Family'), "</b>";
 				echo "</a>";
 				?>
@@ -224,13 +224,13 @@ if (isset($_COOKIE['lastclick'])) {
 			if (isset($people["husb"]) ) {
 				$menu = new Menu();
 				if ($people["husb"]->getLabel() == ".") {
-					$menu->addLabel("&nbsp;" . i18n::translate('Step-Father') . "&nbsp;". "\n");
-				}else{
-					$menu->addLabel("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
+					$menu->addLabel("&nbsp;" . i18n::translate('Step-Father'));
+				} else {
+					$menu->addLabel("&nbsp;" . $people["husb"]->getLabel());
 				}
 				if ($TEXT_DIRECTION=="ltr") {
 					$menu->addClass("", "", "submenu flyout");
-				}else{
+				} else {
 					$menu->addClass("", "", "submenu flyoutrtl");
 				}
 				$slabel  = "</a>".print_pedigree_person_nav($people["husb"]->getXref(), 2, 0, $personcount++);
@@ -238,20 +238,20 @@ if (isset($_COOKIE['lastclick'])) {
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
-				if (PrintReady($people["husb"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["husb"]->getDeathYear()); }
-				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
+				if (PrintReady($people["husb"]->getDeathYear()) == 0) { $DeathYr = ""; } else { $DeathYr = PrintReady($people["husb"]->getDeathYear()); }
+				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; } else { $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
 				?>
 
 				<tr>
-					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
+					<td class="facts_label<?php echo $styleadd; ?>" nowrap="nowrap">
 						<?php echo $menu->getMenu(); ?>
 					</td>
-					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>" >
+					<td align="center" class="<?php echo $this->getPersonStyle($people["husb"]); ?>" >
 						<?php
-						print "<a href=\"".encode_url($people["husb"]->getLinkUrl()."&amp;tab={$tabno}")."\">";
-						print PrintReady($people["husb"]->getFullName());
-						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-						print "</a>";
+						echo "<a href=\"".$people["husb"]->getHtmlUrl()."&amp;tab={$tabno}"."\">";
+						echo PrintReady($people["husb"]->getFullName());
+						echo "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+						echo "</a>";
 						?>
 					</td>
 				</tr>
@@ -264,13 +264,13 @@ if (isset($_COOKIE['lastclick'])) {
 			if (isset($people["wife"]) ) {
 				$menu = new Menu();
 				if ($people["wife"]->getLabel() == ".") {
-					$menu->addLabel("&nbsp;" . i18n::translate('Step-Mother') . "&nbsp;". "\n");
-				}else{
-					$menu->addLabel("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
+					$menu->addLabel("&nbsp;" . i18n::translate('Step-Mother'));
+				} else {
+					$menu->addLabel("&nbsp;" . $people["wife"]->getLabel());
 				}
 				if ($TEXT_DIRECTION=="ltr") {
 					$menu->addClass("", "", "submenu flyout");
-				}else{
+				} else {
 					$menu->addClass("", "", "submenu flyoutrtl");
 				}
 				$slabel  = "</a>".print_pedigree_person_nav($people["wife"]->getXref(), 2, 0, $personcount++);
@@ -278,19 +278,19 @@ if (isset($_COOKIE['lastclick'])) {
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
-				if (PrintReady($people["wife"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["wife"]->getDeathYear()); }
-				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
+				if (PrintReady($people["wife"]->getDeathYear()) == 0) { $DeathYr = ""; } else { $DeathYr = PrintReady($people["wife"]->getDeathYear()); }
+				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; } else { $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
 				?>
 				<tr>
-					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
+					<td class="facts_label<?php echo $styleadd; ?>" nowrap="nowrap">
 						<?php echo $menu->getMenu(); ?>
 					</td>
-					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
+					<td align="center" class="<?php echo $this->getPersonStyle($people["wife"]); ?>">
 						<?php
-						print "<a href=\"".encode_url($people["wife"]->getLinkUrl()."&amp;tab={$tabno}")."\">";
-						print PrintReady($people["wife"]->getFullName());
-						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-						print "</a>";
+						echo "<a href=\"".$people["wife"]->getHtmlUrl()."&amp;tab={$tabno}"."\">";
+						echo PrintReady($people["wife"]->getFullName());
+						echo "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+						echo "</a>";
 						?>
 					</td>
 				</tr>
@@ -300,11 +300,11 @@ if (isset($_COOKIE['lastclick'])) {
 			$styleadd = "";
 			if (isset($people["children"])) {
 				$elderdate = $family->getMarriageDate();
-				foreach($people["children"] as $key=>$child) {
-					$menu = new Menu($child->getLabel() . "\n");
+				foreach ($people["children"] as $key=>$child) {
+					$menu = new Menu($child->getLabel());
 					if ($TEXT_DIRECTION=="ltr") {
 						$menu->addClass("", "", "submenu flyout");
-					}else{
+					} else {
 						$menu->addClass("", "", "submenu flyoutrtl");
 					}
 					$slabel  = "</a>".print_pedigree_person_nav($child->getXref(), 2, 0, $personcount++);
@@ -312,19 +312,19 @@ if (isset($_COOKIE['lastclick'])) {
 					$submenu = new Menu($slabel);
 					$menu->addSubMenu($submenu);
 
-					if (PrintReady($child->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($child->getDeathYear()); }
-					if (PrintReady($child->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($child->getBirthYear()); }
+					if (PrintReady($child->getDeathYear()) == 0) { $DeathYr = ""; } else { $DeathYr = PrintReady($child->getDeathYear()); }
+					if (PrintReady($child->getBirthYear()) == 0) { $BirthYr = ""; } else { $BirthYr = PrintReady($child->getBirthYear()); }
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
+						<td class="facts_label<?php echo $styleadd; ?>" nowrap="nowrap">
 							<?php echo $menu->getMenu(); ?>
 						</td>
-						<td align="center" class="<?php print $this->getPersonStyle($child); ?>">
+						<td align="center" class="<?php echo $this->getPersonStyle($child); ?>">
 							<?php
-							print "<a href=\"".encode_url($child->getLinkUrl()."&amp;tab={$tabno}")."\">";
-							print PrintReady($child->getFullName());
-							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-							print "</a>";
+							echo "<a href=\"".$child->getHtmlUrl()."&amp;tab={$tabno}"."\">";
+							echo PrintReady($child->getFullName());
+							echo "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+							echo "</a>";
 							?>
 						</td>
 					</tr>
@@ -336,13 +336,13 @@ if (isset($_COOKIE['lastclick'])) {
 
 		//-- spouse and children --------------------------------------------------
 		$families = $this->indi->getSpouseFamilies();
-		foreach($families as $famid=>$family) {
+		foreach ($families as $famid=>$family) {
 		echo "<tr><td><br /></td><td></td></tr>";
 		?>
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
-				echo '<a href="', encode_url($family->getLinkUrl()), '">';
+				echo '<a href="', $family->getHtmlUrl(), '">';
 				echo "<b>", i18n::translate('Immediate Family'), "</b>";
 				echo "</a>";
 				?>
@@ -352,17 +352,17 @@ if (isset($_COOKIE['lastclick'])) {
 
 			//$personcount = 0;
 			$people = $this->buildFamilyList($family, "spouse");
-			if ($this->indi->equals($people["husb"])){
+			if ($this->indi->equals($people["husb"])) {
 				$spousetag = 'WIFE';
-			}else{
+			} else {
 				$spousetag = 'HUSB';
 			}
 			$styleadd = "";
-			if ( isset($people["husb"]) && $spousetag == 'HUSB' ) {
-				$menu = new Menu("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
+			if (isset($people["husb"]) && $spousetag == 'HUSB') {
+				$menu = new Menu("&nbsp;" . $people["husb"]->getLabel());
 				if ($TEXT_DIRECTION=="ltr") {
 					$menu->addClass("", "", "submenu flyout");
-				}else{
+				} else {
 					$menu->addClass("", "", "submenu flyoutrtl");
 				}
 				$slabel  = "</a>".print_pedigree_person_nav($people["husb"]->getXref(), 2, 0, $personcount++);
@@ -370,23 +370,23 @@ if (isset($_COOKIE['lastclick'])) {
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
-				if (PrintReady($people["husb"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["husb"]->getDeathYear()); }
-				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
+				if (PrintReady($people["husb"]->getDeathYear()) == 0) { $DeathYr = ""; } else { $DeathYr = PrintReady($people["husb"]->getDeathYear()); }
+				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; } else { $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
 				?>
 				<tr>
-					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
+					<td class="facts_label<?php echo $styleadd; ?>" nowrap="nowrap">
 						<?php echo $menu->getMenu(); ?>
 					</td>
-					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>">
+					<td align="center" class="<?php echo $this->getPersonStyle($people["husb"]); ?>">
 						<?php
 						if ($pid == $people["husb"]->getXref()) {
-							print PrintReady($people["husb"]->getFullName());
-							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-						}else{
-							print "<a href=\"".encode_url($people["husb"]->getLinkUrl()."&amp;tab={$tabno}")."\">";
-							print PrintReady($people["husb"]->getFullName());
-							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-							print "</a>";
+							echo PrintReady($people["husb"]->getFullName());
+							echo "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+						} else {
+							echo "<a href=\"".$people["husb"]->getHtmlUrl()."&amp;tab={$tabno}"."\">";
+							echo PrintReady($people["husb"]->getFullName());
+							echo "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+							echo "</a>";
 						}
 						?>
 					</td>
@@ -394,11 +394,11 @@ if (isset($_COOKIE['lastclick'])) {
 				<?php
 			}
 
-			if ( isset($people["wife"]) && $spousetag == 'WIFE') {
-				$menu = new Menu("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
+			if (isset($people["wife"]) && $spousetag == 'WIFE') {
+				$menu = new Menu("&nbsp;" . $people["wife"]->getLabel());
 				if ($TEXT_DIRECTION=="ltr") {
 					$menu->addClass("", "", "submenu flyout");
-				}else{
+				} else {
 					$menu->addClass("", "", "submenu flyoutrtl");
 				}
 				$slabel  = "</a>".print_pedigree_person_nav($people["wife"]->getXref(), 2, 0, $personcount++);
@@ -406,23 +406,23 @@ if (isset($_COOKIE['lastclick'])) {
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
-				if (PrintReady($people["wife"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["wife"]->getDeathYear()); }
-				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
+				if (PrintReady($people["wife"]->getDeathYear()) == 0) { $DeathYr = ""; } else { $DeathYr = PrintReady($people["wife"]->getDeathYear()); }
+				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; } else { $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
 				?>
 				<tr>
-					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
+					<td class="facts_label<?php echo $styleadd; ?>" nowrap="nowrap">
 						<?php echo $menu->getMenu(); ?>
 					</td>
-					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
+					<td align="center" class="<?php echo $this->getPersonStyle($people["wife"]); ?>">
 						<?php
 						if ($pid == $people["wife"]->getXref()) {
-							print PrintReady($people["wife"]->getFullName());
-							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-						}else{
-							print "<a href=\"".encode_url($people["wife"]->getLinkUrl()."&amp;tab={$tabno}")."\">";
-							print PrintReady($people["wife"]->getFullName());
-							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-							print "</a>";
+							echo PrintReady($people["wife"]->getFullName());
+							echo "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+						} else {
+							echo "<a href=\"".$people["wife"]->getHtmlUrl()."&amp;tab={$tabno}"."\">";
+							echo PrintReady($people["wife"]->getFullName());
+							echo "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+							echo "</a>";
 						}
 						?>
 					</td>
@@ -432,11 +432,11 @@ if (isset($_COOKIE['lastclick'])) {
 
 			$styleadd = "";
 			if (isset($people["children"])) {
-				foreach($people["children"] as $key=>$child) {
-					$menu = new Menu("&nbsp;" . $child->getLabel() . "&nbsp;". "\n");
+				foreach ($people["children"] as $key=>$child) {
+					$menu = new Menu("&nbsp;" . $child->getLabel());
 					if ($TEXT_DIRECTION=="ltr") {
 						$menu->addClass("", "", "submenu flyout");
-					}else{
+					} else {
 						$menu->addClass("", "", "submenu flyoutrtl");
 					}
 					$slabel = "</a>".print_pedigree_person_nav($child->getXref(), 2, 0, $personcount++);
@@ -444,19 +444,19 @@ if (isset($_COOKIE['lastclick'])) {
 					$submenu = new Menu($slabel);
 					$menu->addSubmenu($submenu);
 
-					if (PrintReady($child->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($child->getDeathYear()); }
-					if (PrintReady($child->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($child->getBirthYear()); }
+					if (PrintReady($child->getDeathYear()) == 0) { $DeathYr = ""; } else { $DeathYr = PrintReady($child->getDeathYear()); }
+					if (PrintReady($child->getBirthYear()) == 0) { $BirthYr = ""; } else { $BirthYr = PrintReady($child->getBirthYear()); }
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
+						<td class="facts_label<?php echo $styleadd; ?>" nowrap="nowrap">
 						<?php echo $menu->getMenu(); ?>
 						</td>
-						<td align="center" class="<?php print $this->getPersonStyle($child); ?>">
+						<td align="center" class="<?php echo $this->getPersonStyle($child); ?>">
 							<?php
-							print "<a href=\"".encode_url($child->getLinkUrl()."&amp;tab={$tabno}")."\">";
-							print PrintReady($child->getFullName());
-							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-							print "</a>";
+							echo "<a href=\"".$child->getHtmlUrl()."&amp;tab={$tabno}"."\">";
+							echo PrintReady($child->getFullName());
+							echo "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+							echo "</a>";
 							?>
 						</td>
 					</tr>
@@ -533,7 +533,7 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 
 				//-- parent families --------------------------------------
 				$fams = $person->getChildFamilies();
-				foreach($fams as $famid=>$family) {
+				foreach ($fams as $famid=>$family) {
 
 					if (!is_null($family)) {
 						$husb = $family->getHusband($person);
@@ -546,7 +546,7 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 						if ($husb || $num>0) {
 							if ($husb) {
 								$person_parent="Yes";
-								$parentlinks .= "<a href=\"".encode_url($husb->getLinkUrl()."&amp;tab={$tabno}")."\">";
+								$parentlinks .= "<a href=\"".$husb->getHtmlUrl()."&amp;tab={$tabno}"."\">";
 								$parentlinks .= "&nbsp;".PrintReady($husb->getFullName());
 								$parentlinks .= "</a>";
 								$parentlinks .= "<br />";
@@ -558,7 +558,7 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 						if ($wife || $num>0) {
 							if ($wife) {
 								$person_parent="Yes";
-								$parentlinks .= "<a href=\"".encode_url($wife->getLinkUrl()."&amp;tab={$tabno}")."\">";
+								$parentlinks .= "<a href=\"".$wife->getHtmlUrl()."&amp;tab={$tabno}"."\">";
 								$parentlinks .= "&nbsp;".PrintReady($wife->getFullName());
 								$parentlinks .= "</a>";
 								$parentlinks .= "<br />";
@@ -570,7 +570,7 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 
 				//-- step families -----------------------------------------
 				$fams = $person->getStepFamilies();
-				foreach($fams as $famid=>$family) {
+				foreach ($fams as $famid=>$family) {
 					if (!is_null($family)) {
 						$husb = $family->getHusband($person);
 						$wife = $family->getWife($person);
@@ -579,12 +579,12 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 						$num = count($children);
 
 						if ($natdad == "yes") {
-						}else{
+						} else {
 							// Husband -----------------------
 							if ($husb || $num>0) {
 								if ($husb) {
 									$person_step="Yes";
-									$parentlinks .= "<a href=\"".encode_url($husb->getLinkUrl()."&amp;tab={$tabno}")."\">";
+									$parentlinks .= "<a href=\"".$husb->getHtmlUrl()."&amp;tab={$tabno}"."\">";
 									$parentlinks .= "&nbsp;".PrintReady($husb->getFullName());
 									$parentlinks .= "</a>";
 									$parentlinks .= "<br />";
@@ -593,12 +593,12 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 						}
 
 						if ($natmom == "yes") {
-						}else{
+						} else {
 							// Wife ----------------------------
 							if ($wife || $num>0) {
 								if ($wife) {
 									$person_step="Yes";
-									$parentlinks .= "<a href=\"".encode_url($wife->getLinkUrl()."&amp;tab={$tabno}")."\">";
+									$parentlinks .= "<a href=\"".$wife->getHtmlUrl()."&amp;tab={$tabno}"."\">";
 									$parentlinks .= "&nbsp;".PrintReady($wife->getFullName());
 									$parentlinks .= "</a>";
 									$parentlinks .= "<br />";
@@ -610,7 +610,7 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 
 				// Spouse Families -------------------------------------- @var $family Family
 				$fams = $person->getSpouseFamilies();
-				foreach($fams as $famid=>$family) {
+				foreach ($fams as $famid=>$family) {
 					if (!is_null($family)) {
 						$spouse = $family->getSpouse($person);
 						$children = $family->getChildren();
@@ -619,7 +619,7 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 						// Spouse ------------------------------
 						if ($spouse || $num>0) {
 							if ($spouse) {
-								$spouselinks .= "<a href=\"".encode_url($spouse->getLinkUrl()."&amp;tab={$tabno}")."\">";
+								$spouselinks .= "<a href=\"".$spouse->getHtmlUrl()."&amp;tab={$tabno}"."\">";
 								$spouselinks .= "&nbsp;".PrintReady($spouse->getFullName());
 								$spouselinks .= "</a>";
 								if ($spouse->getFullName() != "") {
@@ -627,16 +627,16 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 								}
 							}
 						}
-						$spouselinks .= "<ul class=\"clist ".$TEXT_DIRECTION."\">\n";
+						$spouselinks .= "<ul class=\"clist ".$TEXT_DIRECTION."\">";
 						// Children ------------------------------   @var $child Person
-						foreach($children as $c=>$child) {
+						foreach ($children as $c=>$child) {
 							if ($child) {
 								$persons="Yes";
 									$spouselinks .= "<li>";
-									$spouselinks .= "<a href=\"".encode_url($child->getLinkUrl()."&amp;tab={$tabno}")."\">";
+									$spouselinks .= "<a href=\"".$child->getHtmlUrl()."&amp;tab={$tabno}"."\">";
 									$spouselinks .= PrintReady($child->getFullName());
 									$spouselinks .= "</a>";
-									$spouselinks .= "</li>\n";
+									$spouselinks .= "</li>";
 							}
 						}
 						$spouselinks .= "</ul>";
@@ -644,13 +644,13 @@ function print_pedigree_person_nav($pid, $style=1, $count=0, $personcount="1") {
 				}
 
 				if ($persons != "Yes") {
-					$spouselinks  .= "&nbsp;(".i18n::translate('none').")\n\t\t";
+					$spouselinks  .= "&nbsp;(".i18n::translate('none').")";
 				}
 				if ($person_parent != "Yes") {
-					$parentlinks .= "&nbsp;(".i18n::translate_c('unknown family', 'unknown').")\n\t\t";
+					$parentlinks .= "&nbsp;(".i18n::translate_c('unknown family', 'unknown').")";
 				}
 				if ($person_step != "Yes") {
-					$step_parentlinks .= "&nbsp;(".i18n::translate_c('unknown family', 'unknown').")\n\t\t";
+					$step_parentlinks .= "&nbsp;(".i18n::translate_c('unknown family', 'unknown').")";
 				}
 			}
 		}
