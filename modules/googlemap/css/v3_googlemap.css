@@ -25,26 +25,10 @@
  * @author Brian Holland
 */
 
-#gmtabs.ui-widget { width: 312px; margin-top:0px; margin-left:0px;  padding: 0px; font-family: Verdana,Arial,sans-serif; font-size: 0.9em; }
-
-/* Tabs ----------------------------------*/
-/*
-#gmtabs.ui-tabs { padding-left: 2px; margin-left: 0px; margin-right:0em; margin-bottom:0em; position:relative; } 
-
-#gmtabs.ui-tabs .ui-tabs-nav li { list-style: none; float: left; position: relative; top: 1px; margin: 0 .2em 1px 0; border-bottom: 0 !important; padding: 0; white-space: wrap; }
-#gmtabs.ui-tabs .ui-tabs-nav li a { float: left; padding: .3em .5em; text-decoration: none; }
-#gmtabs.ui-tabs .ui-tabs-nav li.ui-tabs-selected { background: white; margin-bottom: 0; padding-bottom: 1px; }
-#gmtabs.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, #gmtabs.ui-tabs .ui-tabs-nav li.ui-state-disabled a, #gmtabs.ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; } 
-#gmtabs.ui-tabs .ui-tabs-nav li a, #gmtabs.ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } 
-#gmtabs.ui-tabs .ui-tabs-panel { display: block; padding: 0em .3em; background: none; white-space: wrap; } 
-#gmtabs.ui-tabs .ui-tabs-hide { display: none !important; }
-*/
-
 div.infowindow {
     max-height:260px;
     overflow-x:hidden;
 }
-
 
 #iwhead {
 	text-align: center;
@@ -69,7 +53,6 @@ div.infowindow {
 #iwhead a:hover {
 	color: red;
 }
-
 
 #iwcontent {
 	/* background-color: #ddeeff; */
@@ -123,27 +106,12 @@ text-align: center;
 }
 
 #pano {
-width:296px;
-height: 215px;
+width:297px;
+height: 216px;
 margin-left: 0px;
 margin-top: 0em;
-border: 1px solid #aaaaaa;
+border-top: 1px solid #aaaaaa;
 }
-
-
-/*
-#gmtabs p {
-	margin-top: 0em;
-	font-size: 11px;
-}
-
-#gmtabs p #sp1 {
-	color: #000000;
-	font-weight: bold;
-	font-size: 13px;
-}
-*/
-
 
 .highlt_img {
 	width: 60px;
@@ -156,41 +124,7 @@ border: 1px solid #aaaaaa;
 	border: none;
 }
 
-
-/*  === Elements To be defined later (leave as dislay:none; for now) ==== */ 
-
-/* sidebar */
-#s_bar {
-	display: none;
-	width:370px;
-	border: 1px solid black;
-	margin-bottom: 1em;
-}
-#s_bar td{
-	padding-left:5px;
-	width: 370px;
-	text-decoration:none;
-	color:#4444ff;
-	background:#aabbd8;
-}
-
-/* view_type */
-#view_type {
-	display: block;
-	margin-top: -12px;
-}
-#view_type td {
-	width: 360px;	
-}
-#view_type form{
-	width: 360px;
-	text-align: center;
-}
-
-
-
-/* ============================================================================================== */
-/* root element for tabs  */
+/* root element for tabs   ======================   */
 ul.tabs {  
 	margin:0 !important; 
 	padding:0;
@@ -278,6 +212,36 @@ ul.tabs a.current {
 }
 #pane3_text, #pane4_text {
 	margin-left: 10px;
+}
+
+/*  === Elements To be defined later (leave as dislay:none; for now) ==== */ 
+
+/* sidebar */
+#s_bar {
+	display: none;
+	width:370px;
+	border: 1px solid black;
+	margin-bottom: 1em;
+}
+#s_bar td{
+	padding-left:5px;
+	width: 370px;
+	text-decoration:none;
+	color:#4444ff;
+	background:#aabbd8;
+}
+
+/* view_type */
+#view_type {
+	display: block;
+	margin-top: -12px;
+}
+#view_type td {
+	width: 360px;	
+}
+#view_type form{
+	width: 360px;
+	text-align: center;
 }
 
 
