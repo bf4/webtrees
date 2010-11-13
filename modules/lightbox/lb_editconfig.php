@@ -73,7 +73,7 @@ if ($action=='update' && !isset($security_user)) {
 }
 
 ?>
-<form method="post" name="configform" action="<?php echo encode_url("module.php?mod=lightbox&mod_action=lb_editconfig&pid={$pid}"); ?>">
+<form method="post" name="configform" action="module.php?mod=lightbox&amp;mod_action=lb_editconfig&amp;pid=<?php echo $pid; ?>">
 <input type="hidden" name="action" value="update" />
 
 	<table class="facts_table">
@@ -206,9 +206,9 @@ if ($action=='update' && !isset($security_user)) {
 						&nbsp;&nbsp;
 						<input type="reset" value="<?php echo i18n::translate('Reset'); ?>" />
 						&nbsp;&nbsp;
-			<?php if ($pid){ ?>
+			<?php if ($pid) { ?>
 				<INPUT TYPE="button" VALUE="<?php echo i18n::translate('Return to Album page'); ?>" onclick="javascript:window.location='individual.php?pid=<?php echo $pid; ?>&gedcom=<?php echo $GEDCOM; ?>&tab=lightbox'" />
-			<?php }else{ ?>
+			<?php } else { ?>
 				<INPUT TYPE="button" VALUE="<?php echo i18n::translate('Return to Admin Page'); ?>" onclick="javascript:window.location='module_admin.php'" />
 			<?php } ?>
 

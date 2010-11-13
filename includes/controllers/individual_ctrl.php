@@ -93,10 +93,10 @@ class IndividualController extends BaseController {
 			$this->default_tab=get_gedcom_setting(WT_GED_ID, 'GEDCOM_DEFAULT_TAB');
 		}
 
-		if (find_person_record($this->pid, WT_GED_ID) || find_updated_record($this->pid, WT_GED_ID)!==null){
+		if (find_person_record($this->pid, WT_GED_ID) || find_updated_record($this->pid, WT_GED_ID)!==null) {
 				$this->indi = new Person($gedrec, false);
 				$this->indi->ged_id=WT_GED_ID; // This record is from a file
-		} else if (!$this->indi){
+		} else if (!$this->indi) {
 			return false;
 		}
 
@@ -124,7 +124,7 @@ class IndividualController extends BaseController {
 				//-- check if we just deleted the record and redirect to index
 				$gedrec = find_person_record($this->pid, WT_GED_ID);
 				if (empty($gedrec)) {
-					header("Location: index.php?ctype=gedcom");
+					header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH);
 					exit;
 				}
 				$this->indi = new Person($gedrec);
@@ -138,7 +138,7 @@ class IndividualController extends BaseController {
 				$gedrec = find_person_record($this->pid, WT_GED_ID);
 				//-- check if we just deleted the record and redirect to index
 				if (empty($gedrec)) {
-					header("Location: index.php?ctype=gedcom");
+					header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH);
 					exit;
 				}
 				$this->indi = new Person($gedrec);
@@ -197,7 +197,7 @@ class IndividualController extends BaseController {
 
 		// Initialise tabs
 		$this->tabs = WT_Module::getActiveTabs();
-		foreach($this->tabs as $mod) {
+		foreach ($this->tabs as $mod) {
 			$mod->setController($this);
 			if ($mod->hasTabContent()) {
 				if (empty($this->default_tab)) {
@@ -318,7 +318,7 @@ class IndividualController extends BaseController {
 
 					$name = $this->indi->getFullName();
 					if (WT_USE_LIGHTBOX) {
-						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
+						echo "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">";
 					} else if (!$USE_MEDIA_VIEWER && $imgsize) {
 						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".urlencode($firstmediarec["file"])."', $imgwidth, $imgheight);\">";
 					} else {
@@ -378,13 +378,13 @@ class IndividualController extends BaseController {
 			echo '<dd class="field">', PrintReady($dummy->getFullName());
 				if ($this->userCanEdit() && !strpos($factrec, 'WT_OLD') && $this->name_count > 1) {
 					echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" class=\"font9\" onclick=\"edit_name('".$this->pid."', ".$linenum."); return false;\">", i18n::translate('Edit'), "</a> | ";
-					echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$linenum."); return false;\">", i18n::translate('Delete'), "</a>", help_link('delete_name');
+					echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$linenum."); return false;\">", i18n::translate('Delete'), "</a>";
 				}
 			echo '</dd>';
 			echo '</dl>';
 		echo '</div>';
 		$ct = preg_match_all('/\n2 (\w+) (.*)/', $factrec, $nmatch, PREG_SET_ORDER);
-		for($i=0; $i<$ct; $i++) {
+		for ($i=0; $i<$ct; $i++) {
 			echo '<div>';
 				$fact = trim($nmatch[$i][1]);
 				if (($fact!="SOUR")&&($fact!="NOTE")&&($fact!="GIVN")&&($fact!="SURN")&&($fact!="SPFX")) {
@@ -457,7 +457,7 @@ class IndividualController extends BaseController {
 						echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"add_new_record('".$this->pid."', 'SEX'); return false;\">".i18n::translate('Edit')."</a>";
 					} else {
 							echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"edit_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".i18n::translate('Edit')."</a> | ";
-							echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".i18n::translate('Delete')."</a>\n";
+							echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".i18n::translate('Delete')."</a>";
 					}
 				}
 			}
@@ -530,22 +530,22 @@ class IndividualController extends BaseController {
 		if (find_updated_record($this->pid, WT_GED_ID)!==null) {
 			if (!$this->show_changes) {
 				$label = i18n::translate('This record has been updated.  Click here to show changes.');
-				$link = $this->indi->getLinkUrl().'&show_changes=yes';
+				$link = $this->indi->getHtmlUrl().'&amp;show_changes=yes';
 			} else {
 				$label = i18n::translate('Click here to hide changes.');
-				$link = $this->indi->getLinkUrl().'&show_changes=no';
+				$link = $this->indi->getHtmlUrl().'&amp;show_changes=no';
 			}
-			$submenu = new Menu($label, encode_url($link));
+			$submenu = new Menu($label, $link);
 			$submenu->addIcon('edit_indi');
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 			$menu->addSubmenu($submenu);
 
 			if (WT_USER_CAN_ACCEPT) {
-				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url($this->indi->getLinkUrl()."&action=undo"));
+				$submenu = new Menu(i18n::translate('Undo all changes'), $this->indi->getHtmlUrl()."&amp;action=undo");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 				$submenu->addIcon('edit_indi');
 				$menu->addSubmenu($submenu);
-				$submenu = new Menu(i18n::translate('Accept all changes'), encode_url($this->indi->getLinkUrl()."&action=accept"));
+				$submenu = new Menu(i18n::translate('Approve all changes'), $this->indi->getHtmlUrl()."&amp;action=accept");
 				$submenu->addIcon('edit_indi');
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 				$menu->addSubmenu($submenu);
@@ -583,7 +583,7 @@ class IndividualController extends BaseController {
 		}
 
 		// add to favorites
-		$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url($this->indi->getLinkUrl()."&action=addfav&gid={$this->pid}"));
+		$submenu = new Menu(i18n::translate('Add to My Favorites'), $this->indi->getHtmlUrl()."&amp;action=addfav&amp;gid=".$this->pid);
 		$submenu->addIcon('favorites');
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		$menu->addSubmenu($submenu);
@@ -678,7 +678,7 @@ class IndividualController extends BaseController {
 			$labels["sister"] = i18n::translate('Sister');
 			$labels["brother"] = i18n::translate('Brother');
 		}
-		if ($type=="step"){
+		if ($type=="step") {
 			$labels["parent"] = i18n::translate('Step-Parent');
 			$labels["mother"] = i18n::translate('Step-Mother');
 			$labels["father"] = i18n::translate('Step-Father');
@@ -733,7 +733,7 @@ class IndividualController extends BaseController {
 		//-- step families : set the label for the common parent
 		if ($type=="step") {
 			$fams = $this->indi->getChildFamilies();
-			foreach($fams as $key=>$fam) {
+			foreach ($fams as $key=>$fam) {
 				if ($fam->hasParent($husb)) $labels["father"] = i18n::translate('Father');
 				if ($fam->hasParent($wife)) $labels["mother"] = i18n::translate('Mother');
 			}
@@ -801,11 +801,11 @@ class IndividualController extends BaseController {
 				$merged_children = array();
 				$new_children = $newfamily->getChildren();
 				$num = count($children);
-				for($i=0; $i<$num; $i++) {
+				for ($i=0; $i<$num; $i++) {
 					$child = $children[$i];
 					if (!is_null($child)) {
 						$found = false;
-						foreach($new_children as $key=>$newchild) {
+						foreach ($new_children as $key=>$newchild) {
 							if (!is_null($newchild)) {
 								if ($child->equals($newchild)) {
 									$found = true;
@@ -817,10 +817,10 @@ class IndividualController extends BaseController {
 						else $merged_children[] = $child;
 					}
 				}
-				foreach($new_children as $key=>$newchild) {
+				foreach ($new_children as $key=>$newchild) {
 					if (!is_null($newchild)) {
 						$found = false;
-						foreach($children as $key1=>$child) {
+						foreach ($children as $key1=>$child) {
 							if (!is_null($child)) {
 								if ($child->equals($newchild)) {
 									$found = true;
@@ -836,7 +836,7 @@ class IndividualController extends BaseController {
 		}
 		//-- set the labels for the children
 		$num = count($children);
-		for($i=0; $i<$num; $i++) {
+		for ($i=0; $i<$num; $i++) {
 			if (!is_null($children[$i])) {
 				$label = $labels["sibling"];
 				$sex = $children[$i]->getSex();
@@ -860,7 +860,7 @@ class IndividualController extends BaseController {
 			}
 		}
 		$num = count($newchildren);
-		for($i=0; $i<$num; $i++) {
+		for ($i=0; $i<$num; $i++) {
 			$label = $labels["sibling"];
 			$sex = $newchildren[$i]->getSex();
 			if ($sex=="F") {
@@ -877,7 +877,7 @@ class IndividualController extends BaseController {
 			$newchildren[$i]->setLabel($label);
 		}
 		$num = count($delchildren);
-		for($i=0; $i<$num; $i++) {
+		for ($i=0; $i<$num; $i++) {
 				$label = $labels["sibling"];
 			$sex = $delchildren[$i]->getSex();
 			if ($sex=="F") {

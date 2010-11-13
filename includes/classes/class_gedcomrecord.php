@@ -292,18 +292,22 @@ class GedcomRecord {
 		return !is_null($obj) && $this->xref==$obj->getXref();
 	}
 
-	// Generate a URL that links to this record
-	public function getLinkUrl() {
-		return $this->_getLinkUrl('gedcomrecord.php?pid=');
+	// Generate a URL to this record, suitable for use in HTML
+	public function getHtmlUrl() {
+		return self::_getLinkUrl('gedcomrecord.php?famid=', '&amp;');
+	}
+	// Generate a URL to this record, suitable for use in javascript, HTTP headers, etc.
+	public function getRawUrl() {
+		return self::_getLinkUrl('gedcomrecord.php?famid=', '&');
 	}
 
-	protected function _getLinkUrl($link) {
+	protected function _getLinkUrl($link, $separator) {
 		if ($this->ged_id) {
 			// If the record was created from the database, we know the gedcom
-			$url = $link.$this->getXref().'&ged='.get_gedcom_from_id($this->ged_id);
+			$url=$link.rawurlencode($this->getXref()).$separator.'ged='.rawurlencode(get_gedcom_from_id($this->ged_id));
 		} else {
 			// If the record was created from a text string, assume the current gedcom
-			$url = $link.$this->getXref().'&ged='.WT_GEDCOM;
+			$url=$link.rawurlencode($this->getXref()).$separator.'ged='.rawurlencode(WT_GEDCOM);
 		}
 		if ($this->isRemote()) {
 			list($servid, $aliaid)=explode(':', $this->rfn);
@@ -321,7 +325,7 @@ class GedcomRecord {
 					}
 					$gedcom = $serviceClient->getGedfile();
 					if ($gedcom) {
-						$url .= "&ged={$gedcom}";
+						$url .= $separator.'ged='.rawurlencode($gedcom);
 					}
 				}
 			}
@@ -358,7 +362,7 @@ class GedcomRecord {
 			if ($target) {
 				$target='target="'.$target.'"';
 			}
-			return '<a href="'.encode_url($this->getLinkUrl()).'#content" name="'.preg_replace('/\D/','',$this->getXref()).'" '.$target.'>'.$this->getXref().'</a>';
+			return '<a href="'.$this->getHtmlUrl().'#content" name="'.preg_replace('/\D/','',$this->getXref()).'" '.$target.'>'.$this->getXref().'</a>';
 		} else {
 			return $this->getXref();
 		}
@@ -369,7 +373,7 @@ class GedcomRecord {
 	*
 	*/
 	public function getAbsoluteLinkUrl() {
-		return WT_SERVER_NAME.WT_SCRIPT_PATH.$this->getLinkUrl();
+		return WT_SERVER_NAME.WT_SCRIPT_PATH.$this->getHtmlUrl();
 	}
 
 	/**
@@ -630,7 +634,7 @@ class GedcomRecord {
 			$name=($tag=='li') ? $this->getListName() : $this->getFullName();
 		}
 		$dir=begRTLText($name) ? 'rtl' : 'ltr';
-		$html='<a href="'.$this->getLinkUrl().'"';
+		$html='<a href="'.$this->getHtmlUrl().'"';
 		if ($find) {
 			$html.=' onclick="pasteid(\''.$this->getXref().'\');"';
 		}
@@ -805,7 +809,7 @@ class GedcomRecord {
 		$factrec = ''; // -- complete fact record
 		$line = '';   // -- temporary line buffer
 		$linenum=1;
-		for($i=1; $i<=$lct; $i++) {
+		for ($i=1; $i<=$lct; $i++) {
 			if ($i<$lct) {
 				$line = $indilines[$i];
 			} else {
@@ -815,7 +819,7 @@ class GedcomRecord {
 				$line=' ';
 			}
 			if ($i==$lct||$line{0}==1) {
-				if ($i>1){
+				if ($i>1) {
 					$event = new Event($factrec, $linenum);
 					$fact = $event->getTag();
 					if ($nfacts==NULL || !in_array($fact, $nfacts)) {
@@ -843,9 +847,9 @@ class GedcomRecord {
 		$diff->parseFacts();
 
 		//-- update old facts
-		foreach($this->facts as $key=>$event) {
+		foreach ($this->facts as $key=>$event) {
 			$found = false;
-			foreach($diff->facts as $indexval => $newevent) {
+			foreach ($diff->facts as $indexval => $newevent) {
 				$newfact = $newevent->getGedcomRecord();
 				$newfact=preg_replace("/\\\/", '/', $newfact);
 				if (trim($newfact)==trim($event->getGedcomRecord())) {
@@ -858,9 +862,9 @@ class GedcomRecord {
 			}
 		}
 		//-- look for new facts
-		foreach($diff->facts as $key=>$newevent) {
+		foreach ($diff->facts as $key=>$newevent) {
 			$found = false;
-			foreach($this->facts as $indexval => $event) {
+			foreach ($this->facts as $indexval => $event) {
 				$newfact = $newevent->getGedcomRecord();
 				$newfact=preg_replace("/\\\/", '/', $newfact);
 				if (trim($newfact)==trim($event->getGedcomRecord())) {
@@ -915,7 +919,7 @@ class GedcomRecord {
 			$text=strip_tags($d->Display(false, "{$DATE_FORMAT}", array()));
 		}
 		if ($add_url) {
-			$text='<a name="'.$sort.'" href="'.encode_url($this->getLinkUrl()).'">'.$text.'</a>';
+			$text='<a name="'.$sort.'" href="'.$this->getHtmlUrl().'">'.$text.'</a>';
 		}
 		return $text;
 	}
@@ -937,4 +941,3 @@ class GedcomRecord {
 		return $chan_user;
 	}
 }
-?>

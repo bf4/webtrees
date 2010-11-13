@@ -34,7 +34,7 @@ require './includes/session.php';
 
 // Must be an admin user to use this module
 if (!WT_USER_GEDCOM_ADMIN) {
-	header('Location: login.php?url=gedcheck.php');
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'login.php?url='.WT_SCRIPT_NAME);
 	exit;
 }
 print_header(i18n::translate('GEDCOM checker').' - '.$GEDCOM);
@@ -132,7 +132,7 @@ if (!isset($_POST['action'])) {
 
 // If we're checking a gedcom that is imported into the database, check that the file is synchronised
 if ($ged==WT_GEDCOM) {
-	$ged_link='href="javascript:" onclick="window.open(\''.encode_url("export_gedcom.php?export={$ged}").'\', \'_blank\',\'left=50,top=50,width=500,height=500,resizable=1,scrollbars=1\');"';
+	$ged_link='href="javascript:" onclick="window.open(\''."export_gedcom.php?export=".rawurlencode($ged).'\', \'_blank\',\'left=50,top=50,width=500,height=500,resizable=1,scrollbars=1\');"';
 	echo '<div class="error">', i18n::translate('Edits made to the database are not synchronized to the file %s.  The file contents may be out-of-date.  You can synchronize it with the database now by performing an <b><a "%s">export</a></b>.', $ged, $ged_link), '</div><hr/>';
 }
 
@@ -426,7 +426,7 @@ function add_structure($prefix, $min, $max, $structure)
 		add_structure($prefix.'FAM:',          0,    9999, '<<MULTIMEDIA_LINK>>');
 		break;
 	case '<<FAMILY_EVENT_STRUCTURE>>':
-		foreach(array('ANUL','CENS','DIV','DIVF','ENGA','MARB','MARC','MARL','MARS','RESI') as $event) {
+		foreach (array('ANUL','CENS','DIV','DIVF','ENGA','MARB','MARC','MARL','MARS','RESI') as $event) {
 			add_element  ($prefix.$event,     $min, $max, $TAG['NULL']);
 			add_structure($prefix.$event.':', 0,    1,    '<<FAMILY_EVENT_DETAIL>>');
 		}
@@ -503,16 +503,16 @@ function add_structure($prefix, $min, $max, $structure)
 		add_element  ($prefix.'AGE', 0,    1,    $TAG['AGE_AT_EVENT']);
 		break;
 	case '<<INDIVIDUAL_EVENT_STRUCTURE>>':
-		foreach(array('BIRT','CHR') as $event) {
+		foreach (array('BIRT','CHR') as $event) {
 			add_element  ($prefix.$event,         $min, $max, 'Y?');
 			add_structure($prefix.$event.':',     0,    1,    '<<INDIVIDUAL_EVENT_DETAIL>>');
 			add_element  ($prefix.$event.':FAMC', 0,    1,    $TAG['XREF']);
 		}
-		foreach(array('DEAT') as $event) {
+		foreach (array('DEAT') as $event) {
 			add_element  ($prefix.$event,     $min, $max, 'Y?');
 			add_structure($prefix.$event.':', 0,    1,    '<<INDIVIDUAL_EVENT_DETAIL>>');
 		}
-		foreach(array('BURI','CREM','BAPM','BARM','BASM','BLES','CHRA','CONF','FCOM','ORDN','NATU','EMIG','IMMI','CENS','PROB','WILL','GRAD','RETI','EVEN') as $event) {
+		foreach (array('BURI','CREM','BAPM','BARM','BASM','BLES','CHRA','CONF','FCOM','ORDN','NATU','EMIG','IMMI','CENS','PROB','WILL','GRAD','RETI','EVEN') as $event) {
 			add_element  ($prefix.$event,     $min, $max, $TAG['NULL']);
 			add_structure($prefix.$event.':', 0,    1,    '<<INDIVIDUAL_EVENT_DETAIL>>');
 		}
@@ -947,4 +947,3 @@ if (isset($last_err_num)) {
 echo '</div>'; // language/direction/alignment
 
 print_footer();
-?>

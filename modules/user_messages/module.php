@@ -102,27 +102,12 @@ class user_messages_WT_Module extends WT_Module implements WT_Module_Block {
 		if (count($usermessages)==0) {
 			$content .= i18n::translate('You have no pending messages.')."<br />";
 		} else {
-			$content .= '
-				<script language="JavaScript" type="text/javascript">
-				<!--
-					function select_all() {
-						';
-			foreach($usermessages as $key=>$message) {
-				if (isset($message["id"])) $key = $message["id"];
-				$content .= '
-							var cb = document.getElementById("cb_message'.$key.'");
-							if (cb) {
-								if (!cb.checked) cb.checked = true;
-								else cb.checked = false;
-							}
-							';
+			$content .= WT_JS_START.'function select_all() {';
+			foreach ($usermessages as $message) {
+				$content .= 'var cb=document.getElementById("cb_message'.$message["id"].'");';
+				$content .= 'cb.checked=!cb.checked;';
 			}
-			$content .= '
-					return false;
-				}
-				//-->
-				</script>
-			';
+			$content .= 'return false;}'.WT_JS_END;
 			$content .= "<input type=\"hidden\" name=\"action\" value=\"deletemessage\" />";
 			$content .= "<table class=\"list_table\"><tr>";
 			$content .= "<td class=\"list_label\">".i18n::translate('Delete')."<br /><a href=\"javascript:;\" onclick=\"return select_all();\">".i18n::translate('All')."</a></td>";
@@ -130,7 +115,7 @@ class user_messages_WT_Module extends WT_Module implements WT_Module_Block {
 			$content .= "<td class=\"list_label\">".i18n::translate('Date Sent:')."</td>";
 			$content .= "<td class=\"list_label\">".i18n::translate('Email Address:')."</td>";
 			$content .= "</tr>";
-			foreach($usermessages as $key=>$message) {
+			foreach ($usermessages as $key=>$message) {
 				if (isset($message["id"])) $key = $message["id"];
 				$content .= "<tr>";
 				$content .= "<td class=\"list_value_wrap\"><input type=\"checkbox\" id=\"cb_message$key\" name=\"message_id[]\" value=\"$key\" /></td>";
@@ -163,7 +148,7 @@ class user_messages_WT_Module extends WT_Module implements WT_Module_Block {
 				if ($user_id) {
 					$content .= "<a href=\"javascript:;\" onclick=\"reply('".$user_id."', '".$message["subject"]."'); return false;\">".i18n::translate('Reply')."</a> | ";
 				}
-				$content .= "<a href=\"".encode_url("index.php?action=deletemessage&message_id={$key}")."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this message?  It cannot be retrieved later.')."');\">".i18n::translate('Delete')."</a></div></td></tr>";
+				$content .= "<a href=\"index.php?action=deletemessage&amp;message_id={$key}\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this message?  It cannot be retrieved later.')."');\">".i18n::translate('Delete')."</a></div></td></tr>";
 			}
 			$content .= "</table>";
 			$content .= "<input type=\"submit\" value=\"".i18n::translate('Delete Selected Messages')."\" /><br />";

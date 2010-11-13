@@ -29,53 +29,50 @@ require 'admin_functions.php';
 admin_header(i18n::translate('GEDCOM management'));
 echo '<h1>', i18n::translate('GEDCOM management'), '</h1>';
 
+// The gedcom admin page is for gedcom administrators only!
+//if (!WT_USER_GEDCOM_ADMIN) {
+//	header('Location: login.php?url=editgedcoms.php');
+//	exit;
+//}
+
 // Which directory contains our data files?
 $INDEX_DIRECTORY=get_site_setting('INDEX_DIRECTORY');
 
+// Don't allow the user to cancel the request.  We do not want to be left
+// with an incomplete transaction.
+ignore_user_abort(true);
+
 function import_gedcom_file($gedcom_id, $file_name) {
-	$file_size=filesize($file_name);
+	// Read the file in blocks of roughly 64K.  Ensure that each block
+	// contains complete gedcom records.  This will ensure we don't split
+	// multi-byte characters, as well as simplifying the code to import
+	// each block.
+
+	$file_data='';
 	$fp=fopen($file_name, 'rb');
+
 	WT_DB::exec("START TRANSACTION");
-
-	// Cannot use the stream technique at http://php.net/manual/en/pdo.lobs.php
-	// It doesn't work, probably due to the MySQL bug mentioned below.
-	//WT_DB::prepare(
-	//	"UPDATE `##gedcom`".
-	//	" SET import_gedcom=?, import_offset=1".
-	//	" WHERE gedcom_id=?"
-	//)
-	//->bindParam(1, $fp,        PDO::PARAM_LOB)
-	//->bindParam(2, $gedcom_id, PDO::PARAM_INT)
-	//->execute();
-
-	$max_allowed_packet=WT_DB::prepare("SELECT @@max_allowed_packet")->fetchOne();
-	WT_DB::prepare(
-		"UPDATE `##gedcom`".
-		" SET import_gedcom='', import_offset=1".
-		" WHERE gedcom_id=?"
-	)->execute(array($gedcom_id));
-
-	// The max_allowed_packet setting in MySQL puts a limit on the size of SQL
-	// statements that can be received over the network.  Due to a bug, it also
-	// limits the size of blobs that can be processed on the server.
-	// Setting this value has no effect on upload limits (so we must still
-	// upload data in chunks smaller than this), but it will allow us to use
-	// CONCAT(import_gedcom, ?)
-	// See http://bugs.mysql.com/bug.php?id=22853 (Scheduled to be fixed in MySQL 6)
-	try {
-		WT_DB::exec("SET @@max_allowed_packet=".max($file_size*2, $max_allowed_packet));		
-	} catch (PDOException $ex) {
-		// We can only set this on MySQL 5.1.30 or earlier
-	}
+	WT_DB::prepare("DELETE FROM `##gedcom_chunk` WHERE gedcom_id=?")->execute(array($gedcom_id));
 
 	while (!feof($fp)) {
-		$data=fread($fp, $max_allowed_packet * 0.75);
-		WT_DB::prepare(
-			"UPDATE `##gedcom`".
-			" SET import_gedcom=CONCAT(import_gedcom, ?)".
-			" WHERE gedcom_id=?"
-		)->execute(array($data, $gedcom_id));
+		$file_data.=fread($fp, 65536);
+		// There is no strrpos() function that searches for substrings :-(
+		for ($pos=strlen($file_data)-1; $pos>0; --$pos) {
+			if ($file_data[$pos]=='0' && ($file_data[$pos-1]=="\n" || $file_data[$pos-1]=="\r")) {
+				// We've found the last record boundary in this chunk of data
+				break;
+			}
+		}
+		if ($pos) {
+			WT_DB::prepare(
+				"INSERT INTO `##gedcom_chunk` (gedcom_id, chunk_data) VALUES (?, ?)"
+			)->execute(array($gedcom_id, substr($file_data, 0, $pos)));
+			$file_data=substr($file_data, $pos);
+		}
 	}
+	WT_DB::prepare(
+		"INSERT INTO `##gedcom_chunk` (gedcom_id, chunk_data) VALUES (?, ?)"
+	)->execute(array($gedcom_id, $file_data));
 
 	WT_DB::exec("COMMIT");
 	fclose($fp);
@@ -102,7 +99,7 @@ case 'add_ged':
 		$gedcom_id=get_id_from_gedcom($ged_name, true);
 		import_gedcom_file($gedcom_id, $INDEX_DIRECTORY.$ged_name);
 	}
-	header('Location: admin.php#gedcoms');exit;
+	header('Location: editgedcoms.php');exit;
 	break;
 case 'new_ged':
 	$ged_name=basename(safe_POST('ged_name'));
@@ -113,11 +110,13 @@ case 'new_ged':
 		// I18N: This should be a common/default/placeholder name of a person.  Put slashes around the surname.
 		$john_doe=i18n::translate('John /DOE/');
 		$note=i18n::translate('Edit this individual and replace their details with your own');
+		WT_DB::prepare("DELETE FROM `##gedcom_chunk` WHERE gedcom_id=?")->execute(array($gedcom_id));
 		WT_DB::prepare(
-			"UPDATE `##gedcom`".
-			" SET import_gedcom=?, import_offset=1".
-			" WHERE gedcom_id=?"
-		)->execute(array("0 HEAD\n0 @I1@ INDI\n1 NAME {$john_doe}\n1 SEX M\n1 BIRT\n2 DATE 1 JAN 1850\n2 NOTE {$note}\n0 TRLR\n", $gedcom_id));
+			"INSERT INTO `##gedcom_chunk` (gedcom_id, chunk_data) VALUES (?, ?)"
+		)->execute(array(
+			$gedcom_id,
+			"0 HEAD\n0 @I1@ INDI\n1 NAME {$john_doe}\n1 SEX M\n1 BIRT\n2 DATE 01 JAN 1850\n2 NOTE {$note}\n0 TRLR\n"
+		));
 	}
 	break;
 case 'upload_ged':
@@ -132,7 +131,7 @@ case 'upload_ged':
 			}
 		}
 	}
-	header('Location: admin.php#gedcoms');exit;
+	header('Location: editgedcoms.php');exit;
 	break;
 case 'replace_upload':
 	$gedcom_id=safe_POST('gedcom_id');
@@ -144,7 +143,7 @@ case 'replace_upload':
 			}
 		}
 	}
-	header('Location: admin.php#gedcoms');exit;
+	header('Location: editgedcoms.php');exit;
 	break;
 case 'replace_import':
 	$gedcom_id=safe_POST('gedcom_id');
@@ -153,20 +152,24 @@ case 'replace_import':
 		$ged_name=basename(safe_POST('ged_name'));
 		import_gedcom_file($gedcom_id, $INDEX_DIRECTORY.$ged_name);
 	}
-	header('Location: admin.php#gedcoms');exit;
+	header('Location: editgedcoms.php');exit;
 	break;
 }
 
 $gedcoms=WT_DB::prepare(
-	"SELECT gedcom_id, gedcom_name, import_offset".
-	" FROM `##gedcom`".
-	" ORDER BY gedcom_name"
+	"SELECT gedcom_id, gedcom_name FROM `##gedcom` ORDER BY gedcom_name"
 )->fetchAll();
 
 $all_gedcoms=array();
 foreach ($gedcoms as $gedcom) {
 	$all_gedcoms[$gedcom->gedcom_id]=$gedcom->gedcom_name;
 }
+
+//print_header(i18n::translate('GEDCOM administration'));
+
+//echo '<p class="center"><input TYPE="button" VALUE="', i18n::translate('Return to Administration page'), '" onclick="javascript:window.location=\'admin.php\'" /></p>';
+
+//echo '<h2 class="center">', i18n::translate('GEDCOM administration'), '</h2>';
 
 // Process GET actions
 switch (safe_GET('action')) {
@@ -229,115 +232,131 @@ case 'importform':
 
 // List the gedcoms available to this user
 foreach ($gedcoms as $gedcom) {
-//	if (userGedcomAdmin(WT_USER_ID, $gedcom->gedcom_id)) { REMOVED TEMPORARILY
+	//if (userGedcomAdmin(WT_USER_ID, $gedcom->gedcom_id)) {
 
-	echo
-		'<table id="gedcom_table">',
-			'<tr>',
-				'<td class="gedcom"><a href="index.php?ctype=gedcom&ged=', urlencode($gedcom->gedcom_name), '">', htmlspecialchars($gedcom->gedcom_name), ' - ', htmlspecialchars(get_gedcom_setting($gedcom->gedcom_id, 'title')), '</a></td>',
-				'<td>';
-					// The second row shows an optional progress bar and a list of maintenance options
-					if ($gedcom->import_offset>0) {
-					echo '<div id="import', $gedcom->gedcom_id, '"></div>',
-					WT_JS_START,
-					'$("#import', $gedcom->gedcom_id, '").load("import.php?gedcom_id=', $gedcom->gedcom_id, '&keep_media=', safe_POST('keep_media'.$gedcom->gedcom_id), '");',
-					WT_JS_END,
-					'<table border="0" width="100%" id="actions', $gedcom->gedcom_id, '" style="display:none">';
-					} else {
-						echo '<table border="0" width="100%" id="actions', $gedcom->gedcom_id, '">';
-					}
-						echo '<tr align="center">',
-							// export
-							'<td><a href="javascript:" onclick="window.open(\'', encode_url("export_gedcom.php?export={$gedcom->gedcom_name}"), '\', \'_blank\',\'left=50,top=50,width=500,height=500,resizable=1,scrollbars=1\');">', i18n::translate('Export'), '</a>',
-							admin_help_link('export_gedcom.php'),
-							'</td>',
-							// import
-							'<td><a href="', WT_SCRIPT_NAME, '?action=importform&amp;gedcom_id=', $gedcom->gedcom_id, '">', i18n::translate('Import'), '</a>',
-							admin_help_link('import_gedcom'),
-							'</td>',
-							// download
-							'<td><a href="downloadgedcom.php?ged=', urlencode($gedcom->gedcom_name),'">', i18n::translate('Download'), '</a>',
-							admin_help_link('download_gedcom'),
-							'</td>',
-							// upload
-							'<td><a href="', WT_SCRIPT_NAME, '?action=uploadform&amp;gedcom_id=', $gedcom->gedcom_id, '">', i18n::translate('Upload'), '</a>',
-							admin_help_link('help_uploadgedcom.php'),
-							'</td>',
-							// delete
-							'<td><a href="editgedcoms.php?action=delete&ged=', urlencode($gedcom->gedcom_name), '" onclick="return confirm(\''.htmlspecialchars(i18n::translate('Permanently delete the GEDCOM %s and all its settings?', $gedcom->gedcom_name)),'\');">', i18n::translate('Delete'), '</a>',
-							admin_help_link('delete_gedcom'),
-							'</td>',
-						'</tr>',
-					'</table>',
-				'</td>',
-			'</tr>',
-		'</table>';
-//	}REMOVED TEMPORARILY
+		echo
+			'<table class="gedcom_table" width="100%">',
+			'<tr><td class="list_label" width="20%">', i18n::translate('GEDCOM name'),
+			'</td><td class="list_value"><a href="index.php?ctype=gedcom&ged=', urlencode($gedcom->gedcom_name), '">', htmlspecialchars($gedcom->gedcom_name), ' - ',
+			htmlspecialchars(get_gedcom_setting($gedcom->gedcom_id, 'title')), '</a>',
+			'</td></tr><tr><td class="list_label">', i18n::translate('GEDCOM administration'),
+			'</td><td class="list_value">';
+
+		// The third row shows an optional progress bar and a list of maintenance options
+		$importing=WT_DB::prepare(
+			"SELECT 1 FROM `##gedcom_chunk` WHERE gedcom_id=? AND imported=0 LIMIT 1"
+		)->execute(array($gedcom->gedcom_id))->fetchOne();
+		if ($importing) {
+			echo
+				'<div id="import', $gedcom->gedcom_id, '"></div>',
+				WT_JS_START,
+				'$("#import', $gedcom->gedcom_id, '").load("import.php?gedcom_id=', $gedcom->gedcom_id, '&keep_media=', safe_POST('keep_media'.$gedcom->gedcom_id), '");',
+				WT_JS_END,
+				'<table border="0" width="100%" id="actions', $gedcom->gedcom_id, '" style="display:none">';
+		} else {
+			echo '<table border="0" width="100%" id="actions', $gedcom->gedcom_id, '">';
+		}
+		echo
+			'<tr align="center">',
+			// configuration
+			'<td><a href="editconfig_gedcom.php?ged=', urlencode($gedcom->gedcom_name), '">', i18n::translate('Configuration'), '</a>',
+			help_link('gedcom_configfile'),
+			'</td>',
+			// export
+			'<td><a href="javascript:" onclick="window.open(\'', encode_url("export_gedcom.php?export={$gedcom->gedcom_name}"), '\', \'_blank\',\'left=50,top=50,width=500,height=500,resizable=1,scrollbars=1\');">', i18n::translate('Export'), '</a>',
+			help_link('export_gedcom'),
+			'</td>',
+			// import
+			'<td><a href="', WT_SCRIPT_NAME, '?action=importform&amp;gedcom_id=', $gedcom->gedcom_id, '">', i18n::translate('Import'), '</a>',
+			help_link('import_gedcom'),
+			'</td>',
+			// download
+			'<td><a href="downloadgedcom.php?ged=', urlencode($gedcom->gedcom_name),'">', i18n::translate('Download'), '</a>',
+			help_link('download_gedcom'),
+			'</td>',
+			// upload
+			'<td><a href="', WT_SCRIPT_NAME, '?action=uploadform&amp;gedcom_id=', $gedcom->gedcom_id, '">', i18n::translate('Upload'), '</a>',
+			help_link('upload_gedcom'),
+			'</td>',
+			// delete
+			'<td><a href="editgedcoms.php?action=delete&ged=', urlencode($gedcom->gedcom_name), '" onclick="return confirm(\''.htmlspecialchars(i18n::translate('Permanently delete the GEDCOM %s and all its settings?', $gedcom->gedcom_name)),'\');">', i18n::translate('Delete'), '</a>',
+			help_link('delete_gedcom'),
+			'</td></tr></table></td></tr></table><br />';
+//	}
 }
 
 // Options for creating new gedcoms and setting defaults
-//if (WT_USER_IS_ADMIN) {REMOVED TEMPORARILY
-	echo '<br /><br /><br />',
-	'<table id="gedcom_table">',
-		'<tr>',
-			'<td class="defaults">', i18n::translate('Default GEDCOM'),      admin_help_link('default_gedcom'),        '</td>',
-			'<td class="defaults">', i18n::translate('Add a new GEDCOM'),    admin_help_link('help_addgedcom.php'),    '</td>',
-			'<td class="defaults">', i18n::translate('Upload a new GEDCOM'), admin_help_link('help_uploadgedcom.php'), '</td>',
-			'<td class="defaults">', i18n::translate('Create a new GEDCOM'), admin_help_link('help_addnewgedcom.php'), '</td>',
-		'</tr>',
-		'<tr>',
-			'<td class="defaults">',
-				'<form name="defaultform" method="post" action="', WT_SCRIPT_NAME, '">',
-					'<input type="hidden" name="action" value="setdefault" />',
-					'<select name="default_ged" class="header_select" onchange="document.defaultform.submit();">';
-						$DEFAULT_GEDCOM=get_site_setting('DEFAULT_GEDCOM');
-						if (empty($DEFAULT_GEDCOM)) {
-							echo '<option value="" selected="selected"></option>';
-						}
-						foreach ($gedcoms as $gedcom) {
-							echo '<option value="', urlencode($gedcom->gedcom_name), '"';
-							if ($DEFAULT_GEDCOM==$gedcom->gedcom_name) echo ' selected="selected"';
-							echo '>', htmlspecialchars($gedcom->gedcom_name), '</option>';
-						}
-						echo
-					'</select>',
-				'</form>',
-			'</td>',
-			'<td class="defaults">',
-				'<form name="addform" method="post" action="', WT_SCRIPT_NAME, '">',
-				$INDEX_DIRECTORY,
-				'<input type="hidden" name="action" value="add_ged" />',
-				'<select name="ged_name" onchange="document.addform.submit();" />',
-					'<option>', i18n::translate('Select a file'), '</option>',
-						$d=opendir($INDEX_DIRECTORY);
-						$files=false;
-						while (($f=readdir($d))!==false) {
-							if (!in_array($f, $all_gedcoms) && !is_dir($INDEX_DIRECTORY.$f) && is_readable($INDEX_DIRECTORY.$f)) {
-								$fp=fopen($INDEX_DIRECTORY.$f, 'rb');
-								$header=fread($fp, 64);
-								fclose($fp);
-								if (preg_match('/^('.WT_UTF8_BOM.')?0 *HEAD/', $header)) {
-									echo '<option>', htmlspecialchars($f), '</option>';
-									$files=true;
-								}
-							}
-						}
-					echo'</select>',
-				'</form>',
-			'</td>',
-			'<td class="defaults">',
-				'<form name="uploadform" method="post" action="', WT_SCRIPT_NAME, '" enctype="multipart/form-data">',
-					'<input type="hidden" name="action" value="upload_ged" />',
-					'<input type="file" name="ged_name" onchange="document.uploadform.submit();" />',
-				'</form>',
-			'</td>',
-			'<td class="defaults">',
-				'<form name="createform" method="post" action="', WT_SCRIPT_NAME, '">',
-					'<input type="hidden" name="action" value="new_ged" />',
-					'<input name="ged_name" />',
-					' <input type="submit" value="', i18n::translate('Save') , '"/>',
-				'</form>',
-			'</td>',
-		'</tr>',
-	'</table>';
-//}REMOVED TEMPORARILY
+//if (WT_USER_IS_ADMIN) {
+	echo
+		'<br/><table class="gedcom_table"><tr>',
+		'<td class="list_label">', i18n::translate('Default GEDCOM'),      help_link('default_gedcom'), '</td>',
+		'<td class="list_label">', i18n::translate('Add a new GEDCOM'),    help_link('add_gedcom'),     '</td>',
+		'<td class="list_label">', i18n::translate('Upload a new GEDCOM'), help_link('upload_gedcom'),  '</td>',
+		'<td class="list_label">', i18n::translate('Create a new GEDCOM'), help_link('add_new_gedcom'), '</td>',
+		'</tr><tr>',
+		'<td class="list_value_wrap">',
+		'<form name="defaultform" method="post" action="', WT_SCRIPT_NAME, '">',
+		'<input type="hidden" name="action" value="setdefault" />',
+		'<select name="default_ged" class="header_select" onchange="document.defaultform.submit();">';
+	$DEFAULT_GEDCOM=get_site_setting('DEFAULT_GEDCOM');
+	if (empty($DEFAULT_GEDCOM)) {
+		echo '<option value="" selected="selected"></option>';
+	}
+	foreach ($gedcoms as $gedcom) {
+		echo '<option value="', urlencode($gedcom->gedcom_name), '"';
+		if ($DEFAULT_GEDCOM==$gedcom->gedcom_name) echo ' selected="selected"';
+		echo '>', htmlspecialchars($gedcom->gedcom_name), '</option>';
+	}
+	echo
+		'</select>',
+		'</form></td>',
+		'<td class="list_value_wrap">',
+		'<form name="addform" method="post" action="', WT_SCRIPT_NAME, '">',
+		$INDEX_DIRECTORY,
+		'<input type="hidden" name="action" value="add_ged" />',
+		'<select name="ged_name" onchange="document.addform.submit();" />',
+		'<option>', i18n::translate('Select a file'), '</option>',
+	$d=opendir($INDEX_DIRECTORY);
+	$files=false;
+	while (($f=readdir($d))!==false) {
+		if (!in_array($f, $all_gedcoms) && !is_dir($INDEX_DIRECTORY.$f) && is_readable($INDEX_DIRECTORY.$f)) {
+			$fp=fopen($INDEX_DIRECTORY.$f, 'rb');
+			$header=fread($fp, 64);
+			fclose($fp);
+			if (preg_match('/^('.WT_UTF8_BOM.')?0 *HEAD/', $header)) {
+				echo '<option>', htmlspecialchars($f), '</option>';
+				$files=true;
+			}
+		}
+	}
+	echo
+		'</select>',
+		'</form>',
+		'</td>',
+		'<td class="list_value_wrap">',
+		'<form name="uploadform" method="post" action="', WT_SCRIPT_NAME, '" enctype="multipart/form-data">',
+		'<input type="hidden" name="action" value="upload_ged" />',
+		'<input type="file" name="ged_name" onchange="document.uploadform.submit();" />',
+		'</form>',
+		'</td>',
+		'<td class="list_value_wrap">',
+		'<form name="createform" method="post" action="', WT_SCRIPT_NAME, '">',
+		'<input type="hidden" name="action" value="new_ged" />',
+		'<input name="ged_name" />',
+		' <input type="submit" value="', i18n::translate('Save') , '"/>',
+		'</form>',
+		'</td>',
+		'</tr></table><br/>';
+
+		// display link to PGV-WT transfer wizard on first visit to this page, before any GEDCOM is loaded
+		if (count($gedcoms)==0 && get_user_count()==1) {
+			echo
+				'<div class="center">',
+				'<a style="color:green; font-weight:bold;" href="pgv_to_wt.php">',
+				i18n::translate('Click here for PhpGedView to <b>webtrees</b> transfer wizard'),
+				'</a>',
+				help_link('PGV_WIZARD'),
+				'</div>';
+		}
+//}
+	include 'admin_footer.php';

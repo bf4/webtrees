@@ -604,30 +604,31 @@ class CalendarDate {
 	// Create a URL that links this date to the WT calendar
 	function CalendarURL($date_fmt="") {
 		global $DATE_FORMAT;
-		if (empty($date_fmt))
+		if (empty($date_fmt)) {
 			$date_fmt=$DATE_FORMAT;
+		}
 		$URL='calendar.php?cal='.$this->CALENDAR_ESCAPE();
 		$action="year";
 		if (strpos($date_fmt, "Y")!==false
 		||  strpos($date_fmt, "y")!==false) {
-			$URL.='&year='.$this->FormatGedcomYear();
+			$URL.='&amp;year='.$this->FormatGedcomYear();
 		}
 		if (strpos($date_fmt, "F")!==false
 		||  strpos($date_fmt, "M")!==false
 		||  strpos($date_fmt, "m")!==false
 		||  strpos($date_fmt, "n")!==false) {
-			$URL.='&month='.$this->FormatGedcomMonth();
+			$URL.='&amp;month='.$this->FormatGedcomMonth();
 			if ($this->m>0)
 				$action="calendar";
 		}
 		if (strpos($date_fmt, "d")!==false
 		||  strpos($date_fmt, "D")!==false
 		||  strpos($date_fmt, "j")!==false) {
-			$URL.='&day='.$this->FormatGedcomDay();
+			$URL.='&amp;day='.$this->FormatGedcomDay();
 			if ($this->d>0)
 				$action="today";
 		}
-		return encode_url($URL.'&action='.$action);
+		return $URL.'&amp;action='.$action;
 	}
 } // class CalendarDate
 
@@ -1012,12 +1013,12 @@ class HebrewDate extends JewishDate {
 		$thousands = $num / 1000; //get # thousands
 		$sb = "";
 		//append thousands to String
-		if($num % 1000 == 0) { // in year is 5000, 4000 etc
+		if ($num % 1000 == 0) { // in year is 5000, 4000 etc
 			$sb .= $jOnes[$thousands];
 			$sb .= self::GERSH;
 			$sb .= " ";
 			$sb .= self::ALAFIM; //add # of thousands plus word thousand (overide alafim boolean)
-		} else if($DISPLAY_JEWISH_THOUSANDS) { // if alafim boolean display thousands
+		} else if ($DISPLAY_JEWISH_THOUSANDS) { // if alafim boolean display thousands
 			$sb .= $jOnes[$thousands];
 			$sb .= self::GERSH; //append thousands quote
 			$sb .= " ";
@@ -1026,14 +1027,14 @@ class HebrewDate extends JewishDate {
 		$hundreds = $num / 100; // # of hundreds
 		$sb .= $jHundreds[$hundreds]; //add hundreds to String
 		$num = $num % 100; //remove 100s
-		if($num == 15) { //special case 15
+		if ($num == 15) { //special case 15
 			$sb .= $tavTaz[0];
-		} else if($num == 16) { //special case 16
+		} else if ($num == 16) { //special case 16
 			$sb .= $tavTaz[1];
 		} else {
 			$tens = $num / 10;
-			if($num % 10 == 0) {                                    // if evenly divisable by 10
-				if($singleDigitYear == false) {
+			if ($num % 10 == 0) {                                    // if evenly divisable by 10
+				if ($singleDigitYear == false) {
 					$sb .= $jTenEnds[$tens]; // use end letters so that for example 5750 will end with an end nun
 				} else {
 					$sb .= $jTens[$tens]; // use standard letters so that for example 5050 will end with a regular nun
@@ -1462,8 +1463,8 @@ class GedcomDate {
 
 	// Convert an individual gedcom date string into a CalendarDate object
 	static function ParseDate($date) {
-		// Calendar escape specified? - use it
-		if (preg_match('/^(@#[^@]+@) ?(.*)/', $date, $match)) {
+		// Valid calendar escape specified? - use it
+		if (preg_match('/^(@#d(?:gregorian|julian|hebrew|hijri|french r|roman)+@) ?(.*)/', $date, $match)) {
 			$cal=$match[1];
 			$date=$match[2];
 		} else {

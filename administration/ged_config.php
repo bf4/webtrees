@@ -46,6 +46,7 @@ $PRIVACY_CONSTANTS=array(
 	'privacy'     =>i18n::translate('Show only to authenticated users'),
 	'confidential'=>i18n::translate('Show only to admin users'),
 	'hidden'      =>i18n::translate('Hide even from admin users')
+
 );
 
 switch (safe_POST('action')) {
@@ -348,9 +349,9 @@ case 'update':
 <form enctype="multipart/form-data" method="post" id="configform" name="configform" action="ged_config.php">
 
 	<?php
-		echo '<h1><img src="images/tree.png">', i18n::translate('GEDCOM configuration'), ' - ';
-		echo PrintReady(get_gedcom_setting(WT_GED_ID, 'title'));
-		echo '</h1>';
+		echo '<h2>', i18n::translate('GEDCOM configuration'), ' - ';
+			echo PrintReady(get_gedcom_setting(WT_GED_ID, 'title'));
+		echo '</h2>';
 	?>
 
 <input type="hidden" name="action" value="update" />
@@ -362,7 +363,7 @@ case 'update':
 <table class="config center <?php echo $TEXT_DIRECTION ?>">
 	<tr>
 		<td colspan="2">
-			<div id="tabs" class="">
+			<div id="tabs">
 				<ul>
 					<li><a href="#file-options"><span><?php echo i18n::translate('GEDCOM Basics')?></span></a></li>
 					<li><a href="#privacy"><span><?php echo i18n::translate('Privacy')?></span></a></li>
@@ -1694,9 +1695,11 @@ case 'update':
 			<table class="facts_table" border="0">
 				<tr>
 					<td style="padding: 5px" class="topbottombar">
-						<button type="submit" class="submitBtn" tabindex="<?php echo ++$i; ?>" value="<?php echo i18n::translate('Save configuration'); ?>" /><span><?php echo i18n::translate('Save configuration'); ?></span></button>
+						<div class="btn">
+						<button type="submit" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" tabindex="<?php echo ++$i; ?>" value="<?php echo i18n::translate('Save configuration'); ?>" /><span><?php echo i18n::translate('Save configuration'); ?></span></button>				
 						&nbsp;&nbsp;
-						<button type="reset" class="submitBtn" tabindex="<?php echo ++$i; ?>" value="<?php echo i18n::translate('Reset'); ?>" /><span><?php echo i18n::translate('Reset'); ?></span></button>
+						<button type="reset" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" tabindex="<?php echo ++$i; ?>" value="<?php echo i18n::translate('Reset'); ?>" /><span><?php echo i18n::translate('Reset'); ?></span></button>
+						</div>
 					</td>
 				</tr>
 			</table>

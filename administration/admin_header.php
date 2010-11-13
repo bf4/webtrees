@@ -38,8 +38,13 @@ echo
 	'<head>',
 	'<title>', htmlspecialchars($title), '</title>',
 	'<link rel="shortcut icon" href="', $FAVICON, '" type="image/x-icon" />',
-	'<link rel="stylesheet" href="admin_style.css" type="text/css" media="all" />',
-	'<link rel="stylesheet" href="../js/jquery/css/jquery-ui.custom.css" type="text/css" />';
+	'<link type="text/css" href="css/redmond/jquery-ui-1.8.5.custom.css" rel="stylesheet" />',
+	'<link rel="stylesheet" href="admin_style.css" type="text/css" media="all" />';
+//	'<link rel="stylesheet" href="../js/jquery/css/jquery-ui.custom.css" type="text/css" />';
+		
+echo
+	'<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>',
+	'<script type="text/javascript" src="js/jquery-ui-1.8.5.custom.min.js"></script>';
 
 echo $javascript;
 echo $head; //-- additional header information
@@ -61,6 +66,15 @@ jQuery(document).ready(function(){
 		"iDisplayLength": 10,
 		"sPaginationType": "full_numbers"
 	});
+	
+	jQuery(function() {
+		$( "button, input:submit, a", ".btn" ).button();
+		$( "a", ".btn" ).click(function() { return false; });
+	});
+jQuery("button").click(function () {
+      $("#slide1").slideToggle("slow");
+    });
+
 });
 </script>
 <?php
@@ -70,31 +84,28 @@ echo
 	'<body id="body" ',$bodyOnLoad, '>';
 // Header
 echo
-	'<div id="admin_head">',
+	'<div id="admin_head" class="ui-widget-content">',
 		'<div id="logo"><img src="images/header.jpg" width="281" height="50" alt="" /></div>',
 		'<div id="info">',
 			WT_WEBTREES, ' ', WT_VERSION_TEXT,
 			'<br />',
-			i18n::translate('Current Server Time:'),
-			' ', format_timestamp(time()),
+			i18n::translate('Current Server Time:'), ' ', format_timestamp(time()),
 			'<br />',
-			i18n::translate('Current User Time:'),
-			' ', format_timestamp(client_time()),
-
+			i18n::translate('Current User Time:'), ' ', format_timestamp(client_time()),
 		'</div>',
 		'<div id="title">', i18n::translate('Administration'), '</div>',
-		'<img src="images/hline.gif" width="100%" height="3" alt="" />',
+		//'<img src="images/hline.gif" width="100%" height="3" alt="" />',
 	'</div>';
 		
 // Side menu 
 echo
-	'<div id="admin_menu">',
-		'<dl><dt><img src="images/admin.png" /><a href="ged_config.php">', i18n::translate('Administration'), '</a></dt></dl>',
-		'<dl><dt><img src="images/my_page.png" /><a href="../index.php?ctype=user">', i18n::translate('Back to My Page'), '</dt></dl>',	
+	'<div id="admin_menu" class="ui-widget-content">',
+		'<dl><dt><a href="ged_config.php">', i18n::translate('Administration'), '</a></dt></dl>',
+		'<dl><dt><a href="../index.php?ctype=user">', i18n::translate('Back to My Page'), '</dt></dl>',	
 		'<dl>',
 			'<dt>';
 			$class=""; if (curPageName()=='siteconfig.php') {$class="current";} 
-				echo '<img src="images/gedcom.png" /><a class="' ,$class, '" href="siteconfig.php">', i18n::translate('Site'), '</a></dt>',
+				echo '<a class="' ,$class, '" href="siteconfig.php">', i18n::translate('Site'), '</a></dt>',
 				'<dd><a class="' ,$class, '" href="siteconfig.php">', i18n::translate('Server configuration'), '</a></dd>';
 			$class=""; if (curPageName()=='logs.php') {$class="current";} 
 				echo '<dd><a class="' ,$class, '" href="logs.php">', i18n::translate('Logs'), '</a></dd>';
@@ -106,7 +117,7 @@ echo
 				echo '<dd><a class="' ,$class, '" href="manageservers.php">', i18n::translate('Manage sites'), '</a></dd>',
 		'</dl>',
 		'<dl>',
-			'<dt><img src="images/tree.png" /><a href="ged_admin.php">', i18n::translate('GEDCOMs'), '</a></dt>',
+			'<dt><a href="ged_admin.php">', i18n::translate('GEDCOMs'), '</a></dt>',
 			'<dd><a href="ged_admin.php">', i18n::translate('Manage GEDCOMs'), '</a></dd>',
 			'<dd><i>Configure these :</i></dd>';
 			//-- gedcom list
@@ -120,13 +131,13 @@ echo
 					}
 				}
 		echo '</dl>',
-		'<dl><dt><img src="images/users.png" /><a href="user_stats.php">', i18n::translate('Users'), '</a></dt',
+		'<dl><dt><a href="user_stats.php">', i18n::translate('Users'), '</a></dt',
 			'<dd><a href="user_stats.php">', i18n::translate('User Statistics'), '</a></dd>',
 			'<dd><a href="user_list.php">', i18n::translate('Manage users'), '</a></dd>',
 			'<dd><a href="user_admin.php?action=createform">', i18n::translate('Add user'), '</a></dd>',
 			'<dd><a href="#">', i18n::translate('Bulk messaging'), '</a></dd>',
 		'</dl>',
-		'<dl><dt><img src="images/modules.png" /><a href="admin_modules.php">', i18n::translate('Modules'), '</a></dt',
+		'<dl><dt><a href="admin_modules.php">', i18n::translate('Modules'), '</a></dt',
 			'<dd><a href="admin_modules.php">', i18n::translate('Manage modules'), '</a></dd>',
 			'<dd class="indent"><a href="#">', i18n::translate('Tabs - manage'), '</a></dd>',
 			'<dd class="indent"><a href="#">', i18n::translate('Sidebar - manage'), '</a></dd>',
@@ -138,7 +149,7 @@ echo
 					echo '<dd><a href="../', $module->getConfigLink(), '">', $module->getTitle(), ' - configure</a></dd>';
 			}
 		echo '</dl>',
-		'<dl><dt><img src="images/media.png" /><a href="user_info.php">', i18n::translate('Media'), '</a></dt>',
+		'<dl><dt><a href="user_info.php">', i18n::translate('Media'), '</a></dt>',
 			'<dd><a href="admin_media.php">', i18n::translate('Manage media'), '</a></dd>',
 			'<dd><a href="#">', i18n::translate('Upload media'), '</a></dd>',
 			'<dd><a href="#">', i18n::translate('Media firewall'), '</a></dd>',

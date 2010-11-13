@@ -196,7 +196,7 @@ class Person extends GedcomRecord {
 	* get the birth year
 	* @return string the year of birth
 	*/
-	function getBirthYear(){
+	function getBirthYear() {
 		return $this->getBirthDate()->MinDate()->Format('%Y');
 	}
 
@@ -925,12 +925,12 @@ class Person extends GedcomRecord {
 					}
 				}
 			}
-			if($otherfacts){
+			if ($otherfacts) {
 				if (!$hasdiv && !is_null($spouse)) $this->add_spouse_facts($spouse, $family->getGedcomRecord());
 				$this->add_children_facts($family);
 			}
 		}
-		if($otherfacts){
+		if ($otherfacts) {
 			$this->add_parents_facts($this);
 			$this->add_historical_facts();
 			$this->add_asso_facts();
@@ -1132,13 +1132,13 @@ class Person extends GedcomRecord {
 				if ($option=='_NEPH') {
 					$rela='sibchi';
 					$parent_sex = Person::getInstance($except)->getSex();
-					if ($sex=='F') {         $rela='sibdau';
-						if ($parent_sex=='F'){ $rela='sisdau';  $op='_NIE1';}
-						if ($parent_sex=='M'){ $rela='brodau';  $op='_NIE2';}
+					if ($sex=='F') {          $rela='sibdau';
+						if ($parent_sex=='F') { $rela='sisdau';  $op='_NIE1';}
+						if ($parent_sex=='M') { $rela='brodau';  $op='_NIE2';}
 					}
-					if ($sex=='M')         { $rela='sibson';
-						if ($parent_sex=='F'){ $rela='sisson';  $op='_NEP1';}
-						if ($parent_sex=='M'){ $rela='broson';  $op='_NEP2';}
+					if ($sex=='M')          { $rela='sibson';
+						if ($parent_sex=='F') { $rela='sisson';  $op='_NEP1';}
+						if ($parent_sex=='M') { $rela='broson';  $op='_NEP2';}
 					}
 				}
 				// add child birth
@@ -1321,8 +1321,8 @@ class Person extends GedcomRecord {
 		$dDate=$this->getEstimatedDeathDate();
 		if (!$bDate->isOK()) return;
 
-		if ($SHOW_RELATIVES_EVENTS && file_exists(WT_ROOT.'languages/histo.'.WT_LOCALE.'.php')) {
-			require WT_ROOT.'languages/histo.'.WT_LOCALE.'.php';
+		if ($SHOW_RELATIVES_EVENTS && file_exists(get_site_setting('INDEX_DIRECTORY').'histo.'.WT_LOCALE.'.php')) {
+			require get_site_setting('INDEX_DIRECTORY').'histo.'.WT_LOCALE.'.php';
 			foreach ($histo as $indexval=>$hrec) {
 				$sdate=new GedcomDate(get_gedcom_value('DATE', 2, $hrec, '', false));
 				if ($sdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sdate)<=0 && GedcomDate::Compare($sdate, $this->getEstimatedDeathDate())<=0) {
@@ -1404,7 +1404,7 @@ class Person extends GedcomRecord {
 							break;
 						}
 					}
-					if (!$found){
+					if (!$found) {
 						$event = new Event($factrec);
 						$event->setParentObject($this);
 						$this->indifacts[] = $event;
@@ -1563,9 +1563,13 @@ class Person extends GedcomRecord {
 		return $txt;
 	}
 
-	// Generate a URL that links to this record
-	public function getLinkUrl() {
-		return parent::_getLinkUrl('individual.php?pid=');
+	// Generate a URL to this record, suitable for use in HTML
+	public function getHtmlUrl() {
+		return parent::_getLinkUrl('individual.php?pid=', '&amp;');
+	}
+	// Generate a URL to this record, suitable for use in javascript, HTTP headers, etc.
+	public function getRawUrl() {
+		return parent::_getLinkUrl('individual.php?pid=', '&');
 	}
 
 	// If this object has no name, what do we call it?
@@ -1761,7 +1765,9 @@ class Person extends GedcomRecord {
 		foreach ($surns as $n=>$surn) {
 			// Scottish 'Mc and Mac' prefixes both sort under 'Mac'
 			if (strcasecmp(substr($surn, 0, 2), 'Mc')==0) {
-				$surn=substr_replace($surn, 0, 2, 'Mac');
+				$surn=substr_replace($surn, 'Mac', 0, 2);
+			} elseif (strcasecmp(substr($surn, 0, 4), 'Mac ')==0) {
+				$surn=substr_replace($surn, 'Mac', 0, 4);
 			}
 
 			$this->_getAllNames[]=array(

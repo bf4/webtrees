@@ -43,7 +43,7 @@ if (!defined('WT_WEBTREES')) {
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 		<title><?php echo htmlspecialchars($title); ?></title>
 		<link rel="stylesheet" href="<?php echo $stylesheet; ?>" type="text/css" media="all" />
-		<?php if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) {?> <link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" /> <?php } ?>
+		<?php if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) { ?> <link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" /> <?php } ?>
 		<?php if ($BROWSERTYPE!='other') { ?>
 			<link rel="stylesheet" href="<?php echo WT_THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 		<?php }
@@ -65,8 +65,8 @@ if (!defined('WT_WEBTREES')) {
 	</style>
 	<?php }
 	if ($view!="simple") { ?>
-		<?php if (!empty($META_DESCRIPTION)) {?><meta name="description" content="<?php echo htmlspecialchars($META_DESCRIPTION); ?>" /><?php } ?>
-		<?php if (!empty($META_ROBOTS)) {?><meta name="robots" content="<?php echo htmlspecialchars($META_ROBOTS); ?>" /><?php } ?>
+		<?php if (!empty($META_DESCRIPTION)) { ?><meta name="description" content="<?php echo htmlspecialchars($META_DESCRIPTION); ?>" /><?php } ?>
+		<?php if (!empty($META_ROBOTS)) { ?><meta name="robots" content="<?php echo htmlspecialchars($META_ROBOTS); ?>" /><?php } ?>
 		<meta name="generator" content="<?php echo WT_WEBTREES, ' - ', WT_WEBTREES_URL; ?>" />
 	<?php } ?>
 	<?php echo $javascript; ?>
@@ -75,15 +75,15 @@ if (!defined('WT_WEBTREES')) {
 	<script type="text/javascript" src="js/jquery/jquery.tablesorter.js"></script>
 	<script type="text/javascript" src="js/jquery/jquery.tablesorter.pager.js"></script>
 	<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />
-	<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
-	<?php if ($TEXT_DIRECTION=='rtl') {?>
-		<link type="text/css" href="<?php echo WT_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
-	<?php }?>
-	<link type="text/css" href="<?php echo WT_THEME_DIR?>modules.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo WT_THEME_DIR; ?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
+	<?php if ($TEXT_DIRECTION=='rtl') { ?>
+		<link type="text/css" href="<?php echo WT_THEME_DIR; ?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
+	<?php } ?>
+	<link type="text/css" href="<?php echo WT_THEME_DIR; ?>modules.css" rel="Stylesheet" />
 </head>
 <body id="body" <?php echo $bodyOnLoad; ?>>
 <!-- begin header section -->
-<?php if ($view!='simple') {?>
+<?php if ($view!='simple') { ?>
 <div id="header" class="<?php echo $TEXT_DIRECTION; ?>">
 <table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
@@ -96,18 +96,36 @@ if (!defined('WT_WEBTREES')) {
 				</div>
 			</td>
 			<td align="center" valign="middle">
-				<?php print_user_links(); ?>
+			<?php
+				if (WT_USER_ID) {
+					echo '<a href="edituser.php" class="link">', i18n::translate('Logged in as '), ' (', WT_USER_NAME, ')</a><br />';
+					if (WT_USER_GEDCOM_ADMIN) {
+						echo '<a href="admin.php" class="link">', i18n::translate('Administration'), '</a> | ';
+					}
+					echo logout_link();
+				} elseif (empty($SEARCH_SPIDER)) {
+					echo login_link();
+				}
+			?>
 			</td>
 			<?php if (empty($SEARCH_SPIDER)) { ?>
 			<td align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right"; ?>" valign="middle" >
-				<?php print_theme_dropdown(); ?>
-				<?php print_lang_form(); ?>
+			<?php
+				$menu=MenuBar::getThemeMenu();
+				if ($menu) {
+					echo $menu->getMenuAsDropdown();
+				}
+				$menu=MenuBar::getLanguageMenu();
+				if ($menu) {
+					echo $menu->getMenuAsDropdown();
+				}
+			?>
 			</td>
 			<td style="white-space: normal;" align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right"; ?>" valign="middle" >
 				<form action="search.php" method="get">
 					<input type="hidden" name="action" value="general" />
 					<input type="hidden" name="topsearch" value="yes" />
-					<input type="text" name="query" size="15" value="<?php echo i18n::translate('Search')?>" onfocus="if (this.value == '<?php echo i18n::translate('Search')?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php echo i18n::translate('Search')?>';" />
+					<input type="text" name="query" size="15" value="<?php echo i18n::translate('Search'); ?>" onfocus="if (this.value == '<?php echo i18n::translate('Search'); ?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php echo i18n::translate('Search'); ?>';" />
 					<input type="submit" name="search" value=" &gt; " />
 				</form>
 				<?php print_favorite_selector(); ?>

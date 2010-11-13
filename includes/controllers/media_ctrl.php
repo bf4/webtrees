@@ -68,10 +68,10 @@ class MediaController extends BaseController{
 		}
 
 		//Checks to see if the File Name ($filename) exists
-		if (!empty($filename)){
+		if (!empty($filename)) {
 			//If the File Name ($filename) is set, then it will call the method to get the Media ID ($this->mid) from the File Name ($filename)
 			$this->mid = get_media_id_from_file($filename);
-			if (!$this->mid){
+			if (!$this->mid) {
 				//This will set the Media ID to be false if the File given doesn't match to anything in the database
 				$this->mid = false;
 				// create a very basic gedcom record for this file so that the functions of the media object will work
@@ -81,7 +81,7 @@ class MediaController extends BaseController{
 		}
 
 		//checks to see if the Media ID ($this->mid) is set. If the Media ID isn't set then there isn't any information avaliable for that picture the picture doesn't exist.
-		if ($this->mid){
+		if ($this->mid) {
 			//This creates a Media Object from the getInstance method of the Media Class. It takes the Media ID ($this->mid) and creates the object.
 			$this->mediaobject = Media::getInstance($this->mid);
 			//This sets the controller ID to be the Media ID
@@ -116,7 +116,7 @@ class MediaController extends BaseController{
 				$mediarec = find_media_record($this->pid, get_id_from_gedcom($GEDCOM));
 				//-- check if we just deleted the record and redirect to index
 				if (empty($mediarec)) {
-					header("Location: index.php?ctype=gedcom");
+					header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH);
 					exit;
 				}
 				$this->mediaobject = new Media($mediarec);
@@ -130,7 +130,7 @@ class MediaController extends BaseController{
 				$mediarec = find_media_record($this->pid, WT_GED_ID);
 				//-- check if we just deleted the record and redirect to index
 				if (empty($mediarec)) {
-					header("Location: index.php?ctype=gedcom");
+					header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH);
 					exit;
 				}
 				$this->mediaobject = new Media($mediarec);
@@ -231,21 +231,21 @@ class MediaController extends BaseController{
 		if (find_updated_record($this->pid, WT_GED_ID)!==null) {
 			if (!$this->show_changes) {
 				$label = i18n::translate('This record has been updated.  Click here to show changes.');
-				$link = "mediaviewer.php?mid={$this->pid}&show_changes=yes";
+				$link = "mediaviewer.php?mid={$this->pid}&amp;show_changes=yes";
 			} else {
 				$label = i18n::translate('Click here to hide changes.');
-				$link = "mediaviewer.php?mid={$this->pid}&show_changes=no";
+				$link = "mediaviewer.php?mid={$this->pid}&samp;how_changes=no";
 			}
-			$submenu = new Menu($label, encode_url($link));
+			$submenu = new Menu($label, $link);
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 			$menu->addSubmenu($submenu);
 
 			if (WT_USER_CAN_ACCEPT) {
-				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url("mediaviewer.php?mid={$this->pid}&action=undo"));
+				$submenu = new Menu(i18n::translate('Undo all changes'), "mediaviewer.php?mid={$this->pid}&amp;action=undo");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 				$submenu->addIcon('notes');
 				$menu->addSubmenu($submenu);
-				$submenu = new Menu(i18n::translate('Accept all changes'), encode_url("mediaviewer.php?mid={$this->pid}&action=accept"));
+				$submenu = new Menu(i18n::translate('Approve all changes'), "mediaviewer.php?mid={$this->pid}&amp;action=accept");
 				$submenu->addIcon('notes');
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 				$menu->addSubmenu($submenu);
@@ -275,8 +275,7 @@ class MediaController extends BaseController{
 
 		// delete
 		if (WT_USER_GEDCOM_ADMIN) {
-			$submenu = new Menu(i18n::translate('Remove object'));
-			$submenu->addLink(encode_url("media.php?action=removeobject&xref=".$this->pid));
+			$submenu = new Menu(i18n::translate('Remove object'), "media.php?action=removeobject&amp;xref=".$this->pid);
 			$submenu->addOnclick("return confirm('".i18n::translate('Are you sure you want to remove this object from the database?')."')");
 			$submenu->addIcon('edit_media');
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
@@ -284,7 +283,7 @@ class MediaController extends BaseController{
 		}
 
 		// add to favorites
-		$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url("mediaviewer.php?action=addfav&mid={$this->mid}&gid={$this->mid}"));
+		$submenu = new Menu(i18n::translate('Add to My Favorites'), "mediaviewer.php?action=addfav&amp;mid={$this->mid}&amp;gid={$this->mid}");
 		$submenu->addIcon('favorites');
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		$menu->addSubmenu($submenu);
@@ -338,9 +337,9 @@ class MediaController extends BaseController{
 			else $newfacts[] = new Event("1 TYPE ".i18n::translate('Other'));
 			//-- loop through new facts and add them to the list if they are any changes
 			//-- compare new and old facts of the Personal Fact and Details tab 1
-			for($i=0; $i<count($facts); $i++) {
+			for ($i=0; $i<count($facts); $i++) {
 				$found=false;
-				foreach($newfacts as $indexval => $newfact) {
+				foreach ($newfacts as $indexval => $newfact) {
 					if (trim($newfact->gedcomRecord)==trim($facts[$i]->gedcomRecord)) {
 						$found=true;
 						break;
@@ -350,9 +349,9 @@ class MediaController extends BaseController{
 					$facts[$i]->gedcomRecord.="\nWT_OLD\n";
 				}
 			}
-			foreach($newfacts as $indexval => $newfact) {
+			foreach ($newfacts as $indexval => $newfact) {
 				$found=false;
-				foreach($facts as $indexval => $fact) {
+				foreach ($facts as $indexval => $fact) {
 					if (trim($fact->gedcomRecord)==trim($newfact->gedcomRecord)) {
 						$found=true;
 						break;

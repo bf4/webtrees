@@ -271,7 +271,7 @@ class Event {
 
 		if (!$this->canShow()) return "";
 		$data = "";
-		if ($this->gedcomRecord != "1 DEAT"){
+		if ($this->gedcomRecord != "1 DEAT") {
 		   $data .= "<span class=\"details_label\">".$this->getLabel($ABBREVIATE_CHART_LABELS)."</span> ";
 		}
 		$emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","OBJE","CHAN","_SEPR","RESI", "DATA", "MAP");
@@ -280,8 +280,8 @@ class Event {
 		if (!$this->dest)
 			$data .= format_fact_date($this, $anchor, false, true);
 		$data .= format_fact_place($this, $anchor, false, false);
-		$data .= "<br />\n";
-		if (!$return) print $data;
+		$data .= "<br />";
+		if (!$return) echo $data;
 		else return $data;
 	}
 

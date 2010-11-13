@@ -32,10 +32,6 @@ if (!defined('WT_WEBTREES')) {
 	exit;
 }
 
-// Remove non-standard tags.
-$date_and_time=array();
-unset ($level2_tags['CEME']);
-
 $theme_name="F.A.B."; // need double quotes, as file is scanned/parsed by script
 $stylesheet=WT_THEME_DIR.'style.css';
 $headerfile=WT_THEME_DIR.'header.php';
@@ -157,6 +153,7 @@ $WT_IMAGES=array(
 	'slide_open'=>WT_THEME_DIR.'images/open.png',
 	'spacer'=>WT_THEME_DIR.'images/spacer.gif',
 	'stop'=>WT_THEME_DIR.'images/stop.gif',
+	'trashcan'=>WT_THEME_DIR.'images/trashcan.gif',
 	'uarrow'=>WT_THEME_DIR.'images/uarrow.gif',
 	'uarrow2'=>WT_THEME_DIR.'images/uarrow2.gif',
 	'uarrow3'=>WT_THEME_DIR.'images/uarrow3.gif',

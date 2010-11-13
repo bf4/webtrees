@@ -36,7 +36,7 @@ require WT_ROOT.'includes/functions/functions_edit.php';
 
 // prevent users with editing account disabled from being able to edit their account
 if (!get_user_setting(WT_USER_ID, 'editaccount')) {
-	header('Location: index.php?ctype=user');
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH);
 	exit;
 }
 
@@ -94,7 +94,7 @@ if ($form_action=='update') {
 			rename_user(WT_USER_ID, $form_username);
 		}
 		// Reload page to pick up changes such as theme and user_id
-		header('Location: edituser.php');
+		header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.WT_SCRIPT_NAME);
 		exit;
 	}
 } else {
@@ -109,27 +109,27 @@ if ($form_action=='update') {
 <!--
 function checkform(frm) {
 	if (frm.form_username.value=="") {
-		alert("<?php print i18n::translate('You must enter a user name.');?>");
+		alert("<?php echo i18n::translate('You must enter a user name.'); ?>");
 		frm.form_username.focus();
 		return false;
 	}
 	if (frm.form_realname.value=="") {
-		alert("<?php print i18n::translate('You must enter a real name.');?>");
+		alert("<?php echo i18n::translate('You must enter a real name.'); ?>");
 		frm.form_realname.focus();
 		return false;
 	}
 	if (frm.form_email.value.indexOf("@")==-1) {
-		alert("<?php print i18n::translate('You must enter an email address.');?>");
+		alert("<?php echo i18n::translate('You must enter an email address.'); ?>");
 		frm.user_email.focus();
 		return false;
 	}
 	if (frm.form_pass1.value!=frm.form_pass2.value) {
-		alert("<?php print i18n::translate('Passwords do not match.');?>");
+		alert("<?php echo i18n::translate('Passwords do not match.'); ?>");
 		frm.form_pass1.focus();
 		return false;
 	}
 	if (frm.form_pass1.value.length > 0 && frm.form_pass1.value.length < 6) {
-		alert("<?php print i18n::translate('Passwords must contain at least 6 characters.');?>");
+		alert("<?php echo i18n::translate('Passwords must contain at least 6 characters.'); ?>");
 		frm.form_pass1.focus();
 		return false;
 	}
@@ -164,7 +164,7 @@ echo '</td></tr>';
 $person=Person::getInstance(WT_USER_GEDCOM_ID);
 if ($person) {
 	echo '<tr><td class="descriptionbox wrap">';
-	echo i18n::translate('GEDCOM INDI record ID'), help_link('edituser_gedcomid'), '</td><td class="optionbox">';
+	echo i18n::translate('Individual record'), help_link('edituser_gedcomid'), '</td><td class="optionbox">';
 	echo $person->format_list('span');
 	echo '</td></tr>';
 }
@@ -188,7 +188,7 @@ echo i18n::translate('Confirm password'), help_link('edituser_conf_password'), '
 echo '<input type="password" name="form_pass2" /></td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
-echo i18n::translate('Change language'), help_link('edituser_change_lang');
+echo i18n::translate('Language'), help_link('edituser_change_lang');
 echo '</td><td class="optionbox" valign="top">';
 echo edit_field_language('form_language', get_user_setting(WT_USER_ID, 'language'));
 echo '</td></tr>';
@@ -232,4 +232,3 @@ echo '<tr><td class="topbottombar" colspan="2"><input type="submit" value="', i1
 echo '</table></form>';
 
 print_footer();
-?>

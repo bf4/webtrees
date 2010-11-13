@@ -31,28 +31,16 @@
 define('WT_SCRIPT_NAME', 'index.php');
 require './includes/session.php';
 
-if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
-if (isset($_REQUEST['ctype'])) $ctype = $_REQUEST['ctype'];
-$news_id = safe_GET('news_id');
+// The only option for action is "ajax"
+$action=safe_REQUEST($_REQUEST, 'action', 'ajax');
 
-$time = client_time();
+// The default view depends on whether we are logged in
+$ctype=safe_REQUEST($_REQUEST, 'ctype', array('gedcom', 'user'), WT_USER_ID ? 'user' : 'gedcom');
 
-if (!isset($action)) $action='';
-
-// Visitors should see any links to a user page, but they may be
-// following a link after an inactivity logout.
-if (!WT_USER_ID) {
-	if (!empty($ctype) && $ctype=='user') {
-		header('Location: login.php?url=index.php&ctype=user');
-		exit;
-	} else {
-		$ctype = 'gedcom';
-	}
-}
-
-if (empty($ctype)) {
-	if ($PAGE_AFTER_LOGIN == 'welcome') $ctype = 'gedcom';
-	else $ctype = 'user';
+// A request to see a user page, but not logged in?
+if (!WT_USER_ID && $ctype=='user') {
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'login.php?url='.rawurlencode('index.php?ctype=user'));
+	exit;
 }
 
 //-- get the blocks list
@@ -61,9 +49,6 @@ if ($ctype=='user') {
 } else {
 	$blocks=get_gedcom_blocks(WT_GED_ID);
 }
-
-// We have finished writing session data, so release the lock
-Zend_Session::writeClose();
 
 $all_blocks=WT_Module::getActiveBlocks();
 
@@ -92,6 +77,9 @@ if ($action=='ajax') {
 	}
 	exit;
 }
+
+// We have finished writing session data, so release the lock
+Zend_Session::writeClose();
 
 if ($ctype=='user') {
 	$helpindex = 'mypage_portal';
@@ -178,13 +166,13 @@ if ($blocks['side']) {
 // Ensure there is always way to configure the blocks
 if ($ctype=='user' && !in_array('user_welcome', $blocks['main']) && !in_array('user_welcome', $blocks['side'])) {
 	echo '<div align="center">';
-	echo "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".WT_USER_NAME."&ctype=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".i18n::translate('Customize My Page').'</a>';
+	echo "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".rawurlencode(WT_USER_NAME)."&amp;ctype=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".i18n::translate('Customize My Page').'</a>';
 	echo help_link('mypage_customize');
 	echo '</div>';
 }
 if (WT_USER_IS_ADMIN && $ctype=='gedcom' && !in_array('gedcom_block', $blocks['main']) && !in_array('gedcom_block', $blocks['side'])) {
 	echo '<div align="center">';
-	echo "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name={$GEDCOM}&ctype=gedcom", false)."', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".i18n::translate('Customize this GEDCOM Home Page').'</a>';
+	echo "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".rawurlencode($GEDCOM)."&amp;ctype=gedcom', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".i18n::translate('Customize this GEDCOM Home Page').'</a>';
 	echo '</div>';
 }
 

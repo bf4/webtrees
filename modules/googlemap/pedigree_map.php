@@ -137,7 +137,7 @@ echo PrintReady($controller->getPersonName())."</h2>";
 			<tr>
 				<td class="optionbox">
 					<input class="pedigree_form" type="text" id="rootid" name="rootid" size="3" value="<?php echo $controller->rootid; ?>" />
-					<?php print_findindi_link("rootid","");?>
+					<?php print_findindi_link("rootid",""); ?>
 				</td>
 				<td class="optionbox">
 					<select name="PEDIGREE_GENERATIONS">
@@ -272,7 +272,7 @@ echo "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\">";
 echo "  <tr>";
 echo " <td valign=\"top\">";
 // print summary statistics
-if (isset($curgen)){
+if (isset($curgen)) {
 	$total=pow(2,$curgen)-1;
 	$miss=$total-$count-$priv;
 	echo i18n::plural(
@@ -475,11 +475,11 @@ function Map_type() {}
 		var button4 = document.createElement('li');
 		var button5 = document.createElement('li');
 
-		button1.innerHTML = '<?php echo i18n::translate('Redraw map')?>';
-		button2.innerHTML = '<?php echo i18n::translate('Map')?>';
-		button3.innerHTML = '<?php echo i18n::translate('Satellite')?>';
-		button4.innerHTML = '<?php echo i18n::translate('Hybrid')?>';
-		button5.innerHTML = '<?php echo i18n::translate('Terrain')?>';
+		button1.innerHTML = '<?php echo i18n::translate('Redraw map'); ?>';
+		button2.innerHTML = '<?php echo i18n::translate('Map'); ?>';
+		button3.innerHTML = '<?php echo i18n::translate('Satellite'); ?>';
+		button4.innerHTML = '<?php echo i18n::translate('Hybrid'); ?>';
+		button5.innerHTML = '<?php echo i18n::translate('Terrain'); ?>';
 
 		button1.onclick = function() { pm_map.setCenter(bounds.getCenter(), pm_map.getBoundsZoomLevel(bounds)); return false; };
 		button2.onclick = function() { pm_map.setMapType(G_NORMAL_MAP); return false; };
@@ -530,11 +530,11 @@ pm_map.addControl(mini);
 
 function wheelevent(e)
 {
-	if (true){//document.getElementById("prevent").checked
-			if (!e){
+	if (true) {//document.getElementById("prevent").checked
+			if (!e) {
 					e = window.event
 			}
-	if (e.preventDefault){
+	if (e.preventDefault) {
 			e.preventDefault()
 	}
 	e.returnValue = false;
@@ -606,7 +606,7 @@ for ($i=0; $i<($controller->treesize); $i++) {
 				addslashes($bdate->Display(false))."<br />".$bplace;
 
 		$latlongval[$i] = get_lati_long_placelocation($person->getBirthPlace());
-		if ($latlongval[$i] != NULL){
+		if ($latlongval[$i] != NULL) {
 			$lat[$i] = str_replace(array('N', 'S', ','), array('', '-', '.'), $latlongval[$i]["lati"]);
 			$lon[$i] = str_replace(array('E', 'W', ','), array('', '-', '.'), $latlongval[$i]["long"]);
 			if (!($lat[$i] == NULL && $lon[$i] == NULL) && !($lat[$i] == 0 && $lon[$i] == 0)) {
@@ -704,11 +704,11 @@ document.getElementById("side_bar").innerHTML = side_bar_html;
 // === create the context menu div ===
 	  var contextmenu = document.createElement("div");
 	  contextmenu.style.visibility="hidden";
-	  contextmenu.innerHTML = '<a href="javascript:zoomIn()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom in');?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:zoomOut()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom out');?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:zoomInHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom in here');?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:zoomOutHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom out here');?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:centreMapHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Center map here');?>&nbsp;&nbsp;</div></a>';
+	  contextmenu.innerHTML = '<a href="javascript:zoomIn()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom in'); ?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:zoomOut()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom out'); ?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:zoomInHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom in here'); ?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:zoomOutHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom out here'); ?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:centreMapHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Center map here'); ?>&nbsp;&nbsp;</div></a>';
 	  pm_map.getContainer().appendChild(contextmenu);
 
 	  // === listen for singlerightclick ===
@@ -767,7 +767,7 @@ document.getElementById("side_bar").innerHTML = side_bar_html;
 	  GEvent.addListener(pm_map, "click", function() {
 		contextmenu.style.visibility="hidden";
 	  });
-	<?php if ($GOOGLEMAP_PH_CONTROLS) {?>
+	<?php if ($GOOGLEMAP_PH_CONTROLS) { ?>
 		// hide controls
 		GEvent.addListener(pm_map, 'mouseout', function() {pm_map.hideControls();});
 		// show controls

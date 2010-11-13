@@ -1,5 +1,5 @@
 /**
- * Style for Minimal theme
+ * Style for Admiistration pages
  *
  * Use this stylesheet to customize the display of your site.
  * To learn more about CSS visit http://www.w3.org/TR/REC-CSS2/
@@ -25,248 +25,69 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  * @package webtrees
- * @subpackage Themes
+ * @subpackage Administration
  * @version $Id$
  */
 
-/* general styles /*
+/* general styles */
+body { font-size: 12px; margin: 0 50px;}
+a.current { color: #E17009;}
+a:hover { color: red;}
+input, textarea {	color: black; padding-left: 3px; padding-right: 3px;}
+fieldset {margin: 8px 8px 4px 8px;}
+legend {color:#81A9CB; font-style: italic; font-weight:bold;	padding: 0 5px 5px; align: top;}
+img {border:none;}
+.icon {border: none;	padding-left: 0pt;padding-right: 5pt;}
+.warning, .error, .red {	color: red;}
+.center {text-align: center;}
+.nowrap {white-space: nowrap;}
+.indent {padding-left: 15px;}
 
-.something {
-	/*empty style to make sure that the BODY style is not ignored */
-}
-
-/* jquery-ui custom styles */
-.ui-widget {font-size: 12px; font-family: tahoma, arial, helvetica, sans-serif;}
-.ui-widget-content a:hover   { color: red; }
-.ui-tabs-nav li.ui-tabs-selected   { background: #f8f8f8; }
-.ui-tabs-nav li.ui-tabs-selected a  { font-weight:600; color: #81A9CB; }
-.ui-tabs-nav li.ui-tabs-selected a:hover  { font-weight:600; color: #81A9CB; }
-.ui-widget-header { padding: 5px; background-color: #B2C7D7;}
-.ui-state-default .ui-icon {	background-image: url(../js/jquery/css/images/ui-icons_666666_256x240.png);	margin-left:20px;}
-.ui-state-default, .ui-widget-content .ui-state-default {padding: 10px 3px; white-space: nowrap;}
-.css_right {	float:right; white-space: nowrap;}
-.ui-icon-carat-2-n-s {background-position:-128px 0;}
-
-body {
-	color: gray;
-	background-color: white;
-	font: 11px tahoma, arial, helvetica, sans-serif;
-}
-
-img {
-	border: none;
-}
-
-a {
-	color: #666666;
-	font-family: tahoma, arial, helvetica, sans-serif;
-	text-decoration: none;
-}
-
-a:hover	{
-	color: black;
-	text-decoration: underline;
-}
-
-h1 {
-	color: #666666;
-	font-size: 18px;
-	font-weight:bold;
-	margin-top:	0;
-}
-
-h1 img {
-	padding-right:10px;
-	width: 35px;
-	vertical-align: middle;
-}
-
-h2 {
-	color: #81A9CB;
-	font-size: 14px;
-	font-weight:bold;
-	margin-top:	0;
-}
-
-h3 {
-	color: black;
-	font-size: 12px;
-	font-weight:bold;
-}
-
-input, textarea {
-	color: black;
-	padding-left: 3px;
-	padding-right: 3px;
-}
-
-
-fieldset {
-	margin: 8px 8px 4px 8px;
-}
-
-legend {
-	color:#81A9CB;
-	font-style: italic;
-	font-weight:bold;
-	padding: 0 5px 5px; align: top;
-}
-
-.icon {
-	border: none;
-	padding-left: 0pt;
-	padding-right: 5pt;
-}
-
-.warning, .error, .red {
-	color: red;
-}
-
-.center {
-	text-align: center;
-}
-
-.nowrap {
-	white-space: nowrap;
-}
-
-.indent {
-	padding-left: 15px;
-}
-
-.current {
-	color: #81A9CB;
-	text-decoration: underline
-}
-
-/* REQUIRED BUTTON STYLES: */		
-button { 
-	position: relative;
-	border: 0; 
-	padding: 0;
-	cursor: pointer;
-	overflow: visible; /* removes extra side padding in IE */
-}
-
-button::-moz-focus-inner {
-	border: none;  /* overrides extra padding in Firefox */
-}
-
-button span { 
-	position: relative;
-	display: block; 
-	white-space: nowrap;	
-}
-
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-	/* Safari and Google Chrome only - fix margins */
-	button span {
-		margin-top: -1px;
-	}
-}
-
-
-/* OPTIONAL BUTTON STYLES for applying custom look and feel: */		
-button.submitBtn { 
-	padding: 0 15px 0 0; 
-	margin-right:5px; 
-	font-size: 1.5em; 
-	text-align: center; 
-	background: transparent url(images/btn_blue_sprite2.gif) no-repeat right -84px; 
-}
-	
-button.submitBtn span {
-	padding: 3px 0 0 15px; 
-	height:37px; 
-	background: transparent url(images/btn_blue_sprite2.gif) no-repeat left top; 
-	color:#fff; 
-}
-	
-button.submitBtn:hover, button.submitBtnHover { /* the redundant class is used to apply the hover state with a script */
-	background-position: right -126px; 
-}
-	
-button.submitBtn:hover span, button.submitBtnHover span {
-	background-position: 0 -42px;
-}
+/* jQuery UI CSS customisations */
+.css_right {float: right;}
+.ui-toolbar {padding:5px;}
 
 /* Text direction */
-.ltr {
-	text-align: left;
-}
-
-.rtl {
-	text-align: right;
-	direction: rtl;
-}
+.ltr {text-align: left;}
+.rtl {text-align: right;	direction: rtl;}
 
 /* header styles */
-#admin_head  {
-	height: 70px;
-	margin-bottom: 20px;
-}
+#admin_head  {height: 70px;	margin-bottom: 20px;}
+#logo {float: left; width: 300px; }
+#title  {text-align: center; color: #81A9CB; font-size: 18px; font-weight:bold; padding-top: 20px;}
+#info  {font-size: 12px; text-align: right; float: right; width: 350px; padding: 10px 10px 0 0; margin-bottom: 3px;}
 
-#logo {
-	float: left;
-	width: 300px;
-}
+/* side menu */
+#admin_menu {padding-left:5px; width: 200px; float: left; position: absolute; color: #2E6E9E;}
+#admin_menu dd  {margin-left: 25px;}
 
-#title  {
-	text-align: center;
-	color: #81A9CB;
-	font-size: 18px;
-	font-weight:bold;
-	padding-top: 20px;
-}
+/* content wrapper */
+#admin_content {margin-left:220px;}
 
-#info  {
-	color: gray;
-	font-size: 12px;
-	text-align: right;
-	float: right;
-	width: 350px;
-	padding-top: 10px;
-	margin-bottom: 3px;
-}
+/* Jquery table "list" used for User List" */
+table#list   {width: 100%}
+#list th {text-align:left;}
+#list img {padding-left:15px; width:25px; vertical-align:middle;}
+#list .yes_no img {width: 16px; vertical-align:middle;}
+#list .name {padding-right: 5px;}
+#list .description {font-size: 10px;	color: #666666;	width: 35%;}
+#list .date {font-size: 80%;}
+.dataTables_paginate {float: right;text-align: right;}
+.paging_full_numbers .fg-button {cursor:pointer;padding: 2px 6px;}
+	
+/* GEDCOM config tables */
+.facts_table {text-align: left;width:100%;}
+.config {}
+.descriptionbox  {border-bottom: solid #81a9cb 1px;vertical-align: top;white-space: nowrap;padding: 3px;background-color:#DFEFFC;}
+.optionbox {	border-bottom: solid #81a9cb 1px;vertical-align: top;white-space: nowrap;padding: 3px;}
+.subbar {background-color: #d1d9ef;border: solid #81a9cb 1px;font-size: 11px;font-weight: bold;vertical-align: top;white-space: nowrap;padding: 3px;}
 
-#admin_menu {
-/*	margin-left: 15px;*/
-	width: 200px;
-	float: left;
-	position: absolute;
-}
+/*=======sliding div=================*/
+#slide1 { }
+#user {border: 3px solid green;}
+/*=======sliding div=================*/
 
-#admin_menu dl {
-	max-height: 180px;
-	overflow-x: auto;
-	margin-top: 0;
-}
 
-#admin_menu dt  {
-	font-size: 12px;
-	font-weight:bold;
-}
-
-#admin_menu dt img {
-	width: 25px;
-	vertical-align: middle;
-}
-
-#admin_menu dd  {
-	font-size: 12px;
-	font-weight: normal;
-	margin-left: 25px;
-}
-
-#admin_menu dd:active {
-	color: #81A9CB;
-	font-weight: bold;
-}
-
-#admin_content {
-	margin-left: 220px;
-/*	padding-left: 15px;*/
-}
 
 #admin_content dt {
 	float: left;
@@ -284,38 +105,6 @@ button.submitBtn:hover span, button.submitBtnHover span {
 	float: left;
 	text-align: center;
 	width: 100%
-}
-
-/* config tables */
- .config {
-	width: 750px;
-}
-
-/* Style for the descriptionbox */
-.descriptionbox  {
-	border-bottom: solid #81a9cb 1px;
-	vertical-align: top;
-	white-space: nowrap;
-	padding: 3px;
-}
-
-/* Style for the optionbox */
-.optionbox {
-	border-bottom: solid #81a9cb 1px;
-	vertical-align: top;
-	white-space: nowrap;
-	padding: 3px;
-}
-
-/* Style for the subbar */
-.subbar {
-	background-color: #d1d9ef;
-	border: solid #81a9cb 1px;
-	font-size: 11px;
-	font-weight: bold;
-	vertical-align: top;
-	white-space: nowrap;
-	padding: 3px;
 }
 
 /* help text pop-ups */
@@ -352,38 +141,6 @@ button.submitBtn:hover span, button.submitBtnHover span {
 	color: black;
 }
 
-table#list   {
-	background-color: #d1d9ef;
-	border:	1px solid #CCCCCC;
-	border-collapse:collapse;
-	width: 100%
-}
-
-#list img {
-	padding-left: 15px;
-	width: 25px;
-	vertical-align:middle;
-}
-
-#list .yes_no img {
-	width: 16px;
-	vertical-align:middle;
-}
-
-#list .name {
-	padding-right: 5px;
-}
-
-#list .description {
-	font-size: 10px;
-	color: #666666;
-	width: 35%;
-}
-
-#list .date {
-	font-size: 80%;
-}
-	
 .edit_link {
 	white-space: nowrap;
 }
@@ -398,11 +155,6 @@ background-color: #d1d9ef;
 
 .even {
 background-color: #EEFFEE;
-}
-
-#list_wrapper {
-	font-size: 12px;
-	width: 100%;
 }
 
 #list_length {
@@ -425,20 +177,6 @@ background-color: #EEFFEE;
 	white-space: nowrap;
 }
 
-.dataTables_paginate {
-	padding-top: 0;
-}
-
-.dataTables_paginate {
-	float: right;
-	text-align: right;
-}
-
-.paging_full_numbers .fg-button {
-cursor:pointer;
-padding: 2px 6px;
-}
-
 /* General Info page */
 
 #user_info {
@@ -447,10 +185,6 @@ padding: 2px 6px;
 	float: left;
 	font-size: 12px;
 	padding: 5px;
-}
-
-#user_info a:hover, #admin_menu a:hover, #gedcom_table a:hover {
-	color: red;
 }
 
 /* GEDCOM management */
@@ -479,7 +213,7 @@ table#gedcom_table .defaults  {
 
 table#server {
 	font-size: 12px;
-}
+}/
 
 /* PHP Info */
 

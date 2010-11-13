@@ -139,7 +139,7 @@ class AdvancedSearchController extends SearchController {
 		$newvalues = array();
 		$newplus = array();
 		$rels = array();
-		foreach($this->fields as $j=>$field) {
+		foreach ($this->fields as $j=>$field) {
 			if (strpos($this->fields[$j], "FAMC:HUSB:NAME")===0 || strpos($this->fields[$j], "FAMC:WIFE:NAME")===0) {
 				$rels[$this->fields[$j]] = $this->values[$j];
 				continue;
@@ -152,7 +152,7 @@ class AdvancedSearchController extends SearchController {
 		$this->fields = $newfields;
 		$this->values = $newvalues;
 		$this->plusminus = $newplus;
-		foreach($rels as $field=>$value) {
+		foreach ($rels as $field=>$value) {
 			$this->fields[] = $field;
 			$this->values[] = $value;
 		}
@@ -178,7 +178,7 @@ class AdvancedSearchController extends SearchController {
 		$sqltables = " FROM `##".$table."`";
 		$sqlwhere = " WHERE ".$prefix."_file=".WT_GED_ID;
 		$keepfields = $this->fields;
-		for($i=0; $i<$fct; $i++) {
+		for ($i=0; $i<$fct; $i++) {
 			$field = $this->fields[$i];
 			if (empty($field)) continue;
 			$value='';
@@ -279,7 +279,7 @@ class AdvancedSearchController extends SearchController {
 					else $jd2 = $date->date1->maxJD;
 					if (!empty($this->plusminus[$i])) {
 						$adjd = $this->plusminus[$i]*365;
-						//print $jd1.":".$jd2.":".$adjd;
+						//echo $jd1.":".$jd2.":".$adjd;
 						$jd1 = $jd1 - $adjd;
 						$jd2 = $jd2 + $adjd;
 					}
@@ -324,7 +324,7 @@ class AdvancedSearchController extends SearchController {
 				}
 				//-- alter the fields and recurse to generate a subquery for spouse/parent fields
 				$oldfields = $this->fields;
-				for($j=0; $j<$fct; $j++) {
+				for ($j=0; $j<$fct; $j++) {
 					//-- if it doesn't start with FAMS or FAMC then remove that field
 					if (preg_match("/^".$parts[0].":/", $this->fields[$j])==0) {
 						$this->fields[$j]='';
@@ -336,7 +336,7 @@ class AdvancedSearchController extends SearchController {
 				$sqlwhere .= " AND ROW(FAMS.f_id, FAMS.f_file) IN (".$subsql.")";
 				$this->fields = $oldfields;
 				//-- remove all of the fam fields so they don't show up again
-				for($j=0; $j<$fct; $j++) {
+				for ($j=0; $j<$fct; $j++) {
 					//-- if it does start with FAMS or FAMC then remove that field
 					if (preg_match("/^".$parts[0].":/", $this->fields[$j])>0) {
 						$this->fields[$j]='';
@@ -351,7 +351,7 @@ class AdvancedSearchController extends SearchController {
 				}
 				//-- alter the fields and recurse to generate a subquery for spouse/parent fields
 				$oldfields = $this->fields;
-				for($j=0; $j<$fct; $j++) {
+				for ($j=0; $j<$fct; $j++) {
 					//-- if it doesn't start with FAMS or FAMC then remove that field
 					if (preg_match("/^".$parts[0].":/", $this->fields[$j])==0) {
 						$this->fields[$j]='';
@@ -363,7 +363,7 @@ class AdvancedSearchController extends SearchController {
 				$sqlwhere .= " AND ROW(FAMC.f_id, FAMC.f_file) IN (".$subsql.")";
 				$this->fields = $oldfields;
 				//-- remove all of the fam fields so they don't show up again
-				for($j=0; $j<$fct; $j++) {
+				for ($j=0; $j<$fct; $j++) {
 					//-- if it does start with FAMS or FAMC then remove that field
 					if (preg_match("/^".$parts[0].":/", $this->fields[$j])>0) {
 						$this->fields[$j]='';
@@ -378,7 +378,7 @@ class AdvancedSearchController extends SearchController {
 				}
 				//-- alter the fields and recurse to generate a subquery for spouse/parent fields
 				$oldfields = $this->fields;
-				for($j=0; $j<$fct; $j++) {
+				for ($j=0; $j<$fct; $j++) {
 					//-- if it doesn't start with FAMS or FAMC then remove that field
 					if (preg_match("/^".$parts[0].":/", $this->fields[$j])==0) {
 						$this->fields[$j]='';
@@ -390,7 +390,7 @@ class AdvancedSearchController extends SearchController {
 				if ($parts[0]=='WIFE') $sqlwhere .= " AND ROW(f_wife, f_file) IN (".$subsql.")";
 				$this->fields = $oldfields;
 				//-- remove all of the fam fields so they don't show up again
-				for($j=0; $j<$fct; $j++) {
+				for ($j=0; $j<$fct; $j++) {
 					//-- if it does start with HUSB or WIFE then remove that field
 					if (preg_match("/^".$parts[0].":/", $this->fields[$j])>0) {
 						$this->fields[$j]='';
@@ -403,7 +403,7 @@ class AdvancedSearchController extends SearchController {
 
 				$ct = count($parts);
 				$liketmp='';
-				for($j=0; $j<$ct; $j++) {
+				for ($j=0; $j<$ct; $j++) {
 					$liketmp.= "%".($j+1)." ".$parts[$j]." %";
 					//if ($j<$ct-1) {
 						//$sqlwhere .= "%";
@@ -415,10 +415,10 @@ class AdvancedSearchController extends SearchController {
 			}
 		}
 		$sql = $sqlfields.$sqltables.$sqlwhere;
-		//print $sql;
+		//echo $sql;
 		if ($justSql) return $sql;
 		$rows=WT_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
-		foreach ($rows as $row){
+		foreach ($rows as $row) {
 			$row['xref']=$row['i_id'];
 			$row['ged_id']=$row['i_file'];
 			$row['type'] = 'INDI';
@@ -436,7 +436,7 @@ class AdvancedSearchController extends SearchController {
 			echo '<br /><div class="center">';
 			uasort($this->myindilist, array('GedcomRecord', 'Compare'));
 			print_indi_table($this->myindilist, i18n::translate('Individuals')." @ ".PrintReady(get_gedcom_setting(WT_GEDCOM, 'title'), true));
-			print "</div>";
+			echo "</div>";
 		}
 		else {
 			$ret = false;

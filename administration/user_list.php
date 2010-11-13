@@ -154,25 +154,26 @@ ob_start();
 	}
 
 	// Then show the users
-	echo '<h1>', i18n::translate('Manage users'), '</h1>',
+	echo '<h2>', i18n::translate('Manage users'), '</h2>',
 		'<table id="list">',
 			'<thead>',
 				'<tr>',
-					'<th>', i18n::translate('Message'), '</th>',
-					'<th>', i18n::translate('Real name'), '</th>',
-					'<th>', i18n::translate('User name'), '</th>',
-					'<th>', i18n::translate('Languages'), '</th>',
-					'<th>', i18n::translate('Privileges'), '</th>',
-					'<th>', i18n::translate('Date registered'), '</th>',
-					'<th>', i18n::translate('Last logged in'), '</th>',
-					'<th>', i18n::translate('Verified '), '</th>',
-					'<th>', i18n::translate('Approved'), '</th>',
-					'<th>', i18n::translate('Delete'), '</th>',
+					'<th style="width:60px;">', i18n::translate('Message'), '</th>',
+					'<th style="width:100px;">', i18n::translate('Real name'), '</th>',
+					'<th style="width:80px;">', i18n::translate('User name'), '</th>',
+					'<th style="width:80px;">', i18n::translate('Languages'), '</th>',
+					'<th style="width:90px;">', i18n::translate('Privileges'), '</th>',
+					'<th style="width:100px;">', i18n::translate('Date registered'), '</th>',
+					'<th style="width:100px;">', i18n::translate('Last logged in'), '</th>',
+					'<th style="width:65px;">', i18n::translate('Verified '), '</th>',
+					'<th style="width:65px;">', i18n::translate('Approved'), '</th>',
+					'<th style="width:50px;">', i18n::translate('Delete'), '</th>',
+					'<th style="width:50px;">', i18n::translate('More...'), '</th>',
 				'</tr>',
 			'</thead>',
 			'<tbody>';
 				foreach($users as $user_id=>$user_name) {
-					echo "<tr>\n";
+					echo "<div id=\"user\"><tr>\n";
 					echo "\t<td>";
 					if ($user_id!=WT_USER_ID && get_user_setting($user_id, 'contactmethod')!='none') {
 						echo "<a href=\"javascript:;\" onclick=\"return message('", $user_name, "');\"><img src=\"images/email.png\" \"alt=\"", i18n::translate('Send Message'), "\" title=\"", i18n::translate('Send Message'), "\" /></a>";
@@ -246,7 +247,14 @@ ob_start();
 						if (WT_USER_ID!=$user_id)
 							echo "<a href=\"", encode_url("user_admin.php?action=deleteuser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" onclick=\"return confirm('", i18n::translate('Are you sure you want to delete the user'), " $user_name');\"><img src=\"images/delete.png\" alt=\"", i18n::translate('Delete'), "\" title=\"", i18n::translate('Delete'), "\" /></a>";
 					echo '</td>',
-				'</tr>';
+					'<td>',
+						'<button>Toggle</button',
+					'</td>',
+				'</tr>',
+				'</div>',
+				'<div id="slide1">',
+					'This is the paragraph to end all paragraphs.  You should feel <em>lucky</em> to have seen such a paragraph in your life.  Congratulations!',
+				'</div>';
 				}
 			echo '</tbody>',
 		'</table>';

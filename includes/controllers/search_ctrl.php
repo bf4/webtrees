@@ -127,10 +127,10 @@ class SearchController extends BaseController {
 		if (isset ($_REQUEST["replace"])) {
 			$this->replace = $_REQUEST["replace"];
 
-			if(isset($_REQUEST["replaceNames"])) $this->replaceNames = true;
-			if(isset($_REQUEST["replacePlaces"])) $this->replacePlaces = true;
-			if(isset($_REQUEST["replacePlacesWord"])) $this->replacePlacesWord = true;
-			if(isset($_REQUEST["replaceAll"])) $this->replaceAll = true;
+			if (isset($_REQUEST["replaceNames"])) $this->replaceNames = true;
+			if (isset($_REQUEST["replacePlaces"])) $this->replacePlaces = true;
+			if (isset($_REQUEST["replacePlacesWord"])) $this->replacePlacesWord = true;
+			if (isset($_REQUEST["replaceAll"])) $this->replaceAll = true;
 		}
 
 		// Aquire all the variables values from the $_REQUEST
@@ -316,9 +316,9 @@ class SearchController extends BaseController {
 		foreach ($varNames as $key => $varName) {
 			if (isset ($_REQUEST[$varName]))
 			{
-				if($varName == "action")
-				if($_REQUEST[$varName] == "replace")
-				if(!WT_USER_CAN_ACCEPT)
+				if ($varName == "action")
+				if ($_REQUEST[$varName] == "replace")
+				if (!WT_USER_CAN_ACCEPT)
 				{
 					$this->action = "general";
 					continue;
@@ -336,7 +336,7 @@ class SearchController extends BaseController {
 	 */
 	function printVars($varNames) {
 		foreach ($varNames as $key => $varName) {
-			print $varName.": ".$this-> $varName."<br/>";
+			echo $varName.": ".$this-> $varName."<br/>";
 		}
 	}
 
@@ -357,7 +357,7 @@ class SearchController extends BaseController {
 		if (isset ($this->query)) {
 			$record=GedcomRecord::getInstance($this->query);
 			if ($record && $record->canDisplayDetails()) {
-				header("Location: ".encode_url($record->getLinkUrl(), false));
+				header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.$record->getRawUrl());
 				exit;
 			}
 		}
@@ -429,28 +429,28 @@ class SearchController extends BaseController {
 			if (count($this->myindilist)==1 && !$this->myfamlist && !$this->mysourcelist && !$this->mynotelist) {
 				$indi=$this->myindilist[0];
 				if (!count_linked_indi($indi->getXref(), 'ASSO', $indi->getGedId()) && !count_linked_fam($indi->getXref(), 'ASSO', $indi->getGedId()) && $indi->canDisplayName()) {
-					header("Location: ".encode_url($indi->getLinkUrl(), false));
+					header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.$indi->getRawUrl());
 					exit;
 				}
 			}
 			if (!$this->myindilist && count($this->myfamlist)==1 && !$this->mysourcelist && !$this->mynotelist) {
 				$fam=$this->myfamlist[0];
 				if ($fam->canDisplayName()) {
-					header("Location: ".encode_url($fam->getLinkUrl(), false));
+					header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.$fam->getRawUrl());
 					exit;
 				}
 			}
 			if (!$this->myindilist && !$this->myfamlist && count($this->mysourcelist)==1 && !$this->mynotelist) {
 				$sour=$this->mysourcelist[0];
 				if ($sour->canDisplayName()) {
-					header("Location: ".encode_url($sour->getLinkUrl(), false));
+					header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.$sour->getRawUrl());
 					exit;
 				}
 			}
 			if (!$this->myindilist && !$this->myfamlist && !$this->mysourcelist && count($this->mynotelist)==1) {
 				$note=$this->mynotelist[0];
 				if ($note->canDisplayName()) {
-					header("Location: ".encode_url($note->getLinkUrl(), false));
+					header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.$note->getRawUrl());
 					exit;
 				}
 			}
@@ -491,47 +491,47 @@ class SearchController extends BaseController {
 		$adv_name_tags = preg_split("/[\s,;: ]+/", $ADVANCED_NAME_FACTS);
 		$name_tags = array_unique(array_merge($STANDARD_NAME_FACTS, $adv_name_tags));
 		$name_tags[] = "_MARNM";
-		foreach($this->myindilist as $id=>$individual) {
+		foreach ($this->myindilist as $id=>$individual) {
 			$indirec=find_gedcom_record($individual->getXref(), WT_GED_ID, true);
 			$oldRecord = $indirec;
 			$newRecord = $indirec;
-			if($this->replaceAll) {
+			if ($this->replaceAll) {
 				$newRecord = preg_replace("~".$oldquery."~i", $this->replace, $newRecord);
 			} else {
-				if($this->replaceNames) {
-					foreach($name_tags as $f=>$tag) {
+				if ($this->replaceNames) {
+					foreach ($name_tags as $f=>$tag) {
 						$newRecord = preg_replace("~(\d) ".$tag." (.*)".$oldquery."(.*)~i", "$1 ".$tag." $2".$this->replace."$3", $newRecord);
 					}
 				}
-				if($this->replacePlaces) {
+				if ($this->replacePlaces) {
 					if ($this->replacePlacesWord) $newRecord = preg_replace('~(\d) PLAC (.*)([,\W\s])'.$oldquery.'([,\W\s])~i', "$1 PLAC $2$3".$this->replace."$4",$newRecord);
 					else $newRecord = preg_replace("~(\d) PLAC (.*)".$oldquery."(.*)~i", "$1 PLAC $2".$this->replace."$3",$newRecord);
 				}
 			}
 			//-- if the record changed replace the record otherwise remove it from the search results
-			if($newRecord != $oldRecord) {
+			if ($newRecord != $oldRecord) {
 				replace_gedrec($individual->getXref(), WT_GED_ID, $newRecord);
 			} else {
 				unset($this->myindilist[$id]);
 			}
 		}
 
-		foreach($this->myfamlist as $id=>$family) {
+		foreach ($this->myfamlist as $id=>$family) {
 			$indirec=find_gedcom_record($family->getXref(), WT_GED_ID, true);
 			$oldRecord = $indirec;
 			$newRecord = $indirec;
 
-			if($this->replaceAll) {
+			if ($this->replaceAll) {
 				$newRecord = preg_replace("~".$oldquery."~i", $this->replace, $newRecord);
 			}
 			else {
-				if($this->replacePlaces) {
+				if ($this->replacePlaces) {
 					if ($this->replacePlacesWord) $newRecord = preg_replace('~(\d) PLAC (.*)([,\W\s])'.$oldquery.'([,\W\s])~i', "$1 PLAC $2$3".$this->replace."$4",$newRecord);
 					else $newRecord = preg_replace("~(\d) PLAC (.*)".$oldquery."(.*)~i", "$1 PLAC $2".$this->replace."$3",$newRecord);
 				}
 			}
 			//-- if the record changed replace the record otherwise remove it from the search results
-			if($newRecord != $oldRecord) {
+			if ($newRecord != $oldRecord) {
 				replace_gedrec($family->getXref(), WT_GED_ID, $newRecord);
 			} else {
 				unset($this->myfamlist[$id]);
@@ -546,17 +546,17 @@ class SearchController extends BaseController {
 			if ($this->replaceAll) {
 				$newRecord = preg_replace("~".$oldquery."~i", $this->replace, $newRecord);
 			} else {
-				if($this->replaceNames) {
+				if ($this->replaceNames) {
 					$newRecord = preg_replace("~(\d) TITL (.*)".$oldquery."(.*)~i", "$1 TITL $2".$this->replace."$3", $newRecord);
 					$newRecord = preg_replace("~(\d) ABBR (.*)".$oldquery."(.*)~i", "$1 ABBR $2".$this->replace."$3", $newRecord);
 				}
-				if($this->replacePlaces) {
+				if ($this->replacePlaces) {
 					if ($this->replacePlacesWord) $newRecord = preg_replace('~(\d) PLAC (.*)([,\W\s])'.$oldquery.'([,\W\s])~i', "$1 PLAC $2$3".$this->replace."$4",$newRecord);
 					else $newRecord = preg_replace("~(\d) PLAC (.*)".$oldquery."(.*)~i", "$1 PLAC $2".$this->replace."$3",$newRecord);
 				}
 			}
 			//-- if the record changed replace the record otherwise remove it from the search results
-			if($newRecord != $oldRecord) {
+			if ($newRecord != $oldRecord) {
 				replace_gedrec($source->getXref(), WT_GED_ID, $newRecord);
 			} else {
 				unset($this->mysourcelist[$id]);
@@ -572,7 +572,7 @@ class SearchController extends BaseController {
 				$newRecord = preg_replace("~".$oldquery."~i", $this->replace, $newRecord);
 			}
 			//-- if the record changed replace the record otherwise remove it from the search results
-			if($newRecord != $oldRecord) {
+			if ($newRecord != $oldRecord) {
 				replace_gedrec($note->getXref(), WT_GED_ID, $newRecord);
 			} else {
 				unset($this->mynotelist[$id]);
@@ -636,7 +636,7 @@ class SearchController extends BaseController {
 		//-- if only 1 item is returned, automatically forward to that item
 		if (count($this->myindilist)==1 && $this->action!="replace") {
 			$indi=$this->myindilist[0];
-			header("Location: ".encode_url($indi->getLinkUrl(), false));
+			header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.$indi->getRawUrl());
 			exit;
 		}
 		usort($this->myindilist, array('GedcomRecord', 'Compare'));
@@ -792,9 +792,9 @@ class SearchController extends BaseController {
 				load_gedcom_settings(WT_GED_ID);
 			} else
 			if (isset ($this->query)) {
-				print "<br /><div class=\"warning\" style=\" text-align: center;\"><i>".i18n::translate('No results found.')."</i><br />";
+				echo "<br /><div class=\"warning\" style=\" text-align: center;\"><i>".i18n::translate('No results found.')."</i><br />";
 				if (!isset ($this->srindi) && !isset ($this->srfams) && !isset ($this->srsour) && !isset ($this->srnote)) {
-					print "<i>".i18n::translate('Be sure to select an option to search for.')."</i><br />";
+					echo "<i>".i18n::translate('Be sure to select an option to search for.')."</i><br />";
 				}
 				echo '</div>';
 			}
@@ -821,8 +821,8 @@ class SearchController extends BaseController {
 				if (!empty ($this->Sites) && count($this->Sites) > 0) {
 					$no_results_found = false;
 					// Start output here, because from the indi's we may have printed some fams which need the column header.
-					print "<br />";
-					print "<div class=\"center\">";
+					echo "<br />";
+					echo "<div class=\"center\">";
 
 					if (isset ($this->multisiteResults) && (count($this->multisiteResults) > 0)) {
 						$this->totalResults = 0;
@@ -834,7 +834,7 @@ class SearchController extends BaseController {
 							$siteName = $serviceClient->getServiceTitle();
 							$siteURL = dirname($serviceClient->getURL());
 
-							print "<table id=\"multiResultsOutTbl\" class=\"list_table, $TEXT_DIRECTION\" align=\"center\">";
+							echo "<table id=\"multiResultsOutTbl\" class=\"list_table, $TEXT_DIRECTION\" align=\"center\">";
 
 							if (isset ($siteResults) && !empty ($siteResults->persons)) {
 								$displayed_once = false;
@@ -854,64 +854,66 @@ class SearchController extends BaseController {
 										if (!$displayed_once) {
 											if (!$no_results_found) {
 												$no_results_found = true;
-												print "<tr><td class=\"list_label\" colspan=\"2\" width=\"100%\"><img src=\"".$WT_IMAGES["indis"]."\" border=\"0\" width=\"25\" alt=\"\" /> ".i18n::translate('People')."</td></tr>";
-												print "<tr><td><table id=\"multiResultsInTbl\" align=\"center\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" ><tr>";
+												echo "<tr><td class=\"list_label\" colspan=\"2\" width=\"100%\">";
+													if (isset($WT_IMAGES["indis"])) echo "<img src=\"".$WT_IMAGES["indis"]."\" border=\"0\" width=\"25\" alt=\"\" /> ";
+												echo i18n::translate('People')."</td></tr>";
+												echo "<tr><td><table id=\"multiResultsInTbl\" align=\"center\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" ><tr>";
 											}
 											$displayed_once = true;
-											print "<td class=\"list_label\" colspan=\"2\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" >".i18n::translate('Site: ')."<a href=\"".encode_url($siteURL)."\" target=\"_blank\">".$siteName."</a>".i18n::translate(' contained the following')."</td></tr>";
+											echo "<td class=\"list_label\" colspan=\"2\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" >".i18n::translate('Site: ')."<a href=\"".$siteURL."\" target=\"_blank\">".$siteName."</a>".i18n::translate(' contained the following')."</td></tr>";
 										}
-										print "<tr><td class=\"list_value $TEXT_DIRECTION\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" valign=\"center\" ><ul>";
-										print "<li class=\"$TEXT_DIRECTION\" dir=\"$TEXT_DIRECTION\">";
-										print "<a href=\"".encode_url("{$siteURL}/individual.php?pid={$person->PID}&ged={$serviceClient->gedfile}")."\" target=\"_blank\">";
+										echo "<tr><td class=\"list_value $TEXT_DIRECTION\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" valign=\"center\" ><ul>";
+										echo "<li class=\"$TEXT_DIRECTION\" dir=\"$TEXT_DIRECTION\">";
+										echo "<a href=\"{$siteURL}/individual.php?pid={$person->PID}&amp;ged={$serviceClient->gedfile}\" target=\"_blank\">";
 										$pageResultsNum += 1;
-										print "<b>".$person->getFullName()."</b>";
+										echo "<b>".$person->getFullName()."</b>";
 										if (!empty ($person->PID)) {
-											print " (".$person->PID.")";
+											echo " (".$person->PID.")";
 										}
 										if (!empty ($person->birthDate) || !empty ($person->birthPlace)) {
-											print " -- <i>";
+											echo " -- <i>";
 											if (!empty ($person->birthDate)) {
-												print " ".$person->birthDate;
+												echo " ".$person->birthDate;
 											}
 											if (!empty ($person->birthPlace)) {
-												print " ".$person->birthPlace;
+												echo " ".$person->birthPlace;
 											}
-											print "</i>";
+											echo "</i>";
 										}
-										print "</a></li></ul></td>";
+										echo "</a></li></ul></td>";
 
 										/*******************************  Remote Links Per Result *************************************************/
 										if (WT_USER_CAN_EDIT) {
-											print "<td class=\"list_value $TEXT_DIRECTION\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" >"."<ul style=\"list-style: NONE\"><li><a href=\"javascript:;\" "."onclick=\"return open_link('".$key."', '".$person->PID."', '".$person->getFullName()."');\">"."<b>".i18n::translate('Add Local Link')."</b></a></ul></li></td></tr>\n";
+											echo "<td class=\"list_value $TEXT_DIRECTION\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" >"."<ul style=\"list-style: NONE\"><li><a href=\"javascript:;\" "."onclick=\"return open_link('".$key."', '".$person->PID."', '".$person->getFullName()."');\">"."<b>".i18n::translate('Add Local Link')."</b></a></ul></li></td></tr>";
 										}
 									}
 								}
 
-								print "</table>";
+								echo "</table>";
 
-								print "\n\t\t&nbsp;</td></tr></table>";
+								echo "&nbsp;</td></tr></table>";
 							}
 							if ($this->multiTotalResults > 0) {
-								print "</tr><tr><td align=\"left\">Displaying individuals ";
-								print (($this->multiResultsPerPage * $this->resultsPageNum) + 1)." ".i18n::translate('to')." ". (($this->multiResultsPerPage * $this->resultsPageNum) + $pageResultsNum);
-								print " ".i18n::translate('of')." ". ($this->multiTotalResults)."</td></tr></table>";
+								echo "</tr><tr><td align=\"left\">Displaying individuals ";
+								echo (($this->multiResultsPerPage * $this->resultsPageNum) + 1)." ".i18n::translate('to')." ". (($this->multiResultsPerPage * $this->resultsPageNum) + $pageResultsNum);
+								echo " ".i18n::translate('of')." ". ($this->multiTotalResults)."</td></tr></table>";
 								$this->multiTotalResults = 0;
 							} else
-							print "</tr></table>";
+							echo "</tr></table>";
 						}
-						print "</table>";
+						echo "</table>";
 					}
 					echo '</div>';
 					if (!$no_results_found && $this->multiTotalResults == 0 && (isset ($this->multiquery) || isset ($this->name) || isset ($this->birthdate) || isset ($this->birthplace) || isset ($this->deathdate) || isset ($this->deathplace) || isset ($this->gender))) {
-						print "<table align=\"center\" \><td class=\"warning\" style=\" text-align: center;\"><font color=\"red\"><b><i>".i18n::translate('No results found.')."</i></b></font><br /></td></tr></table>";
+						echo "<table align=\"center\" \><td class=\"warning\" style=\" text-align: center;\"><font color=\"red\"><b><i>".i18n::translate('No results found.')."</i></b></font><br /></td></tr></table>";
 					}
 				}
 			} else
 			if ($sitesChecked < 1 && $this->isPostBack) {
-				print "<table align=\"center\" \><tr><td class=\"warning\" style=\" text-align: center;\"><font color=\"red\"><b><i>".i18n::translate('Be sure to select at least one remote site.')."</i></b></font><br /></td></tr></table>";
+				echo "<table align=\"center\" \><tr><td class=\"warning\" style=\" text-align: center;\"><font color=\"red\"><b><i>".i18n::translate('Be sure to select at least one remote site.')."</i></b></font><br /></td></tr></table>";
 			}
 
-			print "</table>";
+			echo "</table>";
 			// Prints the Paged Results: << 1 2 3 4 >> links if there are more than $this->resultsPerPage results
 			if ($this->resultsPerPage > 1 && $this->totalResults > $this->resultsPerPage) {
 				$this->printPageResultsLinks($this->inputFieldNames, $this->totalResults, $this->multiResultsPerPage);
@@ -962,39 +964,39 @@ class SearchController extends BaseController {
 	 * in the query string usually from input values in a form i.e. 'action', 'query', 'showasso' etc.
 	 */
 	function printPageResultsLinks($inputFieldNames, $totalResults, $resultsPerPage) {
-		print "<br /><table align='center'><tr><td>".i18n::translate('Result Page')." &nbsp;&nbsp;";
+		echo "<br /><table align='center'><tr><td>".i18n::translate('Result Page')." &nbsp;&nbsp;";
 		// Prints the '<<' linking to the previous page if it's not on the first page
 		if ($this->resultsPageNum > 0) {
-			print " <a href='";
+			echo " <a href='";
 			$this->printQueryString($inputFieldNames, 0);
-			print "'>&lt;&lt;</a> ";
-			print " <a href='";
+			echo "'>&lt;&lt;</a> ";
+			echo " <a href='";
 			$this->printQueryString($inputFieldNames, ($this->resultsPageNum - 1));
-			print "'>&lt;</a>";
+			echo "'>&lt;</a>";
 		}
 
 		// Prints out each number linking to that page number.
 		// If it's on that page number it is printed out bold instead of a link
 		for ($i = 1; $i < (($totalResults / $resultsPerPage) + 1); $i ++) {
 			if ($i != $this->resultsPageNum + 1) {
-				print " <a href='";
+				echo " <a href='";
 				$this->printQueryString($inputFieldNames, ($i -1));
-				print "'>".$i."</a>";
+				echo "'>".$i."</a>";
 			} else
-			print " <b>".$i."</b>";
+			echo " <b>".$i."</b>";
 		}
 
 		// Prints the '>>' linking to the next page if it's not on the last page
 		if ($this->resultsPageNum < (($totalResults / $resultsPerPage) - 1)) {
-			print " <a href='";
+			echo " <a href='";
 			$this->printQueryString($inputFieldNames, ($this->resultsPageNum + 1));
-			print "'>&gt;</a>";
-			print " <a href='";
+			echo "'>&gt;</a>";
+			echo " <a href='";
 			$this->printQueryString($inputFieldNames, (int)($totalResults / $resultsPerPage));
-			print "'>&gt;&gt;</a>";
+			echo "'>&gt;&gt;</a>";
 		}
 
-		print "</td></tr></table>";
+		echo "</td></tr></table>";
 	}
 
 	/**
@@ -1010,15 +1012,15 @@ class SearchController extends BaseController {
 		foreach ($inputFieldNames as $key => $value) {
 			$controllerVar = $this->getValue($value);
 			if (!empty ($controllerVar)) {
-				$tempURL .= "&{$value}={$controllerVar}";
+				$tempURL .= "&amp;{$value}={$controllerVar}";
 			}
 		}
-		$tempURL .= "&resultsPageNum={$pageNum}";
-		foreach($this->sgeds as $i=>$key) {
+		$tempURL .= "&amp;resultsPageNum={$pageNum}";
+		foreach ($this->sgeds as $i=>$key) {
 			$str = str_replace(array (".", "-", " "), array ("_", "_", "_"), $key);
-			$tempURL .= "&{$str}=yes";
+			$tempURL .= "&amp;{$str}=yes";
 		}
-		print encode_url($tempURL);
+		echo $tempURL;
 	}
 
 	function getValue($varName) {

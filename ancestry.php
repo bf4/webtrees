@@ -156,7 +156,8 @@ if ($i==$OLD_PGENS) {
 	echo ' selected="selected"';
 }
 	echo '>', $i, '</option>';
-}?>
+}
+?>
 </select>
 
 </td>
@@ -214,7 +215,7 @@ case 1:
 			$person=Person::getInstance($pid);
 			if (!is_null($person)) {
 				$famids=$person->getChildFamilies();
-				foreach($famids as $famid=>$family) {
+				foreach ($famids as $famid=>$family) {
 					$parents=find_parents_in_record($family->getGedcomRecord());
 					if ($parents) {
 						print_sosa_family($famid, $pid, $i);

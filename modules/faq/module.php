@@ -244,7 +244,7 @@ class faq_WT_Module extends WT_Module implements WT_Module_Block, WT_Module_Conf
 			"SELECT block_order, block_id".
 			" FROM `##block`".
 			" WHERE block_order=(".
-			"  SELECT MAX(block_order) FROM `##block` WHERE block_order<? AND module_name=?".
+			"  SELECT MAX(block_order) FROM `##block` WHERE block_order < ? AND module_name=?".
 			" )".
 			" LIMIT 1"
 		)->execute(array($block_order, $this->getName()))->fetchOneRow();
@@ -302,7 +302,7 @@ class faq_WT_Module extends WT_Module implements WT_Module_Block, WT_Module_Conf
 		echo '<h2 class="center">', i18n::translate('Frequently asked questions'), '</h2>';
 		// Instructions
 		echo '<div class="faq_italic">', i18n::translate('Click on a title to go straight to it, or scroll down to read them all');
-			if (WT_USER_GEDCOM_ADMIN){
+			if (WT_USER_GEDCOM_ADMIN) {
 				echo '<div style="float:right;">',
 						'<a href="module.php?mod=faq&mod_action=config">', i18n::translate('Click here to Add, Edit, or Delete'), '</a>',
 				'</div>';
@@ -312,7 +312,7 @@ class faq_WT_Module extends WT_Module implements WT_Module_Block, WT_Module_Conf
 		$row_count = 0;
 		echo '<table class="faq">';
 		// List of titles
-		foreach($faqs as $id => $faq) {
+		foreach ($faqs as $id => $faq) {
 			$header = get_block_setting($faq->block_id, 'header');
 			$faqbody = get_block_setting($faq->block_id, 'faqbody');
 			$languages=get_block_setting($faq->block_id, 'languages');
@@ -335,7 +335,7 @@ class faq_WT_Module extends WT_Module implements WT_Module_Block, WT_Module_Conf
 		echo '</table><hr>';
 		// Detailed entries
 		echo '<table>';
-		foreach($faqs as $id => $faq) {
+		foreach ($faqs as $id => $faq) {
 			$header = get_block_setting($faq->block_id, 'header');
 			$faqbody = get_block_setting($faq->block_id, 'faqbody');
 			$languages=get_block_setting($faq->block_id, 'languages');

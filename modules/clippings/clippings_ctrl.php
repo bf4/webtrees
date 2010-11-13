@@ -24,7 +24,7 @@
 *
 * @package webtrees
 * @subpackage Charts
-* @version $Id: clippings_ctrl.php 6607 2009-12-23 17:43:48Z yalnifj $
+* @version $Id$
 */
 
 if (!defined('WT_WEBTREES')) {
@@ -356,7 +356,7 @@ class ClippingsController extends BaseController {
 				AddToLog("deleted dummy user -> {$tempUserID} <-", 'auth');
 			}
 
-			if($this->IncludeMedia == "yes")
+			if ($this->IncludeMedia == "yes")
 			{
 				$this->media_list = $media;
 			}
@@ -380,7 +380,7 @@ class ClippingsController extends BaseController {
 
 		$tempFileName = 'clipping'.rand().'.ged';
 		$fp = fopen($INDEX_DIRECTORY.$tempFileName, "wb");
-		if($fp)
+		if ($fp)
 		{
 			flock($fp,LOCK_EX);
 			fwrite($fp,$this->download_data);
@@ -393,7 +393,7 @@ class ClippingsController extends BaseController {
 			// add the ged file to the root of the zip file (strip off the index_directory)
 			$this->media_list[]= array (PCLZIP_ATT_FILE_NAME => $INDEX_DIRECTORY.$tempFileName, PCLZIP_ATT_FILE_NEW_FULL_NAME => $tempFileName);
 			$v_list = $archive->create($this->media_list, PCLZIP_OPT_COMMENT, $comment);
-			if ($v_list == 0) print "Error : ".$archive->errorInfo(true)."</td></tr>";
+			if ($v_list == 0) echo "Error : ".$archive->errorInfo(true)."</td></tr>";
 			else {
 				$openedFile = fopen($fname,"rb");
 				$this->download_data = fread($openedFile,filesize($fname));
@@ -404,14 +404,14 @@ class ClippingsController extends BaseController {
 		}
 		else
 		{
-			print i18n::translate('Cannot create')." ".$INDEX_DIRECTORY."$tempFileName ".i18n::translate('Check access rights on this directory.')."<br /><br />";
+			echo i18n::translate('Cannot create')." ".$INDEX_DIRECTORY."$tempFileName ".i18n::translate('Check access rights on this directory.')."<br /><br />";
 		}
 	}
 	/**
 	 * Brings up the download dialog box and allows the user to download the file
 	 * based on the options he or she selected
 	 */
-	function download_clipping(){
+	function download_clipping() {
 		if ($this->IncludeMedia == "yes" || $this->Zip == "yes") {
 			header('Content-Type: application/zip');
 			header('Content-Disposition: attachment; filename="clipping.zip"');
