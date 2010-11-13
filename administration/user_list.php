@@ -165,7 +165,6 @@ ob_start();
 					'<th style="width:65px;">', i18n::translate('Verified '), '</th>',
 					'<th style="width:65px;">', i18n::translate('Approved'), '</th>',
 					'<th style="width:50px;">', i18n::translate('Delete'), '</th>',
-					'<th style="width:50px;">', i18n::translate('More...'), '</th>',
 				'</tr>',
 			'</thead>',
 			'<tbody>';
@@ -241,9 +240,6 @@ ob_start();
 						if (WT_USER_ID!=$user_id)
 							echo "<a href=\"", urlencode("user_admin.php?action=deleteuser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" onclick=\"return confirm('", i18n::translate('Are you sure you want to delete the user'), " $user_name');\"><img src=\"images/delete.png\" alt=\"", i18n::translate('Delete'), "\" title=\"", i18n::translate('Delete'), "\" /></a>";
 					echo '</td>',
-					'<td>',
-						'<button>Toggle</button',
-					'</td>',
 				'</tr>';
 				}
 			echo '</tbody>',
