@@ -84,11 +84,8 @@ $emailaddress            =safe_POST('emailaddress', WT_REGEX_EMAIL);
 $user_theme              =safe_POST('user_theme',               $ALL_THEME_DIRS);
 $user_language           =safe_POST('user_language',            array_keys(i18n::installed_languages()), WT_LOCALE);
 $new_contact_method      =safe_POST('new_contact_method');
-$new_default_tab         =safe_POST('new_default_tab',          array_keys(WT_Module::getActiveTabs()), $GEDCOM_DEFAULT_TAB);
 $new_comment             =safe_POST('new_comment',              WT_REGEX_UNSAFE);
 $new_comment_exp         =safe_POST('new_comment_exp'           );
-$new_max_relation_path   =safe_POST_integer('new_max_relation_path', 1, $MAX_RELATION_PATH_LENGTH, 2);
-$new_relationship_privacy=safe_POST_bool('new_relationship_privacy');
 $new_auto_accept         =safe_POST_bool('new_auto_accept');
 $canadmin                =safe_POST_bool('canadmin');
 $visibleonline           =safe_POST_bool('visibleonline');
@@ -173,8 +170,7 @@ ob_start();
 			'</thead>',
 			'<tbody>';
 				foreach($users as $user_id=>$user_name) {
-					echo "<div id=\"user\"><tr>\n";
-					echo "\t<td>";
+					echo "<tr><td>";
 					if ($user_id!=WT_USER_ID && get_user_setting($user_id, 'contactmethod')!='none') {
 						echo "<a href=\"javascript:;\" onclick=\"return message('", $user_name, "');\"><img src=\"images/email.png\" \"alt=\"", i18n::translate('Send Message'), "\" title=\"", i18n::translate('Send Message'), "\" /></a>";
 					} else {
@@ -182,7 +178,7 @@ ob_start();
 					}
 					echo '</td>';
 					$userName = getUserFullName($user_id);
-					echo "\t<td><a class=\"edit_link\" href=\"", encode_url("user_edit.php?action=edituser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" title=\"", i18n::translate('Edit'), "\">", $userName;
+					echo "\t<td><a class=\"edit_link\" href=\"", urlencode("user_edit.php?action=edituser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" title=\"", i18n::translate('Edit'), "\">", $userName;
 					if ($TEXT_DIRECTION=="ltr") echo getLRM();
 					else                        echo getRLM();
 					echo "</a></td>\n";
@@ -220,8 +216,6 @@ ob_start();
 							}
 						}
 					echo '</div>';
-					//echo "</div>";
-					//$k++;
 					echo '</td>';
 						if (((date("U") - (int)get_user_setting($user_id, 'reg_timestamp')) > 604800) && !get_user_setting($user_id, 'verified'))
 							echo '<td class="red">';
@@ -245,16 +239,12 @@ ob_start();
 					echo '</td>',
 					'<td>';
 						if (WT_USER_ID!=$user_id)
-							echo "<a href=\"", encode_url("user_admin.php?action=deleteuser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" onclick=\"return confirm('", i18n::translate('Are you sure you want to delete the user'), " $user_name');\"><img src=\"images/delete.png\" alt=\"", i18n::translate('Delete'), "\" title=\"", i18n::translate('Delete'), "\" /></a>";
+							echo "<a href=\"", urlencode("user_admin.php?action=deleteuser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" onclick=\"return confirm('", i18n::translate('Are you sure you want to delete the user'), " $user_name');\"><img src=\"images/delete.png\" alt=\"", i18n::translate('Delete'), "\" title=\"", i18n::translate('Delete'), "\" /></a>";
 					echo '</td>',
 					'<td>',
 						'<button>Toggle</button',
 					'</td>',
-				'</tr>',
-				'</div>',
-				'<div id="slide1">',
-					'This is the paragraph to end all paragraphs.  You should feel <em>lucky</em> to have seen such a paragraph in your life.  Congratulations!',
-				'</div>';
+				'</tr>';
 				}
 			echo '</tbody>',
 		'</table>';
