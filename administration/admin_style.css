@@ -65,16 +65,16 @@ img {border:none;}
 #admin_content {margin-left:220px;}
 
 /* JEditable styles for site config */
-.s {width:100%; display:block; /* background:url(../themes/fab/images/edit_sm.png) no-repeat right;*/}
+.editable {width:100%; display:block; /* background:url(../themes/fab/images/edit_sm.png) no-repeat right;*/}
 .editable:hover { color: red; cursor:pointer;}
 .editable input, select {padding:0;}
 .editable button {font-size:95%; font-weight:bold 84%; margin: 1px; padding:0 5px; background-color:#dfeffc; border:1px solid; border-color:#d3d3d3 #808080 #808080 #d3d3d3;}
 .editable button:hover  {border-color:#808080 #d3d3d3 #d3d3d3 #808080;}
-.server {width: 700px; margin:0 0 0 20px;} /* table */
-.server th { background-color:#d1d9ef; text-align:left; padding:8px 0 1px 3px;} /* sub-headings, both cols */
-.server th+th { font-style:italic;} /* sub-headings, right col */
-.server td {background-color:#dfeffc; white-space:normal;padding:3px;} /* left-col */
-.server td+td {background-color:#dcdcdc; width:250px;} /* right/col */
+.site_config {width: 700px; margin:0 0 0 20px;} /* table */
+.site_config th { background-color:#d1d9ef; text-align:left; padding:8px 0 1px 3px;} /* sub-headings, both cols */
+.site_config th+th { font-style:italic;} /* sub-headings, right col */
+.site_config td {background-color:#dfeffc; white-space:normal;padding:3px;} /* left-col */
+.site_config td+td {background-color:#dcdcdc; width:250px;} /* right/col */
 
 
 /* Jquery table "list" used for User List" */
@@ -220,7 +220,7 @@ table#gedcom_table .defaults  {
 	color:#666666;
 }
 
-table#server {
+table#site_config {
 	font-size: 12px;
 }/
 
