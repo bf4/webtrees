@@ -39,7 +39,7 @@ echo
 	'<title>', htmlspecialchars($title), '</title>',
 	'<link rel="shortcut icon" href="', $FAVICON, '" type="image/x-icon" />',
 	'<link type="text/css" href="css/redmond/jquery-ui-1.8.5.custom.css" rel="stylesheet" />',
-	'<link rel="stylesheet" href="admin_style.css" type="text/css" media="all" />',
+	'<link rel="stylesheet" href="css/admin_style.css" type="text/css" media="all" />',
 	$javascript,
 	$head; //-- additional header information
 ?>
