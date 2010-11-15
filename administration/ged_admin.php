@@ -237,7 +237,7 @@ foreach ($gedcoms as $gedcom) {
 		echo
 			'<table class="gedcom_table" width="100%">',
 			'<tr><td class="list_label" width="20%">', i18n::translate('GEDCOM name'),
-			'</td><td class="list_value"><a href="index.php?ctype=gedcom&ged=', urlencode($gedcom->gedcom_name), '">', htmlspecialchars($gedcom->gedcom_name), ' - ',
+			'</td><td class="list_value"><a href="index.php?ctype=gedcom&ged=', rawurlencode($gedcom->gedcom_name), '">', htmlspecialchars($gedcom->gedcom_name), ' - ',
 			htmlspecialchars(get_gedcom_setting($gedcom->gedcom_id, 'title')), '</a>',
 			'</td></tr><tr><td class="list_label">', i18n::translate('GEDCOM administration'),
 			'</td><td class="list_value">';
@@ -259,11 +259,11 @@ foreach ($gedcoms as $gedcom) {
 		echo
 			'<tr align="center">',
 			// configuration
-			'<td><a href="editconfig_gedcom.php?ged=', urlencode($gedcom->gedcom_name), '">', i18n::translate('Configuration'), '</a>',
+			'<td><a href="editconfig_gedcom.php?ged=', rawurlencode($gedcom->gedcom_name), '">', i18n::translate('Configuration'), '</a>',
 			help_link('gedcom_configfile'),
 			'</td>',
 			// export
-			'<td><a href="javascript:" onclick="window.open(\'', encode_url("export_gedcom.php?export={$gedcom->gedcom_name}"), '\', \'_blank\',\'left=50,top=50,width=500,height=500,resizable=1,scrollbars=1\');">', i18n::translate('Export'), '</a>',
+			'<td><a href="javascript:" onclick="window.open(\'export_gedcom.php?export=', rawurlencode($gedcom->gedcom_name), '\', \'_blank\',\'left=50,top=50,width=500,height=500,resizable=1,scrollbars=1\');">', i18n::translate('Export'), '</a>',
 			help_link('export_gedcom'),
 			'</td>',
 			// import
@@ -271,7 +271,7 @@ foreach ($gedcoms as $gedcom) {
 			help_link('import_gedcom'),
 			'</td>',
 			// download
-			'<td><a href="downloadgedcom.php?ged=', urlencode($gedcom->gedcom_name),'">', i18n::translate('Download'), '</a>',
+			'<td><a href="downloadgedcom.php?ged=', rawurlencode($gedcom->gedcom_name),'">', i18n::translate('Download'), '</a>',
 			help_link('download_gedcom'),
 			'</td>',
 			// upload
@@ -279,7 +279,7 @@ foreach ($gedcoms as $gedcom) {
 			help_link('upload_gedcom'),
 			'</td>',
 			// delete
-			'<td><a href="editgedcoms.php?action=delete&ged=', urlencode($gedcom->gedcom_name), '" onclick="return confirm(\''.htmlspecialchars(i18n::translate('Permanently delete the GEDCOM %s and all its settings?', $gedcom->gedcom_name)),'\');">', i18n::translate('Delete'), '</a>',
+			'<td><a href="editgedcoms.php?action=delete&ged=', rawurlencode($gedcom->gedcom_name), '" onclick="return confirm(\''.htmlspecialchars(i18n::translate('Permanently delete the GEDCOM %s and all its settings?', $gedcom->gedcom_name)),'\');">', i18n::translate('Delete'), '</a>',
 			help_link('delete_gedcom'),
 			'</td></tr></table></td></tr></table><br />';
 //	}
@@ -302,8 +302,9 @@ foreach ($gedcoms as $gedcom) {
 	if (empty($DEFAULT_GEDCOM)) {
 		echo '<option value="" selected="selected"></option>';
 	}
+
 	foreach ($gedcoms as $gedcom) {
-		echo '<option value="', urlencode($gedcom->gedcom_name), '"';
+		echo '<option value="', rawurlencode($gedcom->gedcom_name), '"';
 		if ($DEFAULT_GEDCOM==$gedcom->gedcom_name) echo ' selected="selected"';
 		echo '>', htmlspecialchars($gedcom->gedcom_name), '</option>';
 	}
@@ -318,7 +319,8 @@ foreach ($gedcoms as $gedcom) {
 		'<option>', i18n::translate('Select a file'), '</option>',
 	$d=opendir($INDEX_DIRECTORY);
 	$files=false;
-	while (($f=readdir($d))!==false) {
+	// TODO: does not work in administration subdirectory - $INDEX_DIRECTORY is either absolute or relative to WT_ROOT
+	while ($d && ($f=readdir($d))!==false) {
 		if (!in_array($f, $all_gedcoms) && !is_dir($INDEX_DIRECTORY.$f) && is_readable($INDEX_DIRECTORY.$f)) {
 			$fp=fopen($INDEX_DIRECTORY.$f, 'rb');
 			$header=fread($fp, 64);

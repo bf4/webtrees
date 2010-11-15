@@ -37,7 +37,7 @@ require 'admin_functions.php';
 // Only admin users can access this page
 //if (!WT_USER_IS_ADMIN) {
 //	$LOGIN_URL=get_site_setting('LOGIN_URL');
-//	$loginURL = "$LOGIN_URL?url=".urlencode(WT_SCRIPT_NAME."?".$QUERY_STRING);
+//	$loginURL = "$LOGIN_URL?url=".rawurlencode(WT_SCRIPT_NAME."?".$QUERY_STRING);
 //	header("Location: $loginURL");
 //	exit;
 //}

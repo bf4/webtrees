@@ -37,7 +37,7 @@ require 'admin_functions.php';
 // Only admin users can access this page
 //if (!WT_USER_IS_ADMIN) {
 //	$LOGIN_URL=get_site_setting('LOGIN_URL');
-//	$loginURL = "$LOGIN_URL?url=".urlencode(WT_SCRIPT_NAME."?".$QUERY_STRING);
+//	$loginURL = "$LOGIN_URL?url=".rawurlencode(WT_SCRIPT_NAME."?".$QUERY_STRING);
 //	header("Location: $loginURL");
 //	exit;
 //}
@@ -177,7 +177,7 @@ ob_start();
 					}
 					echo '</td>';
 					$userName = getUserFullName($user_id);
-					echo "\t<td><a class=\"edit_link\" href=\"", urlencode("user_edit.php?action=edituser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" title=\"", i18n::translate('Edit'), "\">", $userName;
+					echo "\t<td><a class=\"edit_link\" href=\"", "user_edit.php?action=edituser&amp;username=", rawurlencode($user_name)."&amp;sort={$sort}&amp;filter={$filter}&amp;usrlang={$usrlang}&amp;ged=".rawurlencode($ged), "\" title=\"", i18n::translate('Edit'), "\">", $userName;
 					if ($TEXT_DIRECTION=="ltr") echo getLRM();
 					else                        echo getRLM();
 					echo "</a></td>\n";
@@ -209,7 +209,7 @@ ob_start();
 							}
 							$uged = get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
 							if ($uged) {
-								echo ': <a href="individual.php?pid=', $uged, '&amp;ged=', urlencode($ged_name), '">', $ged_name, '</a></span><br />';
+								echo ': <a href="individual.php?pid=', $uged, '&amp;ged=', rawurlencode($ged_name), '">', $ged_name, '</a></span><br />';
 							} else {
 								echo ': ', $ged_name, '</span><br />';
 							}
@@ -238,7 +238,7 @@ ob_start();
 					echo '</td>',
 					'<td>';
 						if (WT_USER_ID!=$user_id)
-							echo "<a href=\"", urlencode("user_admin.php?action=deleteuser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" onclick=\"return confirm('", i18n::translate('Are you sure you want to delete the user'), " $user_name');\"><img src=\"images/delete.png\" alt=\"", i18n::translate('Delete'), "\" title=\"", i18n::translate('Delete'), "\" /></a>";
+							echo "<a href=\"user_admin.php?action=deleteuser&amp;username=", rawurlencode($user_name)."&amp;sort={$sort}&amp;filter={$filter}&amp;usrlang={$usrlang}&amp;ged=", rawurlencode($ged), "\" onclick=\"return confirm('", i18n::translate('Are you sure you want to delete the user'), " $user_name');\"><img src=\"images/delete.png\" alt=\"", i18n::translate('Delete'), "\" title=\"", i18n::translate('Delete'), "\" /></a>";
 					echo '</td>',
 				'</tr>';
 				}

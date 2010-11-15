@@ -37,7 +37,7 @@ require 'admin_functions.php';
 // Only admin users can access this page
 //if (!WT_USER_IS_ADMIN) {
 //	$LOGIN_URL=get_site_setting('LOGIN_URL');
-//	$loginURL = "$LOGIN_URL?url=".urlencode(WT_SCRIPT_NAME."?".$QUERY_STRING);
+//	$loginURL = "$LOGIN_URL?url=".rawurlencode(WT_SCRIPT_NAME."?".$QUERY_STRING);
 //	header("Location: $loginURL");
 //	exit;
 //}
@@ -545,7 +545,7 @@ if ($action == "listusers") {
 							}
 							$uged = get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
 							if ($uged) {
-								echo ': <a href="individual.php?pid=', $uged, '&amp;ged=', urlencode($ged_name), '">', $ged_name, '</a></span><br />';
+								echo ': <a href="individual.php?pid=', $uged, '&amp;ged=', rawurlencode($ged_name), '">', $ged_name, '</a></span><br />';
 							} else {
 								echo ': ', $ged_name, '</span><br />';
 							}

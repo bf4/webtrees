@@ -116,7 +116,7 @@ echo
 					foreach ($gedcom_titles as $gedcom_title) {
 						$pagename = curPageName();
 						$class=""; if ($gedcom_title->gedcom_title == PrintReady(get_gedcom_setting(WT_GED_ID, 'title')) && $pagename == 'ged_config.php') {$class="current";} 
-						echo '<dd class="indent"><a class="', $class, '" href="', PrintReady(urlencode('ged_config.php?ctype=gedcom&ged='.$gedcom_title->gedcom_name)), '">', PrintReady($gedcom_title->gedcom_title, true),'</a></dd>';
+						echo '<dd class="indent"><a class="', $class, '" href="ged_config.php?ctype=gedcom&amp;ged='.rawurlencode($gedcom_title->gedcom_name), '">', $gedcom_title->gedcom_title,'</a></dd>';
 						
 					}
 				}

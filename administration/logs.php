@@ -173,13 +173,13 @@ echo
 	'<p align="center">',
 		i18n::translate('%d Results', $total_rows);
 		$url=
-			WT_SCRIPT_NAME.'?from='.urlencode($from).
-			'&amp;to='.urlencode($to).
-			'&amp;type='.urlencode($type).
-			'&amp;text='.urlencode($text).
-			'&amp;ip='.urlencode($ip).
-			'&amp;user='.urlencode($user).
-			'&amp;gedc='.urlencode($gedc);
+			WT_SCRIPT_NAME.'?from='.rawurlencode($from).
+			'&amp;to='.rawurlencode($to).
+			'&amp;type='.rawurlencode($type).
+			'&amp;text='.rawurlencode($text).
+			'&amp;ip='.rawurlencode($ip).
+			'&amp;user='.rawurlencode($user).
+			'&amp;gedc='.rawurlencode($gedc);
 
 //		if (WT_USER_IS_ADMIN) {
 			echo '&nbsp;-&nbsp;<a href="', $url, '&amp;export=yes">', i18n::translate('Export'), '</a>';
