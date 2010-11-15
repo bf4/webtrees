@@ -129,9 +129,9 @@ echo
 		'</dl>',
 		'<dl><dt><a href="admin_modules.php">', i18n::translate('Modules'), '</a></dt',
 			'<dd><a href="admin_modules.php">', i18n::translate('Manage modules'), '</a></dd>',
-			'<dd class="indent"><a href="#">', i18n::translate('Tabs - manage'), '</a></dd>',
-			'<dd class="indent"><a href="#">', i18n::translate('Sidebar - manage'), '</a></dd>',
-			'<dd class="indent"><a href="#">', i18n::translate('Menus - manage'), '</a></dd>',
+			'<dd class="indent"><a href="admin_modules.php#tabs">', i18n::translate('Tabs - manage'), '</a></dd>',
+			'<dd class="indent"><a href="admin_modules.php#sidebars">', i18n::translate('Sidebar - manage'), '</a></dd>',
+			'<dd class="indent"><a href="admin_modules.php#menus">', i18n::translate('Menus - manage'), '</a></dd>',
 			'<dd>----------------------------</dd>';
 			foreach (WT_Module::getInstalledModules() as $module) {
 				$status=WT_DB::prepare("SELECT status FROM `##module` WHERE module_name=?")->execute(array($module->getName()))->fetchOne();
