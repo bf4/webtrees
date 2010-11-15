@@ -30,9 +30,9 @@
  */
 
 /* general styles */
-body { font-size: 12px; margin: 0 50px;}
+body { font-size: 12px; margin: 10px;}
 a.current { color: #E17009;}
-a:hover { color: red;}
+a:hover { color: red; cursor:hand;}
 input, textarea {	color: black; padding-left: 3px; padding-right: 3px;}
 fieldset {margin: 8px 8px 4px 8px;}
 legend {color:#81A9CB; font-style: italic; font-weight:bold;	padding: 0 5px 5px; align: top;}
@@ -64,6 +64,19 @@ img {border:none;}
 /* content wrapper */
 #admin_content {margin-left:220px;}
 
+/* JEditable styles for site config */
+.s {width:100%; display:block; /* background:url(../themes/fab/images/edit_sm.png) no-repeat right;*/}
+.editable:hover { color: red; cursor:pointer;}
+.editable input, select {padding:0;}
+.editable button {font-size:95%; font-weight:bold 84%; margin: 1px; padding:0 5px; background-color:#dfeffc; border:1px solid; border-color:#d3d3d3 #808080 #808080 #d3d3d3;}
+.editable button:hover  {border-color:#808080 #d3d3d3 #d3d3d3 #808080;}
+.server {width: 700px; margin:0 0 0 20px;} /* table */
+.server th { background-color:#d1d9ef; text-align:left; padding:8px 0 1px 3px;} /* sub-headings, both cols */
+.server th+th { font-style:italic;} /* sub-headings, right col */
+.server td {background-color:#dfeffc; white-space:normal;padding:3px;} /* left-col */
+.server td+td {background-color:#dcdcdc; width:250px;} /* right/col */
+
+
 /* Jquery table "list" used for User List" */
 table#list   {width: 100%}
 #list th {text-align:left;}
@@ -74,7 +87,10 @@ table#list   {width: 100%}
 #list .date {font-size: 80%;}
 .dataTables_paginate {float: right;text-align: right;}
 .paging_full_numbers .fg-button {cursor:pointer;padding: 2px 6px;}
-	
+img.open {width:11px;}
+td.details {background-color:#D1CFD0;border:2px solid #A19B9E;}
+
+
 /* GEDCOM config tables */
 .facts_table {text-align: left;width:100%;}
 .config {}
