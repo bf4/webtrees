@@ -22,7 +22,7 @@
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'readme.php');
+define('WT_SCRIPT_NAME', 'administration/readme.php');
 require '../includes/session.php';
 require 'admin_functions.php';
 
@@ -59,4 +59,3 @@ foreach ($arr as $value) {
 	
 echo '</div>';
 include 'admin_footer.php';
-?>

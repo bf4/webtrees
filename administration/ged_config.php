@@ -29,7 +29,7 @@
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'ged_config.php');
+define('WT_SCRIPT_NAME', 'administration/ged_config.php');
 require '../includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 require 'admin_functions.php';
@@ -1710,4 +1710,3 @@ case 'update':
 <br />
 <?php
 include 'admin_footer.php';
-?>

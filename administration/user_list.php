@@ -29,7 +29,7 @@
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'user_admin.php');
+define('WT_SCRIPT_NAME', 'administration/user_admin.php');
 require '../includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 require 'admin_functions.php';
@@ -246,4 +246,3 @@ ob_start();
 		'</table>';
 	include 'admin_footer.php';
 ob_flush();
-?>

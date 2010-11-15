@@ -27,7 +27,7 @@
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'admin_modules.php');
+define('WT_SCRIPT_NAME', 'administration/admin_modules.php');
 require '../includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 require 'admin_functions.php';
@@ -706,4 +706,3 @@ admin_header(i18n::translate('Module administration'));
 </div>
 <?php
 include 'admin_footer.php';
-?>

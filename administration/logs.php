@@ -24,7 +24,7 @@
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'logs.php');
+define('WT_SCRIPT_NAME', 'administration/logs.php');
 require '../includes/session.php';
 require 'admin_functions.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
@@ -214,4 +214,3 @@ echo
 	'</table>';
 }
 include 'admin_footer.php';
-?>

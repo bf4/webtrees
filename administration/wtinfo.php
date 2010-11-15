@@ -27,7 +27,7 @@
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'wtinfo.php');
+define('WT_SCRIPT_NAME', 'administration/wtinfo.php');
 require '../includes/session.php';
 require 'admin_functions.php';
 
@@ -83,4 +83,3 @@ if ($action == "phpinfo") {
 }
 
 include 'admin_footer.php';
-?>

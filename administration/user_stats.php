@@ -29,7 +29,7 @@
  * @version $Id: user_info.php 9190 2010-07-28 02:50:49Z nigel $
  */
 
-define('WT_SCRIPT_NAME', 'administration.php');
+define('WT_SCRIPT_NAME', 'administration/administration.php');
 require '../includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 require_once WT_ROOT.'includes/classes/class_stats.php';
@@ -118,7 +118,7 @@ echo '<h1>', i18n::translate('User information'), '</h1>',
 				$ind = 1;
 				echo '<tr><td class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 				if ($geds["number"] == 0) echo $geds["name"];
-				else echo "<a href=\"", encode_url("user_admin.php?action=listusers&filter=gedadmin&ged=".$geds["ged"]), "\">", $geds["name"], "</a>";
+				else echo "<a href=\"", "user_admin.php?action=listusers&amp;filter=gedadmin&amp;ged=".rawurlencode($geds["ged"]), "\">", $geds["name"], "</a>";
 				echo '</td><td class="" colspan="2">', $geds["number"], '</td></tr>';
 			}
 		echo '<tr>',
@@ -156,4 +156,3 @@ echo '<h1>', i18n::translate('User information'), '</h1>',
 '</div>',
 '<br />';
 include 'admin_footer.php';
-?>

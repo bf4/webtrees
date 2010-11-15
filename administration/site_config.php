@@ -24,7 +24,7 @@
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'site_config.php');
+define('WT_SCRIPT_NAME', 'administration/site_config.php');
 require '../includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 require 'admin_functions.php';
@@ -167,4 +167,3 @@ echo
 	'<td class="topbottombar" colspan="2"><button type="submit" class="myButton" >', i18n::translate('Save'), '</button></td>',
 	'</tr></table></form>';
 include 'admin_footer.php';
-?>

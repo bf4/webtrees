@@ -29,7 +29,7 @@
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'user_admin.php');
+define('WT_SCRIPT_NAME', 'administration/user_admin.php');
 require '../includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 require 'admin_functions.php';
@@ -183,7 +183,7 @@ if ($action=='createuser' || $action=='edituser2') {
 				addMessage($message); */
 			}
 			// Reload the form cleanly, to allow the user to verify their changes
-			header("Location: ".encode_url("user_admin.php?action=edituser&username={$username}&ged={$ged}", false));
+			header("Location: user_admin.php?action=edituser&username=".rawurlencode($username)."&ged=".rawurlencode($ged));
 			exit;
 		}
 	}
@@ -245,7 +245,7 @@ if ($action=="edituser") {
 	<table class="center list_table width80 <?php echo $TEXT_DIRECTION; ?>">
 	<tr><td class="topbottombar" colspan="2">
 	<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Update user account'); ?>" />
-	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Back'); ?>" onclick="window.location='<?php echo encode_url("user_admin.php?action=listusers&sort={$sort}&filter={$filter}&usrlang={$usrlang}"); ?>';"/>
+	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Back'); ?>" onclick="window.location='<?php echo "user_admin.php?action=listusers&amp;sort={$sort}&amp;filter={$filter}&amp;usrlang={$usrlang}"; ?>';"/>
 	</td></tr>
 	<tr>
 	<td class="descriptionbox width20 wrap"><?php echo i18n::translate('User name'), help_link('useradmin_username'); ?></td>
@@ -280,7 +280,7 @@ if ($action=="edituser") {
 		$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
 		$person=Person::getInstance($pid);
 		if ($person) {
-			echo ' <span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady($person->getFullName()), '</a>', $person->format_first_major_fact(WT_EVENTS_BIRT, 1), $person->format_first_major_fact(WT_EVENTS_DEAT, 1), '</span>';
+			echo ' <span class="list_item"><a href="', $person->getHtmlUrl(), '">', PrintReady($person->getFullName()), '</a>', $person->format_first_major_fact(WT_EVENTS_BIRT, 1), $person->format_first_major_fact(WT_EVENTS_DEAT, 1), '</span>';
 		}
 		echo "</td></tr>";
 		} ?> 
@@ -301,7 +301,7 @@ if ($action=="edituser") {
 		$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
 		$person=Person::getInstance($pid);
 		if ($person) {
-			echo ' <span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady($person->getFullName()), '</a>', $person->format_first_major_fact(WT_EVENTS_BIRT, 1), $person->format_first_major_fact(WT_EVENTS_DEAT, 1), '</span>';
+			echo ' <span class="list_item"><a href="', $person->getHtmlUrl(), '">', PrintReady($person->getFullName()), '</a>', $person->format_first_major_fact(WT_EVENTS_BIRT, 1), $person->format_first_major_fact(WT_EVENTS_DEAT, 1), '</span>';
 		}
 		?>
 		</td></tr>
@@ -407,7 +407,7 @@ if ($action=="edituser") {
 	</tr>
 	<tr><td class="topbottombar" colspan="2">
 	<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Update user account'); ?>" />
-	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Back'); ?>" onclick="window.location='<?php echo encode_url("user_admin.php?action=listusers&sort={$sort}&filter={$filter}&usrlang={$usrlang}"); ?>';"/>
+	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Back'); ?>" onclick="window.location='<?php echo "user_admin.php?action=listusers&amp;sort={$sort}&amp;filter={$filter}&amp;usrlang={$usrlang}"; ?>';"/>
 	</td></tr>
 	</table>
 	</form>
@@ -607,4 +607,3 @@ if ($action == "createform") {
 //	print_footer();
 	exit;
 }
-?>

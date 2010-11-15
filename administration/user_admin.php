@@ -29,7 +29,7 @@
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'user_admin.php');
+define('WT_SCRIPT_NAME', 'administration/user_admin.php');
 require '../includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 require 'admin_functions.php';
@@ -196,7 +196,7 @@ if ($action=='createuser' || $action=='edituser2') {
 				addMessage($message); */
 			}
 			// Reload the form cleanly, to allow the user to verify their changes
-			header("Location: ".encode_url("user_admin.php?action=edituser&username={$username}&ged={$ged}", false));
+			header("Location: user_admin.php?action=edituser&username=".rawurlencode($username)."&ged=".rawurlencode($ged));
 			exit;
 		}
 	}
@@ -258,7 +258,7 @@ if ($action=="edituser") {
 	<table class="center list_table width80 <?php echo $TEXT_DIRECTION; ?>">
 	<tr><td class="topbottombar" colspan="2">
 	<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Update user account'); ?>" />
-	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Back'); ?>" onclick="window.location='<?php echo encode_url("user_admin.php?action=listusers&sort={$sort}&filter={$filter}&usrlang={$usrlang}"); ?>';"/>
+	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Back'); ?>" onclick="window.location='<?php echo "user_admin.php?action=listusers&amp;sort={$sort}&amp;filter={$filter}&amp;usrlang={$usrlang}"; ?>';"/>
 	</td></tr>
 	<tr>
 	<td class="descriptionbox width20 wrap"><?php echo i18n::translate('User name'), help_link('useradmin_username'); ?></td>
@@ -293,7 +293,7 @@ if ($action=="edituser") {
 		$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
 		$person=Person::getInstance($pid);
 		if ($person) {
-			echo ' <span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady($person->getFullName()), '</a>', $person->format_first_major_fact(WT_EVENTS_BIRT, 1), $person->format_first_major_fact(WT_EVENTS_DEAT, 1), '</span>';
+			echo ' <span class="list_item"><a href="', $person->getHtmlUrl(), '">', PrintReady($person->getFullName()), '</a>', $person->format_first_major_fact(WT_EVENTS_BIRT, 1), $person->format_first_major_fact(WT_EVENTS_DEAT, 1), '</span>';
 		}
 		echo "</td></tr>";
 		} ?> 
@@ -314,7 +314,7 @@ if ($action=="edituser") {
 		$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
 		$person=Person::getInstance($pid);
 		if ($person) {
-			echo ' <span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady($person->getFullName()), '</a>', $person->format_first_major_fact(WT_EVENTS_BIRT, 1), $person->format_first_major_fact(WT_EVENTS_DEAT, 1), '</span>';
+			echo ' <span class="list_item"><a href="', $person->getHtmlUrl(), '">', PrintReady($person->getFullName()), '</a>', $person->format_first_major_fact(WT_EVENTS_BIRT, 1), $person->format_first_major_fact(WT_EVENTS_DEAT, 1), '</span>';
 		}
 		?>
 		</td></tr>
@@ -420,7 +420,7 @@ if ($action=="edituser") {
 	</tr>
 	<tr><td class="topbottombar" colspan="2">
 	<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Update user account'); ?>" />
-	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Back'); ?>" onclick="window.location='<?php echo encode_url("user_admin.php?action=listusers&sort={$sort}&filter={$filter}&usrlang={$usrlang}"); ?>';"/>
+	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Back'); ?>" onclick="window.location='<?php echo "user_admin.php?action=listusers&amp;sort={$sort}&amp;filter={$filter}&amp;usrlang={$usrlang}"; ?>';"/>
 	</td></tr>
 	</table>
 	</form>
@@ -513,7 +513,7 @@ if ($action == "listusers") {
 					}
 					echo '</td>';
 					$userName = getUserFullName($user_id);
-					echo "\t<td><a class=\"edit_link\" href=\"", encode_url("user_admin.php?action=edituser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" title=\"", i18n::translate('Edit'), "\">", $userName;
+					echo "\t<td><a class=\"edit_link\" href=\"", "user_admin.php?action=edituser&amp;username={$user_name}&amp;sort={$sort}&amp;filter={$filter}&amp;usrlang={$usrlang}&amp;ged=", rawurlencode($ged), "\" title=\"", i18n::translate('Edit'), "\">", $userName;
 					if ($TEXT_DIRECTION=="ltr") echo getLRM();
 					else                        echo getRLM();
 					echo "</a></td>\n";
@@ -576,7 +576,7 @@ if ($action == "listusers") {
 					echo '</td>',
 					'<td>';
 						if (WT_USER_ID!=$user_id)
-							echo "<a href=\"", encode_url("user_admin.php?action=deleteuser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" onclick=\"return confirm('", i18n::translate('Are you sure you want to delete the user'), " $user_name');\"><img src=\"images/delete_user.png\" alt=\"", i18n::translate('Delete'), "\" title=\"", i18n::translate('Delete'), "\" /></a>";
+							echo "<a href=\"", "user_admin.php?action=deleteuser&amp;username={$user_name}&amp;sort={$sort}&amp;filter={$filter}&amp;usrlang={$usrlang}&amp;ged=", rawurlencode($ged), "\" onclick=\"return confirm('", i18n::translate('Are you sure you want to delete the user'), " $user_name');\"><img src=\"images/delete_user.png\" alt=\"", i18n::translate('Delete'), "\" title=\"", i18n::translate('Delete'), "\" /></a>";
 					echo '</td>',
 				'</tr>';
 				}
@@ -908,111 +908,110 @@ echo '<p class="center"><input TYPE="button" VALUE="', i18n::translate('Return t
 	 '<h2 class="center">', i18n::translate('User administration'), '</h2>';
 ?>
 <table class="center list_table width40 <?php echo $TEXT_DIRECTION; ?>">
-	<tr>
-		<td colspan="3" class="topbottombar"><?php echo i18n::translate('Select an option below:'); ?></td>
-	</tr>
-	<tr>
-		<td class="optionbox"><a href="user_admin.php?action=listusers"><?php echo i18n::translate('User List'); ?></a></td>
-		<td class="optionbox width50" colspan="2" ><a href="user_admin.php?action=createform"><?php echo i18n::translate('Add a new user'); ?></a></td>
-	</tr>
-	<tr>
-		<td class="optionbox"><a href="user_admin.php?action=cleanup"><?php echo i18n::translate('Cleanup users'); ?></a></td>
-		<td class="optionbox" colspan="2" ><a href="javascript: <?php echo i18n::translate('Send message to all users'); ?>" onclick="message('all', 'messaging2', '', ''); return false;"><?php echo i18n::translate('Send message to all users'); ?></a></td>
-	</tr>
-		<td class="optionbox" colspan="3"><a href="javascript: <?php echo i18n::translate('Send message to users who have never logged in'); ?>" onclick="message('never_logged', 'messaging2', '', ''); return false;"><?php echo i18n::translate('Send message to users who have never logged in'); ?></a></td>
-	</tr>
-	<tr>
-		<td class="optionbox" colspan="3"><a href="javascript: <?php echo i18n::translate('Send message to users who have not logged in for 6 months'); ?>" onclick="message('last_6mo', 'messaging2', '', ''); return false;"><?php echo i18n::translate('Send message to users who have not logged in for 6 months'); ?></a></td>
-	</tr>
-	<tr>
-		<td colspan="3" class="topbottombar"><?php echo i18n::translate('Informational'); ?></td>
-	</tr>
-	<tr>
-	<td class="optionbox" colspan="3">
-	<?php
-	$totusers = 0;			// Total number of users
-	$warnusers = 0;			// Users with warning
-	$applusers = 0;			// Users who have not verified themselves
-	$nverusers = 0;			// Users not verified by admin but verified themselves
-	$adminusers = 0;		// Administrators
-	$userlang = array();	// Array for user languages
-	$gedadmin = array();	// Array for gedcom admins
-	foreach(get_all_users() as $user_id=>$user_name) {
-		$totusers = $totusers + 1;
-		if (((date("U") - (int)get_user_setting($user_id, 'reg_timestamp')) > 604800) && !get_user_setting($user_id, 'verified')) $warnusers++;
+<tr>
+	<td colspan="3" class="topbottombar"><?php echo i18n::translate('Select an option below:'); ?></td>
+</tr>
+<tr>
+	<td class="optionbox"><a href="user_admin.php?action=listusers"><?php echo i18n::translate('User List'); ?></a></td>
+	<td class="optionbox width50" colspan="2" ><a href="user_admin.php?action=createform"><?php echo i18n::translate('Add a new user'); ?></a></td>
+</tr>
+<tr>
+	<td class="optionbox"><a href="user_admin.php?action=cleanup"><?php echo i18n::translate('Cleanup users'); ?></a></td>
+	<td class="optionbox" colspan="2" ><a href="javascript: <?php echo i18n::translate('Send message to all users'); ?>" onclick="message('all', 'messaging2', '', ''); return false;"><?php echo i18n::translate('Send message to all users'); ?></a></td>
+</tr>
+	<td class="optionbox" colspan="3"><a href="javascript: <?php echo i18n::translate('Send message to users who have never logged in'); ?>" onclick="message('never_logged', 'messaging2', '', ''); return false;"><?php echo i18n::translate('Send message to users who have never logged in'); ?></a></td>
+</tr>
+<tr>
+	<td class="optionbox" colspan="3"><a href="javascript: <?php echo i18n::translate('Send message to users who have not logged in for 6 months'); ?>" onclick="message('last_6mo', 'messaging2', '', ''); return false;"><?php echo i18n::translate('Send message to users who have not logged in for 6 months'); ?></a></td>
+</tr>
+<tr>
+	<td colspan="3" class="topbottombar"><?php echo i18n::translate('Informational'); ?></td>
+</tr>
+<tr>
+<td class="optionbox" colspan="3">
+<?php
+$totusers = 0;			// Total number of users
+$warnusers = 0;			// Users with warning
+$applusers = 0;			// Users who have not verified themselves
+$nverusers = 0;			// Users not verified by admin but verified themselves
+$adminusers = 0;		// Administrators
+$userlang = array();	// Array for user languages
+$gedadmin = array();	// Array for gedcom admins
+foreach(get_all_users() as $user_id=>$user_name) {
+	$totusers = $totusers + 1;
+	if (((date("U") - (int)get_user_setting($user_id, 'reg_timestamp')) > 604800) && !get_user_setting($user_id, 'verified')) $warnusers++;
+	else {
+		if (get_user_setting($user_id, 'comment_exp')) {
+			if ((strtotime(get_user_setting($user_id, 'comment_exp')) != "-1") && (strtotime(get_user_setting($user_id, 'comment_exp')) < time("U"))) $warnusers++;
+		}
+	}
+	if (!get_user_setting($user_id, 'verified_by_admin') && get_user_setting($user_id, 'verified')) {
+		$nverusers++;
+	}
+	if (!get_user_setting($user_id, 'verified')) {
+		$applusers++;
+	}
+	if (get_user_setting($user_id, 'canadmin')) {
+		$adminusers++;
+	}
+	foreach ($all_gedcoms as $ged_id=>$ged_name) {
+		if (get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin') {
+			$title=PrintReady(strip_tags(get_gedcom_setting($ged_id, 'title')));
+			if (isset($gedadmin[$title])) {
+				$gedadmin[$title]["number"]++;
+			} else {
+				$gedadmin[$title]["name"] = $title;
+				$gedadmin[$title]["number"] = 1;
+				$gedadmin[$title]["ged"] = $ged_name;
+			}
+		}
+	}
+	if ($user_lang=get_user_setting($user_id, 'language')) {
+		if (isset($userlang[$user_lang]))
+			$userlang[$user_lang]["number"]++;
 		else {
-			if (get_user_setting($user_id, 'comment_exp')) {
-				if ((strtotime(get_user_setting($user_id, 'comment_exp')) != "-1") && (strtotime(get_user_setting($user_id, 'comment_exp')) < time("U"))) $warnusers++;
-			}
-		}
-		if (!get_user_setting($user_id, 'verified_by_admin') && get_user_setting($user_id, 'verified')) {
-			$nverusers++;
-		}
-		if (!get_user_setting($user_id, 'verified')) {
-			$applusers++;
-		}
-		if (get_user_setting($user_id, 'canadmin')) {
-			$adminusers++;
-		}
-		foreach ($all_gedcoms as $ged_id=>$ged_name) {
-			if (get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin') {
-				$title=PrintReady(strip_tags(get_gedcom_setting($ged_id, 'title')));
-				if (isset($gedadmin[$title])) {
-					$gedadmin[$title]["number"]++;
-				} else {
-					$gedadmin[$title]["name"] = $title;
-					$gedadmin[$title]["number"] = 1;
-					$gedadmin[$title]["ged"] = $ged_name;
-				}
-			}
-		}
-		if ($user_lang=get_user_setting($user_id, 'language')) {
-			if (isset($userlang[$user_lang]))
-				$userlang[$user_lang]["number"]++;
-			else {
-				$userlang[$user_lang]["langname"] = Zend_Locale::getTranslation($user_lang, 'language', WT_LOCALE);
-				$userlang[$user_lang]["number"] = 1;
-			}
+			$userlang[$user_lang]["langname"] = Zend_Locale::getTranslation($user_lang, 'language', WT_LOCALE);
+			$userlang[$user_lang]["number"] = 1;
 		}
 	}
-	echo "<table class=\"width100 $TEXT_DIRECTION\">";
-	echo "<tr><td class=\"font11\">", i18n::translate('Total number of users'), "</td><td class=\"font11\">", $totusers, "</td></tr>";
+}
+echo "<table class=\"width100 $TEXT_DIRECTION\">";
+echo "<tr><td class=\"font11\">", i18n::translate('Total number of users'), "</td><td class=\"font11\">", $totusers, "</td></tr>";
 
+echo "<tr><td class=\"font11\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+if ($adminusers == 0) echo i18n::translate('Site Administrators');
+else echo "<a href=\"user_admin.php?action=listusers&amp;filter=adminusers\">", i18n::translate('Site Administrators'), "</a>";
+echo "</td><td class=\"font11\">", $adminusers, "</td></tr>";
+
+echo "<tr><td class=\"font11\">", i18n::translate('GEDCOM Administrators'), "</td></tr>";
+asort($gedadmin);
+$ind = 0;
+foreach ($gedadmin as $key=>$geds) {
+	if ($ind !=0) echo "<td class=\"font11\"></td>";
+	$ind = 1;
 	echo "<tr><td class=\"font11\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-	if ($adminusers == 0) echo i18n::translate('Site Administrators');
-	else echo "<a href=\"user_admin.php?action=listusers&amp;filter=adminusers\">", i18n::translate('Site Administrators'), "</a>";
-	echo "</td><td class=\"font11\">", $adminusers, "</td></tr>";
+	if ($geds["number"] == 0) echo $geds["name"];
+	else echo "<a href=\"", "user_admin.php?action=listusers&amp;filter=gedadmin&amp;ged=".rawurlencode($geds["ged"]), "\">", $geds["name"], "</a>";
+	echo "</td><td class=\"font11\">", $geds["number"], "</td></tr>";
+}
+echo "<tr><td class=\"font11\"></td></tr><tr><td class=\"font11\">";
+if ($warnusers == 0) echo i18n::translate('Users with warnings');
+else echo "<a href=\"user_admin.php?action=listusers&amp;filter=warnings\">", i18n::translate('Users with warnings'), "</a>";
+echo "</td><td class=\"font11\">", $warnusers, "</td></tr>";
 
-	echo "<tr><td class=\"font11\">", i18n::translate('GEDCOM Administrators'), "</td></tr>";
-	asort($gedadmin);
-	$ind = 0;
-	foreach ($gedadmin as $key=>$geds) {
-		if ($ind !=0) echo "<td class=\"font11\"></td>";
-		$ind = 1;
-		echo "<tr><td class=\"font11\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-		if ($geds["number"] == 0) echo $geds["name"];
-		else echo "<a href=\"", encode_url("user_admin.php?action=listusers&filter=gedadmin&ged=".$geds["ged"]), "\">", $geds["name"], "</a>";
-		echo "</td><td class=\"font11\">", $geds["number"], "</td></tr>";
-	}
-	echo "<tr><td class=\"font11\"></td></tr><tr><td class=\"font11\">";
-	if ($warnusers == 0) echo i18n::translate('Users with warnings');
-	else echo "<a href=\"user_admin.php?action=listusers&amp;filter=warnings\">", i18n::translate('Users with warnings'), "</a>";
-	echo "</td><td class=\"font11\">", $warnusers, "</td></tr>";
+echo "<tr><td class=\"font11\">";
+if ($applusers == 0) echo i18n::translate('Unverified by User');
+else echo "<a href=\"user_admin.php?action=listusers&amp;filter=usunver\">", i18n::translate('Unverified by User'), "</a>";
+echo "</td><td class=\"font11\">", $applusers, "</td></tr>";
 
-	echo "<tr><td class=\"font11\">";
-	if ($applusers == 0) echo i18n::translate('Unverified by User');
-	else echo "<a href=\"user_admin.php?action=listusers&amp;filter=usunver\">", i18n::translate('Unverified by User'), "</a>";
-	echo "</td><td class=\"font11\">", $applusers, "</td></tr>";
+echo "<tr><td class=\"font11\">";
+if ($nverusers == 0) echo i18n::translate('Unverified by Administrator');
+else echo "<a href=\"user_admin.php?action=listusers&amp;filter=admunver\">", i18n::translate('Unverified by Administrator'), "</a>";
+echo "</td><td class=\"font11\">", $nverusers, "</td></tr>";
 
-	echo "<tr><td class=\"font11\">";
-	if ($nverusers == 0) echo i18n::translate('Unverified by Administrator');
-	else echo "<a href=\"user_admin.php?action=listusers&amp;filter=admunver\">", i18n::translate('Unverified by Administrator'), "</a>";
-	echo "</td><td class=\"font11\">", $nverusers, "</td></tr>";
-
-	echo "<tr valign=\"middle\"><td class=\"font11\">", i18n::translate('Users\' languages'), "</td>";
-	foreach ($userlang as $key=>$ulang) {
-		echo '<td><a href="user_admin.php?action=listusers&amp;filter=language&amp;usrlang=', $key, '">', $ulang['langname'], '</a></td><td>', $ulang['number'], '</td></tr><tr class="vmiddle"><td></td>';
-	}
-	echo "</tr></table>";
-	echo "</td></tr></table>";
-	?>
+echo "<tr valign=\"middle\"><td class=\"font11\">", i18n::translate('Users\' languages'), "</td>";
+foreach ($userlang as $key=>$ulang) {
+	echo '<td><a href="user_admin.php?action=listusers&amp;filter=language&amp;usrlang=', $key, '">', $ulang['langname'], '</a></td><td>', $ulang['number'], '</td></tr><tr class="vmiddle"><td></td>';
+}
+echo "</tr></table>";
+echo "</td></tr></table>";

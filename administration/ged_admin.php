@@ -22,7 +22,7 @@
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'ged_admin.php');
+define('WT_SCRIPT_NAME', 'administration/ged_admin.php');
 require '../includes/session.php';
 require 'admin_functions.php';
 
@@ -359,4 +359,4 @@ foreach ($gedcoms as $gedcom) {
 				'</div>';
 		}
 //}
-	include 'admin_footer.php';
+include 'admin_footer.php';

@@ -29,7 +29,7 @@
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'help_text.php');
+define('WT_SCRIPT_NAME', 'administration/help_text.php');
 require '../includes/session.php';
 
 $help=safe_GET('help');
@@ -4274,4 +4274,3 @@ echo '<a href="help_text.php?help=help_contents_help"><b>', i18n::translate('Hel
 echo '<a href="javascript:;" onclick="window.close();"><b>', i18n::translate('Close Window'), '</b></a>';
 echo '</div>';
 print_simple_footer();
-?>
