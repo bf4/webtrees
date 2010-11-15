@@ -90,7 +90,7 @@ echo
 // Side menu 
 echo
 	'<div id="admin_menu" class="ui-widget-content">',
-		'<dl><dt><a href="ged_config.php">', i18n::translate('Administration'), '</a></dt></dl>',
+		'<dl><dt><a href="index.php">', i18n::translate('Administration'), '</a></dt></dl>',
 		'<dl><dt><a href="../index.php?ctype=user">', i18n::translate('Back to My Page'), '</dt></dl>',	
 		'<dl>',
 			'<dt>';
