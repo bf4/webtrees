@@ -39,19 +39,9 @@ echo
 	'<title>', htmlspecialchars($title), '</title>',
 	'<link rel="shortcut icon" href="', $FAVICON, '" type="image/x-icon" />',
 	'<link type="text/css" href="css/redmond/jquery-ui-1.8.5.custom.css" rel="stylesheet" />',
-	'<link rel="stylesheet" href="admin_style.css" type="text/css" media="all" />';
-//	'<link rel="stylesheet" href="../js/jquery/css/jquery-ui.custom.css" type="text/css" />';
-		
-echo
-	'<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>',
-	'<script type="text/javascript" src="js/jquery-ui-1.8.5.custom.min.js"></script>';
-
-echo $javascript;
-echo $head; //-- additional header information
-echo
-	'<script type="text/javascript" src="../js/jquery/jquery.min.js"></script>',
-	'<script type="text/javascript" src="../js/jquery/jquery-ui.min.js"></script>',
-	'<script type="text/javascript" src="../js/jquery/jquery.dataTables.js"></script>';
+	'<link rel="stylesheet" href="admin_style.css" type="text/css" media="all" />',
+	$javascript,
+	$head; //-- additional header information
 ?>
 <script type="text/javascript">
 
