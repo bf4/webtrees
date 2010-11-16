@@ -26,7 +26,7 @@
 
 define('WT_SCRIPT_NAME', 'administration/logs.php');
 require '../includes/session.php';
-require 'admin_functions.php';
+require WT_ROOT.'administration/admin_functions.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 
 // Only admin users can access this page

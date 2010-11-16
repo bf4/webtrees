@@ -32,8 +32,9 @@
 define('WT_SCRIPT_NAME', 'administration/administration.php');
 require '../includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
-require_once WT_ROOT.'includes/classes/class_stats.php';
-require 'admin_functions.php';
+require WT_ROOT.'includes/classes/class_stats.php';
+require WT_ROOT.'administration/admin_functions.php';
+
 $INDEX_DIRECTORY=get_site_setting('INDEX_DIRECTORY');
 
 $stats=new stats(WT_GEDCOM);

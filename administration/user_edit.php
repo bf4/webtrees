@@ -32,7 +32,7 @@
 define('WT_SCRIPT_NAME', 'administration/user_admin.php');
 require '../includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
-require 'admin_functions.php';
+require WT_ROOT.'administration/admin_functions.php';
 
 // Only admin users can access this page
 //if (!WT_USER_IS_ADMIN) {

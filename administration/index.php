@@ -27,9 +27,12 @@
 define('WT_SCRIPT_NAME', 'administration/index.php');
 require '../includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
-require 'admin_functions.php';
+require WT_ROOT.'administration/admin_functions.php';
 
 admin_header(i18n::translate(WT_WEBTREES));
 
+// Show "about webtrees" information
+
+// This is the place for the "check for updated versions of webtrees" code
 
 include 'admin_footer.php';

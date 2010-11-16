@@ -24,7 +24,7 @@
 
 define('WT_SCRIPT_NAME', 'administration/ged_admin.php');
 require '../includes/session.php';
-require 'admin_functions.php';
+require WT_ROOT.'administration/admin_functions.php';
 
 admin_header(i18n::translate('GEDCOM management'));
 echo '<h1>', i18n::translate('GEDCOM management'), '</h1>';

@@ -24,7 +24,7 @@
 
 define('WT_SCRIPT_NAME', 'administration/readme.php');
 require '../includes/session.php';
-require 'admin_functions.php';
+require WT_ROOT.'administration/admin_functions.php';
 
 function get_tag($txt,$tag){
 	$offset = 0;

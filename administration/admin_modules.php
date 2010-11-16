@@ -30,8 +30,7 @@
 define('WT_SCRIPT_NAME', 'administration/admin_modules.php');
 require '../includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
-require 'admin_functions.php';
-
+require WT_ROOT.'administration/admin_functions.php';
 
 //if (!WT_USER_GEDCOM_ADMIN) {
 //	header("Location: login.php?url=module_admin.php");
