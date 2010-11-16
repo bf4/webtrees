@@ -70,17 +70,20 @@ case 'user_list':
 		$ORDER_BY='';
 	}
 
+	// This becomes a JSON list, not array, so need to fetch with numeric keys.
 	$aaData=WT_DB::prepare(
 		"SELECT SQL_CALC_FOUND_ROWS u.user_id AS user_id, real_name, user_name, email,".
-		" FROM_UNIXTIME(us1.setting_value) AS reg_timestamp,".
-		" FROM_UNIXTIME(us2.setting_value) AS sessiontime,".
-		" us3.setting_value AS verified,".
-		" us4.setting_value AS verified_by_admin".
+		" us1.setting_value AS language,".
+		" FROM_UNIXTIME(us2.setting_value) AS reg_timestamp,".
+		" FROM_UNIXTIME(us3.setting_value) AS sessiontime,".
+		" us4.setting_value AS verified,".
+		" us5.setting_value AS verified_by_admin".
 		" FROM `##user` u".
-		" LEFT JOIN `##user_setting` us1 ON (u.user_id=us1.user_id AND us1.setting_name='reg_timestamp')".
-		" LEFT JOIN `##user_setting` us2 ON (u.user_id=us2.user_id AND us2.setting_name='sessiontime')".
-		" LEFT JOIN `##user_setting` us3 ON (u.user_id=us3.user_id AND us3.setting_name='verified')".
-		" LEFT JOIN `##user_setting` us4 ON (u.user_id=us4.user_id AND us4.setting_name='verified_by_admin')".
+		" LEFT JOIN `##user_setting` us1 ON (u.user_id=us1.user_id AND us1.setting_name='language')".
+		" LEFT JOIN `##user_setting` us2 ON (u.user_id=us2.user_id AND us2.setting_name='reg_timestamp')".
+		" LEFT JOIN `##user_setting` us3 ON (u.user_id=us3.user_id AND us3.setting_name='sessiontime')".
+		" LEFT JOIN `##user_setting` us4 ON (u.user_id=us4.user_id AND us4.setting_name='verified')".
+		" LEFT JOIN `##user_setting` us5 ON (u.user_id=us5.user_id AND us5.setting_name='verified_by_admin')".
 		$WHERE.
 		$ORDER_BY.
 		$LIMIT
@@ -91,13 +94,14 @@ case 'user_list':
 		$row[1]=edit_field_inline('user-real_name-'.$row[0], $row[1]);
 		$row[2]=edit_field_inline('user-user_name-'.$row[0], $row[2]);
 		$row[3]=edit_field_inline('user-email-'.    $row[0], $row[3]);
+		$row[4]=edit_field_language_inline('user_setting-language-'.    $row[0], $row[4]);
 		if ($row[0]==WT_USER_ID) {
-			$row[6]='-';
 			$row[7]='-';
+			$row[8]='-';
 		} else {
 			// Cannot approve/unapprove your own account
-			$row[6]=edit_field_yes_no_inline('user_setting-verified-'.         $row[0], $row[6]);
-			$row[7]=edit_field_yes_no_inline('user_setting-verified_by_admin-'.$row[0], $row[7]);
+			$row[7]=edit_field_yes_no_inline('user_setting-verified-'.         $row[0], $row[7]);
+			$row[8]=edit_field_yes_no_inline('user_setting-verified_by_admin-'.$row[0], $row[8]);
 		}
 	}
 
