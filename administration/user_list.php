@@ -216,6 +216,33 @@ ob_start();
 			}
 		}
 	}
+
+	echo
+		'<table id="list2">',
+		'<thead>',
+		'<tr>',
+		'<th>User ID</th>',
+		'<th>Real name</th>',
+		'<th>User name</th>',
+		'<th>Date registered</th>',
+		'<th>Last logged in</th>',
+		'<th>Verified</th>',
+		'<th>Verified by admin</th>',
+		'</tr>',
+		'</thead>',
+		'<tbody>',
+		'</tbody>',
+		'</table>',
+		WT_JS_START,
+		'jQuery(document).ready(function() {',
+		' jQuery("#list2").dataTable( {',
+		'  "bProcessing": true,',
+		'  "bServerSide": true,',
+		'  "sAjaxSource": "', WT_SERVER_NAME, WT_SCRIPT_PATH, 'load.php?src=user_list"',
+		' } );',
+		'} );',		
+		WT_JS_END;
+
 	// Then show the users
 	echo '<h2>', i18n::translate('List users'), '</h2>',
 		'<table id="list">',
