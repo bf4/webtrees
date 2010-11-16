@@ -40,8 +40,10 @@ case 'user_list':
 	$sSearch=safe_GET('sSearch');
 	if ($sSearch) {
 		$WHERE=
-			"real_name LIKE CONCAT('%', '" . WT_DB::quote($sSearch) . "', '%') OR " .
-			"user_name LIKE CONCAT('%', '" . WT_DB::quote($sSearch) . "', '%')";
+			" WHERE".
+			" real_name LIKE CONCAT('%', " . WT_DB::quote($sSearch) . ", '%') OR " .
+			" user_name LIKE CONCAT('%', " . WT_DB::quote($sSearch) . ", '%') OR " .
+			" email     LIKE CONCAT('%', " . WT_DB::quote($sSearch) . ", '%')";
 	} else {
 		$WHERE="";
 	}
@@ -68,7 +70,7 @@ case 'user_list':
 	}
 
 	$aaData=WT_DB::prepare(
-		"SELECT SQL_CALC_FOUND_ROWS u.user_id AS user_id, real_name, user_name,".
+		"SELECT SQL_CALC_FOUND_ROWS u.user_id AS user_id, real_name, user_name, email,".
 		" FROM_UNIXTIME(us1.setting_value) AS reg_timestamp,".
 		" FROM_UNIXTIME(us2.setting_value) AS sessiontime,".
 		" us3.setting_value AS verified,".
