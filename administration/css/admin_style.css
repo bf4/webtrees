@@ -31,7 +31,7 @@
 
 /* general styles */
 body { font-size:12px; margin:10px;}
-a.current { color:#E17009;}
+.ui-widget-content a.current { color:#E17009;}
 a:hover { color:red; cursor:hand;}
 input, textarea {	color:black; padding-left:3px; padding-right:3px;}
 fieldset {margin:8px 8px 4px 8px;}

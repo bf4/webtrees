@@ -92,8 +92,9 @@ echo
 				}
 		echo '</dl>',
 		'<dl><dt><a href="user_stats.php">', i18n::translate('Users'), '</a></dt',
-			'<dd><a href="user_stats.php">', i18n::translate('User Statistics'), '</a></dd>',
-			'<dd><a href="user_list.php">', i18n::translate('List users'), '</a></dd>',
+			'<dd><a href="user_stats.php">', i18n::translate('User Statistics'), '</a></dd>';
+			$class=""; if (curPageName()=='user_list.php') {$class="current";} 
+				echo '<dd><a class="' ,$class, '" href="user_list.php">', i18n::translate('List users'), '</a></dd>',
 			'<dd><a href="user_admin.php?action=createform">', i18n::translate('Add user'), '</a></dd>',
 			'<dd><a href="#">', i18n::translate('Bulk messaging'), '</a></dd>',
 		'</dl>',
