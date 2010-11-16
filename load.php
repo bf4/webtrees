@@ -23,6 +23,7 @@
 
 define('WT_SCRIPT_NAME', 'load.php');
 require './includes/session.php';
+require_once WT_ROOT.'includes/functions/functions_edit.php';
 
 // Header for an AJAX response.  There is no error/return value.
 // Invalid requests just get an empty response - same as no data.
@@ -84,6 +85,21 @@ case 'user_list':
 		$ORDER_BY.
 		$LIMIT
 	)->execute()->fetchAll(PDO::FETCH_NUM);
+
+	// Reformat various columns for display
+	foreach ($aaData as &$row) {
+		$row[1]=edit_field_inline('user-real_name-'.$row[0], $row[1]);
+		$row[2]=edit_field_inline('user-user_name-'.$row[0], $row[2]);
+		$row[3]=edit_field_inline('user-email-'.    $row[0], $row[3]);
+		if ($row[0]==WT_USER_ID) {
+			$row[6]='-';
+			$row[7]='-';
+		} else {
+			// Cannot approve/unapprove your own account
+			$row[6]=edit_field_yes_no_inline('user_setting-verified-'.         $row[0], $row[6]);
+			$row[7]=edit_field_yes_no_inline('user_setting-verified_by_admin-'.$row[0], $row[7]);
+		}
+	}
 
 	// Total filtered/unfiltered rows
 	$iTotalDisplayRecords=WT_DB::prepare("SELECT FOUND_ROWS()")->fetchOne();
