@@ -4,7 +4,7 @@
  * Use this stylesheet to customize the display of your site.
  * To learn more about CSS visit http://www.w3.org/TR/REC-CSS2/
  *
- * webtrees: Web based Family History software
+ * webtrees:Web based Family History software
  * Copyright (C) 2010 webtrees development team.
  *
  * Derived from PhpGedView
@@ -26,51 +26,51 @@
  *
  * @package webtrees
  * @subpackage Administration
- * @version $Id: admin_style.css 9851 2010-11-15 21:16:14Z nigel $
+ * @version $Id:admin_style.css 9851 2010-11-15 21:16:14Z nigel $
  */
 
 /* general styles */
-body { font-size: 12px; margin: 10px;}
-a.current { color: #E17009;}
-a:hover { color: red; cursor:hand;}
-input, textarea {	color: black; padding-left: 3px; padding-right: 3px;}
-fieldset {margin: 8px 8px 4px 8px;}
-legend {color:#81A9CB; font-style: italic; font-weight:bold;	padding: 0 5px 5px; align: top;}
+body { font-size:12px; margin:10px;}
+a.current { color:#E17009;}
+a:hover { color:red; cursor:hand;}
+input, textarea {	color:black; padding-left:3px; padding-right:3px;}
+fieldset {margin:8px 8px 4px 8px;}
+legend {color:#81A9CB; font-style:italic; font-weight:bold;	padding:0 5px 5px; align:top;}
 img {border:none;}
-.icon {border: none;	padding-left: 0pt;padding-right: 5pt;}
-.warning, .error, .red {	color: red;}
-.center {text-align: center;}
-.nowrap {white-space: nowrap;}
-.indent {padding-left: 15px;}
+.icon {border:none;	padding-left:0pt;padding-right:5pt;}
+.warning, .error, .red {	color:red;}
+.center {text-align:center;}
+.nowrap {white-space:nowrap;}
+.indent {padding-left:15px;}
 
 /* jQuery UI CSS customisations */
-.css_right {float: right;}
+.css_right {float:right;}
 .ui-toolbar {padding:5px;}
 
 /* Text direction */
-.ltr {text-align: left;}
-.rtl {text-align: right;	direction: rtl;}
+.ltr {text-align:left;}
+.rtl {text-align:right;	direction:rtl;}
 
 /* header styles */
-#admin_head  {height: 70px;	margin-bottom: 20px;}
-#logo {float: left; width: 300px; }
-#title  {text-align: center; color: #81A9CB; font-size: 18px; font-weight:bold; padding-top: 20px;}
-#info  {font-size: 12px; text-align: right; float: right; width: 350px; padding: 10px 10px 0 0; margin-bottom: 3px;}
+#admin_head  {height:70px;	margin-bottom:20px;}
+#logo {float:left; width:300px; }
+#title  {text-align:center; color:#81A9CB; font-size:18px; font-weight:bold; padding-top:20px;}
+#info  {font-size:12px; text-align:right; float:right; width:350px; padding:10px 10px 0 0; margin-bottom:3px;}
 
 /* side menu */
-#admin_menu {padding-left:5px; width: 200px; float: left; position: absolute; color: #2E6E9E;}
-#admin_menu dd  {margin-left: 25px;}
+#admin_menu {padding-left:5px; width:200px; float:left; position:absolute; color:#2E6E9E;}
+#admin_menu dd  {margin-left:25px;}
 
 /* content wrapper */
 #admin_content {margin-left:220px;}
 
 /* JEditable styles for site config */
 .editable {width:100%; display:block; /* background:url(../themes/fab/images/edit_sm.png) no-repeat right;*/}
-.editable:hover { color: red; cursor: pointer; cursor: hand;} /* both cursors needed for cross-browser support */
+.editable:hover { color:red; cursor:pointer; cursor:hand;} /* both cursors needed for cross-browser support */
 .editable input, select {padding:0;}
-.editable button {font-size:95%; font-weight:bold 84%; margin: 1px; padding:0 5px; background-color:#dfeffc; border:1px solid; border-color:#d3d3d3 #808080 #808080 #d3d3d3;}
+.editable button {font-size:95%; font-weight:bold 84%; margin:1px; padding:0 5px; background-color:#dfeffc; border:1px solid; border-color:#d3d3d3 #808080 #808080 #d3d3d3;}
 .editable button:hover  {border-color:#808080 #d3d3d3 #d3d3d3 #808080;}
-.site_config {width: 700px; margin:0 0 0 20px;} /* table */
+.site_config {width:700px; margin:0 0 0 20px;} /* table */
 .site_config th { background-color:#d1d9ef; text-align:left; padding:8px 0 1px 3px;} /* sub-headings, both cols */
 .site_config th+th { font-style:italic;} /* sub-headings, right col */
 .site_config td {background-color:#dfeffc; white-space:normal;padding:3px;} /* left-col */
@@ -78,178 +78,174 @@ img {border:none;}
 
 
 /* Jquery table "list" used for User List" */
-table#list   {width: 100%}
+table#list   {width:100%}
 #list th {text-align:left;}
 #list img {padding-left:15px; width:25px; vertical-align:middle;}
-#list .yes_no img {width: 16px; vertical-align:middle;}
-#list .name {padding-right: 5px;}
-#list .description {font-size: 10px;	color: #666666;	width: 35%;}
-#list .date {font-size: 80%;}
-.dataTables_paginate {float: right;text-align: right;}
-.paging_full_numbers .fg-button {cursor:pointer;padding: 2px 6px;}
-img.open {width:11px;}
+#list img.open {width:16px; vertical-align:middle;}
+#list .yes_no img {width:16px; vertical-align:middle;}
+#list .name {padding-right:5px;}
+#list .description {font-size:10px;	color:#666666;	width:35%;}
+#list .date {}
+.dataTables_paginate {float:right;text-align:right;}
+.paging_full_numbers .fg-button {cursor:pointer;padding:2px 6px;}
 td.details {background-color:#D1CFD0;border:2px solid #A19B9E;}
-
+.edit_link {white-space:nowrap;}
+.edit_link:after {content:" " url("../images/edit.png");}
+.details td {vertical-align:top; border-right:1px solid #808080; padding-right:20px;}
+.details th {font-weight:bold; vertical-align:top; padding-left:20px;}
+.details ul {margin:0; padding:0 0 0 20px;}
 
 /* GEDCOM config tables */
-.facts_table {text-align: left;width:100%;}
+.facts_table {text-align:left;width:100%;}
 .config {}
-.descriptionbox  {border-bottom: solid #81a9cb 1px;vertical-align: top;white-space: nowrap;padding: 3px;background-color:#DFEFFC;}
-.optionbox {	border-bottom: solid #81a9cb 1px;vertical-align: top;white-space: nowrap;padding: 3px;}
-.subbar {background-color: #d1d9ef;border: solid #81a9cb 1px;font-size: 11px;font-weight: bold;vertical-align: top;white-space: nowrap;padding: 3px;}
+.descriptionbox  {border-bottom:solid #81a9cb 1px;vertical-align:top;white-space:nowrap;padding:3px;background-color:#DFEFFC;}
+.optionbox {	border-bottom:solid #81a9cb 1px;vertical-align:top;white-space:nowrap;padding:3px;}
+.subbar {background-color:#d1d9ef;border:solid #81a9cb 1px;font-size:11px;font-weight:bold;vertical-align:top;white-space:nowrap;padding:3px;}
 
 #admin_content dt {
-	float: left;
-	width: 300px;
+	float:left;
+	width:300px;
 }
 
 #admin_content dd {
-	color: 	grey;
-	font-size: 14px;
-	font-style: italic;
-	padding-top: 3px;
+	color:	grey;
+	font-size:14px;
+	font-style:italic;
+	padding-top:3px;
 }
 
 #admin_footer {
-	float: left;
-	text-align: center;
-	width: 100%
+	float:left;
+	text-align:center;
+	width:100%
 }
 
 /* help text pop-ups */
 .help {
-	cursor: help;
+	cursor:help;
 }
 
 .helpcontent {
-	margin-left: 10px;
+	margin-left:10px;
 	margin-right:10px;
 }
 
 .helpfooter {
-	margin: 10px;
+	margin:10px;
 }
 
 .helpheader {
-	margin: 10px;
-	font-size: 18px;
-	font-weight: bold;
-	color: black;
+	margin:10px;
+	font-size:18px;
+	font-weight:bold;
+	color:black;
 }
 
 .helpstart {
-	margin: 10px;
-	font-size: 14px;
-	color: blue;
-	text-decoration: none;
-	font-weight:  bold;
+	margin:10px;
+	font-size:14px;
+	color:blue;
+	text-decoration:none;
+	font-weight: bold;
 }
 
 .helptext {
-	font-size: 12px;
-	color: black;
+	font-size:12px;
+	color:black;
 }
-
-.edit_link {
-	white-space: nowrap;
-}
-
-.edit_link:after {
-	content: url(images/edit.png);
-}
-
+/*------------------------------------------------*/
 .odd {
-background-color: #d1d9ef;
+background-color:#d1d9ef;
 }
 
 .even {
-background-color: #EEFFEE;
+background-color:#EEFFEE;
 }
 
 #list_length {
-	float: left;
+	float:left;
 }
 
 #list_filter {
-	float: right;
+	float:right;
 }
 
 #list_info {
-	float: left;
+	float:left;
 }
 
 #list_paginate {
 }
 
 #privileges span  {
-	font-size: 80%;
-	white-space: nowrap;
+	font-size:80%;
+	white-space:nowrap;
 }
 
 /* General Info page */
 
 #user_info {
-	border: 1px solid grey;
-	width: 400px;
-	float: left;
-	font-size: 12px;
-	padding: 5px;
+	border:1px solid grey;
+	width:400px;
+	float:left;
+	font-size:12px;
+	padding:5px;
 }
 
 /* GEDCOM management */
 
 table#gedcom_table {
-	border-bottom: solid #81a9cb 1px;
-	vertical-align: top;
-	white-space: nowrap;
-	padding: 3px;
-	width: 100%;
+	border-bottom:solid #81a9cb 1px;
+	vertical-align:top;
+	white-space:nowrap;
+	padding:3px;
+	width:100%;
 }
 
 table#gedcom_table .gedcom  {
-	font-weight: bold;
-	font-size: 12px;
-	width: 40%;
+	font-weight:bold;
+	font-size:12px;
+	width:40%;
 }
 
 table#gedcom_table .defaults  {
-	font-weight: bold;
-	font-size: 12px;
+	font-weight:bold;
+	font-size:12px;
 	text-align:center;
-	width: 25%;
+	width:25%;
 	color:#666666;
 }
 
 table#site_config {
-	font-size: 12px;
+	font-size:12px;
 }/
 
 /* PHP Info */
 
 .facts_table, .facts_table_rtl {
-	width: 100%;
+	width:100%;
 }
 
 .facts_value {
-	border-bottom: solid #81a9cb 1px;
+	border-bottom:solid #81a9cb 1px;
 	text-align:left;
-	padding: 3px;
+	padding:3px;
 }
 
 #phpinfo table.heading  {
-	padding: 3px;
+	padding:3px;
 	text-align:center;
-	width: 100%;
+	width:100%;
 }
 
 #phpinfo  td {
 }
 
 /* ReadMe file */
-#readme {font-size: 12px; padding:10px; }
-#readme 	h3 {color: #81A9CB; font-size:14px; font-weight:bold; margin: 14px 0; }
-#readme 	h2 {color: #81A9CB; font-size:14px; font-weight:bold; margin-top:0; }
-#readme	a {color: #81A9CB; font-weight: normal; text-decoration: none;}
-#readme	a:hover {color: #81A9CB;}
+#readme {font-size:12px; padding:10px; }
+#readme 	h3 {color:#81A9CB; font-size:14px; font-weight:bold; margin:14px 0; }
+#readme 	h2 {color:#81A9CB; font-size:14px; font-weight:bold; margin-top:0; }
+#readme	a {color:#81A9CB; font-weight:normal; text-decoration:none;}
+#readme	a:hover {color:#81A9CB;}
 #readme	li {line-height:150%;}
-#readme	.back {color: #81A9CB; float:right;}
+#readme	.back {color:#81A9CB; float:right;}

@@ -29,20 +29,87 @@
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'administration/user_admin.php');
+define('WT_SCRIPT_NAME', 'user_list.php');
 require '../includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 require 'admin_functions.php';
 
 // Only admin users can access this page
-//if (!WT_USER_IS_ADMIN) {
-//	$LOGIN_URL=get_site_setting('LOGIN_URL');
-//	$loginURL = "$LOGIN_URL?url=".rawurlencode(WT_SCRIPT_NAME."?".$QUERY_STRING);
-//	header("Location: $loginURL");
-//	exit;
-//}
+if (!WT_USER_IS_ADMIN) {
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'login.php?url='.WT_SCRIPT_NAME);
+	exit;
+}
 
 admin_header(i18n::translate('User administration'));
+
+?>
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+
+		/* Insert a 'details' column to the table */
+		var nCloneTh = document.createElement( 'th' );
+		var nCloneTd = document.createElement( 'td' );
+		nCloneTh.innerHTML = 'Details';
+		nCloneTd.innerHTML = '<img class="open" src="images/open.png" width="11px">';
+		nCloneTd.className = "";
+		
+		jQuery('#list thead tr').each( function () {
+			this.insertBefore( nCloneTh, this.childNodes[0] );
+		} );
+		
+		jQuery('#list tbody tr').each( function () {
+			this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
+		} );
+
+		var oTable = jQuery('#list').dataTable( {
+			"oLanguage": {
+				"sLengthMenu": 'Display <select><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="50">50</option><option value="-1">All</option></select> records'
+			},
+			"bJQueryUI": true,
+			"bAutoWidth":false,
+			"aaSorting": [[ 1, "asc" ]],
+			"iDisplayLength": 10,
+			"sPaginationType": "full_numbers",
+			"aoColumnDefs": [
+				{ "bSortable": false, "aTargets": [ 0 ] }
+			]
+		});
+		
+		/* Add event listener for opening and closing details
+		 * Note that the indicator for showing which row is open is not controlled by DataTables,
+		 * rather it is done here
+		*/
+		jQuery('#list tbody td img.open').live('click', function () {
+			var nTr = this.parentNode.parentNode;
+			if ( this.src.match('close') )
+			{
+				/* This row is already open - close it */
+				this.src = "images/open.png";
+				oTable.fnClose( nTr );
+			}
+			else
+			{
+				/* Open this row */
+				this.src = "images/close.png";
+				oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
+			}
+		} );
+	
+	});
+
+	/* Formating function for row details */
+	function fnFormatDetails ( oTable, nTr )
+	{
+		var aData = oTable.fnGetData( nTr );
+		var sOut = '<table class="details">';
+		sOut += '<tr><th>'+'<?php echo i18n::translate('Role');?>'+': </th><td>'+aData[5]+'</td>';
+		sOut += '<th>'+'<?php echo i18n::translate('Language');?>'+': </th><td>'+aData[4]+'</td></tr>';
+		sOut += '</table>';
+		
+		return sOut;
+	}
+</script>
+<?php
 
 if ($ENABLE_AUTOCOMPLETE) require '../js/autocomplete.js.htm';
 
@@ -53,11 +120,11 @@ foreach (admin_get_theme_names() as $themename=>$themedir) {
 	$ALL_THEME_DIRS[]=$themedir;
 }
 $ALL_EDIT_OPTIONS=array(
-	'none'=>i18n::translate('None'),
-	'access'=>i18n::translate('Access'),
-	'edit'=>i18n::translate('Edit'),
-	'accept'=>i18n::translate('Accept'),
-	'admin'=>i18n::translate('Admin GEDCOM')
+	'none'  => /* I18N: Listbox entry; name of a role */ i18n::translate('Visitor'),
+	'access'=> /* I18N: Listbox entry; name of a role */ i18n::translate('Member'),
+	'edit'  => /* I18N: Listbox entry; name of a role */ i18n::translate('Editor'),
+	'accept'=> /* I18N: Listbox entry; name of a role */ i18n::translate('Moderator'),
+	'admin' => /* I18N: Listbox entry; name of a role */ i18n::translate('Manager')
 );
 
 // Extract form actions (GET overrides POST if both set)
@@ -149,22 +216,21 @@ ob_start();
 			}
 		}
 	}
-
 	// Then show the users
-	echo '<h2>', i18n::translate('Manage users'), '</h2>',
+	echo '<h2>', i18n::translate('List users'), '</h2>',
 		'<table id="list">',
 			'<thead>',
 				'<tr>',
-					'<th style="width:60px;">', i18n::translate('Message'), '</th>',
-					'<th style="width:100px;">', i18n::translate('Real name'), '</th>',
-					'<th style="width:80px;">', i18n::translate('User name'), '</th>',
-					'<th style="width:80px;">', i18n::translate('Languages'), '</th>',
-					'<th style="width:90px;">', i18n::translate('Privileges'), '</th>',
-					'<th style="width:100px;">', i18n::translate('Date registered'), '</th>',
-					'<th style="width:100px;">', i18n::translate('Last logged in'), '</th>',
-					'<th style="width:65px;">', i18n::translate('Verified '), '</th>',
-					'<th style="width:65px;">', i18n::translate('Approved'), '</th>',
-					'<th style="width:50px;">', i18n::translate('Delete'), '</th>',
+					'<th>', i18n::translate('Message'), '</th>',
+					'<th>', i18n::translate('Real name'), '</th>',
+					'<th>', i18n::translate('User name'), '</th>',
+//					'<th>', i18n::translate('Languages'), '</th>',
+//					'<th>', i18n::translate('Role'), '</th>',
+					'<th>', i18n::translate('Date registered'), '</th>',
+					'<th>', i18n::translate('Last logged in'), '</th>',
+					'<th>', i18n::translate('Verified '), '</th>',
+					'<th>', i18n::translate('Approved'), '</th>',
+					'<th>', i18n::translate('Delete'), '</th>',
 				'</tr>',
 			'</thead>',
 			'<tbody>';
@@ -177,10 +243,11 @@ ob_start();
 					}
 					echo '</td>';
 					$userName = getUserFullName($user_id);
-					echo "\t<td><a class=\"edit_link\" href=\"", "user_edit.php?action=edituser&amp;username=", rawurlencode($user_name)."&amp;sort={$sort}&amp;filter={$filter}&amp;usrlang={$usrlang}&amp;ged=".rawurlencode($ged), "\" title=\"", i18n::translate('Edit'), "\">", $userName;
-					if ($TEXT_DIRECTION=="ltr") echo getLRM();
-					else                        echo getRLM();
-					echo "</a></td>\n";
+					echo "<td><a class=\"edit_link\" href=\"useradmin.php?action=edituser&amp;username={$user_name}&amp;filter={$filter}&amp;usrlang={$usrlang}&amp;ged={$ged}\" title=\"", i18n::translate('Edit'), "\">", $userName, '</a>';
+					if (get_user_setting($user_id, 'canadmin')) {
+						echo '<div class="warning">', i18n::translate('Administrator'), '</div>';
+					}
+					echo "</td>";
 					if (get_user_setting($user_id, "comment_exp")) {
 						if ((strtotime(get_user_setting($user_id, "comment_exp")) != "-1") && (strtotime(get_user_setting($user_id, "comment_exp")) < time("U")))
 						echo '<td class="red">', $user_name;
@@ -192,30 +259,36 @@ ob_start();
 							echo '<img class="adminicon" align="top" alt="', $tempTitle, '" title="', $tempTitle, '" src="images/notes.png" />';
 					}
 					echo "</td>\n";
-					echo "\t<td>", Zend_Locale::getTranslation(get_user_setting($user_id, 'language'), 'language', WT_LOCALE), "</td>\n";
-					echo "\t<td>";
-					echo '<div id="privileges">';
-						if (get_user_setting($user_id, 'canadmin')) {
-							echo "<span class=\"warning\">", i18n::translate('User can administer'), "</span>\n";
-						}
+					echo '<td style="display:none;">', Zend_Locale::getTranslation(get_user_setting($user_id, 'language'), 'language', WT_LOCALE), '</td>';
+					echo '<td style="display:none;">';
+					//echo '<div id="role">';
+						echo "<ul>";
 						foreach ($all_gedcoms as $ged_id=>$ged_name) {
-							switch (get_user_gedcom_setting($user_id, $ged_id, 'canedit')) {
-							case 'admin':  echo '<span class="warning">', i18n::translate('Admin GEDCOM'); break;
-							case 'accept': echo '<span class="warning">', i18n::translate('Accept'); break;
-							case 'edit':   echo '<span>', i18n::translate('Edit'); break;
-							case 'access': echo '<span>', i18n::translate('Access'); break;
+							$role=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
+							switch ($role) {
+							case 'admin':
+							case 'accept':
+								echo '<li class="warning">', $ALL_EDIT_OPTIONS[$role];
+								break;
+							case 'edit':
+							case 'access':
 							case 'none':
-							default:       echo '<span>', i18n::translate('None'); break;
+								echo '<li>', $ALL_EDIT_OPTIONS[$role];
+								break;
+							default:
+								echo '<li>', $ALL_EDIT_OPTIONS['none'];
+								break;
 							}
 							$uged = get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
 							if ($uged) {
-								echo ': <a href="individual.php?pid=', $uged, '&amp;ged=', rawurlencode($ged_name), '">', $ged_name, '</a></span><br />';
+								echo ' <a href="individual.php?pid=', $uged, '&amp;ged=', urlencode($ged_name), '">', $ged_name, '</a></li>';
 							} else {
-								echo ': ', $ged_name, '</span><br />';
+								echo ' ', $ged_name, '</li>';
 							}
 						}
-					echo '</div>';
-					echo '</td>';
+						echo "</ul>";
+					//	echo "</div>";
+						echo '</td>';
 						if (((date("U") - (int)get_user_setting($user_id, 'reg_timestamp')) > 604800) && !get_user_setting($user_id, 'verified'))
 							echo '<td class="red">';
 					else echo '<td>';
