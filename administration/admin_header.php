@@ -39,7 +39,7 @@ echo
 	'<title>', htmlspecialchars($title), '</title>',
 	'<link rel="shortcut icon" href="', $FAVICON, '" type="image/x-icon" />',
 	'<link rel="stylesheet" href="css/admin_style.css" type="text/css" media="all" />',
-	'<link rel="stylesheet" href="css/redmond/jquery-ui-1.8.5.custom.css" type="text/css" />',
+	'<link rel="stylesheet" href="css/pepper-grinder/jquery-ui-1.8.6.custom.css" type="text/css" />',
 	$javascript,
 	$head; //-- additional header information
 
@@ -48,7 +48,7 @@ echo
 	'<body id="body" ',$bodyOnLoad, '>',
 // Header
 	'<div id="admin_head" class="ui-widget-content">',
-		'<div id="logo"><img src="images/header.jpg" width="281" height="50" alt="" /></div>',
+		'<div id="logo"><img src="images/header.png" width="281" height="50" alt="" /></div>',
 		'<div id="info">',
 			WT_WEBTREES, ' ', WT_VERSION_TEXT,
 			'<br />',

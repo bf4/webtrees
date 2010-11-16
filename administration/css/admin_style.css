@@ -54,7 +54,7 @@ img {border:none;}
 /* header styles */
 #admin_head  {height:70px;	margin-bottom:20px;}
 #logo {float:left; width:300px; }
-#title  {text-align:center; color:#81A9CB; font-size:18px; font-weight:bold; padding-top:20px;}
+#title  {text-align:center; /*color:#81A9CB;*/ font-size:18px; font-weight:bold; padding-top:20px;}
 #info  {font-size:12px; text-align:right; float:right; width:350px; padding:10px 10px 0 0; margin-bottom:3px;}
 
 /* side menu */
