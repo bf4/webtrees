@@ -50,7 +50,7 @@ case 'user_list':
 	}
 	$iDisplayStart =safe_GET('iDisplayStart',  WT_REGEX_INTEGER);
 	$iDisplayLength=safe_GET('iDisplayLength', WT_REGEX_INTEGER);
-	if ($iDisplayLength) {
+	if ($iDisplayLength>0) {
 		$LIMIT=" LIMIT " . $iDisplayStart . ',' . $iDisplayLength;
 	} else {
 		$LIMIT="";
@@ -96,8 +96,8 @@ case 'user_list':
 		$row[3]=edit_field_inline('user-email-'.    $row[0], $row[3]);
 		$row[4]=edit_field_language_inline('user_setting-language-'.    $row[0], $row[4]);
 		if ($row[0]==WT_USER_ID) {
-			$row[7]='-';
-			$row[8]='-';
+			$row[7]=$row[7] ? i18n::translate('yes') : i18n::translate('no');
+			$row[8]=$row[7] ? i18n::translate('yes') : i18n::translate('no');
 		} else {
 			// Cannot approve/unapprove your own account
 			$row[7]=edit_field_yes_no_inline('user_setting-verified-'.         $row[0], $row[7]);
@@ -110,7 +110,7 @@ case 'user_list':
 	$iTotalRecords=WT_DB::prepare("SELECT COUNT(*) FROM `##user`")->fetchOne();
 
 	echo json_encode(array(
-		'sEcho'               =>safe_GET('sEcho'), // What is this field?  It is undocumented.
+		'sEcho'               =>(int)safe_GET('sEcho'), // See http://www.datatables.net/usage/server-side
 		'iTotalRecords'       =>$iTotalRecords,
 		'iTotalDisplayRecords'=>$iTotalDisplayRecords,
 		'aaData'              =>$aaData

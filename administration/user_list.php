@@ -218,7 +218,7 @@ ob_start();
 	}
 
 	echo
-		'<table id="list2">',
+		'<table id="user-list" width="100%">',
 		'<thead>',
 		'<tr>',
 		'<th>User ID</th>',
@@ -237,10 +237,12 @@ ob_start();
 		'</table>',
 		WT_JS_START,
 		'jQuery(document).ready(function() {',
-		' jQuery("#list2").dataTable( {',
+		' jQuery("#user-list").dataTable( {',
 		'  "oLanguage": {',
 		'   "sLengthMenu": "Display <select><option value=10>10</option><option value=20>20</option><option value=30>30</option><option value=40>40</option><option value=50>50</option><option value=-1>All</option></select> records"',
 		'  },',
+		'  "bAutoWidth":false,',
+		'  "aaSorting": [[ 1, "asc" ]],',
 		'  "bProcessing": true,',
 		'  "bServerSide": true,',
 		'  "sAjaxSource": "', WT_SERVER_NAME, WT_SCRIPT_PATH, 'load.php?src=user_list",',
