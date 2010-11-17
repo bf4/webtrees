@@ -69,17 +69,17 @@ img {border:none;}
 /* FOOTER */
 #admin_footer {float:left;text-align:center;	width:100%;	margin-top: 30px;}
 
-/* JEditable styles for site config */
+/*SITE CONFIG */
 .editable {width:100%; display:block; /* background:url(../themes/fab/images/edit_sm.png) no-repeat right;*/}
 .editable:hover { color:red; cursor:pointer; cursor:hand;} /* both cursors needed for cross-browser support */
 .editable input, select {padding:0;}
 .editable button {font-size:95%; font-weight:bold 84%; margin:1px; padding:0 5px; background-color:#dfeffc; border:1px solid; border-color:#d3d3d3 #808080 #808080 #d3d3d3;}
 .editable button:hover  {border-color:#808080 #d3d3d3 #d3d3d3 #808080;}
-.site_config {width:700px; margin:0 0 0 20px;} /* table */
-.site_config th { background-color:#d1d9ef; text-align:left; padding:8px 0 1px 3px;} /* sub-headings, both cols */
-.site_config th+th { font-style:italic;} /* sub-headings, right col */
-.site_config td {background-color:#dfeffc; white-space:normal;padding:3px;} /* left-col */
-.site_config td+td {background-color:#dcdcdc; width:250px;} /* right/col */
+.site_config {/*width:700px;*/ padding: 0 20px 20px 0;}/*  table */
+.site_config th { /*background-color:#d1d9ef;*/ text-align:left; padding:8px 0 1px 3px;font-size:105%;} /* sub-headings, both cols */
+.site_config th+th { font-style:italic;font-size:95%;} /* sub-headings, right col */
+.site_config td {/*background-color:#dfeffc;*/ white-space:normal;padding:3px 3px 3px 30px;} /* left-col */
+.site_config td+td {background-color:#dcdcdc; width:250px; padding:3px 3px 3px 3px;} /* right/col */
 
 
 /* USER List */
@@ -110,10 +110,14 @@ td.details {background-color:#D1CFD0;border:2px solid #A19B9E;}
 
 /* GEDCOM config tables */
 .facts_table {text-align:left;width:100%;}
+.facts_table th {text-align:left; padding:8px 0 1px 3px;font-size:105%;}
+.facts_table td {white-space:normal;padding:3px 3px 3px 30px;} /* left-col */
+.facts_table td+td {padding:3px 3px 3px 3px;} /* right/col */
+
 .config {}
 .descriptionbox  {border-bottom:solid #81a9cb 1px;vertical-align:top;white-space:nowrap;padding:3px;background-color:#DFEFFC;}
 .optionbox {	border-bottom:solid #81a9cb 1px;vertical-align:top;white-space:nowrap;padding:3px;}
-.subbar {background-color:#d1d9ef;border:solid #81a9cb 1px;font-size:11px;font-weight:bold;vertical-align:top;white-space:nowrap;padding:3px;}
+.subbar {background-color:#d1d9ef;border:solid #81a9cb 1px;font-size:105%;font-weight:bold;vertical-align:top;white-space:nowrap;padding:3px 3px 3px 30px;}
 
 /* INDEX page */
 #user_info {	width:400px;float:left;padding:5px;}
