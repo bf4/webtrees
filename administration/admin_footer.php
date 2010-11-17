@@ -36,8 +36,7 @@ echo '</div>';
 // closing div id=\"content\"
 echo '<div id="admin_footer">';
 	echo
-		'<br />',
-		'<div align="center" style="width:99%;">',
+		'<div align="center"">',
 			'<br />',
 			'<a href="', WT_WEBTREES_URL, ' target="_blank">',
 			'<img src="images/webtrees_s.png" width="100" border="0" alt="', WT_WEBTREES, WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): "", '"',

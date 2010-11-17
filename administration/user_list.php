@@ -246,113 +246,113 @@ ob_start();
 		'  "bProcessing": true,',
 		'  "bServerSide": true,',
 		'  "sAjaxSource": "', WT_SERVER_NAME, WT_SCRIPT_PATH, 'load.php?src=user_list",',
-		'  "aaSorting": [[ 1, "asc" ]],',
 		'  "bJQueryUI": true,',
 		'  "sPaginationType": "full_numbers"',
+//		'	"aoColumnDefs": [{ "bSortable": false, "aTargets": [ 0 ] }],',
 		' } );',
 		'} );',		
 		WT_JS_END;
-
+		
 	// Then show the users
 	echo '<h2>', i18n::translate('List users'), '</h2>',
-		'<table id="list">',
-			'<thead>',
-				'<tr>',
-					'<th>', i18n::translate('Message'), '</th>',
-					'<th>', i18n::translate('Real name'), '</th>',
-					'<th>', i18n::translate('User name'), '</th>',
+	'<table id="list">',
+		'<thead>',
+			'<tr>',
+				'<th>', i18n::translate('Message'), '</th>',
+				'<th>', i18n::translate('Real name'), '</th>',
+				'<th>', i18n::translate('User name'), '</th>',
 //					'<th>', i18n::translate('Languages'), '</th>',
 //					'<th>', i18n::translate('Role'), '</th>',
-					'<th>', i18n::translate('Date registered'), '</th>',
-					'<th>', i18n::translate('Last logged in'), '</th>',
-					'<th>', i18n::translate('Verified '), '</th>',
-					'<th>', i18n::translate('Approved'), '</th>',
-					'<th>', i18n::translate('Delete'), '</th>',
-				'</tr>',
-			'</thead>',
-			'<tbody>';
-				foreach($users as $user_id=>$user_name) {
-					echo "<tr><td>";
-					if ($user_id!=WT_USER_ID && get_user_setting($user_id, 'contactmethod')!='none') {
-						echo "<a href=\"javascript:;\" onclick=\"return message('", $user_name, "');\"><img src=\"images/email.png\" \"alt=\"", i18n::translate('Send Message'), "\" title=\"", i18n::translate('Send Message'), "\" /></a>";
-					} else {
-						echo '&nbsp;';
-					}
-					echo '</td>';
-					$userName = getUserFullName($user_id);
-					echo "<td><a class=\"edit_link\" href=\"useradmin.php?action=edituser&amp;username={$user_name}&amp;filter={$filter}&amp;usrlang={$usrlang}&amp;ged={$ged}\" title=\"", i18n::translate('Edit'), "\">", $userName, '</a>';
-					if (get_user_setting($user_id, 'canadmin')) {
-						echo '<div class="warning">', i18n::translate('Administrator'), '</div>';
-					}
-					echo "</td>";
-					if (get_user_setting($user_id, "comment_exp")) {
-						if ((strtotime(get_user_setting($user_id, "comment_exp")) != "-1") && (strtotime(get_user_setting($user_id, "comment_exp")) < time("U")))
-						echo '<td class="red">', $user_name;
-						else echo '<td>', $user_name;
-					}
-					else echo '<td>', $user_name;
-						if (get_user_setting($user_id, "comment")) {
-							$tempTitle = PrintReady(get_user_setting($user_id, "comment"));
-							echo '<img class="adminicon" align="top" alt="', $tempTitle, '" title="', $tempTitle, '" src="images/notes.png" />';
-					}
-					echo "</td>\n";
-					echo '<td style="display:none;">', Zend_Locale::getTranslation(get_user_setting($user_id, 'language'), 'language', WT_LOCALE), '</td>';
-					echo '<td style="display:none;">';
-					//echo '<div id="role">';
-						echo "<ul>";
-						foreach ($all_gedcoms as $ged_id=>$ged_name) {
-							$role=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
-							switch ($role) {
-							case 'admin':
-							case 'accept':
-								echo '<li class="warning">', $ALL_EDIT_OPTIONS[$role];
-								break;
-							case 'edit':
-							case 'access':
-							case 'none':
-								echo '<li>', $ALL_EDIT_OPTIONS[$role];
-								break;
-							default:
-								echo '<li>', $ALL_EDIT_OPTIONS['none'];
-								break;
-							}
-							$uged = get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
-							if ($uged) {
-								echo ' <a href="individual.php?pid=', $uged, '&amp;ged=', urlencode($ged_name), '">', $ged_name, '</a></li>';
-							} else {
-								echo ' ', $ged_name, '</li>';
-							}
-						}
-						echo "</ul>";
-					//	echo "</div>";
-						echo '</td>';
-						if (((date("U") - (int)get_user_setting($user_id, 'reg_timestamp')) > 604800) && !get_user_setting($user_id, 'verified'))
-							echo '<td class="red">';
-					else echo '<td>';
-						echo format_timestamp((int)get_user_setting($user_id, 'reg_timestamp'));
-					echo '</td>';
-					echo '<td>';
-						if ((int)get_user_setting($user_id, 'reg_timestamp') > (int)get_user_setting($user_id, 'sessiontime')) {
-							echo i18n::translate('Never'), '<br />', i18n::time_ago(time() - (int)get_user_setting($user_id, 'reg_timestamp'));
-						} else {
-							echo format_timestamp((int)get_user_setting($user_id, 'sessiontime')), '<br />', i18n::time_ago(time() - (int)get_user_setting($user_id, 'sessiontime'));
-						}
-					echo '</td>',
-					'<td class="center">';
-						if (get_user_setting($user_id, 'verified')) echo i18n::translate('Yes');
-						else echo i18n::translate('No');
-					echo '</td>',
-					'<td class="center">';
-						if (get_user_setting($user_id, 'verified_by_admin')) echo i18n::translate('Yes');
-						else echo i18n::translate('No');
-					echo '</td>',
-					'<td>';
-						if (WT_USER_ID!=$user_id)
-							echo "<a href=\"user_admin.php?action=deleteuser&amp;username=", rawurlencode($user_name)."&amp;sort={$sort}&amp;filter={$filter}&amp;usrlang={$usrlang}&amp;ged=", rawurlencode($ged), "\" onclick=\"return confirm('", i18n::translate('Are you sure you want to delete the user'), " $user_name');\"><img src=\"images/delete.png\" alt=\"", i18n::translate('Delete'), "\" title=\"", i18n::translate('Delete'), "\" /></a>";
-					echo '</td>',
-				'</tr>';
+				'<th>', i18n::translate('Date registered'), '</th>',
+				'<th>', i18n::translate('Last logged in'), '</th>',
+				'<th>', i18n::translate('Verified '), '</th>',
+				'<th>', i18n::translate('Approved'), '</th>',
+				'<th>', i18n::translate('Delete'), '</th>',
+			'</tr>',
+		'</thead>',
+		'<tbody>';
+			foreach($users as $user_id=>$user_name) {
+				echo "<tr><td>";
+				if ($user_id!=WT_USER_ID && get_user_setting($user_id, 'contactmethod')!='none') {
+					echo "<a href=\"javascript:;\" onclick=\"return message('", $user_name, "');\"><img src=\"images/email.png\" \"alt=\"", i18n::translate('Send Message'), "\" title=\"", i18n::translate('Send Message'), "\" /></a>";
+				} else {
+					echo '&nbsp;';
 				}
-			echo '</tbody>',
-		'</table>';
-	include 'admin_footer.php';
+				echo '</td>';
+				$userName = getUserFullName($user_id);
+				echo "<td><a class=\"edit_link\" href=\"useradmin.php?action=edituser&amp;username={$user_name}&amp;filter={$filter}&amp;usrlang={$usrlang}&amp;ged={$ged}\" title=\"", i18n::translate('Edit'), "\">", $userName, '</a>';
+				if (get_user_setting($user_id, 'canadmin')) {
+					echo '<div class="warning">', i18n::translate('Administrator'), '</div>';
+				}
+				echo "</td>";
+				if (get_user_setting($user_id, "comment_exp")) {
+					if ((strtotime(get_user_setting($user_id, "comment_exp")) != "-1") && (strtotime(get_user_setting($user_id, "comment_exp")) < time("U")))
+					echo '<td class="red">', $user_name;
+					else echo '<td>', $user_name;
+				}
+				else echo '<td>', $user_name;
+					if (get_user_setting($user_id, "comment")) {
+						$tempTitle = PrintReady(get_user_setting($user_id, "comment"));
+						echo '<img class="adminicon" align="top" alt="', $tempTitle, '" title="', $tempTitle, '" src="images/notes.png" />';
+				}
+				echo "</td>\n";
+				echo '<td style="display:none;">', Zend_Locale::getTranslation(get_user_setting($user_id, 'language'), 'language', WT_LOCALE), '</td>';
+				echo '<td style="display:none;">';
+				//echo '<div id="role">';
+					echo "<ul>";
+					foreach ($all_gedcoms as $ged_id=>$ged_name) {
+						$role=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
+						switch ($role) {
+						case 'admin':
+						case 'accept':
+							echo '<li class="warning">', $ALL_EDIT_OPTIONS[$role];
+							break;
+						case 'edit':
+						case 'access':
+						case 'none':
+							echo '<li>', $ALL_EDIT_OPTIONS[$role];
+							break;
+						default:
+							echo '<li>', $ALL_EDIT_OPTIONS['none'];
+							break;
+						}
+						$uged = get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
+						if ($uged) {
+							echo ' <a href="individual.php?pid=', $uged, '&amp;ged=', urlencode($ged_name), '">', $ged_name, '</a></li>';
+						} else {
+							echo ' ', $ged_name, '</li>';
+						}
+					}
+					echo "</ul>";
+				//	echo "</div>";
+					echo '</td>';
+					if (((date("U") - (int)get_user_setting($user_id, 'reg_timestamp')) > 604800) && !get_user_setting($user_id, 'verified'))
+						echo '<td class="red">';
+				else echo '<td>';
+					echo format_timestamp((int)get_user_setting($user_id, 'reg_timestamp'));
+				echo '</td>';
+				echo '<td>';
+					if ((int)get_user_setting($user_id, 'reg_timestamp') > (int)get_user_setting($user_id, 'sessiontime')) {
+						echo i18n::translate('Never'), '<br />', i18n::time_ago(time() - (int)get_user_setting($user_id, 'reg_timestamp'));
+					} else {
+						echo format_timestamp((int)get_user_setting($user_id, 'sessiontime')), '<br />', i18n::time_ago(time() - (int)get_user_setting($user_id, 'sessiontime'));
+					}
+				echo '</td>',
+				'<td class="center">';
+					if (get_user_setting($user_id, 'verified')) echo i18n::translate('Yes');
+					else echo i18n::translate('No');
+				echo '</td>',
+				'<td class="center">';
+					if (get_user_setting($user_id, 'verified_by_admin')) echo i18n::translate('Yes');
+					else echo i18n::translate('No');
+				echo '</td>',
+				'<td>';
+					if (WT_USER_ID!=$user_id)
+						echo "<a href=\"user_admin.php?action=deleteuser&amp;username=", rawurlencode($user_name)."&amp;sort={$sort}&amp;filter={$filter}&amp;usrlang={$usrlang}&amp;ged=", rawurlencode($ged), "\" onclick=\"return confirm('", i18n::translate('Are you sure you want to delete the user'), " $user_name');\"><img src=\"images/delete.png\" alt=\"", i18n::translate('Delete'), "\" title=\"", i18n::translate('Delete'), "\" /></a>";
+				echo '</td>',
+			'</tr>';
+			}
+		echo '</tbody>',
+	'</table>';
+include 'admin_footer.php';
 ob_flush();
