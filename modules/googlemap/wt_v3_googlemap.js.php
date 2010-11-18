@@ -32,7 +32,6 @@
 <!--[if IE]>
 <script type="text/javascript">ie = 1;</script>
 <![endif]-->
-
 <script type="text/javascript">
 
 //<![CDATA[
@@ -47,8 +46,6 @@
    	var head = "";
    	var dir = "";
    	var svzoom = "";
-    
-    //var markers = [];
 
 	var infowindow = new google.maps.InfoWindow( { 
     	// size: new google.maps.Size(150,50),
@@ -114,7 +111,6 @@
     var sv2_zoom = null;
 	var placer = null; 
 	
-	// var SView = "";
 	// A function to create the marker and set up the event window
 	function createMarker(i, latlng, event, html, category, placed, index, tab, address, media, sv_lati, sv_long, sv_bearing, sv_elevation, sv_zoom, sv_point) {
     	var contentString = '<div id="iwcontent">'+html+'<\/div>';
@@ -156,8 +152,8 @@
   		if (sv_elevation == '') {
   			marker.sv_elevation = 5;
   		} else {
-    		// marker.sv_elevation = sv_elevation;
-    		marker.sv_elevation = 10;
+    		marker.sv_elevation = sv_elevation;
+    		// marker.sv_elevation = 5;
     	}
     	if (sv_zoom == '' || sv_zoom == 0 || sv_zoom == 1) {
     		marker.sv_zoom = 1.2;
@@ -176,98 +172,88 @@
        		sv_zoom[i] = parseFloat(gmarkers[i].sv_zoom);    	
 		
 		// == Open infowindow when marker is clicked ==
-		//if (document.getElementById("golfbox").checked == false) { 
-			// Either events -----------
-    		google.maps.event.addListener(marker, 'click', function() {
-    			infowindow.close();
-        		infowindow.setContent(contentString);
-        		infowindow.open(map, marker);
-             	var panoramaOptions = {
-          			position: marker.position,
-          			navigationControl: false,
-      				linksControl: false,
-   					addressControl: false,
-					pov: {
-						heading: sv_dir[i],
-						pitch: sv_elev[i],
-						// pitch: 5,
-						zoom: sv_zoom[i]
-					}         	
-        		};
+    	google.maps.event.addListener(marker, 'click', function() {
+    		infowindow.close();
+        	infowindow.setContent(contentString);
+        	infowindow.open(map, marker);
+            var panoramaOptions = {
+          		position: marker.position,
+          		mode: 'html5', 
+          		// mode: 'webgl',
+          		navigationControl: false,
+      			linksControl: false,
+   				addressControl: false,
+				pov: {
+					heading: sv_dir[i],
+					pitch: sv_elev[i],
+					// pitch: 5,
+					zoom: sv_zoom[i]
+				}         	
+        	};
         		
-				// === Use jquery for tabs ===	
-				jQuery("#gmtabs").tabs("div.panes > div");
+			// === Use jquery for tabs ===	
+			// var $fred = jQuery("#gmtabs").tabs("div.panes > div");
+			// jQuery("#gmtabs").tabs('select', '#SV');
 			
-				jQuery('#EV').click(function() {
-            		document.tabLayerEV = eval('document.getElementById("EV")');
-            		document.tabLayerEV.style.background = "#ffffff";
-            		document.tabLayerEV.style.paddingBottom = "1px";
-            		document.tabLayerSV = eval('document.getElementById("SV")');
-            		document.tabLayerSV.style.background = "#cccccc";
-            		document.tabLayerSV.style.paddingBottom = "0px";
-            		document.tabLayerPH = eval('document.getElementById("PH")');
-            		document.tabLayerPH.style.background = "#cccccc";
-            		document.tabLayerPH.style.paddingBottom = "0px";
-            		document.panelLayer1 = eval('document.getElementById("pane1")');
-            		document.panelLayer1.style.display = "inline";
-            		document.panelLayer2 = eval('document.getElementById("pane2")');
-            		document.panelLayer2.style.display = "none";
-            		document.panelLayer3 = eval('document.getElementById("pane3")');
-            		document.panelLayer3.style.display = "none";
-          		});	
+			jQuery('#EV').click(function() {
+           		document.tabLayerEV = eval('document.getElementById("EV")');
+            	document.tabLayerEV.style.background = "#ffffff";
+            	document.tabLayerEV.style.paddingBottom = "1px";
+            	document.tabLayerSV = eval('document.getElementById("SV")');
+            	document.tabLayerSV.style.background = "#cccccc";
+            	document.tabLayerSV.style.paddingBottom = "0px";
+            	document.tabLayerPH = eval('document.getElementById("PH")');
+            	document.tabLayerPH.style.background = "#cccccc";
+            	document.tabLayerPH.style.paddingBottom = "0px";
+            	document.panelLayer1 = eval('document.getElementById("pane1")');
+            	document.panelLayer1.style.display = "block";
+            	document.panelLayer2 = eval('document.getElementById("pane2")');
+            	document.panelLayer2.style.display = "none";
+            	document.panelLayer3 = eval('document.getElementById("pane3")');
+            	document.panelLayer3.style.display = "none";
+            	
+          	});	
 			
-				jQuery('#SV').click(function() { 
-            		document.tabLayerEV = eval('document.getElementById("EV")');
-            		document.tabLayerEV.style.background = "#cccccc";
-            		document.tabLayerEV.style.paddingBottom = "0px";
-            		document.tabLayerSV = eval('document.getElementById("SV")');
-            		document.tabLayerSV.style.background = "#ffffff";
-            		document.tabLayerSV.style.paddingBottom = "1px";
-            		document.tabLayerPH = eval('document.getElementById("PH")');
-            		document.tabLayerPH.style.background = "#cccccc";
-            		document.tabLayerPH.style.paddingBottom = "0px";
-            		document.panelLayer1 = eval('document.getElementById("pane1")');
-            		document.panelLayer1.style.display = "none";
-            		document.panelLayer2 = eval('document.getElementById("pane2")');
-            		document.panelLayer2.style.display = "block";
-            		document.panelLayer3 = eval('document.getElementById("pane3")');
-            		document.panelLayer3.style.display = "none";
-       				var panorama = new google.maps.StreetViewPanorama(document.getElementById("pano"), panoramaOptions);
-            		// map.setStreetView(panorama);  // **** If you uncomment this, the pegman will appear ****
-          		});	
+			jQuery('#SV').click(function() { 
+            	document.tabLayerEV = eval('document.getElementById("EV")');
+            	document.tabLayerEV.style.background = "#cccccc";
+            	document.tabLayerEV.style.paddingBottom = "0px";
+            	document.tabLayerSV = eval('document.getElementById("SV")');
+            	document.tabLayerSV.style.background = "#ffffff";
+            	document.tabLayerSV.style.paddingBottom = "1px";
+            	document.tabLayerPH = eval('document.getElementById("PH")');
+            	document.tabLayerPH.style.background = "#cccccc";
+            	document.tabLayerPH.style.paddingBottom = "0px";
+            	document.panelLayer1 = eval('document.getElementById("pane1")');
+            	document.panelLayer1.style.display = "none";
+            	document.panelLayer2 = eval('document.getElementById("pane2")');
+            	document.panelLayer2.style.display = "block";
+            	document.panelLayer3 = eval('document.getElementById("pane3")');
+            	document.panelLayer3.style.display = "none";
+       			var panorama = new google.maps.StreetViewPanorama(document.getElementById("pano"), panoramaOptions);
+            	// map.setStreetView(panorama);  // **** If you uncomment this, the pegman will appear ****
+          	});	
           		
-				jQuery('#PH').click(function() {
-            		document.tabLayerEV = eval('document.getElementById("EV")');
-            		document.tabLayerEV.style.background = "#cccccc";
-            		document.tabLayerEV.style.paddingBottom = "0px";
-            		document.tabLayerSV = eval('document.getElementById("SV")');
-            		document.tabLayerSV.style.background = "#cccccc";
-            		document.tabLayerSV.style.paddingBottom = "0px";
-            		document.tabLayerPH = eval('document.getElementById("PH")');
-            		document.tabLayerPH.style.background = "#ffffff";
-            		document.tabLayerPH.style.paddingBottom = "1px";
-            		document.panelLayer1 = eval('document.getElementById("pane1")');
-            		document.panelLayer1.style.display = "none";
-            		document.panelLayer2 = eval('document.getElementById("pane2")');
-            		document.panelLayer2.style.display = "none";
-            		document.panelLayer3 = eval('document.getElementById("pane3")');
-            		document.panelLayer3.style.display = "inline";
-          		});	
-          	
-        		// == rebuild the side bar ==
-        		//	makeSidebar(i);      	
-    		});
-/*    	
-		} else {
-    		// Or streetview -----------
-			var message =
-				"Marker: " + (i + 1) + "<br/>" +
-				// "LatLng: " + marker.getPosition().toUrlValue(4) + "<br/>";
-				"LatLng: " + marker.position + "<br/>";
-				"heading: " + marker.sv_bearing + "<br/>";
-			setMarkerMessage(marker, message);    		
-    	}
-*/
+			jQuery('#PH').click(function() {
+            	document.tabLayerEV = eval('document.getElementById("EV")');
+            	document.tabLayerEV.style.background = "#cccccc";
+            	document.tabLayerEV.style.paddingBottom = "0px";
+            	document.tabLayerSV = eval('document.getElementById("SV")');
+            	document.tabLayerSV.style.background = "#cccccc";
+            	document.tabLayerSV.style.paddingBottom = "0px";
+            	document.tabLayerPH = eval('document.getElementById("PH")');
+            	document.tabLayerPH.style.background = "#ffffff";
+            	document.tabLayerPH.style.paddingBottom = "1px";
+            	document.panelLayer1 = eval('document.getElementById("pane1")');
+            	document.panelLayer1.style.display = "none";
+            	document.panelLayer2 = eval('document.getElementById("pane2")');
+            	document.panelLayer2.style.display = "none";
+            	document.panelLayer3 = eval('document.getElementById("pane3")');
+            	document.panelLayer3.style.display = "block";
+          	});	
+          	     	
+    	});
+    		
 	}
 	
     // == shows all markers of a particular category, and ensures the checkbox is checked ==
@@ -277,8 +263,6 @@
             	gmarkers[i].setVisible(true);
           	}
         }
-        // == check the checkbox ==
-        //document.getElementById(category+"box").checked = true;
         // == close any info window for clarity
         infowindow.close();
     }
@@ -290,8 +274,6 @@
             	gmarkers[i].setVisible(false);
           	}
         }
-        // == clear the checkbox ==
-        document.getElementById(category+"box").checked = false;
         // == close the info window, in case its open on a marker that we just hid
         infowindow.close();
     }
@@ -419,7 +401,8 @@
   		// Add the markers to the map from the $gmarks array 		
   		var locations = [
   		
-			<?php foreach($gmarks as $gmark) { 
+			<?php 
+			foreach($gmarks as $gmark) { 
 						
 				// create thumbnail images of highlighted images ===========================
 				if (!empty($pid)) {
@@ -429,7 +412,7 @@
 					$person = Person::getInstance($gmark['name']);
 				}
 				
-				// This person -----------------------------
+				// The current indi -----------------------------
 				if (!empty($this_person)) {
 					$class = "pedigree_image_portrait";
 					if ($gmark['fact'] == 'Census') {
@@ -457,7 +440,6 @@
 							} else {
 								$object = "";
 							}
-
 							if (!empty($object["thumb"])) {
 								$size = findImageSize($object["thumb"]);
 								$class = "pedigree_image_portrait";
@@ -512,7 +494,6 @@
 
     			[
     				// Elements 0-9. Basic parameters 
-
 					"<?php echo $gmark['fact'].''; ?>", 
     				"<?php echo $gmark['lati']; ?>", 
     				"<?php echo $gmark['lng']; ?>", 
@@ -544,7 +525,6 @@
 					"<?php if (!empty($gmark['sv_elevation'])) { echo $gmark['sv_elevation']; } ?>",
 					"<?php if (!empty($gmark['sv_zoom'])) { echo $gmark['sv_zoom']; } ?>"
 					// "<?php if (!empty($gmark['sv_point'])) { echo $gmark['sv_point']; } ?>"
-
     			],
 
     		<?php } ?> 
@@ -636,9 +616,9 @@
  			 	'<div id = "gmtabs">',
  			 	
           				'<ul class="tabs" >',
-          					'<li><a href="#" id="EV">Events<\/a><\/li>',
-          					'<li><a href="#" id="SV">Street View<\/a><\/li>',
-          					'<li><a href="#" id="PH">Image<\/a><\/li>',
+         					'<li><a href="#event" id="EV">Events<\/a><\/li>',
+          					'<li><a href="#sview" id="SV">Street View<\/a><\/li>',
+          					'<li><a href="#image" id="PH">Image<\/a><\/li>',
           			//		'<li><a href="#" id="SP">Aerial<\/a><\/li>',
        					'<\/ul>',
        					
@@ -678,27 +658,16 @@
   	  		'<\/div>'
    			].join('');
 		  	
-       		// === If 'placed="yes", (Use multitabs variable, else use singletab variable) ===      		
-       		if (locations[i][9] == "yes" ) {
-       			var html = multitabs;
-       		} else {
-       			var html = multitabs;
-       		} 
-
-      		
-       		// create the marker -----------------------------------------------
+      		// create the marker -----------------------------------------------
+       		var html = multitabs;
        		var marker = createMarker(i, point, event, html, category, placed, index, tab, addr2, media, sv_lati, sv_long, sv_bearing, sv_elevation, sv_zoom, sv_point);
     		var myLatLng = new google.maps.LatLng(locations[i][1], locations[i][2]);
     		bounds.extend(myLatLng);
     		map.fitBounds(bounds);
   		
       	}  // end loop through location markers
-        
-        // initially load sidebar (hidden item but THIS IS required)
-        // makeSidebar();
 
     }	// end loadMap()
-	
   	
 //]]>
 </script>

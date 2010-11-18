@@ -644,11 +644,6 @@ function build_indiv_map($indifacts, $famids) {
 		// === Include css and js files ============================================================
 		echo '<link type="text/css" href="modules/googlemap/css/v3_googlemap.css" rel="stylesheet" />';
 		require_once WT_ROOT.'modules/googlemap/wt_v3_googlemap.js.php';
-		?>
-		<script>
-		loadMap();
-		</script>
-		<?php
 	
 		// === Create the normal googlemap sidebar of events and children ==========================
 		echo "<div style=\"overflow: auto; overflow-x: hidden; overflow-y: auto; height: {$GOOGLEMAP_YSIZE}px;\"><table class=\"facts_table\">";
