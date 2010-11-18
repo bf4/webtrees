@@ -31,10 +31,11 @@
 
 /* general styles */
 body { font-size:12px; margin:10px;}
-.ui-widget-content a.current { color:#E17009; font-weight:bold;}
+.ui-widget-content a.current { color:#E17009;}
 .ui-widget-content a:hover { color:red; cursor:hand;}
 input, textarea {	color:black; padding-left:3px; padding-right:3px;}
 fieldset {margin:8px 8px 4px 8px;}
+legend {font-style:italic; font-weight:bold;	padding:0 5px 5px; align:top;}
 img {border:none;}
 .icon {border:none;	padding-left:0pt;padding-right:5pt;}
 .warning, .error, .red {	color:red;}
@@ -42,45 +43,45 @@ img {border:none;}
 .nowrap {white-space:nowrap;}
 .indent {padding-left:15px;}
 
-/* jQuery UI CSS customisations */
-.css_right {float:right;}
-.ui-toolbar {padding:5px;}
-
-/* Text direction */
-.ltr {text-align:left;}
-.rtl {text-align:right;	direction:rtl;}
-
-/* header styles */
+/* HEADER */
 #admin_head  {height:70px;	margin-bottom:20px;}
-#logo {float:left; }
+#logo {float:left; width:300px; }
 #title  {text-align:center; font-size:18px; font-weight:bold; padding-top:20px;}
 #info  {font-size:12px; text-align:right; float:right; width:350px; padding:10px 10px 0 0; margin-bottom:3px;}
 
-/* side menu */
-#admin_menu {padding:10px 0 10px 5px; width:200px; float:left;}
-#admin_menu dd  {margin-left:25px;}
-.ui-menu ul {list-style: none outside none; margin:0 0 0 -30px;}
-.ui-menu li ul {list-style: none outside none; margin:0 0 0 -20px;}
-.ui-menu li ul span {font-style: italic; color:#81A9CB; font-weight:bold;}
+/* SIDE MENU */
+#admin_menu {padding:10px 0 10px 5px; width:200px; float:left; position:absolute; color:#2E6E9E;}
+/*.ui-menu {padding:10px 0 10px 5px;}*/
+#admin_menu ul {list-style: none outside none; margin:0 0 0 -30px;}
+#admin_menu li ul {list-style: none outside none; margin:0 0 0 -20px;}
+#admin_menu li ul span {font-style: italic; font-weight:bold;}
 
-/* content wrapper */
-#admin_content {margin-left:240px;}
+/* CONTENT */
+#admin_content {margin-left:220px;}
 
 /* FOOTER */
-#admin_footer {float:left;text-align:center;	width:100%;	margin-top: 30px;}
+#admin_footer {float:left; text-align:center; width:100%; margin-top:30px;}
+
+/* INDEX */
+#admin_index {min-height:620px; padding:20px;}
+
+/* USER STATS */
+#user_info {float:left; border:1px solid grey; height:335px; width:400px; padding:5px;}
+
+/* ABOUT webtrees */
+#about {float:right; border:1px solid grey; height:335px; width:400px; padding: 5px;}
 
 /*SITE CONFIG */
-.editable {width:100%; display:block; /* background:url(../themes/fab/images/edit_sm.png) no-repeat right;*/}
-.editable:hover { color:red; cursor:pointer; cursor:hand;} /* both cursors needed for cross-browser support */
+.editable {width:100%; display:block}
+.editable:hover {color:red; cursor:pointer; cursor:hand;} /* both cursors needed for cross-browser support */
 .editable input, select {padding:0;}
-.editable button {font-size:95%; font-weight:bold 84%; margin:1px; padding:0 5px; background-color:#dfeffc; border:1px solid; border-color:#d3d3d3 #808080 #808080 #d3d3d3;}
+.editable button {font-size:95%; font-weight:bold; margin:1px; padding:0 5px; background-color:#dfeffc; border:1px solid; border-color:#d3d3d3 #808080 #808080 #d3d3d3;}
 .editable button:hover  {border-color:#808080 #d3d3d3 #d3d3d3 #808080;}
-.site_config {/*width:700px;*/ padding: 0 20px 20px 0;}/*  table */
-.site_config th { /*background-color:#d1d9ef;*/ text-align:left; padding:8px 0 1px 3px;font-size:105%;} /* sub-headings, both cols */
+.site_config {padding: 0 20px 20px 0;}/*  table */
+.site_config th {text-align:left; padding:8px 0 1px 3px;font-size:105%;} /* sub-headings, both cols */
 .site_config th+th { font-style:italic;font-size:95%;} /* sub-headings, right col */
-.site_config td {/*background-color:#dfeffc;*/ white-space:normal;padding:3px 3px 3px 30px;} /* left-col */
+.site_config td {white-space:normal;padding:3px 3px 3px 30px;} /* left-col */
 .site_config td+td {background-color:#dcdcdc; width:250px; padding:3px 3px 3px 3px;} /* right/col */
-
 
 /* USER List */
 table#list   {width:100%}
@@ -99,29 +100,33 @@ td.details {background-color:#D1CFD0;border:2px solid #A19B9E;}
 .details td {vertical-align:top; border-right:1px solid #808080; padding-right:20px;}
 .details th {font-weight:bold; vertical-align:top; padding-left:20px;}
 .details ul {margin:0; padding:0 0 0 20px;}
-
 .odd {background-color:#dfd;}
 .even {background-color:#efe;}
 #list_length {float:left;}
 #list_filter {float:right;}
-
 #user-list_length {float:left;}
 #user-list_filter {float:right;}
 
 /* GEDCOM config tables */
 .facts_table {text-align:left;width:100%;}
-.facts_table th {text-align:left; padding:8px 0 1px 3px;font-size:105%;}
-.facts_table td {white-space:normal;padding:3px 3px 3px 30px;} /* left-col */
-.facts_table td+td {padding:3px 3px 3px 3px;} /* right/col */
-
 .config {}
 .descriptionbox  {border-bottom:solid #81a9cb 1px;vertical-align:top;white-space:nowrap;padding:3px;background-color:#DFEFFC;}
 .optionbox {	border-bottom:solid #81a9cb 1px;vertical-align:top;white-space:nowrap;padding:3px;}
-.subbar {background-color:#d1d9ef;border:solid #81a9cb 1px;font-size:105%;font-weight:bold;vertical-align:top;white-space:nowrap;padding:3px 3px 3px 30px;}
+.subbar {background-color:#d1d9ef;border:solid #81a9cb 1px;font-size:11px;font-weight:bold;vertical-align:top;white-space:nowrap;padding:3px;}
 
-/* INDEX page */
-#user_info {	width:400px;float:left;padding:5px;}
-#about {width:450px; float:right; padding:5px; height:315px;}
+/* README */
+#readme {font-size:12px; padding:10px; }
+#readme 	h1 {font-size:16px; font-weight:bold; margin-top:0; }
+#readme 	h2 {font-size:14px; font-weight:bold; margin-top:0; }
+#readme 	h3 {font-size:14px; font-weight:bold; margin:14px 0; }
+#readme	li {line-height:150%;}
+#readme	.back {float:right;}
+
+/* PHP INFO */
+#phpinfo table.heading  {padding:3px;	text-align:center;width:100%;}
+
+
+
 
 /* help text pop-ups */
 .help {
@@ -157,7 +162,9 @@ td.details {background-color:#D1CFD0;border:2px solid #A19B9E;}
 	color:black;
 }
 /*------------------------------------------------*/
- 
+/* General Info page */
+
+
 /* GEDCOM management */
 
 table#gedcom_table {
@@ -186,7 +193,6 @@ table#site_config {
 	font-size:12px;
 }/
 
-/* PHP Info */
 
 .facts_table, .facts_table_rtl {
 	width:100%;
@@ -198,21 +204,22 @@ table#site_config {
 	padding:3px;
 }
 
-#phpinfo table.heading  {
-	padding:3px;
-	text-align:center;
-	width:100%;
+/* jQuery UI CSS customisations 
+.css_right {float:right;}
+.ui-toolbar {padding:5px;}*/
+
+/* Text direction 
+.ltr {text-align:left;}
+.rtl {text-align:right;	direction:rtl;}*/
+
+/*#admin_content dt {
+	float:left;
+	width:300px;
 }
 
-#phpinfo  td {
-}
-
-/* ReadMe file */
-#readme {font-size:12px; padding:10px; }
-#readme 	h3 {font-size:14px; font-weight:bold; margin:14px 0; }
-#readme 	h2 {font-size:14px; font-weight:bold; margin-top:0; }
-#readme 	h1 {font-size:16px; font-weight:bold; margin-top:0; }
-#readme	a {font-weight:normal; text-decoration:none;}
-#readme	a:hover {}
-#readme	li {line-height:150%;}
-#readme	.back {float:right;}
+#admin_content dd {
+	color:	grey;
+	font-size:14px;
+	font-style:italic;
+	padding-top:3px;
+}*/

@@ -44,7 +44,7 @@ echo
 	$head; //-- additional header information
 
 // Check for updates
-$latest_version_txt=fetch_latest_version();
+/*$latest_version_txt=fetch_latest_version();
 if ($latest_version_txt) {
 	list($latest_version, $earliest_version, $download_url)=explode('|', $latest_version_txt);
 	// If the latest version is newer than this version, show a download link.
@@ -56,7 +56,7 @@ if ($latest_version_txt) {
 	// Cannot determine the latest version
 	$latest_version='-';
 }
-
+*/
 echo
 	'</head>',
 	'<body id="body" ',$bodyOnLoad, '>',
@@ -64,9 +64,10 @@ echo
 	'<div id="admin_head" class="ui-widget-content">',
 		'<div id="logo"><img src="images/header.png" width="281" height="50" alt="" /></div>',
 		'<div id="info">',
-			i18n::translate('Installed webtrees version: %s', WT_VERSION_TEXT),
-			'<br />',
-			i18n::translate('Latest stable webtrees version: %s', $latest_version),
+//			i18n::translate('Installed webtrees version: %s', WT_VERSION_TEXT),
+//			'<br />',
+//			i18n::translate('Latest stable webtrees version: %s', $latest_version),
+			WT_WEBTREES, ' ', WT_VERSION_TEXT,
 			'<br />',
 			i18n::translate('Current Server Time:'), ' ', format_timestamp(time()),
 			'<br />',
@@ -75,7 +76,7 @@ echo
 		'<div id="title">', i18n::translate('Administration'), '</div>',
 	'</div>',
 // Side menu 
-	'<div id="admin_menu" class="ui-widget-content ui-menu">',
+	'<div id="admin_menu" class="ui-widget-content">',
 		'<ul>',
 			'<li>';	$class=""; if (curPageName()=="index.php") {$class="current";} echo '<a class="',$class,'" href="index.php">', i18n::translate('Administration'), '</a></li>',
 			'<li><a href="../index.php?ctype=user">', i18n::translate('Back to My Page'), '</li>',	
@@ -90,7 +91,7 @@ echo
 			'</li>',
 			'<li>';	$class=""; if (curPageName()=="ged_admin.php") {$class="current";} echo '<a class="' ,$class, '" href="ged_admin.php">', i18n::translate('Family trees'), '</a>',
 				'<ul>',
-					'<li>';	$class=""; if (curPageName()=="ged_admin.php") {$class="current";} echo '<a class="' ,$class, '" ="ged_admin.php">', i18n::translate('Manage GEDCOMs'), '</a></li>',
+					'<li>';	$class=""; if (curPageName()=="ged_admin.php") {$class="current";} echo '<a class="' ,$class, '" href="ged_admin.php">', i18n::translate('Manage GEDCOMs'), '</a></li>',
 					'<li><span>', i18n::translate('Configure these trees'), ' :</span>',
 						'<ul>';
 							//-- gedcom list
@@ -108,9 +109,9 @@ echo
 			'</li>',
 			'<li>';	$class=""; if (curPageName()=="user_list.php") {$class="current";} echo '<a class="' ,$class, '" href="user_list.php">', i18n::translate('Users'), '</a>',
 				'<ul>',
-					'<li>';	$class=""; if (curPageName()=="user_list.php") {$class="current";} echo '<a class="' ,$class, '" ="user_list.php">', i18n::translate('List users'), '</a></li>',
-					'<li>';	$class=""; if (curPageName()=="user_admin.php") {$class="current";} echo '<a class="' ,$class, '" ="user_admin.php">', i18n::translate('Add user'), '</a></li>',
-					'<li>';	$class=""; if (curPageName()=="#") {$class="current";} echo '<a class="' ,$class, '" ="#">', i18n::translate('Bulk messaging'), '</a></li>',
+					'<li>';	$class=""; if (curPageName()=="user_list.php") {$class="current";} echo '<a class="' ,$class, '" href="user_list.php">', i18n::translate('List users'), '</a></li>',
+					'<li>';	$class=""; if (curPageName()=="user_admin.php") {$class="current";} echo '<a class="' ,$class, '" href="user_admin.php">', i18n::translate('Add user'), '</a></li>',
+					'<li>';	$class=""; if (curPageName()=="#") {$class="current";} echo '<a class="' ,$class, '" href="#">', i18n::translate('Bulk messaging'), '</a></li>',
 				'</ul>',
 			'</li>',
 			'<li><a href="admin_modules.php">', i18n::translate('Modules'), '</a>',
