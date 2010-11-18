@@ -43,6 +43,20 @@ echo
 	$javascript,
 	$head; //-- additional header information
 
+// Check for updates
+$latest_version_txt=fetch_latest_version();
+if ($latest_version_txt) {
+	list($latest_version, $earliest_version, $download_url)=explode('|', $latest_version_txt);
+	// If the latest version is newer than this version, show a download link.
+	if (version_compare(WT_VERSION, $latest_version)<=0) {
+		// A newer version is available.  Make a link to it
+		$latest_version='<a href="'.$download_url.'" style="font-weight:bold; color:red;">'.$latest_version.'</a>';
+	}
+} else {
+	// Cannot determine the latest version
+	$latest_version='-';
+}
+
 echo
 	'</head>',
 	'<body id="body" ',$bodyOnLoad, '>',
@@ -50,7 +64,9 @@ echo
 	'<div id="admin_head" class="ui-widget-content">',
 		'<div id="logo"><img src="images/header.png" width="281" height="50" alt="" /></div>',
 		'<div id="info">',
-			WT_WEBTREES, ' ', WT_VERSION_TEXT,
+			i18n::translate('Installed webtrees version: %s', WT_VERSION_TEXT),
+			'<br />',
+			i18n::translate('Latest stable webtrees version: %s', $latest_version),
 			'<br />',
 			i18n::translate('Current Server Time:'), ' ', format_timestamp(time()),
 			'<br />',
