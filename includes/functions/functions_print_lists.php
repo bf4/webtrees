@@ -998,7 +998,7 @@ function print_repo_table($repos, $legend='') {
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo '<table id="', $table_id, '" class="sortable list_table center"><tr><td></td>';
-	echo '<th class="list_label">', translate_fact('NAME'), '</th>';
+	echo '<th class="list_label">', i18n::translate('Repository name'), '</th>';
 	echo '<th class="list_label">', i18n::translate('Sources'), '</th>';
 	if ($SHOW_LAST_CHANGE) {
 		echo '<th class="list_label rela">', translate_fact('CHAN'), '</th>';
@@ -1397,7 +1397,7 @@ function print_changes_table($change_ids) {
 		echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"cb_parents_$table_id\">", i18n::translate('Show parents'), "</label><br />";
 	}
 	echo i18n::translate('Total changes'), ": ", $n;
-	if ($n>=$NMAX) echo "<br /><span class=\"warning\">", i18n::translate('Recent Changes'), " &gt; ", $NMAX, "</span>";
+	if ($n>=$NMAX) echo "<br /><span class=\"warning\">", i18n::translate('Recent changes'), " &gt; ", $NMAX, "</span>";
 	echo "</td>";
 	echo "<td style=\"display:none\">GIVN</td>";
 	echo "<td></td>";

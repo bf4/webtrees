@@ -52,7 +52,7 @@ if (empty($url)) {
 	// If we came here by means of a URL like http://mysite.com/foo/login.php
 	// we don't have a proper login URL, and session cookies haven't been set yet
 	// We'll re-load the page to properly determine cookie support
-	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'login.php?url=index.php&ctype=user');
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'login.php?url=index.php');
 }
 
 $message='';
@@ -94,7 +94,7 @@ if ($action=='login') {
 				$url = "individual.php?pid=".$pid;
 			} else {
 				//-- user does not have a pid?  Go to My Page
-				$url = "index.php?ctype=user";
+				$url = "index.php";
 			}
 		}
 
@@ -122,22 +122,15 @@ if ($action=='login') {
 		if ((isset($_SERVER['HTTP_REFERER'])) && ((stristr($_SERVER['HTTP_REFERER'],$tSERVER_URL)!==false)||(stristr($_SERVER['HTTP_REFERER'],$tLOGIN_URL)!==false))) {
 			$url = basename($_SERVER['HTTP_REFERER']);
 			if (stristr($url, ".php")===false) {
-				$url = "index.php?ctype=gedcom&ged=$GEDCOM";
+				$url = "index.php?ged=$GEDCOM";
 			}
 		}
 		else {
 			if (isset($url)) {
 				if (stristr($url,WT_SERVER_NAME.WT_SCRIPT_PATH)!==false) $url = WT_SERVER_NAME.WT_SCRIPT_PATH;
 			}
-			//else $url = WT_SERVER_NAME.WT_SCRIPT_PATH;
-			/* - commented out based on UI feedback
-			else $url = "index.php?ctype=user";
-			*/
 			else $url = "individual.php";
 		}
-	}
-	else if (stristr($url, "index.php")&&!stristr($url, "ctype=")) {
-		$url.="&ctype=gedcom";
 	}
 }
 
@@ -146,9 +139,9 @@ if ($type=="full") {
 } else {
 	print_simple_header(i18n::translate('webtrees user login'));
 }
-echo "<div class=\"center\">";
+echo '<div class="center">';
 
-echo "<table class=\"center width60 ltr\"><tr><td>";
+echo '<table class="center width60"><tr><td>';
 switch ($WELCOME_TEXT_AUTH_MODE) {
 case 1:
 	echo i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to every visitor who has a user account.<br /><br />If you have a user account, you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your application, the site administrator will activate your account.  You will receive an email when your application has been approved.');
@@ -214,7 +207,7 @@ if (get_site_setting('USE_REGISTRATION_MODULE')) { ?>
 	<td class="optionbox <?php echo $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=register"><?php echo i18n::translate('Request new user account'); ?></a></td></tr>
 	<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('Lost your password?'), help_link('new_password'); ?></td>
 	<td class="optionbox <?php echo $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=pwlost"><?php echo i18n::translate('Request new password'); ?></a></td></tr>
-	<tr><td class="topbottombar ltr" colspan="2">&nbsp;</td></tr>
+	<tr><td class="topbottombar" colspan="2">&nbsp;</td></tr>
 	</table>
 <?php
 }

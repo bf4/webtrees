@@ -70,10 +70,6 @@ if (!defined('WT_WEBTREES')) {
 		<meta name="generator" content="<?php echo WT_WEBTREES, ' - ', WT_WEBTREES_URL; ?>" />
 	<?php } ?>
 	<?php echo $javascript; ?>
-	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="js/jquery/jquery.tablesorter.js"></script>
-	<script type="text/javascript" src="js/jquery/jquery.tablesorter.pager.js"></script>
 	<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />
 	<link type="text/css" href="<?php echo WT_THEME_DIR; ?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
 	<?php if ($TEXT_DIRECTION=='rtl') { ?>
@@ -96,12 +92,30 @@ if (!defined('WT_WEBTREES')) {
 				</div>
 			</td>
 			<td align="center" valign="middle">
-				<?php print_user_links(); ?>
+			<?php
+				if (WT_USER_ID) {
+					echo '<a href="edituser.php" class="link">', i18n::translate('Logged in as '), ' (', WT_USER_NAME, ')</a><br />';
+					if (WT_USER_GEDCOM_ADMIN) {
+						echo '<a href="admin.php" class="link">', i18n::translate('Administration'), '</a> | ';
+					}
+					echo logout_link();
+				} elseif (empty($SEARCH_SPIDER)) {
+					echo login_link();
+				}
+			?>
 			</td>
 			<?php if (empty($SEARCH_SPIDER)) { ?>
 			<td align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right"; ?>" valign="middle" >
-				<?php print_theme_dropdown(); ?>
-				<?php print_lang_form(); ?>
+			<?php
+				$menu=MenuBar::getThemeMenu();
+				if ($menu) {
+					echo $menu->getMenuAsDropdown();
+				}
+				$menu=MenuBar::getLanguageMenu();
+				if ($menu) {
+					echo $menu->getMenuAsDropdown();
+				}
+			?>
 			</td>
 			<td style="white-space: normal;" align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right"; ?>" valign="middle" >
 				<form action="search.php" method="get">

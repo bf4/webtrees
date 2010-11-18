@@ -45,52 +45,43 @@ echo
 	'<html xmlns="http://www.w3.org/1999/xhtml" ', i18n::html_markup(), '>',
 	'<head>',
 	'<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />',
+	'<meta name="description" content="', htmlspecialchars($META_DESCRIPTION), '" />',
+	'<meta name="robots" content="', htmlspecialchars($META_ROBOTS), '" />',
+	'<meta name="generator" content="', WT_WEBTREES, ' ', WT_VERSION_TEXT, '" />',
 	'<title>', htmlspecialchars($title), '</title>',
-	'<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">',
-	'<link rel="stylesheet" href="', $stylesheet, '" type="text/css" media="all" />';
+	'<link type="image/x-icon" rel="shortcut icon" href="favicon.ico">',
+	'<link type="text/css" rel="stylesheet" href="', $stylesheet, '" />',
+	'<link type="text/css" rel="stylesheet" href="js/jquery/css/jquery-ui.custom.css" />',
+	'<link type="text/css" rel="stylesheet" href="', WT_THEME_DIR, 'jquery/jquery-ui_theme.css" />',
+	'<link type="text/css" rel="stylesheet" href="', WT_THEME_DIR, 'modules.css" />';
+
+if ($BROWSERTYPE!='other') {
+	echo '<link type="text/css" rel="stylesheet" href="',  WT_THEME_DIR, $BROWSERTYPE, '.css" />';
+}
+
+if ($TEXT_DIRECTION=='rtl') {
+	echo '<link type="text/css" rel="stylesheet" href="', WT_THEME_DIR, 'jquery/jquery-ui_theme_rtl.css" />';
+}
 
 if (WT_USE_LIGHTBOX) {
 	if ($TEXT_DIRECTION=='rtl') {
 		echo
-			'<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />',
-			'<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';
+			'<link type="text/css" rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" />',
+			'<link type="text/css" rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" />';
 	} else {
 		echo
-			'<link rel="stylesheet" href="modules/lightbox/css/clearbox_music.css" type="text/css" />',
-			'<link rel="stylesheet" href="modules/lightbox/css/album_page.css" type="text/css" media="screen" />';
+			'<link type="text/css" rel="stylesheet" href="modules/lightbox/css/clearbox_music.css" />',
+			'<link type="text/css" rel="stylesheet" href="modules/lightbox/css/album_page.css" />';
 	}
 }
 
 echo
-	'<meta name="description" content="', htmlspecialchars($META_DESCRIPTION), '" />',
-	'<meta name="robots" content="', htmlspecialchars($META_ROBOTS), '" />',
-	'<meta name="generator" content="', WT_WEBTREES, ' ', WT_VERSION_TEXT, '" />';
-
-echo
 	$javascript,
-	'<script type="text/javascript" src="js/jquery/jquery.min.js"></script>',
-	'<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>',
-	'<script type="text/javascript" src="js/jquery/jquery.tablesorter.js"></script>',
-	'<script type="text/javascript" src="js/jquery/jquery.tablesorter.pager.js"></script>',
-	'<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />';
-
-if ($BROWSERTYPE!='other') {
-	echo '<link type="text/css" href="', WT_THEME_DIR, 'jquery/jquery-ui_theme.css" rel="Stylesheet" />';
-}
-
-echo '<link rel="stylesheet" href="',  WT_THEME_DIR, $BROWSERTYPE, '.css" type="text/css" media="all" />';
-
-if ($TEXT_DIRECTION=='rtl') {
-	echo '<link type="text/css" href="', WT_THEME_DIR, 'jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />';
-}
-
-echo
-	'<link type="text/css" href="', WT_THEME_DIR, 'modules.css" rel="Stylesheet" />',
 	'</head>',
 	'<body id="body" ',$bodyOnLoad, '>';
 
-echo '<div id="header" class="block">'; // Every page has a header
-if ($view!='simple') {
+if ($view!='simple') { // Use "simple" headers for popup windows
+	echo '<div id="header" class="block">';
 	// Print the user links
 	if ($SEARCH_SPIDER) {
 		// Search engines get a reduced menu
@@ -110,7 +101,7 @@ if ($view!='simple') {
 				echo ' | <li><a href="admin.php" class="link">', i18n::translate('Administration'), '</a></li>';
 			}
 			if (WT_USER_CAN_ACCEPT && exists_pending_change()) {
-				echo ' | <li><a href="javascript:;" onclick="window.open(\'edit_changes.php\',\'_blank\',\'width=600,height=500,resizable=1,scrollbars=1\'); return false;" style="color:red;">', i18n::translate('Pending Changes'), '</a></li>';
+				echo ' | <li><a href="javascript:;" onclick="window.open(\'edit_changes.php\',\'_blank\',\'width=600,height=500,resizable=1,scrollbars=1\'); return false;" style="color:red;">', i18n::translate('Pending changes'), '</a></li>';
 			}
 		} else {
 			echo '<li>', login_link(), '</li>';
@@ -161,6 +152,6 @@ if ($view!='simple') {
 		}
 	}
 	unset($menu_items, $n, $menu);
-	echo '</ul></div>';
+	echo '</ul></div></div>';
 }
-echo '</div><div id="content">';
+echo '<div id="content">';

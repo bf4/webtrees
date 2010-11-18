@@ -115,7 +115,7 @@ class MenuBar {
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_pedigree");
 			$menu->addSubmenu($submenu);
 			//-- my_indi submenu
-			$submenu = new Menu(i18n::translate('My Individual Record'), "individual.php?pid=".WT_USER_GEDCOM_ID);
+			$submenu = new Menu(i18n::translate('My individual record'), "individual.php?pid=".WT_USER_GEDCOM_ID);
 			$submenu->addIcon('indis');
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_indis");
 			$menu->addSubmenu($submenu);
@@ -440,149 +440,102 @@ class MenuBar {
 	* get the menu for the lists
 	* @return Menu the menu item
 	*/
-	public static function getListsMenu($surname="") {
+	public static function getListsMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGES, $MULTI_MEDIA, $SEARCH_SPIDER, $controller;
 
-		$style = "top";
-		if ($surname) $style = "sub";
+		$surname='';
 		if (isset($controller)) {
-			if (!$surname) {
-				if (isset($controller->indi)) {
-					list($surname)=explode(',', $controller->indi->getSortName());
-				}
-				if (isset($controller->rootid)) {
-					$person = Person::getInstance($controller->rootid);
-					list($surname)=explode(',', $person->getSortName());
-				}
+			if (isset($controller->indi)) {
+				list($surname)=explode(',', $controller->indi->getSortName());
+			}
+			if (isset($controller->rootid)) {
+				$person = Person::getInstance($controller->rootid);
+				list($surname)=explode(',', $person->getSortName());
 			}
 		}
 
-		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
+		if ($TEXT_DIRECTION=='rtl') $ff='_rtl'; else $ff='';
 
-		if (!empty($SEARCH_SPIDER)) { // Only want the indi list for search engines.
-			//-- main lists menu item
-			$link = "indilist.php?ged=".WT_GEDCOM;
-			if ($style=="sub") {
-				$link .= "&amp;surname={$surname}";
-				$menu = new Menu(i18n::translate('Lists'), $link);
-				$menu->addIcon('lists');
-				$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_small_indis");
-			} else {
-				$menu = new Menu(i18n::translate('Lists'), $link, "down");
-				$menu->addIcon('lists');
-				$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_indis");
-			}
-
-			//-- gedcom list
-			if (get_site_setting('ALLOW_CHANGE_GEDCOM')) {
-				foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
-					$submenu = new Menu(i18n::translate('Individuals')." - ".PrintReady(get_gedcom_setting($ged_id, 'title')), 'indilist.php?ged='.$gedcom);
-					$submenu->addIcon('gedcom');
-					$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_gedcom");
-					$menu->addSubmenu($submenu);
-				}
-			}
+		// The top level menu shows the individual list
+		$menu=new Menu(i18n::translate('Lists'), 'indilist.php?ged='.WT_GEDCOM, 'down');
+		$menu->addIcon('lists');
+		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", 'icon_large_indis');
+ 
+		// Search engines only get the individual list
+		if ($SEARCH_SPIDER) {
 			return $menu;
 		}
-		//-- main lists menu item
-		$link = "indilist.php?ged=".WT_GEDCOM;
-		if ($style=="sub") {
-			$link .= "&amp;surname=".$surname;
-			$menu = new Menu(i18n::translate('Lists'), $link);
-			$menu->addIcon('lists');
-			$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff", "icon_small_indis");
-		} else {
-			$menu = new Menu(i18n::translate('Lists'), $link, "down");
-			$menu->addIcon('lists');
-			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_indis");
-		}
 
-		// Build a sortable list of submenu items and then sort it in localized name order
-		$menuList = array();
-		$menuList["individual"] = i18n::translate('Individuals');
-		if (file_exists(WT_ROOT.'famlist.php')) $menuList["family"] = i18n::translate('Families');
-		if (file_exists(WT_ROOT.'branches.php')) $menuList["branches"] = i18n::translate('Branches');
-		if ($style=="top" && file_exists(WT_ROOT.'sourcelist.php')) $menuList["source"] = i18n::translate('Sources');
-		if ($style=="top" && file_exists(WT_ROOT.'notelist.php')) $menuList["note"] = i18n::translate('Shared Notes');
-		if ($style=="top" && file_exists(WT_ROOT.'repolist.php')) $menuList["repository"] = i18n::translate('Repositories');
-		if ($style=="top" && file_exists(WT_ROOT.'placelist.php')) $menuList["places"] = i18n::translate('Place hierarchy');
-		if ($style=="top" && file_exists(WT_ROOT.'medialist.php') && $MULTI_MEDIA) $menuList["media"] = i18n::translate('Multimedia');
+		// Build a list of submenu items and then sort it in localized name order
+		$menuList=array(
+			'branches.php'  =>i18n::translate('Branches'),
+			'famlist.php'   =>i18n::translate('Families'),
+			'indilist.php'  =>i18n::translate('Individuals'),
+			'medialist.php' =>i18n::translate('Multimedia'),
+			'placelist.php' =>i18n::translate('Place hierarchy'),
+			'repolist.php'  =>i18n::translate('Repositories'),
+			'notelist.php'  =>i18n::translate('Shared Notes'),
+			'sourcelist.php'=>i18n::translate('Sources')
+		);
 		asort($menuList);
 
-		// Produce the submenus in localized name order
-
-		foreach ($menuList as $menuType => $menuName) {
-			switch ($menuType) {
-			case "individual":
-				//-- indi list sub menu
-				$link = "indilist.php?ged=".WT_GEDCOM;
-				if ($surname) $link .= "&amp;surname=".$surname;
-				$submenu = new Menu(i18n::translate('Individuals'), $link);
+		foreach ($menuList as $page=>$name) {
+			$link=$page.'?ged='.WT_GEDCOM;
+			switch ($page) {
+			case 'indilist.php':
+				if ($surname) $link .= '&amp;surname='.$surname;
+				$submenu = new Menu($name, $link);
 				$submenu->addIcon('indis');
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_indis");
-				$menu->addSubmenu($submenu);
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", '', 'icon_small_indis');
 				break;
 
-			case "family":
-				//-- famlist sub menu
-				$link = "famlist.php?ged=".WT_GEDCOM;
-				if ($surname) $link .= "&amp;surname=".$surname;
-				$submenu = new Menu(i18n::translate('Families'), $link);
+			case 'famlist.php':
+				if ($surname) $link .= '&amp;surname='.$surname;
+				$submenu = new Menu($name, $link);
 				$submenu->addIcon('cfamily');
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_cfamily");
-				$menu->addSubmenu($submenu);
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", '', 'icon_small_cfamily');
 				break;
 
-			case "branches":
-				//-- branches sub menu
-				$link = "branches.php?ged=".WT_GEDCOM;
-				if ($surname) $link .= "&amp;surn=".$surname;
-				$submenu = new Menu(i18n::translate('Branches'), $link);
+			case 'branches.php':
+				if ($surname) $link .= '&amp;surn='.$surname;
+				$submenu = new Menu($name, $link);
 				$submenu->addIcon('patriarch');
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_patriarch");
-				$menu->addSubmenu($submenu);
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", '', 'icon_small_patriarch');
 				break;
 
-			case "source":
-				//-- source
-				$submenu = new Menu(i18n::translate('Sources'), 'sourcelist.php?ged='.WT_GEDCOM);
+			case 'sourcelist.php':
+				$submenu = new Menu($name, $link);
 				$submenu->addIcon('menu_source');
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_source");
-				$menu->addSubmenu($submenu);
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", '', 'icon_small_menu_source');
 				break;
 
-			case "note":
-				//-- shared note
-				$submenu = new Menu(i18n::translate('Shared Notes'), 'notelist.php?ged='.WT_GEDCOM);
+			case 'notelist.php':
+				$submenu = new Menu($name, $link);
 				$submenu->addIcon('menu_note');
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_notes");
-				$menu->addSubmenu($submenu);
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", '', 'icon_small_notes');
 				break;
 
-			case "repository":
-				//-- repository
-				$submenu = new Menu(i18n::translate('Repositories'), "repolist.php");
+			case 'repolist.php':
+				$submenu = new Menu($name, $link);
 				$submenu->addIcon('menu_repository');
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_repository");
-				$menu->addSubmenu($submenu);
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", '', 'icon_small_menu_repository');
 				break;
 
-			case "places":
-				//-- places
-				$submenu = new Menu(i18n::translate('Place hierarchy'), 'placelist.php?ged='.WT_GEDCOM);
+			case 'placelist.php':
+				$submenu = new Menu($name, $link);
 				$submenu->addIcon('place');
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_place");
-				$menu->addSubmenu($submenu);
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", '', 'icon_small_place');
 				break;
 
-			case "media":
-				//-- medialist
-				$submenu = new Menu(i18n::translate('Multimedia'), 'medialist.php?ged='.WT_GEDCOM);
-				$submenu->addIcon('menu_media');
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_media");
-				$menu->addSubmenu($submenu);
+			case 'medialist.php':
+				if ($MULTI_MEDIA) {
+					$submenu = new Menu($name, $link);
+					$submenu->addIcon('menu_media');
+					$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", '', 'icon_small_menu_media');
+				}
 				break;
 			}
+			$menu->addSubmenu($submenu);
 		}
 
 		return $menu;
@@ -595,19 +548,19 @@ class MenuBar {
 	public static function getCalendarMenu() {
 		global $TEXT_DIRECTION, $WT_IMAGES, $SEARCH_SPIDER;
 
-		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
+		if ($TEXT_DIRECTION=='rtl') $ff='_rtl'; else $ff='';
 		if ((!file_exists(WT_ROOT.'calendar.php')) || (!empty($SEARCH_SPIDER))) {
-			$menu = new Menu("", "", "");
+			$menu = new Menu('', '', '');
 			return $menu;
 		}
 		//-- main calendar menu item
-		$menu = new Menu(i18n::translate('Calendar'), 'calendar.php?ged='.WT_GEDCOM, "down");
+		$menu = new Menu(i18n::translate('Calendar'), 'calendar.php?ged='.WT_GEDCOM, 'down');
 		$menu->addIcon('calendar');
-		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_calendar");
+		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", 'icon_large_calendar');
 		//-- viewday sub menu
 		$submenu = new Menu(i18n::translate('View Day'), 'calendar.php?ged='.WT_GEDCOM);
 		$submenu->addIcon('calendar');
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_calendar");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", '', 'icon_small_calendar');
 		$menu->addSubmenu($submenu);
 		//-- viewmonth sub menu
 		$submenu = new Menu(i18n::translate('View Month'), "calendar.php?ged=".WT_GEDCOM."&amp;action=calendar");
@@ -865,15 +818,16 @@ class MenuBar {
 		global $SEARCH_SPIDER;
 		global $controller; // Pages with a controller can be added to the favorites
 
-		if ($SEARCH_SPIDER) {
-			return false; // show no favorites, because they taint every page that is indexed.
-		}
-
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
 		$menu=new Menu(i18n::translate('Favorites'), '#', 'down');
 		$menu->addIcon('gedcom');
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_gedcom");
+
+		// Don't list favorites on private sites and for search engines
+		if (!WT_USER_ID && $REQUIRE_AUTHENTICATION || $SEARCH_SPIDER) {
+			return $menu;
+		}
 
 		if (array_key_exists('gedcom_favorites', WT_Module::getActiveModules())) {
 			$gedfavs=gedcom_favorites_WT_Module::getUserFavorites(WT_GEDCOM);

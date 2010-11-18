@@ -72,10 +72,6 @@ echo
 
 echo
 	$javascript,
-	'<script type="text/javascript" src="js/jquery/jquery.min.js"></script>',
-	'<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>',
-	'<script type="text/javascript" src="js/jquery/jquery.tablesorter.js"></script>',
-	'<script type="text/javascript" src="js/jquery/jquery.tablesorter.pager.js"></script>',
 	'<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />';
 ?>
 
@@ -125,7 +121,7 @@ if ($view!='simple') {
 				echo ' | <li><a href="admin.php" class="icon_color">', i18n::translate('Administration'), '</a></li>';
 			}
 			if (WT_USER_CAN_ACCEPT && exists_pending_change()) {
-				echo ' | <li><a href="javascript:;" onclick="window.open(\'edit_changes.php\',\'_blank\',\'width=600,height=500,resizable=1,scrollbars=1\'); return false;" style="color:red;">', i18n::translate('Pending Changes'), '</a></li>';
+				echo ' | <li><a href="javascript:;" onclick="window.open(\'edit_changes.php\',\'_blank\',\'width=600,height=500,resizable=1,scrollbars=1\'); return false;" style="color:red;">', i18n::translate('Pending changes'), '</a></li>';
 			}
 		} else {
 			echo '<li>', login_link('class="icon_color"'), '</li>';

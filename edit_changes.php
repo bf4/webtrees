@@ -1,6 +1,6 @@
 <?php
 /**
- * Interface to review/accept/reject changes made by editing online.
+ * Interface to moderate pending changes.
  *
  * webtrees: Web based Family History software
  * Copyright (C) 2010 webtrees development team.
@@ -41,7 +41,7 @@ $change_id=safe_GET('change_id');
 $index    =safe_GET('index');
 $ged      =safe_GET('ged');
 
-print_simple_header(i18n::translate('Review GEDCOM changes'));
+print_simple_header(/* I18N: Moderate as a verb, not adjective  */ i18n::translate('Moderate pending changes'));
 echo WT_JS_START;
 ?>
 	function show_gedcom_record(xref) {
@@ -58,7 +58,7 @@ echo WT_JS_START;
 	}
 <?php
 echo WT_JS_END;
-echo '<div class="center"><span class="subheaders">', i18n::translate('Review GEDCOM changes'), '</span><br /><br />';
+echo '<div class="center"><span class="subheaders">', i18n::translate('Moderate pending changes'), '</span><br /><br />';
 
 switch ($action) {
 case 'undo':
@@ -177,9 +177,9 @@ if ($changed_gedcoms) {
 			$output.='<table class="list_table"><tr>';
 			$output.='<td class="list_label">'.i18n::translate('Accept').'</td>';
 			$output.='<td class="list_label">'.i18n::translate('Type').'</td>';
-			$output.='<td class="list_label">'.i18n::translate('User name').'</td>';
+			$output.='<td class="list_label">'.i18n::translate('User').'</td>';
 			$output.='<td class="list_label">'.i18n::translate('Date').'</td>';
-			$output.='<td class="list_label">GEDCOM</td>';
+			$output.='<td class="list_label">'.i18n::translate('Family tree').'</td>';
 			$output.='<td class="list_label">'.i18n::translate('Undo').'</td>';
 			$output.='</tr>';
 		}
@@ -193,7 +193,7 @@ if ($changed_gedcoms) {
 			$output.=i18n::translate('Replace record');
 		}
 		echo '</b></td>';
-		$output .= "<td class=\"list_value\"><a href=\"javascript:;\" onclick=\"return reply('".$change->user_name."', '".i18n::translate('Review GEDCOM Changes')."')\" alt=\"".i18n::translate('Send Message')."\">";
+		$output .= "<td class=\"list_value\"><a href=\"javascript:;\" onclick=\"return reply('".$change->user_name."', '".i18n::translate('Moderate pending changes')."')\" alt=\"".i18n::translate('Send Message')."\">";
 		$output .= PrintReady($change->real_name);
 		$output .= PrintReady('&nbsp;('.$change->user_name.')').'</a></td>';
 		$output .= '<td class="list_value">'.$change->change_time.'</td>';
@@ -206,10 +206,8 @@ if ($changed_gedcoms) {
 	//-- Now for the global Action bar:
 	$output2 = '<br /><table class="list_table">';
 	// Row 1 column 1: title "Accept all"
-	$output2 .= '<tr><td class="list_label">'.i18n::translate('Accept all changes').'</td>';
-	// Row 1 column 2: separator
-	$output2 .= '<td class="list_label width25">&nbsp;</td>';
-	// Row 1 column 3: title "Undo all"
+	$output2 .= '<tr><td class="list_label">'.i18n::translate('Approve all changes').'</td>';
+	// Row 1 column 2: title "Undo all"
 	$output2 .= '<td class="list_label">'.i18n::translate('Undo all changes').'</td></tr>';
 
 	// Row 2 column 1: action "Accept all"
@@ -217,13 +215,11 @@ if ($changed_gedcoms) {
 	$count = 0;
 	foreach ($changed_gedcoms as $gedcom_name) {
 		if ($count!=0) $output2.='<br />';
-		$output2 .= '<a href="edit_changes.php?action=acceptall&amp;ged='.rawurlencode($gedcom_name).'">'.$gedcom_name.' - '.i18n::translate('Accept all changes').'</a>';
+		$output2 .= '<a href="edit_changes.php?action=acceptall&amp;ged='.rawurlencode($gedcom_name).'">'.$gedcom_name.' - '.i18n::translate('Approve all changes').'</a>';
 		$count ++;
 	}
 	$output2 .= '</td>';
-	// Row 2 column 2: separator
-	$output2 .= '<td class="list_value width25">&nbsp;</td>';
-	// Row 2 column 3: action "Undo all"
+	// Row 2 column 2: action "Undo all"
 	$output2 .= '<td class="list_value">';
 	$count = 0;
 	foreach ($changed_gedcoms as $gedcom_name) {
@@ -236,8 +232,7 @@ if ($changed_gedcoms) {
 	$output2 .= '</td></tr></table>';
 
 	echo
-		i18n::translate('Decide for each change to either accept or reject it.<br /><br />To accept all changes at once, click <b>"Accept all changes"</b> in the box below.<br />To get more information about a change,<br />click <b>"View change diff"</b> to see the differences,<br />or click <b>"View GEDCOM record"</b> to see the new data in GEDCOM format.'),
-		'<br />', $output2, $output, $output2, '<br /><br />',
+		$output2, $output, $output2, '<br /><br />',
 		'<a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close();">',
 		i18n::translate('Close Window'),
 		'</a>';

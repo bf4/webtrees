@@ -39,6 +39,15 @@ define('WT_FUNCTIONS_EDIT_PHP', '');
 
 require_once WT_ROOT.'includes/functions/functions_import.php';
 
+// Create an edit control for inline editing using jeditable
+function edit_field_inline($name, $value) {
+	return
+		'<span class="editable" id="' . $name . '">' . htmlspecialchars($value) . '</span>' .
+		WT_JS_START .
+		'jQuery("#' . $name . '").editable("' . WT_SERVER_NAME . WT_SCRIPT_PATH . 'save.php", {submit:"' . i18n::translate('OK') . '", style:"inherit"})' .
+		WT_JS_END;
+}
+
 // Create a <select> control for a form
 // $name     - the ID for the form element
 // $values   - array of value=>display items
@@ -69,6 +78,26 @@ function select_edit_control($name, $values, $empty, $selected, $extra='') {
 	return '<select name="'.$name.'" '.$extra.'>'.$html.'</select>';
 }
 
+// An inline-editing version of select_edit_control()
+function select_edit_control_inline($name, $values, $empty, $selected, $extra='') {
+	if (!is_null($empty)) {
+		// Push ''=>$empty onto the front of the array, maintaining keys
+		$tmp=array(''=>$empty);
+		foreach ($values as $key=>$value) {
+			$tmp[$key]=$value;
+		}
+		$values=$tmp;
+	}
+	$values['selected']=$selected;
+	return
+		'<span class="editable" id="' . $name . '">' .
+		(array_key_exists($selected, $values) ? htmlspecialchars($values[$selected]) : '').
+		'</span>' .
+		WT_JS_START .
+		'jQuery("#' . $name . '").editable("' . WT_SERVER_NAME . WT_SCRIPT_PATH . 'save.php", {type:"select", data:' . json_encode($values) . ', submit:"' . i18n::translate('OK') . '", style:"inherit", callback:function(value, settings) {jQuery(this).innerHTML=settings.data[value];} })' .
+		WT_JS_END;
+}
+
 // Create a set of radio buttons for a form
 // $name     - the ID for the form element
 // $values   - array of value=>display items
@@ -95,6 +124,13 @@ function edit_field_yes_no($name, $selected=false, $extra='') {
 	//return select_edit_control(
 		//$name, array(true=>i18n::translate('yes'), false=>i18n::translate('no')), null, $selected, $extra
 	//);
+}
+
+// An inline-editing version of edit_field_yes_no()
+function edit_field_yes_no_inline($name, $selected=false, $extra='') {
+	return select_edit_control_inline(
+		$name, array(true=>i18n::translate('yes'), false=>i18n::translate('no')), null, $selected, $extra
+	);
 }
 
 // Print an edit control for a checkbox
@@ -139,10 +175,10 @@ function edit_language_checkboxes($field_prefix, $languages) {
 // Print an edit control for access level
 function edit_field_access_level($name, $selected='', $extra='') {
 	$ACCESS_LEVEL=array(
-		WT_PRIV_PUBLIC=>i18n::translate('Show to public'),
-		WT_PRIV_USER  =>i18n::translate('Show only to authenticated users'),
-		WT_PRIV_NONE  =>i18n::translate('Show only to admin users'),
-		WT_PRIV_HIDE  =>i18n::translate('Hide even from admin users')
+		WT_PRIV_PUBLIC=>i18n::translate('Show to visitors'),
+		WT_PRIV_USER  =>i18n::translate('Show to members'),
+		WT_PRIV_NONE  =>i18n::translate('Show to managers'),
+		WT_PRIV_HIDE  =>i18n::translate('Hide from everyone')
 	);
 	return select_edit_control($name, $ACCESS_LEVEL, null, $selected, $extra);
 }
@@ -179,6 +215,13 @@ function edit_field_contact($name, $selected='', $extra='') {
 // Print an edit control for a language field
 function edit_field_language($name, $selected='', $extra='') {
 	return select_edit_control($name, i18n::installed_languages(), null, $selected, $extra);
+}
+
+// An inline-editing version of edit_field_language()
+function edit_field_language_inline($name, $selected=false, $extra='') {
+	return select_edit_control_inline(
+		$name, i18n::installed_languages(), null, $selected, $extra
+	);
 }
 
 // Print an edit control for a username

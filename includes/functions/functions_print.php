@@ -393,7 +393,14 @@ function print_header($title) {
 	}
 	$GEDCOM_TITLE = get_gedcom_setting(WT_GED_ID, 'title');
 	$query_string = $QUERY_STRING;
-	$javascript=WT_JS_START.'
+	$javascript=
+		'<script type="text/javascript" src="js/jquery/jquery.min.js"></script>'.
+		'<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>'.
+		'<script type="text/javascript" src="js/jquery/jquery.tablesorter.js"></script>'. // Deprecated - use datatables
+		'<script type="text/javascript" src="js/jquery/jquery.tablesorter.pager.js"></script>'. // Deprecated - use datatables
+		'<script type="text/javascript" src="js/jquery/jquery.jeditable.js"></script>'.
+		'<script type="text/javascript" src="js/jquery/jquery.dataTables.min.js"></script>'.
+		WT_JS_START.'
 		/* setup some javascript variables */
 		var query = "'.$query_string.'";
 		var textDirection = "'.$TEXT_DIRECTION.'";
@@ -565,44 +572,6 @@ function execution_stats() {
 		$PRIVACY_CHECKS,
 		version_compare(PHP_VERSION, '5.2.1', '>=') ? (memory_get_peak_usage(true)/1024) : (memory_get_usage()/1024)
 	);
-}
-
-//-- print a form to change the language
-function print_lang_form($option=0) {
-	$language_menu=MenuBar::getLanguageMenu();
-	if (empty($language_menu)) {
-		return;
-	}
-	echo '<div class="lang_form">';
-	switch($option) {
-	case 1:
-		echo $language_menu->getMenu();
-		break;
-	default:
-		echo $language_menu->getMenuAsDropdown();
-		break;
-	}
-	echo '</div>';
-}
-/**
-* print user links
-*
-* this function will print login/logout links and other links based on user privileges
-*/
-function print_user_links() {
-	global $QUERY_STRING, $SEARCH_SPIDER;
-
-	if (WT_USER_ID) {
-		echo '<a href="edituser.php" class="link">', i18n::translate('Logged in as '), ' (', WT_USER_NAME, ')</a><br />';
-		if (WT_USER_GEDCOM_ADMIN) {
-			echo '<a href="admin.php" class="link">', i18n::translate('Administration'), '</a> | ';
-		}
-		echo logout_link();
-	} else {
-		if (empty($SEARCH_SPIDER)) {
-			echo login_link();
-		}
-	}
 }
 
 // Generate a login link
@@ -1177,26 +1146,6 @@ function write_align_with_textdir_check($t_dir, $return=false)
 	}
 	if ($return) return $out;
 	echo $out;
-}
-//-- print theme change dropdown box
-function print_theme_dropdown($style=0) {
-	global $ALLOW_THEME_DROPDOWN;
-
-	if ($ALLOW_THEME_DROPDOWN && get_site_setting('ALLOW_USER_THEMES')) {
-		echo '<div class="theme_form">';
-		$theme_menu=MenuBar::getThemeMenu();
-		switch ($style) {
-		case 0:
-			echo $theme_menu->getMenuAsDropdown();
-			break;
-		case 1:
-			echo $theme_menu->getMenu();
-			break;
-		}
-		echo '</div>';
-	} else {
-		echo '&nbsp;';
-	}
 }
 
 /**

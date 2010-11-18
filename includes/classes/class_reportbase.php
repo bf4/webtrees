@@ -1911,12 +1911,7 @@ function GedcomSHandler($attrs) {
 					$temp = explode(" ", trim($tgedrec));
 					$level = $temp[0] + 1;
 					$newgedrec = get_sub_record($level, "$level $tag", $tgedrec);
-					if ($level!=1) {
-						$tgedrec = $newgedrec;
-					} else {
-						$newgedrec = "";
-						break;
-					}
+					$tgedrec = $newgedrec;
 				}
 			}
 		}
@@ -2174,7 +2169,7 @@ function GetPersonNameSHandler($attrs) {
 				//short-circuit with the faster strlen
 				if (strlen($name)>$attrs["truncate"] && utf8_strlen($name)>$attrs["truncate"]) {
 					$name = preg_replace("/\(.*\) ?/", "", $name); //removes () and text inbetween - what about ", [ and { etc?
-					$words = explode(" ", $name);
+					$words = preg_split('/[, -]+/', $name); // names separated with space, comma or hyphen - any others?
 					$name = $words[count($words)-1];
 					for ($i=count($words)-2; $i>=0; $i--) {
 						$len = utf8_strlen($name);
@@ -2329,13 +2324,11 @@ function RepeatTagSHandler($attrs) {
 				$i++;
 			}
 			$level--;
-			if ($level > 0) {
-				$count = preg_match_all("/$level $t(.*)/", $subrec, $match, PREG_SET_ORDER);
-				$i = 0;
-				while ($i < $count) {
-					$repeats[] = get_sub_record($level, "$level $t", $subrec, $i + 1);;
-					$i++;
-				}
+			$count = preg_match_all("/$level $t(.*)/", $subrec, $match, PREG_SET_ORDER);
+			$i = 0;
+			while ($i < $count) {
+				$repeats[] = get_sub_record($level, "$level $t", $subrec, $i + 1);;
+				$i++;
 			}
 		}
 	}

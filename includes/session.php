@@ -33,7 +33,7 @@ if (!defined('WT_SCRIPT_NAME')) {
 
 // Identify ourself
 define('WT_WEBTREES',        'webtrees');
-define('WT_VERSION',         '1.0.5');
+define('WT_VERSION',         '1.0.6');
 define('WT_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
 define('WT_VERSION_TEXT',    trim(WT_VERSION.' '.WT_VERSION_RELEASE));
 define('WT_WEBTREES_URL',    'http://webtrees.net');
@@ -424,7 +424,7 @@ if (WT_SCRIPT_NAME!='help_text.php') {
 			basicHTTPAuthenticateUser();
 		} else {
 			if (WT_SCRIPT_NAME=='index.php') {
-				$url='index.php?ctype=gedcom&ged='.WT_GEDCOM;
+				$url='index.php?ged='.WT_GEDCOM;
 			} else {
 				$url=WT_SCRIPT_NAME.'?'.$QUERY_STRING;
 			}

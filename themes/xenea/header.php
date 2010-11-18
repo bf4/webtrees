@@ -75,10 +75,6 @@ $displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMA
 		<meta name="generator" content="<?php echo WT_WEBTREES, ' - ', WT_WEBTREES_URL; ?>" />
 	<?php } ?>
 	<?php echo $javascript; ?>
-	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="js/jquery/jquery.tablesorter.js"></script>
-	<script type="text/javascript" src="js/jquery/jquery.tablesorter.pager.js"></script>
 	<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />
 	<link type="text/css" href="<?php echo WT_THEME_DIR; ?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
 	<?php if ($TEXT_DIRECTION=='rtl') { ?>
@@ -123,8 +119,28 @@ $displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMA
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#84beff" style="background-image:url('<?php echo WT_THEME_DIR; ?>images/barra.gif');">
 			 <tr class="blanco">
 				<td width="10" height="40"><img src="<?php echo WT_THEME_DIR; ?>images/pixel.gif" width="1" height="18" alt="" /></td>
-				<td width="115"><div id="favtheme" align="<?php echo $TEXT_DIRECTION=="rtl"?"right":"left"; ?>" ><?php print_theme_dropdown(1); ?><?php print_favorite_selector(1); ?></div></td>
-				<td><div align="center" ><?php print_user_links(); ?></div></td>
+				<td width="115"><div id="favtheme" align="<?php echo $TEXT_DIRECTION=="rtl"?"right":"left"; ?>" >
+					<?php
+					$menu=MenuBar::getThemeMenu();
+					if ($menu) {
+						echo $menu->getMenu();
+					}
+					print_favorite_selector(1);
+				?>
+				</div></td>
+				<td><div align="center" >
+				<?php
+					if (WT_USER_ID) {
+						echo '<a href="edituser.php" class="link">', i18n::translate('Logged in as '), ' (', WT_USER_NAME, ')</a><br />';
+						if (WT_USER_GEDCOM_ADMIN) {
+							echo '<a href="admin.php" class="link">', i18n::translate('Administration'), '</a> | ';
+						}
+						echo logout_link();
+					} elseif (empty($SEARCH_SPIDER)) {
+						echo login_link();
+					}
+				?>
+				</div></td>
 				<td width="120" align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right"; ?>" >
 					<div class="makeMenu"><?php
 						$language_menu=MenuBar::getLanguageMenu();
