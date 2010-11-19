@@ -49,9 +49,13 @@ if ($latest_version_txt) {
 }
 
 echo '<h2>', i18n::translate('About webtrees'), '</h2>',
-	'<p>' ,i18n::translate('Installed webtrees version: %s', WT_VERSION_TEXT),'</p>',
-	'<p>' ,i18n::translate('Latest stable webtrees version: %s', $latest_version), '</p>';
-			
+	'<p>' ,i18n::translate('Your installed  version of webtrees is: %s', WT_VERSION_TEXT),'</p>';
+	if (version_compare(WT_VERSION, $latest_version)>0) {
+		echo '<p>' ,i18n::translate('The latest stable webtrees version is: %s', $latest_version), ' - ' ,i18n::translate('No upgrade required.'), '</p>';
+	} else {
+		echo '<p class="warning">' ,i18n::translate('We recommend you click here to upgrade to the latest stable webtrees version: %s', $latest_version), '</p>';
+	}
+
 
 			
 			
