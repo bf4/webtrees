@@ -39,7 +39,7 @@ admin_header(i18n::translate('Server configuration'));
 
 echo
 	// Display the config items inline, rather than using a form.
-	'<table class="site_config ui-widget-content"><tr>',
+	'<table class="site_config"><tr>',
 	'<th>', i18n::translate('Server configuration'), '</th><th>', i18n::translate('Click to edit'), '</th>',
 	'</tr><tr>',
 	'<td>', i18n::translate('Data file directory'), help_link('INDEX_DIRECTORY'), '</td>',

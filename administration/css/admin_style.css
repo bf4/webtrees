@@ -31,46 +31,50 @@
 
 /* general styles */
 body { font-size:12px; margin:10px;}
+.ui-widget-content a { text-decoration:none;}
 .ui-widget-content a.current { color:#E17009;}
 .ui-widget-content a:hover { color:red; cursor:hand;}
+.css_right {float:right;}
 input, textarea {	color:black; padding-left:3px; padding-right:3px;}
 fieldset {margin:8px 8px 4px 8px;}
 legend {font-style:italic; font-weight:bold;	padding:0 5px 5px; align:top;}
 img {border:none;}
 .icon {border:none;	padding-left:0pt;padding-right:5pt;}
-.warning, .error, .red {	color:red;}
+.warning, .error, .red {	font-weight:bold; color:red;}
+.accepted { font-weight:bold; color:green;}
 .center {text-align:center;}
 .nowrap {white-space:nowrap;}
 .indent {padding-left:15px;}
 
 /* HEADER */
-#admin_head  {height:70px;	margin-bottom:20px;}
-#logo {float:left; width:300px; }
-#title  {text-align:center; font-size:18px; font-weight:bold; padding-top:20px;}
-#info  {font-size:12px; text-align:right; float:right; width:350px; padding:10px 10px 0 0; margin-bottom:3px;}
+#admin_head  {height:70px; margin-bottom:10px; background-image: url("../images/header.png"); background-repeat:no-repeat; background-position:top left;}
+#title  {position:absolute; float:left; width:100%; text-align:center; font-size:18px; font-weight:bold; padding-top:20px;}
+#info  {float:right; width:350px; font-size:12px; text-align:right; padding:10px 10px 0 0; margin-bottom:3px;}
 
 /* SIDE MENU */
-#admin_menu {padding:10px 0 10px 5px; width:200px; float:left; position:absolute; color:#2E6E9E;}
+#admin_menu {padding:10px 0 10px 5px; width:200px; float:left; position:absolute; color:#2E6E9E; min-height:620px;}
 #admin_menu ul {list-style: none outside none; margin:0 0 0 -30px;}
 #admin_menu li ul {list-style: none outside none; margin:0 0 0 -20px;}
 #admin_menu li ul span {font-style: italic; font-weight:bold;}
 
 /* CONTENT */
-#admin_content {margin-left:220px;}
+#admin_content {margin-left:220px; min-height:620px; padding:10px; }
 
 /* FOOTER */
 #admin_footer {float:left; text-align:center; width:100%; margin-top:30px;}
 
 /* INDEX */
-#admin_index {min-height:620px; padding:20px;}
+#admin_index {}
+
+/* All DASBOARD BLOCKS */
+#about, #user_info {background:OldLace; padding:5px; border:1px inset #D9D6C4;}
+#about h2, #user_info h2 {margin:0;}
 
 /* ABOUT webtrees */
-#about {background:Linen; height:120px; padding:5px; margin-bottom: 20px;}
-#about h2 {margin:0;}
+#about {margin-bottom:10px;}
 
 /* USER STATS */
-#user_info {background:Linen; height:310px; width:350px; padding:5px;}
-#user_info h2 {margin:0;}
+#user_info {width:350px;}
 
 /*SITE CONFIG */
 .editable {width:100%; display:block}
@@ -86,13 +90,12 @@ img {border:none;}
 
 /* USER List */
 table#list   {width:100%}
-#list th {text-align:left;}
+#list th {text-align:left;white-space:nowrap;}
 #list img {padding-left:15px; width:25px; vertical-align:middle;}
 #list img.open {width:16px; vertical-align:middle;}
 #list .yes_no img {width:16px; vertical-align:middle;}
 #list .name {padding-right:5px;}
 #list .description {font-size:10px;	color:#666666;	width:35%;}
-#list .date {}
 .dataTables_paginate {float:right;text-align:right;}
 .paging_full_numbers .fg-button {cursor:pointer;padding:2px 6px;}
 td.details {background-color:#D1CFD0;border:2px solid #A19B9E;}

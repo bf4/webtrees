@@ -31,8 +31,6 @@ require WT_ROOT.'administration/admin_functions.php';
 
 admin_header(i18n::translate(WT_WEBTREES));
 // Display a series of "blocks" of general information, vary according to admin or manager.
-echo '<div id="admin_index" class="ui-widget-content">',
-		'<div id="about" class="ui-widget-content">',include 'about_webtrees.php','</div>',
-		'<div id="user_info" class="ui-widget-content">',include 'user_stats.php','</div>',
-	'</div>';
+echo '<div id="about">',include 'about_webtrees.php','</div>',
+	'<div id="user_info">',include 'user_stats.php','</div>',
 include 'admin_footer.php';

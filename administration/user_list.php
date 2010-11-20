@@ -254,8 +254,7 @@ ob_start();
 		WT_JS_END;
 		
 	// Then show the users
-	echo '<h2>', i18n::translate('List users'), '</h2>',
-	'<table id="list">',
+	echo '<table id="list">',
 		'<thead>',
 			'<tr>',
 				'<th>', i18n::translate('Message'), '</th>',

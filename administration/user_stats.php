@@ -130,7 +130,7 @@ echo '<h2>', i18n::translate('User information'), '</h2>',
 			if ($nverusers == 0) echo i18n::translate('Unverified by Administrator');
 			else echo "<a href=\"user_admin.php?action=listusers&amp;filter=admunver\">", i18n::translate('Unverified by Administrator'), "</a>";
 		echo '</td>',
-		'<td  colspan="2">', $nverusers, '</td>',
+		'<td colspan="2">', $nverusers, '</td>',
 	'</tr>',
 	'<tr valign="middle">',
 		'<td>', i18n::translate('Users\' languages'), '</td>';
@@ -140,6 +140,6 @@ echo '<h2>', i18n::translate('User information'), '</h2>',
 	echo '</tr>',
 	'<tr>',
 		'<td>', i18n::translate('Users logged in'), '</td>',
-		'<td  colspan="2">', $stats->_usersLoggedIn(), '</td>',
+		'<td colspan="2">', $stats->_usersLoggedIn(), '</td>',
 	'</tr>',
 '</table>';

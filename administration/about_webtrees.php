@@ -49,14 +49,10 @@ if ($latest_version_txt) {
 }
 
 echo '<h2>', i18n::translate('About webtrees'), '</h2>',
-	'<p>' ,i18n::translate('Your installed  version of webtrees is: %s', WT_VERSION_TEXT),'</p>';
+	'<p>', i18n::translate('Welcome to the <b>webtrees</b> adminsration page. This page provides access to all the site and family tree configuration settings as well as providing some useful information blocks. Administrators can upgrade to the lastest version with a single click, whenever the page reports that a new version is available.'), '</p>',
+	'<p>' ,i18n::translate('Your installed  version of <b>webtrees</b> is: %s', WT_VERSION_TEXT),'</p>';
 	if (version_compare(WT_VERSION, $latest_version)>0) {
-		echo '<p>' ,i18n::translate('The latest stable webtrees version is: %s', $latest_version), ' - ' ,i18n::translate('No upgrade required.'), '</p>';
+		echo '<p>' ,i18n::translate('The latest stable <b>webtrees</b> version is: %s', $latest_version), '&nbsp;<span class="accepted">' ,i18n::translate('No upgrade required.'), '</span></p>';
 	} else {
 		echo '<p class="warning">' ,i18n::translate('We recommend you click here to upgrade to the latest stable webtrees version: %s', $latest_version), '</p>';
 	}
-
-
-			
-			
-			

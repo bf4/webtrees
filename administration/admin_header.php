@@ -62,7 +62,6 @@ echo
 	'<body id="body" ',$bodyOnLoad, '>',
 // Header
 	'<div id="admin_head" class="ui-widget-content">',
-		'<div id="logo"><img src="images/header.png" width="281" height="50" alt="" /></div>',
 		'<div id="info">',
 //			i18n::translate('Installed webtrees version: %s', WT_VERSION_TEXT),
 //			'<br />',
@@ -139,4 +138,4 @@ echo
 		'</ul>',
 	'</div>',
 // Content -->
-'<div id="admin_content">';
+'<div id="admin_content" class="ui-widget-content">';
