@@ -144,6 +144,48 @@ function trim_recursive($var) {
 	}
 }
 
+// Fetch a remote file.  Stream wrappers are disabled on
+// many hosts, and do not allow the detection of timeout.
+function fetch_remote_file($host, $path, $timeout=3) {
+	$fp=@fsockopen($host, '80', $errno, $errstr, $timeout );
+	if (!$fp) {
+		return null;
+	}
+
+	fputs($fp, "GET $path HTTP/1.0\r\nHost: $host\r\nKeep-Alive: 300\r\nConnection: keep-alive\r\n\r\n");
+
+	$response='';
+	while ($data=fread($fp, 65536)) {
+		$response.=$data;
+	}
+	fclose($fp);
+
+	// The response includes headers, a blank line, then the content
+	$response=substr($response, strpos($response, "\r\n\r\n") + 4);
+
+	return $response;
+}
+
+// Check with the webtrees.net server for the latest version of webtrees.
+// Fetching the remote file can be slow, and place an excessive load on
+// the webtrees.net server, so only check it infrequently, and cache the result.
+function fetch_latest_version() {
+	$last_update_timestamp=get_site_setting('LATEST_WT_VERSION_TIMESTAMP');
+	if ($last_update_timestamp < time()-24*60*60) {
+		$latest_version_txt=fetch_remote_file('webtrees.net', '/latest-version.txt');
+		if ($latest_version_txt) {
+			set_site_setting('LATEST_WT_VERSION', $latest_version_txt);
+			set_site_setting('LATEST_WT_VERSION_TIMESTAMP', time());
+			return $latest_version_txt;
+		} else {
+			// Cannot connect to server - use cached version (if we have one)
+			return get_site_setting('LATEST_WT_VERSION');
+		}
+	} else {
+		return get_site_setting('LATEST_WT_VERSION');
+	}
+}
+
 // Convert a file upload PHP error code into user-friendly text
 function file_upload_error_text($error_code) {
 	switch ($error_code) {
