@@ -90,17 +90,18 @@ echo '<h2>', i18n::translate('User information'), '</h2>',
 			}	
 			echo i18n::translate('Total number of users'),
 		'</td>',
-		'<td colspan="2">', $totusers, '</td>',
+		'<td>', $totusers, '</td>',
 	'</tr>',
 	'<tr>',
 		'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 			if ($adminusers == 0) echo i18n::translate('Site Administrators');
 			else echo "<a href=\"user_admin.php?action=listusers&amp;filter=adminusers\">", i18n::translate('Site Administrators'), "</a>";
 		echo '</td>',
-		'<td colspan="2">', $adminusers, '</td>',
+		'<td>', $adminusers, '</td>',
 	'</tr>',
 	'<tr>',
-		'<td>', i18n::translate('GEDCOM Administrators'), '</td>',
+		'<td colspan="2">', i18n::translate('GEDCOM Administrators'), '</td>',
+		'</tr>';
 		asort($gedadmin);
 		$ind = 0;
 		foreach ($gedadmin as $key=>$geds) {
@@ -109,37 +110,37 @@ echo '<h2>', i18n::translate('User information'), '</h2>',
 			echo '<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 			if ($geds["number"] == 0) echo $geds["name"];
 			else echo "<a href=\"", "user_admin.php?action=listusers&amp;filter=gedadmin&amp;ged=".rawurlencode($geds["ged"]), "\">", $geds["name"], "</a>";
-			echo '</td><td  colspan="2">', $geds["number"], '</td></tr>';
+			echo '</td><td>', $geds["number"], '</td></tr>';
 		}
 	echo '</tr><tr>',
 		'<td>';
 			if ($warnusers == 0) echo i18n::translate('Users with warnings');
 			else echo "<a href=\"user_admin.php?action=listusers&amp;filter=warnings\">", i18n::translate('Users with warnings'), "</a>";
 		echo '</td>',
-		'<td colspan="2">', $warnusers, '</td>',
+		'<td>', $warnusers, '</td>',
 	'</tr>',
 	'<tr>',
 		'<td>';
 			if ($applusers == 0) echo i18n::translate('Unverified by User');
 			else echo "<a href=\"user_admin.php?action=listusers&amp;filter=usunver\">", i18n::translate('Unverified by User'), "</a>";
 		echo '</td>',
-		'<td  colspan="2">', $applusers, '</td>',
+		'<td>', $applusers, '</td>',
 	'</tr>',
 	'<tr>',
 		'<td>';
 			if ($nverusers == 0) echo i18n::translate('Unverified by Administrator');
 			else echo "<a href=\"user_admin.php?action=listusers&amp;filter=admunver\">", i18n::translate('Unverified by Administrator'), "</a>";
 		echo '</td>',
-		'<td colspan="2">', $nverusers, '</td>',
+		'<td>', $nverusers, '</td>',
 	'</tr>',
 	'<tr valign="middle">',
-		'<td>', i18n::translate('Users\' languages'), '</td>';
+		'<td colspan="2">', i18n::translate('Users\' languages'), '</td></tr>';
 		foreach ($userlang as $key=>$ulang) {
-			echo '<td><a href="user_admin.php?action=listusers&amp;filter=language&amp;usrlang=', $key, '">', $ulang['langname'], '</a></td><td>', $ulang['number'], '</td></tr>';
+			echo '<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="user_admin.php?action=listusers&amp;filter=language&amp;usrlang=', $key, '">', $ulang['langname'], '</a></td><td>', $ulang['number'], '</td></tr>';
 		}
 	echo '</tr>',
 	'<tr>',
 		'<td>', i18n::translate('Users logged in'), '</td>',
-		'<td colspan="2">', $stats->_usersLoggedIn(), '</td>',
+		'<td>', $stats->_usersLoggedIn(), '</td>',
 	'</tr>',
 '</table>';
