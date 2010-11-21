@@ -33,7 +33,11 @@ require WT_ROOT.'administration/admin_functions.php';
 print_header(i18n::translate('Administration'));
 
 // Display a series of "blocks" of general information, vary according to admin or manager.
-echo '<div id="about">',include WT_ROOT.'administration/about_webtrees.php','</div>',
-	'<div id="user_info">',include WT_ROOT.'administration/user_stats.php','</div>';
+echo '<div id="about">';
+	include WT_ROOT.'administration/about_webtrees.php';
+echo '</div>';
+echo '<div id="user_info">';
+	include WT_ROOT.'administration/user_stats.php';
+echo '</div>';
 	
 print_footer();

@@ -40,9 +40,9 @@ echo
 	'<title>', htmlspecialchars($title), '</title>',
 	'<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />',
 	'<link rel="stylesheet" href="', $stylesheet, '" type="text/css" media="all" />',
-	'<link rel="stylesheet" href="', WT_THEME_DIR, 'jquery/jquery-ui_theme.css" type="text/css" />',
-	$javascript,
-	$head; //-- additional header information
+	'<link rel="stylesheet" href="', WT_THEME_DIR, 'jquery/jquery-ui_theme.css" type="text/css" />';
+//	$javascript;
+//	$head; //-- additional header information
 
 // Check for updates
 /*$latest_version_txt=fetch_latest_version();

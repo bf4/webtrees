@@ -39,7 +39,7 @@ echo '<div id="admin_footer">';
 		'<div align="center"">',
 			'<br />',
 			'<a href="', WT_WEBTREES_URL, ' target="_blank">',
-			'<img src="images/webtrees_s.png" width="100" border="0" alt="', WT_WEBTREES, WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): "", '"',
+			'<img src="', $WT_IMAGES['webtrees'], '" width="100" border="0" alt="', WT_WEBTREES, WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): "", '"',
 				'title="', WT_WEBTREES, WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): "" , '" /></a><br />',
 			'<br />';
 

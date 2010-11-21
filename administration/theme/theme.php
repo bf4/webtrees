@@ -34,11 +34,19 @@ if (!defined('WT_WEBTREES')) {
 
 //$theme_name = "theme"; // need double quotes, as file is scanned/parsed by script
 $stylesheet       = WT_THEME_DIR.'style.css';
-//$rtl_stylesheet   = WT_THEME_DIR.'style_rtl.css';
 $headerfile       = WT_THEME_DIR.'header.php';
 $footerfile       = WT_THEME_DIR.'footer.php';
 $WT_USE_HELPIMG   = true;
 
 //- main icons
 $WT_IMAGES=array(
+	'webtrees'=>WT_THEME_DIR.'images/webtrees_s.png',
+	'zoomin'=>WT_THEME_DIR.'images/zoomin.gif', //added only to avoid error messages from print_header function
+	'zoomout'=>WT_THEME_DIR.'images/zoomout.gif', //added only to avoid error messages from print_header function
+	'minus'=>WT_THEME_DIR.'images/minus.gif', //added only to avoid error messages from print_header function
+	'plus'=>WT_THEME_DIR.'images/plus.gif', //added only to avoid error messages from print_header function
+	'rarrow2'=>WT_THEME_DIR.'images/rarrow2.gif', //added only to avoid error messages from print_header function
+	'larrow2'=>WT_THEME_DIR.'images/larrow2.gif', //added only to avoid error messages from print_header function
+	'darrow2'=>WT_THEME_DIR.'images/darrow2.gif', //added only to avoid error messages from print_header function
+	'uarrow2'=>WT_THEME_DIR.'images/uarrow2.gif', //added only to avoid error messages from print_header function
 );
