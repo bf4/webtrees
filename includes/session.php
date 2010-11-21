@@ -453,11 +453,7 @@ if (WT_USER_ID) {
 }
 
 // Set the theme
-
-if (WT_SCRIPT_NAME=='administration.php') {
-  $THEME_DIR='adminstration/theme/';
-} else {
-
+if (!defined('WT_THEME_DIR')) {
 	if (get_site_setting('ALLOW_USER_THEMES')) {
 		// Requested change of theme?
 		$THEME_DIR=safe_GET('theme', get_theme_names());
@@ -484,6 +480,7 @@ if (WT_SCRIPT_NAME=='administration.php') {
 			list($THEME_DIR)=get_theme_names();
 		}
 	}
+	define('WT_THEME_DIR', $THEME_DIR);
 }
 
 // Remember this setting
