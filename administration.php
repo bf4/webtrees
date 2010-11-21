@@ -25,6 +25,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'administration.php');
+define('WT_THEME_DIR', 'administration/theme/');
 require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 require WT_ROOT.'administration/admin_functions.php';

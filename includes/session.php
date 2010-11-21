@@ -485,7 +485,6 @@ if (WT_SCRIPT_NAME=='administration.php') {
 		}
 	}
 }
-define('WT_THEME_DIR', $THEME_DIR);
 
 // Remember this setting
 $_SESSION['theme_dir']=WT_THEME_DIR;
