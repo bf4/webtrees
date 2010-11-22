@@ -24,7 +24,7 @@
  *
  * @package webtrees
  * @subpackage Themes
- * @version $Id: admin_header.php 9898 2010-11-20 03:35:38Z nigel $
+ * @version $Id: header.php 9898 2010-11-20 03:35:38Z nigel $
  */
 
 if (!defined('WT_WEBTREES')) {
@@ -41,32 +41,15 @@ echo
 	'<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />',
 	'<link rel="stylesheet" href="', $stylesheet, '" type="text/css" media="all" />',
 	'<link rel="stylesheet" href="', WT_THEME_DIR, 'jquery/jquery-ui_theme.css" type="text/css" />';
-//	$javascript;
-//	$head; //-- additional header information
+	$javascript;
+	$head; //-- additional header information
 
-// Check for updates
-/*$latest_version_txt=fetch_latest_version();
-if ($latest_version_txt) {
-	list($latest_version, $earliest_version, $download_url)=explode('|', $latest_version_txt);
-	// If the latest version is newer than this version, show a download link.
-	if (version_compare(WT_VERSION, $latest_version)<=0) {
-		// A newer version is available.  Make a link to it
-		$latest_version='<a href="'.$download_url.'" style="font-weight:bold; color:red;">'.$latest_version.'</a>';
-	}
-} else {
-	// Cannot determine the latest version
-	$latest_version='-';
-}
-*/
 echo
 	'</head>',
 	'<body id="body" ',$bodyOnLoad, '>',
 // Header
 	'<div id="admin_head" class="ui-widget-content">',
 		'<div id="info">',
-//			i18n::translate('Installed webtrees version: %s', WT_VERSION_TEXT),
-//			'<br />',
-//			i18n::translate('Latest stable webtrees version: %s', $latest_version),
 			WT_WEBTREES, ' ', WT_VERSION_TEXT,
 			'<br />',
 			i18n::translate('Current Server Time:'), ' ', format_timestamp(time()),
@@ -78,11 +61,11 @@ echo
 // Side menu 
 	'<div id="admin_menu" class="ui-widget-content">',
 		'<ul>',
-			'<li>';	$class=""; if (curPageName()=="index.php") {$class="current";} echo '<a class="',$class,'" href="index.php">', i18n::translate('Administration'), '</a></li>',
-			'<li><a href="../index.php?ctype=user">', i18n::translate('Back to My Page'), '</li>',	
-			'<li>';	$class=""; if (curPageName()=="site_config.php") {$class="current";} echo '<a class="',$class, '" href="site_config.php">', i18n::translate('Site'), '</a>',
+			'<li>';	$class=""; if (curPageName()=="administration.php") {$class="current";} echo '<a class="',$class,'" href="administration.php">', i18n::translate('Administration'), '</a></li>',
+			'<li><a href="index.php?ctype=user">', i18n::translate('Back to My Page'), '</li>',	
+			'<li>';	$class=""; if (curPageName()=="admin_site_config.php") {$class="current";} echo '<a class="',$class, '" href="admin_site_config.php">', i18n::translate('Site'), '</a>',
 				'<ul>',
-					'<li>';	$class=""; if (curPageName()=="site_config.php") {$class="current";} echo '<a class="' ,$class, '" href="site_config.php">', i18n::translate('Server configuration'), '</a></li>',
+					'<li>';	$class=""; if (curPageName()=="admin_site_config.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_config.php">', i18n::translate('Server configuration'), '</a></li>',
 					'<li>';	$class=""; if (curPageName()=="logs.php") {$class="current";} echo '<a class="' ,$class, '" href="logs.php">', i18n::translate('Logs'), '</a></li>',
 					'<li>';	$class=""; if (curPageName()=="readme.php") {$class="current";} echo '<a class="' ,$class, '" href="readme.php">', i18n::translate('README documentation'), '</a></li>',
 					'<li>';	$class=""; if (curPageName()=="wtinfo.php") {$class="current";} echo '<a class="' ,$class, '" href="wtinfo.php?action=phpinfo">', i18n::translate('PHP information'), '</a></li>',

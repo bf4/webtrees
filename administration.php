@@ -25,19 +25,27 @@
  */
 
 define('WT_SCRIPT_NAME', 'administration.php');
-define('WT_THEME_DIR', 'administration/theme/');
+define('WT_THEME_DIR', 'themes/_administration/');
 require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
-require WT_ROOT.'administration/admin_functions.php';
+require WT_ROOT.'includes/functions/functions_admin.php';
 
 print_header(i18n::translate('Administration'));
 
 // Display a series of "blocks" of general information, vary according to admin or manager.
 echo '<div id="about">';
-	include WT_ROOT.'administration/about_webtrees.php';
+	include WT_THEME_DIR.'about_webtrees.php';
 echo '</div>';
-echo '<div id="user_info">';
-	include WT_ROOT.'administration/user_stats.php';
+echo '<div id="x">';
+	echo '<div id="block1">';
+		include WT_THEME_DIR.'user_stats.php';
+	echo '</div>';
+	echo '<div id="block3">';
+//		include WT_THEME_DIR.'administration/user_stats.php';
+	echo '</div>';
+	echo '<div id="block2">';
+//		include WT_THEME_DIR.'administration/user_stats.php';
+	echo '</div>';
 echo '</div>';
 	
 print_footer();
