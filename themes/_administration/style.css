@@ -88,8 +88,8 @@ img {border:none;}
 .editable input, select {padding:0;}
 .editable button {font-size:95%; font-weight:bold; margin:1px; padding:0 5px; background-color:#dfeffc; border:1px solid; border-color:#d3d3d3 #808080 #808080 #d3d3d3;}
 .editable button:hover  {border-color:#808080 #d3d3d3 #d3d3d3 #808080;}
-.site_config {padding: 0 20px 20px 0;}/*  table */
-.site_config th {text-align:left; padding:8px 0 1px 3px;font-size:105%;} /* sub-headings, both cols */
+.site_config {padding: 0;}/*  table */
+.site_config th {text-align:left; padding:0 0 1px 3px;font-size:105%;} /* sub-headings, both cols */
 .site_config th+th { font-style:italic;font-size:95%;} /* sub-headings, right col */
 .site_config td {white-space:normal;padding:3px 3px 3px 30px;} /* left-col */
 .site_config td+td {background-color:#dcdcdc; width:250px; padding:3px 3px 3px 3px;} /* right/col */
