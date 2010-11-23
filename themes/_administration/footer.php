@@ -24,7 +24,7 @@
  *
  * @package webtrees
  * @subpackage Themes
- * @version $Id: admin_footer.php 9870 2010-11-17 07:24:46Z nigel $
+ * @version $Id$
  */
 
 if (!defined('WT_WEBTREES')) {

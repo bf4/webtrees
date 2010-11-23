@@ -1,6 +1,6 @@
 <?php
 /**
- * Welcome page for the administration module
+ * UI for online updating of the config file.
  *
  * webtrees: Web based Family History software
  * Copyright (C) 2010 webtrees development team.
@@ -19,33 +19,45 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package webtrees
- * @subpackage Admin
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'administration.php');
+define('WT_SCRIPT_NAME', 'themes/_administration/readme.php');
 define('WT_THEME_DIR', 'themes/_administration/');
 require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 require WT_ROOT.'includes/functions/functions_admin.php';
 
-print_header(i18n::translate('Administration'));
-
-// Display a series of "blocks" of general information, vary according to admin or manager.
-echo '<div id="about">';
-	include WT_THEME_DIR.'about_webtrees.php';
-echo '</div>';
-echo '<div id="x">';
-	echo '<div id="block1">';
-		include WT_THEME_DIR.'user_stats.php';
-	echo '</div>';
-	echo '<div id="block3">';
-//		include WT_THEME_DIR.'administration/user_stats.php';
-	echo '</div>';
-	echo '<div id="block2">';
-//		include WT_THEME_DIR.'administration/user_stats.php';
-	echo '</div>';
-echo '</div>';
+function get_tag($txt,$tag){
+	$offset = 0;
+	$start_tag = "<".$tag;
+	$end_tag = "</".$tag.">";
+	$arr = array();
+	do{
+		$pos = strpos($txt,$start_tag,$offset);
+		if($pos){
+			$str_pos = strpos($txt,">",$pos)+1;
+			$end_pos = strpos($txt,$end_tag,$str_pos);
+			$len = $end_pos - $str_pos;
+			$f_text = substr($txt,$str_pos,$len);
+			$arr[] = $f_text;
+			$offset = $end_pos;
+		}
+	}while($pos);
+	return $arr;
+}
 	
+print_header(i18n::translate('ReadMe'));
+
+echo '<div id="readme">';
+
+$url = 'readme.html';
+$txt = file_get_contents($url);
+$arr = get_tag($txt, "body");
+
+foreach ($arr as $value) {
+	echo $value;
+}
+	
+echo '</div>';
 print_footer();

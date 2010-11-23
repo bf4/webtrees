@@ -24,7 +24,7 @@
  *
  * @package webtrees
  * @subpackage Themes
- * @version $Id: header.php 9898 2010-11-20 03:35:38Z nigel $
+ * @version $Id$
  */
 
 if (!defined('WT_WEBTREES')) {
@@ -39,11 +39,19 @@ echo
 	'<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />',
 	'<title>', htmlspecialchars($title), '</title>',
 	'<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />',
+	'<link rel="stylesheet" href="', WT_THEME_DIR, 'jquery/jquery-ui_theme.css" type="text/css" />',
 	'<link rel="stylesheet" href="', $stylesheet, '" type="text/css" media="all" />',
-	'<link rel="stylesheet" href="', WT_THEME_DIR, 'jquery/jquery-ui_theme.css" type="text/css" />';
 	$javascript;
-	$head; //-- additional header information
+//	$head; //-- additional header information
 
+?>
+<script>
+	$(function() {
+		jQuery( "button, input:submit, a", ".site_logs" ).button();
+		jQuery( "a", ".site_logs" ).click(function() { return false; });
+	});
+</script>
+<?php
 echo
 	'</head>',
 	'<body id="body" ',$bodyOnLoad, '>',
@@ -66,9 +74,9 @@ echo
 			'<li>';	$class=""; if (curPageName()=="admin_site_config.php") {$class="current";} echo '<a class="',$class, '" href="admin_site_config.php">', i18n::translate('Site'), '</a>',
 				'<ul>',
 					'<li>';	$class=""; if (curPageName()=="admin_site_config.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_config.php">', i18n::translate('Server configuration'), '</a></li>',
-					'<li>';	$class=""; if (curPageName()=="logs.php") {$class="current";} echo '<a class="' ,$class, '" href="logs.php">', i18n::translate('Logs'), '</a></li>',
-					'<li>';	$class=""; if (curPageName()=="readme.php") {$class="current";} echo '<a class="' ,$class, '" href="readme.php">', i18n::translate('README documentation'), '</a></li>',
-					'<li>';	$class=""; if (curPageName()=="wtinfo.php") {$class="current";} echo '<a class="' ,$class, '" href="wtinfo.php?action=phpinfo">', i18n::translate('PHP information'), '</a></li>',
+					'<li>';	$class=""; if (curPageName()=="admin_site_logs.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_logs.php">', i18n::translate('Logs'), '</a></li>',
+					'<li>';	$class=""; if (curPageName()=="admin_site_readme.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_readme.php">', i18n::translate('README documentation'), '</a></li>',
+					'<li>';	$class=""; if (curPageName()=="admin_site_info.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_info.php?action=phpinfo">', i18n::translate('PHP information'), '</a></li>',
 					'<li>';	$class=""; if (curPageName()=="manageservers.php") {$class="current";} echo '<a class="' ,$class, '" href="manageservers.php">', i18n::translate('Manage sites'), '</a></li>',
 				'</ul>',
 			'</li>',

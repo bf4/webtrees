@@ -26,7 +26,7 @@
  *
  * @package webtrees
  * @subpackage Administration
- * @version $Id: user_info.php 9190 2010-07-28 02:50:49Z nigel $
+ * @version $Id$
  */
 
 if (!defined('WT_WEBTREES')) {

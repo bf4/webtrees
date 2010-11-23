@@ -34,7 +34,9 @@ body { font-size:12px; margin:10px;}
 .ui-widget-content a {text-decoration:none;}
 .ui-widget-content a.current {color:#E17009; font-weight:bold;}
 .ui-widget-content a:hover {color:red; cursor:hand; cursor:pointer;}
+.ui-widget-header {padding:5px;}
 .css_right {float:right;}
+input.ui-button { padding:1px 3px;}
 input, textarea {	color:black; padding-left:3px; padding-right:3px;}
 fieldset {margin:8px 8px 4px 8px;}
 legend {font-style:italic; font-weight:bold;	padding:0 5px 5px; align:top;}
@@ -92,7 +94,17 @@ img {border:none;}
 .site_config th {text-align:left; padding:0 0 1px 3px;font-size:105%;} /* sub-headings, both cols */
 .site_config th+th { font-style:italic;font-size:95%;} /* sub-headings, right col */
 .site_config td {white-space:normal;padding:3px 3px 3px 30px;} /* left-col */
-.site_config td+td {background-color:#dcdcdc; width:250px; padding:3px 3px 3px 3px;} /* right/col */
+.site_config td+td {background-color:#dcdcdc; width:250px; padding:3px;} /* right/col */
+
+/*SITE LOGS */
+.site_logs {padding: 0;}/*  table */
+.site_logs td {background-color:#dcdcdc; width:250px; padding:3px; text-align:right;}
+.site_logs td+td {text-align:center;}
+table#log_list   {width:100%}
+#log_list_length {float:left;}
+#log_list_filter {float:right;}
+#log_list_info {float:left;}
+#log_list_paginate {float:right;}
 
 /* USER List */
 table#list   {width:100%}
