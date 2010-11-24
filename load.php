@@ -108,7 +108,7 @@ case 'user_list':
 
 	// Total filtered/unfiltered rows
 	$iTotalDisplayRecords=WT_DB::prepare("SELECT FOUND_ROWS()")->fetchOne();
-	$iTotalRecords=WT_DB::prepare("SELECT COUNT(*) FROM `##user`")->fetchOne();
+	$iTotalRecords=WT_DB::prepare("SELECT COUNT(*) FROM `##user` WHERE user_id>0")->fetchOne();
 
 	echo json_encode(array(
 		'sEcho'               =>(int)safe_GET('sEcho'), // See http://www.datatables.net/usage/server-side
