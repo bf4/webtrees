@@ -39,7 +39,6 @@ require_once WT_ROOT.'includes/functions/functions.php';
 require_once WT_ROOT.'includes/functions/functions_edit.php';
 require_once WT_ROOT.'includes/functions/functions_import.php';
 require_once WT_ROOT.'includes/classes/class_serviceclient.php';
-require WT_ROOT.'includes/functions/functions_admin.php';
 
 print_header(i18n::translate('Manage sites'));
 //-- only allow gedcom admins here

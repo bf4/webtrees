@@ -30,7 +30,6 @@
 define('WT_SCRIPT_NAME', 'admin_site_info.php');
 define('WT_THEME_DIR', 'themes/_administration/');
 require './includes/session.php';
-require WT_ROOT.'includes/functions/functions_admin.php';
 
 // Only admin users can access this page
 if (!WT_USER_GEDCOM_ADMIN) {

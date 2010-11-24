@@ -28,7 +28,6 @@ define('WT_SCRIPT_NAME', 'administration.php');
 define('WT_THEME_DIR', 'themes/_administration/');
 require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
-require WT_ROOT.'includes/functions/functions_admin.php';
 
 print_header(i18n::translate('Administration'));
 

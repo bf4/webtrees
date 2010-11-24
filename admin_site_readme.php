@@ -26,7 +26,6 @@ define('WT_SCRIPT_NAME', 'themes/_administration/readme.php');
 define('WT_THEME_DIR', 'themes/_administration/');
 require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
-require WT_ROOT.'includes/functions/functions_admin.php';
 
 function get_tag($txt,$tag){
 	$offset = 0;

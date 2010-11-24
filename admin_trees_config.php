@@ -33,7 +33,6 @@ define('WT_SCRIPT_NAME', 'administration/admin_trees_config.php');
 define('WT_THEME_DIR', 'themes/_administration/');
 require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
-require WT_ROOT.'includes/functions/functions_admin.php';
 
 $INDEX_DIRECTORY=get_site_setting('INDEX_DIRECTORY');
 

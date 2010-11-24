@@ -69,27 +69,27 @@ echo
 // Side menu 
 	'<div id="admin_menu" class="ui-widget-content">',
 		'<ul>',
-			'<li>';	$class=""; if (curPageName()=="administration.php") {$class="current";} echo '<a class="',$class,'" href="administration.php">', i18n::translate('Administration'), '</a></li>',
+			'<li>';	$class=""; if (WT_SCRIPT_NAME=="administration.php") {$class="current";} echo '<a class="',$class,'" href="administration.php">', i18n::translate('Administration'), '</a></li>',
 			'<li><a href="index.php?ctype=user">', i18n::translate('Back to My Page'), '</li>',	
-			'<li>';	$class=""; if (curPageName()=="admin_site_config.php") {$class="current";} echo '<a class="',$class, '" href="admin_site_config.php">', i18n::translate('Site'), '</a>',
+			'<li>';	$class=""; if (WT_SCRIPT_NAME=="admin_site_config.php") {$class="current";} echo '<a class="',$class, '" href="admin_site_config.php">', i18n::translate('Site'), '</a>',
 				'<ul>',
-					'<li>';	$class=""; if (curPageName()=="admin_site_config.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_config.php">', i18n::translate('Server configuration'), '</a></li>',
-					'<li>';	$class=""; if (curPageName()=="admin_site_logs.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_logs.php">', i18n::translate('Logs'), '</a></li>',
-					'<li>';	$class=""; if (curPageName()=="admin_site_readme.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_readme.php">', i18n::translate('README documentation'), '</a></li>',
-					'<li>';	$class=""; if (curPageName()=="admin_site_info.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_info.php?action=phpinfo">', i18n::translate('PHP information'), '</a></li>',
-					'<li>';	$class=""; if (curPageName()=="admin_site_manageservers.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_manageservers.php">', i18n::translate('Manage servers'), '</a></li>',
+					'<li>';	$class=""; if (WT_SCRIPT_NAME=="admin_site_config.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_config.php">', i18n::translate('Server configuration'), '</a></li>',
+					'<li>';	$class=""; if (WT_SCRIPT_NAME=="admin_site_logs.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_logs.php">', i18n::translate('Logs'), '</a></li>',
+					'<li>';	$class=""; if (WT_SCRIPT_NAME=="admin_site_readme.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_readme.php">', i18n::translate('README documentation'), '</a></li>',
+					'<li>';	$class=""; if (WT_SCRIPT_NAME=="admin_site_info.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_info.php?action=phpinfo">', i18n::translate('PHP information'), '</a></li>',
+					'<li>';	$class=""; if (WT_SCRIPT_NAME=="admin_site_manageservers.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_manageservers.php">', i18n::translate('Manage servers'), '</a></li>',
 				'</ul>',
 			'</li>',
-			'<li>';	$class=""; if (curPageName()=="admin_trees_manage.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_trees_manage.php">', i18n::translate('Family trees'), '</a>',
+			'<li>';	$class=""; if (WT_SCRIPT_NAME=="admin_trees_manage.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_trees_manage.php">', i18n::translate('Family trees'), '</a>',
 				'<ul>',
-					'<li>';	$class=""; if (curPageName()=="admin_trees_manage.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_trees_manage.php">', i18n::translate('Manage GEDCOMs'), '</a></li>',
+					'<li>';	$class=""; if (WT_SCRIPT_NAME=="admin_trees_manage.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_trees_manage.php">', i18n::translate('Manage GEDCOMs'), '</a></li>',
 					'<li><span>', i18n::translate('Configure these trees'), ' :</span>',
 						'<ul>';
 							//-- gedcom list
 							$gedcom_titles=get_gedcom_titles();
 							if (get_site_setting('ALLOW_CHANGE_GEDCOM')) {
 								foreach ($gedcom_titles as $gedcom_title) {
-									$pagename = curPageName();
+									$pagename = WT_SCRIPT_NAME;
 									$class=""; if ($gedcom_title->gedcom_title==PrintReady(get_gedcom_setting(WT_GED_ID, 'title')) && $pagename == 'admin_trees_config.php') {$class="current";} 
 									echo '<li><a class="', $class, '" href="admin_trees_config.php?ctype=gedcom&amp;ged='.rawurlencode($gedcom_title->gedcom_name), '">', $gedcom_title->gedcom_title,'</a></li>';					
 								}
@@ -98,11 +98,11 @@ echo
 					'</li>',
 				'</ul>',
 			'</li>',
-			'<li>';	$class=""; if (curPageName()=="admin_users_list.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_users_list.php">', i18n::translate('Users'), '</a>',
+			'<li>';	$class=""; if (WT_SCRIPT_NAME=="admin_users_list.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_users_list.php">', i18n::translate('Users'), '</a>',
 				'<ul>',
-					'<li>';	$class=""; if (curPageName()=="admin_users_list.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_users_list.php">', i18n::translate('List users'), '</a></li>',
-					'<li>';	$class=""; if (curPageName()=="#") {$class="current";} echo '<a class="' ,$class, '" href="#">', i18n::translate('Add user'), '</a></li>',
-					'<li>';	$class=""; if (curPageName()=="#") {$class="current";} echo '<a class="' ,$class, '" href="#">', i18n::translate('Bulk messaging'), '</a></li>',
+					'<li>';	$class=""; if (WT_SCRIPT_NAME=="admin_users_list.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_users_list.php">', i18n::translate('List users'), '</a></li>',
+					'<li>';	$class=""; if (WT_SCRIPT_NAME=="#") {$class="current";} echo '<a class="' ,$class, '" href="#">', i18n::translate('Add user'), '</a></li>',
+					'<li>';	$class=""; if (WT_SCRIPT_NAME=="#") {$class="current";} echo '<a class="' ,$class, '" href="#">', i18n::translate('Bulk messaging'), '</a></li>',
 				'</ul>',
 			'</li>',
 			'<li><a href="#">', i18n::translate('Modules'), '</a>',

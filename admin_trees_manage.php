@@ -25,7 +25,6 @@
 define('WT_SCRIPT_NAME', 'admin_trees_manage.php');
 define('WT_THEME_DIR', 'themes/_administration/');
 require './includes/session.php';
-require WT_ROOT.'includes/functions/functions_admin.php';
 
 // The gedcom admin page is for gedcom administrators only!
 if (!WT_USER_GEDCOM_ADMIN) {
