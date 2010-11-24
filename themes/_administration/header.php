@@ -116,7 +116,7 @@ echo
 							foreach (WT_Module::getInstalledModules() as $module) {
 								$status=WT_DB::prepare("SELECT status FROM `##module` WHERE module_name=?")->execute(array($module->getName()))->fetchOne();
 								if ($module instanceof WT_Module_Config)
-									echo '<li><a href="../', $module->getConfigLink(), '">', $module->getTitle(), ' - configure</a></li>';
+									echo '<li><a href="', $module->getConfigLink(), '">', $module->getTitle(), ' - configure</a></li>';
 							}
 						echo '</ul>',
 					'</li>',
