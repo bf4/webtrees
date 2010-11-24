@@ -42,11 +42,12 @@ case 'user_list':
 	if ($sSearch) {
 		$WHERE=
 			" WHERE".
+			" u.user_id>0 AND (".
 			" real_name LIKE CONCAT('%', " . WT_DB::quote($sSearch) . ", '%') OR " .
 			" user_name LIKE CONCAT('%', " . WT_DB::quote($sSearch) . ", '%') OR " .
-			" email     LIKE CONCAT('%', " . WT_DB::quote($sSearch) . ", '%')";
+			" email     LIKE CONCAT('%', " . WT_DB::quote($sSearch) . ", '%'))";
 	} else {
-		$WHERE="";
+		$WHERE=" WHERE u.user_id>0";
 	}
 	$iDisplayStart =safe_GET('iDisplayStart',  WT_REGEX_INTEGER);
 	$iDisplayLength=safe_GET('iDisplayLength', WT_REGEX_INTEGER);
