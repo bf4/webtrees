@@ -80,9 +80,9 @@ echo
 					'<li>';	$class=""; if (curPageName()=="admin_site_manageservers.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_manageservers.php">', i18n::translate('Manage servers'), '</a></li>',
 				'</ul>',
 			'</li>',
-			'<li>';	$class=""; if (curPageName()=="ged_admin.php") {$class="current";} echo '<a class="' ,$class, '" href="ged_admin.php">', i18n::translate('Family trees'), '</a>',
+			'<li>';	$class=""; if (curPageName()=="admin_trees_manage.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_trees_manage.php">', i18n::translate('Family trees'), '</a>',
 				'<ul>',
-					'<li>';	$class=""; if (curPageName()=="ged_admin.php") {$class="current";} echo '<a class="' ,$class, '" href="ged_admin.php">', i18n::translate('Manage GEDCOMs'), '</a></li>',
+					'<li>';	$class=""; if (curPageName()=="admin_trees_manage.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_trees_manage.php">', i18n::translate('Manage GEDCOMs'), '</a></li>',
 					'<li><span>', i18n::translate('Configure these trees'), ' :</span>',
 						'<ul>';
 							//-- gedcom list
@@ -90,8 +90,8 @@ echo
 							if (get_site_setting('ALLOW_CHANGE_GEDCOM')) {
 								foreach ($gedcom_titles as $gedcom_title) {
 									$pagename = curPageName();
-									$class=""; if ($gedcom_title->gedcom_title==PrintReady(get_gedcom_setting(WT_GED_ID, 'title')) && $pagename == 'ged_config.php') {$class="current";} 
-									echo '<li><a class="', $class, '" href="ged_config.php?ctype=gedcom&amp;ged='.rawurlencode($gedcom_title->gedcom_name), '">', $gedcom_title->gedcom_title,'</a></li>';					
+									$class=""; if ($gedcom_title->gedcom_title==PrintReady(get_gedcom_setting(WT_GED_ID, 'title')) && $pagename == 'admin_trees_config.php') {$class="current";} 
+									echo '<li><a class="', $class, '" href="admin_trees_config.php?ctype=gedcom&amp;ged='.rawurlencode($gedcom_title->gedcom_name), '">', $gedcom_title->gedcom_title,'</a></li>';					
 								}
 							}
 						echo '</ul>',
