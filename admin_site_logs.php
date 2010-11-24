@@ -179,7 +179,7 @@ echo
 				'<td>',
 					i18n::translate('Gedcom'), '<br /><input name="gedc" size="12" value="', htmlspecialchars($gedc), '" ', WT_USER_IS_ADMIN ? '' : 'disabled', '/> ',
 				'</td>',
-				'<td rowspan="2">',
+				'<td class="button" rowspan="2">',
 					'<input type="submit" value="', i18n::translate('Filter'), '"/>',
 				'</td>',
 			'</tr>',

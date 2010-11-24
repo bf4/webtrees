@@ -47,6 +47,7 @@ img {border:none;}
 .center {text-align:center;}
 .nowrap {white-space:nowrap;}
 .indent {padding-left:15px;}
+h3 {margin:0}
 
 /* HEADER */
 #admin_head  {height:70px; margin-bottom:10px; background-image: url("images/header.png"); background-repeat:no-repeat; background-position:top left;}

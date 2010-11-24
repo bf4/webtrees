@@ -47,8 +47,8 @@ echo
 ?>
 <script>
 	$(function() {
-		jQuery( "button, input:submit, a", ".site_logs" ).button();
-		jQuery( "a", ".site_logs" ).click(function() { return false; });
+		jQuery( "input:submit, a", ".button" ).button();
+		jQuery( "a", ".button" ).click(function() { return false; });
 	});
 </script>
 <?php
@@ -77,7 +77,7 @@ echo
 					'<li>';	$class=""; if (curPageName()=="admin_site_logs.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_logs.php">', i18n::translate('Logs'), '</a></li>',
 					'<li>';	$class=""; if (curPageName()=="admin_site_readme.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_readme.php">', i18n::translate('README documentation'), '</a></li>',
 					'<li>';	$class=""; if (curPageName()=="admin_site_info.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_info.php?action=phpinfo">', i18n::translate('PHP information'), '</a></li>',
-					'<li>';	$class=""; if (curPageName()=="manageservers.php") {$class="current";} echo '<a class="' ,$class, '" href="manageservers.php">', i18n::translate('Manage sites'), '</a></li>',
+					'<li>';	$class=""; if (curPageName()=="admin_site_manageservers.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_site_manageservers.php">', i18n::translate('Manage servers'), '</a></li>',
 				'</ul>',
 			'</li>',
 			'<li>';	$class=""; if (curPageName()=="ged_admin.php") {$class="current";} echo '<a class="' ,$class, '" href="ged_admin.php">', i18n::translate('Family trees'), '</a>',
