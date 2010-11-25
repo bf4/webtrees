@@ -42,6 +42,10 @@ $WT_USE_HELPIMG   = true;
 $WT_IMAGES=array(
 	'webtrees'=>WT_THEME_DIR.'images/webtrees_s.png',
 	'help'=>WT_THEME_DIR.'images/help.jpg',
+	'email'=>WT_THEME_DIR.'images/email.png',
+	'open'=>WT_THEME_DIR.'images/open.png',
+	'close'=>WT_THEME_DIR.'images/close.png',
+
 	'zoomin'=>WT_THEME_DIR.'images/zoomin.gif', //added only to avoid error messages from print_header function
 	'zoomout'=>WT_THEME_DIR.'images/zoomout.gif', //added only to avoid error messages from print_header function
 	'minus'=>WT_THEME_DIR.'images/minus.gif', //added only to avoid error messages from print_header function

@@ -233,11 +233,11 @@ foreach ($gedcoms as $gedcom) {
 
 		echo
 			'<table class="gedcom_table" width="100%">',
-			'<tr><td class="list_label" width="20%">', i18n::translate('GEDCOM name'),
-			'</td><td class="list_value"><a href="index.php?ctype=gedcom&ged=', urlencode($gedcom->gedcom_name), '">', htmlspecialchars($gedcom->gedcom_name), ' - ',
+			'<tr><th>', i18n::translate('GEDCOM name'),
+			'</th><th a href="index.php?ctype=gedcom&ged=', urlencode($gedcom->gedcom_name), '">', htmlspecialchars($gedcom->gedcom_name), ' - ',
 			i18n::translate('%s', get_gedcom_setting($gedcom->gedcom_id, 'title')), '</a>',
-			'</td></tr><tr><td class="list_label">', i18n::translate('GEDCOM administration'),
-			'</td><td class="list_value">';
+			'</th></tr><tr><td>', i18n::translate('GEDCOM administration'),
+			'</td><td>';
 
 		// The third row shows an optional progress bar and a list of maintenance options
 		$importing=WT_DB::prepare(
@@ -285,13 +285,13 @@ foreach ($gedcoms as $gedcom) {
 // Options for creating new gedcoms and setting defaults
 if (WT_USER_IS_ADMIN) {
 	echo
-		'<br/><table class="gedcom_table"><tr>',
-		'<td class="list_label">', i18n::translate('Default GEDCOM'),      help_link('default_gedcom'), '</td>',
-		'<td class="list_label">', i18n::translate('Add a new GEDCOM'),    help_link('add_gedcom'),     '</td>',
-		'<td class="list_label">', i18n::translate('Upload a new GEDCOM'), help_link('upload_gedcom'),  '</td>',
-		'<td class="list_label">', i18n::translate('Create a new GEDCOM'), help_link('add_new_gedcom'), '</td>',
+		'<table class="gedcom_table2"><tr>',
+		'<th>', i18n::translate('Default GEDCOM'),      help_link('default_gedcom'), '</th>',
+		'<th>', i18n::translate('Add a new GEDCOM'),    help_link('add_gedcom'),     '</h',
+		'<th>', i18n::translate('Upload a new GEDCOM'), help_link('upload_gedcom'),  '</th>',
+		'<th>', i18n::translate('Create a new GEDCOM'), help_link('add_new_gedcom'), '</th>',
 		'</tr><tr>',
-		'<td class="list_value_wrap">',
+		'<td>',
 		'<form name="defaultform" method="post" action="', WT_SCRIPT_NAME, '">',
 		'<input type="hidden" name="action" value="setdefault" />',
 		'<select name="default_ged" class="header_select" onchange="document.defaultform.submit();">';
@@ -307,7 +307,7 @@ if (WT_USER_IS_ADMIN) {
 	echo
 		'</select>',
 		'</form></td>',
-		'<td class="list_value_wrap">',
+		'<td>',
 		'<form name="addform" method="post" action="', WT_SCRIPT_NAME, '">',
 		$INDEX_DIRECTORY,
 		'<input type="hidden" name="action" value="add_ged" />',
@@ -330,13 +330,13 @@ if (WT_USER_IS_ADMIN) {
 		'</select>',
 		'</form>',
 		'</td>',
-		'<td class="list_value_wrap">',
+		'<td class="button">',
 		'<form name="uploadform" method="post" action="', WT_SCRIPT_NAME, '" enctype="multipart/form-data">',
 		'<input type="hidden" name="action" value="upload_ged" />',
 		'<input type="file" name="ged_name" onchange="document.uploadform.submit();" />',
 		'</form>',
 		'</td>',
-		'<td class="list_value_wrap">',
+		'<td class="button">',
 		'<form name="createform" method="post" action="', WT_SCRIPT_NAME, '">',
 		'<input type="hidden" name="action" value="new_ged" />',
 		'<input name="ged_name" />',

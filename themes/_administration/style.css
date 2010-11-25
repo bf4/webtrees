@@ -127,8 +127,12 @@ td.details {background-color:#D1CFD0;border:2px solid #A19B9E;}
 .even {background-color:#efe;}
 #list_length {float:left;}
 #list_filter {float:right;}
+#list_info {float:left;}
+#list_paginate {float:right;}
 #user-list_length {float:left;}
 #user-list_filter {float:right;}
+#user-list_info {float:left;}
+#user-list_paginate {float:right;}
 
 /* GEDCOM config tables */
 .facts_table {text-align:left;width:100%;}
@@ -148,8 +152,12 @@ td.details {background-color:#D1CFD0;border:2px solid #A19B9E;}
 /* PHP INFO */
 #phpinfo table.heading  {padding:3px;	text-align:center;width:100%;}
 
-
-
+/* MANAGE GEDCOMS */
+.gedcom_table th {font-weight:bold; font-size:14px; text-align:left; width: 15%}
+.gedcom_table th+th {width: 80%}
+.gedcom_table2 {margin-top: 20px; width:85%;}
+.gedcom_table2 th {font-weight:bold; font-size:14px; text-align:center;}
+.gedcom_table2 td {text-align:center;}
 
 /* help text pop-ups */
 .help {

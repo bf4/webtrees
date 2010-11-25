@@ -46,7 +46,7 @@ echo
 
 ?>
 <script>
-	$(function() {
+	jQuery(function() {
 		jQuery( "input:submit, a", ".button" ).button();
 		jQuery( "a", ".button" ).click(function() { return false; });
 	});

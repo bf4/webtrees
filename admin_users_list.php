@@ -50,7 +50,7 @@ print_header(i18n::translate('User administration'));
 		var nCloneTh = document.createElement( 'th' );
 		var nCloneTd = document.createElement( 'td' );
 		nCloneTh.innerHTML = 'Details';
-		nCloneTd.innerHTML = '<img class="open" src="images/open.png" width="11px">';
+		nCloneTd.innerHTML = '<img class="open" src="./themes/_administration/images/open.png" width="11px">';
 		nCloneTd.className = "";
 		
 		jQuery('#list thead tr').each( function () {
@@ -84,13 +84,13 @@ print_header(i18n::translate('User administration'));
 			if ( this.src.match('close') )
 			{
 				/* This row is already open - close it */
-				this.src = "images/open.png";
+				this.src = "./themes/_administration/images/open.png";
 				oTable.fnClose( nTr );
 			}
 			else
 			{
 				/* Open this row */
-				this.src = "images/close.png";
+				this.src = "./themes/_administration/images/close.png";
 				oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
 			}
 		} );
@@ -111,7 +111,7 @@ print_header(i18n::translate('User administration'));
 </script>
 <?php
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+//if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 
 // Valid values for form variables
 $ALL_ACTIONS=array('cleanup', 'cleanup2', 'createform', 'createuser', 'deleteuser', 'edituser', 'edituser2', 'listusers');
@@ -178,7 +178,7 @@ if ($action=='deleteuser') {
 		AddToLog("deleted user ->{$username}<-", 'auth');
 	}
 	// User data is cached, so reload the page to ensure we're up to date
-	header("Location: user_list.php");
+	header("Location: admin_users_list.php");
 	exit;
 }
 
@@ -274,7 +274,7 @@ ob_start();
 				foreach($users as $user_id=>$user_name) {
 					echo "<tr><td>";
 					if ($user_id!=WT_USER_ID && get_user_setting($user_id, 'contactmethod')!='none') {
-						echo "<a href=\"javascript:;\" onclick=\"return message('", $user_name, "');\"><img src=\"images/email.png\" \"alt=\"", i18n::translate('Send Message'), "\" title=\"", i18n::translate('Send Message'), "\" /></a>";
+						echo "<a href=\"javascript:;\" onclick=\"return message('", $user_name, "');\"><img src=\"".$WT_IMAGES['email']."\" \"alt=\"", i18n::translate('Send Message'), "\" title=\"", i18n::translate('Send Message'), "\" /></a>";
 					} else {
 						echo '&nbsp;';
 					}
