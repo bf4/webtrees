@@ -73,7 +73,7 @@ function expand_urls($text) {
  */
 function print_fact(&$eventObj, $noedit=false) {
 	global $nonfacts, $GEDCOM, $RESN_CODES, $WORD_WRAPPED_NOTES;
-	global $TEXT_DIRECTION, $HIDE_GEDCOM_ERRORS, $FACTS, $SHOW_FACT_ICONS, $SHOW_MEDIA_FILENAME;
+	global $TEXT_DIRECTION, $HIDE_GEDCOM_ERRORS, $FACTS, $FACTS_M, $FACTS_F, $SHOW_FACT_ICONS, $SHOW_MEDIA_FILENAME;
 	global $n_chil, $n_gchi, $n_ggch, $SEARCH_SPIDER;
 
 	if (!$eventObj->canShow()) {
@@ -81,7 +81,7 @@ function print_fact(&$eventObj, $noedit=false) {
 	}
 
 	$fact = $eventObj->getTag();
-	if ($HIDE_GEDCOM_ERRORS && !array_key_exists($fact, $FACTS)) {
+	if ($HIDE_GEDCOM_ERRORS && !array_key_exists($fact, $FACTS) && !array_key_exists($fact, $FACTS_M) && !array_key_exists($fact, $FACTS_F)) {
 		return;
 	}
 
@@ -219,12 +219,13 @@ function print_fact(&$eventObj, $noedit=false) {
 				}
 				echo "</a>";
 			}
-			if ($spouse) echo " - ";
 			if (empty($SEARCH_SPIDER)) {
-				echo "<a href=\"family.php?famid={$pid}\">";
-				echo i18n::translate('View Family');
-				echo "</a>";
-				echo "<br />";
+				$family = Family::getInstance($pid);
+				if ($family) {
+					if ($spouse) echo " - ";
+					echo '<a href="', $family->getHtmlUrl(), '">', i18n::translate('View Family'), '</a>';
+					echo '<br />';
+				}
 			}
 		}
 		// -- find date for each fact
@@ -656,13 +657,15 @@ function print_media_links($factrec, $level, $pid='') {
 					}
 					echo "</a>";
 				}
-				if ($spouse && empty($SEARCH_SPIDER)) echo " - ";
-				$ct = preg_match("/WT_FAMILY_ID: (.*)/", $factrec, $match);
-				if ($ct>0) {
-					$famid = trim($match[1]);
-					if (empty($SEARCH_SPIDER)) {
-						echo "<a href=\"family.php?famid={$famid}\">", i18n::translate('View Family');
-						echo "</a>";
+				if (empty($SEARCH_SPIDER)) {
+					$ct = preg_match("/WT_FAMILY_ID: (.*)/", $factrec, $match);
+					if ($ct>0) {
+						$famid = trim($match[1]);
+						$family = Family::getInstance($famid);
+						if ($family) {
+							if ($spouse) echo " - ";
+							echo '<a href="', $family->getHtmlUrl(), '">', i18n::translate('View Family'), '</a>';
+						}
 					}
 				}
 			}
@@ -1070,31 +1073,38 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 				$text .= get_cont($nlevel, $nrec);
 				$text = expand_urls($text);
 				$text = PrintReady($text);
-			}
-			else {
-				//-- print linked note records
-				$noterec = find_gedcom_record($nid, $ged_id, true);
-				$nt = preg_match("/0 @$nid@ NOTE (.*)/", $noterec, $n1match);
-				$text = "";
-				$centitl = "";
-				if ($nt>0) {
-					// If Census assistant installed, enable hotspot link on shared note title ---------------------
-					if (file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php')) {
-						$centitl  = str_replace("~~", "", trim($n1match[1]));
-						$centitl  = str_replace("<br />", "", $centitl);
-						$centitl  = "<a href=\"note.php?nid=$nid\">".$centitl."</a>";
-					} else {
+			} else {
+				//-- print linked/shared note records
+				$note=Note::getInstance($nid);
+			  	if ($note) {
+					$noterec=$note->getGedcomRecord();				
+					$nt = preg_match("/^0 @[^@]+@ NOTE (.*)/", $noterec, $n1match);
+					$text = "";
+					$centitl = "";
+					if ($nt>0) {
+						// If Census assistant installed, enable hotspot link on shared note title ---------------------
+						if (file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php')) {
+							$centitl  = str_replace("~~", "", trim($n1match[1]));
+							$centitl  = str_replace("<br />", "", $centitl);
+							$centitl  = "<a href=\"note.php?nid=$nid\">".$centitl."</a>";
+						} else {
 						$text = preg_replace("/~~/", "<br />", trim($n1match[1]));
+						}
 					}
-				}
-				$text .= get_cont(1, $noterec);
-				$text = expand_urls($text);
-				$text = PrintReady($text)." <br />";
-				// If Census assistant installed, and if Formatted Shared Note (using pipe "|" as delimiter) -------
-				if (strstr($text, "|") && file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php')) {
-					require WT_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php';
-				} else {
-					$text = $centitl."".$text;
+					$text .= get_cont(1, $noterec);
+					$text = expand_urls($text);
+					$text = PrintReady($text)." <br />";
+					// If Census assistant installed, and if Formatted Shared Note (using pipe "|" as delimiter) -------
+					if (strstr($text, "|") && file_exists(WT_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php')) {
+						require WT_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php';
+					} else {
+						$text = $centitl."".$text;
+					}
+			  	} else {
+					$text  = '<span class="error">' . i18n::translate('** WARNING **<br />There is no shared note with id = ') . $nid . '</span>';
+					if (WT_USER_CAN_EDIT) {
+						$text .= '<span class="error">' . i18n::translate('<br />Choose Edit and verify the shared note id by clicking on the icon "Find Shared Note".') . '</span>';
+			  		}			  
 				}
 			}
 
@@ -1472,10 +1482,12 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			echo "</a>";
 		}
 		if (empty($SEARCH_SPIDER)) {
-			if ($spouse) echo " - ";
 			$famid = $rowm['mm_gid'];
-			echo "<a href=\"family.php?famid={$famid}\">", i18n::translate('View Family');
-			echo "</a>";
+			$family = Family::getInstance($famid);
+			if ($family) {
+				if ($spouse) echo " - ";
+				echo '<a href="', $family->getHtmlUrl(), '">', i18n::translate('View Family'), '</a>';
+			}
 		}
 		echo "<br />";
 	}

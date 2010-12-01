@@ -60,6 +60,10 @@ require_once WT_ROOT.'includes/functions/functions_utf-8.php';
 // NOTE: when using listboxes, $regex can be an array of valid values.  For
 // example, you can use safe_POST('lang', array_keys($pgv_language), WT_LOCALE)
 // to validate against a list of valid languages and supply a sensible default.
+//
+// If the values are plain text, pass them through preg_quote_array() to 
+// escape any regex special characters:
+// $export = safe_GET('export', preg_quote_array($gedcoms));
 ////////////////////////////////////////////////////////////////////////////////
 
 function safe_POST($var, $regex=WT_REGEX_NOSCRIPT, $default=null) {
@@ -107,6 +111,22 @@ function safe_REQUEST($arr, $var, $regex=WT_REGEX_NOSCRIPT, $default=null) {
 		return trim_recursive($arr[$var]);
 	} else {
 		return $default;
+	}
+}
+
+function preg_quote_array($var) {
+	if (is_scalar($var)) {
+		return preg_quote($var);
+	} else {
+		if (is_array($var)) {
+			foreach ($var as &$v) {
+				$v = preg_quote($v);
+			}
+			return $var;
+		} else {
+			// Neither scalar nor array.  Object?
+			return false;
+		}
 	}
 }
 
@@ -1986,8 +2006,8 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 	case 'fatbro': return i18n::translate_c('father\'s brother', 'uncle');
 	case 'fatchi': return i18n::translate_c('father\'s child', 'half-sibling');
 	case 'fatdau': return i18n::translate_c('father\'s daughter', 'half-sister');
-	case 'fatfat': return i18n::translate_c('father\'s father', 'grandfather');
-	case 'fatmot': return i18n::translate_c('father\'s mother', 'grandmother');
+	case 'fatfat': return i18n::translate_c('father\'s father', 'paternal grandfather');
+	case 'fatmot': return i18n::translate_c('father\'s mother', 'paternal grandmother');
 	case 'fatpar': return i18n::translate_c('father\'s parent', 'grandparent');
 	case 'fatsib': return i18n::translate_c('father\'s sibling', 'aunt/uncle');
 	case 'fatsis': return i18n::translate_c('father\'s sister', 'aunt');
@@ -2004,9 +2024,9 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 	case 'motbro': return i18n::translate_c('mother\'s brother', 'uncle');
 	case 'motchi': return i18n::translate_c('mother\'s child', 'half-sibling');
 	case 'motdau': return i18n::translate_c('mother\'s daughter', 'half-sister');
-	case 'motfat': return i18n::translate_c('mother\'s father', 'grandfather');
+	case 'motfat': return i18n::translate_c('mother\'s father', 'maternal grandfather');
 	case 'mothus': return i18n::translate_c('mother\'s husband', 'step-father');
-	case 'motmot': return i18n::translate_c('mother\'s mother', 'grandmother');
+	case 'motmot': return i18n::translate_c('mother\'s mother', 'maternal grandmother');
 	case 'motpar': return i18n::translate_c('mother\'s parent', 'grandparent');
 	case 'motsib': return i18n::translate_c('mother\'s sibling', 'aunt/uncle');
 	case 'motsis': return i18n::translate_c('mother\'s sister', 'aunt');

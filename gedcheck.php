@@ -84,7 +84,7 @@ else {
 	$default_ged=$tmp[0];       // First gedcom in directory
 }
 
-$ged          =safe_POST('ged', array_keys($all_geds), $default_ged);
+$ged          =safe_POST('ged', preg_quote_array(array_keys($all_geds)), $default_ged);
 $err_level    =safe_POST('err_level',    '[0-3]', $critical); // Higher numbers are more picky.
 $openinnew    =safe_POST('openinnew',    '[01]',  '0');    // Open links in same/new tab/window
 $context_lines=safe_POST('context_lines','[0-5]', '2');    // Lines of context to display
@@ -180,7 +180,7 @@ function wt_href($tag, $xref, $name='')
 	global $WT_LINK, $target, $ged;
 	$text=($name=='' ? "$tag $xref" : "$name ($xref)");
 	if (isset($WT_LINK[$tag]) && get_id_from_gedcom($ged)) {
-		return '&lrm;<a href="'.$WT_LINK[$tag].str_replace('@','',$xref).'"&amp;ged='.$ged.$target.'>'.$text.'</a>&lrm;';
+		return '&lrm;<a href="'.$WT_LINK[$tag].str_replace('@','',$xref).'&amp;ged='.rawurlencode($ged).'"'.$target.'>'.$text.'</a>&lrm;';
 	} else {
 		return "&lrm;$tag $xref&lrm;";
 	}

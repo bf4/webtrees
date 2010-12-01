@@ -51,6 +51,7 @@ if (WT_USE_LIGHTBOX) {
 	require WT_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 
+// If note does not currently exist
 if (!$controller->note) {
 	echo "<b>", i18n::translate('Unable to find record with ID'), "</b><br /><br />";
 	print_footer();
@@ -58,14 +59,6 @@ if (!$controller->note) {
 }
 else if ($controller->note->isMarkedDeleted()) {
 	echo '<span class="error">', i18n::translate('This record has been marked for deletion upon admin approval.'), '</span>';
-}
-
-$noterec = find_gedcom_record($controller->nid, WT_GED_ID);
-$pnoterec = privatize_gedcom(find_gedcom_record($controller->nid, WT_GED_ID));
-if ($noterec!=$pnoterec) {
-	print_privacy_error();
-	print_footer();
-	exit;
 }
 
 echo WT_JS_START;
@@ -89,12 +82,14 @@ echo '<span class="name_head">', PrintReady(htmlspecialchars($controller->note->
 echo '</span><br />';
 echo '<table class="facts_table">';
 echo '<tr class="', $TEXT_DIRECTION, '"><td><table class="width100">';
+
 // Shared Note details ---------------------
-$nt = preg_match("/0 @$controller->nid@ NOTE(.*)/", $noterec, $n1match);
+$noterec=$controller->note->getGedcomRecord();
+$nt = preg_match("/0 @$controller->nid@ NOTE(.*)/i", $noterec, $n1match);
 if ($nt==1) {
 	$note = print_note_record("<br />".$n1match[1], 1, $noterec, false, true, true);
 } else {
-	$note = "No Text";
+	$note = i18n::translate('No Text');
 }
 echo '<tr><td align="left" class="descriptionbox ', $TEXT_DIRECTION, '">';
 	if (WT_USER_CAN_EDIT) {
@@ -140,7 +135,6 @@ if ($controller->userCanEdit()) {
 	echo '</td></tr>';
 }
 echo '</table><br /><br /></td></tr><tr class="center"><td colspan="2">';
-
 
 // Individuals linked to this shared note
 if ($controller->note->countLinkedIndividuals()) {

@@ -1064,7 +1064,7 @@ case 'addnewrepository':
 	?>
 		function check_form(frm) {
 			if (frm.NAME.value=="") {
-				alert('<?php echo i18n::translate('You must provide a '), " ", translate_fact('NAME'); ?>');
+				alert('<?php echo i18n::translate('You must provide a Repository name'); ?>');
 				frm.NAME.focus();
 				return false;
 			}
@@ -1079,7 +1079,7 @@ case 'addnewrepository':
 		<input type="hidden" name="action" value="addrepoaction" />
 		<input type="hidden" name="pid" value="newrepo" />
 		<table class="facts_table">
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo translate_fact('NAME'), help_link('edit_REPO_NAME'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('Repository name'), help_link('edit_REPO_NAME'); ?></td>
 			<td class="optionbox wrap"><input type="text" name="NAME" id="NAME" value="" size="40" maxlength="255" /> <?php print_specialchar_link("NAME", false); ?></td></tr>
 			<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
 			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo translate_fact('_HEB'), help_link('_HEB'); ?></td>
@@ -1300,7 +1300,7 @@ case 'update':
 						}
 					}
 				}
-				if ($gedlines[$numlines] != "1 CONT\n") {
+				if ($gedlines[$num_lines] != "1 CONT\n") {
 					$gedlines[$k+1] = "1 CONT\n";
 				}
 			}
@@ -1380,7 +1380,7 @@ case 'update':
 							}
 						}
 					}
-					if ($gedlines[$numlines] != "1 CONT\n") {
+					if ($gedlines[$num_lines] != "1 CONT\n") {
 						$gedlines[$k+1] = "1 CONT\n";
 					}
 				}

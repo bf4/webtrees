@@ -36,7 +36,8 @@ if (!WT_USER_IS_ADMIN) {
 
 switch (safe_POST('action')) {
 case 'update':
-	$data_directory= safe_POST('data_directory');
+	$data_directory= str_replace('\\','/',safe_POST('data_directory'));
+	if (substr ($data_directory, -1) != "/") $data_directory = $data_directory . "/";
 	if ($data_directory && is_dir($data_directory) && is_readable($data_directory) && is_writable($data_directory)) {
 		set_site_setting('INDEX_DIRECTORY', $data_directory);
 	}
@@ -44,6 +45,7 @@ case 'update':
 	set_site_setting('USE_REGISTRATION_MODULE',         safe_POST('use_registration_module'));
 	set_site_setting('REQUIRE_ADMIN_AUTH_REGISTRATION', safe_POST('require_admin_auth_registration'));
 	set_site_setting('ALLOW_USER_THEMES',               safe_POST('allow_user_themes'));
+	set_site_setting('THEME_DIR',                       safe_POST('theme_dir', get_theme_names()));
 	set_site_setting('ALLOW_CHANGE_GEDCOM',             safe_POST('allow_change_gedcom'));
 	set_site_setting('SESSION_TIME',                    safe_POST('session_time'));
 	set_site_setting('SERVER_URL',                      safe_POST('server_url'));
@@ -100,17 +102,7 @@ echo
 	'<td class="optionbox wrap">', edit_field_yes_no('allow_user_themes', get_site_setting('ALLOW_USER_THEMES')), '</td>',
 	'</tr><tr>',
 	'<td class="descriptionbox width20 wrap">', i18n::translate('Default Theme'), help_link('THEME'), '</td>',
-	'<td class="optionbox wrap"><select name="THEME_DIR">';
-$current_themedir=get_site_setting('THEME_DIR', 'themes/webtrees/');
-foreach (get_theme_names() as $themename=>$themedir) {
-	echo '<option value="', $themedir, '"';
-	if ($themedir==$current_themedir) {
-		echo ' selected="selected"';
-	}
-	echo '>', $themename, '</option>';
-}
-echo
-	'</select></tr><tr>',
+	'<td class="optionbox wrap">', select_edit_control('theme_dir', array_flip(get_theme_names()), null, get_site_setting('THEME_DIR', 'themes/webtrees/')), '</tr><tr>',
 	'<td class="descriptionbox width20 wrap">', i18n::translate('Allow GEDCOM switching'), help_link('ALLOW_CHANGE_GEDCOM'), '</td>',
 	'<td class="optionbox wrap">', edit_field_yes_no('allow_change_gedcom', get_site_setting('ALLOW_CHANGE_GEDCOM')), '</td>',
 	'</tr><tr>',
