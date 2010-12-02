@@ -44,14 +44,6 @@ echo
 	$javascript;
 //	$head; //-- additional header information
 
-?>
-<script>
-	jQuery(function() {
-		jQuery( "input:submit, a", ".button" ).button();
-		jQuery( "a", ".button" ).click(function() { return false; });
-	});
-</script>
-<?php
 echo
 	'</head>',
 	'<body id="body" ',$bodyOnLoad, '>',
@@ -101,7 +93,7 @@ echo
 			'<li>';	$class=""; if (WT_SCRIPT_NAME=="admin_users_list.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_users_list.php">', i18n::translate('Users'), '</a>',
 				'<ul>',
 					'<li>';	$class=""; if (WT_SCRIPT_NAME=="admin_users_list.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_users_list.php">', i18n::translate('List users'), '</a></li>',
-					'<li>';	$class=""; if (WT_SCRIPT_NAME=="#") {$class="current";} echo '<a class="' ,$class, '" href="#">', i18n::translate('Add user'), '</a></li>',
+					'<li>';	$class=""; if (WT_SCRIPT_NAME=="admin_users_add.php") {$class="current";} echo '<a class="' ,$class, '" href="admin_users_add.php?action=createform">', i18n::translate('Add user'), '</a></li>',
 					'<li>';	$class=""; if (WT_SCRIPT_NAME=="#") {$class="current";} echo '<a class="' ,$class, '" href="#">', i18n::translate('Bulk messaging'), '</a></li>',
 				'</ul>',
 			'</li>',

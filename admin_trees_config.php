@@ -1693,9 +1693,9 @@ print_header(i18n::translate('Configure trees'));
 				<tr>
 					<td style="padding: 5px" class="topbottombar">
 						<div class="btn">
-						<button type="submit" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" tabindex="<?php echo ++$i; ?>" value="<?php echo i18n::translate('Save configuration'); ?>" /><span><?php echo i18n::translate('Save configuration'); ?></span></button>				
+						<button type="submit" tabindex="<?php echo ++$i; ?>" value="<?php echo i18n::translate('Save configuration'); ?>" /><span><?php echo i18n::translate('Save configuration'); ?></span></button>				
 						&nbsp;&nbsp;
-						<button type="reset" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" tabindex="<?php echo ++$i; ?>" value="<?php echo i18n::translate('Reset'); ?>" /><span><?php echo i18n::translate('Reset'); ?></span></button>
+						<button type="reset" tabindex="<?php echo ++$i; ?>" value="<?php echo i18n::translate('Reset'); ?>" /><span><?php echo i18n::translate('Reset'); ?></span></button>
 						</div>
 					</td>
 				</tr>
