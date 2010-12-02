@@ -89,8 +89,6 @@ h3 {margin:0}
 .editable {width:100%; display:block}
 .editable:hover {color:red; cursor:pointer; cursor:hand;} /* both cursors needed for cross-browser support */
 .editable input, select {padding:0;}
-.editable button {font-size:95%; font-weight:bold; margin:1px; padding:0 5px; background-color:#dfeffc; border:1px solid; border-color:#d3d3d3 #808080 #808080 #d3d3d3;}
-.editable button:hover  {border-color:#808080 #d3d3d3 #d3d3d3 #808080;}
 .site_config {padding: 0;}/*  table */
 .site_config th {text-align:left; padding:0 0 1px 3px;font-size:105%;} /* sub-headings, both cols */
 .site_config th+th { font-style:italic;font-size:95%;} /* sub-headings, right col */
