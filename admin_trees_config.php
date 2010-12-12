@@ -389,21 +389,6 @@ print_header(i18n::translate('Configure trees'));
 
 <form enctype="multipart/form-data" method="post" id="configform" name="configform" action="editconfig_gedcom.php">
 
-<table class="facts_table center <?php echo $TEXT_DIRECTION; ?>">
-	<tr>
-		<td colspan="2" class="facts_label">
-			<?php
-				echo "<h2>", i18n::translate('GEDCOM configuration'), " - ";
-				echo PrintReady(get_gedcom_setting(WT_GED_ID, 'title'));
-				echo "</h2>";
-				echo "<a href=\"editgedcoms.php\"><b>";
-				echo i18n::translate('Return to the GEDCOM management menu');
-				echo "</b></a><br /><br />";
-			?>
-		</td>
-	</tr>
-</table>
-
 <input type="hidden" name="action" value="update" />
 <?php
 	if (!empty($error_msg)) echo "<br /><span class=\"error\">".$error_msg."</span><br />";
