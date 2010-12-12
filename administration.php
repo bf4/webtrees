@@ -40,10 +40,10 @@ echo '<div id="x">';
 		include WT_THEME_DIR.'user_stats.php';
 	echo '</div>';
 	echo '<div id="block3">';
-//		include WT_THEME_DIR.'administration/user_stats.php';
+		include WT_THEME_DIR.'recent_changes.php';
 	echo '</div>';
 	echo '<div id="block2">';
-//		include WT_THEME_DIR.'administration/user_stats.php';
+		include WT_THEME_DIR.'tree_stats.php';
 	echo '</div>';
 echo '</div>';
 	
