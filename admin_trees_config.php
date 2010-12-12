@@ -109,11 +109,14 @@ case 'add':
 	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.WT_SCRIPT_NAME.'#privacy');
 	exit;
 case 'update':
-	$_POST["NEW_MEDIA_DIRECTORY"] = preg_replace('/\\\/', '/', $_POST["NEW_MEDIA_DIRECTORY"]);
-	$ct = preg_match("'/$'", $_POST["NEW_MEDIA_DIRECTORY"]);
-	if ($ct==0) $_POST["NEW_MEDIA_DIRECTORY"] .= "/";
+	$_POST["NEW_MEDIA_DIRECTORY"] = trim(str_replace('\\','/',$_POST["NEW_MEDIA_DIRECTORY"]));
+	if (substr ($_POST["NEW_MEDIA_DIRECTORY"], -1) != "/") $_POST["NEW_MEDIA_DIRECTORY"] = $_POST["NEW_MEDIA_DIRECTORY"] . "/";
 	if (substr($_POST["NEW_MEDIA_DIRECTORY"], 0, 2)=="./") $_POST["NEW_MEDIA_DIRECTORY"] = substr($_POST["NEW_MEDIA_DIRECTORY"], 2);
 	if (preg_match("/.*[a-zA-Z]{1}:.*/", $_POST["NEW_MEDIA_DIRECTORY"])>0) $errors = true;
+	if ($_POST["NEW_USE_MEDIA_FIREWALL"]==true) {
+		if (substr($_POST["NEW_MEDIA_DIRECTORY"], 0, 3)=="../") $_POST["NEW_MEDIA_DIRECTORY"] = substr($_POST["NEW_MEDIA_DIRECTORY"], 3);
+		if (substr($_POST["NEW_MEDIA_DIRECTORY"], 0, 1)=="/") $_POST["NEW_MEDIA_DIRECTORY"] = substr($_POST["NEW_MEDIA_DIRECTORY"], 1);
+	}
 
 	set_gedcom_setting(WT_GED_ID, 'ABBREVIATE_CHART_LABELS',      safe_POST_bool('NEW_ABBREVIATE_CHART_LABELS'));
 	set_gedcom_setting(WT_GED_ID, 'ADVANCED_NAME_FACTS',          safe_POST('NEW_ADVANCED_NAME_FACTS'));
@@ -237,9 +240,9 @@ case 'update':
 	if (!$_POST["NEW_MEDIA_FIREWALL_ROOTDIR"]) {
 		$NEW_MEDIA_FIREWALL_ROOTDIR = $INDEX_DIRECTORY;
 	} else {
-		$_POST["NEW_MEDIA_FIREWALL_ROOTDIR"] = trim($_POST["NEW_MEDIA_FIREWALL_ROOTDIR"]);
+		$_POST["NEW_MEDIA_FIREWALL_ROOTDIR"] = trim(str_replace('\\','/',$_POST["NEW_MEDIA_FIREWALL_ROOTDIR"]));
 		if (substr ($_POST["NEW_MEDIA_FIREWALL_ROOTDIR"], -1) != "/") $_POST["NEW_MEDIA_FIREWALL_ROOTDIR"] = $_POST["NEW_MEDIA_FIREWALL_ROOTDIR"] . "/";
-		$NEW_MEDIA_FIREWALL_ROOTDIR = $_POST["NEW_MEDIA_FIREWALL_ROOTDIR"];
+		$NEW_MEDIA_FIREWALL_ROOTDIR = safe_POST("NEW_MEDIA_FIREWALL_ROOTDIR");
 	}
 	if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR)) {
 		$errors = true;
@@ -1221,23 +1224,12 @@ print_header(i18n::translate('Configure trees'));
 							<table>
 								<?php
 								$rel_events=array(
-									array(null,         null,         '_DEAT_SPOU'),
-									array('_BIRT_CHIL', '_MARR_CHIL', '_DEAT_CHIL'),
 									array('_BIRT_GCHI', '_MARR_GCHI', '_DEAT_GCHI'),
-									array('_BIRT_GGCH', '_MARR_GGCH', '_DEAT_GGCH'),
-									array(null,         '_MARR_FATH', '_DEAT_FATH'),
-									array(null,         '_MARR_FAMC', null),
-									array(null,         '_MARR_MOTH', '_DEAT_MOTH'),
+									array('_BIRT_CHIL', '_MARR_CHIL', '_DEAT_CHIL'),
 									array('_BIRT_SIBL', '_MARR_SIBL', '_DEAT_SIBL'),
-									array('_BIRT_HSIB', '_MARR_HSIB', '_DEAT_HSIB'),
-									array('_BIRT_NEPH', '_MARR_NEPH', '_DEAT_NEPH'),
+									array(null,         null,         '_DEAT_SPOU'),
+									array(null,         '_MARR_PARE', '_DEAT_PARE'),
 									array(null,         null,         '_DEAT_GPAR'),
-									array(null,         null,         '_DEAT_GGPA'),
-									array('_BIRT_FSIB', '_MARR_FSIB', '_DEAT_FSIB'),
-									array('_BIRT_MSIB', '_MARR_MSIB', '_DEAT_MSIB'),
-									array('_BIRT_COUS', '_MARR_COUS', '_DEAT_COUS'),
-									array('_FAMC_EMIG', null,         null),
-									array('_FAMC_RESI', null,         null),
 								);
 								foreach ($rel_events as $row) {
 									echo '<tr>';
