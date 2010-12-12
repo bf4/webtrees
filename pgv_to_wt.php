@@ -167,12 +167,10 @@ WT_DB::exec("UPDATE `##log` SET user_id=NULL");
 WT_DB::exec("DELETE FROM `##change`");
 WT_DB::exec("DELETE FROM `##block_setting`");
 WT_DB::exec("DELETE FROM `##block`");
-WT_DB::exec("DELETE FROM `##user_gedcom_setting`");
-WT_DB::exec("DELETE FROM `##user_setting`");
 WT_DB::exec("DELETE FROM `##message`");
-WT_DB::exec("DELETE FROM `##user`");
-WT_DB::exec("DELETE FROM `##user_setting`");
-WT_DB::exec("DELETE FROM `##user`");
+WT_DB::exec("DELETE FROM `##user_gedcom_setting` WHERE user_id>0");
+WT_DB::exec("DELETE FROM `##user_setting`        WHERE user_id>0");
+WT_DB::exec("DELETE FROM `##user`                WHERE user_id>0");
 
 ////////////////////////////////////////////////////////////////////////////////
 if (ob_get_level() == 0) ob_start();
@@ -694,6 +692,15 @@ foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
 	@set_gedcom_setting($ged_id, 'SHOW_PEDIGREE_PLACES',         $SHOW_PEDIGREE_PLACES);
 	@set_gedcom_setting($ged_id, 'SHOW_PRIVATE_RELATIONSHIPS',   $SHOW_PRIVATE_RELATIONSHIPS);
 	@set_gedcom_setting($ged_id, 'SHOW_REGISTER_CAUTION',        $SHOW_REGISTER_CAUTION);
+
+	// Update these - see db_schema_5_6.php
+	$SHOW_RELATIVES_EVENTS=preg_replace('/_(BIRT|MARR|DEAT)_(COUS|MSIB|FSIB|GGCH|NEPH|GGPA)/', '', $SHOW_RELATIVES_EVENTS);
+	$SHOW_RELATIVES_EVENTS=preg_replace('/_FAMC_(RESI_EMIG)/', '', $SHOW_RELATIVES_EVENTS);
+	$SHOW_RELATIVES_EVENTS=preg_replace('/_MARR_(MOTH|FATH|FAMC)/', '_MARR_PARE', $SHOW_RELATIVES_EVENTS);
+	$SHOW_RELATIVES_EVENTS=preg_replace('/_DEAT_(MOTH|FATH)/', '_DEAT_PARE', $SHOW_RELATIVES_EVENTS);
+	preg_match_all('/[_A-Z]+/', $setting, $match);
+	set_gedcom_setting($gedcom_id, 'SHOW_RELATIVES_EVENTS', implode(',', array_unique($match[0])));
+
 	@set_gedcom_setting($ged_id, 'SHOW_RELATIVES_EVENTS',        $SHOW_RELATIVES_EVENTS);
 	@set_gedcom_setting($ged_id, 'SHOW_SPIDER_TAGLINE',          $SHOW_SPIDER_TAGLINE);
 	@set_gedcom_setting($ged_id, 'SHOW_STATS',                   $SHOW_STATS);

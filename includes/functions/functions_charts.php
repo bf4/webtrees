@@ -296,8 +296,8 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 		echo "<br />";
 		echo "<span class='nowrap font12'>";
 		echo "<a href=\"javascript:;\" onclick=\"return addnewchild('$famid','');\">" . i18n::translate('Add a child to this family') . "</a>";
-		echo " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[".Person::sexImage('M', 'small', i18n::translate('Son'     ))."]</a>";
-		echo " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','F');\">[".Person::sexImage('F', 'small', i18n::translate('Daughter'))."]</a>";
+		echo " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[".Person::sexImage('M', 'small', '', i18n::translate('Son'     ))."]</a>";
+		echo " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','F');\">[".Person::sexImage('F', 'small', '', i18n::translate('Daughter'))."]</a>";
 		echo help_link('add_child');
 		echo "</span>";
 		echo "<br /><br />";
@@ -460,9 +460,8 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
  * print the facts table for a family
  *
  * @param string $famid family gedcom ID
- * @param int $sosa optional child sosa number
  */
-function print_family_facts(&$family, $sosa = 0) {
+function print_family_facts(&$family) {
 	global $pbwidth, $pbheight;
 	global $nonfacts;
 	global $TEXT_DIRECTION, $GEDCOM;
@@ -479,87 +478,53 @@ function print_family_facts(&$family, $sosa = 0) {
 		// -- find all the fact information
 		$indifacts = $family->getFacts();
 
-		if (count($indifacts) > 0) {
+		echo '<span class="subheaders">', i18n::translate('Family Group Information'), '</span>';
+		echo '<table class="facts_table">';
+		if ($indifacts) {
 			sort_facts($indifacts);
-			echo "<span class=\"subheaders\">" . i18n::translate('Family Group Information');
-			echo "</span><br /><table class=\"facts_table\">";
-			/* @var $value Event */
-			foreach ($indifacts as $key => $value) {
-				if ($value->getTag()!="SOUR" && $value->getTag()!="OBJE" && $value->getTag()!="NOTE")
-					print_fact($value);
+			foreach ($indifacts as $fact) {
+				print_fact($fact);
 			}
-			// do not print otheritems for sosa
-			if ($sosa == 0) {
-				foreach ($indifacts as $key => $value) {
-					$fact = $value->getTag();
-					// -- handle special source fact case
-					if ($fact == "SOUR") {
-						print_main_sources($value->getGedComRecord(), 1, $famid, $value->getLineNumber());
-					}
-					// -- handle special note fact case
-					else if ($fact == "NOTE") {
-						print_main_notes($value->getGedComRecord(), 1, $famid, $value->getLineNumber());
-					}
-				}
-				// NOTE: Print the media
-				print_main_media($famid);
-			}
-		}
-		else {
-			if ($sosa==0) {
-				echo "<span class=\"subheaders\">" . i18n::translate('Family Group Information');
-				echo "</span><br />";
-			}
-			echo "<table class=\"facts_table\">";
-			if ($sosa == 0) {
-				echo "<tr><td class=\"messagebox\" colspan=\"2\">";
-				echo i18n::translate('No facts for this family.');
-				echo "</td></tr>";
-			}
+			print_main_media($famid);
+		} else {
+			echo '<tr><td class="messagebox" colspan="2">', i18n::translate('No facts for this family.'), '</td></tr>';
 		}
 		// -- new fact link
-		if ($sosa==0 && WT_USER_CAN_EDIT) {
+		if (WT_USER_CAN_EDIT) {
 			print_add_new_fact($famid, $indifacts, "FAM");
 
 			// -- new note
-			echo "<tr><td class=\"descriptionbox\">";
-			echo i18n::translate('Add Note');
-			echo help_link('add_note');
-			echo "</td><td class=\"optionbox\">";
-			echo "<a href=\"javascript:;\" onclick=\"return add_new_record('$famid','NOTE');\">" . i18n::translate('Add a new note') . "</a>";
-			echo "<br />";
-			echo "</td></tr>";
+			echo '<tr><td class="descriptionbox">';
+			echo i18n::translate('Add Note'), help_link('add_note');
+			echo '</td><td class="optionbox">';
+			echo "<a href=\"javascript:;\" onclick=\"return add_new_record('$famid','NOTE');\">", i18n::translate('Add a new note'), '</a>';
+			echo '</td></tr>';
 
 			// -- new shared note
-			echo "<tr><td class=\"descriptionbox\">";
-			echo i18n::translate('Add Shared Note');
-			echo help_link('add_shared_note');
-			echo "</td><td class=\"optionbox\">";
-			echo "<a href=\"javascript:;\" onclick=\"return add_new_record('$famid','SHARED_NOTE');\">" . i18n::translate('Add a new shared note') . "</a>";
-			echo "<br />";
-			echo "</td></tr>";
+			echo '<tr><td class="descriptionbox">';
+			echo i18n::translate('Add Shared Note'), help_link('add_shared_note');
+			echo '</td><td class="optionbox">';
+			echo "<a href=\"javascript:;\" onclick=\"return add_new_record('$famid','SHARED_NOTE');\">", i18n::translate('Add a new shared note'), '</a>';
+			echo '</td></tr>';
 
 			// -- new media
-			echo "<tr><td class=\"descriptionbox\">";
-			echo i18n::translate('Add media');
-			echo help_link('add_media');
-			echo "</td><td class=\"optionbox\">";
-			echo "<a href=\"javascript: ".i18n::translate('Add media')."\" onclick=\"window.open('addmedia.php?action=showmediaform&linktoid={$famid}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">".i18n::translate('Add a new media item')."</a>";
-			echo "<br />";
-			echo "<a href=\"javascript:;\" onclick=\"window.open('inverselink.php?linktoid={$famid}&linkto=family', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;\">".i18n::translate('Link to an existing Media item')."</a>";
-			echo "</td></tr>";
+			echo '<tr><td class="descriptionbox">';
+			echo i18n::translate('Add media'), help_link('add_media');
+			echo '</td><td class="optionbox">';
+			echo "<a href=\"javascript: ", i18n::translate('Add media'), "\" onclick=\"window.open('addmedia.php?action=showmediaform&linktoid={$famid}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">", i18n::translate('Add a new media item'), '</a>';
+			echo '<br />';
+			echo "<a href=\"javascript:;\" onclick=\"window.open('inverselink.php?linktoid={$famid}&linkto=family', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;\">", i18n::translate('Link to an existing Media item'), '</a>';
+			echo '</td></tr>';
 
 			// -- new source citation
-			echo "<tr><td class=\"descriptionbox\">";
-			echo i18n::translate('Add Source Citation');
-			echo help_link('add_source');
-			echo "</td><td class=\"optionbox\">";
-			echo "<a href=\"javascript:;\" onclick=\"return add_new_record('$famid','SOUR');\">" . i18n::translate('Add a new source citation') . "</a>";
-			echo "<br />";
-			echo "</td></tr>";
+			echo '<tr><td class="descriptionbox">';
+			echo i18n::translate('Add Source Citation'), help_link('add_source');
+			echo '</td><td class="optionbox">';
+			echo "<a href=\"javascript:;\" onclick=\"return add_new_record('$famid','SOUR');\">", i18n::translate('Add a new source citation'), '</a>';
+			echo '</td></tr>';
 			// -- end new objects
 		}
-		echo "</table>";
+		echo '</table>';
 	}
 }
 
@@ -585,8 +550,6 @@ function print_sosa_family($famid, $childid, $sosa, $label="", $parid="", $gpari
 	echo "<br />";
 	echo "<table width=\"95%\"><tr><td valign=\"top\" style=\"width: " . ($pbwidth) . "px;\">";
 	print_family_children($famid, $childid, $sosa, $label, $personcount);
-	echo "</td><td valign=\"top\">";
-	if ($sosa == 0) print_family_facts(Family::getInstance($famid), $sosa);
 	echo "</td></tr></table>";
 	echo "<br />";
 }

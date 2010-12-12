@@ -183,19 +183,6 @@ function edit_field_access_level($name, $selected='', $extra='') {
 	return select_edit_control($name, $ACCESS_LEVEL, null, $selected, $extra);
 }
 
-// Print an edit control for logging frequency
-function edit_field_log_frequency($name, $selected='', $extra='') {
-	$LOG_FREQUENCY=array(
-		'none'    =>i18n::translate('Disable logging'),
-		'daily'   =>i18n::translate('Daily'),
-		'weekly'  =>i18n::translate('Weekly'),
-		'monthly' =>i18n::translate('Monthly'),
-		'yearly'  =>i18n::translate('Yearly'),
-		'database'=>i18n::translate('Database')
-	);
-	return select_edit_control($name, $LOG_FREQUENCY, null, $selected, $extra);
-}
-
 // Print an edit control for a contact method field
 function edit_field_contact($name, $selected='', $extra='') {
 	// Different ways to contact the users
@@ -1917,7 +1904,13 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 // Add some empty tags to create a new fact
 function addSimpleTags($fact) {
 	global $ADVANCED_PLAC_FACTS;
-	add_simple_tag("0 {$fact}");
+
+	// Since we are adding a spouse, the default is "MARR Y"
+	if ($fact=='MARR') {
+		add_simple_tag("0 {$fact} Y");
+	} else {
+		add_simple_tag("0 {$fact}");
+	}
 	add_simple_tag("0 DATE", $fact, translate_fact("{$fact}:DATE"));
 	add_simple_tag("0 PLAC", $fact, translate_fact("{$fact}:PLAC"));
 

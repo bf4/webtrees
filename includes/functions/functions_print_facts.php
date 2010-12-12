@@ -69,18 +69,18 @@ function expand_urls($text) {
  *
  * prints a fact record designed for the personal facts and details page
  * @param Event $eventObj The Event object to print
- * @param boolean $noedit Hide or show edit links
  */
-function print_fact(&$eventObj, $noedit=false) {
+function print_fact(&$eventObj) {
 	global $nonfacts, $GEDCOM, $RESN_CODES, $WORD_WRAPPED_NOTES;
 	global $TEXT_DIRECTION, $HIDE_GEDCOM_ERRORS, $FACTS, $FACTS_M, $FACTS_F, $SHOW_FACT_ICONS, $SHOW_MEDIA_FILENAME;
-	global $n_chil, $n_gchi, $n_ggch, $SEARCH_SPIDER;
+	global $n_chil, $n_gchi, $SEARCH_SPIDER;
 
 	if (!$eventObj->canShow()) {
 		return;
 	}
 
-	$fact = $eventObj->getTag();
+	$noedit=!$eventObj->canEdit();
+	$fact  = $eventObj->getTag();
 	if ($HIDE_GEDCOM_ERRORS && !array_key_exists($fact, $FACTS) && !array_key_exists($fact, $FACTS_M) && !array_key_exists($fact, $FACTS_F)) {
 		return;
 	}
@@ -153,9 +153,8 @@ function print_fact(&$eventObj, $noedit=false) {
 				echo "<a onclick=\"return delete_record('$pid', $linenum);\" href=\"javascript:;\" title=\"".i18n::translate('Delete')."\"><div class=\"deletelink\"><span class=\"link_text\">".i18n::translate('Delete')."</span></div></a>";
 			echo "</div>";
 		} else {echo translate_fact($factref, $label_person);}
-		if ($fact=="_BIRT_CHIL" and isset($n_chil)) echo "<br />", i18n::translate('#%d', $n_chil++);
-		if ($fact=="_BIRT_GCHI" and isset($n_gchi)) echo "<br />", i18n::translate('#%d', $n_gchi++);
-		if ($fact=="_BIRT_GGCH" and isset($n_ggch)) echo "<br />", i18n::translate('#%d', $n_ggch++);
+		if ($fact=="_BIRT_CHIL") echo "<br />", i18n::translate('#%d', $n_chil++);
+		if (preg_match("/_BIRT_GCH[I12]/", $fact)) echo "<br />", i18n::translate('#%d', $n_gchi++);
 		echo "</td>";
 	} else {
 		if ($fact == "OBJE") return false;
@@ -172,15 +171,17 @@ function print_fact(&$eventObj, $noedit=false) {
 		if ($ct>0) {
 			if ($factref=='image_size') echo i18n::translate('Image Dimensions');
 			else if ($factref=='file_size') echo i18n::translate('File Size');
-			else if (!$noedit && WT_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && !FactEditRestricted($pid, $factrec)) {
+			else if (!$noedit && WT_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $eventObj->canEdit()) {
 				echo "<a onclick=\"return edit_record('$pid', $linenum);\" href=\"javascript:;\" title=\"".i18n::translate('Edit')."\">". $factref. "</a>";
 				echo "<div class=\"editfacts\">";
 				echo "<a onclick=\"return edit_record('$pid', $linenum);\" href=\"javascript:;\" title=\"".i18n::translate('Edit')."\"><div class=\"editlink\"><span class=\"link_text\">".i18n::translate('Edit')."</span></div></a>";
 				echo "<a onclick=\"return copy_record('$pid', $linenum);\" href=\"javascript:;\" title=\"".i18n::translate('Copy')."\"><div class=\"copylink\"><span class=\"link_text\">".i18n::translate('Copy')."</span></div></a>";
 				echo "<a onclick=\"return delete_record('$pid', $linenum);\" href=\"javascript:;\" title=\"".i18n::translate('Delete')."\"><div class=\"deletelink\"><span class=\"link_text\">".i18n::translate('Delete')."</span></div></a>";
 				echo "</div>";
-			} else echo $factref;
-		} else if (!$noedit && WT_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && !FactEditRestricted($pid, $factrec)) {
+			} else {
+				echo $factref;
+			}
+		} else if (!$noedit && WT_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $eventObj->canEdit()) {
 			echo "<a onclick=\"return edit_record('$pid', $linenum);\" href=\"javascript:;\" title=\"".i18n::translate('Edit')."\">". translate_fact($factref, $label_person). "</a>";
 			echo "<div class=\"editfacts\">";
 				echo "<a onclick=\"return edit_record('$pid', $linenum);\" href=\"javascript:;\" title=\"".i18n::translate('Edit')."\"><div class=\"editlink\"><span class=\"link_text\">".i18n::translate('Edit')."</span></div></a>";
@@ -853,7 +854,9 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 					echo "<a onclick=\"return copy_record('$pid', $linenum);\" href=\"javascript:;\" title=\"".i18n::translate('Copy')."\"><span class=\"copylink\"><span class=\"link_text\">".i18n::translate('Copy')."</span></span></a>";
 					echo "<a onclick=\"return delete_record('$pid', $linenum);\" href=\"javascript:;\" title=\"".i18n::translate('Delete')."\"><span class=\"deletelink\"><span class=\"link_text\">".i18n::translate('Delete')."</span></span></a>";
 				echo "</div>";
-			} else {echo translate_fact($factname, $parent);}
+			} else {
+				echo translate_fact($factname, $parent);
+			}
 			echo "</td>";
 			echo "<td class=\"optionbox $styleadd wrap\">";
 			//echo "<td class=\"facts_value$styleadd\">";
@@ -1048,24 +1051,24 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 					echo translate_fact('NOTE');
 				}
 			}
-				$factlines = explode("\n", $factrec); // 1 BIRT Y\n2 NOTE ...
-				$factwords = explode(" ", $factlines[0]); // 1 BIRT Y
-				$factname = $factwords[1]; // BIRT
-				$parent=GedcomRecord::getInstance($pid);
-				if ($factname == "EVEN" || $factname=="FACT") {
-					// Add ' EVEN' to provide sensible output for an event with an empty TYPE record
-					$ct = preg_match("/2 TYPE (.*)/", $factrec, $ematch);
-					if ($ct>0) {
-						$factname = trim($ematch[1]);
-						echo $factname;
-					} else {
-						echo translate_fact($factname, $parent);
-					}
-				} else if ($factname != "NOTE") {
-					// Note is already printed
+			$factlines = explode("\n", $factrec); // 1 BIRT Y\n2 NOTE ...
+			$factwords = explode(" ", $factlines[0]); // 1 BIRT Y
+			$factname = $factwords[1]; // BIRT
+			$parent=GedcomRecord::getInstance($pid);
+			if ($factname == "EVEN" || $factname=="FACT") {
+				// Add ' EVEN' to provide sensible output for an event with an empty TYPE record
+				$ct = preg_match("/2 TYPE (.*)/", $factrec, $ematch);
+				if ($ct>0) {
+					$factname = trim($ematch[1]);
+					echo $factname;
+				} else {
 					echo translate_fact($factname, $parent);
 				}
+			} else if ($factname != "NOTE") {
+				// Note is already printed
+				echo translate_fact($factname, $parent);
 			}
+		}
 		echo "</td>";
 			if ($nt==0) {
 				//-- print embedded note records

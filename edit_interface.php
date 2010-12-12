@@ -555,7 +555,7 @@ case 'linkspouse':
 	echo "<td class=\"facts_value\"><input id=\"spouseid\" type=\"text\" name=\"spid\" size=\"8\" /> ";
 	print_findindi_link("spouseid", "");
 	echo "</td></tr>";
-	add_simple_tag("0 MARR");
+	add_simple_tag("0 MARR Y");
 	add_simple_tag("0 DATE", "MARR");
 	add_simple_tag("0 PLAC", "MARR");
 	if (WT_USER_IS_ADMIN) {
@@ -1269,6 +1269,7 @@ case 'update':
 			if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
 			if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 			if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
+			if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
 
 			if (!empty($NAME)) $newged .= "1 NAME $NAME\n";
 			if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\n";
@@ -1278,31 +1279,16 @@ case 'update':
 			if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\n";
 			if (!empty($SURN)) $newged .= "2 SURN $SURN\n";
 			if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\n";
-
-			if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];							
-			if (!empty($NOTE)) {
-				$num_lines=0;
-				foreach (preg_split("/\r?\n/", $NOTE, -1 ) as $j=>$line) {
-					$num_lines++;
+			
+			if (!empty($NOTE)) {			
+				$cmpfunc = create_function('$e', 'return strpos($e,"0 @N") !==0 && strpos($e,"1 CONT") !==0;');
+				$gedlines = array_filter($gedlines, $cmpfunc);
+				$tempnote = preg_split('/\r?\n/', trim($NOTE) . "\n"); // make sure only one line ending on the end
+				$title[] = "0 @$pid@ NOTE " . array_shift($tempnote);
+				foreach($tempnote as &$line) {
+    				$line = trim("1 CONT " . $line,' ');
 				}
-				foreach (preg_split("/\r?\n/", $NOTE, -1 ) as $k=>$line) {
-					if ($k==0) {
-						$gedlines[$k] = "0 @{$pid}@ NOTE {$line}\n";
-					} else if ($line != null && $k <= $num_lines) {
-						$gedlines[$k] = "1 CONT {$line}\n";					
-					} else if ($line == null && $k < $num_lines-1) {
-						$gedlines[$k] = "1 CONT\n";
-					} else {
-						if ($line == null) {
-							for ($x=0; $x<=($num_note_lines-$num_lines); $x++) {
-								$gedlines[$k+($x)] = null."\n";
-							}
-						}
-					}
-				}
-				if ($gedlines[$num_lines] != "1 CONT\n") {
-					$gedlines[$k+1] = "1 CONT\n";
-				}
+				$gedlines = array_merge($title,$tempnote,$gedlines);	
 			}
 
 			//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
@@ -1349,6 +1335,7 @@ case 'update':
 				if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
 				if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 				if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
+				if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
 
 				if (!empty($NAME)) $newged .= "1 NAME $NAME\n";
 				if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\n";
@@ -1358,31 +1345,16 @@ case 'update':
 				if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\n";
 				if (!empty($SURN)) $newged .= "2 SURN $SURN\n";
 				if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\n";
-
-				if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];							
-				if (!empty($NOTE)) {
-					$num_lines=0;
-					foreach (preg_split("/\r?\n/", $NOTE, -1 ) as $j=>$line) {
-						$num_lines++;
+					
+				if (!empty($NOTE)) {				
+					$cmpfunc = create_function('$e', 'return strpos($e,"0 @N") !==0 && strpos($e,"1 CONT") !==0;');
+					$gedlines = array_filter($gedlines, $cmpfunc);
+					$tempnote = preg_split('/\r?\n/', trim($NOTE) . "\n"); // make sure only one line ending on the end
+					$title[] = "0 @$pid@ NOTE " . array_shift($tempnote);
+					foreach($tempnote as &$line) {
+    					$line = trim("1 CONT " . $line,' ');
 					}
-					foreach (preg_split("/\r?\n/", $NOTE, -1 ) as $k=>$line) {
-						if ($k==0) {
-							$gedlines[$k] = "0 @{$pid}@ NOTE {$line}\n";
-						} else if ($line != null && $k <= $num_lines) {
-							$gedlines[$k] = "1 CONT {$line}\n";					
-						} else if ($line == null && $k < $num_lines-1) {
-							$gedlines[$k] = "1 CONT\n";
-						} else {
-							if ($line == null) {
-								for ($x=0; $x<=($num_note_lines-$num_lines); $x++) {
-									$gedlines[$k+($x)] = null.'\n';
-								}
-							}
-						}
-					}
-					if ($gedlines[$num_lines] != "1 CONT\n") {
-						$gedlines[$k+1] = "1 CONT\n";
-					}
+					$gedlines = array_merge($title,$tempnote,$gedlines);	
 				}
 				
 				//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
