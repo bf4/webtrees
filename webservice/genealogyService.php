@@ -346,8 +346,7 @@ class GenealogyService
 			'SID' => 'string',
 			'message' => 'string',
 			'gedcom_id' => 'string',
-			'compressionMethod' => 'string',
-			'data_type' => 'string'
+			'compressionMethod' => 'string'
 		);
 
 		$this->__typedef['serviceInfoResult'] =

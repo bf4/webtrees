@@ -116,14 +116,13 @@ class wtServiceLogic extends GenealogyService {
 
 		$GEDCOM = $this->default_gedcom($gedcom_id);
 		$compress_method = $this->setCompression($compression);
-		$sid = Zend_Session::getId();
 		//guest auth
 		if (empty($username) && !$REQUIRE_AUTHENTICATION) {
 			$_SESSION["GEDCOM"] = $GEDCOM;
 			$_SESSION["compression"] = $compress_method;
 			$_SESSION["readonly"] = true;
 			//soap return
-			$return['SID'] = $sid;
+			$return['SID'] = Zend_Session::getId();
 			$return['message'] = 'Logged in as guest';
 			$return['compressionMethod'] = $compress_method;
 			$return['gedcom_id'] = $GEDCOM;
@@ -140,7 +139,7 @@ class wtServiceLogic extends GenealogyService {
 			$_SESSION["GEDCOM"] = $GEDCOM;
 			$_SESSION["compression"] = $compress_method;
 			if (isset( $_SESSION["readonly"] )) unset($_SESSION["readonly"]);
-			$return['SID'] = $sid;
+			$return['SID'] = Zend_Session::getId();
 			$return['message'] = $username . " Logged in successfully";
 			$return['compressionMethod'] = $compress_method;
 			$return['gedcom_id'] = $GEDCOM;
@@ -314,14 +313,9 @@ class wtServiceLogic extends GenealogyService {
 		$person['deathPlace'] = get_gedcom_value("DEAT:PLAC", 1, $gedrec, '', false);
 		$person['gender'] = get_gedcom_value("SEX", 1, $gedrec, '', false);
 		if ($includeGedcom ) {
-			if ($_SESSION['data_type']=='GEDCOM') $person['gedcom'] = $gedrec;
-			else {
-				//-- get XML data here
-				$ge = new GEWebService();
-				$person['gedcom'] = $ge->create_person($gedrec, $PID);
-			}
+			$person['gedcom'] = $gedrec;
 		} else {
-			$person['gedcom'] = "";
+			$person['gedcom'] = '';
 		}
 		$fams = find_families_in_record($gedrec, "FAMS");
 		$familyS = array();
@@ -399,14 +393,7 @@ class wtServiceLogic extends GenealogyService {
 			$CHILDREN[] = $child_id;
 		}
 		$family['CHILDREN'] = new SOAP_Value('CHILDREN', '{urn:'.$this->__namespace.'}ArrayOfIds', $CHILDREN);
-		//$family['CHILDREN'] = $CHILDREN;
-		if ($_SESSION['data_type'] == 'GEDCOM') {
-			$family['gedcom'] = $gedrec;
-		} else {
-			$ge= new GEWebService();
-			$family['gedcom'] = $ge->create_family($gedrec, $FID);
-			addToLog($family['gedcom']);
-		}
+		$family['gedcom'] = $gedrec;
 		$result = new SOAP_Value($soapval, '{urn:'.$this->__namespace.'}Family', $family);
 		return $result;
 	}
@@ -455,12 +442,7 @@ class wtServiceLogic extends GenealogyService {
 		$source['title'] = get_gedcom_value("TITL", 1, $gedrec, '', false);
 		$source['published'] = get_gedcom_value("PUBL", 1, $gedrec, '', false);
 		$source['author'] = get_gedcom_value("AUTH", 1, $gedrec, '', false);
-		if ($_SESSION['data_type']=='GEDCOM') $source['gedcom'] = $gedrec;
-			else {
-				//-- get XML data here
-				$ge = new GEWebService();
-				$source['gedcom'] = $ge->create_source($gedrec, $SCID);
-			}
+		$source['gedcom'] = $gedrec;
 		$result = new SOAP_Value('result', '{urn:'.$this->__namespace.'}Source', $source);
 		return $result;
 	}
@@ -535,23 +517,17 @@ class wtServiceLogic extends GenealogyService {
 				}
 			} //-- end for loop
 			if ($success) {
-				if ($_SESSION['data_type'] == 'GEDCOM') {
-
-					if (empty($_REQUEST['keepfile'])) {
-						$ct = preg_match_all("/ FILE (.*)/", $gedrecords, $match, PREG_SET_ORDER);
-						for ($i=0; $i<$ct; $i++)
-						{
-							$mediaurl = WT_SERVER_NAME.WT_SCRIPT_PATH.$MEDIA_DIRECTORY.extract_filename($match[$i][1]);
-							$gedrecords = str_replace($match[$i][1], $mediaurl, $gedrecords);
-						}
+				if (empty($_REQUEST['keepfile'])) {
+					$ct = preg_match_all("/ FILE (.*)/", $gedrecords, $match, PREG_SET_ORDER);
+					for ($i=0; $i<$ct; $i++)
+					{
+						$mediaurl = WT_SERVER_NAME.WT_SCRIPT_PATH.$MEDIA_DIRECTORY.extract_filename($match[$i][1]);
+						$gedrecords = str_replace($match[$i][1], $mediaurl, $gedrecords);
 					}
-
-					$return = trim($gedrecords);
-					return $return;
-				} else {
-					$ge= new GEWebService();
-					return $ge->create_record($PID);
 				}
+
+				$return = trim($gedrecords);
+				return $return;
 			}
 		} else {
 			return new SOAP_Fault("No gedcom id specified.  Please specify a PID",'Client','',null);
