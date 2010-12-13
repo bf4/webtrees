@@ -1,12 +1,9 @@
 <?php
 /**
- * Header for webtrees theme
+ * Header for webtrees administration theme
  *
  * webtrees: Web based Family History software
  * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +43,7 @@ echo
 
 echo
 	'</head>',
-	'<body id="body" ',$bodyOnLoad, '>',
+	'<body id="body">',
 // Header
 	'<div id="admin_head" class="ui-widget-content">',
 		'<div id="info">',
