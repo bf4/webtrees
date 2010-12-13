@@ -30,6 +30,14 @@ require_once 'SOAP/WSDL.php';
 require_once 'SOAP/Fault.php';
 require_once 'SOAP/Parser.php';
 
+// Our SOAP library uses lots of deprecated features - ignore them
+if (version_compare(PHP_VERSION, '5.3')>0) {
+	error_reporting(error_reporting() & ~E_DEPRECATED & ~E_STRICT);
+} else {
+	error_reporting(error_reporting() & ~E_STRICT);
+}
+
+
 // Arnaud: the following code was taken from DataObject and adapted to suit
 
 // this will be horrifically slow!!!!
