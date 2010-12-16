@@ -318,7 +318,7 @@ ob_start();
 							}
 							$uged = get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
 							if ($uged) {
-								echo ' <a href="individual.php?pid=', $uged, '&amp;ged=', urlencode($ged_name), '">', $ged_name, '</a></li>';
+								echo ' <a href="individual.php?pid=', $uged, '&amp;ged=', rawurlencode($ged_name), '">', $ged_name, '</a></li>';
 							} else {
 								echo ' ', $ged_name, '</li>';
 							}
