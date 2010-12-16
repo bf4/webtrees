@@ -31,10 +31,9 @@ define('WT_SCRIPT_NAME', 'admin_site_info.php');
 define('WT_THEME_DIR', 'themes/_administration/');
 require './includes/session.php';
 
-// Only admin users can access this page
 if (!WT_USER_GEDCOM_ADMIN) {
-	header("Location: ../login.php?url=wtinfo.php?action=".$action);
-exit;
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'login.php?url='.WT_SCRIPT_NAME);
+	exit;
 }
 
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
@@ -44,9 +43,9 @@ if (!isset($action)) $action = "";
 if ($action == "phpinfo") {
 	$helpindex = "phpinfo_help";
 	print_header(i18n::translate('PHP information'));
-	
+
 	echo '<div>';
-	
+
 	ob_start();
 
 	phpinfo();
@@ -76,10 +75,7 @@ if ($action == "phpinfo") {
 	$php_info = substr($php_info, $offset);
 
 	echo $php_info;
-
 	echo '</div>';
-
-	//	exit;
 }
 
 print_footer();
