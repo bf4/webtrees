@@ -22,18 +22,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package webtrees
- * @subpackage Administration
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'administration/admin_trees_config.php');
+define('WT_SCRIPT_NAME', 'admin_trees_config.php');
 define('WT_THEME_DIR', 'themes/_administration/');
 require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
 
 if (!WT_USER_GEDCOM_ADMIN) {
-	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.WT_SCRIPT_NAME);
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'administration.php');
 	exit;
 }
 
@@ -200,7 +198,6 @@ case 'update':
 	set_gedcom_setting(WT_GED_ID, 'SHOW_MARRIED_NAMES',           safe_POST_bool('NEW_SHOW_MARRIED_NAMES'));
 	set_gedcom_setting(WT_GED_ID, 'SHOW_MEDIA_DOWNLOAD',          safe_POST_bool('NEW_SHOW_MEDIA_DOWNLOAD'));
 	set_gedcom_setting(WT_GED_ID, 'SHOW_MEDIA_FILENAME',          safe_POST_bool('NEW_SHOW_MEDIA_FILENAME'));
-	set_gedcom_setting(WT_GED_ID, 'SHOW_MULTISITE_SEARCH',        safe_POST('SHOW_MULTISITE_SEARCH'));
 	set_gedcom_setting(WT_GED_ID, 'SHOW_NO_WATERMARK',            safe_POST('NEW_SHOW_NO_WATERMARK'));
 	set_gedcom_setting(WT_GED_ID, 'SHOW_PARENTS_AGE',             safe_POST_bool('NEW_SHOW_PARENTS_AGE'));
 	set_gedcom_setting(WT_GED_ID, 'SHOW_PEDIGREE_PLACES',         safe_POST('NEW_SHOW_PEDIGREE_PLACES'));
@@ -367,8 +364,7 @@ case 'update':
 	}
 }
 
-print_header(i18n::translate('Configure trees'));
-
+print_header(i18n::translate('Configure family tree'));
 ?>
 <script type="text/javascript">
 //<![CDATA[
@@ -663,14 +659,6 @@ print_header(i18n::translate('Configure trees'));
 						</td>
 						<td class="optionbox">
 							<?php echo edit_field_access_level("SHOW_LIVING_NAMES", get_gedcom_setting(WT_GED_ID, 'SHOW_LIVING_NAMES')); ?>
-						</td>
-					</tr>
-					<tr>
-						<td class="descriptionbox nowrap">
-							<?php echo i18n::translate('Show multi-site search'), help_link('SHOW_MULTISITE_SEARCH'); ?>
-						</td>
-						<td class="optionbox">
-							<?php echo edit_field_access_level("SHOW_MULTISITE_SEARCH", get_gedcom_setting(WT_GED_ID, 'SHOW_MULTISITE_SEARCH')); ?>
 						</td>
 					</tr>
 					<tr>
