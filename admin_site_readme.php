@@ -25,7 +25,6 @@
 define('WT_SCRIPT_NAME', 'themes/_administration/readme.php');
 define('WT_THEME_DIR', 'themes/_administration/');
 require './includes/session.php';
-require WT_ROOT.'includes/functions/functions_edit.php';
 
 function get_tag($txt,$tag){
 	$offset = 0;
@@ -46,7 +45,7 @@ function get_tag($txt,$tag){
 	return $arr;
 }
 	
-print_header(i18n::translate('ReadMe'));
+print_header(i18n::translate("README documentation"));
 
 echo '<div id="readme">';
 
