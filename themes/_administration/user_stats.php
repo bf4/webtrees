@@ -94,8 +94,7 @@ echo '<h2>', i18n::translate('User information'), '</h2>',
 	'</tr>',
 	'<tr>',
 		'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-			if ($adminusers == 0) echo i18n::translate('Site Administrators');
-			else echo "<a href=\"user_admin.php?action=listusers&amp;filter=adminusers\">", i18n::translate('Site Administrators'), "</a>";
+			echo "<a href=\"user_admin.php?action=listusers&amp;filter=adminusers\">", i18n::translate('Site Administrators'), "</a>";
 		echo '</td>',
 		'<td>', $adminusers, '</td>',
 	'</tr>',
