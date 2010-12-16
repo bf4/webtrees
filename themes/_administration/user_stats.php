@@ -44,7 +44,7 @@ $stats=new stats(WT_GEDCOM);
 	$nverusers = 0;			// Users not verified by admin but verified themselves
 	$adminusers = 0;		// Administrators
 	$userlang = array();	// Array for user languages
-	$gedadmin = array();	// Array for gedcom admins
+	$gedadmin = array();	// Array for managers
 
 echo '<h2>', i18n::translate('User information'), '</h2>',
 '<table>',
@@ -94,12 +94,12 @@ echo '<h2>', i18n::translate('User information'), '</h2>',
 	'</tr>',
 	'<tr>',
 		'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-			echo "<a href=\"user_admin.php?action=listusers&amp;filter=adminusers\">", i18n::translate('Administrators'), "</a>";
+		echo "<a href=\"user_admin.php?action=listusers&amp;filter=adminusers\">", i18n::translate('Administrators'), "</a>";
 		echo '</td>',
 		'<td>', $adminusers, '</td>',
 	'</tr>',
 	'<tr>',
-		'<td colspan="2">', i18n::translate('GEDCOM Administrators'), '</td>',
+		'<td colspan="2">', i18n::translate('Managers'), '</td>',
 		'</tr>';
 		asort($gedadmin);
 		$ind = 0;
