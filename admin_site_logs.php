@@ -185,8 +185,8 @@ echo
 		'</table>',
 	'</form>';
 if ($rows) {
-echo
-	'<p align="center">',
+	echo
+		'<p align="center">',
 		i18n::translate('%d Results', $total_rows);
 		$url=
 			WT_SCRIPT_NAME.'?from='.rawurlencode($from).
@@ -197,10 +197,9 @@ echo
 			'&amp;user='.rawurlencode($user).
 			'&amp;gedc='.rawurlencode($gedc);
 
-//		if (WT_USER_IS_ADMIN) {
-			echo '&nbsp;-&nbsp;<a href="', $url, '&amp;export=yes">', i18n::translate('Export'), '</a>';
-			echo ' | <a href="', $url, '&amp;delete=yes" onclick="return confirm(\'', htmlspecialchars(i18n::plural('Permanently delete this %s record?', 'Permanently delete these %s records?', $total_rows, $total_rows)) , '\')">', i18n::translate('Delete'), '</a>';
-//		}
+	echo '&nbsp;-&nbsp;<a href="', $url, '&amp;export=yes">', i18n::translate('Export'), '</a>';
+	echo ' | <a href="', $url, '&amp;delete=yes" onclick="return confirm(\'', htmlspecialchars(i18n::plural('Permanently delete this %s record?', 'Permanently delete these %s records?', $total_rows, $total_rows)) , '\')">', i18n::translate('Delete'), '</a>';
+
 echo
 	'</p>',
 	'<table id="log_list">',
@@ -229,4 +228,5 @@ echo
 		echo '</tbody>',
 	'</table>';
 }
+
 print_footer();
