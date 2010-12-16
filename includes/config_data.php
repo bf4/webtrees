@@ -359,14 +359,6 @@ $STATUS_CODES = array(
 	'UNCLEARED'=>i18n::translate('Uncleared: insufficient data'),
 );
 
-// RESN tags - restriction status
-$RESN_CODES = array(
-	'none'        =>i18n::translate_c('Restriction status', 'None'),
-	'locked'      =>i18n::translate_c('Restriction status', 'Do not change'),
-	'privacy'     =>i18n::translate_c('Restriction status', 'Privacy'),
-	'confidential'=>i18n::translate_c('Restriction status', 'Confidential')
-);
-
 // NPFX tags - name prefixes
 $NPFX_accept=array(
 	'Adm',
@@ -1212,8 +1204,8 @@ $FACTS=array(
 	'FAMS:CHIL:BIRT:PLAC'=>                  i18n::translate('Child\'s birth place'),
 	'FAMS:DIV:DATE'=>                        i18n::translate('Spouse divorce date'),
 	'FAMS:DIV:PLAC'=>                        i18n::translate('Spouse divorce place'),
-	'FAMS:MARR:DAT'=>                        i18n::translate('Marriage date'),
-	'FAMS:MARR:PLAC'=>                       i18n::translate('Marriage place'),
+	'FAMS:MARR:DAT'=>                        i18n::translate('Date of marriage'),
+	'FAMS:MARR:PLAC'=>                       i18n::translate('Place of marriage'),
 	'FAMS:NOTE'=>                            i18n::translate('Spouse note'),
 	'FAMS:SLGS:DATE'=>                       i18n::translate('LDS spouse sealing date'),
 	'FAMS:SLGS:PLAC'=>                       i18n::translate('LDS spouse sealing place'),

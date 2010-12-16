@@ -225,20 +225,13 @@ if ($ua != "") {
 			}
 		}
 	}
-}
-else {
+} else {
 	// For the people who firewall identifying information
 	// Switch real to false if you wish to restrict these connections.
 	$ua = "Browser User Agent Empty";
 	$real = true;
 }
 
-if (WT_SCRIPT_NAME=='genservice.php') {
-	// Robots look very similar to remote-link requests.  Allow them to
-	// access the remote linking service.
-	$real=true;
-}
-	
 if (!$real) {
 	$bot_name = $ua;
 	// strip out several common strings that clutter the User Agent.
@@ -332,15 +325,10 @@ try {
 				$SEARCH_SPIDER = 'Manual Search Engine entry of '.$_SERVER['REMOTE_ADDR'];
 			}
 		}
-		$bot_name = 'MAN'.$_SERVER['REMOTE_ADDR'];
-		Zend_Session::setId(gen_spider_session_name($bot_name, ''));
 	}
 } catch (PDOException $ex) {
 	// Initial installation?  Site Down?  Fail silently.
 }
-
-if ((empty($SEARCH_SPIDER)) && (!empty($_SESSION['last_spider_name']))) // user following a search engine listing in,
-Zend_Session::regenerateId();
 
 if (!empty($SEARCH_SPIDER)) {
 	$spidertime = time();

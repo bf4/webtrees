@@ -376,7 +376,7 @@ function print_header($title) {
 	global $bwidth, $BROWSERTYPE, $SEARCH_SPIDER, $view, $cart;
 	global $GEDCOM, $GEDCOM_TITLE, $action, $query, $theme_name;
 	global $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $THEME_DIR, $print_headerfile;
-	global $WT_IMAGES, $TEXT_DIRECTION, $ONLOADFUNCTION, $REQUIRE_AUTHENTICATION;
+	global $WT_IMAGES, $TEXT_DIRECTION, $REQUIRE_AUTHENTICATION;
 
 	header('Content-Type: text/html; charset=UTF-8');
 
@@ -464,13 +464,6 @@ function print_header($title) {
 	var whichhelp = \'help_'.WT_SCRIPT_NAME.'&action='.$action.'\';
 	//-->
 	'.WT_JS_END.'<script src="js/webtrees.js" language="JavaScript" type="text/javascript"></script>';
-	$bodyOnLoad = '';
-	$bodyOnLoad .= " onload=\"";
-	if (!empty($ONLOADFUNCTION)) $bodyOnLoad .= $ONLOADFUNCTION;
-	if ($TEXT_DIRECTION=="rtl") {
-		$bodyOnLoad .= " maxscroll = document.documentElement.scrollLeft;";
-	}
-	$bodyOnLoad .= "\"";
 	require WT_ROOT.$headerfile;
 
 	// Allow the browser to format the header/menus while we generate the page
@@ -886,7 +879,6 @@ function print_favorite_selector($option=0) {
 function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false, $npage=false) {
 	global $WT_IMAGES, $EXPAND_SOURCES, $EXPAND_NOTES;
 
-	if (!isset($EXPAND_NOTES)) $EXPAND_NOTES = $EXPAND_SOURCES; // FIXME
 	$elementID = "N-".floor(microtime()*1000000);
 	$text = trim($text);
 
@@ -1471,7 +1463,7 @@ function format_parents_age($pid, $birth_date=null) {
 						// Highlight mothers who die in childbirth or shortly afterwards
 						if ($deatdate->isOK() && $deatdate->MinJD()<$birth_date->MinJD()+90) {
 							$class='parentdeath';
-							$title=translate_fact('_DEAT_MOTH');
+							$title=translate_fact('_DEAT_PARE', $parent);
 						} else {
 							$title=i18n::translate('Mother\'s age');
 						}
@@ -1480,7 +1472,7 @@ function format_parents_age($pid, $birth_date=null) {
 						// Highlight fathers who die before the birth
 						if ($deatdate->isOK() && $deatdate->MinJD()<$birth_date->MinJD()) {
 							$class='parentdeath';
-							$title=translate_fact('_DEAT_FATH');
+							$title=translate_fact('_DEAT_PARE', $parent);
 						} else {
 							$title=i18n::translate('Father\'s age');
 						}

@@ -302,7 +302,7 @@ if (strstr($action, 'addchild')) {
 	}
 	echo help_link('edit_add_parent');
 } elseif (strstr($action, 'addopfchild')) {
-	echo '<b>', i18n::translate('Add a child to create a one-parent family'), '</b>', help_link('edit_add_child');
+	echo '<b>', i18n::translate('Add a child to create a one-parent family'), '</b>', help_link('add_opf_child');
 }
 //------------------------------------------------------------------------------
 switch ($action) {
@@ -422,8 +422,8 @@ case 'edit':
 			// Shared Note addition ------------
 			if ($level1type!="SHARED_NOTE" && $level1type!="NOTE") print_add_layer("SHARED_NOTE");
 			if ($level1type!="OBJE" && $level1type!="REPO" && $MULTI_MEDIA) print_add_layer("OBJE");
-			//-- RESN missing in new structure, RESN can be added to all level 1 tags
-			if (!in_array("RESN", $tags)) print_add_layer("RESN");
+			// RESN can be added to all level 1 tags
+			print_add_layer("RESN");
 		}
 	}
 
@@ -476,8 +476,8 @@ case 'add':
 			if ($fact!="REPO") print_add_layer("OBJE");
 		}
 	}
-	//-- RESN missing in new structure, RESN can be added to all level 1 tags
-	if (!in_array("RESN", $tags)) print_add_layer("RESN");
+	// RESN can be added to all level 1 tags
+	print_add_layer("RESN");
 
 	echo "<br /><input type=\"submit\" value=\"", i18n::translate('Add'), "\" /><br />";
 	echo "</form>";
@@ -664,7 +664,7 @@ case 'addnewsource':
 	?>
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
-				alert('<?php echo i18n::translate('You must provide a ').translate_fact('TITL'); ?>');
+				alert('<?php echo i18n::translate('You must provide a source title'); ?>');
 				frm.TITL.focus();
 				return false;
 			}
@@ -998,8 +998,7 @@ case 'editsource':
 	print_add_layer("NOTE");
 	print_add_layer("SHARED_NOTE");
 	print_add_layer("OBJE");
-	//-- RESN missing in new structure, RESN can be added to all level 1 tags
-	if ($tag && !in_array("RESN", $tags)) print_add_layer("RESN");
+	print_add_layer("RESN");
 	echo "<br /><input type=\"submit\" value=\"", i18n::translate('Save'), "\" /><br />";
 	echo "</form>";
 	break;
@@ -1064,7 +1063,7 @@ case 'addnewrepository':
 	?>
 		function check_form(frm) {
 			if (frm.NAME.value=="") {
-				alert('<?php echo i18n::translate('You must provide a Repository name'); ?>');
+				alert('<?php echo i18n::translate('You must provide a repository name'); ?>');
 				frm.NAME.focus();
 				return false;
 			}

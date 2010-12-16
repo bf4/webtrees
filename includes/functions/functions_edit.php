@@ -183,6 +183,18 @@ function edit_field_access_level($name, $selected='', $extra='') {
 	return select_edit_control($name, $ACCESS_LEVEL, null, $selected, $extra);
 }
 
+// Print an edit control for a RESN field
+function edit_field_resn($name, $selected='', $extra='') {
+	$RESN=array(
+		''            =>'',
+		//'none'        =>i18n::translate('Show to visitors'), // Not valid GEDCOM, but useful
+		'privacy'     =>i18n::translate('Show to members'),
+		'confidential'=>i18n::translate('Show to managers'),
+		'locked'      =>i18n::translate('Only managers can edit')
+	);
+	return select_edit_control($name, $RESN, null, $selected, $extra);
+}
+
 // Print an edit control for a contact method field
 function edit_field_contact($name, $selected='', $extra='') {
 	// Different ways to contact the users
@@ -277,13 +289,6 @@ function edit_field_default_tab($name, $selected='', $extra='') {
 		$tabs[$module->getName()]=$module->getTitle();
 	}
 	return select_edit_control($name, $tabs, null, $selected, $extra);
-}
-
-//-- this function creates a new unique connection
-//-- and adds it to the connections file
-//-- it returns the connection identifier
-function newConnection() {
-	return WT_SESSION_NAME."\t".Zend_Session::getId()."\n";
 }
 
 /**
@@ -1198,7 +1203,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	global $tags, $emptyfacts, $main_fact, $TEXT_DIRECTION;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $STATUS_CODES, $SPLIT_PLACES, $pid, $gender, $linkToID;
-	global $bdm, $RESN_CODES;
+	global $bdm;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $PREFER_LEVEL2_SOURCES;
 	global $action, $event_add;
 	global $CensDate, $MEDIA_TYPES;
@@ -1264,7 +1269,8 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	if (empty($linkToID)) $linkToID = $pid;
 
 	$subnamefacts = array("NPFX", "GIVN", "SPFX", "SURN", "NSFX", "_MARNM_SURN");
-	@list($level, $fact, $value) = explode(' ', $tag);
+	preg_match('/^(?:(\d+) ('.WT_REGEX_TAG.') ?(.*))/', $tag, $match);
+	list(, $level, $fact, $value) = $match;
 
 	// element name : used to POST data
 	if ($level==0) {
@@ -1511,34 +1517,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	} else if ($fact=="_WT_USER") {
 		echo edit_field_username($element_name, $value);
 	} else if ($fact=="RESN") {
-		?>
-		<script type="text/javascript">
-		<!--
-		function update_RESN_img(resn_val) {
-			document.getElementById("RESN_none").style.display="none";
-			document.getElementById("RESN_locked").style.display="none";
-			document.getElementById("RESN_privacy").style.display="none";
-			document.getElementById("RESN_confidential").style.display="none";
-			document.getElementById("RESN_"+resn_val).style.display="inline";
-			if (resn_val=='none') resn_val='';
-			document.getElementById("<?php echo $element_id; ?>").value=resn_val;
-		}
-		//-->
-		</script>
-		<?php
-		echo "<input type=\"hidden\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", $value, "\" />";
-		echo "<table><tr valign=\"top\">";
-		foreach ($RESN_CODES as $resn_val => $text) {
-			if ($resn_val=="none") $resnv=""; else $resnv=$resn_val;
-			echo "<td><input type=\"radio\" name=\"RESN_radio\" onclick=\"update_RESN_img('", $resn_val, "')\"";
-			echo " value=\"", $resnv, "\"";
-			if ($value==$resnv) echo " checked=\"checked\"";
-			echo " /><small>", $text, "</small>";
-			echo "<br />&nbsp;<img id=\"RESN_", $resn_val, "\" src=\"images/RESN_", $resn_val, ".gif\"  alt=\"", $text, "\" title=\"", $text, "\" border=\"0\"";
-			if ($value==$resnv) echo " style=\"display:inline\""; else echo " style=\"display:none\"";
-			echo " /></td>";
-		}
-		echo "</tr></table>";
+		echo edit_field_resn($element_name, $value);
 	} else if ($fact=="_PRIM" or $fact=="_THUM") {
 		echo "<select id=\"", $element_id, "\" name=\"", $element_name, "\" >";
 		echo "<option value=\"\"></option>";

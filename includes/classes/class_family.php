@@ -48,7 +48,7 @@ class Family extends GedcomRecord {
 	private $_isNotMarried = null;
 
 	// Create a Family object from either raw GEDCOM data or a database row
-	function __construct($data, $simple=true) {
+	function __construct($data) {
 		if (is_array($data)) {
 			// Construct from a row from the database
 			if ($data['f_husb']) {
@@ -203,12 +203,10 @@ class Family extends GedcomRecord {
 	 */
 	function getNumberOfChildren() {
 
-		if ($this->numChildren!==false) return $this->numChildren;
-
-		$this->numChildren = get_gedcom_value('NCHI', 1, $this->gedrec);
-		if ($this->numChildren!='') return $this->numChildren.'.';
-		$this->numChildren = preg_match_all('/1\s*CHIL\s*@(.*)@/', $this->gedrec, $smatch);
-		return $this->numChildren;
+		$nchi1=(int)get_gedcom_value('NCHI', 1, $this->gedrec);
+		$nchi2=(int)get_gedcom_value('NCHI', 2, $this->gedrec);
+		$nchi3=preg_match_all('/1\s*CHIL\s*@(.*)@/', $this->gedrec, $smatch);
+		return $this->numChildren=max($nchi1, $nchi2, $nchi3);
 	}
 
 	/**

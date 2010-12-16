@@ -48,7 +48,7 @@ define('WT_DEBUG_SQL',  false);
 define('WT_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
 
 // Required version of database tables/columns/indexes/etc.
-define('WT_SCHEMA_VERSION', 6);
+define('WT_SCHEMA_VERSION', 7);
 
 // Regular expressions for validating user input, etc.
 define('WT_REGEX_XREF',     '[A-Za-z0-9:_-]+');
@@ -101,10 +101,10 @@ define ('WT_GOOGLE_CHART_ENCODING', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 define('WT_AUTOCOMPLETE_LIMIT', 500);
 
 // Privacy constants
-define('WT_PRIV_PUBLIC',  2); // Allows non-authenticated public visitors to view the marked information
-define('WT_PRIV_USER',    1); // Allows authenticated users to access the marked information
-define('WT_PRIV_NONE',    0); // Allows admin users to access the marked information
-define('WT_PRIV_HIDE',   -1); // Hide the item to all users including the admin
+define('WT_PRIV_PUBLIC',  2); // Allows visitors to view the marked information
+define('WT_PRIV_USER',    1); // Allows members to access the marked information
+define('WT_PRIV_NONE',    0); // Allows managers to access the marked information
+define('WT_PRIV_HIDE',   -1); // Hide the item to all users
 
 // For performance, it is quicker to refer to files using absolute paths
 define ('WT_ROOT', realpath(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR);
@@ -296,6 +296,13 @@ $cfg=array(
 	'gc_maxlifetime'  => get_site_setting('SESSION_TIME'),
 	'cookie_path'     => WT_SCRIPT_PATH,
 );
+
+// Search engines don't send cookies, and so create a new session with every visit.
+// Make sure they always use the same one
+if ($SEARCH_SPIDER) {
+	Zend_Session::setId('search_engine_'.$_SERVER['REMOTE_ADDR']);
+}
+
 Zend_Session::start($cfg);
 
 // Register a session "namespace" to store session data.  This is better than
