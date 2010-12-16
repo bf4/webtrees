@@ -146,16 +146,16 @@ echo '<table>',
 			$index=0;
 			$search_engines=WT_DB::prepare($sql)->fetchAssoc();
 			foreach ($search_engines as $ip_address=>$ip_comment) {
-				echo '<tr><td class="button">';
-					echo '<button name="deleteSearch" value="', $ip_address, '" type="submit">', i18n::translate('Remove'), '</button>';
-				echo '</td><td><span dir="ltr"><input type="text" name="address', ++$index, '" size="16" value="', $ip_address, '" readonly /></span></td>';
-				echo '<td><input type="text" name="comment', ++$index, '" size="60" value="', $ip_comment, '" readonly /></td></tr>';
+				echo '<tr><td><span dir="ltr"><input type="text" name="address', ++$index, '" size="16" value="', $ip_address, '" readonly /></span></td>';
+				echo '<td><input type="text" name="comment', ++$index, '" size="60" value="', $ip_comment, '" readonly /></td><td class="button">';
+				echo '<button name="deleteSearch" value="', $ip_address, '" type="submit">', i18n::translate('Remove'), '</button>';
+				echo '</td></tr>';
 			}
-			echo '<tr><td class="button" valign="top"><input name="action" type="hidden" value="addSearch"/>';
-				echo '<input type="submit" value="', i18n::translate('Add'), '" />';
-			echo '</td><td valign="top"><span dir="ltr"><input type="text" id="txtAddIp" name="address" size="16"  value="', empty($errorSearch) ? '':$address, '" /></span></td>';
+			echo '<tr><td valign="top"><span dir="ltr"><input type="text" id="txtAddIp" name="address" size="16"  value="', empty($errorSearch) ? '':$address, '" /></span></td>';
 			echo '<td><input type="text" id="txtAddComment" name="comment" size="60"  value="" />';
-			echo '<br />', i18n::translate('You may enter a comment here.'), '</td></tr>';
+			echo '<br />', i18n::translate('You may enter a comment here.'), '</td><td class="button" valign="top"><input name="action" type="hidden" value="addSearch"/>';
+				echo '<input type="submit" value="', i18n::translate('Add'), '" />';
+			echo '</td></tr>';
 
 			if (!empty($errorSearch)) {
 				echo '<tr><td colspan="2"><span class="warning">';
@@ -184,16 +184,16 @@ echo '<table>',
 $sql="SELECT ip_address, comment FROM `##ip_address` WHERE category='banned' ORDER BY INET_ATON(ip_address)";
 $banned=WT_DB::prepare($sql)->fetchAssoc();
 foreach ($banned as $ip_address=>$ip_comment) {
-	echo '<tr><td class="button">';
+	echo '<tr><td><span dir="ltr"><input type="text" name="address', ++$index, '" size="16" value="', $ip_address, '" readonly /></span></td>';
+	echo '<td><input type="text" name="comment', ++$index, '" size="60" value="', $ip_comment, '" readonly /></td><td class="button">';
 	echo '<button name="deleteBanned" value="', $ip_address, '" type="submit">', i18n::translate('Remove'), '</button>';
-	echo '</td><td><span dir="ltr"><input type="text" name="address', ++$index, '" size="16" value="', $ip_address, '" readonly /></span></td>';
-	echo '<td><input type="text" name="comment', ++$index, '" size="60" value="', $ip_comment, '" readonly /></td></tr>';
+	echo '</td></tr>';
 }
-echo '<tr><td class="button" valign="top"><input name="action" type="hidden" value="addBanned"/>';
-echo '<input type="submit" value="', i18n::translate('Add'), '" />';
-echo '</td><td valign="top"><span dir="ltr"><input type="text" id="txtAddIp" name="address" size="16"  value="', empty($errorBanned) ? '':$address, '" /></span></td>';
+echo '<tr><td valign="top"><span dir="ltr"><input type="text" id="txtAddIp" name="address" size="16"  value="', empty($errorBanned) ? '':$address, '" /></span></td>';
 echo '<td><input type="text" id="txtAddComment" name="comment" size="60"  value="" />';
-echo '<br />', i18n::translate('You may enter a comment here.'), '</td></tr>';
+echo '<br />', i18n::translate('You may enter a comment here.'), '</td><td class="button" valign="top"><input name="action" type="hidden" value="addBanned"/>';
+echo '<input type="submit" value="', i18n::translate('Add'), '" />';
+echo '</td></tr>';
 
 if (!empty($errorBanned)) {
 	echo '<tr><td colspan="2"><span class="warning">';
