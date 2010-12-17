@@ -179,22 +179,48 @@ foreach ($gedcom_titles as $gedcom_title) {
 }
 echo '</div>'; // id=block3
 
-echo '<div id="block2">';
-echo '<h2>', i18n::translate('Family tree statistics'), '</h2>';
-foreach ($all_gedcoms as $gedcom) {
+echo
+	'<div id="block2">',
+	'<h2>', i18n::translate('Family tree statistics'), '</h2>',
+	'<div>';
+$n=0;
+foreach ($all_gedcoms as $ged_id=>$gedcom) {
 	$stats = new stats($gedcom);
+	if ($ged_id==WT_GED_ID) {
+		$accordian_element=$n;
+	}
+	++$n;
 	echo
-		'<table id="tree_stats">',
-		'<tr><td colspan="2"><h3>', $stats->gedcomTitle(), '</h3></td></tr>',
-		'<tr><th>', i18n::translate('Individuals'), '</th><td>', $stats->totalIndividuals(), '</td></tr>',
-		'<tr><th>', i18n::translate('Families'), '</th><td>', $stats->totalFamilies(), '</td></tr>',
-		'<tr><th>', i18n::translate('Sources'), '</th><td>', $stats->totalSources(), '</td></tr>',
-		'<tr><th>', i18n::translate('Repositories'), '</th><td>', $stats->totalRepositories(), '</td></tr>',
-		'<tr><th>', i18n::translate('Media objects'), '</th><td>', $stats->totalMedia(), '</td></tr>',
-		'<tr><th>', i18n::translate('Notes'), '</th><td>', $stats->totalNotes(), '</td></tr>',
-		'</table>';
+		'<h3>', $stats->gedcomTitle(), '</h3>',
+		'<div>',
+		'<table>',
+		'<tr><td><a href="indilist.php?ged=',  rawurlencode($gedcom), '">',
+		i18n::translate('Individuals'), '</a></td><td>', $stats->totalIndividuals(),
+		'</td></tr>',
+		'<tr><td><a href="famlist.php?ged=',   rawurlencode($gedcom), '">',
+		i18n::translate('Families'), '</a></td><td>', $stats->totalFamilies(),
+		'</td></tr>',
+		'<tr><td><a href="sourlist.php?ged=',  rawurlencode($gedcom), '">',
+		i18n::translate('Sources'), '</a></td><td>', $stats->totalSources(),
+		'</td></tr>',
+		'<tr><td><a href="repolist.php?ged=',  rawurlencode($gedcom), '">',
+		i18n::translate('Repositories'), '</a></td><td>', $stats->totalRepositories(),
+		'</td></tr>',
+		'<tr><td><a href="medialist.php?ged=', rawurlencode($gedcom), '">',
+		i18n::translate('Media objects'), '</a></td><td>', $stats->totalMedia(),
+		'</td></tr>',
+		'<tr><td><a href="notelist.php?ged=',  rawurlencode($gedcom), '">',
+		i18n::translate('Notes'), '</a></td><td>', $stats->totalNotes(),
+		'</td></tr>',
+		'</table>',
+		'</div>';
 }
-echo '</div>'; // id=block2
+echo
+	'</div>',
+	WT_JS_START,
+	'jQuery("#block2 div").accordion({active:',$accordian_element,'});',
+	WT_JS_END,
+	'</div>'; // id=block2
 
 echo '</div>'; // id=x
 	
