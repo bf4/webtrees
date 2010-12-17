@@ -39,6 +39,20 @@ echo
 	'<body id="body">',
 // Header
 	'<div id="admin_head" class="ui-widget-content">',
+	'<div id="title"><a href="administration.php">', i18n::translate('Administration'), '</a></div>',
+	'<div id="links">',
+	'<a href="index.php">', i18n::translate('My page'), '</a> | ',
+	logout_link(),
+	'<span>';
+	$language_menu=MenuBar::getLanguageMenu();
+		if ($language_menu) {
+			echo ' | ', $language_menu->getMenuAsList();
+		}
+	echo '</span>';
+	if (WT_USER_CAN_ACCEPT && exists_pending_change()) {
+	echo ' | <li><a href="javascript:;" onclick="window.open(\'edit_changes.php\',\'_blank\',\'width=600,height=500,resizable=1,scrollbars=1\'); return false;" style="color:red;">', i18n::translate('Pending changes'), '</a></li>';
+	}
+	echo '</div>',
 	'<div id="info">',
 	WT_WEBTREES, ' ', WT_VERSION_TEXT,
 	'<br />',
@@ -46,7 +60,6 @@ echo
 	'<br />',
 	i18n::translate('Current User Time:'), ' ', format_timestamp(client_time()),
 	'</div>',
-	'<div><a href="administration.php" id="title">', i18n::translate('Administration'), '</a></div>',
 	'</div>',
 // Side menu 
 	'<div id="admin_menu" class="ui-widget-content">',
