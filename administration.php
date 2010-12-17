@@ -161,14 +161,13 @@ echo
 	'<h2>', i18n::translate('Recent changes'), '</h2>',
 	'<div id="changes">';
 $n=0;
-$gedcom_titles=get_gedcom_titles();
-foreach (get_gedcom_titles() as $gedcom_title) {
+foreach ($all_gedcoms as $ged_id=>$gedcom) {
 	if ($ged_id==WT_GED_ID) {
 		$accordian_element=$n;
 	}
 	++$n;
 	echo 
-		'<h3>', $gedcom_title->gedcom_title, '</h3>',
+		'<h3>', get_gedcom_setting($ged_id, 'title'), '</h3>',
 		'<div>',
 		'<table>',
 		'<tr><td>&nbsp;</td><td><u>', i18n::translate('Today'), '</u></td><td><u>', i18n::translate('This week'), '</u></td><td><u>', i18n::translate('This month'), '</u></td>',
