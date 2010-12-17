@@ -185,7 +185,7 @@ foreach (get_gedcom_titles() as $gedcom_title) {
 echo
 	'</div>', // id=changes
 	WT_JS_START,
-	'jQuery("#changes").accordion({active:',$accordian_element,'});',
+	'jQuery("#changes").accordion({active:',$accordian_element,', icons:false});',
 	WT_JS_END,
 	'</div>'; // id=block3
 
@@ -228,7 +228,7 @@ foreach ($all_gedcoms as $ged_id=>$gedcom) {
 echo
 	'</div>', // id=tree_stats
 	WT_JS_START,
-	'jQuery("#tree_stats").accordion({active:',$accordian_element,'});',
+	'jQuery("#tree_stats").accordion({active:',$accordian_element,', icons:false});',
 	WT_JS_END,
 	'</div>'; // id=block2
 
