@@ -101,26 +101,6 @@ if (WT_USER_IS_ADMIN) {
 		'</a></li>',
 		'</ul></li>',
 		'<li><a ', (WT_SCRIPT_NAME=="#" ? 'class="current" ' : ''), 'href="administration.php">',
-		i18n::translate('Modules'),
-		'</a></li>',
-		'<li><ul>',
-		'<li><a ', (WT_SCRIPT_NAME=="#" ? 'class="current" ' : ''), 'href="administration.php">',
-		i18n::translate('Tabs'),
-		'</a></li>',
-		'<li><a ', (WT_SCRIPT_NAME=="#" ? 'class="current" ' : ''), 'href="administration.php">',
-		i18n::translate('Sidebar'),
-		'</a></li>',
-		'<li><a ', (WT_SCRIPT_NAME=="#" ? 'class="current" ' : ''), 'href="administration.php">',
-		i18n::translate('Menus'),
-		'</a></li>';
-	foreach (WT_Module::getInstalledModules() as $module) {
-		if ($module instanceof WT_Module_Config) {
-			echo '<li><i><a href="', $module->getConfigLink(), '">', $module->getTitle(), '</a></i></li>';
-		}
-	}
-	echo
-		'</ul></li>',
-		'<li><a ', (WT_SCRIPT_NAME=="#" ? 'class="current" ' : ''), 'href="administration.php">',
 		i18n::translate('Media'),
 		'</a></li>',
 		'<li><ul>',
@@ -133,7 +113,26 @@ if (WT_USER_IS_ADMIN) {
 		'<li><a ', (WT_SCRIPT_NAME=="#" ? 'class="current" ' : ''), 'href="administration.php">',
 		i18n::translate('Media firewall'),
 		'</a><li>',
+		'</ul></li>',
+		'<li><a ', (WT_SCRIPT_NAME=="#" ? 'class="current" ' : ''), 'href="administration.php">',
+		i18n::translate('Modules'),
+		'</a></li>',
+		'<li><ul>',
+		'<li><a ', (WT_SCRIPT_NAME=="#" ? 'class="current" ' : ''), 'href="administration.php">',
+		i18n::translate('Tabs'),
+		'</a></li>',
+		'<li><a ', (WT_SCRIPT_NAME=="#" ? 'class="current" ' : ''), 'href="administration.php">',
+		i18n::translate('Sidebar'),
+		'</a></li>',
+		'<li><a ', (WT_SCRIPT_NAME=="#" ? 'class="current" ' : ''), 'href="administration.php">',
+		i18n::translate('Menus'),
+		'</a></li>',
 		'</ul></li>';
+	foreach (WT_Module::getInstalledModules() as $module) {
+		if ($module instanceof WT_Module_Config) {
+			echo '<li><i><a href="', $module->getConfigLink(), '">', $module->getTitle(), '</a></i></li>';
+		}
+	}
 }
 echo
 	'</ul>',
