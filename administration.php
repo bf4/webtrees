@@ -156,17 +156,21 @@ echo
 	'</table>';
 echo '</div>'; // id=block2
 
-echo '<div id="block3">',
-	'<h2>', i18n::translate('Recent changes'), '</h2>';
-
+echo
+	'<div id="block3">',
+	'<h2>', i18n::translate('Recent changes'), '</h2>',
+	'<div id="changes">';
+$n=0;
 $gedcom_titles=get_gedcom_titles();
-foreach ($gedcom_titles as $gedcom_title) {
-//	echo '<table id="tree_stats"><tr><th>', $gedcom_title->gedcom_title, '</th></tr><tr><td>';
-//	print_changes_table(get_recent_changes(WT_CLIENT_JD-7));
-//	echo '</td></tr></table>';
+foreach (get_gedcom_titles() as $gedcom_title) {
+	if ($ged_id==WT_GED_ID) {
+		$accordian_element=$n;
+	}
+	++$n;
 	echo 
-		'<table id="changes">',
-		'<tr><td colspan="4"><h3>', $gedcom_title->gedcom_title, '</h3></td></tr>',
+		'<h3>', $gedcom_title->gedcom_title, '</h3>',
+		'<div>',
+		'<table>',
 		'<tr><td>&nbsp;</td><td><u>', i18n::translate('Today'), '</u></td><td><u>', i18n::translate('This week'), '</u></td><td><u>', i18n::translate('This month'), '</u></td>',
 		'<tr><th>', i18n::translate('Individuals'), '</th><td>10</td><td>10</td><td>10</td></tr>',
 		'<tr><th>', i18n::translate('Families'), '</th><td>5</td><td>10</td><td>10</td></tr>',
@@ -174,15 +178,21 @@ foreach ($gedcom_titles as $gedcom_title) {
 		'<tr><th>', i18n::translate('Repositories'), '</th><td>1</td><td>10</td><td>10</td></tr>',
 		'<tr><th>', i18n::translate('Media objects'), '</th><td>13</td><td>10</td><td>10</td></tr>',
 		'<tr><th>', i18n::translate('Notes'), '</th><td>0</td><td>10</td><td>10</td></tr>',
-		'</table>';
+		'</table>',
+		'</div>';
 	
 }
-echo '</div>'; // id=block3
+echo
+	'</div>', // id=changes
+	WT_JS_START,
+	'jQuery("#changes").accordion({active:',$accordian_element,'});',
+	WT_JS_END,
+	'</div>'; // id=block3
 
 echo
 	'<div id="block2">',
 	'<h2>', i18n::translate('Family tree statistics'), '</h2>',
-	'<div>';
+	'<div id="tree_stats">';
 $n=0;
 foreach ($all_gedcoms as $ged_id=>$gedcom) {
 	$stats = new stats($gedcom);
@@ -216,9 +226,9 @@ foreach ($all_gedcoms as $ged_id=>$gedcom) {
 		'</div>';
 }
 echo
-	'</div>',
+	'</div>', // id=tree_stats
 	WT_JS_START,
-	'jQuery("#block2 div").accordion({active:',$accordian_element,'});',
+	'jQuery("#tree_stats").accordion({active:',$accordian_element,'});',
 	WT_JS_END,
 	'</div>'; // id=block2
 
