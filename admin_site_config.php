@@ -40,7 +40,7 @@ print_header(i18n::translate('Server configuration'));
 echo
 	// Display the config items inline, rather than using a form.
 	'<table class="site_config"><tr>',
-	'<th>', i18n::translate('Server configuration'), '</th><th>', i18n::translate('Click to edit'), '</th>',
+	'<th>', i18n::translate('Server configuration'), '</th><th>&nbsp;</th>',
 	'</tr><tr>',
 	'<td>', i18n::translate('Data file directory'), help_link('INDEX_DIRECTORY'), '</td>',
 	'<td>', edit_field_inline('site_setting-INDEX_DIRECTORY', get_site_setting('INDEX_DIRECTORY')), '</td>',
@@ -78,7 +78,7 @@ echo
 	'<td>', i18n::translate('Login URL'), help_link('LOGIN_URL'), '</td>',
 	'<td>', edit_field_inline('site_setting-LOGIN_URL', get_site_setting('LOGIN_URL')), '</td>',
 	'</tr><tr>',
-	'<th>', i18n::translate('SMTP mail configuration'), '</th><th>', i18n::translate('Click to edit'), '</th>',
+	'<th>', i18n::translate('SMTP mail configuration'), '</th><th>&nbsp;</th>',
 	'</tr><tr>',
 	'<td>', i18n::translate('Messages'), help_link('SMTP_ACTIVE'), '</td>',
 	'<td>', select_edit_control_inline('site_setting-SMTP_ACTIVE', array('internal'=>i18n::translate('Use PHP mail to send messages'), 'external'=>i18n::translate('Use SMTP to send messages'), 'disabled'=>i18n::translate('Do not send messages')), null, get_site_setting('SMTP_ACTIVE')), '</td>',

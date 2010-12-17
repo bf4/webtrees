@@ -298,7 +298,7 @@ if (WT_USER_IS_ADMIN) {
 		$INDEX_DIRECTORY,
 		'<input type="hidden" name="action" value="add_ged" />',
 		'<select name="ged_name" onchange="document.addform.submit();" />',
-		'<option>', i18n::translate('Select a file'), '</option>',
+		'<option>', i18n::translate('&lt;select&gt;'), '</option>',
 	$d=opendir($INDEX_DIRECTORY);
 	$files=false;
 	while (($f=readdir($d))!==false) {

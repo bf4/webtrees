@@ -29,6 +29,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'module.php');
+define('WT_THEME_DIR', 'themes/_administration/'); // OOPS! We don't always want this.  How can we decide?
 require './includes/session.php';
 
 $all_modules=WT_Module::getActiveModules();
