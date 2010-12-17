@@ -1,33 +1,27 @@
 <?php
-/**
- * Module Administration User Interface.
- *
- * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
- * Copyright (C) 2002 to 2009  PGV Development Team
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package webtrees
- * @subpackage Module
- * @version $Id$
- */
+// Module Administration User Interface.
+//
+// webtrees: Web based Family History software
+// Copyright (C) 2010 webtrees development team.
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// @version $Id$
 
-define('WT_SCRIPT_NAME', 'module_admin.php');
+define('WT_SCRIPT_NAME', 'admin_module_blocks.php');
+define('WT_THEME_DIR', 'themes/_administration/');
 
 require 'includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
@@ -297,9 +291,6 @@ print_header(i18n::translate('Module administration'));
 </script>
 
 <div align="center">
-	<p><?php echo "<h2>".i18n::translate('Module administration')."</h2>"; ?></p>
-	<p><?php echo i18n::translate('Below is the list of all the modules installed in this instance of webtrees.  Modules are installed by placing them in the <i>modules</i> directory.  Here you can set the access level per GEDCOM for each module.  If a module includes tabs for the individual page or menus for the menu bar, you can also set the access level and order of each of them.'); ?></p>
-	<p><input TYPE="button" VALUE="<?php echo i18n::translate('Return to Administration page'); ?>" onclick="javascript:window.location='admin.php'" /></p>
 	<div id="tabs">
 		<form method="post" action="module_admin.php">
 			<input type="hidden" name="action" value="update_mods" />
@@ -320,7 +311,6 @@ print_header(i18n::translate('Module administration'));
 					<thead>
 						<tr>
 						<th><?php echo i18n::translate('Enabled'); ?></th>
-						<th><?php echo i18n::translate('Configuration'); ?></th>
 						<th><?php echo i18n::translate('Module Name'); ?></th>
 						<th><?php echo i18n::translate('Description'); ?></th>
 						<th><?php echo i18n::translate('Menu'); ?></th>
@@ -338,8 +328,8 @@ print_header(i18n::translate('Module administration'));
 							$status=WT_DB::prepare(
 								"SELECT status FROM `##module` WHERE module_name=?"
 							)->execute(array($module->getName()))->fetchOne();
-							echo '<tr><td>', two_state_checkbox('status-'.$module->getName(), $status=='enabled'), '</td><td>';
-							if ($module instanceof WT_Module_Config) echo '<a href="', $module->getConfigLink(), '"><img class="adminicon" src="', $WT_IMAGES["admin"], '" border="0" alt="', $module->getName(), '" /></a>'; ?></td>
+							echo '<tr><td>', two_state_checkbox('status-'.$module->getName(), $status=='enabled'), '</td>';
+							?>
 							<td><?php echo $module->getTitle(); ?></td>
 							<td><?php echo $module->getDescription(); ?></td>
 							<td><?php if ($module instanceof WT_Module_Menu) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
