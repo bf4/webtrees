@@ -156,12 +156,26 @@ echo
 	'</table>';
 echo '</div>'; // id=block2
 
-echo '<div id="block3">';
+echo '<div id="block3">',
+	'<h2>', i18n::translate('Recent changes'), '</h2>';
+
 $gedcom_titles=get_gedcom_titles();
 foreach ($gedcom_titles as $gedcom_title) {
-	echo '<table id="tree_stats"><tr><th>', $gedcom_title->gedcom_title, '</th></tr><tr><td>';
-	print_changes_table(get_recent_changes(WT_CLIENT_JD-7));
-	echo '</td></tr></table>';
+//	echo '<table id="tree_stats"><tr><th>', $gedcom_title->gedcom_title, '</th></tr><tr><td>';
+//	print_changes_table(get_recent_changes(WT_CLIENT_JD-7));
+//	echo '</td></tr></table>';
+	echo 
+		'<table id="changes">',
+		'<tr><td colspan="4"><h3>', $gedcom_title->gedcom_title, '</h3></td></tr>',
+		'<tr><td>&nbsp;</td><td><u>', i18n::translate('Today'), '</u></td><td><u>', i18n::translate('This week'), '</u></td><td><u>', i18n::translate('This month'), '</u></td>',
+		'<tr><th>', i18n::translate('Individuals'), '</th><td>10</td><td>10</td><td>10</td></tr>',
+		'<tr><th>', i18n::translate('Families'), '</th><td>5</td><td>10</td><td>10</td></tr>',
+		'<tr><th>', i18n::translate('Sources'), '</th><td>1</td><td>10</td><td>10</td></tr>',
+		'<tr><th>', i18n::translate('Repositories'), '</th><td>1</td><td>10</td><td>10</td></tr>',
+		'<tr><th>', i18n::translate('Media objects'), '</th><td>13</td><td>10</td><td>10</td></tr>',
+		'<tr><th>', i18n::translate('Notes'), '</th><td>0</td><td>10</td><td>10</td></tr>',
+		'</table>';
+	
 }
 echo '</div>'; // id=block3
 
@@ -171,13 +185,13 @@ foreach ($all_gedcoms as $gedcom) {
 	$stats = new stats($gedcom);
 	echo
 		'<table id="tree_stats">',
-		'<tr><th colspan="3">', $stats->gedcomTitle(), '</th></tr>',
-		'<tr><td width="20px">&nbsp;</td><td>', i18n::translate('Individuals'), '</td><td>', $stats->totalIndividuals(), '</td></tr>',
-		'<tr><td>&nbsp;</td><td>', i18n::translate('Families'), '</td><td>', $stats->totalFamilies(), '</td></tr>',
-		'<tr><td>&nbsp;</td><td>', i18n::translate('Sources'), '</td><td>', $stats->totalSources(), '</td></tr>',
-		'<tr><td>&nbsp;</td><td>', i18n::translate('Repositories'), '</td><td>', $stats->totalRepositories(), '</td></tr>',
-		'<tr><td>&nbsp;</td><td>', i18n::translate('Media objects'), '</td><td>', $stats->totalMedia(), '</td></tr>',
-		'<tr><td>&nbsp;</td><td>', i18n::translate('Notes'), '</td><td>', $stats->totalNotes(), '</td></tr>',
+		'<tr><td colspan="2"><h3>', $stats->gedcomTitle(), '</h3></td></tr>',
+		'<tr><th>', i18n::translate('Individuals'), '</th><td>', $stats->totalIndividuals(), '</td></tr>',
+		'<tr><th>', i18n::translate('Families'), '</th><td>', $stats->totalFamilies(), '</td></tr>',
+		'<tr><th>', i18n::translate('Sources'), '</th><td>', $stats->totalSources(), '</td></tr>',
+		'<tr><th>', i18n::translate('Repositories'), '</th><td>', $stats->totalRepositories(), '</td></tr>',
+		'<tr><th>', i18n::translate('Media objects'), '</th><td>', $stats->totalMedia(), '</td></tr>',
+		'<tr><th>', i18n::translate('Notes'), '</th><td>', $stats->totalNotes(), '</td></tr>',
 		'</table>';
 }
 echo '</div>'; // id=block2

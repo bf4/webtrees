@@ -76,21 +76,15 @@ h4 {margin: 5px 3px; font-weight:normal; font-style:italic;}
 /* All DASHBOARD BLOCKS */
 #about, #block1 , #block2, #block3{background:OldLace; padding:5px; border:1px inset #D9D6C4;}
 #about h2, #block1 h2, #block2 h2, #block3 h2 {margin:0;}
-
-/* ABOUT webtrees */
-#about {margin-bottom:10px;}
-
-/*TREE stats */
-#tree_stats th {text-align:left; }
-#tree_stats td {width:20px;}
-#tree_stats td+td {width: 180px}
-#tree_stats td+td+td {text-align:right; width: 30px}
-
-/*INFO BLOCKS*/
+#tree_stats h3, #changes h3  {text-align:left; }
 #block1, #block2, #block3 {height:480px; overflow:auto; width:31%;}
 #block1  {float:left;}
 #block2  {margin: 0 auto;}
 #block3  {float:right;}
+#about {margin-bottom:10px;}
+#tree_stats th, #changes th {padding: 0 10px 0 20px; text-align:left; white-space:nowrap;}
+#tree_stats td, #changes td {padding-right:10px; width:30px; text-align:right; white-space:nowrap;}
+
 
 /*SITE CONFIG */
 .editable {width:100%; display:block}
