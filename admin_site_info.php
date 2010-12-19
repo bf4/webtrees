@@ -28,7 +28,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'admin_site_info.php');
-define('WT_THEME_DIR', 'themes/_administration/');
+
 require './includes/session.php';
 
 if (!WT_USER_GEDCOM_ADMIN) {

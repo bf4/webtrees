@@ -23,7 +23,7 @@
  */
 
 define('WT_SCRIPT_NAME', 'admin_trees_manage.php');
-define('WT_THEME_DIR', 'themes/_administration/');
+
 require './includes/session.php';
 
 // The gedcom admin page is for managers only!

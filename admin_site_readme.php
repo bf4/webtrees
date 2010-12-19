@@ -22,8 +22,8 @@
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'themes/_administration/readme.php');
-define('WT_THEME_DIR', 'themes/_administration/');
+define('WT_SCRIPT_NAME', 'admin_site_readme.php');
+
 require './includes/session.php';
 
 function get_tag($txt,$tag){

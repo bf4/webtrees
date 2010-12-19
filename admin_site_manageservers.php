@@ -33,7 +33,7 @@
 */
 
 define('WT_SCRIPT_NAME', 'admin_site_manageservers.php');
-define('WT_THEME_DIR', 'themes/_administration/');
+
 require './includes/session.php';
 require_once WT_ROOT.'includes/functions/functions.php';
 require_once WT_ROOT.'includes/functions/functions_edit.php';

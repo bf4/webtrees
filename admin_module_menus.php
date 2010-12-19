@@ -21,7 +21,6 @@
 // @version $Id$
 
 define('WT_SCRIPT_NAME', 'admin_module_menus.php');
-define('WT_THEME_DIR', 'themes/_administration/');
 
 require 'includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
