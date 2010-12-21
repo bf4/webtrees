@@ -62,7 +62,7 @@ h4 {margin: 5px 3px; font-weight:normal; font-style:italic;}
 #links li:hover > ul {display:block;}
 
 /* SIDE and CONTENT panels */
-#admin_menu, #admin_content {min-height:660px;}
+#admin_menu, #admin_content {min-height:720px;}
 
 /* SIDE MENU */
 #admin_menu {padding:10px 0 10px 5px; width:200px; float:left; position:absolute; color:#2E6E9E;}
@@ -83,7 +83,7 @@ h4 {margin: 5px 3px; font-weight:normal; font-style:italic;}
 #about, #block1 , #block2, #block3{background:OldLace; padding:5px; border:1px inset #D9D6C4;}
 #about h2, #block1 h2, #block2 h2, #block3 h2 {margin:0;}
 #tree_stats h3, #changes h3  {text-align:left; }
-#block1, #block2, #block3 {height:480px; overflow:auto; width:31%;}
+#block1, #block2, #block3 {height:540px; overflow:auto; width:31%;}
 #block1  {float:left;}
 #block2  {margin: 0 auto;}
 #block3  {float:right;}
