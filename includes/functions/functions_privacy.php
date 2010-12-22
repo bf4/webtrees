@@ -315,7 +315,7 @@ function canDisplayRecord($ged_id, $gedrec) {
 				}
 			}
 		}
-		return true;
+		return $cache[$cache_key]=true;
 	case 'OBJE':
 		// Hide media objects that are linked to private records
 		foreach (get_media_relations($xref) as $gid=>$type2) {
@@ -344,7 +344,7 @@ function canDisplayRecord($ged_id, $gedrec) {
 		}
 	}
 
-	// Level 1 tags (except INDI and FAM) can be controlled by global tag settings
+	// Level 0 tags (except INDI and FAM) can be controlled by global tag settings
 	if (isset($global_facts[$type])) {
 		return $cache[$cache_key]=($global_facts[$type]>=$pgv_USER_ACCESS_LEVEL);
 	}
