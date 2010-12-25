@@ -1669,6 +1669,5 @@ print_header(i18n::translate('Configure family tree'));
 	</tr>
 </table>
 </form>
-<br />
 <?php
 print_footer();
