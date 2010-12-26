@@ -28,6 +28,7 @@ define('WT_SCRIPT_NAME', 'administration.php');
 
 require './includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
+//global $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX;
 
 print_header(i18n::translate('Administration'));
 
@@ -171,15 +172,14 @@ foreach ($all_gedcoms as $ged_id=>$gedcom) {
 		'<div>',
 		'<table>',
 		'<tr><td>&nbsp;</td><td><u>', i18n::translate('Today'), '</u></td><td><u>', i18n::translate('This week'), '</u></td><td><u>', i18n::translate('This month'), '</u></td>',
-		'<tr><th>', i18n::translate('Individuals'), '</th><td>10</td><td>10</td><td>10</td></tr>',
-		'<tr><th>', i18n::translate('Families'), '</th><td>5</td><td>10</td><td>10</td></tr>',
-		'<tr><th>', i18n::translate('Sources'), '</th><td>1</td><td>10</td><td>10</td></tr>',
-		'<tr><th>', i18n::translate('Repositories'), '</th><td>1</td><td>10</td><td>10</td></tr>',
-		'<tr><th>', i18n::translate('Media objects'), '</th><td>13</td><td>10</td><td>10</td></tr>',
-		'<tr><th>', i18n::translate('Notes'), '</th><td>0</td><td>10</td><td>10</td></tr>',
+		'<tr><th>', i18n::translate('Individuals'), '</th><td>', count_changes_today($GEDCOM_ID_PREFIX, $ged_id), '</td><td>', count_changes_week($GEDCOM_ID_PREFIX, $ged_id), '</td><td>', count_changes_month($GEDCOM_ID_PREFIX, $ged_id), '</td></tr>',
+		'<tr><th>', i18n::translate('Families'), '</th><td>', count_changes_today($FAM_ID_PREFIX, $ged_id), '</td><td>', count_changes_week($FAM_ID_PREFIX, $ged_id), '</td><td>', count_changes_month($FAM_ID_PREFIX, $ged_id), '</td></tr>',
+		'<tr><th>', i18n::translate('Sources'), '</th><td>', count_changes_today($SOURCE_ID_PREFIX, $ged_id), '</td><td>', count_changes_week($SOURCE_ID_PREFIX, $ged_id), '</td><td>', count_changes_month($SOURCE_ID_PREFIX, $ged_id), '</td></tr>',
+		'<tr><th>', i18n::translate('Repositories'), '</th><td>', count_changes_today($REPO_ID_PREFIX, $ged_id), '</td><td>', count_changes_week($REPO_ID_PREFIX, $ged_id), '</td><td>', count_changes_month($REPO_ID_PREFIX, $ged_id), '</td></tr>',
+		'<tr><th>', i18n::translate('Media objects'), '</th><td>', count_changes_today($MEDIA_ID_PREFIX, $ged_id), '</td><td>', count_changes_week($MEDIA_ID_PREFIX, $ged_id), '</td><td>', count_changes_month($MEDIA_ID_PREFIX, $ged_id), '</td></tr>',
+		'<tr><th>', i18n::translate('Notes'), '</th><td>', count_changes_today($NOTE_ID_PREFIX, $ged_id), '</td><td>', count_changes_week($NOTE_ID_PREFIX, $ged_id), '</td><td>', count_changes_month($NOTE_ID_PREFIX, $ged_id), '</td></tr>',
 		'</table>',
 		'</div>';
-	
 }
 echo
 	'</div>', // id=changes
