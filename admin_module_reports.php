@@ -131,45 +131,43 @@ print_header(i18n::translate('Module administration'));
 	<div id="tabs">
 		<form method="post" action="<?php echo WT_SCRIPT_NAME; ?>">
 			<input type="hidden" name="action" value="update_mods" />
-			<div id="reports_tab">
-				<table id="reports_table" class="list_table">
-					<thead>
+			<table id="reports_table" class="list_table">
+				<thead>
+					<tr>
+					<th class="list_label"><?php echo i18n::translate('Module Name'); ?></th>
+					<th class="list_label"><?php echo i18n::translate('Access level'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$order = 1;
+					foreach (WT_Module::getInstalledReports() as $module) { ?>
 						<tr>
-						<th class="list_label"><?php echo i18n::translate('Module Name'); ?></th>
-						<th class="list_label"><?php echo i18n::translate('Access level'); ?></th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php
-						$order = 1;
-						foreach (WT_Module::getInstalledReports() as $module) { ?>
-							<tr>
-								<td class="list_value"><?php echo $module->getTitle(); ?></td>
-								<td class="list_value_wrap">
-									<table>
-										<?php
-										foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-											$varname = 'reportaccess-'.$module->getName().'-'.$ged_id;
-											$access_level=WT_DB::prepare(
-												"SELECT access_level FROM `##module_privacy` WHERE gedcom_id=? AND module_name=? AND component='report'"
-											)->execute(array($ged_id, $module->getName()))->fetchOne();
-											if ($access_level===null) {
-												$access_level=$module->defaultAccessLevel();
-											}
-											echo '<tr><td>', htmlspecialchars($ged_name), '</td><td>';
-											echo edit_field_access_level($varname, $access_level);
+							<td class="list_value"><?php echo $module->getTitle(); ?></td>
+							<td class="list_value_wrap">
+								<table>
+									<?php
+									foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+										$varname = 'reportaccess-'.$module->getName().'-'.$ged_id;
+										$access_level=WT_DB::prepare(
+											"SELECT access_level FROM `##module_privacy` WHERE gedcom_id=? AND module_name=? AND component='report'"
+										)->execute(array($ged_id, $module->getName()))->fetchOne();
+										if ($access_level===null) {
+											$access_level=$module->defaultAccessLevel();
 										}
-										?>
-									</table>
-								</td>
-							</tr>
-							<?php
-							$order++;
-							}
-							?>
-					</tbody>
-				</table>
-			</div>
+										echo '<tr><td>', htmlspecialchars($ged_name), '</td><td>';
+										echo edit_field_access_level($varname, $access_level);
+									}
+									?>
+								</table>
+							</td>
+						</tr>
+						<?php
+						$order++;
+						}
+						?>
+				</tbody>
+			</table>
 			<input type="submit" value="<?php echo i18n::translate('Save'); ?>" />
 		</form>
 	</div>

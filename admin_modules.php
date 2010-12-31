@@ -182,62 +182,60 @@ print_header(i18n::translate('Module administration'));
 	<div id="tabs">
 	<form method="post" action="<?php echo WT_SCRIPT_NAME; ?>">
 			<input type="hidden" name="action" value="update_mods" />
-			<div id="installed_tab">
-				<table id="installed_table" class="tablesorter" border="0" cellpadding="0" cellspacing="1">
-					<thead>
-						<tr>
-						<th><?php echo i18n::translate('Enabled'); ?></th>
-						<th><?php echo i18n::translate('Module Name'); ?></th>
-						<th><?php echo i18n::translate('Description'); ?></th>
-						<th><?php echo i18n::translate('Menu'); ?></th>
-						<th><?php echo i18n::translate('Tab'); ?></th>
-						<th><?php echo i18n::translate('Sidebar'); ?></th>
-						<th><?php echo i18n::translate('Block'); ?></th>
-						<th><?php echo i18n::translate('Chart'); ?></th>
-						<th><?php echo i18n::translate('Report'); ?></th>
-						<th><?php echo i18n::translate('Theme'); ?></th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php
-						foreach (WT_Module::getInstalledModules() as $module) {
-							$status=WT_DB::prepare(
-								"SELECT status FROM `##module` WHERE module_name=?"
-							)->execute(array($module->getName()))->fetchOne();
-							echo '<tr><td>', two_state_checkbox('status-'.$module->getName(), $status=='enabled'), '</td>';
-							?>
-							<td><?php echo $module->getTitle(); ?></td>
-							<td><?php echo $module->getDescription(); ?></td>
-							<td><?php if ($module instanceof WT_Module_Menu) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
-							<td><?php if ($module instanceof WT_Module_Tab) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
-							<td><?php if ($module instanceof WT_Module_Sidebar) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
-							<td><?php if ($module instanceof WT_Module_Block) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
-							<td><?php if ($module instanceof WT_Module_Chart) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
-							<td><?php if ($module instanceof WT_Module_Report) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
-							<td><?php if ($module instanceof WT_Module_Theme) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
-							</tr>
-						<?php
-						}
+			<table id="installed_table" class="tablesorter" border="0" cellpadding="0" cellspacing="1">
+				<thead>
+					<tr>
+					<th><?php echo i18n::translate('Enabled'); ?></th>
+					<th><?php echo i18n::translate('Module Name'); ?></th>
+					<th><?php echo i18n::translate('Description'); ?></th>
+					<th><?php echo i18n::translate('Menu'); ?></th>
+					<th><?php echo i18n::translate('Tab'); ?></th>
+					<th><?php echo i18n::translate('Sidebar'); ?></th>
+					<th><?php echo i18n::translate('Block'); ?></th>
+					<th><?php echo i18n::translate('Chart'); ?></th>
+					<th><?php echo i18n::translate('Report'); ?></th>
+					<th><?php echo i18n::translate('Theme'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					foreach (WT_Module::getInstalledModules() as $module) {
+						$status=WT_DB::prepare(
+							"SELECT status FROM `##module` WHERE module_name=?"
+						)->execute(array($module->getName()))->fetchOne();
+						echo '<tr><td>', two_state_checkbox('status-'.$module->getName(), $status=='enabled'), '</td>';
 						?>
-					</tbody>
-				</table>
-				<div id="pager" class="pager">
-					<!--<form>-->
-						<img src="<?php echo WT_THEME_DIR; ?>images/jquery/first.png" class="first"/>
-						<img src="<?php echo WT_THEME_DIR; ?>images/jquery/prev.png" class="prev"/>
-						<input type="text" class="pagedisplay"/>
-						<img src="<?php echo WT_THEME_DIR; ?>images/jquery/next.png" class="next"/>
-						<img src="<?php echo WT_THEME_DIR; ?>images/jquery/last.png" class="last"/>
-						<select class="pagesize">
-							<option value="10">10</option>
-							<option selected="selected"  value="15">15</option>
-							<option value="30">30</option>
-							<option value="40">40</option>
-							<option  value="50">50</option>
-							<option  value="100">100</option>
-						</select>
-					<!--</form>-->
-				</div>
+						<td><?php echo $module->getTitle(); ?></td>
+						<td><?php echo $module->getDescription(); ?></td>
+						<td><?php if ($module instanceof WT_Module_Menu) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
+						<td><?php if ($module instanceof WT_Module_Tab) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
+						<td><?php if ($module instanceof WT_Module_Sidebar) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
+						<td><?php if ($module instanceof WT_Module_Block) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
+						<td><?php if ($module instanceof WT_Module_Chart) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
+						<td><?php if ($module instanceof WT_Module_Report) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
+						<td><?php if ($module instanceof WT_Module_Theme) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
+						</tr>
+					<?php
+					}
+					?>
+				</tbody>
+			</table>
+			<div id="pager" class="pager">
+				<!--<form>-->
+					<img src="<?php echo WT_THEME_DIR; ?>images/jquery/first.png" class="first"/>
+					<img src="<?php echo WT_THEME_DIR; ?>images/jquery/prev.png" class="prev"/>
+					<input type="text" class="pagedisplay"/>
+					<img src="<?php echo WT_THEME_DIR; ?>images/jquery/next.png" class="next"/>
+					<img src="<?php echo WT_THEME_DIR; ?>images/jquery/last.png" class="last"/>
+					<select class="pagesize">
+						<option value="10">10</option>
+						<option selected="selected"  value="15">15</option>
+						<option value="30">30</option>
+						<option value="40">40</option>
+						<option  value="50">50</option>
+						<option  value="100">100</option>
+					</select>
+				<!--</form>-->
 			</div>
 			<input type="submit" value="<?php echo i18n::translate('Save'); ?>" />
 		</form>
