@@ -39,12 +39,13 @@ $earliest=WT_DB::prepare("SELECT DATE(MIN(log_time)) FROM `##log`")->execute(arr
 $latest  =WT_DB::prepare("SELECT DATE(MAX(log_time)) FROM `##log`")->execute(array())->fetchOne();
 
 // Filtering
-$from=safe_GET('from', '\d\d\d\d-\d\d-\d\d', $earliest);
-$to  =safe_GET('to',   '\d\d\d\d-\d\d-\d\d', $latest);
-$type=safe_GET('type', array('auth','change','config','debug','edit','error','media','search'));
-$text=safe_GET('text');
-$ip  =safe_GET('ip');
-$user=safe_GET('user');
+$action=safe_GET('action');
+$from  =safe_GET('from', '\d\d\d\d-\d\d-\d\d', $earliest);
+$to    =safe_GET('to',   '\d\d\d\d-\d\d-\d\d', $latest);
+$type  =safe_GET('type', array('auth','change','config','debug','edit','error','media','search'));
+$text  =safe_GET('text');
+$ip    =safe_GET('ip');
+$user  =safe_GET('user');
 if (WT_USER_IS_ADMIN) {
 	// Administrators can see all logs
 	$gedc=safe_GET('gedc');
@@ -84,28 +85,33 @@ if ($gedc) {
 	$args []=$gedc;
 }
 
-$sql1=
-	"SELECT COUNT(*)".
+$SELECT1=
+	"SELECT SQL_CACHE SQL_CALC_FOUND_ROWS log_time, log_type, log_message, ip_address, IFNULL(user_name, '<none>') AS user_name, IFNULL(gedcom_name, '<none>') AS gedcom_name".
 	" FROM `##log`".
 	" LEFT JOIN `##user`   USING (user_id)".   // user may be deleted
 	" LEFT JOIN `##gedcom` USING (gedcom_id)"; // gedcom may be deleted
-
-$sql2=
-	"SELECT log_time, log_type, log_message, ip_address, IFNULL(user_name, '<none>') AS user_name, IFNULL(gedcom_name, '<none>') AS gedcom_name".
-	" FROM `##log`".
-	" LEFT JOIN `##user`   USING (user_id)".   // user may be deleted
-	" LEFT JOIN `##gedcom` USING (gedcom_id)"; // gedcom may be deleted
+$SELECT2=
+	"SELECT COUNT(*) FROM `##log`";
 
 if ($query) {
-	$sql1.=" WHERE ".implode(' AND ', $query);
-	// Order ascending, otherwise the current OFFSET/LIMIT will change when new events are logged
-	$sql2.=" WHERE ".implode(' AND ', $query)." ORDER BY log_id";
+	$WHERE=" WHERE ".implode(' AND ', $query);
+} else {
+	$WHERE='';
 }
 
-if (safe_GET('export', 'yes')=='yes') {
+switch($action) {
+case 'delete':
+	$DELETE=
+		"DELETE `##log` FROM `##log`".
+		" LEFT JOIN `##user`   USING (user_id)".   // user may be deleted
+		" LEFT JOIN `##gedcom` USING (gedcom_id)". // gedcom may be deleted
+		$WHERE;
+	WT_DB::prepare($DELETE)->execute($args);
+	break;
+case 'export':
 	header('Content-Type: text/csv');
 	header('Content-Disposition: attachment; filename="webtrees-logs.csv"');
-	$rows=WT_DB::prepare($sql2)->execute($args)->fetchAll();
+	$rows=WT_DB::prepare($SELECT1.$WHERE.' ORDER BY log_id')->execute($args)->fetchAll();
 	foreach ($rows as $row) {
 		echo
 			'"', $row->log_time, '",',
@@ -117,46 +123,89 @@ if (safe_GET('export', 'yes')=='yes') {
 			"\n";
 	}
 	exit;
-}
-
-if (safe_GET('delete', 'yes')=='yes') {
-	$sql3=
-		"DELETE `##log` FROM `##log`".
-		" LEFT JOIN `##user`   USING (user_id)".   // user may be deleted
-		" LEFT JOIN `##gedcom` USING (gedcom_id)"; // gedcom may be deleted
-	if ($query) {
-		$sql3.=" WHERE ".implode(' AND ', $query);
+case 'load_json':
+	$iDisplayStart =(int)safe_GET('iDisplayStart');
+	$iDisplayLength=(int)safe_GET('iDisplayLength');
+	if ($iDisplayLength>0) {
+		$LIMIT=" LIMIT " . $iDisplayStart . ',' . $iDisplayLength;
+	} else {
+		$LIMIT="";
 	}
-	WT_DB::prepare($sql3)->execute($args);
+	$iSortingCols=safe_GET('iSortingCols');
+	if ($iSortingCols) {
+		$ORDER_BY=' ORDER BY ';
+		for ($i=0; $i<$iSortingCols; ++$i) {
+			// Datatables numbers columns 0, 1, 2, ...
+			// MySQL numbers columns 1, 2, 3, ...
+			switch (safe_GET('sSortDir_'.$i)) {
+			case 'asc':
+				$ORDER_BY.=(1+(int)safe_GET('iSortCol_'.$i)).' ASC ';
+				break;
+			case 'desc':
+				$ORDER_BY.=(1+(int)safe_GET('iSortCol_'.$i)).' DESC ';
+				break;
+			}
+			if ($i<$iSortingCols-1) {
+				$ORDER_BY.=',';
+			}
+		}
+	} else {
+		$ORDER_BY='1 DESC';
+	}
+
+	// This becomes a JSON list, not array, so need to fetch with numeric keys.
+	$aaData=WT_DB::prepare($SELECT1.$WHERE.$ORDER_BY.$LIMIT)->execute($args)->fetchAll(PDO::FETCH_NUM);
+	
+	// Total filtered/unfiltered rows
+	$iTotalDisplayRecords=WT_DB::prepare("SELECT FOUND_ROWS()")->fetchColumn();
+	$iTotalRecords=WT_DB::prepare($SELECT2.$WHERE)->execute($args)->fetchColumn();
+
+	header('Content-type: application/json; charset=utf8');	
+	echo json_encode(array( // See http://www.datatables.net/usage/server-side
+		'sEcho'               =>(int)safe_GET('sEcho'),
+		'iTotalRecords'       =>$iTotalRecords,
+		'iTotalDisplayRecords'=>$iTotalDisplayRecords,
+		'aaData'              =>$aaData
+	));
+	exit;
 }
-
-$total_rows=WT_DB::prepare($sql1)->execute($args)->fetchOne();
-
-$rows=WT_DB::prepare($sql2)->execute($args)->fetchAll();
 
 print_header(i18n::translate('Logs'));
-?>
-<script type="text/javascript">
-	jQuery(document).ready(function(){
+echo WT_JS_START;
 
+?>
+	jQuery(document).ready(function(){
 		var oTable = jQuery('#log_list').dataTable( {
+			"sDom": '<"H"lpr>t<"F"i>',
+			"bProcessing": true,
+			"bServerSide": true,
+			"sAjaxSource": "<?php echo WT_SERVER_NAME.WT_SCRIPT_PATH.WT_SCRIPT_NAME.'?action=load_json&from=', $from,'&to=', $to, '&type=', $type, '&text=', rawurlencode($text), '&ip=', rawurlencode($ip), '&user=', rawurlencode($user), '&gedc=', rawurlencode($gedc); ?>",
 			"oLanguage": {
-				"sLengthMenu": 'Display <select><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="50">50</option><option value="-1">All</option></select> records'
+				"sLengthMenu": 'Display <select><option value="10">10</option><option value="20">20</option><option value="50">50</option><option value="100">100</option></select> records'
 			},
 			"bJQueryUI": true,
 			"bAutoWidth":false,
-			"aaSorting": [[ 1, "asc" ]],
+			"aaSorting": [[ 1, "desc" ]],
 			"iDisplayLength": 20,
 			"sPaginationType": "full_numbers",
 		});
-		
-	
 	});
 
-</script>
 <?php
+
+$url=
+	WT_SCRIPT_NAME.'?from='.rawurlencode($from).
+	'&amp;to='.rawurlencode($to).
+	'&amp;type='.rawurlencode($type).
+	'&amp;text='.rawurlencode($text).
+	'&amp;ip='.rawurlencode($ip).
+	'&amp;user='.rawurlencode($user).
+	'&amp;gedc='.rawurlencode($gedc);
+
 echo
+	WT_JS_END,
 	'<form name="logs" method="get" action="'.WT_SCRIPT_NAME.'">',
+		'<input type="hidden" name="action", value="show"/>',
 		'<table class="site_logs">',
 			'<tr>',
 				'<td>',
@@ -179,54 +228,33 @@ echo
 					i18n::translate('Gedcom'), '<br /><input name="gedc" size="12" value="', htmlspecialchars($gedc), '" ', WT_USER_IS_ADMIN ? '' : 'disabled', '/> ',
 				'</td>',
 				'<td class="button" rowspan="2">',
-					'<input type="submit" value="', i18n::translate('Filter'), '"/>',
+					'<input type="submit" value="', i18n::translate('Filter'), '" />',
+					'<br/>',
+					'<input type="submit" value="', i18n::translate('Export'), '" onclick="document.logs.action.value=\'export\';return true;" ', ($action ? '' : 'disabled="disabled"'),' />',
+					'<br/>',
+					'<input type="submit" value="', i18n::translate('Delete'), '" onclick="if (confirm(\'', htmlspecialchars(i18n::translate('Permanently delete these records?')) , '\')) {document.logs.action.value=\"export\";return true;} else {return false;}" ', ($action ? '' : 'disabled="disabled"'),' />',
 				'</td>',
 			'</tr>',
 		'</table>',
 	'</form>';
-if ($rows) {
+
+if ($action) {
 	echo
-		'<p align="center">',
-		i18n::translate('%d Results', $total_rows);
-		$url=
-			WT_SCRIPT_NAME.'?from='.rawurlencode($from).
-			'&amp;to='.rawurlencode($to).
-			'&amp;type='.rawurlencode($type).
-			'&amp;text='.rawurlencode($text).
-			'&amp;ip='.rawurlencode($ip).
-			'&amp;user='.rawurlencode($user).
-			'&amp;gedc='.rawurlencode($gedc);
-
-	echo '&nbsp;-&nbsp;<a href="', $url, '&amp;export=yes">', i18n::translate('Export'), '</a>';
-	echo ' | <a href="', $url, '&amp;delete=yes" onclick="return confirm(\'', htmlspecialchars(i18n::plural('Permanently delete this %s record?', 'Permanently delete these %s records?', $total_rows, $total_rows)) , '\')">', i18n::translate('Delete'), '</a>';
-
-echo
-	'</p>',
-	'<table id="log_list">',
-		'<thead>',
-			'<tr>',
-				'<th>', i18n::translate('Timestamp'), '</th>',
-				'<th>', i18n::translate('Type'), '</th>',
-				'<th>', i18n::translate('Message'), '</th>',
-				'<th>', i18n::translate('IP address'), '</th>',
-				'<th>', i18n::translate('User'), '</th>',
-				'<th>', i18n::translate('GEDCOM'), '</th>',
-			'</tr>',
-		'</thead>',
-		'<tbody>';
-			foreach ($rows as $row) {
-				echo
-					'<tr>',
-						'<td>', $row->log_time, '</td>',
-						'<td>', $row->log_type, '</td>',
-						'<td>', nl2br(htmlspecialchars($row->log_message)), '</td>',
-						'<td>', $row->ip_address, '</td>',
-						'<td>', htmlspecialchars($row->user_name), '</td>',
-						'<td>', htmlspecialchars($row->gedcom_name), '</td>',
-					'</tr>';
-			}
-		echo '</tbody>',
-	'</table>';
+		'<br/>',
+		'<table id="log_list">',
+			'<thead>',
+				'<tr>',
+					'<th>', i18n::translate('Timestamp'), '</th>',
+					'<th>', i18n::translate('Type'), '</th>',
+					'<th>', i18n::translate('Message'), '</th>',
+					'<th>', i18n::translate('IP address'), '</th>',
+					'<th>', i18n::translate('User'), '</th>',
+					'<th>', i18n::translate('GEDCOM'), '</th>',
+				'</tr>',
+			'</thead>',
+			'<tbody>',
+	 	'</tbody>',
+		'</table>';
 }
 
 print_footer();
