@@ -27,7 +27,7 @@
  * @version $Id$
  */
 
-define('WT_SCRIPT_NAME', 'uploadmedia.php');
+define('WT_SCRIPT_NAME', 'admin_media_upload.php');
 require './includes/session.php';
 require_once WT_ROOT.'includes/functions/functions_mediadb.php';
 

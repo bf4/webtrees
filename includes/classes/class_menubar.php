@@ -151,7 +151,7 @@ class MenuBar {
 			//-- upload_media submenu
 			if (is_writable($MEDIA_DIRECTORY) && $MULTI_MEDIA) {
 				$menu->addSeparator();
-				$submenu = new Menu(i18n::translate('Upload media files'), "uploadmedia.php?ged=".WT_GEDURL);
+				$submenu = new Menu(i18n::translate('Upload media files'), "admin_media_upload.php?ged=".WT_GEDURL);
 				$submenu->addIcon('menu_media');
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_media");
 				$menu->addSubmenu($submenu);
