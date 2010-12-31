@@ -78,7 +78,7 @@ if (WT_USER_IS_ADMIN) {
 		'</a></li>',
 		'<li><a ', (WT_SCRIPT_NAME=="admin_site_readme.php" ? 'class="current" ' : ''), 'href="admin_site_readme.php">', i18n::translate('README documentation'), '</a></li>',
 		'<li><a ', (WT_SCRIPT_NAME=="admin_site_info.php" ? 'class="current" ' : ''), 'href="admin_site_info.php?action=phpinfo">', i18n::translate('PHP information'), '</a></li>',
-		'<li><a ', (WT_SCRIPT_NAME=="admin_site_manageservers.php" ? 'class="current" ' : ''), 'href="admin_site_manageservers.php">', i18n::translate('Manage servers'), '</a></li>',
+		'<li><a ', (WT_SCRIPT_NAME=="admin_site_manageservers.php" ? 'class="current" ' : ''), 'href="admin_site_manageservers.php">', i18n::translate('Manage sites'), '</a></li>',
 		'</ul></li>',
 		'<li><a ', (WT_SCRIPT_NAME=="admin_trees_manage.php" ? 'class="current" ' : ''), 'href="admin_trees_manage.php">',
 		i18n::translate('Family trees'),
