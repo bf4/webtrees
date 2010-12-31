@@ -214,9 +214,6 @@ print_header(i18n::translate('Module administration'));
   }
 
   jQuery(document).ready(function() {
-	//-- tabs
-    jQuery("#tabs").tabs();
-
     //-- sortable menus and tabs tables
     jQuery("#menus_table, #tabs_table, #sidebars_table").sortable({items: '.sortme', forceHelperSize: true, forcePlaceholderSize: true, opacity: 0.7, cursor: 'move', axis: 'y'});
 
@@ -293,11 +290,6 @@ print_header(i18n::translate('Module administration'));
 	<div id="tabs">
 		<form method="post" action="module_admin.php">
 			<input type="hidden" name="action" value="update_mods" />
-			<!-- page tabs -->
-				<ul>
-					<li><a href="#tabs_tab"><span><?php echo i18n::translate('Tabs'); ?></span></a></li>
-				</ul>
-			<!-- tabs -->
 			<div id="tabs_tab">
 				<table id="tabs_table" class="list_table">
 					<thead>
