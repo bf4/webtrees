@@ -154,7 +154,7 @@ echo WT_JS_START; ?>
 			<table id="tabs_table" class="list_table">
 				<thead>
 					<tr>
-					<th class="list_label"><?php echo i18n::translate('Module Name'); ?></th>
+					<th class="list_label"><?php echo i18n::translate('Tab'); ?></th>
 					<th class="list_label"><?php echo i18n::translate('Order'); ?></th>
 					<th class="list_label"><?php echo i18n::translate('Access level'); ?></th>
 					</tr>

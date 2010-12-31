@@ -134,7 +134,7 @@ print_header(i18n::translate('Module administration'));
 			<table id="blocks_table" class="list_table">
 				<thead>
 					<tr>
-					<th class="list_label"><?php echo i18n::translate('Module Name'); ?></th>
+					<th class="list_label"><?php echo i18n::translate('Block'); ?></th>
 					<th class="list_label"><?php echo i18n::translate('Access level'); ?></th>
 					</tr>
 				</thead>
