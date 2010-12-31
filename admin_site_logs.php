@@ -91,8 +91,9 @@ $SELECT1=
 	" LEFT JOIN `##user`   USING (user_id)".   // user may be deleted
 	" LEFT JOIN `##gedcom` USING (gedcom_id)"; // gedcom may be deleted
 $SELECT2=
-	"SELECT COUNT(*) FROM `##log`";
-
+	"SELECT COUNT(*) FROM `##log`".
+	" LEFT JOIN `##user`   USING (user_id)".   // user may be deleted
+	" LEFT JOIN `##gedcom` USING (gedcom_id)"; // gedcom may be deleted
 if ($query) {
 	$WHERE=" WHERE ".implode(' AND ', $query);
 } else {
