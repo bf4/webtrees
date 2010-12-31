@@ -287,7 +287,7 @@ class MediaController extends BaseController{
 
 		// delete
 		if (WT_USER_GEDCOM_ADMIN) {
-			$submenu = new Menu(i18n::translate('Remove object'), "media.php?action=removeobject&amp;xref=".$this->pid);
+			$submenu = new Menu(i18n::translate('Remove object'), "admin_media.php?action=removeobject&amp;xref=".$this->pid);
 			$submenu->addOnclick("return confirm('".i18n::translate('Are you sure you want to remove this object from the database?')."')");
 			$submenu->addIcon('edit_media');
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");

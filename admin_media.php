@@ -37,7 +37,7 @@
  * Check array buld up use ID_GEDCOM for aray key
  */
 
- /* Standard variable convention media.php
+ /* Standard variable convention admin_media.php
  * $filename = Filename of the media item
  * $thumbnail = Filename of the thumbnail of the media item
  * $gedfile = Name of the GEDCOM file
@@ -46,7 +46,7 @@
  * $dirs = list of subdirectories within current directory.  Built with medialist.
  */
 
-define('WT_SCRIPT_NAME', 'media.php');
+define('WT_SCRIPT_NAME', 'admin_media.php');
 require './includes/session.php';
 require_once WT_ROOT.'includes/functions/functions_print_lists.php';
 require_once WT_ROOT.'includes/functions/functions_print_facts.php';
@@ -766,7 +766,7 @@ if (check_media_structure()) {
 
 ?>
 
-<form name="managemedia" method="post" onsubmit="return checknames(this);" action="media.php">
+	<form name="managemedia" method="post" onsubmit="return checknames(this);" action="<?php echo WT_SCRIPT_NAME; ?>">
 	<input type="hidden" name="thumbdir" value="<?php echo $thumbdir; ?>" />
 	<input type="hidden" name="level" value="<?php echo $level; ?>" />
 	<input type="hidden" name="all" value="true" />
@@ -827,7 +827,7 @@ if (check_media_structure()) {
 
 	<!-- // NOTE: Row 3 right: Generate missing thumbnails -->
 	<?php
-		$tempURL = "media.php?";
+		$tempURL = WT_SCRIPT_NAME.'?';
 		if (!empty($filter)) $tempURL .= 'filter='.rawurlencode($filter).'&amp;';
 		if (!empty($subclick)) $tempURL .= "subclick={$subclick}&amp;";
 		$tempURL .= "action=thumbnail&amp;sortby={$sortby}&amp;all=yes&amp;level={$level}&amp;directory=".rawurlencode($directory).$thumbget;
@@ -879,13 +879,13 @@ jQuery(document).ready(function() {
 		$pdir = '';
 		for ($i=0; $i<count($levels)-2; $i++) $pdir.=$levels[$i].'/';
 		if ($pdir != '') {
-			$uplink = "<a href=\"media.php?directory={$pdir}&amp;amp;sortby={$sortby}&amp;amp;level=".($level-1).$thumbget."\">";
+			$uplink = "<a href=\"".WT_SCRIPT_NAME."?directory={$pdir}&amp;amp;sortby={$sortby}&amp;amp;level=".($level-1).$thumbget."\">";
 			if ($TEXT_DIRECTION=="rtl") $uplink .= getLRM();
 			$uplink .= $pdir;
 			if ($TEXT_DIRECTION=="rtl") $uplink .= getLRM();
 			$uplink .= "</a>";
 
-			$uplink2 = "<a href=\"media.php?directory={$pdir}&amp;sortby={$sortby}&amp;level=".($level-1).$thumbget."\"><img class=\"icon\" src=\"";
+			$uplink2 = "<a href=\"".WT_SCRIPT_NAME."?directory={$pdir}&amp;sortby={$sortby}&amp;level=".($level-1).$thumbget."\"><img class=\"icon\" src=\"";
 			$uplink2 .= $WT_IMAGES["larrow"];
 			$uplink2 .= "\" alt=\"\" /></a>";
 		}
@@ -952,7 +952,7 @@ jQuery(document).ready(function() {
 			$standard_files = count($files);
 
 			echo "<br />";
-			echo "<form name=\"blah3\" action=\"media.php\" method=\"post\">";
+			echo "<form name=\"blah3\" action=\"".WT_SCRIPT_NAME."\" method=\"post\">";
 			echo "<input type=\"hidden\" name=\"directory\" value=\"".$directory."\" />";
 			echo "<input type=\"hidden\" name=\"level\" value=\"".($level)."\" />";
 			echo "<input type=\"hidden\" name=\"dir\" value=\"".$directory."\" />";
@@ -1017,7 +1017,7 @@ jQuery(document).ready(function() {
 				echo "<tr>";
 					echo "<td class=\"optionbox center width10\">";
 						// directory options
-						echo "<form name=\"blah\" action=\"media.php\" method=\"post\">";
+						echo "<form name=\"blah\" action=\"".WT_SCRIPT_NAME."\" method=\"post\">";
 						echo "<input type=\"hidden\" name=\"directory\" value=\"".$directory.$dir."/\" />";
 						echo "<input type=\"hidden\" name=\"parentdir\" value=\"".$directory."\" />";
 						echo "<input type=\"hidden\" name=\"level\" value=\"".($level)."\" />";
@@ -1034,7 +1034,7 @@ jQuery(document).ready(function() {
 						echo "</form>";
 					echo "</td>";
 					echo "<td class=\"descriptionbox $TEXT_DIRECTION\">";
-						echo "<a href=\"media.php?directory=".rawurlencode($directory.$dir)."/&amp;sortby={$sortby}&amp;level=".($level+1).$thumbget."\">";
+						echo "<a href=\"".WT_SCRIPT_NAME."?directory=".rawurlencode($directory.$dir)."/&amp;sortby={$sortby}&amp;level=".($level+1).$thumbget."\">";
 						if ($TEXT_DIRECTION=="rtl") echo getRLM();
 						echo $dir;
 						if ($TEXT_DIRECTION=="rtl") echo getRLM();
@@ -1062,7 +1062,7 @@ jQuery(document).ready(function() {
 			// Set up for two passes, the first showing URLs, the second normal files
 			?>
 <div align="center">
-	<form class="tablesorter" method="post" action="media.php">
+<form class="tablesorter" method="post" action="<?php echo WT_SCRIPT_NAME; ?>">
 		<table id="media_table" class="tablesorter" border="0" cellpadding="0" cellspacing="1">
 			<thead>
 				<tr>
@@ -1135,7 +1135,7 @@ jQuery(document).ready(function() {
 								unset($tempMedia);
 							}
 							if (!$isExternal && $objectCount<2) {
-								$tempURL = "media.php?";
+								$tempURL = WT_SCRIPT_NAME.'?';
 								if (!empty($filter)) $tempURL.= "filter=".rawurlencode($filter)."&amp;";
 								$tempURL .= "action=deletefile&amp;showthumb={$showthumb}&amp;sortby={$sortby}&amp;filter={$filter}&amp;subclick={$subclick}&amp;filename=".rawurlencode($media['FILE'])."&amp;directory={$directory}&amp;level={$level}&amp;xref={$media['XREF']}&amp;gedfile={$media['GEDFILE']}";
 								echo "<a href=\"".$tempURL."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this file?')."');\">".i18n::translate('Delete file')."</a><br />";
@@ -1143,7 +1143,7 @@ jQuery(document).ready(function() {
 
 							// Remove Object
 							if (!empty($media["XREF"])) {
-								$tempURL = "media.php?";
+								$tempURL = WT_SCRIPT_NAME.'?';
 								if (!empty($filter)) $tempURL .= "filter={$filter}&amp;";
 								$tempURL .= "action=removeobjectamp;&showthumb={$showthumb}amp;&sortby={$sortby}amp;&filter={$filter}amp;&subclick={$subclick}amp;&filename=".rawurlencode($media['FILE'])."amp;&directory={$directory}amp;&level={$level}amp;&xref={$media['XREF']}amp;&gedfile={$media['GEDFILE']}";
 								echo "<a href=\"".$tempURL."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to remove this object from the database?')."');\">".i18n::translate('Remove object')."</a><br />";
@@ -1151,7 +1151,7 @@ jQuery(document).ready(function() {
 
 							// Remove links
 							if ($media["LINKED"]) {
-								$tempURL = "media.php?";
+								$tempURL = WT_SCRIPT_NAME.'?';
 								if (!empty($filter)) $tempURL .= "filter={$filter}&";
 								$tempURL .= "action=removelinks&showthumb={$showthumb}&sortby={$sortby}&filter={$filter}&subclick={$subclick}&filename=".urlencode($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
 							}
@@ -1165,7 +1165,7 @@ jQuery(document).ready(function() {
 
 							// Move image between standard and protected directories
 							if ($USE_MEDIA_FIREWALL && ($media["EXISTS"] > 1)) {
-								$tempURL = "media.php?";
+								$tempURL = WT_SCRIPT_NAME.'?';
 								if ($media["EXISTS"] == 2) {
 									$tempURL .= "action=moveprotected";
 									$message=i18n::translate('Move to protected directory');
@@ -1183,7 +1183,7 @@ jQuery(document).ready(function() {
 								$ct = preg_match("/\.([^\.]+)$/", $media["FILE"], $match);
 								if ($ct>0) $ext = strtolower(trim($match[1]));
 								if ($ext=="jpg" || $ext=="jpeg" || $ext=="gif" || $ext=="png") {
-									$tempURL = "media.php?";
+									$tempURL = WT_SCRIPT_NAME.'?';
 									if (!empty($filter)) $tempURL .= "filter={$filter}&amp;";
 									$tempURL .= "action=thumbnail&amp;all=no&amp;sortby={$sortby}&amp;level={$level}&amp;directory=".rawurlencode($directory)."&amp;filename=".rawurlencode($media["FILE"]).$thumbget;
 									echo "<a href=\"".$tempURL."\">".i18n::translate('Create thumbnail')."</a>";
