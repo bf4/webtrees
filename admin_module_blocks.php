@@ -126,62 +126,6 @@ if ($action=='update_mods') {
 
 print_header(i18n::translate('Module administration'));
 ?>
-<style type="text/css">
-<!--
-.sortme {
-	cursor: move;
-}
-.sortme img {
-	cursor: pointer;
-}
-//-->
-</style>
-<script type="text/javascript">
-//<![CDATA[
-
-  function reindexMods(id) {
-		jQuery('#'+id+' input').each(
-			function (index, value) {
-				value.value = index+1;
-			});
-  }
-
-  jQuery(document).ready(function() {
-    //-- sortable menus and tabs tables
-    jQuery("#menus_table, #tabs_table, #sidebars_table").sortable({items: '.sortme', forceHelperSize: true, forcePlaceholderSize: true, opacity: 0.7, cursor: 'move', axis: 'y'});
-
-    //-- update the order numbers after drag-n-drop sorting is complete
-    jQuery('#menus_table').bind('sortupdate', function(event, ui) {
-			var id = jQuery(this).attr('id');
-			reindexMods(id);
-		});
-
-    jQuery('#tabs_table').bind('sortupdate', function(event, ui) {
-		var id = jQuery(this).attr('id');
-		reindexMods(id);
-		});
-
-    jQuery('#sidebars_table').bind('sortupdate', function(event, ui) {
-		var id = jQuery(this).attr('id');
-		reindexMods(id);
-		});
-
-
-	// Table sorting and pageing
-	jQuery("#installed_table")
-		.tablesorter({
-			sortList: [[2,0], [3,0]], widgets: ['zebra'],
-			headers: { 0: { sorter: false }}
-		})
-		.tablesorterPager({
-			container: jQuery("#pager"),
-			positionFixed: false,
-			size: 15
-		});
-
-});
-//]]>
-</script>
 
 <div align="center">
 	<div id="tabs">
@@ -199,7 +143,7 @@ print_header(i18n::translate('Module administration'));
 						<?php
 						$order = 1;
 						foreach (WT_Module::getInstalledBlocks() as $module) { ?>
-						<tr class="sortme">
+						<tr>
 							<td class="list_value"><?php echo $module->getTitle(); ?></td>
 							<td class="list_value_wrap">
 								<table>

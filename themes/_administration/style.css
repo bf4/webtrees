@@ -274,3 +274,9 @@ table#site_config {
 	font-style:italic;
 	padding-top:3px;
 }*/
+
+/* Drag-n-drop sorting for modules, etc. */
+.sortme {
+	cursor: move;
+}
+

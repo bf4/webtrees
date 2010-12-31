@@ -129,62 +129,23 @@ if ($action=='update_mods') {
 }
 
 print_header(i18n::translate('Module administration'));
-?>
-<style type="text/css">
-<!--
-.sortme {
-	cursor: move;
-}
-.sortme img {
-	cursor: pointer;
-}
-//-->
-</style>
-<script type="text/javascript">
-//<![CDATA[
 
-  function reindexMods(id) {
-		jQuery('#'+id+' input').each(
-			function (index, value) {
-				value.value = index+1;
-			});
-  }
+echo WT_JS_START; ?>
 
   jQuery(document).ready(function() {
-    //-- sortable menus and tabs tables
-    jQuery("#menus_table, #tabs_table, #sidebars_table").sortable({items: '.sortme', forceHelperSize: true, forcePlaceholderSize: true, opacity: 0.7, cursor: 'move', axis: 'y'});
+    jQuery("#tabs_table").sortable({items: '.sortme', forceHelperSize: true, forcePlaceholderSize: true, opacity: 0.7, cursor: 'move', axis: 'y'});
 
     //-- update the order numbers after drag-n-drop sorting is complete
-    jQuery('#menus_table').bind('sortupdate', function(event, ui) {
-			var id = jQuery(this).attr('id');
-			reindexMods(id);
-		});
-
     jQuery('#tabs_table').bind('sortupdate', function(event, ui) {
-		var id = jQuery(this).attr('id');
-		reindexMods(id);
+			jQuery('#'+jQuery(this).attr('id')+' input').each(
+				function (index, value) {
+					value.value = index+1;
+				}
+			);
 		});
+	});
 
-    jQuery('#sidebars_table').bind('sortupdate', function(event, ui) {
-		var id = jQuery(this).attr('id');
-		reindexMods(id);
-		});
-
-	// Table sorting and pageing
-	jQuery("#installed_table")
-		.tablesorter({
-			sortList: [[2,0], [3,0]], widgets: ['zebra'],
-			headers: { 0: { sorter: false }}
-		})
-		.tablesorterPager({
-			container: jQuery("#pager"),
-			positionFixed: false,
-			size: 15
-		});
-
-});
-//]]>
-</script>
+<?php echo WT_JS_END; ?>
 
 <div align="center">
 	<div id="tabs">
