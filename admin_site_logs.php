@@ -233,7 +233,7 @@ echo
 					'<br/>',
 					'<input type="submit" value="', i18n::translate('Export'), '" onclick="document.logs.action.value=\'export\';return true;" ', ($action ? '' : 'disabled="disabled"'),' />',
 					'<br/>',
-					'<input type="submit" value="', i18n::translate('Delete'), '" onclick="if (confirm(\'', htmlspecialchars(i18n::translate('Permanently delete these records?')) , '\')) {document.logs.action.value=\"export\";return true;} else {return false;}" ', ($action ? '' : 'disabled="disabled"'),' />',
+					'<input type="submit" value="', i18n::translate('Delete'), '" onclick="if (confirm(\'', htmlspecialchars(i18n::translate('Permanently delete these records?')) , '\')) {document.logs.action.value=\'delete\';return true;} else {return false;}" ', ($action ? '' : 'disabled="disabled"'),' />',
 				'</td>',
 			'</tr>',
 		'</table>',
