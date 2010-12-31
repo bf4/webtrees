@@ -32,7 +32,7 @@
 * @author rbennett
 */
 
-define('WT_SCRIPT_NAME', 'admin_site_manageservers.php');
+define('WT_SCRIPT_NAME', 'admin_site_ipaddress.php');
 
 require './includes/session.php';
 require_once WT_ROOT.'includes/functions/functions.php';
@@ -133,7 +133,7 @@ function showSite(siteID) {
 // Search Engine IP address table
 echo '<table>',
 	'<tr><td>',
-	'<form name="searchengineform" action="admin_site_manageservers.php" method="post">',
+	'<form name="searchengineform" action="', WT_SCRIPT_NAME, '" method="post">',
 	'<table>',
 		'<tr>',
 		'<td><h3>', i18n::translate('Manually mark Search Engines by IP'). help_link('help_manual_search_engines'), '</h3></td>',
@@ -170,7 +170,7 @@ echo '<table>',
 <table>
 <tr>
 	<td>
-	<form name="banIPform" action="admin_site_manageservers.php" method="post">
+	<form name="banIPform" action="<?php echo WT_SCRIPT_NAME; ?>" method="post">
 	<table>
 		<tr>
 			<td>
