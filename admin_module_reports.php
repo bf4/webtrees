@@ -20,7 +20,7 @@
 //
 // @version $Id$
 
-define('WT_SCRIPT_NAME', 'admin_module_blocks.php');
+define('WT_SCRIPT_NAME', 'admin_module_reports.php')
 
 require 'includes/session.php';
 require WT_ROOT.'includes/functions/functions_edit.php';
@@ -166,43 +166,6 @@ print_header(i18n::translate('Module administration'));
 		reindexMods(id);
 		});
 
-    //-- enable the arrows buttons
-    jQuery(".uarrow").click(function() {
-        var curr = jQuery(this).parent().parent().get(0);
-        var prev = jQuery(curr).prev();
-        if (prev) jQuery(prev).insertAfter(curr);
-        reindexMods('menus_table');
-        reindexMods('tabs_table');
-        reindexMods('sidebars_table');
-    });
-
-    jQuery(".udarrow").click(function() {
-        var curr = jQuery(this).parent().parent().get(0);
-        var prev = jQuery(curr).parent().children().get(0);
-        if (prev) jQuery(curr).insertBefore(prev);
-        reindexMods('menus_table');
-        reindexMods('tabs_table');
-        reindexMods('sidebars_table');
-    });
-
-    jQuery(".darrow").click(function() {
-        var curr = jQuery(this).parent().parent().get(0);
-        var next = jQuery(curr).next();
-        if (next) jQuery(next).insertBefore(curr);
-        reindexMods('menus_table');
-        reindexMods('tabs_table');
-        reindexMods('sidebars_table');
-    });
-
-    jQuery(".ddarrow").click(function() {
-			var curr = jQuery(this).parent().parent().get(0);
-			var prev = jQuery(curr).parent().children(":last").get(0);
-			if (prev) jQuery(curr).insertAfter(prev);
-			reindexMods('menus_table');
-			reindexMods('tabs_table');
-			reindexMods('sidebars_table');
-	});
-
 	// Table sorting and pageing
 	jQuery("#installed_table")
 		.tablesorter({
@@ -221,7 +184,7 @@ print_header(i18n::translate('Module administration'));
 
 <div align="center">
 	<div id="tabs">
-		<form method="post" action="module_admin.php">
+		<form method="post" action="<?php echo WT_SCRIPT_NAME; ?>">
 			<input type="hidden" name="action" value="update_mods" />
 			<div id="reports_tab">
 				<table id="reports_table" class="list_table">

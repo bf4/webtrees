@@ -170,43 +170,6 @@ print_header(i18n::translate('Module administration'));
 		reindexMods(id);
 		});
 
-    //-- enable the arrows buttons
-    jQuery(".uarrow").click(function() {
-        var curr = jQuery(this).parent().parent().get(0);
-        var prev = jQuery(curr).prev();
-        if (prev) jQuery(prev).insertAfter(curr);
-        reindexMods('menus_table');
-        reindexMods('tabs_table');
-        reindexMods('sidebars_table');
-    });
-
-    jQuery(".udarrow").click(function() {
-        var curr = jQuery(this).parent().parent().get(0);
-        var prev = jQuery(curr).parent().children().get(0);
-        if (prev) jQuery(curr).insertBefore(prev);
-        reindexMods('menus_table');
-        reindexMods('tabs_table');
-        reindexMods('sidebars_table');
-    });
-
-    jQuery(".darrow").click(function() {
-        var curr = jQuery(this).parent().parent().get(0);
-        var next = jQuery(curr).next();
-        if (next) jQuery(next).insertBefore(curr);
-        reindexMods('menus_table');
-        reindexMods('tabs_table');
-        reindexMods('sidebars_table');
-    });
-
-    jQuery(".ddarrow").click(function() {
-			var curr = jQuery(this).parent().parent().get(0);
-			var prev = jQuery(curr).parent().children(":last").get(0);
-			if (prev) jQuery(curr).insertAfter(prev);
-			reindexMods('menus_table');
-			reindexMods('tabs_table');
-			reindexMods('sidebars_table');
-	});
-
 	// Table sorting and pageing
 	jQuery("#installed_table")
 		.tablesorter({
@@ -225,7 +188,7 @@ print_header(i18n::translate('Module administration'));
 
 <div align="center">
 	<div id="tabs">
-		<form method="post" action="module_admin.php">
+		<form method="post" action="<?php echo WT_SCRIPT_NAME; ?>">
 			<input type="hidden" name="action" value="update_mods" />
 			<div id="menus_tab">
 				<table id="menus_table" class="list_table">
@@ -243,10 +206,6 @@ print_header(i18n::translate('Module administration'));
 						<tr class="sortme">
 							<td class="list_value"><?php echo $module->getTitle(); ?></td>
 							<td class="list_value"><input type="text" size="5" value="<?php echo $order; ?>" name="menuorder-<?php echo $module->getName(); ?>" />
-								<img class="uarrow" style="vertical-align:bottom;" src="<?php echo $WT_IMAGES["uarrow"]; ?>" border="0" title="<?php echo i18n::translate('Move up'); ?>" />
-								<img class="udarrow" style="vertical-align:bottom;" src="<?php echo $WT_IMAGES["udarrow"]; ?>" border="0" title="<?php echo i18n::translate('Move to top'); ?>" />
-								<img class="darrow" style="vertical-align:bottom;" src="<?php echo $WT_IMAGES["darrow"]; ?>" border="0" title="<?php echo i18n::translate('Move down'); ?>" />
-								<img class="ddarrow" style="vertical-align:bottom;" src="<?php echo $WT_IMAGES["ddarrow"]; ?>" border="0" title="<?php echo i18n::translate('Move to bottom'); ?>" />
 							</td>
 							<td class="list_value_wrap">
 								<table>
