@@ -44,7 +44,6 @@ class IndividualController extends BaseController {
 	var $accept_success = false;
 	var $default_tab = '';
 
-	var $canedit = false;
 	var $name_count = 0;
 	var $total_names = 0;
 	var $SEX_COUNT = 0;
@@ -56,12 +55,10 @@ class IndividualController extends BaseController {
 
 	function init() {
 		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM;
-		global $DEFAULT_PIN_STATE, $DEFAULT_SB_CLOSED_STATE, $pid;
+		global $DEFAULT_PIN_STATE, $DEFAULT_SB_CLOSED_STATE;
 		global $Fam_Navigator;
 
 		$this->pid = safe_GET_xref('pid');
-
-		$pid = $this->pid;
 
 		$gedrec = find_person_record($this->pid, WT_GED_ID);
 
@@ -88,7 +85,7 @@ class IndividualController extends BaseController {
 			return false;
 		}
 
-		$this->$pid=$this->indi->getXref(); // Correct upper/lower case mismatch
+		$this->pid=$this->indi->getXref(); // Correct upper/lower case mismatch
 
 		//-- perform the desired action
 		switch($this->action) {
@@ -145,17 +142,11 @@ class IndividualController extends BaseController {
 			if (!empty($newrec)) {
 				$this->diffindi = new Person($newrec);
 				$this->diffindi->setChanged(true);
-				$gedrec = $newrec;
 			}
 		}
 
 		if ($this->show_changes) {
 			$this->indi->diffMerge($this->diffindi);
-		}
-
-		//-- only allow editors or users who are editing their own individual or their immediate relatives
-		if ($this->indi->canDisplayDetails()) {
-			$this->canedit = WT_USER_CAN_EDIT;
 		}
 
 		// Initialise tabs
@@ -246,13 +237,7 @@ class IndividualController extends BaseController {
 		if (WT_USER_CAN_EDIT && $SHOW_GEDCOM_RECORD && $this->indi->canDisplayDetails())
 			return true;
 	}
-	/**
-	* check if use can edit this person
-	* @return boolean
-	*/
-	function userCanEdit() {
-		return $this->canedit;
-	}
+
 	/**
 	* get the highlighted object HTML
 	* @return string HTML string for the <img> tag

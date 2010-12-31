@@ -36,12 +36,12 @@ require_once WT_ROOT.'includes/classes/class_module.php';
 class source_report_WT_Module extends WT_Module implements WT_Module_Report {
 	// Extend class WT_Module
 	public function getTitle() {
-		return i18n::translate('Fact Sources');
+		return i18n::translate('Sources Report');
 	}
 
 	// Extend class WT_Module
 	public function getDescription() {
-		return i18n::translate('Fact Sources');
+		return i18n::translate('Prints a list of individuals and families with a specific source');
 	}
 
 	// Extend class WT_Module
@@ -60,7 +60,7 @@ class source_report_WT_Module extends WT_Module implements WT_Module_Report {
 		$menu->addIcon('menu_source');
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff", "icon_small_reports");
 		$menus[]=$menu;
-
+		
 		return $menus;
 	}
 }

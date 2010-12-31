@@ -60,20 +60,18 @@ class FamilyController extends BaseController {
 
 		$this->famid = safe_GET_xref('famid');
 
-		$this->family = Family::getInstance($this->famid);
+		$gedrec = find_family_record($this->famid, WT_GED_ID);
 
-		if (empty($this->famrec)) {
-			//-- if no record was found create a default empty one
-			if (find_updated_record($this->famid, WT_GED_ID)!==null) {
-				$this->famrec = "0 @".$this->famid."@ FAM\n";
-				$this->family = new Family($this->famrec);
-			} else if (!$this->family) {
-				return false;
-			}
+		if (empty($gedrec)) {
+			$gedrec = "0 @".$this->famid."@ FAM\n";
 		}
 
-		$this->famrec = $this->family->getGedcomRecord();
-		$this->display = $this->family->canDisplayName();
+		if (find_family_record($this->famid, WT_GED_ID) || find_updated_record($this->famid, WT_GED_ID)!==null) {
+			$this->family = new Family($gedrec);
+			$this->family->ged_id=WT_GED_ID; // This record is from a file
+		} else if (!$this->family) {
+			return false;
+		}
 
 		$this->famid=$this->family->getXref(); // Correct upper/lower case mismatch
 
@@ -97,8 +95,8 @@ class FamilyController extends BaseController {
 		case 'accept':
 			if (WT_USER_CAN_ACCEPT) {
 				accept_all_changes($this->famid, WT_GED_ID);
-				$this->show_changes = false;
-				$this->accept_success = true;
+				$this->show_changes=false;
+				$this->accept_success=true;
 				//-- check if we just deleted the record and redirect to index
 				$gedrec = find_family_record($this->famid, WT_GED_ID);
 				if (empty($gedrec)) {
@@ -106,15 +104,14 @@ class FamilyController extends BaseController {
 					exit;
 				}
 				$this->family = new Family($gedrec);
-				$this->parents = find_parents($_REQUEST['famid']);
 			}
 			unset($_GET['action']);
 			break;
 		case 'undo':
 			if (WT_USER_CAN_ACCEPT) {
 				reject_all_changes($this->famid, WT_GED_ID);
-				$this->show_changes = false;
-				$this->accept_success = true;
+				$this->show_changes=false;
+				$this->accept_success=true;
 				$gedrec = find_family_record($this->famid, WT_GED_ID);
 				//-- check if we just deleted the record and redirect to index
 				if (empty($gedrec)) {
@@ -122,33 +119,30 @@ class FamilyController extends BaseController {
 					exit;
 				}
 				$this->family = new Family($gedrec);
-				$this->parents = find_parents($this->famid);
 			}
 			unset($_GET['action']);
 			break;
 		}
 
 		//-- if the user can edit and there are changes then get the new changes
-		if ($this->show_changes && WT_USER_CAN_EDIT && find_updated_record($this->famid, WT_GED_ID)!==null) {
-			$newrec = find_gedcom_record($this->famid, WT_GED_ID, true);
-			$this->difffam = new Family($newrec);
-			$this->difffam->setChanged(true);
-			$this->family->diffMerge($this->difffam);
-			//$this->famrec = $newrec;
-			//$this->family = new Family($this->famrec);
+		if ($this->show_changes && WT_USER_CAN_EDIT) {
+			$newrec = find_updated_record($this->famid, WT_GED_ID);
+			if (!empty($newrec)) {
+				$this->difffam = new Family($newrec);
+				$this->difffam->setChanged(true);
+			}
 		}
+
+		if ($this->show_changes) {
+			$this->family->diffMerge($this->difffam);
+		}
+
 		$this->parents = array('HUSB'=>$this->family->getHusbId(), 'WIFE'=>$this->family->getWifeId());
 
 		//-- check if we can display both parents
 		if ($this->display == false) {
 			$this->showLivingHusb = showLivingNameById($this->parents['HUSB']);
 			$this->showLivingWife = showLivingNameById($this->parents['WIFE']);
-		}
-
-		//-- make sure we have the true id from the record
-		$ct = preg_match("/0 @(.*)@/", $this->famrec, $match);
-		if ($ct > 0) {
-			$this->famid = trim($match[1]);
 		}
 
 		if ($this->showLivingHusb == false && $this->showLivingWife == false) {
@@ -169,10 +163,6 @@ class FamilyController extends BaseController {
 		return $this->famid;
 	}
 
-	function getFamilyRecord() {
-		return $this->famrec;
-	}
-
 	function getHusband() {
 		if (!is_null($this->difffam)) return $this->difffam->getHusbId();
 		if ($this->family) return $this->parents['HUSB'];
@@ -185,21 +175,13 @@ class FamilyController extends BaseController {
 		return null;
 	}
 
-	function getChildren() {
-		if (preg_match_all('/\n1 CHIL @('.WT_REGEX_XREF.')@/', $this->famrec, $match)) {
-			return $match[1];
-		} else {
-			return array();
+	// $tags is an array of HUSB/WIFE/CHIL
+	function getTimelineIndis($tags) {
+		preg_match_all('/\n1 (?:'.implode('|', $tags).') @('.WT_REGEX_XREF.')@/', $this->family->getGedcomRecord(), $matches);
+		foreach ($matches[1] as &$match) {
+			$match='pids[]='.$match;
 		}
-	}
-
-	function getChildrenUrlTimeline($start=0) {
-		$children = $this->getChildren();
-		$c = count($children);
-		for ($i = 0; $i < $c; $i++) {
-			$children[$i] = 'pids['.($i + $start).']='.$children[$i];
-		}
-		return join('&amp;', $children);
+		return implode('&amp;', $matches[1]);
 	}
 
 	/**
@@ -212,78 +194,6 @@ class FamilyController extends BaseController {
 		} else {
 			return i18n::translate('Unable to find record with ID');
 		}
-	}
-
-	/**
-	* get the family page charts menu
-	* @return Menu
-	*/
-	function getChartsMenu() {
-		global $TEXT_DIRECTION, $WT_IMAGES, $GEDCOM;
-
-		if (!$this->family) return null;
-		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
-		else $ff="";
-
-		$husb = $this->getHusband();
-		$wife = $this->getWife();
-		$link = '';
-		$c = 0;
-		if ($husb) {
-			$link .= 'pids[0]='.$husb;
-			$c++;
-			if ($wife) {
-				$link .= '&amp;pids[1]='.$wife;
-				$c++;
-			}
-		} else if ($wife) {
-			$link .= 'pids[0]='.$wife;
-			$c++;
-		}
-
-		// charts menu
-		$menu = new Menu(i18n::translate('Charts'), 'timeline.php?'.$link);
-		$menu->addIcon('timeline');
-		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
-		// Build a sortable list of submenu items and then sort it in localized name order
-		$menuList = array();
-		$menuList["parentTimeLine"] = i18n::translate('Show couple on timeline chart');
-		$menuList["childTimeLine"] = i18n::translate('Show children on timeline chart');
-		$menuList["familyTimeLine"] = i18n::translate('Show family on timeline chart');
-		asort($menuList);
-
-		// Produce the submenus in localized name order
-
-		foreach ($menuList as $menuType => $menuName) {
-			switch ($menuType) {
-			case "parentTimeLine":
-				// charts / parents_timeline
-				$submenu = new Menu(i18n::translate('Show couple on timeline chart'), 'timeline.php?'.$link);
-				$submenu->addIcon('timeline');
-				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
-				$menu->addSubmenu($submenu);
-				break;
-
-			case "childTimeLine":
-				// charts / children_timeline
-				$submenu = new Menu(i18n::translate('Show children on timeline chart'), 'timeline.php?'.$this->getChildrenUrlTimeline());
-				$submenu->addIcon('timeline');
-				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
-				$menu->addSubmenu($submenu);
-				break;
-
-			case "familyTimeLine":
-				// charts / family_timeline
-				$submenu = new Menu(i18n::translate('Show family on timeline chart'), 'timeline.php?'.$link.'&amp;'.$this->getChildrenUrlTimeline($c));
-				$submenu->addIcon('timeline');
-				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
-				$menu->addSubmenu($submenu);
-				break;
-
-			}
-		}
-
-		return $menu;
 	}
 
 	/**

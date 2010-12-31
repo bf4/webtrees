@@ -125,8 +125,8 @@ class MediaController extends BaseController{
 				accept_all_changes($this->pid, WT_GED_ID);
 				$this->show_changes=false;
 				$this->accept_success=true;
-				$mediarec = find_media_record($this->pid, get_id_from_gedcom($GEDCOM));
 				//-- check if we just deleted the record and redirect to index
+				$mediarec = find_media_record($this->pid, WT_GED_ID);
 				if (empty($mediarec)) {
 					header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH);
 					exit;
@@ -152,8 +152,6 @@ class MediaController extends BaseController{
 			break;
 		}
 
-		if ($this->mediaobject->canDisplayDetails()) {
-			$this->canedit = WT_USER_CAN_EDIT;
 		}
 	}
 
@@ -163,7 +161,7 @@ class MediaController extends BaseController{
 	*/
 	function getPageTitle() {
 		if ($this->mediaobject) {
-			return $this->mediaobject->getFullName()." - ".$this->mediaobject->getXref();
+			return $this->mediaobject->getFullName()." - ".i18n::translate('Multimedia Information');
 		} else {
 			return i18n::translate('Unable to find record with ID');
 		}
