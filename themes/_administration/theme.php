@@ -54,8 +54,4 @@ $WT_IMAGES=array(
 	'larrow2'=>WT_THEME_DIR.'images/larrow2.gif', //added only to avoid error messages from print_header function
 	'darrow2'=>WT_THEME_DIR.'images/darrow2.gif', //added only to avoid error messages from print_header function
 	'uarrow2'=>WT_THEME_DIR.'images/uarrow2.gif', //added only to avoid error messages from print_header function
-	'darrow'=>WT_THEME_DIR.'images/uarrow.gif',
-	'ddarrow'=>WT_THEME_DIR.'images/udarrow.gif',
-	'uarrow'=>WT_THEME_DIR.'images/uarrow.gif',
-	'udarrow'=>WT_THEME_DIR.'images/udarrow.gif',
 );
