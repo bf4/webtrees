@@ -113,80 +113,17 @@ $action = safe_POST('action');
 if ($action=='update_mods') {
 	foreach (WT_Module::getInstalledModules() as $module) {
 		$module_name=$module->getName();
-		$status=safe_POST("status-{$module_name}");
-		if ($status!==null) {
-			WT_DB::prepare("UPDATE `##module` SET status=? WHERE module_name=?")->execute(array($status ? 'enabled' : 'disabled', $module_name));
-		}
 		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-			if ($module instanceof WT_Module_Block) {
-				$value = safe_POST("blockaccess-{$module_name}-{$ged_id}", WT_REGEX_INTEGER, $module->defaultAccessLevel());
-				WT_DB::prepare(
-					"REPLACE INTO `##module_privacy` (module_name, gedcom_id, component, access_level) VALUES (?, ?, 'block', ?)"
-				)->execute(array($module_name, $ged_id, $value));
-			}
-
-			if ($module instanceof WT_Module_Chart) {
-				$value = safe_POST("chartaccess-{$module_name}-{$ged_id}", WT_REGEX_INTEGER, $module->defaultAccessLevel());
-				WT_DB::prepare(
-					"REPLACE INTO `##module_privacy` (module_name, gedcom_id, component, access_level) VALUES (?, ?, 'chart', ?)"
-				)->execute(array($module_name, $ged_id, $value));
-			}
-
 			if ($module instanceof WT_Module_Menu) {
 				$value = safe_POST("menuaccess-{$module_name}-{$ged_id}", WT_REGEX_INTEGER, $module->defaultAccessLevel());
 				WT_DB::prepare(
 					"REPLACE INTO `##module_privacy` (module_name, gedcom_id, component, access_level) VALUES (?, ?, 'menu', ?)"
 				)->execute(array($module_name, $ged_id, $value));
-			}
-
-			if ($module instanceof WT_Module_Sidebar) {
-				$value = safe_POST("sidebaraccess-{$module_name}-{$ged_id}", WT_REGEX_INTEGER, $module->defaultAccessLevel());
+				$value = safe_POST('menuorder-'.$module_name);
 				WT_DB::prepare(
-					"REPLACE INTO `##module_privacy` (module_name, gedcom_id, component, access_level) VALUES (?, ?, 'sidebar', ?)"
-				)->execute(array($module_name, $ged_id, $value));
+					"UPDATE `##module` SET menu_order=? WHERE module_name=?"
+				)->execute(array($value, $module_name));
 			}
-
-			if ($module instanceof WT_Module_Report) {
-				$value = safe_POST("reportaccess-{$module_name}-{$ged_id}", WT_REGEX_INTEGER, $module->defaultAccessLevel());
-				WT_DB::prepare(
-					"REPLACE INTO `##module_privacy` (module_name, gedcom_id, component, access_level) VALUES (?, ?, 'report', ?)"
-				)->execute(array($module_name, $ged_id, $value));
-			}
-
-			if ($module instanceof WT_Module_Tab) {
-				$value = safe_POST("tabaccess-{$module_name}-{$ged_id}", WT_REGEX_INTEGER, $module->defaultAccessLevel());
-				WT_DB::prepare(
-					"REPLACE INTO `##module_privacy` (module_name, gedcom_id, component, access_level) VALUES (?, ?, 'tab', ?)"
-				)->execute(array($module_name, $ged_id, $value));
-			}
-
-			if ($module instanceof WT_Module_Theme) {
-				$value = safe_POST("themeaccess-{$module_name}-{$ged_id}", WT_REGEX_INTEGER, $module->defaultAccessLevel());
-				WT_DB::prepare(
-				"REPLACE INTO `##module_privacy` (module_name, gedcom_id, component, access_level) VALUES (?, ?, 'theme', ?)"
-				)->execute(array($module_name, $ged_id, $value));
-			}
-		}
-
-		$value = safe_POST('menuorder-'.$module_name);
-		if ($value) {
-			WT_DB::prepare(
-				"UPDATE `##module` SET menu_order=? WHERE module_name=?"
-			)->execute(array($value, $module_name));
-		}
-
-		$value = safe_POST('taborder-'.$module_name);
-		if ($value) {
-			WT_DB::prepare(
-				"UPDATE `##module` SET tab_order=? WHERE module_name=?"
-			)->execute(array($value, $module_name));
-		}
-
-		$value = safe_POST('sidebarorder-'.$module_name);
-		if ($value) {
-			WT_DB::prepare(
-				"UPDATE `##module` SET sidebar_order=? WHERE module_name=?"
-			)->execute(array($value, $module_name));
 		}
 	}
 }
