@@ -310,7 +310,7 @@ if (check_media_structure()) {
 		echo i18n::translate('Uploading media files is not allowed because multi-media items have been disabled or because the media directory is not writable.');
 		echo "</b></span><br />";
 	} else {
-		show_mediaUpload_form('media.php', $showthumb); // We have the green light to upload media, echo the form
+		show_mediaUpload_form(WT_SCRIPT_NAME, $showthumb); // We have the green light to upload media, echo the form
 	}
 	echo "</div><br />";
 
