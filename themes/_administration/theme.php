@@ -54,4 +54,19 @@ $WT_IMAGES=array(
 	'larrow2'=>WT_THEME_DIR.'images/larrow2.gif', //added only to avoid error messages from print_header function
 	'darrow2'=>WT_THEME_DIR.'images/darrow2.gif', //added only to avoid error messages from print_header function
 	'uarrow2'=>WT_THEME_DIR.'images/uarrow2.gif', //added only to avoid error messages from print_header function
+	// media images
+	'media'=>WT_THEME_DIR.'images/media/media.png',
+	'media_audio'=>WT_THEME_DIR.'images/media/audio.png',
+	'media_doc'=>WT_THEME_DIR.'images/media/doc.gif',
+	'media_flash'=>WT_THEME_DIR.'images/media/flash.png',
+	'media_flashrem'=>WT_THEME_DIR.'images/media/flashrem.png',
+	'media_ged'=>WT_THEME_DIR.'images/media/ged.gif',
+	'media_globe'=>WT_THEME_DIR.'images/media/globe.png',
+	'media_html'=>WT_THEME_DIR.'images/media/html.gif',
+	'media_picasa'=>WT_THEME_DIR.'images/media/picasa.png',
+	'media_pdf'=>WT_THEME_DIR.'images/media/pdf.gif',
+	'media_tex'=>WT_THEME_DIR.'images/media/tex.gif',
+	'media_wmv'=>WT_THEME_DIR.'images/media/wmv.png',
+	'media_wmvrem'=>WT_THEME_DIR.'images/media/wmvrem.png',
 );
+
