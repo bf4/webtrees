@@ -108,7 +108,7 @@ if (WT_USER_IS_ADMIN) {
 		i18n::translate('Bulk messaging'),
 		'</a></li>',
 		'</ul></li>',
-		'<li><a ', (WT_SCRIPT_NAME=="admin_media" ? 'class="current" ' : ''), 'href="admin_media.php">',
+		'<li><a ', (WT_SCRIPT_NAME=="admin_media.php" ? 'class="current" ' : ''), 'href="admin_media.php">',
 		i18n::translate('Media'),
 		'</a></li>',
 		'<li><ul>',
