@@ -46,7 +46,7 @@ if ($TEXT_DIRECTION=='ltr') {
 
 echo
 	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
-	'<html xmlns="http://www.w3.org/1999/xhtml" ', i18n::html_markup(), '>',
+	'<html xmlns="http://www.w3.org/1999/xhtml" ', WT_I18N::html_markup(), '>',
 	'<head>',
 	'<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />',
 	'<title>', htmlspecialchars($title), '</title>',
@@ -88,7 +88,7 @@ echo
 	'<link rel="stylesheet" href="', $stylesheet, '" type="text/css" media="all" />';
 
 if ($BROWSERTYPE!='other') { ?>
-	<link rel="stylesheet" href="<?php echo $THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="<?php echo WT_THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 <?php
 }
 
@@ -96,7 +96,7 @@ if ($BROWSERTYPE!='other') { ?>
 if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) { ?>
 	<link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" />
 <?php }
-	echo '</head><body id="body" ', $bodyOnLoad, '>';
+	echo '</head><body id="body">';
 ?>
 
 <!-- Remove header for edit windows -->
@@ -114,33 +114,28 @@ if ($view!='simple') {
 	if (empty($SEARCH_SPIDER)) {
 		echo '<div style="float:', WT_CSS_REVERSE_ALIGN, ';"><ul class="makeMenu">';
 		if (WT_USER_ID) {
-			echo
-				'<li><a href="edituser.php" class="icon_color">', getUserFullName(WT_USER_ID), '</a></li>',
-				' | <li>', logout_link('class="icon_color"'), '</li>';
-			if (WT_USER_GEDCOM_ADMIN) {
-				echo ' | <li><a href="admin.php" class="icon_color">', i18n::translate('Administration'), '</a></li>';
-			}
+			echo '<li><a href="edituser.php" class="icon_color">', getUserFullName(WT_USER_ID), '</a></li> | <li>', logout_link('class="icon_color"'), '</li>';
 			if (WT_USER_CAN_ACCEPT && exists_pending_change()) {
-				echo ' | <li><a href="javascript:;" onclick="window.open(\'edit_changes.php\',\'_blank\',\'width=600,height=500,resizable=1,scrollbars=1\'); return false;" style="color:red;">', i18n::translate('Pending changes'), '</a></li>';
+				echo ' | <li><a href="javascript:;" onclick="window.open(\'edit_changes.php\',\'_blank\',\'width=600,height=500,resizable=1,scrollbars=1\'); return false;" style="color:red;">', WT_I18N::translate('Pending changes'), '</a></li>';
 			}
 		} else {
 			echo '<li>', login_link('class="icon_color"'), '</li>';
 		}
-		echo '<span class="link"> | ', MenuBar::getFavoritesMenu()->getMenuAsList();
-		$language_menu=MenuBar::getLanguageMenu();
+		echo ' | <span class="link">', WT_MenuBar::getFavoritesMenu()->getMenuAsList();
+		$language_menu=WT_MenuBar::getLanguageMenu();
 		if ($language_menu) {
 			echo ' | ', $language_menu->getMenuAsList();
 		}
 		global $ALLOW_THEME_DROPDOWN;
 		if ($ALLOW_THEME_DROPDOWN && get_site_setting('ALLOW_USER_THEMES')) {
-			echo ' | ', MenuBar::getThemeMenu()->getMenuAsList();
+			echo ' | ', WT_MenuBar::getThemeMenu()->getMenuAsList();
 		}
 		echo
 			'</span> | <form style="display:inline;" action="search.php" method="get">',
 			'<input type="hidden" name="action" value="general" />',
 			'<input type="hidden" name="topsearch" value="yes" />',
-			'<input type="text" name="query" size="15" value="', i18n::translate('Search'), '" onfocus="if (this.value==\'', i18n::translate('Search'), '\') this.value=\'\'; focusHandler();" onblur="if (this.value==\'\') this.value=\'', i18n::translate('Search'), '\';" />',
-			'<input type="image" src="', WT_THEME_DIR, 'images/go.gif', '" align="top" alt="', i18n::translate('Search'), '" title="', i18n::translate('Search'), '" />',
+			'<input type="text" name="query" size="15" value="', WT_I18N::translate('Search'), '" onfocus="if (this.value==\'', WT_I18N::translate('Search'), '\') this.value=\'\'; focusHandler();" onblur="if (this.value==\'\') this.value=\'', WT_I18N::translate('Search'), '\';" />',
+			'<input type="image" src="', WT_THEME_DIR, 'images/go.gif', '" align="top" alt="', WT_I18N::translate('Search'), '" title="', WT_I18N::translate('Search'), '" />',
 			'</form>',
 			'</div>';
 	}
@@ -154,49 +149,49 @@ if ($view!='simple') {
 		'<table id="toplinks"><tr><td class="toplinks_left">',
 		'<table align="', $TEXT_DIRECTION=="ltr"?"left":"right", '">',
 		'<tr>';
-	$menu=MenuBar::getGedcomMenu();
+	$menu=WT_MenuBar::getGedcomMenu();
 	if ($menu) {
 		$menu->addLabel('', 'none');
 		echo '<td>', $menu->getMenu(), '</td>';
 	}
-	$menu=MenuBar::getMyPageMenu();
+	$menu=WT_MenuBar::getMyPageMenu();
 	if ($menu) {
 		$menu->addLabel('', 'none');
 		echo '<td>', $menu->getMenu(), '</td>';
 	}
-	$menu=MenuBar::getChartsMenu();
+	$menu=WT_MenuBar::getChartsMenu();
 	if ($menu) {
 		$menu->addLabel('', 'none');
 		echo '<td>', $menu->getMenu(), '</td>';
 	}
-	$menu=MenuBar::getListsMenu();
+	$menu=WT_MenuBar::getListsMenu();
 	if ($menu) {
 		$menu->addLabel('', 'none');
 		echo '<td>', $menu->getMenu(), '</td>';
 	}
-	$menu=MenuBar::getCalendarMenu();
+	$menu=WT_MenuBar::getCalendarMenu();
 	if ($menu) {
 		$menu->addLabel('', 'none');
 		echo '<td>', $menu->getMenu(), '</td>';
 	}
-	$menu=MenuBar::getReportsMenu();
+	$menu=WT_MenuBar::getReportsMenu();
 	if ($menu) {
 		$menu->addLabel('', 'none');
 		echo '<td>', $menu->getMenu(), '</td>';
 	}
-	$menu=MenuBar::getSearchMenu();
+	$menu=WT_MenuBar::getSearchMenu();
 	if ($menu) {
 		$menu->addLabel('', 'none');
 		echo '<td>', $menu->getMenu(), '</td>';
 	}
-	$menus=MenuBar::getModuleMenus();
+	$menus=WT_MenuBar::getModuleMenus();
 	foreach ($menus as $m=>$menu) {
 		if ($menu) {
 			$menu->addLabel('', 'none');
 			echo '<td>', $menu->getMenu(), '</td>';
 		}
 	}
-	$menu=MenuBar::getHelpMenu();
+	$menu=WT_MenuBar::getHelpMenu();
 	if ($menu) {
 		$menu->addLabel('', 'none');
 		echo '<td>', $menu->getMenu(), '</td>';

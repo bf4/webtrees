@@ -171,10 +171,7 @@ if ($quitReason != "") {
 
 // The search list has been reversed.  Whitelist all browsers, and
 // mark everything else as a spider/bot.
-// Java/ Axis/ and PEAR required for GDBI and our own cross site communication.
 $real_browsers = array(
-	'PHP-SOAP',
-	'PGVAgent',
 	'MSIE ',
 	'Opera',
 	'Firefox',
@@ -184,9 +181,6 @@ $real_browsers = array(
 	'http://www.avantbrowser.com',
 	'BlackBerry',
 	'Lynx',
-	'Java/',
-	'PEAR',
-	'Axis/',
 	'MSFrontPage',
 	'RssReader',
 	'Liferea/',
@@ -231,8 +225,7 @@ if ($ua != "") {
 			}
 		}
 	}
-}
-else {
+} else {
 	// For the people who firewall identifying information
 	// Switch real to false if you wish to restrict these connections.
 	$ua = "Browser User Agent Empty";
@@ -332,15 +325,10 @@ try {
 				$SEARCH_SPIDER = 'Manual Search Engine entry of '.$_SERVER['REMOTE_ADDR'];
 			}
 		}
-		$bot_name = 'MAN'.$_SERVER['REMOTE_ADDR'];
-		Zend_Session::setId(gen_spider_session_name($bot_name, ''));
 	}
 } catch (PDOException $ex) {
 	// Initial installation?  Site Down?  Fail silently.
 }
-
-if ((empty($SEARCH_SPIDER)) && (!empty($_SESSION['last_spider_name']))) // user following a search engine listing in,
-Zend_Session::regenerateId();
 
 if (!empty($SEARCH_SPIDER)) {
 	$spidertime = time();

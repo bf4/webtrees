@@ -2,7 +2,7 @@
 /**
  * Perform an incremental import of a gedcom file.
  *
- * For each gedcom that needs importing, editgedcoms.php will create
+ * For each gedcom that needs importing, admin_trees_manage.php will create
  * a <div id="importNNN"></div>, where NNN is the gedcom ID.
  * It will then call import.php to load the div's contents using AJAX.
  *
@@ -67,7 +67,7 @@ $row=WT_DB::prepare(
 
 if ($row->import_offset==$row->import_total) {
 	set_gedcom_setting($gedcom_id, 'imported', true);
-	// Finished?  Show the maintenance links, similar to editgedcoms.php
+	// Finished?  Show the maintenance links, similar to admin_trees_manage.php
 	WT_DB::exec("COMMIT");
 	echo
 		WT_JS_START,
@@ -79,7 +79,7 @@ if ($row->import_offset==$row->import_total) {
 
 // Calculate progress so far
 $percent=100*(($row->import_offset) / $row->import_total);
-$status=i18n::translate('Loading data from GEDCOM: %.1f%%', $percent);
+$status=WT_I18N::translate('Loading data from GEDCOM: %.1f%%', $percent);
 
 echo
 	'<div id="progressbar', $gedcom_id, '"><div style="position:absolute;">', $status, '</div></div>',
@@ -118,12 +118,12 @@ for ($end_time=microtime(true)+1.0; microtime(true)<$end_time; ) {
 		)->execute(array($data->gedcom_chunk_id))->fetchOneRow();
 		if (substr($data->chunk_data, 0, 6)!='0 HEAD') {
 			WT_DB::exec("ROLLBACK");
-			echo i18n::translate('Invalid GEDCOM file - no header record found.');
+			echo WT_I18N::translate('Invalid GEDCOM file - no header record found.');
 			echo WT_JS_START, 'jQuery("#actions', $gedcom_id, '").toggle();', WT_JS_END;
 			exit;
 		}
 		// What character set is this?  Need to convert it to UTF8
-		if (preg_match('/\n1 CHAR(?:ACTER)? (.+)/', $data->chunk_data, $match)) {
+		if (preg_match('/\n[ \t]*1 CHAR(?:ACTER)? (.+)/', $data->chunk_data, $match)) {
 			$charset=strtoupper($match[1]);
 		} else {
 			$charset='ASCII';
@@ -152,7 +152,7 @@ for ($end_time=microtime(true)+1.0; microtime(true)<$end_time; ) {
 		case 'ANSI': // ANSI could be anything.  Most applications seem to treat it as latin1.
 			echo
 				WT_JS_START,
-				'alert("', /* I18N: %1$s and %2$s are the names of character encodings, such as ISO-8859-1 or ASCII */ i18n::translate('This GEDCOM is encoded using %1$s.  Assume this to mean %2$s.', $charset, 'ISO-8859-1'), '");',
+				'alert("', /* I18N: %1$s and %2$s are the names of character encodings, such as ISO-8859-1 or ASCII */ WT_I18N::translate('This GEDCOM is encoded using %1$s.  Assume this to mean %2$s.', $charset, 'ISO-8859-1'), '");',
 				WT_JS_END;
 		case 'WINDOWS':
 		case 'CP1252':
@@ -195,7 +195,7 @@ for ($end_time=microtime(true)+1.0; microtime(true)<$end_time; ) {
 			// TODO: fisharebest has written a mysql stored procedure that converts ANSEL to UTF-8
 		default:
 			WT_DB::exec("ROLLBACK");
-			echo '<span class="error">',  i18n::translate('Error: converting GEDCOM files from %s encoding to UTF-8 encoding not currently supported.', $charset), '</span>';
+			echo '<span class="error">',  WT_I18N::translate('Error: converting GEDCOM files from %s encoding to UTF-8 encoding not currently supported.', $charset), '</span>';
 			echo WT_JS_START, 'jQuery("#actions', $gedcom_id, '").toggle();', WT_JS_END;
 			exit;
 		}

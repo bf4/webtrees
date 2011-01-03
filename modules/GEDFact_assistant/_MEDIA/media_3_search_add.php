@@ -41,12 +41,12 @@ if (!defined('WT_WEBTREES')) {
 	//-- Search Function ------------------------------------------------------------
 	?>
 	<tr>
-		<td class="descriptionbox font9 center"><?php echo i18n::translate('Search for People to add to Add Links list.'); ?></td>
+		<td class="descriptionbox font9 center"><?php echo WT_I18N::translate('Search for People to add to Add Links list.'); ?></td>
 	</tr>
 	<tr>
 		<td id="srch" class="optionbox center">
 			<script>
-			var enter_name = "<?php echo i18n::translate('You must enter a name'); ?>";
+			var enter_name = "<?php echo WT_I18N::translate('You must enter a name'); ?>";
 				function findindi(persid) {
 					var findInput = document.getElementById('personid');
 					txt = findInput.value;
@@ -65,7 +65,7 @@ if (!defined('WT_WEBTREES')) {
 			<?php
 			echo '<input id="personid" type="text" value="" />';
 			echo '<a href="javascript: onclick=findindi()">' ;
-			echo '&nbsp;<font size="2">&nbsp;', i18n::translate('Search'), '</font>';
+			echo '&nbsp;<font size="2">&nbsp;', WT_I18N::translate('Search'), '</font>';
 			echo '</a>';
 			?>
 		</td>
@@ -78,7 +78,7 @@ if (!defined('WT_WEBTREES')) {
 
 	<?php
 	//-- Add Family Members to Census  -------------------------------------------
-	global $WT_IMAGES, $spouselinks, $parentlinks, $DeathYr, $BirthYr, $TEXT_DIRECTION, $GEDCOM, $censyear, $censdate;
+	global $WT_IMAGES, $spouselinks, $parentlinks, $DeathYr, $BirthYr, $TEXT_DIRECTION, $censyear, $censdate;
 	// echo "CENS = " . $censyear;
 	?>
 	<tr>
@@ -90,16 +90,16 @@ if (!defined('WT_WEBTREES')) {
 				// Header text with "Head" button =================================================
 				if (isset($WT_IMAGES["button_head"])) {
 					$headImg  = "<img class=\"headimg vmiddle\" src=\"".$WT_IMAGES["button_head"]."\" />";
-					$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"".$WT_IMAGES["button_head"]."\" alt=\"".i18n::translate('Click to choose person as Head of family.')."\" title=\"".i18n::translate('Click to choose person as Head of family.')."\" />";
+					$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"".$WT_IMAGES["button_head"]."\" alt=\"".WT_I18N::translate('Click to choose person as Head of family.')."\" title=\"".WT_I18N::translate('Click to choose person as Head of family.')."\" />";
 				} else {
 					$headImg  = "<img class=\"headimg vmiddle\" src=\"images/buttons/head.gif\" />";
-					$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"images/buttons/head.gif\" alt=\"".i18n::translate('Click to choose person as Head of family.')."\" title=\"".i18n::translate('Click to choose person as Head of family.')."\" />";
+					$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"images/buttons/head.gif\" alt=\"".WT_I18N::translate('Click to choose person as Head of family.')."\" title=\"".WT_I18N::translate('Click to choose person as Head of family.')."\" />";
 				}
 				global $tempStringHead;
-				echo i18n::translate('Click %s to choose person as Head of family.', $headImg);
+				echo WT_I18N::translate('Click %s to choose person as Head of family.', $headImg);
 				?>
 				<br /><br />
-				<?php echo i18n::translate('Click Name to add person to Add Links List.'); ?>
+				<?php echo WT_I18N::translate('Click Name to add person to Add Links List.'); ?>
 			</td>
 		</tr>
 
@@ -113,7 +113,7 @@ if (!defined('WT_WEBTREES')) {
 		//-- Build Parent Family ---------------------------------------------------
 		$personcount=0;
 		$families = $this->indi->getChildFamilies();
-		foreach ($families as $famid=>$family) {
+		foreach ($families as $family) {
 			$label = $this->indi->getChildFamilyLabel($family);
 			$people = $this->buildFamilyList($family, "parents");
 			$marrdate = $family->getMarriageDate();
@@ -121,7 +121,7 @@ if (!defined('WT_WEBTREES')) {
 			// Husband -------------------
 			$styleadd = "";
 			if (isset($people["husb"])) {
-				$married   = GedcomDate::Compare($censdate, $marrdate);
+				$married   = WT_Date::Compare($censdate, $marrdate);
 				$nam   = $people["husb"]->getAllNames();
 				$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 				$givn  = rtrim($nam[0]['givn'],'*');
@@ -130,11 +130,11 @@ if (!defined('WT_WEBTREES')) {
 					$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
 					$marn  = $nam[1]['surname'];
 				}
-				$menu = new Menu("&nbsp;" . $people["husb"]->getLabel());
+				$menu = new WT_Menu("&nbsp;" . $people["husb"]->getLabel());
 				// $menu->addClass("", "", "submenu");
 				$slabel  = print_pedigree_person_nav2($people["husb"]->getXref(), 2, 0, $personcount++, $currpid, $censyear);
 				$slabel .= $parentlinks;
-				$submenu = new Menu($slabel);
+				$submenu = new WT_Menu($slabel);
 				$menu->addSubMenu($submenu);
 
 
@@ -149,7 +149,7 @@ if (!defined('WT_WEBTREES')) {
 					<td align="left" class="facts_value" >
 						<font size=1>
 							<?php
-							echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$people["husb"]->getXref()."&amp;gedcom={$GEDCOM}\">";
+							echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$people["husb"]->getXref()."&amp;gedcom=".WT_GEDURL."\">";
 							echo $headImg2;
 							echo "</a>";
 							?>
@@ -191,7 +191,7 @@ if (!defined('WT_WEBTREES')) {
 						</a>
 						<?php
 						} else {
-							echo i18n::translate('Private');
+							echo WT_I18N::translate('Private');
 						}
 						?>
 						</font>
@@ -201,7 +201,7 @@ if (!defined('WT_WEBTREES')) {
 			}
 
 			if (isset($people["wife"])) {
-				$married   = GedcomDate::Compare($censdate, $marrdate);
+				$married   = WT_Date::Compare($censdate, $marrdate);
 				$nam = $people["wife"]->getAllNames();
 				$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 				$givn  = rtrim($nam[0]['givn'],'*');
@@ -214,11 +214,11 @@ if (!defined('WT_WEBTREES')) {
 					$marn  = $surn;
 				}
 
-				$menu = new Menu("&nbsp;" . $people["wife"]->getLabel());
+				$menu = new WT_Menu("&nbsp;" . $people["wife"]->getLabel());
 				//$menu->addClass("", "", "submenu");
 				$slabel  = print_pedigree_person_nav2($people["wife"]->getXref(), 2, 0, $personcount++, $currpid, $censyear);
 				$slabel .= $parentlinks;
-				$submenu = new Menu($slabel);
+				$submenu = new WT_Menu($slabel);
 				$menu->addSubMenu($submenu);
 				?>
 				<tr>
@@ -230,7 +230,7 @@ if (!defined('WT_WEBTREES')) {
 					<td align="left" class="facts_value">
 						<font size=1>
 							<?php
-							echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$people["wife"]->getXref()."&amp;gedcom={$GEDCOM}\">";
+							echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$people["wife"]->getXref()."&amp;gedcom=".WT_GEDURL."\">";
 							echo $headImg2;
 							echo "</a>";
 							?>
@@ -281,7 +281,7 @@ if (!defined('WT_WEBTREES')) {
 						</a>
 						<?php
 						} else {
-							echo i18n::translate('Private');
+							echo WT_I18N::translate('Private');
 						}
 						?>
 						</font>
@@ -297,7 +297,7 @@ if (!defined('WT_WEBTREES')) {
 					$married="";
 					foreach ($child->getSpouseFamilies() as $childfamily) {
 						$tmp=$childfamily->getMarriageDate();
-						$married = GedcomDate::Compare($censdate, $tmp);
+						$married = WT_Date::Compare($censdate, $tmp);
 					}
 					$nam   = $child->getAllNames();
 					$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
@@ -308,11 +308,11 @@ if (!defined('WT_WEBTREES')) {
 						$marn  = $nam[1]['surname'];
 					}
 
-					$menu = new Menu("&nbsp;" . $child->getLabel());
+					$menu = new WT_Menu("&nbsp;" . $child->getLabel());
 					//$menu->addClass("", "", "submenu");
 					$slabel  = print_pedigree_person_nav2($child->getXref(), 2, 0, $personcount++, $currpid, $censyear);
 					$slabel .= $spouselinks;
-					$submenu = new Menu($slabel);
+					$submenu = new WT_Menu($slabel);
 					$menu->addSubMenu($submenu);
 
 					if ($child->getXref()==$pid) {
@@ -334,7 +334,7 @@ if (!defined('WT_WEBTREES')) {
 							<td align="left" class="facts_value">
 								<font size=1>
 									<?php
-									echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$child->getXref()."&amp;gedcom={$GEDCOM}\">";
+									echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$child->getXref()."&amp;gedcom=".WT_GEDURL."\">";
 									echo $headImg2;
 									echo "</a>";
 									?>
@@ -390,7 +390,7 @@ if (!defined('WT_WEBTREES')) {
 									</a>
 									<?php
 								} else {
-									echo i18n::translate('Private');
+									echo WT_I18N::translate('Private');
 								}
 								?>
 								</font>
@@ -404,7 +404,7 @@ if (!defined('WT_WEBTREES')) {
 		}
 
 		//-- Build step families ----------------------------------------------------------------
-		foreach ($this->indi->getStepFamilies() as $famid=>$family) {
+		foreach ($this->indi->getStepFamilies() as $family) {
 			$label = $this->indi->getStepFamilyLabel($family);
 			$people = $this->buildFamilyList($family, "step");
 			if ($people) {
@@ -416,7 +416,7 @@ if (!defined('WT_WEBTREES')) {
 			$styleadd = "";
 			$elderdate = "";
 			if (isset($people["husb"]) ) {
-				$married   = GedcomDate::Compare($censdate, $marrdate);
+				$married   = WT_Date::Compare($censdate, $marrdate);
 				$nam   = $people["husb"]->getAllNames();
 				$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 				$givn  = rtrim($nam[0]['givn'],'*');
@@ -425,16 +425,16 @@ if (!defined('WT_WEBTREES')) {
 					$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
 					$marn  = $nam[1]['surname'];
 				}
-				$menu = new Menu();
+				$menu = new WT_Menu();
 				if ($people["husb"]->getLabel() == ".") {
-					$menu->addLabel("&nbsp;" . i18n::translate('Step-Father'));
+					$menu->addLabel("&nbsp;" . WT_I18N::translate('Step-Father'));
 				} else {
 					$menu->addLabel("&nbsp;" . $people["husb"]->getLabel());
 				}
 				//$menu->addClass("", "", "submenu");
 				$slabel  = print_pedigree_person_nav2($people["husb"]->getXref(), 2, 0, $personcount++, $currpid, $censyear);
 				$slabel .= $parentlinks;
-				$submenu = new Menu($slabel);
+				$submenu = new WT_Menu($slabel);
 				$menu->addSubMenu($submenu);
 				if (PrintReady($people["husb"]->getDeathYear()) == 0) { $DeathYr = ""; } else { $DeathYr = PrintReady($people["husb"]->getDeathYear()); }
 				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; } else { $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
@@ -448,7 +448,7 @@ if (!defined('WT_WEBTREES')) {
 					<td align="left" class="facts_value">
 						<font size=1>
 							<?php
-							echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$people["husb"]->getXref()."&amp;gedcom={$GEDCOM}\">";
+							echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$people["husb"]->getXref()."&amp;gedcom=".WT_GEDURL."\">";
 							echo $headImg2;
 							echo "</a>";
 							?>
@@ -466,7 +466,7 @@ if (!defined('WT_WEBTREES')) {
 								echo PrintReady($fulln);
 							?>", "<?php
 							if ($people["husb"]->getLabel() == ".") {
-								echo PrintReady(i18n::translate('Step-Father')); // label = Relationship
+								echo PrintReady(WT_I18N::translate('Step-Father')); // label = Relationship
 							} else {
 								echo PrintReady($people["husb"]->getLabel()); // label = Relationship
 							}
@@ -494,7 +494,7 @@ if (!defined('WT_WEBTREES')) {
 							</a>
 							<?php
 						} else {
-							echo i18n::translate('Private');
+							echo WT_I18N::translate('Private');
 						}
 						?>
 						</font>
@@ -507,7 +507,7 @@ if (!defined('WT_WEBTREES')) {
 			// Wife -------------------
 			$styleadd = "";
 			if (isset($people["wife"]) ) {
-				$married   = GedcomDate::Compare($censdate, $marrdate);
+				$married   = WT_Date::Compare($censdate, $marrdate);
 				$nam   = $people["wife"]->getAllNames();
 				$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 				$givn  = rtrim($nam[0]['givn'],'*');
@@ -516,16 +516,16 @@ if (!defined('WT_WEBTREES')) {
 					$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
 					$marn  = $nam[1]['surname'];
 				}
-				$menu = new Menu();
+				$menu = new WT_Menu();
 				if ($people["husb"]->getLabel() == ".") {
-					$menu->addLabel("&nbsp;" . i18n::translate('Step-Mother'));
+					$menu->addLabel("&nbsp;" . WT_I18N::translate('Step-Mother'));
 				} else {
 					$menu->addLabel("&nbsp;" . $people["wife"]->getLabel());
 				}
 				//$menu->addClass("", "", "submenu");
 				$slabel  = print_pedigree_person_nav2($people["wife"]->getXref(), 2, 0, $personcount++, $currpid, $censyear);
 				$slabel .= $parentlinks;
-				$submenu = new Menu($slabel);
+				$submenu = new WT_Menu($slabel);
 				$menu->addSubMenu($submenu);
 				if (PrintReady($people["wife"]->getDeathYear()) == 0) { $DeathYr = ""; } else { $DeathYr = PrintReady($people["wife"]->getDeathYear()); }
 				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; } else { $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
@@ -539,7 +539,7 @@ if (!defined('WT_WEBTREES')) {
 					<td align="left" class="facts_value">
 						<font size=1>
 							<?php
-							echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$people["wife"]->getXref()."&amp;gedcom={$GEDCOM}\">";
+							echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$people["wife"]->getXref()."&amp;gedcom=".WT_GEDURL."\">";
 							echo $headImg2;
 							echo "</a>";
 							?>
@@ -561,7 +561,7 @@ if (!defined('WT_WEBTREES')) {
 							// }
 							?>", "<?php
 							if ($people["wife"]->getLabel() == ".") {
-								echo PrintReady(i18n::translate('Step-Mother')); // label = Relationship
+								echo PrintReady(WT_I18N::translate('Step-Mother')); // label = Relationship
 							} else {
 								echo PrintReady($people["wife"]->getLabel()); // label = Relationship
 							}
@@ -594,7 +594,7 @@ if (!defined('WT_WEBTREES')) {
 						</a>
 						<?php
 						} else {
-							echo i18n::translate('Private');
+							echo WT_I18N::translate('Private');
 						}
 						?>
 						</font>
@@ -616,11 +616,11 @@ if (!defined('WT_WEBTREES')) {
 						$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
 						$marn  = $nam[1]['surname'];
 					}
-					$menu = new Menu("&nbsp;" . $child->getLabel());
+					$menu = new WT_Menu("&nbsp;" . $child->getLabel());
 					//$menu->addClass("", "", "submenu");
 					$slabel  = print_pedigree_person_nav2($child->getXref(), 2, 0, $personcount++, $currpid, $censyear);
 					$slabel .= $spouselinks;
-					$submenu = new Menu($slabel);
+					$submenu = new WT_Menu($slabel);
 					$menu->addSubMenu($submenu); if (PrintReady($child->getDeathYear()) == 0) { $DeathYr = ""; } else { $DeathYr = PrintReady($child->getDeathYear()); }
 					if (PrintReady($child->getBirthYear()) == 0) { $BirthYr = ""; } else { $BirthYr = PrintReady($child->getBirthYear()); }
 					?>
@@ -633,7 +633,7 @@ if (!defined('WT_WEBTREES')) {
 						<td align="left" class="facts_value" >
 							<font size=1>
 							<?php
-							echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$child->getXref()."&amp;gedcom={$GEDCOM}\">";
+							echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$child->getXref()."&amp;gedcom=".WT_GEDURL."\">";
 							echo $headImg2;
 							echo "</a>";
 							?>
@@ -671,7 +671,7 @@ if (!defined('WT_WEBTREES')) {
 							</a>
 							<?php
 							} else {
-								echo i18n::translate('Private');
+								echo WT_I18N::translate('Private');
 							}
 							?>
 							</font>
@@ -688,7 +688,7 @@ if (!defined('WT_WEBTREES')) {
 		//-- Build Spouse Family ---------------------------------------------------
 		$families = $this->indi->getSpouseFamilies();
 		//$personcount = 0;
-		foreach ($families as $famid=>$family) {
+		foreach ($families as $family) {
 			$people = $this->buildFamilyList($family, "spouse");
 			if ($this->indi->equals($people["husb"])) {
 				$spousetag = 'WIFE';
@@ -699,7 +699,7 @@ if (!defined('WT_WEBTREES')) {
 
 			// Husband -------------------
 			if (isset($people["husb"])) {
-				$married   = GedcomDate::Compare($censdate, $marrdate);
+				$married   = WT_Date::Compare($censdate, $marrdate);
 				$nam   = $people["husb"]->getAllNames();
 				$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 				$givn  = rtrim($nam[0]['givn'],'*');
@@ -708,11 +708,11 @@ if (!defined('WT_WEBTREES')) {
 					$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
 					$marn  = $nam[1]['surname'];
 				}
-				$menu = new Menu("&nbsp;" . $people["husb"]->getLabel());
+				$menu = new WT_Menu("&nbsp;" . $people["husb"]->getLabel());
 				//$menu->addClass("", "", "submenu");
 				$slabel  = print_pedigree_person_nav2($people["husb"]->getXref(), 2, 0, $personcount++, $currpid, $censyear);
 				$slabel .= $parentlinks;
-				$submenu = new Menu($slabel);
+				$submenu = new WT_Menu($slabel);
 				$menu->addSubMenu($submenu);
 				if (PrintReady($people["husb"]->getDeathYear()) == 0) { $DeathYr = ""; } else { $DeathYr = PrintReady($people["husb"]->getDeathYear()); }
 				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; } else { $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
@@ -722,7 +722,7 @@ if (!defined('WT_WEBTREES')) {
 						<font size=1>
 							<?php
 							if ($people["husb"]->getXref()==$pid) {
-								echo "&nbsp" .($people["husb"]->getLabel())." ".i18n::translate('Head of Household:');
+								echo "&nbsp" .($people["husb"]->getLabel())." ".WT_I18N::translate('Head of Household:');
 							} else {
 								echo $menu->getMenu();
 							}
@@ -732,7 +732,7 @@ if (!defined('WT_WEBTREES')) {
 					<td align="left" class="facts_value" >
 						<font size=1>
 							<?php
-							echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$people["husb"]->getXref()."&amp;gedcom={$GEDCOM}\">";
+							echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$people["husb"]->getXref()."&amp;gedcom=".WT_GEDURL."\">";
 							echo $headImg2;
 							echo "</a>";
 							?>
@@ -779,7 +779,7 @@ if (!defined('WT_WEBTREES')) {
 						</a>
 						<?php
 						} else {
-							echo i18n::translate('Private');
+							echo WT_I18N::translate('Private');
 							}
 							?>
 						</font>
@@ -792,7 +792,7 @@ if (!defined('WT_WEBTREES')) {
 			// Wife -------------------
 			//if (isset($people["wife"]) && $spousetag == 'WIFE') {
 			if (isset($people["wife"])) {
-				$married = GedcomDate::Compare($censdate, $marrdate);
+				$married = WT_Date::Compare($censdate, $marrdate);
 				$nam   = $people["wife"]->getAllNames();
 				$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 				$givn  = rtrim($nam[0]['givn'],'*');
@@ -804,11 +804,11 @@ if (!defined('WT_WEBTREES')) {
 					$fulmn = $fulln;
 					$marn  = $surn;
 				}
-				$menu = new Menu("&nbsp;" . $people["wife"]->getLabel());
+				$menu = new WT_Menu("&nbsp;" . $people["wife"]->getLabel());
 				//$menu->addClass("", "", "submenu");
 				$slabel  = print_pedigree_person_nav2($people["wife"]->getXref(), 2, 0, $personcount++, $currpid, $censyear);
 				$slabel .= $parentlinks;
-				$submenu = new Menu($slabel);
+				$submenu = new WT_Menu($slabel);
 				$menu->addSubMenu($submenu);
 				if (PrintReady($people["wife"]->getDeathYear()) == 0) { $DeathYr = ""; } else { $DeathYr = PrintReady($people["wife"]->getDeathYear()); }
 				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; } else { $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
@@ -818,7 +818,7 @@ if (!defined('WT_WEBTREES')) {
 						<font size=1>
 							<?php
 							if ($people["wife"]->getXref()==$pid) {
-								echo "&nbsp" .($people["wife"]->getLabel())." ".i18n::translate('Head of Household:');
+								echo "&nbsp" .($people["wife"]->getLabel())." ".WT_I18N::translate('Head of Household:');
 							} else {
 								echo $menu->getMenu();
 							}
@@ -828,7 +828,7 @@ if (!defined('WT_WEBTREES')) {
 					<td align="left" class="facts_value">
 						<font size=1>
 							<?php
-							echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$people["wife"]->getXref()."&amp;gedcom={$GEDCOM}\">";
+							echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$people["wife"]->getXref()."&amp;gedcom=".WT_GEDURL."\">";
 							echo $headImg2;
 							echo "</a>";
 							?>
@@ -883,7 +883,7 @@ if (!defined('WT_WEBTREES')) {
 							</a>
 							<?php
 						} else {
-							echo i18n::translate('Private');
+							echo WT_I18N::translate('Private');
 						}
 						?>
 						</font>
@@ -897,7 +897,7 @@ if (!defined('WT_WEBTREES')) {
 					$married="";
 					foreach ($child->getSpouseFamilies() as $childfamily) {
 						$tmp=$childfamily->getMarriageDate();
-						$married = GedcomDate::Compare($censdate, $tmp);
+						$married = WT_Date::Compare($censdate, $tmp);
 					}
 					$nam   = $child->getAllNames();
 					$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
@@ -910,11 +910,11 @@ if (!defined('WT_WEBTREES')) {
 						$fulmn = $fulln;
 						$marn  = $surn;
 					}
-					$menu = new Menu("&nbsp;" . $child->getLabel());
+					$menu = new WT_Menu("&nbsp;" . $child->getLabel());
 					//$menu->addClass("", "", "submenu");
 					$slabel = print_pedigree_person_nav2($child->getXref(), 2, 0, $personcount++, $child->getLabel(), $censyear);
 					$slabel .= $spouselinks;
-					$submenu = new Menu($slabel);
+					$submenu = new WT_Menu($slabel);
 					$menu->addSubmenu($submenu);
 					?>
 				<tr>
@@ -926,7 +926,7 @@ if (!defined('WT_WEBTREES')) {
 					<td align="left" class="facts_value">
 						<font size=1>
 							<?php
-							echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$child->getXref()."&amp;gedcom={$GEDCOM}\">";
+							echo "<a href=\"edit_interface.php?action=addmedia_links&amp;noteid=newnote&amp;pid=".$child->getXref()."&amp;gedcom=".WT_GEDURL."\">";
 							echo $headImg2;
 							echo "</a>";
 							?>
@@ -979,7 +979,7 @@ if (!defined('WT_WEBTREES')) {
 						</a>
 						<?php
 					} else {
-						echo i18n::translate('Private');
+						echo WT_I18N::translate('Private');
 					}
 					?>
 						</font>
@@ -1007,7 +1007,7 @@ require_once WT_ROOT.'includes/functions/functions_charts.php';
  * @param int $count on some charts it is important to keep a count of how many boxes were printed
  */
 function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", $currpid, $censyear) {
-	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $ZOOM_BOXES, $LINK_ICONS, $GEDCOM;
+	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $ZOOM_BOXES, $LINK_ICONS;
 	global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_PEDIGREE_PLACES;
 	global $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
 	global $WT_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
@@ -1025,7 +1025,7 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 	if (!isset($OLD_PGENS)) $OLD_PGENS = $DEFAULT_PEDIGREE_GENERATIONS;
 	if (!isset($talloffset)) $talloffset = $PEDIGREE_LAYOUT;
 
-	$person=Person::getInstance($pid);
+	$person=WT_Person::getInstance($pid);
 	if ($pid==false || empty($person)) {
 		$spouselinks  = false;
 		$parentlinks  = false;
@@ -1045,26 +1045,25 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 				//-- draw a box for the family popup
 				if ($TEXT_DIRECTION=="rtl") {
 				$spouselinks .= "<table id=\"flyoutFamRTL\" class=\"person_box$isF\"><tr><td class=\"name2 font9 rtl\">";
-				$spouselinks .= "<b>" . i18n::translate('Family') . "</b> (" .$person->getFullName(). ")<br />";
+				$spouselinks .= "<b>" . WT_I18N::translate('Family') . "</b> (" .$person->getFullName(). ")<br />";
 				$parentlinks .= "<table id=\"flyoutParRTL\" class=\"person_box$isF\"><tr><td class=\"name2 font9 rtl\">";
-				$parentlinks .= "<b>" . i18n::translate('Parents') . "</b> (" .$person->getFullName(). ")<br />";
+				$parentlinks .= "<b>" . WT_I18N::translate('Parents') . "</b> (" .$person->getFullName(). ")<br />";
 				$step_parentlinks .= "<table id=\"flyoutStepRTL\" class=\"person_box$isF\"><tr><td class=\"name2 font9 rtl\">";
-				$step_parentlinks .= "<b>" . i18n::translate('Parents') . "</b> (" .$person->getFullName(). ")<br />";
+				$step_parentlinks .= "<b>" . WT_I18N::translate('Parents') . "</b> (" .$person->getFullName(). ")<br />";
 				} else {
 				$spouselinks .= "<table id=\"flyoutFam\" class=\"person_box$isF\"><tr><td class=\"name2 font9 ltr\">";
-				$spouselinks .= "<b>" . i18n::translate('Family') . "</b> (" .$person->getFullName(). ")<br />";
+				$spouselinks .= "<b>" . WT_I18N::translate('Family') . "</b> (" .$person->getFullName(). ")<br />";
 				$parentlinks .= "<table id=\"flyoutPar\" class=\"person_box$isF\"><tr><td class=\"name2 font9 ltr\">";
-				$parentlinks .= "<b>" . i18n::translate('Parents') . "</b> (" .$person->getFullName(). ")<br />";
+				$parentlinks .= "<b>" . WT_I18N::translate('Parents') . "</b> (" .$person->getFullName(). ")<br />";
 				$step_parentlinks .= "<table id=\"flyoutStep\" class=\"person_box$isF\"><tr><td class=\"name2 font9 ltr\">";
-				$step_parentlinks .= "<b>" . i18n::translate('Parents') . "</b> (" .$person->getFullName(). ")<br />";
+				$step_parentlinks .= "<b>" . WT_I18N::translate('Parents') . "</b> (" .$person->getFullName(). ")<br />";
 				}
 				$persons       = "";
 				$person_parent = "";
 				$person_step   = "";
 
 				//-- parent families --------------------------------------
-				$fams = $person->getChildFamilies();
-				foreach ($fams as $famid=>$family) {
+				foreach ($person->getChildFamilies() as $family) {
 
 					if (!is_null($family)) {
 						$husb = $family->getHusband($person);
@@ -1077,16 +1076,16 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 						// Husband ------------------------------
 						if ($husb || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") {
-								$title = i18n::translate('Family book chart').": ".$famid;
+								$title = WT_I18N::translate('Family book chart').": ".$family->getXref();
 							} else {
-								$title = $famid." :".i18n::translate('Family book chart');
+								$title = $family->getXref()." :".WT_I18N::translate('Family book chart');
 							}
 							if ($husb) {
 								$person_parent="Yes";
 								if ($TEXT_DIRECTION=="ltr") {
-									$title = i18n::translate('Individual information').": ".$husb->getXref();
+									$title = WT_I18N::translate('Individual information').": ".$husb->getXref();
 								} else {
-									$title = $husb->getXref()." :".i18n::translate('Individual information');
+									$title = $husb->getXref()." :".WT_I18N::translate('Individual information');
 								}
 								$tmp=$husb->getXref();
 								if ($husb->canDisplayName()) {
@@ -1123,7 +1122,7 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 									$parentlinks .= "</a>";
 
 								} else {
-									$parentlinks .= i18n::translate('Private');
+									$parentlinks .= WT_I18N::translate('Private');
 								}
 								$natdad = "yes";
 							}
@@ -1132,20 +1131,20 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 						// Wife ------------------------------
 						if ($wife || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") {
-								$title = i18n::translate('Family book chart').": ".$famid;
+								$title = WT_I18N::translate('Family book chart').": ".$family->getXref();
 							} else {
-								$title = $famid." :".i18n::translate('Family book chart');
+								$title = $family->getXref()." :".WT_I18N::translate('Family book chart');
 							}
 							if ($wife) {
 								$person_parent="Yes";
 								if ($TEXT_DIRECTION=="ltr") {
-									$title = i18n::translate('Individual information').": ".$wife->getXref();
+									$title = WT_I18N::translate('Individual information').": ".$wife->getXref();
 								} else {
-									$title = $wife->getXref()." :".i18n::translate('Individual information');
+									$title = $wife->getXref()." :".WT_I18N::translate('Individual information');
 								}
 								$tmp=$wife->getXref();
 								if ($wife->canDisplayName()) {
-									$married = GedcomDate::Compare($censdate, $marrdate);
+									$married = WT_Date::Compare($censdate, $marrdate);
 									$nam   = $wife->getAllNames();
 									$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 									$givn  = rtrim($nam[0]['givn'],'*');
@@ -1191,7 +1190,7 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 									// $parentlinks .= "</div></a>";
 									$parentlinks .= "</a>";
 								} else {
-									$parentlinks .= i18n::translate('Private');
+									$parentlinks .= WT_I18N::translate('Private');
 								}
 								$parentlinks .= "<br />";
 								$natmom = "yes";
@@ -1202,7 +1201,7 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 
 				//-- step families -----------------------------------------
 				$fams = $person->getStepFamilies();
-				foreach ($fams as $famid=>$family) {
+				foreach ($fams as $family) {
 					if (!is_null($family)) {
 						$husb = $family->getHusband($person);
 						$wife = $family->getWife($person);
@@ -1216,16 +1215,16 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 							// Husband -----------------------
 							if (($husb || $num>0) && $husb->getLabel() != ".") {
 								if ($TEXT_DIRECTION=="ltr") {
-									$title = i18n::translate('Family book chart').": ".$famid;
+									$title = WT_I18N::translate('Family book chart').": ".$family->getXref();
 								} else {
-									$title = $famid." :".i18n::translate('Family book chart');
+									$title = $family->getXref()." :".WT_I18N::translate('Family book chart');
 								}
 								if ($husb) {
 									$person_step="Yes";
 									if ($TEXT_DIRECTION=="ltr") {
-										$title = i18n::translate('Individual information').": ".$husb->getXref();
+										$title = WT_I18N::translate('Individual information').": ".$husb->getXref();
 									} else {
-										$title = $husb->getXref()." :".i18n::translate('Individual information');
+										$title = $husb->getXref()." :".WT_I18N::translate('Individual information');
 									}
 									$tmp=$husb->getXref();
 									if ($husb->canDisplayName()) {
@@ -1239,11 +1238,11 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 											$marn  = $nam[1]['surname'];
 										}
 
-										$parentlinks .= "<a href=\"individual.php?pid={$tmp}&amp;tab={$tabno}&amp;gedcom={$GEDCOM}\">";
+										$parentlinks .= "<a href=\"individual.php?pid={$tmp}&amp;tab={$tabno}&amp;gedcom=".WT_GEDURL."\">";
 										$parentlinks .= PrintReady($husb->getFullName());
 										$parentlinks .= "</a>";
 									} else {
-										$parentlinks .= i18n::translate('Private');
+										$parentlinks .= WT_I18N::translate('Private');
 									}
 									$parentlinks .= "<br />";
 								}
@@ -1255,20 +1254,20 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 							// Wife ----------------------------
 							if ($wife || $num>0) {
 								if ($TEXT_DIRECTION=="ltr") {
-									$title = i18n::translate('Family book chart').": ".$famid;
+									$title = WT_I18N::translate('Family book chart').": ".$family->getXref();
 								} else {
-									$title = $famid." :".i18n::translate('Family book chart');
+									$title = $family->getXref()." :".WT_I18N::translate('Family book chart');
 								}
 								if ($wife) {
 									$person_step="Yes";
 									if ($TEXT_DIRECTION=="ltr") {
-										$title = i18n::translate('Individual information').": ".$wife->getXref();
+										$title = WT_I18N::translate('Individual information').": ".$wife->getXref();
 									} else {
-										$title = $wife->getXref()." :".i18n::translate('Individual information');
+										$title = $wife->getXref()." :".WT_I18N::translate('Individual information');
 									}
 									$tmp=$wife->getXref();
 									if ($wife->canDisplayName()) {
-										$married = GedcomDate::Compare($censdate, $marrdate);
+										$married = WT_Date::Compare($censdate, $marrdate);
 										$nam   = $wife->getAllNames();
 										$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 										$givn  = rtrim($nam[0]['givn'],'*');
@@ -1277,11 +1276,11 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 											$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
 											$marn  = $nam[1]['surname'];
 										}
-										$parentlinks .= "<a href=\"individual.php?pid={$tmp}&amp;tab={$tabno}&amp;gedcom={$GEDCOM}\">";
+										$parentlinks .= "<a href=\"individual.php?pid={$tmp}&amp;tab={$tabno}&amp;gedcom=".WT_GEDURL."\">";
 										$parentlinks .= PrintReady($wife->getFullName());
 										$parentlinks .= "</a>";
 									} else {
-										$parentlinks .= i18n::translate('Private');
+										$parentlinks .= WT_I18N::translate('Private');
 									}
 									$parentlinks .= "<br />";
 								}
@@ -1291,8 +1290,7 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 				}
 
 				// Spouse Families -------------------------------------- @var $family Family
-				$fams = $person->getSpouseFamilies();
-				foreach ($fams as $famid=>$family) {
+				foreach ($person->getSpouseFamilies() as $family) {
 					if (!is_null($family)) {
 						$spouse = $family->getSpouse($person);
 						$children = $family->getChildren();
@@ -1302,19 +1300,19 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 						// Spouse ------------------------------
 						if ($spouse || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") {
-								$title = i18n::translate('Family book chart').": ".$famid;
+								$title = WT_I18N::translate('Family book chart').": ".$family->getXref();
 							} else {
-								$title = $famid." :".i18n::translate('Family book chart');
+								$title = $family->getXref()." :".WT_I18N::translate('Family book chart');
 							}
 							if ($spouse) {
 								if ($TEXT_DIRECTION=="ltr") {
-									$title = i18n::translate('Individual information').": ".$spouse->getXref();
+									$title = WT_I18N::translate('Individual information').": ".$spouse->getXref();
 								} else {
-									$title = $spouse->getXref()." :".i18n::translate('Individual information');
+									$title = $spouse->getXref()." :".WT_I18N::translate('Individual information');
 								}
 								$tmp=$spouse->getXref();
 								if ($spouse->canDisplayName()) {
-									$married = GedcomDate::Compare($censdate, $marrdate);
+									$married = WT_Date::Compare($censdate, $marrdate);
 									$nam   = $spouse->getAllNames();
 									$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 									$givn  = rtrim($nam[0]['givn'],'*');
@@ -1364,7 +1362,7 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 										//}
 										$spouselinks .= "</a>";
 								} else {
-									$spouselinks .= i18n::translate('Private');
+									$spouselinks .= WT_I18N::translate('Private');
 								}
 								$spouselinks .= "</a>";
 								if ($spouse->getFullName() != "") {
@@ -1380,7 +1378,7 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 							$cpid = $child->getXref();
 							if ($child) {
 								$persons="Yes";
-									$title = i18n::translate('Individual information').": ".$cpid;
+									$title = WT_I18N::translate('Individual information').": ".$cpid;
 									if ($child->canDisplayName()) {
 										$nam   = $child->getAllNames();
 										$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
@@ -1423,7 +1421,7 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 									$spouselinks .= PrintReady($child->getFullName()); // Full Name
 									$spouselinks .= "</a>";
 									} else {
-										$spouselinks .= i18n::translate('Private');
+										$spouselinks .= WT_I18N::translate('Private');
 									}
 									$spouselinks .= "</li>";
 							}
@@ -1434,19 +1432,19 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 				}
 
 				if ($persons != "Yes") {
-					$spouselinks  .= "(" . i18n::translate('none') . ")</td></tr></table>";
+					$spouselinks  .= "(" . WT_I18N::translate('none') . ")</td></tr></table>";
 				} else {
 					$spouselinks  .= "</td></tr></table>";
 				}
 
 				if ($person_parent != "Yes") {
-					$parentlinks .= "(" . i18n::translate_c('unknown family', 'unknown') . ")</td></tr></table>";
+					$parentlinks .= "(" . WT_I18N::translate_c('unknown family', 'unknown') . ")</td></tr></table>";
 				} else {
 					$parentlinks .= "</td></tr></table>";
 				}
 
 				if ($person_step != "Yes") {
-					$step_parentlinks .= "(" . i18n::translate_c('unknown family', 'unknown') . ")</td></tr></table>";
+					$step_parentlinks .= "(" . WT_I18N::translate_c('unknown family', 'unknown') . ")</td></tr></table>";
 				} else {
 					$step_parentlinks .= "</td></tr></table>";
 				}

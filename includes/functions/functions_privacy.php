@@ -74,7 +74,7 @@ function is_dead($indirec, $gedcom_id) {
 	// If any event occured more than $MAX_ALIVE_AGE years ago, then assume the person is dead
 	preg_match_all('/\n2 DATE (.+)/', $indirec, $date_matches);
 	foreach ($date_matches[1] as $date_match) {
-		$date=new GedcomDate($date_match);
+		$date=new WT_Date($date_match);
 		if ($date->isOK() && $date->MaxJD() <= WT_SERVER_JD - 365*$MAX_ALIVE_AGE) {
 			return true;
 		}
@@ -89,7 +89,7 @@ function is_dead($indirec, $gedcom_id) {
 		if (!empty($parents['HUSB'])) {
 			preg_match_all('/\n2 DATE (.+)/', find_person_record($parents['HUSB'], $gedcom_id), $date_matches);
 			foreach ($date_matches[1] as $date_match) {
-				$date=new GedcomDate($date_match);
+				$date=new WT_Date($date_match);
 				// Assume fathers are no more than 40 years older than their children
 				if ($date->isOK() && $date->MaxJD() <= WT_SERVER_JD - 365*($MAX_ALIVE_AGE+40)) {
 					return true;
@@ -99,7 +99,7 @@ function is_dead($indirec, $gedcom_id) {
 		if (!empty($parents['WIFE'])) {
 			preg_match_all('/\n2 DATE (.+)/', find_person_record($parents['WIFE'], $gedcom_id), $date_matches);
 			foreach ($date_matches[1] as $date_match) {
-				$date=new GedcomDate($date_match);
+				$date=new WT_Date($date_match);
 				// Assume mothers are no more than 40 years older than their children
 				if ($date->isOK() && $date->MaxJD() <= WT_SERVER_JD - 365*($MAX_ALIVE_AGE+40)) {
 					return true;
@@ -115,7 +115,7 @@ function is_dead($indirec, $gedcom_id) {
 		// Check all marriage events
 		preg_match_all('/\n1 (?:'.WT_EVENTS_MARR.')(?:\n[2-9].+)*\n2 DATE (.+)/', $indirec, $date_matches);
 		foreach ($date_matches[1] as $date_match) {
-			$date=new GedcomDate($date_match);
+			$date=new WT_Date($date_match);
 			// Assume marriage occurs after age of 10
 			if ($date->isOK() && $date->MaxJD() <= WT_SERVER_JD - 365*($MAX_ALIVE_AGE-10)) {
 				return true;
@@ -131,7 +131,7 @@ function is_dead($indirec, $gedcom_id) {
 			}
 			preg_match_all('/\n2 DATE (.+)/', find_person_record($spid, $gedcom_id), $date_matches);
 			foreach ($date_matches[1] as $date_match) {
-				$date=new GedcomDate($date_match);
+				$date=new WT_Date($date_match);
 				// Assume max age difference between spouses of 40 years
 				if ($date->isOK() && $date->MaxJD() <= WT_SERVER_JD - 365*($MAX_ALIVE_AGE+40)) {
 					return true;
@@ -145,7 +145,7 @@ function is_dead($indirec, $gedcom_id) {
 			preg_match_all('/\n2 DATE (.+)/', $childrec, $date_matches);
 			// Assume children born after age of 15
 			foreach ($date_matches[1] as $date_match) {
-				$date=new GedcomDate($date_match);
+				$date=new WT_Date($date_match);
 				if ($date->isOK() && $date->MaxJD() <= WT_SERVER_JD - 365*($MAX_ALIVE_AGE-15)) {
 					return true;
 				}
@@ -159,7 +159,7 @@ function is_dead($indirec, $gedcom_id) {
 					preg_match_all('/\n2 DATE (.+)/', $grandchildrec, $date_matches);
 					// Assume grandchildren born after age of 30
 					foreach ($date_matches[1] as $date_match) {
-						$date=new GedcomDate($date_match);
+						$date=new WT_Date($date_match);
 						if ($date->isOK() && $date->MaxJD() <= WT_SERVER_JD - 365*($MAX_ALIVE_AGE-30)) {
 							return true;
 						}
@@ -278,7 +278,7 @@ function canDisplayRecord($ged_id, $gedrec) {
 			if ($KEEP_ALIVE_YEARS_BIRTH) {
 				preg_match_all('/\n1 (?:'.WT_EVENTS_BIRT.').*(?:\n[2-9].*)*(?:\n2 DATE (.+))/', $gedrec, $matches, PREG_SET_ORDER);
 				foreach ($matches as $match) {
-					$date=new GedcomDate($match[1]);
+					$date=new WT_Date($match[1]);
 					if ($date->isOK() && $date->gregorianYear()+$KEEP_ALIVE_YEARS_BIRTH > date('Y')) {
 						$keep_alive=true;
 						break;
@@ -288,7 +288,7 @@ function canDisplayRecord($ged_id, $gedrec) {
 			if ($KEEP_ALIVE_YEARS_DEATH) {
 				preg_match_all('/\n1 (?:'.WT_EVENTS_DEAT.').*(?:\n[2-9].*)*(?:\n2 DATE (.+))/', $gedrec, $matches, PREG_SET_ORDER);
 				foreach ($matches as $match) {
-					$date=new GedcomDate($match[1]);
+					$date=new WT_Date($match[1]);
 					if ($date->isOK() && $date->gregorianYear()+$KEEP_ALIVE_YEARS_DEATH > date('Y')) {
 						$keep_alive=true;
 						break;
@@ -304,7 +304,7 @@ function canDisplayRecord($ged_id, $gedrec) {
 			$relationship=get_relationship($pgv_USER_GEDCOM_ID, $xref, true, WT_USER_PATH_LENGTH);
 			return $cache[$cache_key]=($relationship!==false);
 		}
-		// No restriction found - show living people to authenticated users only:
+		// No restriction found - show living people to members only:
 		return WT_PRIV_USER>=$pgv_USER_ACCESS_LEVEL;
 	case 'FAM':
 		// Hide a family if either spouse is private
@@ -315,7 +315,7 @@ function canDisplayRecord($ged_id, $gedrec) {
 				}
 			}
 		}
-		return true;
+		return $cache[$cache_key]=true;
 	case 'OBJE':
 		// Hide media objects that are linked to private records
 		foreach (get_media_relations($xref) as $gid=>$type2) {
@@ -337,14 +337,14 @@ function canDisplayRecord($ged_id, $gedrec) {
 			"SELECT l_from FROM `##link` WHERE l_to=? AND l_file=?"
 		)->execute(array($xref, $ged_id))->fetchOneColumn();
 		foreach ($linked_gids as $linked_gid) {
-			$linked_record=GedcomRecord::getInstance($linked_gid);
+			$linked_record=WT_GedcomRecord::getInstance($linked_gid);
 			if (!$linked_record->canDisplayDetails()) {
 				return $cache[$cache_key]=false;
 			}
 		}
 	}
 
-	// Level 1 tags (except INDI and FAM) can be controlled by global tag settings
+	// Level 0 tags (except INDI and FAM) can be controlled by global tag settings
 	if (isset($global_facts[$type])) {
 		return $cache[$cache_key]=($global_facts[$type]>=$pgv_USER_ACCESS_LEVEL);
 	}
@@ -369,14 +369,14 @@ function canDisplayFact($xref, $ged_id, $gedrec) {
 	}
 
 	// Does this record have a RESN?
-	if (strpos($gedrec, "\n2 RESN none")) {
-		return true;
+	if (strpos($gedrec, "\n2 RESN confidential")) {
+		return WT_PRIV_NONE>=WT_USER_ACCESS_LEVEL;
 	}
 	if (strpos($gedrec, "\n2 RESN privacy")) {
 		return WT_PRIV_USER>=WT_USER_ACCESS_LEVEL;
 	}
-	if (strpos($gedrec, "\n2 RESN confidential")) {
-		return WT_PRIV_NONE>=WT_USER_ACCESS_LEVEL;
+	if (strpos($gedrec, "\n2 RESN none")) {
+		return true;
 	}
 
 	// Does this record have a default RESN?
@@ -456,7 +456,7 @@ function privatize_gedcom($gedrec) {
 						}
 					}
 				} else {
-					$newrec.="\n1 NAME ".i18n::translate('Private');
+					$newrec.="\n1 NAME ".WT_I18N::translate('Private');
 				}
 				// Just show the 1 FAMC/FAMS tag, not any subtags, which may contain private data
 				if (preg_match_all('/\n1 FAM[CS] @('.WT_REGEX_XREF.')@/', $gedrec, $matches, PREG_SET_ORDER)) {
@@ -483,22 +483,22 @@ function privatize_gedcom($gedrec) {
 				}
 				break;
 			case 'NOTE':
-				$newrec="0 @{$gid}@ {$type} ".i18n::translate('Private');
+				$newrec="0 @{$gid}@ {$type} ".WT_I18N::translate('Private');
 				break;
 			case 'SOUR':
-				$newrec="0 @{$gid}@ {$type}\n1 TITL ".i18n::translate('Private');
+				$newrec="0 @{$gid}@ {$type}\n1 TITL ".WT_I18N::translate('Private');
 				break;
 			case 'REPO':
 			case 'SUBM':
-				$newrec="0 @{$gid}@ {$type}\n1 NAME ".i18n::translate('Private');
+				$newrec="0 @{$gid}@ {$type}\n1 NAME ".WT_I18N::translate('Private');
 				break;
 			case 'SUBN':
-				$newrec="0 @{$gid}@ {$type}\n1 FAMF ".i18n::translate('Private');
+				$newrec="0 @{$gid}@ {$type}\n1 FAMF ".WT_I18N::translate('Private');
 				break;
 			case 'OBJE':
 			default:
 				// Other objects have no name/title, so add an inline note
-				$newrec="0 @{$gid}@ {$type}\n1 NOTE ".i18n::translate('Private');
+				$newrec="0 @{$gid}@ {$type}\n1 NOTE ".WT_I18N::translate('Private');
 			}
 			return $newrec;
 		}

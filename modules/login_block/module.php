@@ -1,65 +1,61 @@
 <?php
-/**
- * Classes and libraries for module system
- *
- * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
- * Copyright (C) 2010 John Finlay
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @version $Id$
- */
+// Classes and libraries for module system
+//
+// webtrees: Web based Family History software
+// Copyright (C) 2011 webtrees development team.
+//
+// Derived from PhpGedView
+// Copyright (C) 2010 John Finlay
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// @version $Id$
 
 if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once WT_ROOT.'includes/classes/class_module.php';
-
 class login_block_WT_Module extends WT_Module implements WT_Module_Block {
 	// Extend class WT_Module
 	public function getTitle() {
-		return i18n::translate('Login');
+		return WT_I18N::translate('Login');
 	}
 
 	// Extend class WT_Module
 	public function getDescription() {
-		return i18n::translate('The Login block accepts a user name and password for users to login.');
+		return WT_I18N::translate('The Login block accepts a user name and password for users to login.');
 	}
 
 	// Implement class WT_Module_Block
 	public function getBlock($block_id, $template=true, $cfg=null) {
-		global $QUERY_STRING, $TEXT_DIRECTION, $THEME_DIR;
+		global $TEXT_DIRECTION;
 
 		$id=$this->getName().$block_id;
 		if (WT_USER_ID) {
-			$title = i18n::translate('Logout');
+			$title = WT_I18N::translate('Logout');
 
 
 			$content = '<div class="center"><form method="post" action="index.php?logout=1" name="logoutform" onsubmit="return true;">';
-			$content .= '<br /><a href="edituser.php" class="name2">'.i18n::translate('Logged in as ').' ('.WT_USER_NAME.')</a><br /><br />';
+			$content .= '<br /><a href="edituser.php" class="name2">'.WT_I18N::translate('Logged in as ').' ('.WT_USER_NAME.')</a><br /><br />';
 
-			$content .= "<input type=\"submit\" value=\"".i18n::translate('Logout')."\" />";
+			$content .= "<input type=\"submit\" value=\"".WT_I18N::translate('Logout')."\" />";
 
 			$content .= "<br /><br /></form></div>";
 		} else {
-			$title = i18n::translate('Login');
+			$title = WT_I18N::translate('Login');
 			if (get_site_setting('USE_REGISTRATION_MODULE')) {
 				$title.=help_link('index_login_register');
 			} else {
@@ -82,7 +78,7 @@ class login_block_WT_Module extends WT_Module implements WT_Module_Block {
 			$content .= "<tr><td ";
 			$content .= write_align_with_textdir_check("right", true);
 			$content .= " class=\"{$TEXT_DIRECTION} wrap width50\">";
-			$content .= i18n::translate('User name');
+			$content .= WT_I18N::translate('User name');
 			$content .= help_link('username');
 			$content .= "</td><td ";
 			$content .= write_align_with_textdir_check("left", true);
@@ -93,7 +89,7 @@ class login_block_WT_Module extends WT_Module implements WT_Module_Block {
 			$content .= "<tr><td ";
 			$content .= write_align_with_textdir_check("right", true);
 			$content .= " class=\"{$TEXT_DIRECTION} wrap width50\">";
-			$content .= i18n::translate('Password');
+			$content .= WT_I18N::translate('Password');
 			$content .= help_link('password');
 			$content .= "</td><td ";
 			$content .= write_align_with_textdir_check("left", true);
@@ -102,7 +98,7 @@ class login_block_WT_Module extends WT_Module implements WT_Module_Block {
 
 			// Row 3: "Login" link
 			$content .= "<tr><td colspan=\"2\" class=\"center\">";
-			$content .= "<input type=\"submit\" value=\"".i18n::translate('Login')."\" />&nbsp;";
+			$content .= "<input type=\"submit\" value=\"".WT_I18N::translate('Login')."\" />&nbsp;";
 			$content .= "</td></tr>";
 
 			if (get_site_setting('USE_REGISTRATION_MODULE')) {
@@ -111,13 +107,13 @@ class login_block_WT_Module extends WT_Module implements WT_Module_Block {
 				$content .= "<tr><td ";
 				$content .= write_align_with_textdir_check("right", true);
 				$content .= " class=\"{$TEXT_DIRECTION} wrap width50\"><br />";
-				$content .= i18n::translate('No account?');
+				$content .= WT_I18N::translate('No account?');
 				$content .= help_link('new_user');
 				$content .= "</td><td ";
 				$content .= write_align_with_textdir_check("left", true);
 				$content .= " class=\"{$TEXT_DIRECTION}\"><br />";
 				$content .= "<a href=\"login_register.php?action=register\">";
-				$content .= i18n::translate('Request new user account');
+				$content .= WT_I18N::translate('Request new user account');
 				$content .= "</a>";
 				$content .= "</td></tr>";
 
@@ -125,13 +121,13 @@ class login_block_WT_Module extends WT_Module implements WT_Module_Block {
 				$content .= "<tr><td ";
 				$content .= write_align_with_textdir_check("right", true);
 				$content .= " class=\"{$TEXT_DIRECTION} wrap width50\">";
-				$content .= i18n::translate('Lost your password?');
+				$content .= WT_I18N::translate('Lost your password?');
 				$content .= help_link('new_password');
 				$content .= "</td><td ";
 				$content .= write_align_with_textdir_check("left", true);
 				$content .= " class=\"{$TEXT_DIRECTION}\">";
 				$content .= "<a href=\"login_register.php?action=pwlost\">";
-				$content .= i18n::translate('Request new password');
+				$content .= WT_I18N::translate('Request new password');
 				$content .= "</a>";
 				$content .= "</td></tr>";
 			}
@@ -141,7 +137,7 @@ class login_block_WT_Module extends WT_Module implements WT_Module_Block {
 		}
 
 		if ($template) {
-			require $THEME_DIR.'templates/block_main_temp.php';
+			require WT_THEME_DIR.'templates/block_main_temp.php';
 		} else {
 			return $content;
 		}

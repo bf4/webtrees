@@ -34,9 +34,9 @@
 
 define('WT_SCRIPT_NAME', 'pedigree.php');
 require './includes/session.php';
-require WT_ROOT.'includes/controllers/pedigree_ctrl.php';
+require WT_ROOT.'includes/functions/functions_edit.php';
 
-$controller = new PedigreeController();
+$controller = new WT_Controller_Pedigree();
 $controller->init();
 
 // -- echo html header information
@@ -51,7 +51,7 @@ if (WT_USE_LIGHTBOX) {
 }
 
 echo '<table><tr><td valign="middle">';
-echo "<h2>", i18n::translate('Pedigree Tree'), ":";
+echo "<h2>", WT_I18N::translate('Pedigree Tree'), help_link('pedigree_tree');
 echo '<br />', PrintReady($controller->name);
 if ($controller->addname!="") {
 	echo '<br />', PrintReady($controller->addname);
@@ -72,21 +72,21 @@ echo '</h2>';
 		<table class="list_table <?php echo $TEXT_DIRECTION; ?>" width="500" align="center">
 			<tr>
 				<td colspan="4" class="topbottombar" style="text-align:center; ">
-					<?php echo i18n::translate('Options:'); ?>
+					<?php echo WT_I18N::translate('Options:'); ?>
 				</td>
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Root Person ID'), help_link('rootid'); ?>
+					<?php echo WT_I18N::translate('Root Person ID'), help_link('rootid'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Generations'), help_link('PEDIGREE_GENERATIONS'); ?>
+					<?php echo WT_I18N::translate('Generations'), help_link('PEDIGREE_GENERATIONS'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Orientation'), help_link('talloffset'); ?>
+					<?php echo WT_I18N::translate('Orientation'), help_link('talloffset'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Show Details'), help_link('show_full'); ?>
+					<?php echo WT_I18N::translate('Show Details'), help_link('show_full'); ?>
 				</td>
 			</tr>
 
@@ -107,22 +107,7 @@ echo '</h2>';
 					</select>
 				</td>
 				<td class="optionbox">
-					<select name="talloffset">
-					<?php
-						echo '<option value="0"';
-							if ($talloffset==0) echo ' selected="selected"';
-							echo '>', i18n::translate('Portrait'), '</option>';
-						echo '<option value="1"';
-							if ($talloffset==1) echo ' selected="selected"';
-							echo '>', i18n::translate('Landscape'), '</option>';
-						echo '<option value="2"';
-							if ($talloffset==2) echo ' selected="selected"';
-							echo '>', i18n::translate('Oldest at top'), '</option>';
-						echo '<option value="3"';
-							if ($talloffset==3) echo ' selected="selected"';
-							echo '>', i18n::translate('Oldest at bottom'), '</option>';
-					?>
-					</select>
+					<?php echo select_edit_control('talloffset', array(0=>WT_I18N::translate('Portrait'), 1=>WT_I18N::translate('Landscape'), 2=>WT_I18N::translate('Oldest at top'), 3=>WT_I18N::translate('Oldest at bottom')), null, $talloffset); ?>
 				</td>
 				<td class="optionbox">
 					<input type="checkbox" value="<?php
@@ -132,14 +117,14 @@ echo '</h2>';
 			</tr>
 			<tr>
 				<td class="topbottombar" colspan="4">
-					<input type="submit" value="<?php echo i18n::translate('View'); ?>" />
+					<input type="submit" value="<?php echo WT_I18N::translate('View'); ?>" />
 				</td>
 			</tr>
 		</table>
 	</form>
 <?php
 	if ($show_full==0) {
-		echo '<span class="details2">', i18n::translate('Click on any of the boxes to get more information about that person.'), '</span><br />';
+		echo '<span class="details2">', WT_I18N::translate('Click on any of the boxes to get more information about that person.'), '</span><br />';
 	}
 ?>
 	</td></tr>
@@ -166,8 +151,7 @@ for ($i=($controller->treesize-1); $i>=0; $i--) {
 	if ($talloffset < 2) {
 		$xoffset = $controller->offsetarray[$i]["x"];
 		$yoffset = $controller->offsetarray[$i]["y"];
-	}
-	else {
+	} else {
 		$xoffset = $controller->offsetarray[$i]["y"];
 		$yoffset = $controller->offsetarray[$i]["x"];
 	}
@@ -188,28 +172,35 @@ for ($i=($controller->treesize-1); $i>=0; $i--) {
 				$linexoffset = $xoffset;
 				if ($talloffset < 2) {
 					echo '<div id="line' .$i . '" dir="';
-					if ($TEXT_DIRECTION=="rtl") echo 'rtl" style="position:absolute; right:';
-					else echo 'ltr" style="position:absolute; left:';
+					if ($TEXT_DIRECTION=="rtl") {
+						echo 'rtl" style="position:absolute; right:';
+					} else {
+						echo 'ltr" style="position:absolute; left:';
+					}
 					echo $linexoffset, 'px; top:', ($yoffset+1+$controller->pbheight/2), 'px; z-index: 0;">';
 					echo '<img src="', $WT_IMAGES["vline"], '" width="', $linesize, '" height="', ($vlength-1), '\" alt="" />';
 					echo '</div>';
-				}
-				else {
+				} else {
 					echo '<div id="vline$i" dir="';
-					if ($TEXT_DIRECTION=="rtl") echo 'rtl" style="position:absolute; right:';
-					else echo 'ltr" style="position:absolute; left:';
+					if ($TEXT_DIRECTION=="rtl") {
+						echo 'rtl" style="position:absolute; right:';
+					} else {
+						echo 'ltr" style="position:absolute; left:';
+					}
 					if ($talloffset > 2) {
 						echo ($linexoffset-2+$controller->pbwidth/2+$vlength/2), 'px; top:', ($yoffset+1-$controller->pbheight/2), 'px; z-index: 0;">';
 						echo '<img src="', $WT_IMAGES["vline"], '" width="', $linesize, '" height="', ($controller->pbheight), '" alt="" />';
-					}
-					else {
+					} else {
 						echo ($linexoffset-2+$controller->pbwidth/2+$vlength/2), "px; top:", ($yoffset+1+$controller->pbheight/2), "px; z-index: 0;\">";
 						echo '<img src="', $WT_IMAGES["vline"], '" width="', $linesize, '" height="', ($controller->pbheight), '" alt="" />';
 					}
 					echo '</div>';
 					echo '<div id="line$i" dir="';
-					if ($TEXT_DIRECTION=="rtl") echo 'rtl" style="position:absolute; right:';
-					else echo 'ltr" style="position:absolute; left:';
+					if ($TEXT_DIRECTION=="rtl") {
+						echo 'rtl" style="position:absolute; right:';
+					} else {
+						echo 'ltr" style="position:absolute; left:';
+					}
 					echo ($linexoffset+$controller->pbwidth), 'px; top:', ($yoffset+1+$controller->pbheight/2), 'px; z-index: 0;\">';
 					echo '<img src="', $WT_IMAGES["hline"], '" width="', ($vlength-$controller->pbwidth), '" height="', $linesize, '" alt="" />';
 					echo '</div>';
@@ -221,24 +212,44 @@ for ($i=($controller->treesize-1); $i>=0; $i--) {
 	if (!empty($controller->treeid[$i]) || $SHOW_EMPTY_BOXES) {
 		// Work around a bug in FireFox that mis-places some boxes in Portrait RTL, resulting in
 		// vertical lines that themselves appear to be mis-placed.
-		if ($TEXT_DIRECTION=="rtl" && $BROWSERTYPE=="mozilla" && ($curgen <= 2)) $xoffset += 10;
-		if ($TEXT_DIRECTION=="rtl") $xoffset += $brborder; // Account for thickness of right box border
+		if ($TEXT_DIRECTION=="rtl" && $BROWSERTYPE=="mozilla" && ($curgen <= 2)) {
+			$xoffset += 10;
+		}
+		if ($TEXT_DIRECTION=="rtl") {
+			$xoffset += $brborder; // Account for thickness of right box border
+		}
 
-		if ($yoffset>$maxyoffset) $maxyoffset=$yoffset;
+		if ($yoffset>$maxyoffset) {
+			$maxyoffset=$yoffset;
+		}
 		$widthadd = 0;
-		if ($i==0) $iref = rand();
-		else $iref = $i;
+		if ($i==0) {
+			$iref = rand();
+		} else {
+			$iref = $i;
+		}
 
-		if (($curgen==1)&&(!empty($controller->treeid[$i]))&&(count(find_family_ids($controller->treeid[$i]))>0)) $widthadd = 20;
-		if (($curgen >2) && ($curgen < $controller->PEDIGREE_GENERATIONS)) $widthadd = 10;
+		// Can we go back to an earlier generation?
+		$can_go_back=$curgen==1 && WT_Person::getInstance($controller->treeid[$i]) && WT_Person::getInstance($controller->treeid[$i])->getChildFamilies();
+
+		if ($can_go_back) {
+			$widthadd = 20;
+		} elseif ($curgen >2 && $curgen < $controller->PEDIGREE_GENERATIONS) {
+			$widthadd = 10;
+		}
 		if ($talloffset == 2) {
 			echo '<div id="uparrow" dir="';
-			if ($TEXT_DIRECTION=="rtl") echo 'rtl" style="position:absolute; right:';
-			else echo 'ltr" style="position:absolute; left:';
+			if ($TEXT_DIRECTION=="rtl") {
+				echo 'rtl" style="position:absolute; right:';
+			} else {
+				echo 'ltr" style="position:absolute; left:';
+			}
 			echo ($xoffset+$controller->pbwidth/2-5), 'px; top:', ($yoffset-20), 'px; width:10px; height:10px; ">';
-			if (($curgen==1)&&(count(find_family_ids($controller->treeid[$i]))>0)) {
+			if ($can_go_back) {
 				$did = 1;
-				if ($i > ($controller->treesize/2) + ($controller->treesize/4)-1) $did++;
+				if ($i > ($controller->treesize/2) + ($controller->treesize/4)-1) {
+					$did++;
+				}
 				echo '<a href=pedigree.php?PEDIGREE_GENERATIONS=', $controller->PEDIGREE_GENERATIONS, '&amp;rootid=', $controller->treeid[$did], '&amp;show_full=', $controller->show_full, '&amp;talloffset=', $controller->talloffset, ' ';
 				echo "onmouseover=\"swap_image('arrow$i', 2);\" onmouseout=\"swap_image('arrow$i', 2);\">";
 				echo "<img id=\"arrow$i\" src=\"", $WT_IMAGES["uarrow"], '" border="0" alt="" />';
@@ -247,13 +258,22 @@ for ($i=($controller->treesize-1); $i>=0; $i--) {
 			echo "</div>";
 		}
 		echo "<div id=\"box";
-		if (empty($controller->treeid[$i])) echo "$iref";
-		else echo $controller->treeid[$i];
-		if ($TEXT_DIRECTION=="rtl") echo ".1.$iref\" style=\"position:absolute; right:";
-		else echo ".1.$iref\" style=\"position:absolute; left:";
+		if (empty($controller->treeid[$i])) {
+			echo "$iref";
+		} else {
+			echo $controller->treeid[$i];
+		}
+		if ($TEXT_DIRECTION=="rtl") {
+			echo ".1.$iref\" style=\"position:absolute; right:";
+		} else {
+			echo ".1.$iref\" style=\"position:absolute; left:";
+		}
 
-		if ($talloffset == 2) $zindex = $PEDIGREE_GENERATIONS-$curgen;
-		else $zindex = 0;
+		if ($talloffset == 2) {
+			$zindex = $PEDIGREE_GENERATIONS-$curgen;
+		} else {
+			$zindex = 0;
+		}
 
 		echo $xoffset, "px; top:", $yoffset, "px; width:", ($controller->pbwidth+$widthadd), "px; height:", $controller->pbheight, "px; ";
 		echo "z-index: ", $zindex, ";\">";
@@ -262,27 +282,30 @@ for ($i=($controller->treesize-1); $i>=0; $i--) {
 			echo "<tr><td>";
 			echo "<img src=\"", $WT_IMAGES["hline"], "\" align=\"left\" hspace=\"0\" vspace=\"0\" alt=\"\" />";
 			echo "</td><td width=\"100%\">";
+		} else {
+			echo "<tr><td width=\"100%\">";
 		}
-		else echo "<tr><td width=\"100%\">";
-		if (!isset($controller->treeid[$i])) $controller->treeid[$i] = false;
+		if (!isset($controller->treeid[$i])) {
+			$controller->treeid[$i] = false;
+		}
 		print_pedigree_person($controller->treeid[$i], 1, $iref, 1);
-		if (($curgen==1) && (count(find_family_ids($controller->treeid[$i]))>0)) {
+		if ($can_go_back) {
 			$did = 1;
-			if ($i > ($controller->treesize/2) + ($controller->treesize/4)-1) $did++;
+			if ($i > ($controller->treesize/2) + ($controller->treesize/4)-1) {
+				$did++;
+			}
 			if ($talloffset==3) {
 				echo "</td></tr><tr><td align=\"center\">";
 				echo "<a href=\"pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&amp;rootid={$controller->treeid[$did]}&amp;show_full={$controller->show_full}&amp;talloffset={$controller->talloffset}\" ";
 				echo "onmouseover=\"swap_image('arrow$i', 3);\" onmouseout=\"swap_image('arrow$i', 3);\">";
 				echo "<img id=\"arrow$i\" src=\"", $WT_IMAGES["darrow"], "\" border=\"0\" alt=\"\" />";
-			}
-			else if ($talloffset < 2) {
+			} elseif ($talloffset < 2) {
 				echo "</td><td valign=\"middle\">";
 				echo "<a href=\"pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&amp;rootid={$controller->treeid[$did]}&amp;show_full={$controller->show_full}&amp;talloffset={$talloffset}\" ";
 				if ($TEXT_DIRECTION=="rtl") {
 					echo "onmouseover=\"swap_image('arrow$i', 0);\" onmouseout=\"swap_image('arrow$i', 0);\">";
 					echo "<img id=\"arrow$i\" src=\"", $WT_IMAGES["larrow"], "\" border=\"0\" alt=\"\" />";
-				}
-				else {
+				} else {
 					echo "onmouseover=\"swap_image('arrow$i', 1);\" onmouseout=\"swap_image('arrow$i', 1);\">";
 					echo "<img id=\"arrow$i\" src=\"", $WT_IMAGES["rarrow"], "\" border=\"0\" alt=\"\" />";
 				}
@@ -301,94 +324,126 @@ if ($controller->rootPerson->canDisplayDetails()) {
 	$cfamids = $controller->rootPerson->getChildFamilies();
 	if (count($famids)>0) {
 		echo "<div id=\"childarrow\" dir=\"";
-		if ($TEXT_DIRECTION=="rtl") echo "rtl\" style=\"position:absolute; right:";
-		else echo "ltr\" style=\"position:absolute; left:";
-		if ($talloffset == 0) {
+		if ($TEXT_DIRECTION=="rtl") {
+			echo "rtl\" style=\"position:absolute; right:";
+		} else {
+			echo "ltr\" style=\"position:absolute; left:";
+		}
+		switch ($talloffset) {
+		case 0:
 			if ($PEDIGREE_GENERATIONS<6) {
 				$addxoffset = 60*(5-$PEDIGREE_GENERATIONS);
-			}
-			else {
+			} else {
 				$addxoffset = 0;
 			}
 			echo $addxoffset, "px; top:", $yoffset, "px; width:10px; height:10px; \">";
-		}
-		else if ($talloffset == 1) {
+			if ($TEXT_DIRECTION=="rtl") {
+				echo "<a href=\"javascript: ", WT_I18N::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow', 1);\" onmouseout=\"swap_image('larrow', 1);\">";
+				echo "<img id=\"larrow\" src=\"", $WT_IMAGES["rarrow"], "\" border=\"0\" alt=\"\" />";
+			} else {
+				echo "<a href=\"javascript: ", WT_I18N::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow', 0);\" onmouseout=\"swap_image('larrow', 0);\">";
+				echo "<img id=\"larrow\" src=\"", $WT_IMAGES["larrow"], "\" border=\"0\" alt=\"\" />";
+			}
+			break;
+		case 1:
 			if ($PEDIGREE_GENERATIONS<4) $basexoffset += 60;
 			echo $basexoffset, "px; top:", $yoffset, "px; width:10px; height:10px; \">";
-		}
-		else if ($talloffset==3) {
-			echo ($linexoffset-10+$controller->pbwidth/2+$vlength/2), "px; top:", ($yoffset-$controller->pbheight/2-10), "px; width:10px; height:10px; \">";
-		}
-		else {
+			if ($TEXT_DIRECTION=="rtl") {
+				echo "<a href=\"javascript: ", WT_I18N::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow', 1);\" onmouseout=\"swap_image('larrow', 1);\">";
+				echo "<img id=\"larrow\" src=\"", $WT_IMAGES["rarrow"], "\" border=\"0\" alt=\"\" />";
+			} else {
+				echo "<a href=\"javascript: ", WT_I18N::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow', 0);\" onmouseout=\"swap_image('larrow', 0);\">";
+				echo "<img id=\"larrow\" src=\"", $WT_IMAGES["larrow"], "\" border=\"0\" alt=\"\" />";
+			}
+			break;
+		case 2:
 			echo ($linexoffset-10+$controller->pbwidth/2+$vlength/2), "px; top:", ($yoffset+$controller->pbheight/2+10), "px; width:10px; height:10px; \">";
-		}
-		if ($talloffset < 2) {
-			if ($TEXT_DIRECTION=="rtl") echo "<a href=\"javascript: ", i18n::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow', 1);\" onmouseout=\"swap_image('larrow', 1);\">";
-			else echo "<a href=\"javascript: ", i18n::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow', 0);\" onmouseout=\"swap_image('larrow', 0);\">";
-			if ($TEXT_DIRECTION=="rtl") echo "<img id=\"larrow\" src=\"", $WT_IMAGES["rarrow"], "\" border=\"0\" alt=\"\" />";
-			else echo "<img id=\"larrow\" src=\"", $WT_IMAGES["larrow"], "\" border=\"0\" alt=\"\" />";
-		} else if ($talloffset==3) {
-			echo "<a href=\"javascript: ", i18n::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('uarrow', 2);\" onmouseout=\"swap_image('uarrow', 2);\">";
-			echo "<img id=\"uarrow\" src=\"", $WT_IMAGES["uarrow"], "\" border=\"0\" alt=\"\" />";
-		} else {
-			echo "<a href=\"javascript: ", i18n::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('darrow', 3);\" onmouseout=\"swap_image('darrow', 3);\">";
+			echo "<a href=\"javascript: ", WT_I18N::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('darrow', 3);\" onmouseout=\"swap_image('darrow', 3);\">";
 			echo "<img id=\"darrow\" src=\"", $WT_IMAGES["darrow"], "\" border=\"0\" alt=\"\" />";
+			break;
+		case 3:
+			echo ($linexoffset-10+$controller->pbwidth/2+$vlength/2), "px; top:", ($yoffset-$controller->pbheight/2-10), "px; width:10px; height:10px; \">";
+			echo "<a href=\"javascript: ", WT_I18N::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('uarrow', 2);\" onmouseout=\"swap_image('uarrow', 2);\">";
+			echo "<img id=\"uarrow\" src=\"", $WT_IMAGES["uarrow"], "\" border=\"0\" alt=\"\" />";
+			break;
 		}
 		echo "</a>";
 		echo "</div>";
 		$yoffset += ($controller->pbheight / 2)+10;
 		echo "<div id=\"childbox\" dir=\"";
-		if ($TEXT_DIRECTION=="rtl") echo "rtl\" style=\"position:absolute; right:";
-		else echo "ltr\" style=\"position:absolute; left:";
+		if ($TEXT_DIRECTION=="rtl") {
+			echo "rtl\" style=\"position:absolute; right:";
+		} else {
+			echo "ltr\" style=\"position:absolute; left:";
+		}
 		echo $xoffset, "px; top:", $yoffset, "px; width:", $controller->pbwidth, "px; height:", $controller->pbheight, "px; visibility: hidden;\">";
 		echo "<table class=\"person_box\"><tr><td>";
-		foreach ($famids as $ind=>$family) {
+		foreach ($famids as $family) {
 			if ($family!=null) {
 				$husb = $family->getHusbId();
 				$wife = $family->getWifeId();
-				if ($controller->rootid!=$husb) $spid=$family->getHusband();
-				else $spid=$family->getWife();
+				if ($controller->rootid!=$husb) {
+					$spid=$family->getHusband();
+				} else {
+					$spid=$family->getWife();
+				}
 				if (!empty($spid)) {
 					echo "<a href=\"pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&amp;rootid=".$spid->getXref()."&amp;show_full={$controller->show_full}&amp;talloffset={$talloffset}\"><span ";
 					if ($spid->canDisplayName()) {
 						$name = $spid->getFullName();
-						$name = rtrim($name);
-					} else $name = i18n::translate('Private');
-					if (hasRTLText($name)) echo 'class="name2">';
-						else echo 'class="name1">';
+					} else {
+						$name = WT_I18N::translate('Private');
+					}
+					if (hasRTLText($name)) {
+						echo 'class="name2">';
+					} else {
+						echo 'class="name1">';
+					}
 					echo PrintReady($name);
 					echo '<br /></span></a>';
 				}
 
 				$children = $family->getChildren();
-				foreach ($children as $ind2=>$child) {
+				foreach ($children as $child) {
 					echo "&nbsp;&nbsp;<a href=\"pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&amp;rootid=".$child->getXref()."&amp;show_full={$controller->show_full}&amp;talloffset={$talloffset}\"><span ";
 					if ($child->canDisplayName()) {
 						$name = $child->getFullName();
-						$name = rtrim($name);
-					} else $name = i18n::translate('Private');
-					if (hasRTLText($name)) echo "class=\"name2\">&lt; ";
-						else echo "class=\"name1\">&lt; ";
+					} else {
+						$name = WT_I18N::translate('Private');
+					}
+					if (hasRTLText($name)) {
+						echo "class=\"name2\">&lt; ";
+					} else {
+						echo "class=\"name1\">&lt; ";
+					}
 					echo PrintReady($name);
 					echo '<br /></span></a>';
 				}
 			}
 		}
 		//-- echo the siblings
-		foreach ($cfamids as $ind=>$family) {
+		foreach ($cfamids as $family) {
 			if ($family!=null) {
 				$children = $family->getChildren();
-				if (count($children)>2) echo '<span class="name1"><br />', i18n::translate('Siblings'), '<br /></span>';
-				if (count($children)==2) echo '<span class="name1"><br />', i18n::translate('Sibling'), '<br /></span>';
-				foreach ($children as $ind2=>$child) {
+				if (count($children)>2) {
+					echo '<span class="name1"><br />', WT_I18N::translate('Siblings'), '<br /></span>';
+				}
+				if (count($children)==2) {
+					echo '<span class="name1"><br />', WT_I18N::translate('Sibling'), '<br /></span>';
+				}
+				foreach ($children as $child) {
 					if (!$controller->rootPerson->equals($child) && !is_null($child)) {
 						echo "&nbsp;&nbsp;<a href=\"pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&amp;rootid=".$child->getXref()."&amp;show_full={$controller->show_full}&amp;talloffset={$talloffset}\"><span ";
 						if ($child->canDisplayName()) {
 							$name = $child->getFullName();
-							$name = rtrim($name);
-						} else $name = i18n::translate('Private');
-						if (hasRTLText($name)) echo 'class="name2"> ';
-							else echo 'class="name1"> ';
+						} else {
+							$name = WT_I18N::translate('Private');
+						}
+						if (hasRTLText($name)) {
+							echo 'class="name2"> ';
+						} else {
+							echo 'class="name1"> ';
+						}
 						echo PrintReady($name);
 						echo '<br /></span></a>';
 					}

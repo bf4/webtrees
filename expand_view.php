@@ -31,8 +31,8 @@ require './includes/session.php';
 
 header('Content-Type: text/html; charset=UTF-8');
 $pid = safe_GET_xref('pid');
-$person = Person::getInstance($pid);
-if (!$person->canDisplayDetails()) return i18n::translate('Private');
+$person = WT_Person::getInstance($pid);
+if (!$person->canDisplayDetails()) return WT_I18N::translate('Private');
 
 $nonfacts = array("SEX","FAMS","FAMC","NAME","TITL","NOTE","SOUR","SSN","OBJE","HUSB","WIFE","CHIL","ALIA","ADDR","PHON","SUBM","_EMAIL","CHAN","URL","EMAIL","WWW","RESI","_UID","_TODO","_WT_OBJE_SORT","_WT_OBJE_SORT");
 $person->add_family_facts(false);
@@ -61,13 +61,16 @@ foreach ($subfacts as $indexval => $event) {
 		$famid = $event->getFamilyId();
 		$spouseid = $event->getSpouseId();
 		if (!empty($spouseid)) {
-			$spouse = Person::getInstance($spouseid);
-			if (!is_null($spouse)) {
-				echo ' <a href="', $spouse->getHtmlUrl().'">', PrintReady($spouse->getFullName()), '</a> - ';
+			$spouse = WT_Person::getInstance($spouseid);
+			if ($spouse) {
+				echo ' <a href="', $spouse->getHtmlUrl(), '">', PrintReady($spouse->getFullName()), '</a> - ';
 			}
 		}
 		if (!empty($famid)) {
-			echo "<a href=\"family.php?famid=$famid\">[".i18n::translate('View Family')."]</a>";
+			$family = WT_Family::getInstance($famid);
+			if ($family) {
+				echo '<a href="', $family->getHtmlUrl(), '">[',WT_I18N::translate('View Family'), ']</a>';
+			}
 		}
 		echo format_fact_place($event, true, true);
 	}

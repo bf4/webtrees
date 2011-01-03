@@ -38,23 +38,23 @@ global $summary, $theme_name, $censyear, $censdate;
 
 $pid = safe_get('pid');
 
-$censdate  = new GedcomDate("31 MAR 1901");
+$censdate  = new WT_Date("31 MAR 1901");
 $censyear   = $censdate->date1->y;
 
 $ctry       = "UK";
-// $married    = GedcomDate::Compare($censdate, $marrdate);
+// $married    = WT_Date::Compare($censdate, $marrdate);
 
 // === Set $married to "Not married as we only want the Birth name here" ===
 $married=-1;
 
-$person=Person::getInstance($pid);
+$person=WT_Person::getInstance($pid);
 // var_dump($person->getAllNames());
 $nam = $person->getAllNames();
 if (PrintReady($person->getDeathYear()) == 0) { $DeathYr = ""; } else { $DeathYr = PrintReady($person->getDeathYear()); }
 if (PrintReady($person->getBirthYear()) == 0) { $BirthYr = ""; } else { $BirthYr = PrintReady($person->getBirthYear()); }
 $fulln   = rtrim($nam[0]['givn'],'*')." ".$nam[0]['surname'];
-$fulln   = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
-$fulln   = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
+$fulln   = str_replace("@N.N.", "(".WT_I18N::translate('unknown').")", $fulln);
+$fulln   = str_replace("@P.N.", "(".WT_I18N::translate('unknown').")", $fulln);
 $wholename = $fulln;
 
 $currpid=$pid;
@@ -73,7 +73,7 @@ $currpid=$pid;
 	// Header of assistant window =====================================================
 	echo "<div class=\"cens_header\">";
 		echo "<div class=\"cens_header_left\">";
-			echo i18n::translate('Head of Household:');
+			echo WT_I18N::translate('Head of Household:');
 			echo " &nbsp;" . $wholename . "&nbsp; (" . $pid . ")";
 		echo "</div>";
 			if ($summary) {
@@ -103,10 +103,10 @@ $currpid=$pid;
 	?>
 	<div class="optionbox cens_textinput">
 		<div class="cens_textinput_left">
-			<input type="button" value="<?php echo i18n::translate('Add/Insert Blank Row'); ?>" onclick="insertRowToTable('', '', '', '', '', '', '', '', 'Age', '', '', '', '', '', '');" />
+			<input type="button" value="<?php echo WT_I18N::translate('Add/Insert Blank Row'); ?>" onclick="insertRowToTable('', '', '', '', '', '', '', '', 'Age', '', '', '', '', '', '');" />
 		</div>
 		<div class="cens_textinput_right">
-			<?php echo i18n::translate('Add'); ?><br>
+			<?php echo WT_I18N::translate('Add'); ?><br>
 			<input  type="radio" name="totallyrad" value="0" checked="checked" />
 		</div>
 	<?php

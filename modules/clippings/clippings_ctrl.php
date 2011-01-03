@@ -34,9 +34,7 @@ if (!defined('WT_WEBTREES')) {
 
 define('WT_CLIPPINGS_CTRL', '');
 
-require_once WT_ROOT.'includes/classes/class_person.php';
 require_once WT_ROOT.'includes/functions/functions.php';
-require_once WT_ROOT.'includes/controllers/basecontrol.php';
 require_once WT_ROOT.'library/pclzip.lib.php';
 
 function same_group($a, $b) {
@@ -53,22 +51,10 @@ function same_group($a, $b) {
 	return 0;
 }
 
-function id_in_cart($id) {
-	global $cart, $GEDCOM;
-	$ct = count($cart);
-	for ($i = 0; $i < $ct; $i++) {
-		$temp = $cart[$i];
-		if ($temp['id'] == $id && $temp['gedcom'] == $GEDCOM) {
-			return true;
-		}
-	}
-	return false;
-}
-
 /**
 * Main controller class for the Clippings page.
 */
-class ClippingsController extends BaseController {
+class WT_Controller_Clippings extends WT_Controller_Base {
 
 	var $download_data;
 	var $media_list = array();
@@ -88,10 +74,10 @@ class ClippingsController extends BaseController {
 	/**
 	 * @param string $thing the id of the person
 	 */
-	function ClippingsControllerRoot() {
-		parent :: BaseController();
+	function __construct() {
+		parent::__construct();
 	}
-	//----------------beginning of function definitions for ClippingsControllerRoot
+	//----------------beginning of function definitions for WT_Controller_Clippings
 	function init() {
 		global $SCRIPT_NAME, $MEDIA_DIRECTORY, $MEDIA_FIREWALL_ROOTDIR, $GEDCOM, $cart;
 
@@ -122,7 +108,7 @@ class ClippingsController extends BaseController {
 		if ($this->action == 'add') {
 			if (empty($this->type) && !empty($this->id)) {
 				$this->type="";
-				$obj = GedcomRecord::getInstance($this->id);
+				$obj = WT_GedcomRecord::getInstance($this->id);
 				if (is_null($obj)) {
 					$this->id="";
 					$this->action="";
@@ -180,14 +166,12 @@ class ClippingsController extends BaseController {
 				} else
 				if ($this->type == 'indi') {
 					if ($others == 'parents') {
-						$famids = find_family_ids($this->id);
-						foreach ($famids as $indexval => $famid) {
+						foreach (WT_Person::getInstance($this->id)->getChildFamilies() as $family) {
 							$clipping = array ();
 							$clipping['type'] = "fam";
-							$clipping['id'] = $famid;
-							$ret = $this->add_clipping($clipping);
-							if ($ret) {
-								$this->add_family_members($famid);
+							$clipping['id'] = $family->getXref();
+							if ($this->add_clipping($clipping)) {
+								$this->add_family_members($family->getXref());
 							}
 						}
 					} else
@@ -198,25 +182,23 @@ class ClippingsController extends BaseController {
 						$this->add_ancestors_to_cart_families($this->id, $this->level2);
 					} else
 					if ($others == 'members') {
-						$famids = find_sfamily_ids($this->id);
-						foreach ($famids as $indexval => $famid) {
+						foreach (WT_Person::getInstance($this->id)->getSpouseFamilies() as $family) {
 							$clipping = array ();
 							$clipping['type'] = "fam";
-							$clipping['id'] = $famid;
-							$ret = $this->add_clipping($clipping);
-							if ($ret)
-							$this->add_family_members($famid);
+							$clipping['id'] = $family->getXref();
+							if ($this->add_clipping($clipping)) {
+								$this->add_family_members($family->getXref());
+							}
 						}
 					} else
 					if ($others == 'descendants') {
-						$famids = find_sfamily_ids($this->id);
-						foreach ($famids as $indexval => $famid) {
+						foreach (WT_Person::getInstance($this->id)->getSpouseFamilies() as $family) {
 							$clipping = array ();
 							$clipping['type'] = "fam";
-							$clipping['id'] = $famid;
-							$ret = $this->add_clipping($clipping);
-							if ($ret)
-							$this->add_family_descendancy($famid, $this->level3);
+							$clipping['id'] = $family->getXref();
+							if ($this->add_clipping($clipping)) {
+								$this->add_family_descendancy($family->getXref(), $this->level3);
+							}
 						}
 					}
 				}
@@ -275,25 +257,25 @@ class ClippingsController extends BaseController {
 					case 'indi':
 						$ft = preg_match_all("/1 FAMC @(.*)@/", $record, $match, PREG_SET_ORDER);
 						for ($k = 0; $k < $ft; $k++) {
-							if (!id_in_cart($match[$k][1])) {
+							if (!self::id_in_cart($match[$k][1])) {
 								$record = preg_replace("/1 FAMC @" . $match[$k][1] . "@.*/", "", $record);
 							}
 						}
 						$ft = preg_match_all("/1 FAMS @(.*)@/", $record, $match, PREG_SET_ORDER);
 						for ($k = 0; $k < $ft; $k++) {
-							if (!id_in_cart($match[$k][1])) {
+							if (!self::id_in_cart($match[$k][1])) {
 								$record = preg_replace("/1 FAMS @" . $match[$k][1] . "@.*/", "", $record);
 							}
 						}
 						$filetext .= trim($record) . "\n";
 						$filetext .= "1 SOUR @WEBTREES@\n";
-						$filetext .= "2 PAGE ".WT_SERVER_NAME.WT_SCRIPT_PATH."individual.php?pid={$clipping['id']}&ged={$clipping['gedcom']}\n";
+						$filetext .= "2 PAGE ".WT_SERVER_NAME.WT_SCRIPT_PATH."individual.php?pid={$clipping['id']}&ged=" . rawurlencode($clipping['gedcom']) . "\n";
 						break;
 
 					case 'fam':
 						$ft = preg_match_all("/1 CHIL @(.*)@/", $record, $match, PREG_SET_ORDER);
 						for ($k = 0; $k < $ft; $k++) {
-							if (!id_in_cart($match[$k][1])) {
+							if (!self::id_in_cart($match[$k][1])) {
 								/* if the child is not in the list delete the record of it */
 								$record = preg_replace("/1 CHIL @" . $match[$k][1] . "@.*/", "", $record);
 							}
@@ -301,7 +283,7 @@ class ClippingsController extends BaseController {
 
 						$ft = preg_match_all("/1 HUSB @(.*)@/", $record, $match, PREG_SET_ORDER);
 						for ($k = 0; $k < $ft; $k++) {
-							if (!id_in_cart($match[$k][1])) {
+							if (!self::id_in_cart($match[$k][1])) {
 								/* if the husband is not in the list delete the record of him */
 								$record = preg_replace("/1 HUSB @" . $match[$k][1] . "@.*/", "", $record);
 							}
@@ -309,7 +291,7 @@ class ClippingsController extends BaseController {
 
 						$ft = preg_match_all("/1 WIFE @(.*)@/", $record, $match, PREG_SET_ORDER);
 						for ($k = 0; $k < $ft; $k++) {
-							if (!id_in_cart($match[$k][1])) {
+							if (!self::id_in_cart($match[$k][1])) {
 								/* if the wife is not in the list delete the record of her */
 								$record = preg_replace("/1 WIFE @" . $match[$k][1] . "@.*/", "", $record);
 							}
@@ -317,12 +299,12 @@ class ClippingsController extends BaseController {
 
 						$filetext .= trim($record) . "\n";
 						$filetext .= "1 SOUR @WEBTREES@\n";
-						$filetext .= "2 PAGE " . WT_SERVER_NAME.WT_SCRIPT_PATH . "family.php?famid={$clipping['id']}&ged={$clipping['gedcom']}\n";
+						$filetext .= "2 PAGE " . WT_SERVER_NAME.WT_SCRIPT_PATH . "family.php?famid={$clipping['id']}&ged=" . rawurlencode($clipping['gedcom']) . "\n";
 						break;
 
 					case 'source':
 						$filetext .= trim($record) . "\n";
-						$filetext .= "1 NOTE " . WT_SERVER_NAME.WT_SCRIPT_PATH . "source.php?sid={$clipping['id']}&ged={$clipping['gedcom']}\n";
+						$filetext .= "1 NOTE " . WT_SERVER_NAME.WT_SCRIPT_PATH . "source.php?sid={$clipping['id']}&ged=" . rawurlencode($clipping['gedcom']) . "\n";
 						break;
 
 					default:
@@ -371,6 +353,19 @@ class ClippingsController extends BaseController {
 			$this->download_clipping();
 		}
 	}
+
+	public static function id_in_cart($id) {
+		global $cart, $GEDCOM;
+		$ct = count($cart);
+		for ($i = 0; $i < $ct; $i++) {
+			$temp = $cart[$i];
+			if ($temp['id'] == $id && $temp['gedcom'] == $GEDCOM) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * Loads everything in the clippings cart into a zip file.
 	 */
@@ -404,7 +399,7 @@ class ClippingsController extends BaseController {
 		}
 		else
 		{
-			echo i18n::translate('Cannot create')." ".$INDEX_DIRECTORY."$tempFileName ".i18n::translate('Check access rights on this directory.')."<br /><br />";
+			echo WT_I18N::translate('Cannot create')." ".$INDEX_DIRECTORY."$tempFileName ".WT_I18N::translate('Check access rights on this directory.')."<br /><br />";
 		}
 	}
 	/**
@@ -435,7 +430,7 @@ class ClippingsController extends BaseController {
 		if (($clipping['id'] == false) || ($clipping['id'] == ""))
 		return false;
 
-		if (!id_in_cart($clipping['id'])) {
+		if (!self::id_in_cart($clipping['id'])) {
 			$clipping['gedcom'] = $GEDCOM;
 			$ged_id=get_id_from_gedcom($GEDCOM);
 			$gedrec=find_gedcom_record($clipping['id'], $ged_id);
@@ -521,10 +516,10 @@ class ClippingsController extends BaseController {
 			}
 			$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch, PREG_SET_ORDER);
 			for ($i = 0; $i < $num; $i++) {
-				$cfamids = find_sfamily_ids($smatch[$i][1]);
+				$cfamids = WT_Person::getInstance($smatch[$i][1])->getSpouseFamilyIds();
 				if (count($cfamids) > 0) {
 					foreach ($cfamids as $indexval => $cfamid) {
-						if (!id_in_cart($cfamid)) {
+						if (!self::id_in_cart($cfamid)) {
 							$clipping = array ();
 							$clipping['type'] = "fam";
 							$clipping['id'] = $cfamid;
@@ -575,7 +570,7 @@ class ClippingsController extends BaseController {
 	//-- recursively adds direct-line ancestors to cart
 	function add_ancestors_to_cart($pid, $level="") {
 		global $cart;
-		$famids = find_family_ids($pid);
+		$famids = WT_Person::getInstance($pid)->getChildFamilyIds();
 		if (count($famids) > 0) {
 			foreach ($famids as $indexval => $famid) {
 				if ($level=="" || $level > 0) {
@@ -609,7 +604,7 @@ class ClippingsController extends BaseController {
 	//-- recursively adds direct-line ancestors and their families to the cart
 	function add_ancestors_to_cart_families($pid, $level="") {
 		global $cart;
-		$famids = find_family_ids($pid);
+		$famids = WT_Person::getInstance($pid)->getChildFamilyIds();
 		if (count($famids) > 0) {
 			foreach ($famids as $indexval => $famid) {
 				if ($level=="" || $level > 0) {

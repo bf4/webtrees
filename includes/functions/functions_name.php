@@ -34,6 +34,17 @@ if (!defined('WT_WEBTREES')) {
 define('WT_FUNCTIONS_NAME_PHP', '');
 
 /**
+ * Takes a string and converts certain characters in the string to others for the purpose of soundex searches
+ */
+function Character_Substitute($input)
+{
+	$stringsToReplace = array("/AE/", "/ae/", "/OE/", "/oe/", "/UE/", "/ue/", "/ss/", "/SS/");
+	$replacements =     array("Ä",   "ä",   "Ö",   "ö",   "Ü",   "ü",   "ß",   "ß");
+
+	preg_replace($stringsToReplace, $replacements, $input);
+}
+
+/**
  * Get array of common surnames
  *
  * This function returns a simple array of the most common surnames
@@ -107,7 +118,7 @@ function check_NN($names) {
 		return $names;
 	}
 	if (count($names) == 2 && stristr($names[0], '@N.N') && stristr($names[1], '@N.N')) {
-		$fullname = i18n::translate('(unknown)'). ' + '. i18n::translate('(unknown)');
+		$fullname = WT_I18N::translate('(unknown)'). ' + '. WT_I18N::translate('(unknown)');
 	} else {
 		for ($i=0; $i<count($names); $i++) {
 			$script = utf8_script($names[$i]);
@@ -137,20 +148,9 @@ function check_NN($names) {
 	if (substr($fullname,-1)==',') $fullname = substr($fullname,0,strlen($fullname)-1);
 	if (substr($fullname,0,2)==', ') $fullname = substr($fullname,2);
 	$fullname = trim($fullname);
-	if (empty($fullname)) return i18n::translate('(unknown)');
+	if (empty($fullname)) return WT_I18N::translate('(unknown)');
 
 	return $fullname;
-}
-
-// Returns 1 if $string is valid 7 bit ASCII and 0 otherwise.
-function is_7bitascii($string) {
-	return preg_match('/^(?:[\x09\x0A\x0D\x20-\x7E])*$/', $string);
-}
-
-// Returns 1 if $string is valid UTF-8 and 0 otherwise.
-// See http://w3.org/International/questions/qa-forms-utf-8.html
-function is_utf8($string) {
-	return preg_match('/^(?:[\x09\x0A\x0D\x20-\x7E]|[\xC2-\xDF][\x80-\xBF]|\xE0[\xA0-\xBF][\x80-\xBF]|[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}|\xED[\x80-\x9F][\x80-\xBF]|\xF0[\x90-\xBF][\x80-\xBF]{2}|[\xF1-\xF3][\x80-\xBF]{3}|\xF4[\x80-\x8F][\x80-\xBF]{2})*$/', $string);
 }
 
 /**

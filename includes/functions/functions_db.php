@@ -179,7 +179,7 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 	$alphas=array();
 	// This logic relies on the database's collation rules to ensure that accented letters
 	// and digraphs appear in the correct listing.
-	foreach (explode(' ', i18n::$alphabet) as $letter) {
+	foreach (explode(' ', WT_I18N::$alphabet) as $letter) {
 		$query="SELECT COUNT(DISTINCT i_id) FROM `##individuals`";
 		if ($marnm) {
 			$query.=" JOIN `##name` ON (i_id=n_id AND i_file=n_file)";
@@ -189,10 +189,10 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 		if ($fams) {
 			$query.=" JOIN `##link` ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
 		}
-		$query.=" WHERE n_file=? AND n_sort LIKE '{$letter}%' COLLATE '".i18n::$collation."'";
-		foreach (explode(' ', i18n::$alphabet) as $letter2) {
+		$query.=" WHERE n_file=? AND n_sort LIKE '{$letter}%' COLLATE '".WT_I18N::$collation."'";
+		foreach (explode(' ', WT_I18N::$alphabet) as $letter2) {
 			if ($letter!=$letter2 && strpos($letter, $letter2)!==0) {
-				$query.=" AND n_sort NOT LIKE '{$letter2}%' COLLATE '".i18n::$collation."'";
+				$query.=" AND n_sort NOT LIKE '{$letter2}%' COLLATE '".WT_I18N::$collation."'";
 			}
 		}
 		$alphas[$letter]=WT_DB::prepare($query)->execute(array(WT_GED_ID))->fetchOne();
@@ -211,8 +211,8 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 		$query.=" JOIN `##link` ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
 	}
 	$query.=" WHERE n_file=?";
-	foreach (explode(' ', i18n::$alphabet) as $letter) {
-		$query.=" AND n_surn NOT LIKE '{$letter}%' COLLATE '".i18n::$collation."'";
+	foreach (explode(' ', WT_I18N::$alphabet) as $letter) {
+		$query.=" AND n_surn NOT LIKE '{$letter}%' COLLATE '".WT_I18N::$collation."'";
 	}
 	$query.=" GROUP BY LEFT(n_surn, 1)";
 	foreach (WT_DB::prepare($query)->execute(array(WT_GED_ID))->fetchAssoc() as $letter=>$count) {
@@ -244,7 +244,7 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 	$alphas=array();
 	// This logic relies on the database's collation rules to ensure that accented letters
 	// and digraphs appear in the correct listing.
-	foreach (explode(' ', i18n::$alphabet) as $letter) {
+	foreach (explode(' ', WT_I18N::$alphabet) as $letter) {
 		$query="SELECT COUNT(DISTINCT i_id) FROM `##individuals`";
 		if ($marnm) {
 			$query.=" JOIN `##name` ON (i_id=n_id AND i_file=n_file)";
@@ -256,14 +256,14 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 		}
 		$query.=" WHERE n_file=?";
 		if ($surn) {
-			$query.=" AND n_sort LIKE ".WT_DB::quote("{$surn},%")." COLLATE '".i18n::$collation."'";
+			$query.=" AND n_sort LIKE ".WT_DB::quote("{$surn},%")." COLLATE '".WT_I18N::$collation."'";
 		} elseif ($salpha) {
-			$query.=" AND n_sort LIKE ".WT_DB::quote("{$salpha}%,%")." COLLATE '".i18n::$collation."'";
+			$query.=" AND n_sort LIKE ".WT_DB::quote("{$salpha}%,%")." COLLATE '".WT_I18N::$collation."'";
 		}
-		$query.=" AND n_givn LIKE '".$letter."%' COLLATE '".i18n::$collation."'";
-		foreach (explode(' ', i18n::$alphabet) as $letter2) {
+		$query.=" AND n_givn LIKE '".$letter."%' COLLATE '".WT_I18N::$collation."'";
+		foreach (explode(' ', WT_I18N::$alphabet) as $letter2) {
 			if ($letter!=$letter2 && strpos($letter, $letter2)!==0) {
-				$query.=" AND n_givn NOT LIKE '{$letter2}%' COLLATE '".i18n::$collation."'";
+				$query.=" AND n_givn NOT LIKE '{$letter2}%' COLLATE '".WT_I18N::$collation."'";
 			}
 		}
 		$alphas[$letter]=WT_DB::prepare($query)->execute(array(WT_GED_ID))->fetchOne();
@@ -283,13 +283,13 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 	}
 	$query.=" WHERE n_file=?";
 	if ($surn) {
-		$query.=" AND n_sort LIKE ".WT_DB::quote("{$surn},%")." COLLATE '".i18n::$collation."'";
+		$query.=" AND n_sort LIKE ".WT_DB::quote("{$surn},%")." COLLATE '".WT_I18N::$collation."'";
 	} elseif ($salpha) {
-		$query.=" AND n_sort LIKE ".WT_DB::quote("{$salpha}%,%")." COLLATE '".i18n::$collation."'";
+		$query.=" AND n_sort LIKE ".WT_DB::quote("{$salpha}%,%")." COLLATE '".WT_I18N::$collation."'";
 	}
-	$query.=" AND n_givn LIKE '".$letter."%' COLLATE '".i18n::$collation."'";
-	foreach (explode(' ', i18n::$alphabet) as $letter) {
-		$query.=" AND n_givn NOT LIKE '{$letter}%' COLLATE '".i18n::$collation."'";
+	$query.=" AND n_givn LIKE '".$letter."%' COLLATE '".WT_I18N::$collation."'";
+	foreach (explode(' ', WT_I18N::$alphabet) as $letter) {
+		$query.=" AND n_givn NOT LIKE '{$letter}%' COLLATE '".WT_I18N::$collation."'";
 	}
 	$query.=" GROUP BY LEFT(n_givn, 1)";
 	foreach (WT_DB::prepare($query)->execute(array(WT_GED_ID))->fetchAssoc() as $letter=>$count) {
@@ -333,18 +333,18 @@ function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
 	} elseif ($surn) {
 		// Specific surname
 		$sql.=
-			" AND n_surn LIKE ".WT_DB::quote($surn)." COLLATE '".i18n::$collation."'".
-			" ORDER BY n_surn COLLATE '".i18n::$collation."'";
+			" AND n_surn LIKE ".WT_DB::quote($surn)." COLLATE '".WT_I18N::$collation."'".
+			" ORDER BY n_surn COLLATE '".WT_I18N::$collation."'";
 	} elseif ($salpha) {
 		// Surname initial
 		$sql.=
-			" AND n_surn LIKE ".WT_DB::quote("{$salpha}%")." COLLATE '".i18n::$collation."'".
-			" ORDER BY n_surn COLLATE '".i18n::$collation."'";
+			" AND n_surn LIKE ".WT_DB::quote("{$salpha}%")." COLLATE '".WT_I18N::$collation."'".
+			" ORDER BY n_surn COLLATE '".WT_I18N::$collation."'";
 	} else {
 		// All surnames
 		$sql.=
 			" AND n_surn NOT IN ('', '@N.N.')".
-			" ORDER BY n_surn COLLATE '".i18n::$collation."'";
+			" ORDER BY n_surn COLLATE '".WT_I18N::$collation."'";
 	}
 
 	$list=array();
@@ -389,37 +389,37 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 	if ($surn) {
 		// Match a surname, with or without a given initial
 		if ($galpha) {
-			$where[]="n_sort LIKE ".WT_DB::quote("{$surn},{$galpha}%")." COLLATE '".i18n::$collation."'";
+			$where[]="n_sort LIKE ".WT_DB::quote("{$surn},{$galpha}%")." COLLATE '".WT_I18N::$collation."'";
 		} else {
-			$where[]="n_sort LIKE ".WT_DB::quote("{$surn},%")." COLLATE '".i18n::$collation."'";
+			$where[]="n_sort LIKE ".WT_DB::quote("{$surn},%")." COLLATE '".WT_I18N::$collation."'";
 		}
 	} elseif ($salpha==',') {
 		// Match a surname-less name, with or without a given initial
 		if ($galpha) {
-			$where[]="n_sort LIKE ".WT_DB::quote(",{$galpha}%")." COLLATE '".i18n::$collation."'";
+			$where[]="n_sort LIKE ".WT_DB::quote(",{$galpha}%")." COLLATE '".WT_I18N::$collation."'";
 		} else {
-			$where[]="n_sort LIKE ".WT_DB::quote(",%")." COLLATE '".i18n::$collation."'";
+			$where[]="n_sort LIKE ".WT_DB::quote(",%")." COLLATE '".WT_I18N::$collation."'";
 		}
 	} elseif ($salpha) {
 		// Match a surname initial, with or without a given initial
 		if ($galpha) {
-			$where[]="n_sort LIKE ".WT_DB::quote("{$salpha}%,{$galpha}%")." COLLATE '".i18n::$collation."'";
+			$where[]="n_sort LIKE ".WT_DB::quote("{$salpha}%,{$galpha}%")." COLLATE '".WT_I18N::$collation."'";
 		} else {
-			$where[]="n_sort LIKE ".WT_DB::quote("{$salpha}%")." COLLATE '".i18n::$collation."'";
+			$where[]="n_sort LIKE ".WT_DB::quote("{$salpha}%")." COLLATE '".WT_I18N::$collation."'";
 		}
 	} elseif ($galpha) {
 		// Match all surnames with a given initial
-		$where[]="n_sort LIKE ".WT_DB::quote("%,{$galpha}%")." COLLATE '".i18n::$collation."'";
+		$where[]="n_sort LIKE ".WT_DB::quote("%,{$galpha}%")." COLLATE '".WT_I18N::$collation."'";
 	} else {
 		// Match all individuals
 	}
 
-	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY CASE n_surn WHEN '@N.N.' THEN 1 ELSE 0 END, n_surn COLLATE '".i18n::$collation."', CASE n_givn WHEN '@P.N.' THEN 1 ELSE 0 END, n_givn COLLATE '".i18n::$collation."'";
+	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY CASE n_surn WHEN '@N.N.' THEN 1 ELSE 0 END, n_surn COLLATE '".WT_I18N::$collation."', CASE n_givn WHEN '@P.N.' THEN 1 ELSE 0 END, n_givn COLLATE '".WT_I18N::$collation."'";
 
 	$list=array();
 	$rows=WT_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 	foreach ($rows as $row) {
-		$person=Person::getInstance($row);
+		$person=WT_Person::getInstance($row);
 		$person->setPrimaryName($row['n_num']);
 		// We need to clone $person, as we may have multiple references to the
 		// same person in this list, and the "primary name" would otherwise
@@ -462,10 +462,10 @@ function get_famlist_fams($surn='', $salpha='', $galpha='', $marnm, $ged_id=null
 			->fetchAll(PDO::FETCH_ASSOC);
 
 		foreach ($rows as $row) {
-			$list[]=Family::getInstance($row);
+			$list[]=WT_Family::getInstance($row);
 		}
 	}
-	usort($list, array('GedcomRecord', 'Compare'));
+	usort($list, array('WT_GedcomRecord', 'Compare'));
 	return $list;
 }
 
@@ -526,12 +526,12 @@ function fetch_linked_indi($xref, $link, $ged_id) {
 		" JOIN `##link` ON (i_file=l_file AND i_id=l_from)".
 		" LEFT JOIN `##name` ON (i_file=n_file AND i_id=n_id AND n_num=0)".
 		" WHERE i_file=? AND l_type=? AND l_to=?".
-		" ORDER BY n_sort COLLATE '".i18n::$collation."'"
+		" ORDER BY n_sort COLLATE '".WT_I18N::$collation."'"
 	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
 	foreach ($rows as $row) {
-		$list[]=Person::getInstance($row);
+		$list[]=WT_Person::getInstance($row);
 	}
 	return $list;
 }
@@ -547,7 +547,7 @@ function fetch_linked_fam($xref, $link, $ged_id) {
 
 	$list=array();
 	foreach ($rows as $row) {
-		$list[]=Family::getInstance($row);
+		$list[]=WT_Family::getInstance($row);
 	}
 	return $list;
 }
@@ -558,12 +558,12 @@ function fetch_linked_note($xref, $link, $ged_id) {
 		" JOIN `##link` ON (o_file=l_file AND o_id=l_from)".
 		" LEFT JOIN `##name` ON (o_file=n_file AND o_id=n_id AND n_num=0)".
 		" WHERE o_file=? AND o_type='NOTE' AND l_type=? AND l_to=?".
-		" ORDER BY n_sort COLLATE '".i18n::$collation."'"
+		" ORDER BY n_sort COLLATE '".WT_I18N::$collation."'"
 	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
 	foreach ($rows as $row) {
-		$list[]=Note::getInstance($row);
+		$list[]=WT_Note::getInstance($row);
 	}
 	return $list;
 }
@@ -574,12 +574,12 @@ function fetch_linked_sour($xref, $link, $ged_id) {
 			" JOIN `##link` ON (s_file=l_file AND s_id=l_from)".
 			" LEFT JOIN `##name` ON (s_file=n_file AND s_id=n_id AND n_num=0)".
 			" WHERE s_file=? AND l_type=? AND l_to=?".
-			" ORDER BY n_sort COLLATE '".i18n::$collation."'"
+			" ORDER BY n_sort COLLATE '".WT_I18N::$collation."'"
 		)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
 	foreach ($rows as $row) {
-		$list[]=Source::getInstance($row);
+		$list[]=WT_Source::getInstance($row);
 	}
 	return $list;
 }
@@ -590,12 +590,12 @@ function fetch_linked_obje($xref, $link, $ged_id) {
 		" JOIN `##link` ON (m_gedfile=l_file AND m_media=l_from)".
 		" LEFT JOIN `##name` ON (m_gedfile=n_file AND m_media=n_id AND n_num=0)".
 		" WHERE m_gedfile=? AND l_type=? AND l_to=?".
-		" ORDER BY n_sort COLLATE '".i18n::$collation."'"
+		" ORDER BY n_sort COLLATE '".WT_I18N::$collation."'"
 	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
 	foreach ($rows as $row) {
-		$list[]=Media::getInstance($row);
+		$list[]=WT_Media::getInstance($row);
 	}
 	return $list;
 }
@@ -894,9 +894,9 @@ function get_source_list($ged_id) {
 
 	$list=array();
 	foreach ($rows as $row) {
-		$list[]=Source::getInstance($row);
+		$list[]=WT_Source::getInstance($row);
 	}
-	usort($list, array('GedcomRecord', 'Compare'));
+	usort($list, array('WT_GedcomRecord', 'Compare'));
 	return $list;
 }
 
@@ -910,9 +910,9 @@ function get_repo_list($ged_id) {
 
 	$list=array();
 	foreach ($rows as $row) {
-		$list[]=Repository::getInstance($row);
+		$list[]=WT_Repository::getInstance($row);
 	}
-	usort($list, array('GedcomRecord', 'Compare'));
+	usort($list, array('WT_GedcomRecord', 'Compare'));
 	return $list;
 }
 
@@ -925,9 +925,9 @@ function get_note_list($ged_id) {
 
 	$list=array();
 	foreach ($rows as $row) {
-		$list[]=Note::getInstance($row);
+		$list[]=WT_Note::getInstance($row);
 	}
-	usort($list, array('GedcomRecord', 'Compare'));
+	usort($list, array('WT_GedcomRecord', 'Compare'));
 	return $list;
 }
 
@@ -949,7 +949,7 @@ function search_indis_custom($join, $where, $order) {
 			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
-		$list[]=Person::getInstance($row);
+		$list[]=WT_Person::getInstance($row);
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=WT_GED_ID) {
@@ -976,7 +976,7 @@ function search_fams_custom($join, $where, $order) {
 			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
-		$list[]=Family::getInstance($row);
+		$list[]=WT_Family::getInstance($row);
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=WT_GED_ID) {
@@ -1006,7 +1006,7 @@ function search_indis($query, $geds, $match, $skip) {
 
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(utf8_strtoupper($q), '/');
-		$querysql[]="i_gedcom LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".i18n::$collation."'";
+		$querysql[]="i_gedcom LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".WT_I18N::$collation."'";
 	}
 
 	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM `##individuals` WHERE (".implode(" {$match} ", $querysql).') AND i_file IN ('.implode(',', $geds).')';
@@ -1024,7 +1024,7 @@ function search_indis($query, $geds, $match, $skip) {
 			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
-		$record=Person::getInstance($row);
+		$record=WT_Person::getInstance($row);
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
 		$gedrec=utf8_strtoupper($record->getGedcomRecord());
 		if ($skip) {
@@ -1060,7 +1060,7 @@ function search_indis_names($query, $geds, $match) {
 	// Convert the query into a SQL expression
 	$querysql=array();
 	foreach ($query as $q) {
-		$querysql[]="n_full LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".i18n::$collation."'";
+		$querysql[]="n_full LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".WT_I18N::$collation."'";
 	}
 	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_num FROM `##individuals` JOIN `##name` ON i_id=n_id AND i_file=n_file WHERE (".implode(" {$match} ", $querysql).') AND i_file IN ('.implode(',', $geds).')';
 
@@ -1077,7 +1077,7 @@ function search_indis_names($query, $geds, $match) {
 			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
-		$indi=Person::getInstance($row);
+		$indi=WT_Person::getInstance($row);
 		if ($indi->canDisplayName()) {
 			$indi->setPrimaryName($row['n_num']);
 			// We need to clone $indi, as we may have multiple references to the
@@ -1157,7 +1157,7 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
-		$indi=Person::getInstance($row);
+		$indi=WT_Person::getInstance($row);
 		if ($indi->canDisplayName()) {
 			$list[]=$indi;
 		}
@@ -1220,7 +1220,7 @@ function search_indis_dates($day, $month, $year, $facts) {
 	$list=array();
 	$rows=WT_DB::prepare($sql)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
 	foreach ($rows as $row) {
-		$list[]=Person::getInstance($row);
+		$list[]=WT_Person::getInstance($row);
 	}
 	return $list;
 }
@@ -1242,7 +1242,7 @@ function search_indis_daterange($start, $end, $facts) {
 	$list=array();
 	$rows=WT_DB::prepare($sql)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
 	foreach ($rows as $row) {
-		$list[]=Person::getInstance($row);
+		$list[]=WT_Person::getInstance($row);
 	}
 	return $list;
 }
@@ -1252,8 +1252,8 @@ function search_indis_year_range($startyear, $endyear) {
 	// TODO: We should use Julian-days, rather than gregorian years,
 	// to allow
 	// the lifespan chart, etc., to use other calendars.
-	$startjd=GregorianDate::YMDtoJD($startyear, 1, 1);
-	$endjd  =GregorianDate::YMDtoJD($endyear+1, 1, 1)-1;
+	$startjd=WT_Date_Gregorian::YMDtoJD($startyear, 1, 1);
+	$endjd  =WT_Date_Gregorian::YMDtoJD($endyear+1, 1, 1)-1;
 
 	return search_indis_daterange($startjd, $endjd, '');
 }
@@ -1278,7 +1278,7 @@ function search_fams($query, $geds, $match, $skip) {
 
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(utf8_strtoupper($q), '/');
-		$querysql[]="f_gedcom LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".i18n::$collation."'";
+		$querysql[]="f_gedcom LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".WT_I18N::$collation."'";
 	}
 
 	$sql="SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_numchil FROM `##families` WHERE (".implode(" {$match} ", $querysql).') AND f_file IN ('.implode(',', $geds).')';
@@ -1296,7 +1296,7 @@ function search_fams($query, $geds, $match, $skip) {
 			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
-		$record=Family::getInstance($row);
+		$record=WT_Family::getInstance($row);
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
 		$gedrec=utf8_strtoupper($record->getGedcomRecord());
 		if ($skip) {
@@ -1332,7 +1332,7 @@ function search_fams_names($query, $geds, $match) {
 	// Convert the query into a SQL expression
 	$querysql=array();
 	foreach ($query as $q) {
-		$querysql[]="(husb.n_full LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".i18n::$collation."' OR wife.n_full LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".i18n::$collation."')";
+		$querysql[]="(husb.n_full LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".WT_I18N::$collation."' OR wife.n_full LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".WT_I18N::$collation."')";
 	}
 
 	$sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_numchil FROM `##families` LEFT OUTER JOIN `##name` husb ON f_husb=husb.n_id AND f_file=husb.n_file LEFT OUTER JOIN `##name` wife ON f_wife=wife.n_id AND f_file=wife.n_file WHERE (".implode(" {$match} ", $querysql).') AND f_file IN ('.implode(',', $geds).')';
@@ -1350,7 +1350,7 @@ function search_fams_names($query, $geds, $match) {
 			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
-		$indi=Family::getInstance($row);
+		$indi=WT_Family::getInstance($row);
 		if ($indi->canDisplayName()) {
 			$list[]=$indi;
 		}
@@ -1383,7 +1383,7 @@ function search_sources($query, $geds, $match, $skip) {
 
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(utf8_strtoupper($q), '/');
-		$querysql[]="s_gedcom LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".i18n::$collation."'";
+		$querysql[]="s_gedcom LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".WT_I18N::$collation."'";
 	}
 
 	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM `##sources` WHERE (".implode(" {$match} ", $querysql).') AND s_file IN ('.implode(',', $geds).')';
@@ -1401,7 +1401,7 @@ function search_sources($query, $geds, $match, $skip) {
 			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
-		$record=Source::getInstance($row);
+		$record=WT_Source::getInstance($row);
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
 		$gedrec=utf8_strtoupper($record->getGedcomRecord());
 		if ($skip) {
@@ -1442,7 +1442,7 @@ function search_notes($query, $geds, $match, $skip) {
 
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(utf8_strtoupper($q), '/');
-		$querysql[]="o_gedcom LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".i18n::$collation."'";
+		$querysql[]="o_gedcom LIKE ".WT_DB::quote("%{$q}%")." COLLATE '".WT_I18N::$collation."'";
 	}
 
 	$sql="SELECT 'NOTE' AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM `##other` WHERE (".implode(" {$match} ", $querysql).") AND o_type='NOTE' AND o_file IN (".implode(',', $geds).')';
@@ -1460,7 +1460,7 @@ function search_notes($query, $geds, $match, $skip) {
 			load_gedcom_settings($row['ged_id']);
 			$GED_ID=$row['ged_id'];
 		}
-		$record=Note::getInstance($row);
+		$record=WT_Note::getInstance($row);
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
 		$gedrec=utf8_strtoupper($record->getGedcomRecord());
 		if ($skip) {
@@ -1650,34 +1650,13 @@ function get_top_surnames($ged_id, $min, $max) {
 	}
 }
 
-/**
-* get a list of remote servers
-*/
-function get_server_list($ged_id=WT_GED_ID) {
-	$sitelist = array();
-
-	$rows=WT_DB::prepare("SELECT s_id, s_name, s_gedcom, s_file FROM `##sources` WHERE s_file=? AND s_dbid=? ORDER BY s_name")
-		->execute(array($ged_id, 'Y'))
-		->fetchAll();
-	foreach ($rows as $row) {
-		$source = array();
-		$source["name"] = $row->s_name;
-		$source["gedcom"] = $row->s_gedcom;
-		$source["gedfile"] = $row->s_file;
-		$source["url"] = get_gedcom_value("URL", 1, $row->s_gedcom);
-		$sitelist[$row->s_id] = $source;
-	}
-
-	return $sitelist;
-}
-
 function delete_fact($linenum, $pid, $gedrec) {
 	global $linefix;
 
 	if (!empty($linenum)) {
 		if ($linenum==0) {
 			delete_gedrec($pid, WT_GED_ID);
-			echo i18n::translate('GEDCOM record successfully deleted.');
+			echo WT_I18N::translate('GEDCOM record successfully deleted.');
 		} else {
 			$gedlines = explode("\n", $gedrec);
 			// NOTE: The array_pop is used to kick off the last empty element on the array
@@ -1715,20 +1694,6 @@ function delete_fact($linenum, $pid, $gedrec) {
 	}
 }
 
-/**
-* get_remote_id Recieves a RFN key and returns a Stub ID if the RFN exists
-*
-* @param mixed $rfn RFN number to see if it exists
-* @access public
-* @return gid Stub ID that contains the RFN number. Returns false if it didn't find anything
-*/
-function get_remote_id($rfn) {
-	return
-		WT_DB::prepare("SELECT r_gid FROM `##remotelinks` WHERE r_linkid=? AND r_file=?")
-		->execute(array($rfn, WT_GED_ID))
-		->fetchOne();
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // Get a list of events whose anniversary occured on a given julian day.
 // Used on the on-this-day/upcoming blocks and the day/month calendar views.
@@ -1744,7 +1709,7 @@ function get_anniversary_events($jd, $facts='', $ged_id=WT_GED_ID) {
 	}
 
 	$found_facts=array();
-	foreach (array(new GregorianDate($jd), new JulianDate($jd), new FrenchRDate($jd), new JewishDate($jd), new HijriDate($jd)) as $anniv) {
+	foreach (array(new WT_Date_Gregorian($jd), new WT_Date_Julian($jd), new WT_Date_French($jd), new WT_Date_Jewish($jd), new WT_Date_Hijri($jd)) as $anniv) {
 		// Build a SQL where clause to match anniversaries in the appropriate calendar.
 		$where="WHERE d_type='".$anniv->CALENDAR_ESCAPE()."'";
 		// SIMPLE CASES:
@@ -1781,7 +1746,7 @@ function get_anniversary_events($jd, $facts='', $ged_id=WT_GED_ID) {
 				// 1 KSL includes 30 CSH (if this year didn't have 30 CSH)
 				// 29 KSL does not include 30 KSL (but would include an invalid 31 KSL if there were no 30 KSL)
 				if ($anniv->d==1) {
-					$tmp=new JewishDate(array($anniv->y, 'csh', 1));
+					$tmp=new WT_Date_Jewish(array($anniv->y, 'csh', 1));
 					if ($tmp->DaysInMonth()==29) {
 						$where.=" AND (d_day<=1 AND d_mon=3 OR d_day=30 AND d_mon=2)";
 					} else {
@@ -1799,7 +1764,7 @@ function get_anniversary_events($jd, $facts='', $ged_id=WT_GED_ID) {
 			case 4:
 				// 1 TVT includes 30 KSL (if this year didn't have 30 KSL)
 				if ($anniv->d==1) {
-					$tmp=new JewishDate($anniv->y, 'ksl', 1);
+					$tmp=new WT_Date_Jewish($anniv->y, 'ksl', 1);
 					if ($tmp->DaysInMonth()==29) {
 						$where.=" AND (d_day<=1 AND d_mon=4 OR d_day=30 AND d_mon=3)";
 					} else {
@@ -1871,9 +1836,9 @@ function get_anniversary_events($jd, $facts='', $ged_id=WT_GED_ID) {
 			$rows=WT_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 			foreach ($rows as $row) {
 				if ($row['type']=='INDI') {
-					$record=Person::getInstance($row);
+					$record=WT_Person::getInstance($row);
 				} else {
-					$record=Family::getInstance($row);
+					$record=WT_Family::getInstance($row);
 				}
 				// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
 				// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
@@ -1889,7 +1854,7 @@ function get_anniversary_events($jd, $facts='', $ged_id=WT_GED_ID) {
 				$ged_date_regex="/2 DATE.*(".($row['d_day']>0 ? "0?{$row['d_day']}\s*" : "").$row['d_month']."\s*".($row['d_year']!=0 ? $year_regex : "").")/i";
 				foreach (get_all_subrecords($row['gedrec'], $skipfacts, false, false) as $factrec) {
 					if (preg_match("/(^1 {$row['d_fact']}|^1 (FACT|EVEN).*\n2 TYPE {$row['d_fact']})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
-						$date=new GedcomDate($match[1]);
+						$date=new WT_Date($match[1]);
 						if (preg_match('/2 PLAC (.+)/', $factrec, $match)) {
 							$plac=$match[1];
 						} else {
@@ -1971,7 +1936,7 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=WT_GED_ID) {
 			$ged_date_regex="/2 DATE.*(".($row[4]>0 ? "0?{$row[4]}\s*" : "").$row[5]."\s*".($row[6]!=0 ? $year_regex : "").")/i";
 			foreach (get_all_subrecords($row[1], $skipfacts, false, false) as $factrec) {
 				if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
-					$date=new GedcomDate($match[1]);
+					$date=new WT_Date($match[1]);
 					if (preg_match('/2 PLAC (.+)/', $factrec, $match)) {
 						$plac=$match[1];
 					} else {
@@ -2062,7 +2027,7 @@ function set_site_setting($setting_name, $setting_value) {
 
 function get_all_gedcoms() {
 	return
-		WT_DB::prepare("SELECT gedcom_id, gedcom_name FROM `##gedcom`")
+		WT_DB::prepare("SELECT SQL_CACHE gedcom_id, gedcom_name FROM `##gedcom` WHERE gedcom_id>0 ORDER BY gedcom_name")
 		->fetchAssoc();
 }
 
@@ -2072,7 +2037,8 @@ function get_gedcom_titles() {
 			"SELECT SQL_CACHE g.gedcom_id, g.gedcom_name, COALESCE(gs.setting_value, g.gedcom_name) AS gedcom_title".
 			" FROM `##gedcom` g".
 			" LEFT JOIN `##gedcom_setting` gs ON (g.gedcom_id=gs.gedcom_id AND gs.setting_name=?)".
-			" ORDER BY 3"
+			" WHERE g.gedcom_id>0".
+			" ORDER BY g.sort_order, 3"
 		)
 		->execute(array('title'))
 		->fetchAll();
@@ -2152,9 +2118,10 @@ function create_user($username, $realname, $email, $password) {
 	} catch (PDOException $ex) {
 		// User already exists?
 	}
-	return
+	$user_id=
 		WT_DB::prepare("SELECT user_id FROM `##user` WHERE user_name=?")
 		->execute(array($username))->fetchOne();
+	return $user_id;
 }
 
 function rename_user($user_id, $new_username) {
@@ -2180,11 +2147,11 @@ function delete_user($user_id) {
 function get_all_users($order='ASC', $key='realname') {
 	if ($key=='username') {
 		return
-			WT_DB::prepare("SELECT user_id, user_name FROM `##user` ORDER BY user_name")
+			WT_DB::prepare("SELECT user_id, user_name FROM `##user` WHERE user_id>0 ORDER BY user_name")
 			->fetchAssoc();
 	} elseif ($key=='realname') {
 		return
-			WT_DB::prepare("SELECT user_id, user_name FROM `##user` ORDER BY real_name")
+			WT_DB::prepare("SELECT user_id, user_name FROM `##user` WHERE user_id>0 ORDER BY real_name")
 			->fetchAssoc();
 	} else {
 		return
@@ -2192,6 +2159,7 @@ function get_all_users($order='ASC', $key='realname') {
 				"SELECT u.user_id, user_name".
 				" FROM `##user` u".
 				" LEFT JOIN `##user_setting` us1 ON (u.user_id=us1.user_id AND us1.setting_name=?)".
+				" WHERE u.user_id>0".
 				" ORDER BY us1.setting_value {$order}"
 			)->execute(array($key))
 			->fetchAssoc();
@@ -2200,7 +2168,7 @@ function get_all_users($order='ASC', $key='realname') {
 
 function get_user_count() {
 	return
-			WT_DB::prepare("SELECT COUNT(*) FROM `##user`")
+			WT_DB::prepare("SELECT COUNT(*) FROM `##user` WHERE user_id>0")
 			->fetchOne();
 }
 
@@ -2213,14 +2181,14 @@ function get_user_by_email($email) {
 
 function get_admin_user_count() {
 	return
-		WT_DB::prepare("SELECT SQL_CACHE COUNT(*) FROM `##user_setting` WHERE setting_name=? AND setting_value=?")
+		WT_DB::prepare("SELECT SQL_CACHE COUNT(*) FROM `##user_setting` WHERE setting_name=? AND setting_value=? AND user_id>0")
 		->execute(array('canadmin', '1'))
 		->fetchOne();
 }
 
 function get_non_admin_user_count() {
 	return
-		WT_DB::prepare("SELECT SQL_CACHE COUNT(*) FROM `##user_setting` WHERE  setting_name=? AND setting_value<>?")
+		WT_DB::prepare("SELECT SQL_CACHE COUNT(*) FROM `##user_setting` WHERE  setting_name=? AND setting_value<>? AND user_id>0")
 		->execute(array('canadmin', '1'))
 		->fetchOne();
 }
@@ -2456,4 +2424,32 @@ function update_favorites($xref_from, $xref_to, $ged_id=WT_GED_ID) {
 		WT_DB::prepare("UPDATE `##favorites` SET fv_gid=? WHERE fv_gid=? AND fv_file=?")
 		->execute(array($xref_to, $xref_from, $ged_name))
 		->rowCount();
+}
+
+/**
+* count changes by today, this week, or this month for administration dashboard
+*
+* @param string $xref
+* @param string $tree
+*/
+function count_changes_today($xref, $tree) {
+	$sql="SELECT count(change_id) FROM `##change` WHERE status='accepted' AND date(change_time)= date(now()) AND xref LIKE ? '%' AND gedcom_id = ? ";
+	return
+		WT_DB::prepare($sql)
+		->execute(array($xref, $tree))
+		->fetchOne();
+}
+function count_changes_week($xref, $tree) {
+	$sql="SELECT count(change_id) FROM `##change` WHERE status='accepted' AND week(change_time,2)= week(now(),2) AND xref LIKE ? '%' AND gedcom_id = ? ";
+	return
+		WT_DB::prepare($sql)
+		->execute(array($xref, $tree))
+		->fetchOne();
+}
+function count_changes_month($xref, $tree) {
+	$sql="SELECT count(change_id) FROM `##change` WHERE status='accepted' AND month(change_time)= month(now()) AND xref LIKE ? '%' AND gedcom_id = ? ";
+	return
+		WT_DB::prepare($sql)
+		->execute(array($xref, $tree))
+		->fetchOne();
 }

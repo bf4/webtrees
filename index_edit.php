@@ -51,8 +51,8 @@ if (isset($_REQUEST['name'])) $name = $_REQUEST['name'];
 //-- otherwise have them login again
 if (!WT_USER_ID) {
 	print_simple_header('');
-	echo i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
-	echo '<div class="center"><a href="javascript:;" onclick="self.close();">', i18n::translate('Close Window').'</a></div>';
+	echo WT_I18N::translate('<b>Access Denied</b><br />You do not have access to this resource.');
+	echo '<div class="center"><a href="javascript:;" onclick="self.close();">', WT_I18N::translate('Close Window').'</a></div>';
 	print_simple_footer();
 	exit;
 }
@@ -97,7 +97,7 @@ if ($ctype=='user') {
 }
 
 if ($ctype=='user') {
-	print_simple_header(i18n::translate('My Page'));
+	print_simple_header(WT_I18N::translate('My Page'));
 } else {
 	print_simple_header(get_gedcom_setting(WT_GED_ID, 'title'));
 }
@@ -148,7 +148,7 @@ if ($action=="configure") {
 	$block=new $class_name;
 	echo "<table class=\"facts_table ".$TEXT_DIRECTION."\" width=\"99%\">";
 	echo "<tr><td class=\"facts_label\">";
-	echo "<h2>".i18n::translate('Configure')."</h2>";
+	echo "<h2>".WT_I18N::translate('Configure')."</h2>";
 	echo "</td></tr>";
 	echo "<tr><td class=\"facts_label03\">";
 	echo "<b>".$block->getTitle()."</b>";
@@ -164,13 +164,13 @@ if ($action=="configure") {
 //-->
 </script>
 <?php
-	echo "\n<form name=\"block\" method=\"post\" action=\"index_edit.php?action=configure&amp;ctype={$ctype}&amp;block_id=", $block_id, "\">\n";
-	echo "<input type=\"hidden\" name=\"save\" value=\"1\" />\n";
+	echo "<form name=\"block\" method=\"post\" action=\"index_edit.php?action=configure&amp;ctype={$ctype}&amp;block_id=", $block_id, "\">";
+	echo "<input type=\"hidden\" name=\"save\" value=\"1\" />";
 	echo "<table border=\"0\" class=\"facts_table ".$TEXT_DIRECTION."\">";
 	$block->configureBlock($block_id);
 	echo "<tr><td colspan=\"2\" class=\"topbottombar\">";
-	echo "<input type=\"button\" value=\"".i18n::translate('Save')."\" onclick=\"document.block.submit();\" />";
-	echo "&nbsp;&nbsp;<input type =\"button\" value=\"".i18n::translate('Cancel')."\" onclick=\"window.close()\" />";
+	echo "<input type=\"button\" value=\"".WT_I18N::translate('Save')."\" onclick=\"document.block.submit();\" />";
+	echo "&nbsp;&nbsp;<input type =\"button\" value=\"".WT_I18N::translate('Cancel')."\" onclick=\"window.close()\" />";
 	echo "</td></tr>";
 	echo "</table>";
 	echo "</form>";
@@ -262,11 +262,11 @@ if ($action=="configure") {
  * Load Block Description array for use by jscript
  */
 	<?php
-	echo "var block_descr = new Array();\n";
+	echo "var block_descr = new Array();";
 	foreach ($all_blocks as $block_name=>$block) {
-		echo "block_descr['$block_name'] = '".str_replace("'", "\\'", $block->getDescription())."';\n";
+		echo "block_descr['$block_name'] = '".str_replace("'", "\\'", $block->getDescription())."';";
 	}
-	echo "block_descr['advice1'] = '".str_replace("'", "\\'", i18n::translate('Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction.'))."';\n";
+	echo "block_descr['advice1'] = '".str_replace("'", "\\'", WT_I18N::translate('Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction.'))."';";
 	?>
 
 
@@ -304,11 +304,6 @@ if ($action=="configure") {
 	}
 	//-->
 	</script>
-	<?php
-	//--------------------------------Start 1st tab Configuration page
-	?>
-	<div id="configure" class="tab_page center" style="position: absolute; display: block; top: auto; left: auto; z-index: 1; ">
-	<br />
 	<form name="config_setup" method="post" action="index_edit.php">
 	<input type="hidden" name="ctype" value="<?php echo $ctype; ?>" />
 	<input type="hidden" name="action" value="update" />
@@ -316,120 +311,108 @@ if ($action=="configure") {
 	<table dir="ltr" border="1" width="400px">
 	<tr><td class="topbottombar" colspan="7">
 	<?php
-	if ($ctype=="user") echo "<b>".i18n::translate('Customize My Page')."</b>";
-	else echo "<b>".i18n::translate('Customize this GEDCOM Home Page')."</b>";
+	if ($ctype=="user") echo "<b>".WT_I18N::translate('Customize My Page')."</b>";
+	else echo "<b>".WT_I18N::translate('Customize this GEDCOM Home Page')."</b>";
 	echo help_link('portal_config_intructions');
 	echo "</td></tr>";
 	// NOTE: Row 1: Column legends
 	echo "<tr>";
-		echo "<td class=\"descriptionbox center vmiddle\" colspan=\"2\">\n";
-			echo "<b>".i18n::translate('Main Section Blocks')."</b>";
-		echo "</td>\n";
-		echo "<td class=\"descriptionbox center vmiddle\" colspan=\"3\">";
-			echo "<b>".i18n::translate('Available Blocks')."</b>";
-		echo "</td>\n";
 		echo "<td class=\"descriptionbox center vmiddle\" colspan=\"2\">";
-			echo "<b>".i18n::translate('Right Section Blocks')."</b>";
+			echo "<b>".WT_I18N::translate('Main Section Blocks')."</b>";
 		echo "</td>";
-	echo "</tr>\n";
+		echo "<td class=\"descriptionbox center vmiddle\" colspan=\"3\">";
+			echo "<b>".WT_I18N::translate('Available Blocks')."</b>";
+		echo "</td>";
+		echo "<td class=\"descriptionbox center vmiddle\" colspan=\"2\">";
+			echo "<b>".WT_I18N::translate('Right Section Blocks')."</b>";
+		echo "</td>";
+	echo "</tr>";
 	echo "<tr>";
 	// NOTE: Row 2 column 1: Up/Down buttons for left (main) block list
 	echo "<td class=\"optionbox width20px center vmiddle\">";
-		echo "<a tabindex=\"-1\" onclick=\"move_up_block('main_select');\" title=\"".i18n::translate('Move Up')."\">".$IconUarrow."</a>";
+		echo "<a tabindex=\"-1\" onclick=\"move_up_block('main_select');\" title=\"".WT_I18N::translate('Move up')."\">".$IconUarrow."</a>";
 		echo "<br />";
-		echo "<a tabindex=\"-1\" onclick=\"move_down_block('main_select');\" title=\"".i18n::translate('Move Down')."\">".$IconDarrow."</a>";
+		echo "<a tabindex=\"-1\" onclick=\"move_down_block('main_select');\" title=\"".WT_I18N::translate('Move down')."\">".$IconDarrow."</a>";
 		echo "<br /><br />";
 		echo help_link('block_move_up');
 
 	echo "</td>";
 	// NOTE: Row 2 column 2: Left (Main) block list
-	echo "<td class=\"optionbox\" dir=\"".$TEXT_DIRECTION."\">\n";
-		echo "<select multiple=\"multiple\" id=\"main_select\" name=\"main[]\" size=\"10\" onchange=\"show_description('main_select');\">\n";
+	echo "<td class=\"optionbox\" dir=\"".$TEXT_DIRECTION."\">";
+		echo "<select multiple=\"multiple\" id=\"main_select\" name=\"main[]\" size=\"10\" onchange=\"show_description('main_select');\">";
 		foreach ($blocks['main'] as $block_id=>$block_name) {
-			echo "<option value=\"$block_id\">".$all_blocks[$block_name]->getTitle()."</option>\n";
+			echo "<option value=\"$block_id\">".$all_blocks[$block_name]->getTitle()."</option>";
 		}
-		echo "</select>\n";
+		echo "</select>";
 	echo "</td>";
 	// NOTE: Row 2 column 3: Left/Right buttons for left (main) block list
 	echo "<td class=\"optionbox width20 vmiddle\">";
-		echo "<a tabindex=\"-1\" onclick=\"move_left_right_block('main_select', 'right_select');\" title=\"".i18n::translate('Move Right')."\">".$IconRDarrow."</a>";
+		echo "<a tabindex=\"-1\" onclick=\"move_left_right_block('main_select', 'right_select');\" title=\"".WT_I18N::translate('Move Right')."\">".$IconRDarrow."</a>";
 		echo "<br />";
-		echo "<a tabindex=\"-1\" onclick=\"move_left_right_block('main_select', 'available_select');\" title=\"".i18n::translate('Remove')."\">".$IconRarrow."</a>";
+		echo "<a tabindex=\"-1\" onclick=\"move_left_right_block('main_select', 'available_select');\" title=\"".WT_I18N::translate('Remove')."\">".$IconRarrow."</a>";
 		echo "<br />";
-		echo "<a tabindex=\"-1\" onclick=\"move_left_right_block('available_select', 'main_select');\" title=\"".i18n::translate('Add')."\">".$IconLarrow."</a>";
+		echo "<a tabindex=\"-1\" onclick=\"move_left_right_block('available_select', 'main_select');\" title=\"".WT_I18N::translate('Add')."\">".$IconLarrow."</a>";
 		echo "<br /><br />";
 		echo help_link('block_move_right');
 
 	echo "</td>";
 	// Row 2 column 4: Middle (Available) block list
 	echo "<td class=\"optionbox\" dir=\"".$TEXT_DIRECTION."\">";
-		echo "<select id=\"available_select\" name=\"available[]\" size=\"10\" onchange=\"show_description('available_select');\">\n";
+		echo "<select id=\"available_select\" name=\"available[]\" size=\"10\" onchange=\"show_description('available_select');\">";
 		foreach ($all_blocks as $block_name=>$block) {
-			echo "<option value=\"$block_name\">".$block->getTitle()."</option>\n";
+			echo "<option value=\"$block_name\">".$block->getTitle()."</option>";
 		}
-		echo "</select>\n";
+		echo "</select>";
 	echo "</td>";
 	// NOTE: Row 2 column 5: Left/Right buttons for right block list
 	echo "<td class=\"optionbox width20 vmiddle\">";
-		echo "<a tabindex=\"-1\" onclick=\"move_left_right_block('right_select', 'main_select');\" title=\"".i18n::translate('Move Left')."\">".$IconLDarrow."</a>";
+		echo "<a tabindex=\"-1\" onclick=\"move_left_right_block('right_select', 'main_select');\" title=\"".WT_I18N::translate('Move Left')."\">".$IconLDarrow."</a>";
 		echo "<br />";
-		echo "<a tabindex=\"-1\" onclick=\"move_left_right_block('right_select', 'available_select');\" title=\"".i18n::translate('Remove')."\">".$IconLarrow."</a>";
+		echo "<a tabindex=\"-1\" onclick=\"move_left_right_block('right_select', 'available_select');\" title=\"".WT_I18N::translate('Remove')."\">".$IconLarrow."</a>";
 		echo "<br />";
-		echo "<a tabindex=\"-1\" onclick=\"move_left_right_block('available_select', 'right_select');\" title=\"".i18n::translate('Add')."\">".$IconRarrow."</a>";
+		echo "<a tabindex=\"-1\" onclick=\"move_left_right_block('available_select', 'right_select');\" title=\"".WT_I18N::translate('Add')."\">".$IconRarrow."</a>";
 		echo "<br /><br />";
 		echo help_link('block_move_right');
 	echo "</td>";
 	// NOTE: Row 2 column 6: Right block list
 	echo "<td class=\"optionbox\" dir=\"".$TEXT_DIRECTION."\">";
-		echo "<select multiple=\"multiple\" id=\"right_select\" name=\"right[]\" size=\"10\" onchange=\"show_description('right_select');\">\n";
+		echo "<select multiple=\"multiple\" id=\"right_select\" name=\"right[]\" size=\"10\" onchange=\"show_description('right_select');\">";
 		foreach ($blocks['side'] as $block_id=>$block_name) {
-			echo "<option value=\"$block_id\">".$all_blocks[$block_name]->getTitle()."</option>\n";
+			echo "<option value=\"$block_id\">".$all_blocks[$block_name]->getTitle()."</option>";
 		}
-		echo "</select>\n";
+		echo "</select>";
 	echo "</td>";
 	// NOTE: Row 2 column 7: Up/Down buttons for right block list
 	echo "<td class=\"optionbox width20 vmiddle\">";
-		echo "<a tabindex=\"-1\" onclick=\"move_up_block('right_select');\" title=\"".i18n::translate('Move Up')."\">".$IconUarrow."</a>";
+		echo "<a tabindex=\"-1\" onclick=\"move_up_block('right_select');\" title=\"".WT_I18N::translate('Move up')."\">".$IconUarrow."</a>";
 		echo "<br />";
-		echo "<a tabindex=\"-1\" onclick=\"move_down_block('right_select');\" title=\"".i18n::translate('Move Down')."\">".$IconDarrow."</a>";
+		echo "<a tabindex=\"-1\" onclick=\"move_down_block('right_select');\" title=\"".WT_I18N::translate('Move down')."\">".$IconDarrow."</a>";
 		echo "<br /><br />";
 		echo help_link('block_move_up');
 	echo "</td>";
 	echo "</tr>";
 	// NOTE: Row 3 columns 1-7: Summary description of currently selected block
 	echo "<tr><td class=\"descriptionbox wrap\" colspan=\"7\" dir=\"".$TEXT_DIRECTION."\"><div id=\"instructions\">";
-	echo i18n::translate('Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction.');
+	echo WT_I18N::translate('Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction.');
 	echo "</div></td></tr>";
 	echo "<tr><td class=\"topbottombar\" colspan=\"7\">";
 
 	if (WT_USER_IS_ADMIN && $ctype=='user') {
-		echo i18n::translate('Use these blocks as the default block configuration for all users?')."<input type=\"checkbox\" name=\"setdefault\" value=\"1\" /><br /><br />\n";
+		echo WT_I18N::translate('Use these blocks as the default block configuration for all users?')."<input type=\"checkbox\" name=\"setdefault\" value=\"1\" /><br /><br />";
 	}
 
-	echo "<input type=\"button\" value=\"".i18n::translate('Reset to Default Blocks')."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=reset&amp;name=".str_replace("'", "\'", $name)."';\" />\n";
+	echo "<input type=\"button\" value=\"".WT_I18N::translate('Reset to Default Blocks')."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=reset&amp;name=".str_replace("'", "\'", $name)."';\" />";
 	if ($ctype=='user') {
 		echo help_link('block_default_portal');
 	} else {
 		echo help_link('block_default_index');
 	}
 	echo "&nbsp;&nbsp;";
-	echo "<input type=\"button\" value=\"".i18n::translate('Save')."\" onclick=\"select_options(); save_form();\" />\n";
+	echo "<input type=\"button\" value=\"".WT_I18N::translate('Save')."\" onclick=\"select_options(); save_form();\" />";
 	echo "&nbsp;&nbsp;";
-	echo "<input type =\"button\" value=\"".i18n::translate('Cancel')."\" onclick=\"window.close()\" />";
+	echo "<input type =\"button\" value=\"".WT_I18N::translate('Cancel')."\" onclick=\"window.close()\" />";
 	echo "</td></tr></table>";
-	echo "</form>\n";
-
-	// end of 1st tab
-	echo "</div>\n";
-
-	//--------------------------------Start 2nd tab Help page
-	echo "\n\t<div id=\"help\" class=\"tab_page\" style=\"position: absolute; display: none; top: auto; left: auto; z-index: 2; \">\n\t";
-
-	echo "<br /><center><input type=\"button\" value=\"".i18n::translate('Click here to continue')."\" onclick=\"expand_layer('configure', true); expand_layer('help', false);\" /></center><br /><br />\n";
-	echo i18n::translate("Here is a short description of each of the blocks you can place on the Welcome or My Page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr></table>");
-
-	// end of 2nd tab
-	echo "</div>\n";
+	echo "</form>";
 }
 
 echo "</body></html>"; // Yes! Absolutely NOTHING at page bottom, please.

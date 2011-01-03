@@ -1,48 +1,42 @@
 <?php
-/**
- * Classes and libraries for module system
- *
- * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
- * Copyright (C) 2009 John Finlay
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package webtrees
- * @subpackage Modules
- * @version $Id$
- */
+// Classes and libraries for module system
+//
+// webtrees: Web based Family History software
+// Copyright (C) 2011 webtrees development team.
+//
+// Derived from PhpGedView
+// Copyright (C) 2010 John Finlay
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// @version $Id$
 
 if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once WT_ROOT.'includes/classes/class_module.php';
-
 class descendancy_WT_Module extends WT_Module implements WT_Module_Sidebar {
 	// Extend WT_Module
 	public function getTitle() {
-		return i18n::translate('Descendancy');
+		return WT_I18N::translate('Descendancy');
 	}
 
 	// Extend WT_Module
 	public function getDescription() {
-		return i18n::translate('Adds a sidebar which allows for easy navigation of individuals in a descendants tree-view format.');
+		return WT_I18N::translate('Adds a sidebar which allows for easy navigation of individuals in a descendants tree-view format.');
 	}
 
 	// Implement WT_Module_Sidebar
@@ -84,9 +78,9 @@ class descendancy_WT_Module extends WT_Module implements WT_Module_Sidebar {
 			}
 		}
 
-		jQuery(document).ready(function() {
-			jQuery("#sb_desc_name").focus(function() {this.select();});
-			jQuery("#sb_desc_name").blur(function() {if (this.value=="") this.value="'.i18n::translate('Search').'";});
+		jQuery(document).ready(function(){
+			jQuery("#sb_desc_name").focus(function(){this.select();});
+			jQuery("#sb_desc_name").blur(function(){if (this.value=="") this.value="'.WT_I18N::translate('Search').'";});
 			var dtimerid = null;
 			jQuery("#sb_desc_name").keyup(function(e) {
 				if (dtimerid) window.clearTimeout(dtimerid);
@@ -117,16 +111,16 @@ class descendancy_WT_Module extends WT_Module implements WT_Module_Sidebar {
 		//-->
 		</script>
 		<form method="post" action="sidebar.php" onsubmit="return false;">
-		<input type="text" name="sb_desc_name" id="sb_desc_name" value="'.i18n::translate('Search').'" />';
+		<input type="text" name="sb_desc_name" id="sb_desc_name" value="'.WT_I18N::translate('Search').'" />';
 		$out .= '</form><div id="sb_desc_content">';
 
 		if ($this->controller) {
 			$root = null;
 			if ($this->controller->pid) {
-				$root = Person::getInstance($this->controller->pid);
+				$root = WT_Person::getInstance($this->controller->pid);
 			}
 			else if ($this->controller->famid) {
-				$fam = Family::getInstance($this->controller->famid);
+				$fam = WT_Family::getInstance($this->controller->famid);
 				if ($fam) $root = $fam->getHusband();
 				if (!$root) $root = $fam->getWife();
 			}
@@ -157,7 +151,7 @@ class descendancy_WT_Module extends WT_Module implements WT_Module_Sidebar {
 			$out .= '<div class="desc_tree_div_visible">';
 			$out .= $this->loadSpouses($person->getXref());
 			$out .= '</div><script type="text/javascript">dloadedNames["'.$person->getXref().'"]=2;</script>';
-		} else {
+		}else {
 			$out .= '<div class="desc_tree_div">';
 			$out .= '</div>';
 		}
@@ -203,23 +197,22 @@ class descendancy_WT_Module extends WT_Module implements WT_Module_Sidebar {
 		$out = '<ul>';
 		$private_count = 0;
 		foreach ($rows as $row) {
-			$person=Person::getInstance($row);
+			$person=PWT_erson::getInstance($row);
 			if ($person->canDisplayName()) {
 				$out .= $this->getPersonLi($person);
 			}
 			else $private_count++;
 		}
-		if ($private_count>0) $out .= '<li>'.i18n::translate('Private').' ('.$private_count.')</li>';
+		if ($private_count>0) $out .= '<li>'.WT_I18N::translate('Private').' ('.$private_count.')</li>';
 		$out .= '</ul>';
 		return $out;
 	}
 
 	public function loadSpouses($pid, $generations=0) {
 		$out = '<ul>';
-		$person = Person::getInstance($pid);
+		$person = WT_Person::getInstance($pid);
 		if ($person->canDisplayDetails()) {
-			$families = $person->getSpouseFamilies();
-			foreach ($families as $family) {
+			foreach($person->getSpouseFamilies() as $family) {
 				$spouse = $family->getSpouse($person);
 				if ($spouse) {
 					$out .= $this->getFamilyLi($family, $spouse, $generations-1);
@@ -232,19 +225,19 @@ class descendancy_WT_Module extends WT_Module implements WT_Module_Sidebar {
 
 	public function loadChildren($famid, $generations=0) {
 		$out = '<ul>';
-		$family = Family::getInstance($famid);
+		$family = WT_Family::getInstance($famid);
 		if ($family->canDisplayDetails()) {
 			$children = $family->getChildren();
 			if (count($children)>0) {
 				$private = 0;
-				foreach ($children as $child) {
+				foreach($children as $child) {
 					if ($child->canDisplayName()) $out .= $this->getPersonLi($child, $generations-1);
 					else $private++;
 				}
-				if ($private>0) $out .= '<li class="sb_desc_indi_li">'.i18n::translate('Private').' ('.$private.')</li>';
+				if ($private>0) $out .= '<li class="sb_desc_indi_li">'.WT_I18N::translate('Private').' ('.$private.')</li>';
 			}
 			else {
-				$out .= i18n::translate('No children');
+				$out .= WT_I18N::translate('No children');
 			}
 		}
 		$out .= "</ul>";

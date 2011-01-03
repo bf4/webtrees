@@ -40,14 +40,14 @@ echo '<div id="footer" class="', $TEXT_DIRECTION, '">';
 		'<p class="logo">',
 			'<a href="', WT_WEBTREES_URL, '" target="_blank">',
 			'<img src="', $WT_IMAGES['webtrees'], '" width="100" border="0" alt="', WT_WEBTREES, WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): "", '"',
-				'title="', WT_WEBTREES, WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): "" , '" /></a>',
+				' title="', WT_WEBTREES, WT_USER_IS_ADMIN? (" - " .WT_VERSION_TEXT): "" , '" /></a>',
 		'</p>';
 	if ($SHOW_STATS || WT_DEBUG) {
 				echo execution_stats();
 	}
 	if (exists_pending_change()) {
 		echo '<a href="javascript:;" onclick="window.open(\'edit_changes.php\', \'_blank\', \'width=600, height=500, resizable=1, scrollbars=1\'); return false;">';
-			echo '<p class="error center">', i18n::translate('There are pending changes for you to moderate.'), '</p>';
+			echo '<p class="error center">', WT_I18N::translate('There are pending changes for you to moderate.'), '</p>';
 		echo '</a>';
 	}
 '</div>'; // close div id=\"footer\"

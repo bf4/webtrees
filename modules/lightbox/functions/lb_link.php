@@ -52,31 +52,31 @@ if (!defined('WT_WEBTREES')) {
 		if ($TEXT_DIRECTION=="rtl") $classSuffix = "_rtl";
 
 		// main link displayed on page
-		$menu = new Menu();
+		$menu = new WT_Menu();
 		if ($LB_ML_THUMB_LINKS == "icon" || $LB_ML_THUMB_LINKS == "both") {
 			$menu->addIcon('image_link');
 		}
 		if ($LB_ML_THUMB_LINKS == "both") {
-			$menu->addLabel(i18n::translate('Set link'), "down");
+			$menu->addLabel(WT_I18N::translate('Set link'), "down");
 		}
 		if ($LB_ML_THUMB_LINKS == "text") {
-			$menu->addLabel(i18n::translate('Set link'));
+			$menu->addLabel(WT_I18N::translate('Set link'));
 		}
 		$menu->addOnclick("return ilinkitem('$mediaid','person')");
 		$menu->addClass("", "", "submenu");
 		$menu->addFlyout("left");
 
-		$submenu = new Menu(i18n::translate('To Person'), "#");
+		$submenu = new WT_Menu(WT_I18N::translate('To Person'), "#");
 		$submenu->addOnclick("return ilinkitem('$mediaid','person')");
 		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
 		$menu->addSubMenu($submenu);
 
-		$submenu = new Menu(i18n::translate('To Family'), "#");
+		$submenu = new WT_Menu(WT_I18N::translate('To Family'), "#");
 		$submenu->addOnclick("return ilinkitem('$mediaid','family')");
 		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
 		$menu->addSubMenu($submenu);
 
-		$submenu = new Menu(i18n::translate('To Source'), "#");
+		$submenu = new WT_Menu(WT_I18N::translate('To Source'), "#");
 		$submenu->addOnclick("return ilinkitem('$mediaid','source')");
 		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
 		$menu->addSubMenu($submenu);

@@ -467,7 +467,7 @@ function build_indiv_map($indifacts, $famids) {
 				if ($famrec) {
 					$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch, PREG_SET_ORDER);
 					for ($j=0; $j<$num; $j++) {
-						$person=Person::getInstance($smatch[$j][1]);
+						$person=WT_Person::getInstance($smatch[$j][1]);
 						if ($person->canDisplayDetails()) {
 							$srec = find_person_record($smatch[$j][1], WT_GED_ID);
 							$birthrec = '';
@@ -483,11 +483,11 @@ function build_indiv_map($indifacts, $famids) {
 										$i = $i + 1;
 										$markers[$i]=array('index'=>'', 'tabindex'=>'', 'placed'=>'no');
 										if (strpos($srec, "\n1 SEX F")!==false) {
-											$markers[$i]["fact"] = i18n::translate('Daughter');
+											$markers[$i]["fact"] = WT_I18N::translate('Daughter');
 											$markers[$i]["class"]  = "person_boxF";
 										} else
 											if (strpos($srec, "\n1 SEX M")!==false) {
-												$markers[$i]["fact"] = i18n::translate('Son');
+												$markers[$i]["fact"] = WT_I18N::translate('Son');
 												$markers[$i]["class"]  = "person_box";
 											} else {
 												$markers[$i]["fact"]     = translate_fact('CHIL');
@@ -520,11 +520,11 @@ function build_indiv_map($indifacts, $famids) {
 												$markers[$i]["fact"]     = translate_fact('CHIL');
 												$markers[$i]["class"]    = "option_boxNN";
 												if (strpos($srec, "\n1 SEX F")!==false) {
-													$markers[$i]["fact"] = i18n::translate('Daughter');
+													$markers[$i]["fact"] = WT_I18N::translate('Daughter');
 													$markers[$i]["class"]  = "person_boxF";
 												}
 												if (strpos($srec, "\n1 SEX M")!==false) {
-													$markers[$i]["fact"] = i18n::translate('Son');
+													$markers[$i]["fact"] = WT_I18N::translate('Son');
 													$markers[$i]["class"]  = "person_box";
 												}
 												$markers[$i]["icon"] = $latlongval["icon"];
@@ -561,11 +561,11 @@ function build_indiv_map($indifacts, $famids) {
 	// Prepare the $markers array for use by the following "required" file/files ===================
 	if ($i == 0) {
 		echo "<table class=\"facts_table\">";
-		echo "<tr><td colspan=\"2\" class=\"facts_value\">".i18n::translate('No map data for this person');
+		echo "<tr><td colspan=\"2\" class=\"facts_value\">".WT_I18N::translate('No map data for this person');
 		echo "</td></tr>";
 		if (WT_USER_IS_ADMIN) {
 			echo "<tr><td align=\"center\" colspan=\"2\">";
-			echo "<a href=\"module.php?mod=googlemap&mod_action=editconfig\">", i18n::translate('Manage GoogleMap configuration'), "</a>";
+			echo "<a href=\"module.php?mod=googlemap&mod_action=admin_editconfig\">", WT_I18N::translate('Manage GoogleMap configuration'), "</a>";
 			echo "</td></tr>";
 		}
 
@@ -658,9 +658,9 @@ function build_indiv_map($indifacts, $famids) {
 				echo "<span class=\"field\">{$marker["info"]}</span><br />";
 			}
 			if (!empty($marker["name"])) {
-				$person=Person::getInstance($marker['name']);
+				$person=WT_Person::getInstance($marker['name']);
 				if ($person) {
-					echo '<a href="', $person->getHtmlUrl(), '">', $person->canDisplayName() ? PrintReady($person->getFullName()) : i18n::translate('Private'), '</a>';
+					echo '<a href="', $person->getHtmlUrl(), '">', $person->canDisplayName() ? PrintReady($person->getFullName()) : WT_I18N::translate('Private'), '</a>';
 				}
 				echo '<br />';
 			}
@@ -670,7 +670,7 @@ function build_indiv_map($indifacts, $famids) {
 				echo print_fact_place_map($marker["placerec"]), "<br />";
 			}
 			if (!empty($marker['date'])) {
-				$date=new GedcomDate($marker['date']);
+				$date=new WT_Date($marker['date']);
 				echo $date->Display(true), "<br />";
 			}
 			echo "</td>";	

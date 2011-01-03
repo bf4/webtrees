@@ -29,7 +29,6 @@
 
 define('WT_SCRIPT_NAME', 'note.php');
 require './includes/session.php';
-require WT_ROOT.'includes/controllers/note_ctrl.php';
 require WT_ROOT.'includes/functions/functions_print_lists.php';
 
 // We have finished writing session data, so release the lock
@@ -37,7 +36,7 @@ Zend_Session::writeClose();
 
 $nonfacts = array();
 
-$controller=new NoteController();
+$controller=new WT_Controller_Note();
 $controller->init();
 
 // Tell addmedia.php what to link to
@@ -51,21 +50,14 @@ if (WT_USE_LIGHTBOX) {
 	require WT_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 
+// If note does not currently exist
 if (!$controller->note) {
-	echo "<b>", i18n::translate('Unable to find record with ID'), "</b><br /><br />";
+	echo "<b>", WT_I18N::translate('Unable to find record with ID'), "</b><br /><br />";
 	print_footer();
 	exit;
 }
 else if ($controller->note->isMarkedDeleted()) {
-	echo '<span class="error">', i18n::translate('This record has been marked for deletion upon admin approval.'), '</span>';
-}
-
-$noterec = find_gedcom_record($controller->nid, WT_GED_ID);
-$pnoterec = privatize_gedcom(find_gedcom_record($controller->nid, WT_GED_ID));
-if ($noterec!=$pnoterec) {
-	print_privacy_error();
-	print_footer();
-	exit;
+	echo '<span class="error">', WT_I18N::translate('This record has been marked for deletion upon admin approval.'), '</span>';
 }
 
 echo WT_JS_START;
@@ -83,30 +75,29 @@ echo WT_JS_END;
 
 echo '<table class="list_table width80"><tr><td>';
 if ($controller->accept_success) {
-	echo '<b>', i18n::translate('Changes successfully accepted into database'), '</b><br />';
+	echo '<b>', WT_I18N::translate('Changes successfully accepted into database'), '</b><br />';
 }
 echo '<span class="name_head">', PrintReady(htmlspecialchars($controller->note->getFullName()));
 echo '</span><br />';
 echo '<table class="facts_table">';
 echo '<tr class="', $TEXT_DIRECTION, '"><td><table class="width100">';
+
 // Shared Note details ---------------------
-$nt = preg_match("/0 @$controller->nid@ NOTE(.*)/", $noterec, $n1match);
-if ($nt==1) {
-	$note = print_note_record("<br />".$n1match[1], 1, $noterec, false, true, true);
-} else {
-	$note = "No Text";
-}
+$noterec=$controller->note->getGedcomRecord();
+preg_match("/0 @{$controller->nid}@ NOTE(.*)/", $noterec, $n1match);
+$note = print_note_record("<br />".$n1match[1], 1, $noterec, false, true, true);
+
 echo '<tr><td align="left" class="descriptionbox ', $TEXT_DIRECTION, '">';
 	if (WT_USER_CAN_EDIT) {
-		echo '<a href="javascript: edit_note()" title="', i18n::translate('Edit'), '">';
+		echo '<a href="javascript: edit_note()" title="', WT_I18N::translate('Edit'), '">';
 		if (!empty($WT_IMAGES["notes"]) && $SHOW_FACT_ICONS) echo '<img src="', $WT_IMAGES["notes"], '" alt="" align="top" />';
-		echo i18n::translate('Shared note'), '</a>';
+		echo WT_I18N::translate('Shared note'), '</a>';
 		echo '<div class="editfacts">';
-			echo '<a href="javascript: edit_note()" title="', i18n::translate('Edit'), '"><div class="editlink"><span class="link_text">', i18n::translate('Edit'), '</span></div></a>';
+			echo '<a href="javascript: edit_note()" title="', WT_I18N::translate('Edit'), '"><div class="editlink"><span class="link_text">', WT_I18N::translate('Edit'), '</span></div></a>';
 		echo '</div>';
 	} else { 
 		if (!empty($WT_IMAGES["notes"]) && $SHOW_FACT_ICONS) echo '<img src="', $WT_IMAGES["notes"], '" alt="" align="top" />';
-		echo i18n::translate('Shared note');
+		echo WT_I18N::translate('Shared note');
 	}
 	echo '</td><td class="optionbox wrap width80 ', $TEXT_DIRECTION, '">';
 	echo $note;
@@ -115,12 +106,8 @@ echo "</td></tr>";
 
 $notefacts=$controller->note->getFacts();
 foreach ($notefacts as $fact) {
-	if ($fact && $fact->getTag()!='CONT') {
-		if ($fact->getTag()=='NOTE' ) {
-			print_fact($fact);
-		} else {
-			print_fact($fact);
-		}
+	if ($fact->getTag()!='CONT') {
+		print_fact($fact);
 	}
 }
 
@@ -128,19 +115,18 @@ foreach ($notefacts as $fact) {
 print_main_media($controller->nid);
 
 // new fact link
-if ($controller->userCanEdit()) {
+if ($controller->note->canEdit()) {
 	print_add_new_fact($controller->nid, $notefacts, 'NOTE');
 	// new media
 	echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, '">';
-	echo i18n::translate('Add media'), help_link('add_media');
+	echo WT_I18N::translate('Add media'), help_link('add_media');
 	echo '</td><td class="optionbox ', $TEXT_DIRECTION, '">';
-	echo '<a href="javascript: ', i18n::translate('Add media'), '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->nid, '\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', i18n::translate('Add a new media item'), '</a>';
+	echo '<a href="javascript: ', WT_I18N::translate('Add media'), '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->nid, '\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', WT_I18N::translate('Add a new media item'), '</a>';
 	echo '<br />';
-	echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid=', $controller->nid, '&linkto=note\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', i18n::translate('Link to an existing Media item'), '</a>';
+	echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid=', $controller->nid, '&linkto=note\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', WT_I18N::translate('Link to an existing Media item'), '</a>';
 	echo '</td></tr>';
 }
 echo '</table><br /><br /></td></tr><tr class="center"><td colspan="2">';
-
 
 // Individuals linked to this shared note
 if ($controller->note->countLinkedIndividuals()) {

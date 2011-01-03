@@ -30,27 +30,26 @@
 define('WT_SCRIPT_NAME', 'gedrecord.php');
 require './includes/session.php';
 
-require_once WT_ROOT.'includes/classes/class_gedcomrecord.php';
 header('Content-Type: text/html; charset=UTF-8');
 
 $pid=safe_GET_xref('pid');
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" <?php echo i18n::html_markup(); ?>>
+<html xmlns="http://www.w3.org/1999/xhtml" <?php echo WT_I18N::html_markup(); ?>>
 	<head>
-		<title><?php echo i18n::translate('Record'), ': ',$pid ; ?></title>
+		<title><?php echo WT_I18N::translate('Record'), ': ',$pid ; ?></title>
 	</head>
 	<body>
 <?php
 
 if (!$SHOW_GEDCOM_RECORD && !WT_USER_CAN_ACCEPT) {
-	echo "<span class=\"error\">", i18n::translate('This page has been disabled by the site administrator.'), "</span>\n";
+	echo "<span class=\"error\">", WT_I18N::translate('This page has been disabled by the site administrator.'), "</span>\n";
 	echo "</body></html>";
 	exit;
 }
 
-$obj=GedcomRecord::getInstance($pid);
+$obj=WT_GedcomRecord::getInstance($pid);
 
 if (is_null($obj) || !$obj->canDisplayDetails()) {
 	print_privacy_error();

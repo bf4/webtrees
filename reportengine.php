@@ -95,13 +95,13 @@ foreach ($vars as $name=>$var) {
 		if (empty($gedcom)) {
 			$action="setup";
 		}
+		// If we wanted a FAM, and were given an INDI, look for a spouse
 		if ($type[$name]=="FAM") {
-			if (preg_match("/0 @.*@ INDI/", $gedcom)>0) {
-				$fams = find_sfamily_ids($var);
-				if (!empty($fams[0])) {
-					$gedcom = find_family_record($fams[0], WT_GED_ID);
+			if (preg_match("/0 @.+@ INDI/", $gedcom)>0) {
+				if (preg_match('/\n1 FAMS @(.+)@/', $gedcom, $match)) {
+					$gedcom = find_family_record($match[1], WT_GED_ID);
 					if (!empty($gedcom)) {
-						$vars[$name] = $fams[0];
+						$vars[$name] = $match[1];
 					} else {
 						$action="setup";
 					}
@@ -137,14 +137,14 @@ if (!empty($report)) {
 
 //-- choose a report to run
 if ($action=="choose") {
-	print_header(i18n::translate('Choose a report to run'));
+	print_header(WT_I18N::translate('Choose a report to run'));
 
 	echo "<br /><br />\n<form name=\"choosereport\" method=\"get\" action=\"reportengine.php\">\n";
 	echo "<input type=\"hidden\" name=\"action\" value=\"setup\" />\n";
 	echo "<input type=\"hidden\" name=\"output\" value=\"", $output, "\" />\n";
 	echo "<table class=\"facts_table width40 center ", $TEXT_DIRECTION, " \">";
-	echo "<tr><td class=\"topbottombar\" colspan=\"2\">", i18n::translate('Choose a report to run'), "</td></tr>";
-	echo "<tr><td class=\"descriptionbox wrap width33 vmiddle\">", i18n::translate('Select report'), "</td>";
+	echo "<tr><td class=\"topbottombar\" colspan=\"2\">", WT_I18N::translate('Choose a report to run'), "</td></tr>";
+	echo "<tr><td class=\"descriptionbox wrap width33 vmiddle\">", WT_I18N::translate('Select report'), "</td>";
 	echo "<td class=\"optionbox\"><select onchange=\"this.form.submit();\" name=\"report\">\n";
 	foreach ($reports as $file=>$report) {
 		if ($report["access"] >= WT_USER_ACCESS_LEVEL) {
@@ -152,7 +152,7 @@ if ($action=="choose") {
 		}
 	}
 	echo "</select></td></tr>\n";
-	echo "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"", i18n::translate('Click here to continue'), "\" /></td></tr>";
+	echo "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"", WT_I18N::translate('Click here to continue'), "\" /></td></tr>";
 	echo "</table></form>\n<br /><br />\n";
 
 	print_footer();
@@ -160,7 +160,7 @@ if ($action=="choose") {
 
 //-- setup report to run
 elseif ($action=="setup") {
-	print_header(i18n::translate('Enter report values'));
+	print_header(WT_I18N::translate('Enter report values'));
 
 	if ($ENABLE_AUTOCOMPLETE) {
 		require_once WT_ROOT."js/autocomplete.js.htm";
@@ -168,7 +168,7 @@ elseif ($action=="setup") {
 
 	//-- make sure the report exists
 	if (!file_exists($report)) {
-		echo "<span class=\"error\">", i18n::translate('File not found.'), "</span> ", $report, "\n";
+		echo "<span class=\"error\">", WT_I18N::translate('File not found.'), "</span> ", $report, "\n";
 	} else {
 		require_once WT_ROOT."includes/reportheader.php";
 		$report_array = array();
@@ -208,8 +208,8 @@ elseif ($action=="setup") {
 		echo "<input type=\"hidden\" name=\"report\" value=\"", $report, "\" />\n";
 
 		echo "<table class=\"facts_table width50 center ", $TEXT_DIRECTION, " \">";
-		echo "<tr><td class=\"topbottombar\" colspan=\"2\">", i18n::translate('Enter report values'), "</td></tr>";
-		echo "<tr><td class=\"descriptionbox width30 wrap\">", i18n::translate('Selected Report'), "</td><td class=\"optionbox\">", $report_array["title"], "</td></tr>\n";
+		echo "<tr><td class=\"topbottombar\" colspan=\"2\">", WT_I18N::translate('Enter report values'), "</td></tr>";
+		echo "<tr><td class=\"descriptionbox width30 wrap\">", WT_I18N::translate('Selected Report'), "</td><td class=\"optionbox\">", $report_array["title"], "</td></tr>\n";
 
 		$doctitle = trim($report_array["title"]);
 		if (!isset($report_array["inputs"])) {
@@ -233,7 +233,7 @@ elseif ($action=="setup") {
 					}
 					echo "<tr><td class=\"descriptionbox wrap\">\n";
 					echo "<input type=\"hidden\" name=\"varnames[]\" value=\"", $input["name"], "\" />\n";
-					echo i18n::translate($input["value"]), "</td><td class=\"optionbox\">";
+					echo WT_I18N::translate($input["value"]), "</td><td class=\"optionbox\">";
 					if (!isset($input["type"])) {
 						$input["type"] = "text";
 					}
@@ -252,12 +252,13 @@ elseif ($action=="setup") {
 							if (!empty($famid)) {
 								$input["default"] = $famid;
 							} else {
-								$famid = find_sfamily_ids(check_rootid($input["default"]));
-								if (empty($famid)) {
-									$famid = find_family_ids(check_rootid($input["default"]));
-								}
-								if (isset($famid[0])) {
-									$input["default"] = $famid[0];
+								// Default the FAM to the first spouse family of the default INDI
+								$person=WT_Person::getInstance(check_rootid($input["default"]));
+								if ($person) {
+									$sfams=$person->getSpouseFamilies();
+									if ($sfams) {
+										$input["default"] = reset($sfams)->getXref();
+									}
 								}
 							}
 						}
@@ -284,7 +285,7 @@ elseif ($action=="setup") {
 						foreach ($options as $indexval => $option) {
 							$opt = explode('=>', $option);
 							list($value, $display)=$opt;
-							if (substr($display, 0, 6)=='i18n::') {
+							if (substr($display, 0, 18)=='WT_I18N::translate' || substr($display, 0, 14)=='translate_fact') {
 								eval("\$display=$display;");
 							}
 							echo "\t<option value=\"", htmlspecialchars($value), "\"";
@@ -306,7 +307,7 @@ elseif ($action=="setup") {
 						} elseif ($input["lookup"]=="SOUR") {
 							print_findsource_link($input["name"]);
 						} elseif ($input["lookup"]=="DATE") {
-							$text = i18n::translate('Select a date');
+							$text = WT_I18N::translate('Select a date');
 							if (isset($WT_IMAGES["button_calendar"])) {
 								$Link = "<img src=\"".$WT_IMAGES["button_calendar"]."\" name=\"a_".$input["name"]."\" id=\"a_".$input["name"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 							} else {
@@ -338,8 +339,8 @@ elseif ($action=="setup") {
 		</td></tr>
 		<?php
 		echo "<tr><td class=\"topbottombar\" colspan=\"2\">";
-		echo " <input type=\"submit\" value=\"", i18n::translate('Download report'), "\" ;\"/>";
-		echo " <input type=\"submit\" value=\"", i18n::translate('Cancel'), "\" onclick=\"document.setupreport.elements['action'].value='setup'; \"/>";
+		echo " <input type=\"submit\" value=\"", WT_I18N::translate('Download report'), "\" ;\"/>";
+		echo " <input type=\"submit\" value=\"", WT_I18N::translate('Cancel'), "\" onclick=\"document.setupreport.elements['action'].value='setup'; \"/>";
 		echo "</td></tr></table></form><br /><br />\n";
 		echo WT_JS_START, "document.title = \"", $doctitle, "\"", WT_JS_END;
 	}
@@ -356,13 +357,203 @@ elseif ($action=="run") {
 	switch ($output) {
 		case "HTML":
 			header('Content-type: text/html; charset=UTF-8');
-			require_once WT_ROOT."includes/classes/class_reporthtml.php";
+			$wt_report = new WT_Report_HTML();
+			$ReportRoot = $wt_report;
 			break;
 		case "PDF":
 		default:
-			require_once WT_ROOT."includes/classes/class_reportpdf.php";
+			$wt_report = new WT_Report_PDF();
+			$ReportRoot = $wt_report;
 			break;
 	}
+
+	$ascii_langs = array("en", "da", "nl", "fr", "he", "hu", "de", "nn", "es");
+
+	//-- setup special characters array to force embedded fonts
+	$SpecialOrds = $RTLOrd;
+	for ($i=195; $i<215; $i++) $SpecialOrds[] = $i;
+
+	if (!isset($embed_fonts)) {
+		if (in_array(WT_LOCALE, $ascii_langs)) {
+			$embed_fonts = false;
+		} else {
+			$embed_fonts = true;
+		}
+	}
+
+	/**
+	 * element handlers array
+	 *
+	 * Converts XML element names into functions
+	 * @global array $elementHandler
+	 */
+	$elementHandler = array();
+	$elementHandler["AgeAtDeath"]["start"]       = "AgeAtDeathSHandler";
+	$elementHandler["br"]["start"]               = "brSHandler";
+	$elementHandler["Body"]["start"]             = "BodySHandler";
+	$elementHandler["Cell"]["end"]               = "CellEHandler";
+	$elementHandler["Cell"]["start"]             = "CellSHandler";
+	$elementHandler["Description"]["end"]        = "DescriptionEHandler";
+	$elementHandler["Description"]["start"]      = "DescriptionSHandler";
+	$elementHandler["Doc"]["end"]                = "DocEHandler";
+	$elementHandler["Doc"]["start"]              = "DocSHandler";
+	$elementHandler["Report"]["end"]             = "";
+	$elementHandler["Report"]["start"]           = "";
+	$elementHandler["Facts"]["end"]              = "FactsEHandler";
+	$elementHandler["Facts"]["start"]            = "FactsSHandler";
+	$elementHandler["Footer"]["start"]           = "FooterSHandler";
+	$elementHandler["Footnote"]["end"]           = "FootnoteEHandler";
+	$elementHandler["Footnote"]["start"]         = "FootnoteSHandler";
+	$elementHandler["FootnoteTexts"]["start"]    = "FootnoteTextsSHandler";
+	$elementHandler["Gedcom"]["end"]             = "GedcomEHandler";
+	$elementHandler["Gedcom"]["start"]           = "GedcomSHandler";
+	$elementHandler["GedcomValue"]["start"]      = "GedcomValueSHandler";
+	$elementHandler["Generation"]["start"]       = "GenerationSHandler";
+	$elementHandler["GetPersonName"]["start"]    = "GetPersonNameSHandler";
+	$elementHandler["Header"]["start"]           = "HeaderSHandler";
+	$elementHandler["HighlightedImage"]["start"] = "HighlightedImageSHandler";
+	$elementHandler["if"]["end"]                 = "ifEHandler";
+	$elementHandler["if"]["start"]               = "ifSHandler";
+	$elementHandler["Image"]["start"]            = "ImageSHandler";
+	$elementHandler["Input"]["end"]              = "";
+	$elementHandler["Input"]["start"]            = "";
+	$elementHandler["Line"]["start"]             = "LineSHandler";
+	$elementHandler["List"]["end"]               = "ListEHandler";
+	$elementHandler["List"]["start"]             = "ListSHandler";
+	$elementHandler["ListTotal"]["start"]        = "ListTotalSHandler";
+	$elementHandler["NewPage"]["start"]          = "NewPageSHandler";
+	$elementHandler["Now"]["start"]              = "NowSHandler";
+	$elementHandler["PageHeader"]["end"]         = "PageHeaderEHandler";
+	$elementHandler["PageHeader"]["start"]       = "PageHeaderSHandler";
+	$elementHandler["PageNum"]["start"]          = "PageNumSHandler";
+	$elementHandler["Relatives"]["end"]          = "RelativesEHandler";
+	$elementHandler["Relatives"]["start"]        = "RelativesSHandler";
+	$elementHandler["RepeatTag"]["end"]          = "RepeatTagEHandler";
+	$elementHandler["RepeatTag"]["start"]        = "RepeatTagSHandler";
+	$elementHandler["SetVar"]["start"]           = "SetVarSHandler";
+	$elementHandler["Style"]["start"]            = "StyleSHandler";
+	$elementHandler["Text"]["end"]               = "TextEHandler";
+	$elementHandler["Text"]["start"]             = "TextSHandler";
+	$elementHandler["TextBox"]["end"]            = "TextBoxEHandler";
+	$elementHandler["TextBox"]["start"]          = "TextBoxSHandler";
+	$elementHandler["Title"]["end"]              = "TitleEHandler";
+	$elementHandler["Title"]["start"]            = "TitleSHandler";
+	$elementHandler["TotalPages"]["start"]       = "TotalPagesSHandler";
+	$elementHandler["var"]["start"]              = "varSHandler";
+	$elementHandler["varLetter"]["start"]        = "varLetterSHandler";
+	$elementHandler["sp"]["start"]               = "spSHandler";
+
+	/**
+	* A new object of the currently used element class
+	*
+	* @global object $currentElement
+	*/
+	$currentElement = new Element();
+
+	/**
+	 * Should character data be printed
+	 *
+	 * This variable is turned on or off by the element handlers to tell whether the inner character
+	 * Data should be printed
+	 * @global boolean $printData
+	 */
+	$printData = false;
+
+	/**
+	* Title collector. Mark it if it has already been used
+	*
+	* @global boolean $reportTitle
+	*/
+	$reportTitle = false;
+
+	/**
+	* Description collector. Mark it if it has already been used
+	*
+	* @global boolean $reportDescription
+	*/
+	$reportDescription = false;
+
+	/**
+	 * Print data stack
+	 *
+	 * As the XML is being processed there will be times when we need to turn on and off the
+	 * <var>$printData</var> variable as we encounter entinties in the XML.  The stack allows us to
+	 * keep track of when to turn <var>$printData</var> on and off.
+	 * @global array $printDataStack
+	 */
+	$printDataStack = array();
+
+	/**
+	* @todo add info
+	* @global array $wt_reportStack
+	*/
+	$wt_reportStack = array();
+
+	/**
+	* @todo add info
+	* @global array $gedrecStack
+	*/
+	$gedrecStack = array();
+
+	/**
+	* @todo add info
+	* @global array $repeatsStack
+	*/
+	$repeatsStack = array();
+
+	/**
+	* @todo add info
+	* @global array $parserStack
+	*/
+	$parserStack = array();
+
+	/**
+	* @todo add info
+	* @global array $repeats
+	*/
+	$repeats = array();
+
+	/**
+	* @todo add info
+	* @global string $gedrec
+	*/
+	$gedrec = "";
+
+	/**
+	* @todo add info
+	* @global ???? $repeatBytes
+	*/
+	$repeatBytes = 0;
+
+	/**
+	* @todo add info
+	* @global resource $parser
+	*/
+	$parser = "";
+
+	/**
+	* @todo add info
+	* @global int $processRepeats
+	*/
+	$processRepeats = 0;
+
+	/**
+	* @todo add info
+	* @global ???? $processIfs
+	*/
+	$processIfs = 0;
+
+	/**
+	* @todo add info
+	* @global ???? $processGedcoms
+	*/
+	$processGedcoms = 0;
+
+	/**
+	 * Wether or not to print footnote
+	 * true = print, false = don't print
+	 */
+	$processFootnote = true;
 
 	//-- start the sax parser
 	$xml_parser = xml_parser_create();

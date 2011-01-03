@@ -129,7 +129,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 	// Set type of media from call in album
 	switch ($kind) {
 	case 1:
-		$tt=i18n::translate('Photo');
+		$tt=WT_I18N::translate('Photo');
 		$sqlmm.="AND (m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ?)";
 		$vars[]='%TYPE photo%';
 		$vars[]='%TYPE map%';
@@ -137,7 +137,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		$vars[]='%TYPE tombstone%';
 		break;
 	case 2:
-		$tt=i18n::translate('Document');
+		$tt=WT_I18N::translate('Document');
 		$sqlmm.="AND (m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ?)";
 		$vars[]='%TYPE card%';
 		$vars[]='%TYPE certificate%';
@@ -147,14 +147,14 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		$vars[]='%TYPE newspaper%';
 		break;
 	case 3:
-		$tt=i18n::translate('Census');
+		$tt=WT_I18N::translate('Census');
 		$sqlmm.="AND (m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ?)";
 		$vars[]='%TYPE electronic%';
 		$vars[]='%TYPE fiche%';
 		$vars[]='%TYPE film%';
 		break;
 	case 4:
-		$tt=i18n::translate('Other');
+		$tt=WT_I18N::translate('Other');
 		$sqlmm.="AND (m_gedrec NOT LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ?)";
 		$vars[]='%TYPE %';
 		$vars[]='%TYPE coat%';
@@ -165,7 +165,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		break;
 	case 5:
 	default:
-		$tt      = i18n::translate('Not in DB');
+		$tt      = WT_I18N::translate('Not in DB');
 		break;
 	}
 
@@ -302,69 +302,34 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 			foreach ($current_objes as $media_id=>$value) {
 				while ($value>0) {
 					$objSubrec = array_pop($obje_links[$media_id]);
-					//-- check if we need to get the object from a remote location
-					$ct = preg_match("/(.*):(.*)/", $media_id, $match);
-					if ($ct>0) {
-						require_once WT_ROOT.'includes/classes/class_serviceclient.php';
-						$client = ServiceClient::getInstance($match[1]);
-						if (!is_null($client)) {
-							$newrec = $client->getRemoteRecord($match[2]);
-							$row['m_media'] = $media_id;
-							$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
-							$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
-							if (empty($row['m_titl'])) {
-								$row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
-							}
-							$row['m_gedrec'] = $newrec;
-							$et = preg_match("/(\.\w+)$/", $row['m_file'], $ematch);
-							$ext = "";
-							if ($et>0) $ext = substr(trim($ematch[1]), 1);
-							$row['m_ext'] = $ext;
-							$row['mm_gid'] = $pid;
-							$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
-							if ($newrec && isset($rowm['m_file'])) {
-								// -----
-							} else {
-								echo "<li class=\"li_new\" >";
-								echo "<center><table class=\"pic\" border=\"0\" ></center>";
-								echo "<tr><td align=\"center\" colspan=\"4\">";
-								echo $row['m_media'];
-								echo "</td></tr>";
-
-								$res =  lightbox_print_media_row('new', $row, $pid);
-								$media_found = $media_found || $res;
-							}
-						}
+					$row = array();
+					$newrec = find_gedcom_record($media_id, $ged_id, true);
+					$row['m_media'] = $media_id;
+					$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
+					$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
+					if (empty($row['m_titl'])) {
+						$row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
+					}
+					$row['m_gedrec'] = $newrec;
+					$et = preg_match("/(\.\w+)$/", $row['m_file'], $ematch);
+					$ext = "";
+					if ($et>0) {
+						$ext = substr(trim($ematch[1]), 1);
+					}
+					$row['m_ext'] = $ext;
+					$row['mm_gid'] = $pid;
+					$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
+					if ($newrec && isset($rowm['m_file'])) {
+						// -----
 					} else {
-						$row = array();
-						$newrec = find_gedcom_record($media_id, $ged_id, true);
-						$row['m_media'] = $media_id;
-						$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
-						$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
-						if (empty($row['m_titl'])) {
-							$row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
-						}
-						$row['m_gedrec'] = $newrec;
-						$et = preg_match("/(\.\w+)$/", $row['m_file'], $ematch);
-						$ext = "";
-						if ($et>0) {
-							$ext = substr(trim($ematch[1]), 1);
-						}
-						$row['m_ext'] = $ext;
-						$row['mm_gid'] = $pid;
-						$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
-						if ($newrec && isset($rowm['m_file'])) {
-							// -----
-						} else {
-							echo "<li class=\"li_new\" >";
-							echo "<center><table class=\"pic\" border=\"0\" ></center>";
-							echo "<tr><td align=\"center\" colspan=\"4\">";
-							echo $row['m_media'];
-							echo "</td></tr>";
+						echo "<li class=\"li_new\" >";
+						echo "<center><table class=\"pic\" border=\"0\" ></center>";
+						echo "<tr><td align=\"center\" colspan=\"4\">";
+						echo $row['m_media'];
+						echo "</td></tr>";
 
-							$res =  lightbox_print_media_row('new', $row, $pid);
-							$media_found = $media_found || $res;
-						}
+						$res =  lightbox_print_media_row('new', $row, $pid);
+						$media_found = $media_found || $res;
 					}
 					$value--;
 				}
@@ -392,7 +357,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 			echo '</td></tr></table>' . "\n";
 			if ($kind==3 && $numm > 0) {
 				echo "<font size='1'>";
-				echo i18n::translate('"UK census images have been obtained from "The National Archives", the custodian of the original records, and appear here with their approval on the condition that no commercial use is made of them without permission.
+				echo WT_I18N::translate('"UK census images have been obtained from "The National Archives", the custodian of the original records, and appear here with their approval on the condition that no commercial use is made of them without permission.
 Requests for commercial publication of these or other UK census images appearing on this website should be directed to: Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom."
 ');
 				echo "</font>";

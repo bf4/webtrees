@@ -1,49 +1,44 @@
 <?php
-/**
- * Classes and libraries for module system
- *
- * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
- * Copyright (C) 2009 John Finlay
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package webtrees
- * @subpackage Modules
- * @version $Id$
- */
+// Classes and libraries for module system
+//
+// webtrees: Web based Family History software
+// Copyright (C) 2011 webtrees development team.
+//
+// Derived from PhpGedView
+// Copyright (C) 2010 John Finlay
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// @version $Id$
 
 if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once WT_ROOT.'includes/classes/class_module.php';
 require_once WT_ROOT.'modules/lightbox/lb_defaultconfig.php';
 
 class lightbox_WT_Module extends WT_Module implements WT_Module_Config, WT_Module_Tab {
 	// Extend WT_Module
 	public function getTitle() {
-		return i18n::translate('Album');
+		return WT_I18N::translate('Album');
 	}
 
 	// Extend WT_Module
 	public function getDescription() {
-		return i18n::translate('Adds a tab (Album) to the individual page which an alternate way to view and work with media.');
+		return WT_I18N::translate('Adds a tab (Album) to the individual page which an alternate way to view and work with media.');
 	}
 
 	// Extend WT_Module
@@ -51,7 +46,6 @@ class lightbox_WT_Module extends WT_Module implements WT_Module_Config, WT_Modul
 		switch($mod_action) {
 		case 'admin_config':
 		case 'album':
-		case 'lb_editconfig':
 			// TODO: these files should be methods in this class
 			require WT_ROOT.'modules/'.$this->getName().'/'.$mod_action.'.php';
 			break;
@@ -60,7 +54,7 @@ class lightbox_WT_Module extends WT_Module implements WT_Module_Config, WT_Modul
 
 	// Implement WT_Module_Config
 	public function getConfigLink() {
-		return 'module.php?mod='.$this->getName().'&mod_action=lb_editconfig';
+		return 'module.php?mod='.$this->getName().'&mod_action=admin_config';
 	}
 
 	// Implement WT_Module_Tab
@@ -81,11 +75,11 @@ class lightbox_WT_Module extends WT_Module implements WT_Module_Config, WT_Modul
 		global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $WT_IMAGES, $TEXT_DIRECTION, $is_media;
 		global $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec ;
 		global $edit ;
-		global $pid, $tabno;
+		global $tabno;
 		global $Fam_Navigator, $NAV_ALBUM;
 
 		ob_start();
-		require_once 'modules/lightbox/functions/lb_head.php';
+		require WT_ROOT.'modules/lightbox/functions/lb_head.php';
 
 		$media_found = false;
 		if (!$this->controller->indi->canDisplayDetails()) {
@@ -95,9 +89,7 @@ class lightbox_WT_Module extends WT_Module implements WT_Module_Config, WT_Modul
 			echo "</td></tr>";
 			echo "</table>";
 		} else {
-			if (file_exists("modules/lightbox/album.php")) {
-				include_once('modules/lightbox/album.php');
-			}
+			require WT_ROOT.'modules/lightbox/album.php';
 		}
 		return '<div id="'.$this->getName().'_content">'.ob_get_clean().'</div>';
 	}
@@ -124,7 +116,7 @@ class lightbox_WT_Module extends WT_Module implements WT_Module_Config, WT_Modul
 	private function get_media_count() {
 		if ($this->mediaCount===null) {
 			$ct = preg_match("/\d OBJE/", $this->controller->indi->getGedcomRecord());
-			foreach ($this->controller->indi->getSpouseFamilies() as $k=>$sfam)
+			foreach ($this->controller->indi->getSpouseFamilies() as $sfam)
 				$ct += preg_match("/\d OBJE/", $sfam->getGedcomRecord());
 			$this->mediaCount = $ct;
 		}

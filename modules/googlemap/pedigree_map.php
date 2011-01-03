@@ -39,16 +39,15 @@ if (!defined('WT_WEBTREES')) {
 	exit;
 }
 
-require WT_ROOT.'includes/controllers/pedigree_ctrl.php';
 require WT_ROOT.'modules/googlemap/defaultconfig.php';
 
-global $PEDIGREE_GENERATIONS, $MAX_PEDIGREE_GENERATIONS, $ENABLE_AUTOCOMPLETE, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $WT_IMAGES, $GEDCOM;
+global $PEDIGREE_GENERATIONS, $MAX_PEDIGREE_GENERATIONS, $ENABLE_AUTOCOMPLETE, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $WT_IMAGES;
 
 // Default is show for both of these.
 $hideflags = safe_GET('hideflags');
 $hidelines = safe_GET('hidelines');
 
-$controller = new PedigreeController();
+$controller = new WT_Controller_Pedigree();
 $controller->init();
 
 // Default of 5
@@ -71,14 +70,14 @@ $MAX_PEDIGREE_GENERATIONS = min($MAX_PEDIGREE_GENERATIONS, 8);
 global $TEXT_DIRECTION;
 
 // -- print html header information
-print_header($controller->getPersonName().' - '.i18n::translate('Pedigree Map'));
+print_header($controller->getPersonName().' - '.WT_I18N::translate('Pedigree Map'));
 
 if (!$GOOGLEMAP_ENABLED) {
 	echo "<table class=\"facts_table\">\n";
-	echo "<tr><td class=\"facts_value\">", i18n::translate('GoogleMap module disabled'), "</td></tr>\n";
+	echo "<tr><td class=\"facts_value\">", WT_I18N::translate('GoogleMap module disabled'), "</td></tr>\n";
 	if (WT_USER_IS_ADMIN) {
 		echo "<tr><td align=\"center\">\n";
-		echo "<a href=\"module.php?mod=googlemap&mod_action=editconfig\">", i18n::translate('Manage GoogleMap configuration'), "</a>";
+		echo "<a href=\"module.php?mod=googlemap&mod_action=admin_editconfig\">", WT_I18N::translate('Manage GoogleMap configuration'), "</a>";
 		echo "</td></tr>\n";
 	}
 	echo "</table><br />";
@@ -90,7 +89,7 @@ if (!$GOOGLEMAP_ENABLED) {
 <?php
 if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm';
 echo '<div><table><tr><td valign="middle">';
-echo "<h2>" . i18n::translate('Pedigree Map') . " " . i18n::translate('for') . " ";
+echo "<h2>" . WT_I18N::translate('Pedigree Map') . " " . WT_I18N::translate('for') . " ";
 echo PrintReady($controller->getPersonName())."</h2>";
 
 // -- print the form to change the number of displayed generations
@@ -104,33 +103,33 @@ echo PrintReady($controller->getPersonName())."</h2>";
 	//-->
 </script>
 </td><td width="50px">&nbsp;</td><td>
-	  <form name="people" method="get" action="module.php?ged=<?php echo $GEDCOM; ?>&amp;mod=googlemap&amp;mod_action=pedigree_map">
+	  <form name="people" method="get" action="module.php?ged=<?php echo WT_GEDURL; ?>&amp;mod=googlemap&amp;mod_action=pedigree_map">
 		<input type="hidden" name="mod" value="googlemap" />
 		<input type="hidden" name="mod_action" value="pedigree_map" />
 		<table class="pedigree_table <?php echo $TEXT_DIRECTION; ?>" width="555">
 			<tr>
 				<td colspan="5" class="topbottombar" style="text-align:center; ">
-					<?php echo i18n::translate('Pedigree Map Options'); ?>
+					<?php echo WT_I18N::translate('Pedigree Map Options'); ?>
 				</td>
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Root Person ID'), help_link('rootid'); ?>
+					<?php echo WT_I18N::translate('Root Person ID'), help_link('rootid'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Generations'), help_link('PEDIGREE_GENERATIONS'); ?>
+					<?php echo WT_I18N::translate('Generations'), help_link('PEDIGREE_GENERATIONS'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Cluster size'), help_link('PEDIGREE_MAP_clustersize','googlemap'); ?>
+					<?php echo WT_I18N::translate('Cluster size'), help_link('PEDIGREE_MAP_clustersize','googlemap'); ?>
 				</td>
 				<td class="descriptionbox wrap">
 					<?php
-					echo i18n::translate('Hide flags'), help_link('PEDIGREE_MAP_hideflags','googlemap');
+					echo WT_I18N::translate('Hide flags'), help_link('PEDIGREE_MAP_hideflags','googlemap');
 					?>
 				</td>
 				<td class="descriptionbox wrap">
 					<?php
-					echo i18n::translate('Hide lines'), help_link('PEDIGREE_MAP_hidelines','googlemap');
+					echo WT_I18N::translate('Hide lines'), help_link('PEDIGREE_MAP_hidelines','googlemap');
 					?>
 				</td>
 			</tr>
@@ -178,7 +177,7 @@ echo PrintReady($controller->getPersonName())."</h2>";
 			</tr>
 			<tr>
 				<td class="topbottombar" colspan="5">
-					<input type="submit" value="<?php echo i18n::translate('View'); ?>" />
+					<input type="submit" value="<?php echo WT_I18N::translate('View'); ?>" />
 				</td>
 			</tr>
 		</table>
@@ -199,11 +198,11 @@ $missing = "";
 for ($i=0; $i<($controller->treesize); $i++) {
 	// -- check to see if we have moved to the next generation
 	if ($i+1 >= pow(2, $curgen)) {$curgen++;}
-	$person = Person::getInstance($controller->treeid[$i]);
+	$person = WT_Person::getInstance($controller->treeid[$i]);
 	if (!empty($person)) {
 		$pid = $controller->treeid[$i];
 		$name = $person->getFullName();
-		if ($name == i18n::translate('Private')) $priv++;
+		if ($name == WT_I18N::translate('Private')) $priv++;
 		$place = $person->getBirthPlace();
 		if (empty($place)) {
 			$latlongval[$i] = NULL;
@@ -222,7 +221,7 @@ for ($i=0; $i<($controller->treesize); $i++) {
 			else { // The place is in the table but has empty values
 				if (!empty($name)) {
 					if (!empty($missing)) $missing .= ",\n ";
-					$addlist = "<a href=\"individual.php?pid=" . $pid . "\">". $name . "</a>";
+					$addlist = '<a href="'.$person->getHtmlUrl().'">'. $name . '</a>';
 					$missing .= $addlist;
 					$miscount++;
 				}
@@ -231,7 +230,7 @@ for ($i=0; $i<($controller->treesize); $i++) {
 		else { // There was no place, or not listed in the map table
 			if (!empty($name)) {
 				if (!empty($missing)) $missing .= ",\n ";
-				$addlist = "<a href=\"individual.php?pid=" . $pid . "\">". $name . "</a>";
+				$addlist = '<a href="'.$person->getHtmlUrl().'">'. $name . '</a>';
 				$missing .= $addlist;
 				$miscount++;
 			}
@@ -251,13 +250,13 @@ echo " background-image: url('images/loading.gif'); background-position: center;
 if (WT_USER_IS_ADMIN) {
 	echo "<table width=\"100%\">";
 	echo "<tr><td align=\"left\">\n";
-	echo "<a href=\"module.php?mod=googlemap&mod_action=editconfig\">", i18n::translate('Manage GoogleMap configuration'), "</a>";
+	echo "<a href=\"module.php?mod=googlemap&mod_action=admin_editconfig\">", WT_I18N::translate('Manage GoogleMap configuration'), "</a>";
 	echo "</td>\n";
 	echo "<td align=\"center\">\n";
-	echo "<a href=\"module.php?mod=googlemap&mod_action=places\">", i18n::translate('Edit geographic place locations'), "</a>";
+	echo "<a href=\"module.php?mod=googlemap&mod_action=admin_places\">", WT_I18N::translate('Edit geographic place locations'), "</a>";
 	echo "</td>\n";
 	echo "<td align=\"right\">\n";
-	echo "<a href=\"module.php?mod=googlemap&mod_action=placecheck\">", i18n::translate('Place Check'), "</a>";
+	echo "<a href=\"module.php?mod=googlemap&mod_action=admin_placecheck\">", WT_I18N::translate('Place Check'), "</a>";
 	echo "</td></tr>\n";
 	echo "</table>\n";
 }
@@ -275,7 +274,7 @@ echo " <td valign=\"top\">";
 if (isset($curgen)) {
 	$total=pow(2,$curgen)-1;
 	$miss=$total-$count-$priv;
-	echo i18n::plural(
+	echo WT_I18N::plural(
 		'%1$d individual displayed, out of the normal total of %2$d, from %3$d generations.',
 		'%1$d individuals displayed, out of the normal total of %2$d, from %3$d generations.',
 		$count,
@@ -286,14 +285,14 @@ if (isset($curgen)) {
 	echo "  <tr>\n";
 	echo " <td valign=\"top\">\n";
 	if ($priv) {
-		echo i18n::plural('%s individual is private.', '%s individuals are private.', $priv, $priv), '<br/>';
+		echo WT_I18N::plural('%s individual is private.', '%s individuals are private.', $priv, $priv), '<br/>';
 	}
 	if ($count+$priv != $total) {
 		if ($miscount == 0) {
-			echo i18n::translate('No ancestors in the database.'), "<br />\n";
+			echo WT_I18N::translate('No ancestors in the database.'), "<br />\n";
 		} else {
 			// I18N: %1$d is a count of individuals, %2$s is a list of their names
-			echo " ".i18n::plural(
+			echo " ".WT_I18N::plural(
 				'%1$d individual is missing birthplace map coordinates: %2$s.',
 				'%1$d individuals are missing birthplace map coordinates: %2$s.',
 				$miscount, $miscount, $missing),
@@ -475,11 +474,11 @@ function Map_type() {}
 		var button4 = document.createElement('li');
 		var button5 = document.createElement('li');
 
-		button1.innerHTML = '<?php echo i18n::translate('Redraw map'); ?>';
-		button2.innerHTML = '<?php echo i18n::translate('Map'); ?>';
-		button3.innerHTML = '<?php echo i18n::translate('Satellite'); ?>';
-		button4.innerHTML = '<?php echo i18n::translate('Hybrid'); ?>';
-		button5.innerHTML = '<?php echo i18n::translate('Terrain'); ?>';
+		button1.innerHTML = '<?php echo WT_I18N::translate('Redraw map'); ?>';
+		button2.innerHTML = '<?php echo WT_I18N::translate('Map'); ?>';
+		button3.innerHTML = '<?php echo WT_I18N::translate('Satellite'); ?>';
+		button4.innerHTML = '<?php echo WT_I18N::translate('Hybrid'); ?>';
+		button5.innerHTML = '<?php echo WT_I18N::translate('Terrain'); ?>';
 
 		button1.onclick = function() { pm_map.setCenter(bounds.getCenter(), pm_map.getBoundsZoomLevel(bounds)); return false; };
 		button2.onclick = function() { pm_map.setMapType(G_NORMAL_MAP); return false; };
@@ -549,14 +548,14 @@ $curgen=1;
 $priv=0;
 $count=0;
 $event = "<img src='modules/googlemap/images/sq1.png' width='10' height='10'>" .
-	 "<strong>&nbsp;".i18n::translate('Root').":&nbsp;</strong>";
+	 "<strong>&nbsp;".WT_I18N::translate('Root').":&nbsp;</strong>";
 $colored_line = array("1"=>"#FF0000","2"=>"#0000FF","3"=>"#00FF00",
 				"4"=>"#FFFF00","5"=>"#00FFFF","6"=>"#FF00FF",
 				"7"=>"#C0C0FF","8"=>"#808000");
 
 for ($i=0; $i<($controller->treesize); $i++) {
 	// moved up to grab the sex of the individuals
-	$person = Person::getInstance($controller->treeid[$i]);
+	$person = WT_Person::getInstance($controller->treeid[$i]);
 	if (!empty($person)) {
 		$pid = $controller->treeid[$i];
 		$indirec = $person->getGedcomRecord();
@@ -569,8 +568,8 @@ for ($i=0; $i<($controller->treesize); $i++) {
 		if ($i+1 >= pow(2, $curgen)) {
 			$curgen++;
 		}
-		$relationship=get_relationship_name(get_relationship($controller->rootid, $pid, false));
-		if (empty($relationship)) $relationship=i18n::translate('self');
+		$relationship=get_relationship_name(get_relationship($controller->rootid, $pid, false, 0, true));
+		if (empty($relationship)) $relationship=WT_I18N::translate('self');
 		$event = "<img src='modules/googlemap/images/sq".$curgen.".png' width='10' height='10'>".
 			 "<strong>&nbsp;".$relationship.":&nbsp;</strong>";
 
@@ -598,11 +597,12 @@ for ($i=0; $i<($controller->treesize); $i++) {
 		// end of add image
 
 		$dataleft  = $image . $event . addslashes($name);
-		$datamid   = " <span><a href='individual.php?pid=". $pid . "' id='alturl' title='" . i18n::translate('Individual information') . "'>";
-		if ($TEXT_DIRECTION == "rtl") $datamid .= PrintReady("(".$pid.")");
-		else $datamid .= "(". $pid . ")";
+		$datamid   = " <span><a href='".$person->getHtmlUrl()."' id='alturl' title='" . WT_I18N::translate('Individual information') . "'>";
+		
+		if ($TEXT_DIRECTION == "rtl") $datamid .= PrintReady("(".WT_I18N::translate('View Person').")");
+		else $datamid .= "(".WT_I18N::translate('View Person').")";
 		$datamid  .= "</a></span>";
-		$dataright = "<br /><strong>". i18n::translate('Birth:') . "&nbsp;</strong>" .
+		$dataright = "<br /><strong>". WT_I18N::translate('Birth:') . "&nbsp;</strong>" .
 				addslashes($bdate->Display(false))."<br />".$bplace;
 
 		$latlongval[$i] = get_lati_long_placelocation($person->getBirthPlace());
@@ -661,11 +661,11 @@ for ($i=0; $i<($controller->treesize); $i++) {
 				echo "var point = new GLatLng(" . $lat[$i] . "," . $lon[$i]. ");\n";
 				echo "var marker = createMarker(point, \"" . addslashes($name). "\",\n\t\"<div>".$dataleft.$datamid.$dataright."</div>\", \"";
 				echo "<div class='iwstyle'>";
-				echo "<a href='module.php?ged={$GEDCOM}&mod=googlemap&mod_action=pedigree_map&rootid={$pid}&PEDIGREE_GENERATIONS={$PEDIGREE_GENERATIONS}";
+				echo "<a href='module.php?ged=".WT_GEDURL."&mod=googlemap&mod_action=pedigree_map&rootid={$pid}&PEDIGREE_GENERATIONS={$PEDIGREE_GENERATIONS}";
 				if ($hideflags) echo "&hideflags=1";
 				if ($hidelines) echo "&hidelines=1";
 				if ($clustersize != 5) echo "&clustersize=". $clustersize; // ignoring the default of 5
-				echo "' title='" . i18n::translate('Pedigree Map') . "'>" . $dataleft . "</a>" . $datamid . $dataright . "</div>\", \"".$marker_number."\");\n";
+				echo "' title='" . WT_I18N::translate('Pedigree Map') . "'>" . $dataleft . "</a>" . $datamid . $dataright . "</div>\", \"".$marker_number."\");\n";
 				echo "pm_map.addOverlay(marker);\n";
 
 				if (!$hidelines) {
@@ -704,11 +704,11 @@ document.getElementById("side_bar").innerHTML = side_bar_html;
 // === create the context menu div ===
 	  var contextmenu = document.createElement("div");
 	  contextmenu.style.visibility="hidden";
-	  contextmenu.innerHTML = '<a href="javascript:zoomIn()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom in'); ?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:zoomOut()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom out'); ?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:zoomInHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom in here'); ?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:zoomOutHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom out here'); ?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:centreMapHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Center map here'); ?>&nbsp;&nbsp;</div></a>';
+	  contextmenu.innerHTML = '<a href="javascript:zoomIn()"><div class="optionbox">&nbsp;&nbsp;<?php echo WT_I18N::translate('Zoom in'); ?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:zoomOut()"><div class="optionbox">&nbsp;&nbsp;<?php echo WT_I18N::translate('Zoom out'); ?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:zoomInHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo WT_I18N::translate('Zoom in here'); ?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:zoomOutHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo WT_I18N::translate('Zoom out here'); ?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:centreMapHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo WT_I18N::translate('Center map here'); ?>&nbsp;&nbsp;</div></a>';
 	  pm_map.getContainer().appendChild(contextmenu);
 
 	  // === listen for singlerightclick ===

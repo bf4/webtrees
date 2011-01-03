@@ -3,7 +3,7 @@
   *  webtrees
 
   *  Version 1.0
-  *  Copyright (C) 2010 webtrees Development Team. All rights reserved.
+  *  Copyright (C) 2011 webtrees Development Team. All rights reserved.
   *
   *  This and other information can be found on line at
   *  http://webtrees.net
@@ -46,7 +46,7 @@
 <!-- LICENSE -->
 <div style="float:left;"><a name="licence"><h3>LICENSE</h3></a></div><div class="back"><a href="#top">back to top</a></div><div style="clear:both;"></div>
  * <b>webtrees: Web based Family History software</b><br />
- * Copyright (C) 2010 webtrees development team.<br />
+ * Copyright (C) 2011 webtrees development team.<br />
  *<br />
  * Derived from PhpGedView - Copyright (C) 2002 to 2010  PGV Development Team.<br />
  * <br />
@@ -89,7 +89,6 @@ To install <b>webtrees</b>, you need:
 			</ul>
 	</ul>
 	<li>MySQL 5.0.13 or later. <b>webtrees</b> can share a single database with other applications, by choosing a unique table prefix during configuration.</li>
-	<li>If you are using MySQL 5.1.31 or later, or 5.0.85 or later, the setting MAX_ALLOWED_PACKET must be larger than your largest GEDCOM file. If you run your own server you can set this in my.ini. Otherwise you may need to ask your web-host to increase it. <a href="https://bugs.launchpad.net/webtrees/+bug/622194">This is a known bug</a>.</li>
 	</ul>
 <hr width="100%">
 <!-- INSTALLATION -->
@@ -119,13 +118,13 @@ There are <i>lots</i> of configuration options. You'll probably want to review t
 <hr width="100%">
 <!-- UPGRADING -->
 <div style="float:left;"><a name="upgrade"><h3>UPGRADING</h3></a></div><div class="back"><a href="#top">back to top</a></div><div style="clear:both;"></div>
-Upgrading <b>webtrees</b> is quick and easy. You are recommened to upgrade whenever a new version is available. 
+Upgrading <b>webtrees</b> is quick and easy. It is strongly recommended that you upgrade your installation whenever a new version is made available. Even minor <b>webtrees</b> version updates usually contain a significant number of bug fixes as well as interface improvements and program enhancements. 
 <ol>
 	<li>Now would be a good time to make a <a href="#backup">backup</a>. </li>
 	<li>Download the latest version of <b>webtrees</b> available from <a href="http://launchpad.net/webtrees">http://launchpad.net/webtrees</a></li>
 	<li>Unzip the .ZIP file, and upload the files to your web server, overwriting the existing files.</li>
 </ol>
-<p><i>NOTE for Macintosh users. Step 3 assumes you are using a copy tool that merges directories rather than replaces them. (Merge is standard behaviour on Windows and Linux.) If you use the Macintosh Finder or other similar tool to perform step 3, it will replace  your configuration, media and other directories with the empty/default ones from the installation. This would be very bad (but you did take a backup in step 1, didn't you!). Futher details and recommendations for suitable tools can be found by searching <a href="http://google.com">google.com</a></i></p>
+<p><i>NOTE for Macintosh users. Step 3 assumes you are using a copy tool that merges directories rather than replaces them. (Merge is standard behaviour on Windows and Linux.) If you use the Macintosh Finder or other similar tool to perform step 3, it will replace  your configuration, media and other directories with the empty/default ones from the installation. This would be very bad (but you did take a backup in step 1, didn't you!). Further details and recommendations for suitable tools can be found by searching <a href="http://google.com">google.com</a></i></p>
 If you have any problems or questions, help is available on the <a href="http://webtrees.net/forums">webtrees forum</a>.
 <hr width="100%">
 <!-- GEDCOM FILES -->
@@ -156,6 +155,7 @@ When or if you change your genealogy data outside of <b>webtrees</b>, it is not 
 <br /><br />
 The area most at risk of intrusion would be the /data folder that contains your config.ini.php file, and various temporary files. If you are concerned there may be a risk there is a very simple test you can do: try to fetch <b>config.ini.php</b> by typing <b>http:// </b><i>url to your site</i><b> /data/config.ini.php</b> in your web browser. 
 <br /><br />
+The most likely result is an "access denied" message like this:
 <table border="1px" cellpadding="5px" cellspacing="0">
 	<tr>
 		<td>

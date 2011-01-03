@@ -42,18 +42,18 @@ foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
 // If we don't have permission to administer any gedcoms, redirect to
 // this page, which will force a login and provide a list.
 if (empty($gedcoms)) {
-	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'editgedcoms.php');
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'admin_trees_manage.php');
 }
 
 // Which gedcom have we requested to export
-$export = safe_GET('export', $gedcoms);
+$export = safe_GET('export', preg_quote_array($gedcoms));
 
-print_simple_header(i18n::translate('Export'));
+print_simple_header(WT_I18N::translate('Export'));
 
 if ($export) {
 	$ged_id = get_id_from_gedcom($export);
 	$filename = get_site_setting('INDEX_DIRECTORY').$export;
-	echo '<h1>', i18n::translate('Export'), '</h1>';
+	echo '<h1>', WT_I18N::translate('Export'), '</h1>';
 	echo '<p>', htmlspecialchars(filename_decode($export)), ' => ', $filename, '</p>';
 	flush();
 	$gedout = fopen($filename.'.tmp', 'w');
@@ -71,7 +71,9 @@ if ($export) {
 
 		$end = microtime(true);
 		fclose($gedout);
-		@unlink($filename);
+		if (file_exists($filename)) {
+			unlink($filename);
+		}
 		rename($filename.'.tmp', $filename);
 		$stat = stat($filename);
 		echo sprintf('<p>%d bytes, %0.3f seconds</p>', $stat['size'], $end-$start);
@@ -82,10 +84,10 @@ if ($export) {
 	echo '<h1>Export data from database to gedcom file</h1>';
 	echo '<ul>';
 	foreach ($gedcoms as $ged_id=>$gedcom) {
-		echo '<li><a href="?export=', urlencode($gedcom), '">', $gedcom, ' => ', htmlspecialchars(filename_decode(realpath(get_gedcom_setting($ged_id, 'path')))), '</a></li>';
+		echo '<li><a href="?export=', rawurlencode($gedcom), '">', $gedcom, ' => ', htmlspecialchars(filename_decode(realpath(get_gedcom_setting($ged_id, 'path')))), '</a></li>';
 	}
 	echo '</ul>';
 }
 
-echo '<p><a href="javascript: ', i18n::translate('Close Window'), '" onclick="window.close();">', i18n::translate('Close Window'), '</a></p>';
+echo '<p><a href="javascript: ', WT_I18N::translate('Close Window'), '" onclick="window.close();">', WT_I18N::translate('Close Window'), '</a></p>';
 print_simple_footer();

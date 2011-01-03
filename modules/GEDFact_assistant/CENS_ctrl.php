@@ -28,9 +28,8 @@
  * @subpackage Census Assistant
  * @version $Id$
  */
-// require_once './config.php';
-require_once 'includes/controllers/individual_ctrl.php';
-$controller = new IndividualController();
+
+$controller = new WT_Controller_Individual();
 $controller->init();
 
 global $USE_THUMBS_MAIN, $tabno;
@@ -46,9 +45,9 @@ global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 		if (!($controller->indi->isDead())) {
 			// If alive display age
 			$bdate=$controller->indi->getBirthDate();
-			$age = GedcomDate::GetAgeGedcom($bdate);
+			$age = WT_Date::GetAgeGedcom($bdate);
 			if ($age!="")
-				$summary.= "<span class=\"label\">".i18n::translate('Age').":</span><span class=\"field\"> ".get_age_at_event($age, true)."</span>";
+				$summary.= "<span class=\"label\">".WT_I18N::translate('Age').":</span><span class=\"field\"> ".get_age_at_event($age, true)."</span>";
 		}
 		$summary.=$controller->indi->format_first_major_fact(WT_EVENTS_DEAT, 2);
 

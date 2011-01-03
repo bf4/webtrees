@@ -37,8 +37,6 @@ if (!defined('WT_WEBTREES')) {
 
 define('WT_FUNCTIONS_IMPORT_PHP', '');
 
-require_once WT_ROOT.'includes/classes/class_media.php';
-require_once WT_ROOT.'includes/functions/functions_lang.php';
 require_once WT_ROOT.'includes/functions/functions_export.php';
 
 // Tidy up a gedcom record on import, so that we can access it consistently/efficiently.
@@ -557,6 +555,8 @@ function reformat_record_import($rec) {
 		case 'DATA':
 		case 'CONT':
 		case 'FILE':
+			// convert backslashes in filenames to forward slashes
+			$data = preg_replace("/\\\/", "/", $data);
 			// Don't strip tabs, even though they are not valid in gedcom data.
 			if ($newrec) {
 				$newrec.="\n";
@@ -595,7 +595,7 @@ function import_record($gedrec, $ged_id, $update) {
 			"INSERT INTO `##families` (f_id, f_file, f_husb, f_wife, f_gedcom, f_numchil) VALUES (?,?,?,?,?,?)"
 		);
 		$sql_insert_sour=WT_DB::prepare(
-			"INSERT INTO `##sources` (s_id, s_file, s_name, s_gedcom, s_dbid) VALUES (?,?,?,?,?)"
+			"INSERT INTO `##sources` (s_id, s_file, s_name, s_gedcom) VALUES (?,?,?,?)"
 		);
 		$sql_insert_other=WT_DB::prepare(
 			"INSERT INTO `##other` (o_id, o_file, o_type, o_gedcom) VALUES (?,?,?,?)"
@@ -621,7 +621,7 @@ function import_record($gedrec, $ged_id, $update) {
 		$xref=$match[1];
 		$type=$match[1];
 	} else {
-		echo i18n::translate('Invalid GEDCOM format'), '<br /><pre>', $gedrec, '</pre>';
+		echo WT_I18N::translate('Invalid GEDCOM format'), '<br /><pre>', $gedrec, '</pre>';
 		return;
 	}
 
@@ -632,29 +632,29 @@ function import_record($gedrec, $ged_id, $update) {
 		if (preg_match('/0 @('.WT_REGEX_XREF.')@ ('.WT_REGEX_TAG.')/', $gedrec, $match)) {
 			list(,$xref, $type)=$match;
 		} else {
-			echo i18n::translate('Invalid GEDCOM format'), '<br /><pre>', $gedrec, '</pre>';
+			echo WT_I18N::translate('Invalid GEDCOM format'), '<br /><pre>', $gedrec, '</pre>';
 			return;
 		}
 	}
 
 	switch ($type) {
 	case 'INDI':
-		$record=new Person($gedrec);
+		$record=new WT_Person($gedrec);
 		break;
 	case 'FAM':
-		$record=new Family($gedrec);
+		$record=new WT_Family($gedrec);
 		break;
 	case 'SOUR':
-		$record=new Source($gedrec);
+		$record=new WT_Source($gedrec);
 		break;
 	case 'REPO':
-		$record=new Repository($gedrec);
+		$record=new WT_Repository($gedrec);
 		break;
 	case 'OBJE':
-		$record=new Media($gedrec);
+		$record=new WT_Media($gedrec);
 		break;
 	default:
-		$record=new GedcomRecord($gedrec);
+		$record=new WT_GedcomRecord($gedrec);
 		$type=$record->getType();
 		break;
 	}
@@ -667,7 +667,6 @@ function import_record($gedrec, $ged_id, $update) {
 	update_places($xref, $ged_id, $gedrec);
 	update_dates ($xref, $ged_id, $gedrec);
 	update_links ($xref, $ged_id, $gedrec);
-	update_rlinks($xref, $ged_id, $gedrec);
 	update_names ($xref, $ged_id, $record);
 
 	switch ($type) {
@@ -712,12 +711,7 @@ function import_record($gedrec, $ged_id, $update) {
 		} else {
 			$name=$xref;
 		}
-		if (strpos($gedrec, "\n1 _DBID")) {
-			$_dbid='Y';
-		} else {
-			$_dbid=null;
-		}
-		$sql_insert_sour->execute(array($xref, $ged_id, $name, $gedrec, $_dbid));
+		$sql_insert_sour->execute(array($xref, $ged_id, $name, $gedrec));
 		break;
 	case 'OBJE':
 		// OBJE records are imported by update_media function
@@ -844,7 +838,7 @@ function update_dates($xref, $ged_id, $gedrec) {
 			if (($fact=='FACT' || $fact=='EVEN') && preg_match("/\n2 TYPE ([A-Z]{3,5})/", $match[0], $tmatch)) {
 				$fact=$tmatch[1];
 			}
-			$date=new GedcomDate($match[2]);
+			$date=new WT_Date($match[2]);
 			$sql_insert_date->execute(array($date->date1->d, $date->date1->Format('%O'), $date->date1->m, $date->date1->y, $date->date1->minJD, $date->date1->maxJD, $fact, $xref, $ged_id, $date->date1->CALENDAR_ESCAPE()));
 			if ($date->date2) {
 				$sql_insert_date->execute(array($date->date2->d, $date->date2->Format('%O'), $date->date2->m, $date->date2->y, $date->date2->minJD, $date->date2->maxJD, $fact, $xref, $ged_id, $date->date2->CALENDAR_ESCAPE()));
@@ -852,25 +846,6 @@ function update_dates($xref, $ged_id, $gedrec) {
 		}
 	}
 	return;
-}
-
-// extract all the remote links from the given record and insert them into the database
-function update_rlinks($xref, $ged_id, $gedrec) {
-	static $sql_insert_rlink=null;
-	if (!$sql_insert_rlink) {
-		$sql_insert_rlink=WT_DB::prepare("INSERT INTO `##remotelinks` (r_gid,r_linkid,r_file) VALUES (?,?,?)");
-	}
-
-	if (preg_match_all("/\n1 RFN (".WT_REGEX_XREF.')/', $gedrec, $matches, PREG_SET_ORDER)) {
-		foreach ($matches as $match) {
-			// Ignore any errors, which may be caused by "duplicates" that differ on case/collation, e.g. "S1" and "s1"
-			try {
-				$sql_insert_rlink->execute(array($xref, $match[1], $ged_id));
-			} catch (PDOException $e) {
-				// We could display a warning here....
-			}
-		}
-	}
 }
 
 // extract all the links from the given record and insert them into the database
@@ -977,8 +952,8 @@ function insert_media($objrec, $objlevel, $update, $gid, $ged_id, $count) {
 		$objrec = preg_replace("/^(\d+) /me", "($1-$objlevel).' '", $objrec);
 
 		//-- check if another picture with the same file and title was previously imported
-		$media = new Media($objrec);
-		$new_media = Media::in_obje_list($media, $ged_id);
+		$media = new WT_Media($objrec);
+		$new_media = WT_Media::in_obje_list($media, $ged_id);
 		if (!$new_media) {
 			//-- add it to the media database table
 			$sql_insert_media->execute(array($m_media, $media->ext, $media->title, $media->file, $ged_id, $objrec));
@@ -1048,9 +1023,9 @@ function update_media($gid, $ged_id, $gedrec, $update = false) {
 		$new_m_media = $old_m_media;
 		//echo "RECORD: old $old_m_media new $new_m_media<br />";
 		$gedrec = str_replace("@" . $old_m_media . "@", "@" . $new_m_media . "@", $gedrec);
-		$media = new Media($gedrec);
+		$media = new WT_Media($gedrec);
 		//--check if we already have a similar object
-		$new_media = Media::in_obje_list($media, $ged_id);
+		$new_media = WT_Media::in_obje_list($media, $ged_id);
 		if (!$new_media) {
 			$sql_insert_media->execute(array($new_m_media, $media->ext, $media->title, $media->file, $ged_id, $gedrec));
 			$media_count++;
@@ -1158,7 +1133,6 @@ function empty_database($ged_id, $keepmedia) {
 	WT_DB::prepare("DELETE FROM `##other`       WHERE o_file =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM `##places`      WHERE p_file =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM `##placelinks`  WHERE pl_file=?")->execute(array($ged_id));
-	WT_DB::prepare("DELETE FROM `##remotelinks` WHERE r_file =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM `##name`        WHERE n_file =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM `##dates`       WHERE d_file =?")->execute(array($ged_id));
 	WT_DB::prepare("DELETE FROM `##change`      WHERE gedcom_id=?")->execute(array($ged_id));
@@ -1259,7 +1233,6 @@ function update_record($gedrec, $ged_id, $delete) {
 	}
 
 	WT_DB::prepare("DELETE FROM `##media_mapping` WHERE mm_gid=? AND mm_gedfile=?")->execute(array($gid, $ged_id));
-	WT_DB::prepare("DELETE FROM `##remotelinks` WHERE r_gid=? AND r_file=?")->execute(array($gid, $ged_id));
 	WT_DB::prepare("DELETE FROM `##name` WHERE n_id=? AND n_file=?")->execute(array($gid, $ged_id));
 	WT_DB::prepare("DELETE FROM `##link` WHERE l_from=? AND l_file=?")->execute(array($gid, $ged_id));
 

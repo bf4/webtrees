@@ -1,48 +1,42 @@
 <?php
-/**
- * Classes and libraries for module system
- *
- * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
- * Copyright (C) 2010 John Finlay
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package webtrees
- * @subpackage Modules
- * @version $Id$
- */
+// Classes and libraries for module system
+//
+// webtrees: Web based Family History software
+// Copyright (C) 2011 webtrees development team.
+//
+// Derived from PhpGedView
+// Copyright (C) 2010 John Finlay
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// @version $Id$
 
 if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once WT_ROOT.'includes/classes/class_module.php';
-
 class notes_WT_Module extends WT_Module implements WT_Module_Tab {
 	// Extend WT_Module
 	public function getTitle() {
-		return i18n::translate('Notes');
+		return WT_I18N::translate('Notes');
 	}
 
 	// Extend WT_Module
 	public function getDescription() {
-		return i18n::translate('Adds a tab to the individual page which displays the notes of an individual.');
+		return WT_I18N::translate('Adds a tab to the individual page which displays the notes of an individual.');
 	}
 
 	// Implement WT_Module_Tab
@@ -72,7 +66,7 @@ if (!$this->controller->indi->canDisplayDetails()) {
 			type="checkbox"
 			<?php if ($SHOW_LEVEL2_NOTES) echo " checked=\"checked\""; ?>
 			onclick="toggleByClassName('TR', 'row_note2');" /> <label
-			for="checkbox_note2"><?php echo i18n::translate('Show all notes'); ?></label>
+			for="checkbox_note2"><?php echo WT_I18N::translate('Show all notes'); ?></label>
 			<?php echo help_link('show_fact_sources'); ?>
 		</td>
 	</tr>
@@ -100,21 +94,21 @@ if (!$this->controller->indi->canDisplayDetails()) {
 			print_main_notes($factrec->getGedcomRecord(), $i, $this->controller->pid, $factrec->getLineNumber(), true);
 		}
 	}
-	if ($this->get_note_count()==0) echo "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".i18n::translate('There are no Notes for this individual.')."</td></tr>";
+	if ($this->get_note_count()==0) echo "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".WT_I18N::translate('There are no Notes for this individual.')."</td></tr>";
 	//-- New Note Link
-	if ($this->controller->canedit) {
+	if ($this->controller->indi->canEdit()) {
 		?>
 	<tr>
-		<td class="facts_label"><?php echo i18n::translate('Add Note'), help_link('add_note'); ?></td>
+		<td class="facts_label"><?php echo WT_I18N::translate('Add Note'), help_link('add_note'); ?></td>
 		<td class="facts_value"><a href="javascript:;"
-			onclick="add_new_record('<?php echo $this->controller->pid; ?>','NOTE'); return false;"><?php echo i18n::translate('Add a new note'); ?></a>
+			onclick="add_new_record('<?php echo $this->controller->pid; ?>','NOTE'); return false;"><?php echo WT_I18N::translate('Add a new note'); ?></a>
 		<br />
 		</td>
 	</tr>
 	<tr>
-		<td class="facts_label"><?php echo i18n::translate('Add Shared Note'), help_link('add_shared_note'); ?></td>
+		<td class="facts_label"><?php echo WT_I18N::translate('Add Shared Note'), help_link('add_shared_note'); ?></td>
 		<td class="facts_value"><a href="javascript:;"
-			onclick="add_new_record('<?php echo $this->controller->pid; ?>','SHARED_NOTE'); return false;"><?php echo i18n::translate('Add a new shared note'); ?></a>
+			onclick="add_new_record('<?php echo $this->controller->pid; ?>','SHARED_NOTE'); return false;"><?php echo WT_I18N::translate('Add a new shared note'); ?></a>
 		<br />
 		</td>
 	</tr>
@@ -140,7 +134,7 @@ if (!$SHOW_LEVEL2_NOTES) {
 	function get_note_count() {
 		if ($this->noteCount===null) {
 			$ct = preg_match_all("/\d NOTE /", $this->controller->indi->getGedcomRecord(), $match, PREG_SET_ORDER);
-			foreach ($this->controller->indi->getSpouseFamilies() as $k => $sfam)
+			foreach ($this->controller->indi->getSpouseFamilies() as $sfam)
 			$ct += preg_match("/\d NOTE /", $sfam->getGedcomRecord());
 			$this->noteCount = $ct;
 		}

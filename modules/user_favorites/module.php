@@ -1,36 +1,32 @@
 <?php
-/**
- * Classes and libraries for module system
- *
- * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
- * Copyright (C) 2010 John Finlay
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @version $Id$
- */
+// Classes and libraries for module system
+//
+// webtrees: Web based Family History software
+// Copyright (C) 2011 webtrees development team.
+//
+// Derived from PhpGedView
+// Copyright (C) 2010 John Finlay
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// @version $Id$
 
 if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-
-require_once WT_ROOT.'includes/classes/class_module.php';
 
 // Create tables, if not already present
 try {
@@ -43,17 +39,17 @@ try {
 class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 	// Extend class WT_Module
 	public function getTitle() {
-		return i18n::translate('User Favorites');
+		return WT_I18N::translate('User Favorites');
 	}
 
 	// Extend class WT_Module
 	public function getDescription() {
-		return i18n::translate('The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them.');
+		return WT_I18N::translate('The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them.');
 	}
 
 	// Implement class WT_Module_Block
 	public function getBlock($block_id, $template=true, $cfg=null) {
-		global $WT_IMAGES, $GEDCOM, $TEXT_DIRECTION, $MEDIA_DIRECTORY, $MULTI_MEDIA, $MEDIA_DIRECTORY_LEVELS, $ctype, $THEME_DIR;
+		global $WT_IMAGES, $GEDCOM, $TEXT_DIRECTION, $MEDIA_DIRECTORY, $MULTI_MEDIA, $MEDIA_DIRECTORY_LEVELS, $ctype;
 		global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE, $ENABLE_AUTOCOMPLETE;
 
 		$action=safe_GET('action');
@@ -63,6 +59,7 @@ class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 			if ($fv_id) {
 				self::deleteFavorite($fv_id);
 			}
+			unset($_GET['action']);
 			break;
 		case 'addfav':
 			$gid     =safe_GET('gid');
@@ -115,6 +112,7 @@ class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 				$favorite['title'] = $favtitle;
 				self::addFavorite($favorite);
 			}
+			unset($_GET['action']);
 			break;
 		}
 
@@ -137,7 +135,7 @@ class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 		if (!is_array($userfavs)) $userfavs = array();
 
 		$id=$this->getName().$block_id;
-		$title=i18n::translate('My Favorites').help_link('mypage_favorites');
+		$title=WT_I18N::translate('My Favorites').help_link('mypage_favorites');
 		if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
 		$title .= "(".count($userfavs).")";
 		if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
@@ -174,14 +172,14 @@ class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 			$cellSpacing = "3px";
 		}
 		if (count($userfavs)==0) {
-			$content .= i18n::translate('You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title.');
+			$content .= WT_I18N::translate('You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title.');
 		} else {
 			$mygedcom = $GEDCOM;
 			$current_gedcom = $GEDCOM;
 			$content .= "<table width=\"{$tableWidth}\" style=\"border:none\" cellspacing=\"{$cellSpacing}\" class=\"center $TEXT_DIRECTION\">";
 			foreach ($userfavs as $key=>$favorite) {
 				if (isset($favorite["id"])) $key=$favorite["id"];
-				$removeFavourite = "<a class=\"font9\" href=\"index.php?ctype={$ctype}&amp;action=deletefav&amp;fv_id={$key}\" onclick=\"return confirm('".i18n::translate('Are you sure you want to remove this item from your list of Favorites?')."');\">".i18n::translate('Remove')."</a><br />";
+				$removeFavourite = "<a class=\"font9\" href=\"index.php?ctype={$ctype}&amp;action=deletefav&amp;fv_id={$key}\" onclick=\"return confirm('".WT_I18N::translate('Are you sure you want to remove this item from your list of Favorites?')."');\">".WT_I18N::translate('Remove')."</a><br />";
 				$current_gedcom = $GEDCOM;
 				$GEDCOM = $favorite["file"];
 				$content .= "<tr><td>";
@@ -205,13 +203,13 @@ class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 						$content .= ob_get_clean();
 						$content .= PrintReady($favorite["note"]);
 					} else {
-						$record=GedcomRecord::getInstance($favorite['gid']);
+						$record=WT_GedcomRecord::getInstance($favorite['gid']);
 						$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">";
 						if ($ctype=="user" || WT_USER_IS_ADMIN) $content .= $removeFavourite;
 						if ($record) {
 							$content.=$record->format_list('span');
 						} else {
-							$content.=i18n::translate('No such ID exists in this GEDCOM file.');
+							$content.=WT_I18N::translate('No such ID exists in this GEDCOM file.');
 						}
 						$content .= "<br />".PrintReady($favorite["note"]);
 					}
@@ -233,7 +231,7 @@ class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 		<br />
 		';
 		$uniqueID = floor(microtime() * 1000000);
-		$content .= "<b><a href=\"javascript: ".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_user_fav{$uniqueID}'); return false;\"><img id=\"add_user_fav_img\" src=\"".$WT_IMAGES["plus"]."\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>";
+		$content .= "<b><a href=\"javascript: ".WT_I18N::translate('Add a new favorite')." \" onclick=\"expand_layer('add_user_fav{$uniqueID}'); return false;\"><img id=\"add_user_fav_img\" src=\"".$WT_IMAGES["plus"]."\" border=\"0\" alt=\"\" />&nbsp;".WT_I18N::translate('Add a new favorite')."</a></b>";
 		$content .= help_link('index_add_favorites');
 		$content .= "<br /><div id=\"add_user_fav{$uniqueID}\" style=\"display: none;\">";
 		$content .= "<form name=\"addufavform\" method=\"get\" action=\"index.php\">";
@@ -242,7 +240,7 @@ class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 		$content .= "<input type=\"hidden\" name=\"favtype\" value=\"user\" />";
 		$content .= "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\" />";
 		$content .= "<table width=\"{$tableWidth}\" style=\"border:none\" cellspacing=\"{$cellSpacing}\" class=\"center $TEXT_DIRECTION\">";
-		$content .= "<tr><td>".i18n::translate('Enter a Person, Family, or Source ID')." <br />";
+		$content .= "<tr><td>".WT_I18N::translate('Enter a Person, Family, or Source ID')." <br />";
 		$content .= "<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid{$uniqueID}\" size=\"5\" value=\"\" />";
 
 		$content .= print_findindi_link("gid{$uniqueID}",'',true);
@@ -252,22 +250,22 @@ class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 		$content .= print_findnote_link("gid{$uniqueID}",'',true);
 		$content .= print_findmedia_link("gid{$uniqueID}",'1','',true);
 
-		$content .= "<br />".i18n::translate('OR<br />Enter a URL and a title');
+		$content .= "<br />".WT_I18N::translate('OR<br />Enter a URL and a title');
 		$content .= "<table><tr><td>".translate_fact('URL')."</td><td><input type=\"text\" name=\"url\" size=\"40\" value=\"\" /></td></tr>";
-		$content .= "<tr><td>".i18n::translate('Title:')."</td><td><input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" /></td></tr></table>";
+		$content .= "<tr><td>".WT_I18N::translate('Title:')."</td><td><input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" /></td></tr></table>";
 		if ($block) $content .= "</td></tr><tr><td><br />";
 		else $content .= "</td><td>";
-		$content .= i18n::translate('Enter an optional note about this favorite');
+		$content .= WT_I18N::translate('Enter an optional note about this favorite');
 		$content .= "<br /><textarea name=\"favnote\" rows=\"6\" cols=\"50\"></textarea>";
 		$content .= "</td></tr></table>";
-		$content .= "<br /><input type=\"submit\" value=\"".i18n::translate('Add')."\" style=\"font-size: 8pt; \" />";
+		$content .= "<br /><input type=\"submit\" value=\"".WT_I18N::translate('Add')."\" style=\"font-size: 8pt; \" />";
 		$content .= "</form></div>";
 
 		if ($template) {
 			if ($block) {
-				require $THEME_DIR.'templates/block_small_temp.php';
+				require WT_THEME_DIR.'templates/block_small_temp.php';
 			} else {
-				require $THEME_DIR.'templates/block_main_temp.php';
+				require WT_THEME_DIR.'templates/block_main_temp.php';
 			}
 		} else {
 			return $content;
@@ -305,7 +303,7 @@ class user_favorites_WT_Module extends WT_Module implements WT_Module_Block {
 
 		$block=get_block_setting($block_id, 'block', false);
 		echo '<tr><td class="descriptionbox wrap width33">';
-		echo /* I18N: label for a yes/no option */ i18n::translate('Add a scrollbar when block contents grow');
+		echo /* I18N: label for a yes/no option */ WT_I18N::translate('Add a scrollbar when block contents grow');
 		echo '</td><td class="optionbox">';
 		echo edit_field_yes_no('block', $block);
 		echo '</td></tr>';

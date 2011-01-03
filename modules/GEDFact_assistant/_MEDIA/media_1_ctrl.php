@@ -41,11 +41,11 @@ $pid = safe_get('pid');
 // echo $pid;
 
 $year = "1901";
-$censevent  = new Event("1 CENS\n2 DATE 03 MAR".$year."");
+$censevent  = new WT_Event("1 CENS\n2 DATE 03 MAR".$year."");
 $censdate   = $censevent->getDate();
 $censyear   = $censdate->date1->y;
 $ctry       = "UK";
-// $married    = GedcomDate::Compare($censdate, $marrdate);
+// $married    = WT_Date::Compare($censdate, $marrdate);
 $married=-1;
 
 
@@ -56,7 +56,7 @@ if ($pid=="") {
 	echo "<br /><br />";
 } else {
 
-	$person=Person::getInstance($pid);
+	$person=WT_Person::getInstance($pid);
 	// var_dump($person->getAllNames());
 	$nam = $person->getAllNames();
 	if (PrintReady($person->getDeathYear()) == 0) { $DeathYr = ""; } else { $DeathYr = PrintReady($person->getDeathYear()); }
@@ -70,11 +70,11 @@ if ($pid=="") {
 
 	echo '<table width=400 class="facts_table center ', $TEXT_DIRECTION, '">';
 	echo '<tr><td class="topbottombar" colspan="1">';
-	echo '<b>', i18n::translate('Family Navigator'), '</b>';
+	echo '<b>', WT_I18N::translate('Family Navigator'), '</b>';
 	echo '</td></tr>';
 	echo '<tr>';
 	//echo '<td class="optionbox wrap" valign="top" align="left" width="50%" >';
-	//echo i18n::translate('Add Family, and Search links');
+	//echo WT_I18N::translate('Add Family, and Search links');
 	//echo '</td>';
 	echo '<td valign="top" width=400>';
 	//-- Search  and Add Family Members Area =========================================

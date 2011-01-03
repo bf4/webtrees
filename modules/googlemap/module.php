@@ -1,59 +1,53 @@
 <?php
-/**
- * Classes and libraries for module system
- *
- * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
- * Copyright (C) 2009 John Finlay
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package webtrees
- * @subpackage Modules
- * @version $Id$
- */
+// Classes and libraries for module system
+//
+// webtrees: Web based Family History software
+// Copyright (C) 2011 webtrees development team.
+//
+// Derived from PhpGedView
+// Copyright (C) 2010 John Finlay
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// @version $Id$
 
 if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once WT_ROOT.'includes/classes/class_module.php';
-
 class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Module_Tab {
 	// Extend WT_Module
 	public function getTitle() {
-		return i18n::translate('Googlemap');
+		return WT_I18N::translate('Googlemap');
 	}
 
 	// Extend WT_Module
 	public function getDescription() {
-		return i18n::translate('Adds a tab to the individual page which maps the events of an individual and their close relatives on a Google map.');
+		return WT_I18N::translate('Adds a tab to the individual page which maps the events of an individual and their close relatives on a Google map.');
 	}
 
 	// Extend WT_Module
 	public function modAction($mod_action) {
 		switch($mod_action) {
 		case 'admin_config':
-		case 'editconfig':
+		case 'admin_editconfig':
 		case 'flags':
 		case 'pedigree_map':
-		case 'placecheck':
-		case 'places':
+		case 'admin_placecheck':
+		case 'admin_places':
 		case 'places_edit':
 			// TODO: these files should be methods in this class
 			require_once WT_ROOT.'modules/googlemap/googlemap.php';
@@ -105,10 +99,10 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 		<td><?php
 		if (!array_key_exists('googlemap', WT_Module::getActiveModules())) {
 			echo "<table class=\"facts_table\">";
-			echo "<tr><td id=\"no_tab8\" colspan=\"2\" class=\"facts_value\">".i18n::translate('GoogleMap module disabled')."</td></tr>";
+			echo "<tr><td id=\"no_tab8\" colspan=\"2\" class=\"facts_value\">".WT_I18N::translate('GoogleMap module disabled')."</td></tr>";
 			if (WT_USER_IS_ADMIN) {
 				echo "<tr><td align=\"center\" colspan=\"2\">";
-				echo "<a href=\"module.php?mod=".$this->getName()."&amp;mod_action=editconfig\">".i18n::translate('Manage GoogleMap configuration')."</a>";
+				echo "<a href=\"module.php?mod=".$this->getName()."&amp;mod_action=admin_editconfig\">".WT_I18N::translate('Manage GoogleMap configuration')."</a>";
 				echo "</td>";
 				echo "</tr>";
 			}
@@ -124,12 +118,12 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 			$tNew = str_replace("&", "&amp;", $tNew);
 			if ($SESSION_HIDE_GOOGLEMAP=="true") {
 				echo "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"".$tNew."&amp;HIDE_GOOGLEMAP=false#".$this->getName()."\">";
-				echo "<img src=\"".$WT_IMAGES["plus"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Activate')."\" title=\"".i18n::translate('Activate')."\" />";
-				echo " ".i18n::translate('Activate')."</a></span>";
+				echo "<img src=\"".$WT_IMAGES["plus"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".WT_I18N::translate('Activate')."\" title=\"".WT_I18N::translate('Activate')."\" />";
+				echo " ".WT_I18N::translate('Activate')."</a></span>";
 			} else {
 				echo "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"" .$tNew."&amp;HIDE_GOOGLEMAP=true#".$this->getName()."\">";
-				echo "<img src=\"".$WT_IMAGES["minus"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Deactivate')."\" title=\"".i18n::translate('Deactivate')."\" />";
-				echo " ".i18n::translate('Deactivate')."</a></span>";
+				echo "<img src=\"".$WT_IMAGES["minus"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".WT_I18N::translate('Deactivate')."\" title=\"".WT_I18N::translate('Deactivate')."\" />";
+				echo " ".WT_I18N::translate('Deactivate')."</a></span>";
 			}
 
 			if (!$this->controller->indi->canDisplayName()) {
@@ -150,13 +144,13 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 					if (WT_USER_IS_ADMIN) {
 						echo "<table width=\"100%\"><tr>";
 						echo "<td width=\"33%\" align=\"left\">";
-						echo "<a href=\"module.php?mod=".$this->getName()."&amp;mod_action=editconfig\">".i18n::translate('Manage GoogleMap configuration')."</a>";
+						echo "<a href=\"module.php?mod=".$this->getName()."&amp;mod_action=admin_editconfig\">".WT_I18N::translate('Manage GoogleMap configuration')."</a>";
 						echo "</td>";
 						echo "<td width=\"33%\" align=\"center\">";
-						echo "<a href=\"module.php?mod=".$this->getName()."&amp;mod_action=places\">".i18n::translate('Edit geographic place locations')."</a>";
+						echo "<a href=\"module.php?mod=".$this->getName()."&amp;mod_action=admin_places\">".WT_I18N::translate('Edit geographic place locations')."</a>";
 						echo "</td>";
 						echo "<td width=\"33%\" align=\"right\">";
-						echo "<a href=\"module.php?mod=".$this->getName()."&amp;mod_action=placecheck\">".i18n::translate('Place Check')."</a>";
+						echo "<a href=\"module.php?mod=".$this->getName()."&amp;mod_action=admin_placecheck\">".WT_I18N::translate('Place Check')."</a>";
 						echo "</td>";
 						echo "</tr></table>";
 					}
@@ -166,7 +160,7 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 					echo "<div id=\"map_content\">";
 					$famids = array();
 					$families = $this->controller->indi->getSpouseFamilies();
-					foreach ($families as $famid=>$family) {
+					foreach ($families as $family) {
 						$famids[] = $family->getXref();
 					}
 					$this->controller->indi->add_family_facts(false);
