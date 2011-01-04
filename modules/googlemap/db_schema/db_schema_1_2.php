@@ -1,9 +1,10 @@
 <?php
 /**
- * Update the GM module database schema from version 0 to version 1
+ * Update the GM module database schema from version 1 to version 2
  *
  * Version 0: empty database
  * Version 1: create the tables, as per PGV 4.2.1
+ * Version 2: update the tables to support streetview
  *
  * The script should assume that it can be interrupted at
  * any point, and be able to continue by re-running the script.
@@ -13,7 +14,7 @@
  * seconds, for systems with low timeout values.
  *
  * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
+ * Copyright (C) 2011 webtrees development team.
  *
  * Derived from PhpGedView
  * Copyright (C) 2009 Greg Roach
@@ -40,27 +41,23 @@ header('HTTP/1.0 403 Forbidden');
 exit;
 }
 
-define('WT_GM_DB_SCHEMA_0_1', '');
+define('WT_GM_DB_SCHEMA_1_2', '');
 
 // Create all of the tables needed for this module
-WT_DB::exec(
-	"CREATE TABLE IF NOT EXISTS `##placelocation` (".
-	" pl_id        INTEGER      NOT NULL,".
-	" pl_parent_id INTEGER          NULL,".
-	" pl_level     INTEGER          NULL,".
-	" pl_place     VARCHAR(255)     NULL,".
-	" pl_long      VARCHAR(30)      NULL,".
-	" pl_lati      VARCHAR(30)      NULL,".
-	" pl_zoom      INTEGER          NULL,".
-	" pl_icon      VARCHAR(255)     NULL,".
-	" PRIMARY KEY     (pl_id),".
-	"         KEY ix1 (pl_level),".
-	"         KEY ix2 (pl_long),".
-	"         KEY ix3 (pl_lati),".
-	"         KEY ix4 (pl_place),".
-	"         KEY ix5 (pl_parent_id)".
-	") COLLATE utf8_unicode_ci ENGINE=InnoDB"
-);
+try {
+	WT_DB::exec(
+		"ALTER TABLE `##placelocation` ADD (".
+		" pl_media      VARCHAR(30)     NULL,".
+		" sv_long       VARCHAR(30)     NULL,".
+		" sv_lati       VARCHAR(30)     NULL,".
+		" sv_bearing    FLOAT           NULL,".
+		" sv_elevation  FLOAT           NULL,".
+		" sv_zoom       FLOAT           NULL".
+		")"
+	);
+} catch (PDOException $ex) {
+	// Already done this?
+}
 
 // Update the version to indicate success
 set_site_setting($schema_name, $next_version);
