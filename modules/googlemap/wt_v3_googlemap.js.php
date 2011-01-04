@@ -641,16 +641,15 @@
        								'<br />This feature to be implemented later.',
        							'<\/div>',
        						'<\/div>',
-       				/*		
-       						'<div id = "pane4">',
-          						divhead,
-          						'<div id = "pane4_text">',
-          							'<br />',
-          							'<br /> Spare Tab Content',
-       								'<br />',
-       							'<\/div>',
-          					'<\/div>',
-         			*/	
+		
+       				//		'<div id = "pane4">',
+          			//			divhead,
+          			//			'<div id = "pane4_text">',
+          			//				'<br />',
+          			//				'<br /> Spare Tab Content',
+       				//				'<br />',
+       				//			'<\/div>',
+          			//		'<\/div>',
 
          				'<\/div>',
          				

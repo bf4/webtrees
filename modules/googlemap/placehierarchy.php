@@ -182,16 +182,13 @@ function create_map() {
 		?>
 
 		<!--  V2 ============ -->
-		<!-- Start of map scripts -->
-		<!-- <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
-		<script src="modules/googlemap/wt_googlemap.js" type="text/javascript"></script> -->
+		<!-- <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script> -->
+		<!-- <script src="modules/googlemap/wt_googlemap.js" type="text/javascript"></script> -->
 		<!--  V2 ============ -->
 		
 		<!--  V3 ============ -->
 		<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
-		<!-- <script src="modules/googlemap/wt_googlemap.js" type="text/javascript"></script> -->
 		<script src="modules/googlemap/wt_v3_googlemap.js" type="text/javascript"></script>
-		<!-- <link type="text/css" href="modules/googlemap/css/v3_googlemap.css" rel="stylesheet" /> -->
 		<!--  V3 ============ -->
 		
 		<?php
