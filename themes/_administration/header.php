@@ -35,7 +35,14 @@ echo
 	'<link rel="stylesheet" href="', WT_THEME_DIR, 'jquery/jquery-ui_theme.css" type="text/css" />',
 	'<link rel="stylesheet" href="', $stylesheet, '" type="text/css" media="all" />',
 	$javascript,
-	'</head>',
+	'</head>';
+?>
+	<!-- This is a script that claims solve all pre-IE9 compatability issues -->
+	<!--[if lt IE 9]>
+	<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+	<![endif]-->	
+<?php
+echo	
 	'<body id="body">',
 // Header
 	'<div id="admin_head" class="ui-widget-content">',
@@ -99,14 +106,14 @@ foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
 echo '</ul></li>';
 if (WT_USER_IS_ADMIN) {
 	echo
-		'<li><a ', (WT_SCRIPT_NAME=="admin_users_list.php" ? 'class="current" ' : ''), 'href="admin_users_list.php">',
+		'<li><a ', (WT_SCRIPT_NAME=="admin_users_list.php" ? 'class="current" ' : ''), 'href="useradmin.php">',
 		WT_I18N::translate('Users'),
 		'</a></li>',
 		'<li><ul>',
 		'<li><a ', (WT_SCRIPT_NAME=="admin_users_add.php" ? 'class="current" ' : ''), 'href="admin_users_add.php?action=createform">', WT_I18N::translate('Add a new user'), '</a></li>',
-		'<li><a ', (WT_SCRIPT_NAME=="#" ? 'class="current" ' : ''), 'href="useradmin.php">',
+		'<li><a ', (WT_SCRIPT_NAME=="admin_users_bulk.php" ? 'class="current" ' : ''), 'href="admin_users_bulk.php">',
 		WT_I18N::translate('Bulk messaging'),
-		'<li><a ', (WT_SCRIPT_NAME=="#" ? 'class="current" ' : ''), 'href="useradmin.php">',
+		'<li><a ', (WT_SCRIPT_NAME=="admin_users_clean.php" ? 'class="current" ' : ''), 'href="admin_users_clean.php?action=cleanup">',
 		WT_I18N::translate('Cleanup users'),
 		'</a></li>',
 		'</ul></li>',

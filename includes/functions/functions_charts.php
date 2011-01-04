@@ -179,7 +179,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 		$marriage = $family->getMarriage();
 		if ($marriage->canShow()) {
 			$marriage->print_simple_fact();
-		} else echo WT_I18N::translate('Private');
+		}
 		echo "</a>";
 	}
 	else echo "<br />";
@@ -260,7 +260,10 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 	global $pbwidth, $pbheight, $show_cousins, $WT_IMAGES, $show_changes, $GEDCOM, $TEXT_DIRECTION;
 
 	$family=WT_Family::getInstance($famid);
-	$children=$family->getChildrenIds();
+	$children=array();
+	foreach ($family->getChildren() as $child) {
+		$children[]=$child->getXref();
+	}
 	$numchil=$family->getNumberOfChildren();
 	echo "<table border=\"0\" cellpadding=\"0\" cellspacing=\"2\"><tr>";
 	if ($sosa>0) echo "<td></td>";
@@ -275,7 +278,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 	}
 	echo ')', getLRM(), '</span>';
 	echo "<br />";
-	// moved to top of list, changed from style to class, and font12 added by Nigel
+
 	if ($sosa==0 && WT_USER_CAN_EDIT) {
 		echo "<br />";
 		echo "<span class='nowrap font12'>";
@@ -335,13 +338,11 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 				echo "</td>";
 				if ($sosa != 0) {
 					// loop for all families where current child is a spouse
-					$famids = WT_Person::getInstance($chil)->getSpouseFamilyIds();
+					$famids = WT_Person::getInstance($chil)->getSpouseFamilies();
 					$maxfam = count($famids)-1;
 					for ($f=0; $f<=$maxfam; $f++) {
-						$famid_child = $famids[$f];
-						if (!$famid_child) continue;
+						$famid_child = $famids[$f]->getXref();
 						$parents = find_parents($famid_child);
-						if (!$parents) continue;
 						if ($parents["HUSB"] == $chil) $spouse = $parents["WIFE"];
 						else $spouse =  $parents["HUSB"];
 						// multiple marriages

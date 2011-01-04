@@ -54,6 +54,12 @@ require_once WT_ROOT.'includes/functions/functions_edit.php';
 require_once WT_ROOT.'includes/functions/functions_import.php';
 require_once WT_ROOT.'includes/functions/functions_mediadb.php';
 
+// Only admin users can access this page
+if (!WT_USER_IS_ADMIN) {
+	header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'login.php?url='.WT_SCRIPT_NAME);
+	exit;
+}
+
 /**
  * This functions checks if an existing directory is physically writeable
  * The standard PHP function only checks for the R/O attribute and doesn't
@@ -803,16 +809,16 @@ if (check_media_structure()) {
 				if (!empty($_SESSION['upload_folder'])) $directory = $_SESSION['upload_folder'];
 				else $directory = $MEDIA_DIRECTORY;
 			}
-			if ($MEDIA_DIRECTORY_LEVELS > 0) {
+			if ($MEDIA_DIRECTORY_LEVELS >= 0) {
 				$folders = get_media_folders();
 				echo "<td dir=\"ltr\"><select name=\"directory\">";
 				foreach ($folders as $f) {
 					echo "<option value=\"".$f."\"";
 					if ($directory==$f) echo " selected=\"selected\"";
-					echo ">{$f}</option>";
+					echo ">".$f."</option>";
 				}
 				echo "</select></td>";
-			} else echo "<input name=\"directory\" type=\"hidden\" value=\"ALL\" />";
+			} else echo "<td><input name=\"directory\" type=\"hidden\" value=\"ALL\" /></td>";
 		?>
 		<!-- Text field for filter -->
 		<td><input type="text" name="filter" value="<?php if ($filter) echo $filter; ?>" /><input type="submit" name="search" value="<?php echo WT_I18N::translate('Filter'); ?>" onclick="this.form.subclick.value=this.name" /></td>
