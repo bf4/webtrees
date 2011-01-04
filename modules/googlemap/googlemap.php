@@ -639,7 +639,10 @@ function build_indiv_map($indifacts, $famids) {
 		$Content = $xml; 
 		$handle = fopen($temp_xml_filename, 'x+');
 		fwrite($handle, $Content);
-		fclose($handle);		
+		fclose($handle);	
+		
+		global $controller;
+		$pid=$controller->indi->getXref();
 	
 		// === Include css and js files ============================================================
 		echo '<link type="text/css" href="modules/googlemap/css/v3_googlemap.css" rel="stylesheet" />';

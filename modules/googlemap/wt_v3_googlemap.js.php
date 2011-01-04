@@ -23,7 +23,7 @@
  *
  * @package webtrees
  * @subpackage Module
- * $Id: V3a_googlemap.js.php 9140 2010-07-21 16:01:50Z greg $
+ * $Id: wt_v3_googlemap.js.php 9140 2010-07-21 16:01:50Z greg $
  * @author Brian Holland
  */
 ?>
@@ -35,7 +35,6 @@
 <script type="text/javascript">
 
 //<![CDATA[
-
     
     // this variable will collect the html which will eventually be placed in the side_bar 
     var side_bar_html = ""; 
@@ -352,7 +351,7 @@
   		controlText.style.fontSize = '12px';
   		controlText.style.paddingLeft = '15px';
   		controlText.style.paddingRight = '15px';
-  		controlText.innerHTML = '<b><?php echo i18n::translate('Redraw map')?><\/b>';
+  		controlText.innerHTML = '<b><?php echo WT_i18n::translate('Redraw map')?><\/b>';
   		controlUI.appendChild(controlText);
 
   		// Setup the click event listeners: simply set the map to original LatLng
@@ -363,7 +362,7 @@
 	
   	function loadMap() { 
 		<?php 	
-			global $pid, $PEDIGREE_GENERATIONS, $MAX_PEDIGREE_GENERATIONS, $ENABLE_AUTOCOMPLETE, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $WT_IMAGES, $GEDCOM;
+			global $PEDIGREE_GENERATIONS, $MAX_PEDIGREE_GENERATIONS, $ENABLE_AUTOCOMPLETE, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $WT_IMAGES, $GEDCOM;
 		?>
 		
   		// Create the map and mapOptions
@@ -406,10 +405,10 @@
 						
 				// create thumbnail images of highlighted images ===========================
 				if (!empty($pid)) {
-					$this_person = Person::getInstance($pid);
+					$this_person = WT_Person::getInstance($pid);
 				}
 				if (!empty($gmark['name'])) {
-					$person = Person::getInstance($gmark['name']);
+					$person = WT_Person::getInstance($gmark['name']);
 				}
 				
 				// The current indi -----------------------------
@@ -497,9 +496,9 @@
 					"<?php echo $gmark['fact'].''; ?>", 
     				"<?php echo $gmark['lati']; ?>", 
     				"<?php echo $gmark['lng']; ?>", 
-    				"<?php if (!empty($gmark['date'])) { $date=new GedcomDate($gmark['date']); echo addslashes($date->Display(true)); } else { echo i18n::translate('Date not known'); } ?>", 
+    				"<?php if (!empty($gmark['date'])) { $date=new WT_Date($gmark['date']); echo addslashes($date->Display(true)); } else { echo i18n::translate('Date not known'); } ?>", 
     				"<?php if (!empty($gmark['info'])) 	{ echo ''.$gmark['info']; } else { echo NULL; } ?>", 
-    				"<?php if (!empty($gmark['name'])) { $person=Person::getInstance($gmark['name']); if ($person) { echo '<a href=\"', $person->getHtmlUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : i18n::translate('Private'), '<\/a>'; } } ?>", 
+    				"<?php if (!empty($gmark['name'])) { $person=WT_Person::getInstance($gmark['name']); if ($person) { echo '<a href=\"', $person->getHtmlUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : i18n::translate('Private'), '<\/a>'; } } ?>", 
     				"<?php if (preg_match('/2 PLAC (.*)/', $gmark['placerec']) == 0) { print_address_structure_map($gmark['placerec'], 1); } else { echo preg_replace('/\"/', '\\\"', print_fact_place_map($gmark['placerec'])); } ?>",
 					"<?php echo $gmark['index'].''; ?>", 
 					"<?php echo $gmark['tabindex'].''; ?>",
@@ -509,7 +508,7 @@
 					"<?php echo strip_tags(preg_replace('/\"/', '\\\"', print_fact_place_map($gmark['placerec']))); ?>",
 					
 					// Element 11. persons Name  
-					"<?php if (!empty($gmark['name'])) { $person=Person::getInstance($gmark['name']); if ($person) { echo $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : i18n::translate('Private'); } } ?>",
+					"<?php if (!empty($gmark['name'])) { $person=WT_Person::getInstance($gmark['name']); if ($person) { echo $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : i18n::translate('Private'); } } ?>",
 					
 					// Element 12. Other people's Highlighted image.
 					"<?php if (!empty($gmark['name'])) { echo $image2; } else { echo ''; } ?>",
@@ -670,3 +669,5 @@
   	
 //]]>
 </script>
+
+
