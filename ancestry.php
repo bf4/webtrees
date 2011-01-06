@@ -194,7 +194,7 @@ case 0:
 	// List
 	$pidarr=array();
 	echo '<ul style="list-style: none; display: block;" id="ancestry_chart', $TEXT_DIRECTION=='rtl' ? '_rtl' : '', '">';
-	$controller->print_child_ascendancy($controller->rootid, 1, $OLD_PGENS-1);
+	$controller->print_child_ascendancy(WT_Person::getInstance($controller->rootid), 1, $OLD_PGENS-1);
 	echo '</ul>';
 	echo '<br />';
 	break;
@@ -204,7 +204,7 @@ case 1:
 
 	// Booklet
 	// first page : show indi facts
-	print_pedigree_person($controller->rootid, 2, 1);
+	print_pedigree_person(WT_Person::getInstance($controller->rootid), 2, 1);
 	// expand the layer
 	echo WT_JS_START, 'expandbox("', $controller->rootid, '.1", 2);', WT_JS_END;
 	// process the tree

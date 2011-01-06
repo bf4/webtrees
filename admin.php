@@ -64,7 +64,7 @@ echo
 if (version_compare(WT_VERSION, $latest_version)>0) {
 	echo '<p>' ,WT_I18N::translate('The latest stable <b>webtrees</b> version is: %s', $latest_version), '&nbsp;<span class="accepted">' ,WT_I18N::translate('No upgrade required.'), '</span></p>';
 } else {
-	echo '<p class="warning">' ,WT_I18N::translate('We recommend you click here to upgrade to the latest stable webtrees version: %s', $latest_version), '</p>';
+	echo '<p class="warning">' ,WT_I18N::translate('We recommend you click here to upgrade to the latest stable <b>webtrees</b> version: %s', $latest_version), '</p>';
 }
 echo '</div>';
 
@@ -81,7 +81,7 @@ $stats=new WT_Stats(WT_GEDCOM);
 	$gedadmin  =array(); // Array for managers
 
 echo
-	'<h2>', WT_I18N::translate('User information'), '</h2>';
+	'<h2>', WT_I18N::translate('Users'), '</h2>';
 
 foreach(get_all_users() as $user_id=>$user_name) {
 	$totusers = $totusers + 1;
@@ -158,7 +158,7 @@ foreach ($userlang as $key=>$ulang) {
 }
 echo
 	'</tr>',
-	'<tr><td colspan="2">', WT_I18N::translate('Users logged in'), '</td></tr>',
+	'<tr><td colspan="2">', WT_I18N::translate('Users Logged In'), '</td></tr>',
 	'<tr><td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;', $stats->_usersLoggedIn(), '</td></tr>',
 	'</table>';
 echo '</div>'; // id=block2
@@ -196,7 +196,7 @@ echo
 
 echo
 	'<div id="block2">',
-	'<h2>', WT_I18N::translate('Family tree statistics'), '</h2>',
+	'<h2>', WT_I18N::translate('Family trees'), '</h2>',
 	'<div id="tree_stats">';
 $n=0;
 foreach ($all_gedcoms as $ged_id=>$gedcom) {

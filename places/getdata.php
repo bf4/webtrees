@@ -28,13 +28,16 @@
  * @see functions_places.php
  */
 
-$localized=@$_GET["localized"];
-$field=@$_GET["field"];
+define('WT_SCRIPT_NAME', 'places/getdata.php');
+require '../includes/session.php';
+
+$localized=safe_GET('localized');
+$field=safe_GET('field');
 //echo $field."|";
-$ctry=@$_GET["ctry"];
-$stae=@$_GET["stae"];
-$cnty=@$_GET["cnty"];
-$city=@$_GET["city"];
+$ctry=safe_GET('ctry', '[A-Za-z._ \'-]+');
+$stae=safe_GET('stae', '[A-Za-z._ \'-]+');
+$cnty=safe_GET('cnty', '[A-Za-z._ \'-]+');
+$city=safe_GET('city', '[A-Za-z._ \'-]+');
 if (empty($ctry)) return;
 
 $mapname="";

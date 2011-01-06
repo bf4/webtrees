@@ -825,29 +825,7 @@ if (check_media_structure()) {
 	</tr>
 	</table>
 </form>
-<script type="text/javascript">
-//<![CDATA[
-jQuery(document).ready(function() {
-// Table pageing
-	
-		var oTable = jQuery('#media_table').dataTable( {
-		"oLanguage": {
-			"sLengthMenu": 'Display <select><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="50">50</option><option value="-1">All</option></select> records'
-		},
-		"bJQueryUI": true,
-		"bAutoWidth":false,
-		"aaSorting": [[ 1, "asc" ]],
-		"iDisplayLength": 10,
-		"sPaginationType": "full_numbers",
-		"aoColumnDefs": [
-			{ "bSortable": false, "aTargets": [ 0,1 ] }
-		]
-	});
-});
-//]]>
-</script>
 <?php
-
 	if (!empty($savedOutput)) echo $savedOutput; // echo everything we have saved up
 
 	if ($action == "filter" && $subclick != "none") {
@@ -1053,15 +1031,33 @@ jQuery(document).ready(function() {
 			if ($sortby=='file') uasort($sortedMediaList, 'filesort');
 
 			// Set up for two passes, the first showing URLs, the second normal files
-			?>
+
+echo WT_JS_START; ?>
+	jQuery(document).ready(function() {
+		jQuery('#media_table').dataTable( {
+			"oLanguage": {
+				"sLengthMenu": 'Display <select><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="50">50</option><option value="-1">All</option></select> records'
+			},
+			"bJQueryUI": true,
+			"bAutoWidth":false,
+			"aaSorting": [[ 1, "asc" ]],
+			"iDisplayLength": 10,
+			"sPaginationType": "full_numbers",
+			"aoColumnDefs": [
+				{ "bSortable": false, "aTargets": [ 0,1 ] }
+			]
+		});
+	});
+<?php echo WT_JS_END;?>
+
 <div align="center">
 <form class="tablesorter" method="post" action="<?php echo WT_SCRIPT_NAME; ?>">
 		<table id="media_table">
 			<thead>
 				<tr>
-				<th width="160px"><?php echo WT_I18N::translate('Edit options'); ?></th>
+				<th><?php echo WT_I18N::translate('Edit options'); ?></th>
 				<?php if ($showthumb) { ?>
-				<th width="160px"><?php echo WT_I18N::translate('Media'); ?></th>
+				<th><?php echo WT_I18N::translate('Media'); ?></th>
 				<?php } ?>
 				<th><?php echo WT_I18N::translate('Description'); ?></th>
 				</tr>
@@ -1187,7 +1183,6 @@ jQuery(document).ready(function() {
 						// NOTE: Close column for file operations
 						echo "</td>";
 
-
 						$name = trim($media["TITL"]);
 						// Get media item Notes
 						$haystack = $media["GEDCOM"];
@@ -1199,7 +1194,11 @@ jQuery(document).ready(function() {
 						$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true))));
 
 						// Get info on how to handle this media file
-						$mediaInfo = mediaFileInfo($media["FILE"], $media["THUMB"], $media["XREF"], $name, $notes);
+						$mediaInfo = mediaFileInfo($media["FILE"], $media["THUMB"], $media["XREF"], $name, $notes, "ADMIN");			
+						$fileName2 = $media["FILE"];
+						$imgsize2 = findImageSize($media["FILE"]);
+						$imgwidth2 = $imgsize2[0];
+						$imgheight2 = $imgsize2[1];
 
 						//-- Thumbnail field
 						if ($showthumb) {
@@ -1209,8 +1208,9 @@ jQuery(document).ready(function() {
 								echo '<iframe style="float:left; padding:5px;" width="264" height="176" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="', $media["FILE"], '&amp;output=svembed"></iframe>';
 							} else {
 								echo '<center><a href="', $mediaInfo['url'], '">';
+								//echo '<center><a href="'.$url2.'">';
 								echo '<img src="', $mediaInfo['thumb'], '" align="middle" class="thumbnail" border="none"', $mediaInfo['width'];
-								echo ' alt="', $name, '" /></a></center>';
+								echo ' title="', $name, '" /></a></center>';
 							}
 							echo '</td>';
 						}
@@ -1256,15 +1256,16 @@ jQuery(document).ready(function() {
 
 						if ($USE_MEDIA_FIREWALL) {
 							if ($media["EXISTS"]) {
+								echo "<br />";
 								switch ($media["EXISTS"]) {
 								case 1:
-									echo WT_I18N::translate('This media object is located on an external server');
+									echo "<br />".WT_I18N::translate('This media object is located on an external server');
 									break;
 								case 2:
-									echo WT_I18N::translate('This media object is in the standard media directory');
+									echo "<br />".WT_I18N::translate('This media object is in the standard media directory');
 									break;
 								case 3:
-									echo WT_I18N::translate('This media object is in the protected media directory');
+									echo "<br />".WT_I18N::translate('This media object is in the protected media directory');
 									break;
 								}
 								echo '<br />';

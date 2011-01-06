@@ -40,16 +40,21 @@ $WT_USE_HELPIMG   = true;
 
 //- main icons
 $WT_IMAGES=array(
-	'webtrees'=>WT_THEME_DIR.'images/webtrees_s.png',
+	'webtrees'=>WT_THEME_DIR.'images/header.png',
 	'help'=>WT_THEME_DIR.'images/help.png',
 	'edit'=>WT_THEME_DIR.'images/edit.png',
 	'email'=>WT_THEME_DIR.'images/email.png',
 	'open'=>WT_THEME_DIR.'images/open.png',
 	'close'=>WT_THEME_DIR.'images/close.png',
 	'button_indi'=>WT_THEME_DIR.'images/indi.gif',
-	'zoomin'=>WT_THEME_DIR.'images/zoomin.gif',
-	'zoomout'=>WT_THEME_DIR.'images/zoomout.gif',
-	'minus'=>WT_THEME_DIR.'images/minus.gif',
+	'button_family'=>WT_THEME_DIR.'images/family.gif',
+	'button_media'=>WT_THEME_DIR.'images/media.gif',
+	'button_repository'=>WT_THEME_DIR.'images/repository.gif',
+	'button_source'=>WT_THEME_DIR.'images/source.gif',
+	'button_find_facts'=>WT_THEME_DIR.'images/find_facts.png',
+	'zoomin'=>WT_THEME_DIR.'images/zoomin.pmg',
+	'zoomout'=>WT_THEME_DIR.'images/zoomout.png',
+	'minus'=>WT_THEME_DIR.'images/close.png',
 	'plus'=>WT_THEME_DIR.'images/open.png',
 	'remove'=>WT_THEME_DIR.'images/delete.png',
 	'remove_grey'=>WT_THEME_DIR.'images/delete_grey.png',
@@ -65,11 +70,16 @@ $WT_IMAGES=array(
 	'ldarrow'=>WT_THEME_DIR.'images/ldarrow.gif',
 	'ddarrow'=>WT_THEME_DIR.'images/ddarrow.gif',
 	'udarrow'=>WT_THEME_DIR.'images/udarrow.gif',
+	'sex_f_9x9'=>'images/sex_f_9x9.gif',
+	'sex_m_9x9'=>'images/sex_m_9x9.gif',
+	'sex_u_9x9'=>'images/sex_u_9x9.gif',
+
 	// media images
 	'media'=>WT_THEME_DIR.'images/media/media.png',
 	'media_audio'=>WT_THEME_DIR.'images/media/audio.png',
 	'media_doc'=>WT_THEME_DIR.'images/media/doc.png',
 	'media_flash'=>WT_THEME_DIR.'images/media/flash.png',
+	'media_flashrem'=>WT_THEME_DIR.'images/media/flash_rem.png',
 	'media_ged'=>WT_THEME_DIR.'images/media/ged.png',
 	'media_globe'=>WT_THEME_DIR.'images/media/globe.png',
 	'media_html'=>WT_THEME_DIR.'images/media/html.pmg',
@@ -77,5 +87,6 @@ $WT_IMAGES=array(
 	'media_pdf'=>WT_THEME_DIR.'images/media/pdf.png',
 	'media_tex'=>WT_THEME_DIR.'images/media/tex.png',
 	'media_wmv'=>WT_THEME_DIR.'images/media/wmv.png',
+	'media_wmvrem'=>WT_THEME_DIR.'images/media/wmv_rem.png',	
 );
 
