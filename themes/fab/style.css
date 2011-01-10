@@ -164,9 +164,18 @@ img {
 	z-index:999;
 }
 
+html[dir='rtl'] .makeMenu li ul {
+	left:auto;
+	right:0px;
+}
+
 .makeMenu li ul li {
 	display:block;
 	text-align:left;
+}
+
+html[dir='rtl'] .makeMenu li ul li {
+	text-align:right;
 }
 
 .makeMenu, .makeMenu li ul {
@@ -766,19 +775,6 @@ img {
 /* Message box */
 .messagebox {
 	background-color: #c2ceef;
-}
-
-.door {
-	margin: 0px 0px 0px 0px;
-	padding: 0px 0px 0px 0px;
-}
-
-.door dd {
-	margin: 2px 2px 2px 2px;
-	padding: 2px 6px 2px 6px;
-	height: 100%; float: left;
-	font-weight: bold;
-	display: none;
 }
 
 .note_details {
