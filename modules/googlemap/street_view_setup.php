@@ -10,8 +10,14 @@
 		c. When the required view is displayed, click the button "Save View".
 	</h5>
 </div>
+
+<?php
+// Note the api key is extracted for the url for now to avoid errors  --- these following line will disappear when v3 is employed --
+$ggmkey = $_GET['ggmkey'];
+?>
+	
 <div id="streetcanva" style="background:#cccccc; margin-top:-15px; width:520px; height:405px;"></div>
-<script type="text/javascript" src="http://maps.google.com/maps?file=api&hl=en&v=2&key=<?php echo $GOOGLEMAP_API_KEY; ?>&sensor=false"></script>
+<script type="text/javascript" src="http://maps.google.com/maps?file=api&hl=en&v=2&key=<?php echo $ggmkey; ?>&sensor=false"></script>
 <!-- <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script> -->
 <script type="text/javascript">
     // Instead of handling events directly in the tags

@@ -1,3 +1,33 @@
+<?php
+/**
+ * Displays a streetview map
+ *
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
+ * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package webtrees
+ * @subpackage Lists - placehierarchy
+ * @version $Id: streetview.php 10309 2011-01-03 21:13:31Z greg $
+ */
+ ?>
+ 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
@@ -30,17 +60,19 @@
     
     </style>
   
-    <script type="text/javascript" src="http://maps.google.com/maps?file=api&hl=en&v=2&key=<?php echo $GOOGLEMAP_API_KEY; ?>&sensor=false"></script>
+  	<?php 
+  	// Note the api key is extracted for the url for now to avoid errors  --- these following lines will disappear when v3 is employed --
+  	$ggmkey = $_GET['ggmkey'];
+	/*    
+    <!--<script type="text/javascript" src="http://maps.google.com/maps?file=api&hl=en&v=2&key=<?php echo $GOOGLEMAP_API_KEY; ?>&sensor=false"></script> --> 
+    <!-- <script type="text/javascript" src="http://maps.google.com/maps?file=api&hl=en&v=2&key=ABQIAAAAOi47wpMF0Gnw8XwdliBxXRQCeCcK0aPAvfHdl869rpMy_2bb3BS8IwYF2P1LoyQ6LNCmQz7lDm_Bkw&sensor=false"></script> -->
+	*/
+	?>
+
+    <script type="text/javascript" src="http://maps.google.com/maps?file=api&hl=en&v=2&key=<?php echo $ggmkey; ?>&sensor=false"></script>
     <script type="text/javascript">
     
-	// Following not used yet ------------------------------
-    // Instead of handling events directly in the tags
-    // attributes (ie. <body onload="...">), I prefer
-    // listening to the events programmatically like:
-	//    GEvent.addDomListener(window, 'load', Initialize);
-	//    GEvent.addDomListener(window, 'unload', GUnload);
-	// -----------------------------------------------------
-    
+	// Following function creates an array of the google map parameters passed ---------------------    
 	var qsParm = new Array();
 	function qs() {
 		var query = window.location.search.substring(1);
@@ -57,7 +89,7 @@
 	qsParm['x'] = null;
 	qsParm['y'] = null;
 	qs();
-	
+	// ---------------------------------------------------------------------------------------------
  
 /*
 *

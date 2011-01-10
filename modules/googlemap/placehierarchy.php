@@ -165,14 +165,14 @@ function set_levelm($level, $parent) {
 
 function create_map() {
 	$level = safe_GET('level');
-	// global $GOOGLEMAP_API_KEY, $GOOGLEMAP_PH_XSIZE, $GOOGLEMAP_PH_YSIZE, $GOOGLEMAP_MAP_TYPE, $TEXT_DIRECTION;
-	global $GOOGLEMAP_PH_XSIZE, $GOOGLEMAP_PH_YSIZE, $GOOGLEMAP_MAP_TYPE, $TEXT_DIRECTION;
+	global $GOOGLEMAP_API_KEY, $GOOGLEMAP_PH_XSIZE, $GOOGLEMAP_PH_YSIZE, $GOOGLEMAP_MAP_TYPE, $TEXT_DIRECTION;
+	// global $GOOGLEMAP_PH_XSIZE, $GOOGLEMAP_PH_YSIZE, $GOOGLEMAP_MAP_TYPE, $TEXT_DIRECTION;
 	// create the map
 	echo "<table class=\" center\" style=\"margin-top:0px;\"><tr valign=\"top\"><td style=\"background:none;\">";
 		//<!-- start of map display -->
 		echo "\n<br /><br />\n";
 		echo "<table style=\"margin-top:-31px;\"><tr valign=\"top\">";
-		if ($level==4) {
+		if ($level>=3) {
 			echo "<td class=\"center\" width=\"200px\" style=\"background:white; padding-top:26px; padding-bottom:0px;\">";
 		} else {
 			echo "<td class=\"center\" width=\"200px\" style=\"padding-top:6px;\">";	
@@ -183,7 +183,7 @@ function create_map() {
 
 		<!--  V2 ============ -->
 		<!-- <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script> -->
-		<!-- <script src="modules/googlemap/wt_googlemap.js" type="text/javascript"></script> -->
+		<!-- <script src="modules/googlemap/wt_googlemap.js" type="text/javascript"> -->
 		<!--  V2 ============ -->
 		
 		<!--  V3 ============ -->
@@ -215,7 +215,7 @@ function create_map() {
 	echo "<td style=\"margin-left:15; padding-top: 7px; float:right; \">";
 
 	
-	// StreetView Window (for level 4 places) ======================================================
+	// StreetView Window (for levels 3 or greater) ======================================================
 	$STREETVIEW = 1;
 	
 	if ($STREETVIEW == 1) {
@@ -240,11 +240,11 @@ function create_map() {
 		<?php
 	
 		$parent = safe_GET('parent');
-		global $TBLPREFIX, $pl_lati, $pl_long;		
-		if ($level==4) {
+		global $TBLPREFIX, $pl_lati, $pl_long;
+		if ($level>=3) {
 	
-			$parent[3] = PrintReady(addslashes($parent[3]));	
-			$latlng = WT_DB::prepare("SELECT pl_id, pl_lati, pl_long, pl_zoom, sv_long, sv_lati, sv_bearing, sv_elevation, sv_zoom FROM ##placelocation WHERE pl_place='{$parent[3]}'")->fetchAll(PDO::FETCH_ASSOC);
+			$parent[$level-1] = PrintReady(addslashes($parent[$level-1]));	
+			$latlng = WT_DB::prepare("SELECT pl_id, pl_lati, pl_long, pl_zoom, sv_long, sv_lati, sv_bearing, sv_elevation, sv_zoom FROM ##placelocation WHERE pl_place='{$parent[$level-1]}'")->fetchAll(PDO::FETCH_ASSOC);
 		
     	  	if (!isset($latlng[0])) {
 		    	echo "<br /><br /><br /><br /><br /><br />";
@@ -266,9 +266,10 @@ function create_map() {
 				
 				// If Streetview coordinates are stored, bring up the regular Streetview -------
 		  		if ($latlng[0]['sv_lati']!=null) {
+  				$ggmkey = $GOOGLEMAP_API_KEY;
 					?>
 					<div>
-					<iframe style="background:transparent; margin-top:-2px; margin-left: 15px; width:520px;height:405px;padding:0;border:solid 0px black" src="modules/googlemap/street_view.php?x=<?php echo $sv_lng; ?>&y=<?php echo $sv_lat; ?>&z=18&t=2&c=1&s=1&b=<?php echo $sv_dir; ?>&p=<?php echo $sv_pitch; ?>&m=0&j=1&k=1&v=1" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe>
+					<iframe style="background:transparent; margin-top:-2px; margin-left: 15px; width:520px;height:405px;padding:0;border:solid 0px black" src="modules/googlemap/street_view.php?x=<?php echo $sv_lng; ?>&y=<?php echo $sv_lat; ?>&z=18&t=2&c=1&s=1&b=<?php echo $sv_dir; ?>&p=<?php echo $sv_pitch; ?>&m=0&j=1&k=1&v=1&ggmkey=<?php echo $ggmkey; ?>" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe>
 					</div>
 					<?php			
 						$list_latlon = ("
@@ -293,11 +294,12 @@ function create_map() {
 						echo "</table>\n";	
 			
 				// Else, if Admin, bring up StreetView adjustment Map --------------------------
-	  			} else if ( WT_USER_IS_ADMIN )  {	  	
+	  			} else if ( WT_USER_IS_ADMIN )  {
+	  			  	$ggmkey = $GOOGLEMAP_API_KEY;
 	  				$sv_lat = $pl_lati; 	// Place Latitude
 					$sv_lng = $pl_long;		// Place Longitude
 					?>
-					<iframe style="background:transparent; margin-top:-2px; margin-left: 15px; width:520px;height:650px;padding:0;border:solid 0px black" src="modules/googlemap/street_view_setup.php?x=<?php echo $sv_lng; ?>&y=<?php echo $sv_lat; ?>" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe>
+					<iframe style="background:transparent; margin-top:-2px; margin-left: 15px; width:520px;height:650px;padding:0;border:solid 0px black" src="modules/googlemap/street_view_setup.php?x=<?php echo $sv_lng; ?>&y=<?php echo $sv_lat; ?>&ggmkey=<?php echo $ggmkey; ?>" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe>
 					<?php			
 					if (WT_USER_IS_ADMIN) {
 						$list_latlon = ("
@@ -311,7 +313,7 @@ function create_map() {
 						echo "<tr><td>\n";
 							echo "<form method=\"post\" action=\"\">";
 							echo $list_latlon;
-							echo "<input type=\"submit\" name=\"Submit\" onClick=\"update_sv_params($placeid);\" value=\"", i18n::translate('Save View'), "\">";
+							echo "<input type=\"submit\" name=\"Submit\" onClick=\"update_sv_params($placeid);\" value=\"", WT_I18n::translate('Save View'), "\">";
 							echo "</form>";
 						echo "</td></tr>\n";
 						echo "</table>\n";			
