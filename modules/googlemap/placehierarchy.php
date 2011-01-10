@@ -172,7 +172,7 @@ function create_map() {
 		//<!-- start of map display -->
 		echo "\n<br /><br />\n";
 		echo "<table style=\"margin-top:-31px;\"><tr valign=\"top\">";
-		if ($level>=3) {
+		if ($level>=1) {
 			echo "<td class=\"center\" width=\"200px\" style=\"background:white; padding-top:26px; padding-bottom:0px;\">";
 		} else {
 			echo "<td class=\"center\" width=\"200px\" style=\"padding-top:6px;\">";	
@@ -241,7 +241,7 @@ function create_map() {
 	
 		$parent = safe_GET('parent');
 		global $TBLPREFIX, $pl_lati, $pl_long;
-		if ($level>=3) {
+		if ($level>=1) {
 	
 			$parent[$level-1] = PrintReady(addslashes($parent[$level-1]));	
 			$latlng = WT_DB::prepare("SELECT pl_id, pl_lati, pl_long, pl_zoom, sv_long, sv_lati, sv_bearing, sv_elevation, sv_zoom FROM ##placelocation WHERE pl_place='{$parent[$level-1]}'")->fetchAll(PDO::FETCH_ASSOC);
@@ -652,7 +652,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
         
         bounds.extend(marker.position);	
 		map.fitBounds(bounds);
-			
+ 			
 		return marker;
 	}
 	
@@ -778,14 +778,17 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 		$numls = count($parent)-1;
 		$levelo=check_were_am_i($numls, $levelm);
 		if ($numfound<2 && ($level==1 || !(isset($levelo[($level-1)])))) {
-	//		echo "zoomlevel = map.getBoundsZoomLevel(bounds);\n";
-	//		echo " map.setCenter(new google.maps.LatLng(0, 0), zoomlevel+5);\n";
+			echo "map.maxZoom=6;";
+		//	echo "zoomlevel = map.getBoundsZoomLevel(bounds);\n";
+		//	echo " map.setCenter(new google.maps.LatLng(0, 0), zoomlevel+5);\n";
 		}
 		else if ($numfound<2 && !isset($levelo[($level-2)])) {
+
 	//		echo "zoomlevel = map.getBoundsZoomLevel(bounds);\n";
 	//		echo " map.setCenter(new google.maps.LatLng(0, 0), zoomlevel+6);\n";
 		}
 		else if ($level==2) {
+		echo "map.maxZoom=8;";
 	//		echo "zoomlevel = map.getBoundsZoomLevel(bounds);\n";
 	//		echo " map.setCenter(new google.maps.LatLng(0, 0), zoomlevel+8);\n";
 		}
@@ -827,6 +830,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 				
 							echo "var point = new google.maps.LatLng(0, 0);\n";
 							echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'><b>";
+
 							echo substr($placelevels, 2), "</b><br />", WT_I18N::translate('This place has no coordinates');
 							if (WT_USER_IS_ADMIN)
 								echo "<br /><a href='module.php?mod=googlemap&mod_action=admin_places&parent=0&display=inactive'>", WT_I18N::translate('Edit geographic location'), "</a>";
@@ -891,13 +895,13 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 		
 //		echo "place_map.addOverlay(marker);\n";
 //		echo "bounds.extend(point);\n";
-
 	}
 	?>
 	//end markers
 	// map.setCenter(bounds.getCenter());
 	
-//	map.fitBounds(bounds);
+// map.fitBounds(bounds);
+
 	
 	<?php if ($GOOGLEMAP_PH_CONTROLS) { ?>
 		// hide controls
@@ -907,7 +911,6 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 //		GEvent.trigger(place_map, 'mouseout');
 		<?php
 	}
-
 //	if ($numfound>1)
 //		echo "map.setZoom(map.getBoundsZoomLevel(bounds));\n";
 	?>

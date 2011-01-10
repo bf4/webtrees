@@ -664,7 +664,7 @@
     		map.fitBounds(bounds);
   		
       	}  // end loop through location markers
-
+      	
     }	// end loadMap()
   	
 //]]>
