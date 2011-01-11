@@ -214,6 +214,29 @@ ul.tabs a.current {
 	margin-left: 10px;
 }
 
+
+/* view_type */
+#view_type {
+	display: block;
+	margin-top: -12px;
+}
+#view_type td {
+	width: 360px;	
+}
+#view_type form{
+	width: 360px;
+	text-align: center;
+}
+
+
+/* place_hierarchy elements */
+#place_hierarchy {
+/* float:left; 
+margin-left:-130px; *
+}
+
+
+
 /*  === Elements To be defined later (leave as dislay:none; for now) ==== */ 
 
 /* sidebar */
@@ -230,18 +253,3 @@ ul.tabs a.current {
 	color:#4444ff;
 	background:#aabbd8;
 }
-
-/* view_type */
-#view_type {
-	display: block;
-	margin-top: -12px;
-}
-#view_type td {
-	width: 360px;	
-}
-#view_type form{
-	width: 360px;
-	text-align: center;
-}
-
-

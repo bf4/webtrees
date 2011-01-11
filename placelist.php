@@ -112,6 +112,8 @@ if ($display=="hierarchy") {
 	if ($numfound==0) {
 		$action="show";
 	}
+	
+	echo '<link type="text/css" href="modules/googlemap/css/v3_googlemap.css" rel="stylesheet" />';
 
 	// -- echo the breadcrumb hierarchy
 	$numls=0;
@@ -269,7 +271,7 @@ if ($display=="hierarchy") {
 				//-->
 				</script>
 				<?php
-				echo "</td><td style=\"margin-left:15; vertical-align: top;\">";
+				echo "</td><td style=\"margin-left:30; vertical-align: top;\">";
 			}
 		}
 	}
@@ -296,7 +298,7 @@ if ($display=="hierarchy") {
 	// -- echo the array
 	foreach ($placelist as $key => $value) {
 		if ($i==0) {
-			echo "\n\t<table class=\"list_table $TEXT_DIRECTION\"";
+			echo "\n\t<table id=\"place_hierarchy\" class=\"list_table $TEXT_DIRECTION\" ";
 			if ($TEXT_DIRECTION=="rtl") {
 				echo " dir=\"rtl\"";
 			}
@@ -347,7 +349,7 @@ if ($display=="hierarchy") {
 		echo "\n\t\t</ul></td></tr>";
 		if (($action!="show")&&($level>0)) {
 			echo "<tr>\n\t\t<td class=\"list_label\" ";
-			if ($ct1 > 20) {
+			if ($ct1 >20) {
 				echo "colspan=\"3\"";
 			} elseif ($ct1 > 4) {
 				echo "colspan=\"2\"";

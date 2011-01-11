@@ -215,7 +215,7 @@ function create_map() {
 	echo "<td style=\"margin-left:15; padding-top: 7px; float:right; \">";
 
 	
-	// StreetView Window (for levels 3 or greater) ======================================================
+	// StreetView Window (for all place levels 1 and greater) ======================================================
 	$STREETVIEW = 1;
 	
 	if ($STREETVIEW == 1) {
@@ -321,6 +321,8 @@ function create_map() {
 	  			}		
 	  	  	}
 		}
+		// Next line puts Place hierarchy on new row -----
+		echo "</td></tr><tr>";
 		
 	}	// End Streetview window ===================================================================
 
