@@ -430,6 +430,8 @@
 						$image = "<img src='modules/googlemap/images/facts/DEAT.gif' height='40' align='left' class='".$class."' border='none' alt='' />";
 					} else if ($gmark['fact'] == 'Burial' || $gmark['fact'] == 'Cremation') {
 						$image = "<img src='modules/googlemap/images/facts/BURI.png' height='40' align='left' class='".$class."' border='none' alt='' />";						
+					} else if ($gmark['fact'] == 'Retirement' ) {
+						$image = "<img src='modules/googlemap/images/facts/RETI.png' height='40' align='left' class='".$class."' border='none' alt='' />";						
 					} else {
 						$indirec = $this_person->getGedcomRecord();
 						$image = "";							
@@ -598,11 +600,13 @@
        			if (i==npo[n][0] || i==npo[n][1] || i==npo[n][2] || i==npo[n][3] || i==npo[n][4] || i==npo[n][5] || i==npo[n][6] || i==npo[n][7] || i==npo[n][8] || i==npo[n][9] || i==npo[n][10] || i==npo[n][11] || i==npo[n][12] || i==npo[n][13] || i==npo[n][14] || i==npo[n][15] || i==npo[n][16] || i==npo[n][17] || i==npo[n][18] || i==npo[n][19] || i==npo[n][20] || i==npo[n][21] || i==npo[n][22] || i==npo[n][23] || i==npo[n][24] || i==npo[n][25]) {
        				for (var x=0; x<numtabs[n]; x++) { 			
        					tabcontid=npo[n][x];
-       					// If a fact with info or a persons name ---
+       					// If a fact with a persons name ---
        					if (locations[tabcontid][5]) {
        						event_tab 	+=	[ '<table><tr><td class="highlt_img">'+locations[tabcontid][12]+'<\/td><td><p><span id="sp1">'+locations[tabcontid][0]+'<\/span><br />'+locations[tabcontid][4]+'<b>'+locations[tabcontid][5]+'<\/b><br />'+locations[tabcontid][3]+'<br /><\/p><\/td><\/tr><\/table>' ]; 
+						// or if a fact with extra info ---
    						} else if (locations[tabcontid][4]) {
    							event_tab 	+=	[ '<table><tr><td class="highlt_img">'+locations[tabcontid][13]+'<\/td><td><p><span id="sp1">'+locations[tabcontid][0]+'<\/span><br />'+locations[tabcontid][4]+'<b>'+locations[tabcontid][5]+'<\/b><br />'+locations[tabcontid][3]+'<br /><\/p><\/td><\/tr><\/table>' ]; 
+   						// or just a simple fact ---
    						} else {
        						event_tab 	+=	[ '<table><tr><td class="highlt_img">'+locations[tabcontid][13]+'<\/td><td><p><span id="sp1">'+locations[tabcontid][0]+'<\/span><br />'+locations[tabcontid][3]+'<br /><\/p><\/td><\/tr><\/table>' ];    						
    						}

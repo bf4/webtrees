@@ -620,7 +620,7 @@ function build_indiv_map($indifacts, $famids) {
 			}
 		}
 
-		// === add $gmarks array to the required V3_GM_googlemap.js.php ============================		
+		// === add $gmarks array to the required wt_v3_googlemap.js.php ============================		
 		$gmarks = $markers;
 
 		// Convert $gmarks array to xml file =======================================================
@@ -686,7 +686,7 @@ function build_indiv_map($indifacts, $famids) {
 	} // end prepare markers array =================================================================
 	
 	
-	// ======= More V3 api stuff which will be sorted later ========================================	
+	// ======= More V3 api stuff (not displayed now) but will be sorted later ==========	
 	?>
    	<table id="s_bar" style="display:none;">
    	  	<tr>
@@ -723,7 +723,7 @@ function build_indiv_map($indifacts, $famids) {
     	</tr>
    	</table>  
 	<?php
-	// =====================================================================
+	// =================================================================================
 	
 	echo "<br />";
 	return $i;

@@ -872,23 +872,7 @@
                 
     		</td>
     	</tr>
-    	<tr style="height:5px"><td></td></tr>    	
-
-		<?php
-		// Not needed --------------------------
-		/*
-		?>
-    	<tr style="font-size:12px;">
-    		<td>           
-        		<div id="coordLabel" style="margin-left:1px; background:#cccccc; padding:4px;"></div>        
-    		</td>
-    		<td align="right">
-       			<!-- <div id="linkLabel"></div> -->
-    		</td>
-    	</tr>
-    	<?php
-    	*/
-    	?>
+    	<tr style="height:5px"><td></td></tr>
 
     </table>
     
