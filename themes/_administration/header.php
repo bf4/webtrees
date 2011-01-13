@@ -80,7 +80,7 @@ if (WT_USER_IS_ADMIN) {
 	echo
 		'<li><ul>',
 		'<li><a ', (WT_SCRIPT_NAME=="admin_site_config.php" ? 'class="current" ' : ''), 'href="admin_site_config.php">',
-		WT_I18N::translate('Server configuration'),
+		WT_I18N::translate('Site configuration'),
 		'</a></li>',
 		'<li><a ', (WT_SCRIPT_NAME=="admin_site_logs.php" ? 'class="current" ' : ''), 'href="admin_site_logs.php">',
 		WT_I18N::translate('Logs'),
@@ -88,9 +88,7 @@ if (WT_USER_IS_ADMIN) {
 		'<li><a ', (WT_SCRIPT_NAME=="admin_site_readme.php" ? 'class="current" ' : ''), 'href="admin_site_readme.php">', WT_I18N::translate('README documentation'), '</a></li>',
 		'<li><a ', (WT_SCRIPT_NAME=="admin_site_info.php" ? 'class="current" ' : ''), 'href="admin_site_info.php?action=phpinfo">', WT_I18N::translate('PHP information'), '</a></li>',
 		'<li><a ', (WT_SCRIPT_NAME=="admin_site_ipaddress.php" ? 'class="current" ' : ''), 'href="admin_site_ipaddress.php">', WT_I18N::translate('Manage sites'), '</a></li>',
-		'<li><a ', (WT_SCRIPT_NAME=="admin_site_merge.php" ? 'class="current" ' : ''), 'href="admin_site_merge.php">', WT_I18N::translate('Merge records'), '</a></li>',
-		'<li><a ', (WT_SCRIPT_NAME=="admin_site_clean.php" ? 'class="current" ' : ''), 'href="admin_site_clean.php">', WT_I18N::translate('Cleanup'), '</a></li>',
-		'<li><a ', (WT_SCRIPT_NAME=="admin_site_other.php" ? 'class="current" ' : ''), 'href="admin_site_other.php">', WT_I18N::translate('Other'), '</a></li>',
+		'<li><a ', (WT_SCRIPT_NAME=="admin_site_clean.php" ? 'class="current" ' : ''), 'href="admin_site_clean.php">', WT_I18N::translate('Cleanup data directory'), '</a></li>',
 		'</ul></li>',
 		'<li><a ', (WT_SCRIPT_NAME=="admin_trees_manage.php" ? 'class="current" ' : ''), 'href="admin_trees_manage.php">',
 		WT_I18N::translate('Family trees'),
@@ -103,12 +101,15 @@ echo '<li><ul>';
 foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
 	if (userGedcomAdmin(WT_USER_ID, $ged_id)) {
 		echo
-			'<li><a ', (WT_SCRIPT_NAME=="admin_trees_config.php" && WT_GED_ID==$ged_id ? 'class="current" ' : ''), 'href="admin_trees_config.php?ged='.rawurlencode($gedcom).'">',
+			'<li><span><a ', (WT_SCRIPT_NAME=="admin_trees_config.php" && WT_GED_ID==$ged_id ? 'class="current" ' : ''), 'href="admin_trees_config.php?ged='.rawurlencode($gedcom).'">',
 			htmlspecialchars(get_gedcom_setting($ged_id, 'title')),
-			'</a></li>';
+			'</a></span></li>';
 	}
 }
-echo '</ul></li>';
+echo
+	'<li><a ', (WT_SCRIPT_NAME=="admin_site_merge.php" ? 'class="current" ' : ''), 'href="admin_site_merge.php">', WT_I18N::translate('Merge records'), '</a></li>',
+	'<li><a ', (WT_SCRIPT_NAME=="admin_site_other.php" ? 'class="current" ' : ''), 'href="admin_site_other.php">', WT_I18N::translate('Add unlinked records'), '</a></li>',
+	'</ul></li>';
 if (WT_USER_IS_ADMIN) {
 	echo
 		'<li><a ', (WT_SCRIPT_NAME=="admin_users_list.php" ? 'class="current" ' : ''), 'href="useradmin.php">',
@@ -117,9 +118,9 @@ if (WT_USER_IS_ADMIN) {
 		'<li><ul>',
 		'<li><a ', (WT_SCRIPT_NAME=="admin_users_add.php" ? 'class="current" ' : ''), 'href="admin_users_add.php?action=createform">', WT_I18N::translate('Add a new user'), '</a></li>',
 		'<li><a ', (WT_SCRIPT_NAME=="admin_users_bulk.php" ? 'class="current" ' : ''), 'href="admin_users_bulk.php">',
-		WT_I18N::translate('Bulk messaging'),
+		WT_I18N::translate('Send broadcast messages'),
 		'<li><a ', (WT_SCRIPT_NAME=="admin_users_clean.php" ? 'class="current" ' : ''), 'href="admin_users_clean.php?action=cleanup">',
-		WT_I18N::translate('Cleanup users'),
+		WT_I18N::translate('Delete inactive users'),
 		'</a></li>',
 		'</ul></li>',
 		'<li><a ', (WT_SCRIPT_NAME=="admin_media.php" ? 'class="current" ' : ''), 'href="admin_media.php">',

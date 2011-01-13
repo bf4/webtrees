@@ -790,7 +790,7 @@ if (check_media_structure()) {
 		<input type="checkbox" name="showthumb" value="true" <?php if ($showthumb) echo "checked=\"checked\""; ?> onclick="submit();" />
 	</td>
 	<td class="wrap"><?php echo "<a href=\"#\" onclick=\"expand_layer('uploadmedia');\">".WT_I18N::translate('Upload media files')."</a>". help_link('upload_media'); ?></td>
-	<td class="wrap"><a href="javascript: <?php echo WT_I18N::translate('Add media'); ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;"> <?php echo WT_I18N::translate('Add a new media item')."</a>". help_link('add_media'); ?></td>
+	<td class="wrap"><a href="javascript: <?php echo WT_I18N::translate('Add media'); ?>" onclick="window.open('addmedia.php?action=showmediaform&amp;linktoid=new', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;"> <?php echo WT_I18N::translate('Add a new media item')."</a>". help_link('add_media'); ?></td>
 	<?php
 		$tempURL = WT_SCRIPT_NAME.'?';
 		if (!empty($filter)) $tempURL .= 'filter='.rawurlencode($filter).'&amp;';
@@ -1051,7 +1051,6 @@ echo WT_JS_START; ?>
 	});
 <?php echo WT_JS_END;?>
 
-<div align="center">
 <form class="tablesorter" method="post" action="<?php echo WT_SCRIPT_NAME; ?>">
 		<table id="media_table">
 			<thead>
@@ -1300,7 +1299,6 @@ echo WT_JS_START; ?>
 	<?php
 		}
 	}
-	?> </div> <?php
 } else {
 	echo WT_I18N::translate('The media folder is corrupted.');
 }

@@ -39,7 +39,7 @@ if (!WT_USER_IS_ADMIN) {
 	exit;
 }
 
-print_header(WT_I18N::translate('User bulk messaging'));
+print_header(WT_I18N::translate('Send broadcast messages'));
 
 ?>
 

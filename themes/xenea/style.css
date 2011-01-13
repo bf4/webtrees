@@ -832,16 +832,12 @@ img.block{
 	position: relative;
 	top: -240px;
 	left: 0;
-	width: 99%;
 }
 
 /*-- pedigree chart rtl specific stylesheets --*/
-#pedigree_chart_rtl {
-	position: relative;
-	float: right;
-	top: -240px;
-	right: 0;
-	width: 99%;
+html[dir='rtl'] #pedigree_chart {
+left:auto;
+right:0px;
 }
 
 /*-- descendancy chart specific stylesheets --*/
@@ -889,10 +885,9 @@ img.block{
 	left: 0;
 }
 
-#relationship_chart_rtl {
-	position: relative;
-	top: -40px;
-	right: 10px;
+html[dir='rtl'] #relationship_chart {
+	left:auto;
+	right:10px;
 }
 
 /*-- ancestry chart specific stylesheets --*/
