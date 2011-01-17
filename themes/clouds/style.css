@@ -457,28 +457,18 @@ padding-right: 0px;
 padding-bottom: 0px;
 }
 
-#descendancy_chart_rtl ul {
-background-image:url(images/vline.gif);
-background-image: url(images/vline.gif);
-background-repeat: repeat-y;
-background-position: right top;
-list-style: none;
-margin: 0px 15px 5px 0px;
-padding-top: 0px;
-padding-bottom: 0px;
-padding-left: 0px;
-}
-
-#descendancy_chart_rtl li {
-list-style: none;
-margin: 0px -15px 2px 0px;
-padding: 0px 0px 0px 0px;
+html[dir='rtl'] #descendancy_chart ul {
+background-position:right top;
+margin:0px 15px 0px 0px;
+left:auto;
 }
 
 #relationship_chart {
 position:relative;
 top:-40px;
 left:0;
+z-index:1;
+width:98%;
 }
 
 html[dir='rtl'] #relationship_chart {
@@ -486,15 +476,12 @@ left:auto;
 right:0px;
 }
 
-#line1, #line2, #line3, #line4, #line5 {
-z-index: 1!important;
-}
-
 #ancestry_chart ul {
 background-image:url(images/vline.gif);
 background-repeat:repeat-y;
 background-position:left top;
 list-style:none;
+display: block;
 margin:0 0 0 15px;
 padding-top:0px;
 padding-right:0px;
@@ -509,21 +496,16 @@ padding-right:0px;
 padding-bottom:0px;
 }
 
-#ancestry_chart_rtl ul {
-background-image:url(images/vline.gif);
-background-repeat:repeat-y;
+html[dir='rtl'] #ancestry_chart ul {
 background-position:right top;
-list-style:none;
 margin:0px 15px 0px 0px;
-padding-top:0px;
-padding-bottom:0px;
-padding-left:0px;
+left:auto;
 }
 
-#ancestry_chart_rtl li {
-list-style: none;
-margin:0px -15px 2px 0px;
+html[dir='rtl'] #ancestry_chart li {
+margin:0px 0px 0px 0px;
 padding:0px 2px 0px 0px;
+left:auto;
 }
 
 .topheader {
@@ -1014,12 +996,6 @@ margin-bottom: 12px;
 position: relative;
 top: 50px;
 left: 0px;
-}
-
-#timeline_chart_rtl {
-position: relative;
-top: 50px;
-right: 0px;
 }
 
 .person0 {
@@ -1854,4 +1830,3 @@ td.descriptionbox  a {
 	width: 20px;
 	float: left;
 }
-
