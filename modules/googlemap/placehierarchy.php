@@ -252,7 +252,7 @@ function create_map() {
 	echo "<td style=\"margin-left:15; padding-top: 7px; float:right; \">";
 
 	
-	// *** Enable Streetview or not (yes/no) *** ===================================================
+	// *** ENABLE STREETVIEW *** (yes/no) ==========================================================
 	$STREETVIEW = 'yes';
 	// =============================================================================================
 	

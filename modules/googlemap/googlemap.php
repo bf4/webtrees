@@ -611,7 +611,7 @@ function build_indiv_map($indifacts, $famids) {
 		$pid=$controller->indi->getXref();
 		
 		
-		// *** Enable Streetview or not (yes/no) *** ===============================================
+		// *** ENABLE STREETVIEW *** (yes/no) ======================================================
 		$STREETVIEW='yes';
 		// =========================================================================================
 		
