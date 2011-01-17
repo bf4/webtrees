@@ -598,7 +598,7 @@ function build_indiv_map($indifacts, $famids) {
 		$xml = str_replace('<br />', '', $xml);
 		$xml = str_replace(' "', '" ', $xml);
 		$xml = str_replace('2 PLAC ', '', $xml);		
-		$temp_xml_filename = WT_ROOT.'modules/googlemap/wt_temp.xml';
+		$temp_xml_filename = WT_ROOT.'modules/googlemap/wt_v3_temp.xml';
 		if (file_exists($temp_xml_filename)) {
 			unlink($temp_xml_filename);
 		}
