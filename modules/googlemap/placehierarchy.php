@@ -252,8 +252,9 @@ function create_map() {
 	echo "<td style=\"margin-left:15; padding-top: 7px; float:right; \">";
 
 	
-	// Enable StreetView Window (for all place levels 1 and greater) ======================================
+	// *** Enable Streetview or not (yes/no) *** ===================================================
 	$STREETVIEW = 'yes';
+	// =============================================================================================
 	
 	if ($STREETVIEW == 'yes') {
 	?>

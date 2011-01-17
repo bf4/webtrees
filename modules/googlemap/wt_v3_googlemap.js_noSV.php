@@ -199,16 +199,16 @@
            		document.tabLayerEV = eval('document.getElementById("EV")');
             	document.tabLayerEV.style.background = "#ffffff";
             	document.tabLayerEV.style.paddingBottom = "1px";
-            	document.tabLayerSV = eval('document.getElementById("SV")');
-            	document.tabLayerSV.style.background = "#cccccc";
-            	document.tabLayerSV.style.paddingBottom = "0px";
+        //    	document.tabLayerSV = eval('document.getElementById("SV")');
+        //    	document.tabLayerSV.style.background = "#cccccc";
+        //    	document.tabLayerSV.style.paddingBottom = "0px";
             	document.tabLayerPH = eval('document.getElementById("PH")');
             	document.tabLayerPH.style.background = "#cccccc";
             	document.tabLayerPH.style.paddingBottom = "0px";
             	document.panelLayer1 = eval('document.getElementById("pane1")');
             	document.panelLayer1.style.display = "block";
-            	document.panelLayer2 = eval('document.getElementById("pane2")');
-            	document.panelLayer2.style.display = "none";
+        //    	document.panelLayer2 = eval('document.getElementById("pane2")');
+        //    	document.panelLayer2.style.display = "none";
             	document.panelLayer3 = eval('document.getElementById("pane3")');
             	document.panelLayer3.style.display = "none";
             	
@@ -218,16 +218,16 @@
             	document.tabLayerEV = eval('document.getElementById("EV")');
             	document.tabLayerEV.style.background = "#cccccc";
             	document.tabLayerEV.style.paddingBottom = "0px";
-            	document.tabLayerSV = eval('document.getElementById("SV")');
-            	document.tabLayerSV.style.background = "#ffffff";
-            	document.tabLayerSV.style.paddingBottom = "1px";
+        //    	document.tabLayerSV = eval('document.getElementById("SV")');
+        //    	document.tabLayerSV.style.background = "#ffffff";
+        //    	document.tabLayerSV.style.paddingBottom = "1px";
             	document.tabLayerPH = eval('document.getElementById("PH")');
             	document.tabLayerPH.style.background = "#cccccc";
             	document.tabLayerPH.style.paddingBottom = "0px";
             	document.panelLayer1 = eval('document.getElementById("pane1")');
             	document.panelLayer1.style.display = "none";
-            	document.panelLayer2 = eval('document.getElementById("pane2")');
-            	document.panelLayer2.style.display = "block";
+        //    	document.panelLayer2 = eval('document.getElementById("pane2")');
+        //    	document.panelLayer2.style.display = "block";
             	document.panelLayer3 = eval('document.getElementById("pane3")');
             	document.panelLayer3.style.display = "none";
        			var panorama = new google.maps.StreetViewPanorama(document.getElementById("pano"), panoramaOptions);
@@ -238,16 +238,16 @@
             	document.tabLayerEV = eval('document.getElementById("EV")');
             	document.tabLayerEV.style.background = "#cccccc";
             	document.tabLayerEV.style.paddingBottom = "0px";
-            	document.tabLayerSV = eval('document.getElementById("SV")');
-            	document.tabLayerSV.style.background = "#cccccc";
-            	document.tabLayerSV.style.paddingBottom = "0px";
+        //    	document.tabLayerSV = eval('document.getElementById("SV")');
+        //    	document.tabLayerSV.style.background = "#cccccc";
+        //    	document.tabLayerSV.style.paddingBottom = "0px";
             	document.tabLayerPH = eval('document.getElementById("PH")');
             	document.tabLayerPH.style.background = "#ffffff";
             	document.tabLayerPH.style.paddingBottom = "1px";
             	document.panelLayer1 = eval('document.getElementById("pane1")');
             	document.panelLayer1.style.display = "none";
-            	document.panelLayer2 = eval('document.getElementById("pane2")');
-            	document.panelLayer2.style.display = "none";
+        //    	document.panelLayer2 = eval('document.getElementById("pane2")');
+        //    	document.panelLayer2.style.display = "none";
             	document.panelLayer3 = eval('document.getElementById("pane3")');
             	document.panelLayer3.style.display = "block";
           	});	
@@ -621,7 +621,7 @@
  			 	
           				'<ul class="tabs" >',
          					'<li><a href="#event" id="EV">Events<\/a><\/li>',
-          					'<li><a href="#sview" id="SV">Street View<\/a><\/li>',
+          			//		'<li><a href="#sview" id="SV">Street View<\/a><\/li>',
           					'<li><a href="#image" id="PH">Image<\/a><\/li>',
           			//		'<li><a href="#" id="SP">Aerial<\/a><\/li>',
        					'<\/ul>',
@@ -631,12 +631,12 @@
           						divhead,
           						event_tab,
           					'<\/div>',
-          			
+          		/*	
        						'<div id = "pane2">',
        							divhead,
 								'<div id="pano"><\/div>',
           					'<\/div>',
-          					
+          		*/			
           					'<div id = "pane3">',
           						divhead,
           						'<div id = "pane3_text">',

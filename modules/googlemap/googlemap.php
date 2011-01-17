@@ -609,10 +609,19 @@ function build_indiv_map($indifacts, $famids) {
 		
 		global $controller;
 		$pid=$controller->indi->getXref();
-	
+		
+		
+		// *** Enable Streetview or not (yes/no) *** ===============================================
+		$STREETVIEW='yes';
+		// =========================================================================================
+		
 		// === Include css and js files ============================================================
 		echo '<link type="text/css" href="modules/googlemap/css/wt_v3_googlemap.css" rel="stylesheet" />';
-		require_once WT_ROOT.'modules/googlemap/wt_v3_googlemap.js.php';
+		if ($STREETVIEW=='yes') {
+			require_once WT_ROOT.'modules/googlemap/wt_v3_googlemap.js.php';
+		} else {
+			require_once WT_ROOT.'modules/googlemap/wt_v3_googlemap.js_noSV.php';		
+		}
 
 		// === Create the normal googlemap sidebar of events and children ==========================
 		echo "<div style=\"overflow: auto; overflow-x: hidden; overflow-y: auto; height: {$GOOGLEMAP_YSIZE}px;\"><table class=\"facts_table\">";
