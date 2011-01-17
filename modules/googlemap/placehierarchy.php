@@ -252,10 +252,10 @@ function create_map() {
 	echo "<td style=\"margin-left:15; padding-top: 7px; float:right; \">";
 
 	
-	// StreetView Window (for all place levels 1 and greater) ======================================================
-	$STREETVIEW = 1;
+	// Enable StreetView Window (for all place levels 1 and greater) ======================================
+	$STREETVIEW = 'yes';
 	
-	if ($STREETVIEW == 1) {
+	if ($STREETVIEW == 'yes') {
 	?>
 		<script>
 		function update_sv_params(placeid) {

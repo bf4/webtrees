@@ -113,7 +113,7 @@ if ($display=="hierarchy") {
 		$action="show";
 	}
 	
-	echo '<link type="text/css" href="modules/googlemap/css/v3_googlemap.css" rel="stylesheet" />';
+	echo '<link type="text/css" href="modules/googlemap/css/wt_v3_googlemap.css" rel="stylesheet" />';
 
 	// -- echo the breadcrumb hierarchy
 	$numls=0;

@@ -611,7 +611,7 @@ function build_indiv_map($indifacts, $famids) {
 		$pid=$controller->indi->getXref();
 	
 		// === Include css and js files ============================================================
-		echo '<link type="text/css" href="modules/googlemap/css/v3_googlemap.css" rel="stylesheet" />';
+		echo '<link type="text/css" href="modules/googlemap/css/wt_v3_googlemap.css" rel="stylesheet" />';
 		require_once WT_ROOT.'modules/googlemap/wt_v3_googlemap.js.php';
 
 		// === Create the normal googlemap sidebar of events and children ==========================
