@@ -3,7 +3,7 @@
  * Google map module for phpGedView
  *
  * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
+ * Copyright (C) 2011 webtrees development team.
  *
  * Modifications Copyright (c) 2010 Greg Roach
  *
@@ -22,8 +22,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package webtrees
- * @subpackage Module
+ * @subpackage Googlemaps v3
  * $Id: wt_v3_googlemap.js.php 9140 2010-07-21 16:01:50Z greg $
+ *
  * @author Brian Holland
  */
 ?>
