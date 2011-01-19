@@ -66,7 +66,7 @@ function place_id_to_hierarchy($id) {
 	return $arr;
 }
 
-// NB This function exists in both places.php and places_edit.php
+// NB This function exists in both admin_places.php and places_edit.php
 function getHighestIndex() {
 	return (int)WT_DB::prepare("SELECT MAX(pl_id) FROM `##placelocation`")->fetchOne();
 }

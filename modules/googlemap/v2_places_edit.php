@@ -24,7 +24,7 @@
  *
  * @package webtrees
  * @subpackage Edit
- * @version $Id$
+ * @version $Id: places_edit.php 10491 2011-01-17 06:22:35Z brian $
  */
 
 if (!defined('WT_WEBTREES')) {
@@ -252,35 +252,28 @@ if ($action=="add") {
 	echo "</b><br />";
 }
 
-// v3 ----------------------------------------------------------------------------------------------
-// echo '<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>';
-// v3 ----------------------------------------------------------------------------------------------
-
-// v2 ----------------------------------------------------------------------------------------------
-echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=$GOOGLEMAP_API_KEY" type="text/javascript"></script>';
-// v2 ----------------------------------------------------------------------------------------------
 ?>
-
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
 <script type="text/javascript">
 <!--
 	if (window.attachEvent) {
 		window.attachEvent("onload", function() {
 			loadMap(); // Internet Explorer
 		});
-//		window.attachEvent("onunload", function() {
-//			GUnload(); // Internet Explorer
-//		});
+		window.attachEvent("onunload", function() {
+			GUnload(); // Internet Explorer
+		});
 	} else {
 		window.addEventListener("load", function() {
 			loadMap(); // Firefox and standard browsers
 		}, false);
-//		window.addEventListener("unload", function() {
-//			GUnload(); // Firefox and standard browsers
-//		}, false);
+		window.addEventListener("unload", function() {
+			GUnload(); // Firefox and standard browsers
+		}, false);
 	}
 	var childplaces = [];
 	var geocoder = new GClientGeocoder();
-<!--
+
 	function updateMap() {
 		var point;
 		var zoom;
@@ -358,83 +351,79 @@ echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false
 			map.addOverlay(childplaces[i]);
 		}
 	}
-	
-// v2 ----------------------------------------------------------------------------------------------
 
 	function Map_type() {}
 	Map_type.prototype = new GControl();
 
-	Map_type.prototype.refresh = function() {
-	//	if (this.map.getCurrentMapType() != G_NORMAL_MAP)
-	//		this.button1.className = 'non_active';
-	//	else
-	//		this.button1.className = 'active';
-	//	if (this.map.getCurrentMapType() != G_SATELLITE_MAP)
-	//		this.button2.className = 'non_active';
-	//	else
-	//		this.button2.className = 'active';
-	//	if (this.map.getCurrentMapType() != G_HYBRID_MAP)
-	//		this.button3.className = 'non_active';
-	//	else
-	//		this.button3.className = 'active';
-	//	if (this.map.getCurrentMapType() != G_PHYSICAL_MAP)
-	//		this.button4.className = 'non_active';
-	//	else
-	//		this.button4.className = 'active';
+	Map_type.prototype.refresh = function()
+	{
+		if (this.map.getCurrentMapType() != G_NORMAL_MAP)
+			this.button1.className = 'non_active';
+		else
+			this.button1.className = 'active';
+		if (this.map.getCurrentMapType() != G_SATELLITE_MAP)
+			this.button2.className = 'non_active';
+		else
+			this.button2.className = 'active';
+		if (this.map.getCurrentMapType() != G_HYBRID_MAP)
+			this.button3.className = 'non_active';
+		else
+			this.button3.className = 'active';
+		if (this.map.getCurrentMapType() != G_PHYSICAL_MAP)
+			this.button4.className = 'non_active';
+		else
+			this.button4.className = 'active';
 	}
 
-	Map_type.prototype.initialize = function(place_map) {
+	Map_type.prototype.initialize = function(place_map)
+	{
 		var list  = document.createElement("ul");
 		list.id = 'map_type';
 
-	//	var button1 = document.createElement('li');
-	//	var button2 = document.createElement('li');
-	//	var button3 = document.createElement('li');
-	//	var button4 = document.createElement('li');
+		var button1 = document.createElement('li');
+		var button2 = document.createElement('li');
+		var button3 = document.createElement('li');
+		var button4 = document.createElement('li');
 
-	//	button1.innerHTML = '<?php echo WT_I18N::translate('Map'); ?>';
-	//	button2.innerHTML = '<?php echo WT_I18N::translate('Satellite'); ?>';
-	//	button3.innerHTML = '<?php echo WT_I18N::translate('Hybrid'); ?>';
-	//	button4.innerHTML = '<?php echo WT_I18N::translate('Terrain'); ?>';
+		button1.innerHTML = '<?php echo WT_I18N::translate('Map'); ?>';
+		button2.innerHTML = '<?php echo WT_I18N::translate('Satellite'); ?>';
+		button3.innerHTML = '<?php echo WT_I18N::translate('Hybrid'); ?>';
+		button4.innerHTML = '<?php echo WT_I18N::translate('Terrain'); ?>';
 
-	//	button1.onclick = function() { map.setMapType(G_NORMAL_MAP); return false; };
-	//	button2.onclick = function() { map.setMapType(G_SATELLITE_MAP); return false; };
-	//	button3.onclick = function() { map.setMapType(G_HYBRID_MAP); return false; };
-	//	button4.onclick = function() { map.setMapType(G_PHYSICAL_MAP); return false; };
+		button1.onclick = function() { map.setMapType(G_NORMAL_MAP); return false; };
+		button2.onclick = function() { map.setMapType(G_SATELLITE_MAP); return false; };
+		button3.onclick = function() { map.setMapType(G_HYBRID_MAP); return false; };
+		button4.onclick = function() { map.setMapType(G_PHYSICAL_MAP); return false; };
 
-	//	list.appendChild(button1);
-	//	list.appendChild(button2);
-	//	list.appendChild(button3);
-	//	list.appendChild(button4);
+		list.appendChild(button1);
+		list.appendChild(button2);
+		list.appendChild(button3);
+		list.appendChild(button4);
 
-	//	this.button1 = button1;
-	//	this.button2 = button2;
-	//	this.button3 = button3;
-	//	this.button4 = button4;
-	//	this.map = map;
-	//	map.getContainer().appendChild(list);
+		this.button1 = button1;
+		this.button2 = button2;
+		this.button3 = button3;
+		this.button4 = button4;
+		this.map = map;
+		map.getContainer().appendChild(list);
 		return list;
 	}
 
-//	Map_type.prototype.getDefaultPosition = function()
-//	{
-//		return new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(2, 2));
-//	}
-
-// v2 ----------------------------------------------------------------------------------------------
+	Map_type.prototype.getDefaultPosition = function()
+	{
+		return new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(2, 2));
+	}
 
 	function loadMap() {
 		var zoom;
-// v2 ----------------------------------------------------------------------------------------------
-	//	if (GBrowserIsCompatible()) {
-// v2 ----------------------------------------------------------------------------------------------
+		if (GBrowserIsCompatible()) {
 			map = new GMap2(document.getElementById("map_pane"));
-//			map.addControl(new GSmallZoomControl3D());
-//			map.addControl(new GScaleControl()) ;
+			map.addControl(new GSmallZoomControl3D());
+			map.addControl(new GScaleControl()) ;
 			var bounds = new GLatLngBounds();
 			var map_type;
 			map_type = new Map_type();
-//			map.addControl(map_type);
+			map.addControl(map_type);
 			GEvent.addListener(map, 'maptypechanged', function() {
 				map_type.refresh();
 			});
@@ -586,9 +575,7 @@ echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false
 				}
 			} ?>
 			// Our info window content
-// v2 ----------------------------------------------------------------------------------------------
-	//	}
-// v2 ----------------------------------------------------------------------------------------------
+		}
 	}
 
 	function edit_close() {
