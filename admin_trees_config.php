@@ -99,6 +99,16 @@ case 'delete':
 	exit;
 case 'add':
 	if ((safe_POST('xref') || safe_POST('tag_type')) && safe_POST('resn')) {
+		if (safe_POST('xref')=='') {
+			WT_DB::prepare(
+				"DELETE FROM `##default_resn` WHERE gedcom_id=? AND tag_type=? AND xref IS NULL"
+			)->execute(array(WT_GED_ID, safe_POST('tag_type')));
+		}
+		if (safe_POST('tag_type')=='') {
+			WT_DB::prepare(
+				"DELETE FROM `##default_resn` WHERE gedcom_id=? AND xref=? AND tag_type IS NULL"
+			)->execute(array(WT_GED_ID, safe_POST('xref')));
+		}
 		WT_DB::prepare(
 			"REPLACE INTO `##default_resn` (gedcom_id, xref, tag_type, resn) VALUES (?, ?, ?, ?)"
 		)->execute(array(WT_GED_ID, safe_POST('xref'), safe_POST('tag_type'), safe_POST('resn')));
@@ -508,7 +518,7 @@ print_header(WT_I18N::translate('Family tree configuration'));
 				</table>
 				<table>
 					<tr>
-						<th colspan="6" colspan="2"><?php echo WT_I18N::translate('ID settings'); ?></th>
+						<th colspan="6"><?php echo WT_I18N::translate('ID settings'); ?></th>
 					</tr>
 					<tr>
 						<td>
@@ -544,7 +554,7 @@ print_header(WT_I18N::translate('Family tree configuration'));
 				</table>
 				<table>
 					<tr>
-						<td colspan="2"><?php echo WT_I18N::translate('Contact Information'); ?></td>
+						<th colspan="2"><?php echo WT_I18N::translate('Contact Information'); ?></th>
 					</tr>
 					<tr>
 						<?php
@@ -593,8 +603,10 @@ print_header(WT_I18N::translate('Family tree configuration'));
 						</select>
 						</td>
 					</tr>
+				</table>
+				<table>
 					<tr>
-						<td colspan="2"><?php echo WT_I18N::translate('Web Site and META Tag Settings'); ?></td>
+						<th colspan="2"><?php echo WT_I18N::translate('Web Site and META Tag Settings'); ?></th>
 					</tr>
 					<tr>
 						<td>
