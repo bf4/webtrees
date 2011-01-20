@@ -173,7 +173,7 @@ function create_map() {
 	echo "\n<br /><br />\n";
 	echo "<table style=\"margin-top:-31px;\"><tr valign=\"top\">";
 	if ($level>=1) {
-		echo "<td class=\"center\" width=\"200px\" style=\"background:white; padding-top:26px; padding-bottom:0px;\">";
+		echo "<td class=\"center\" width=\"200px\" style=\"background:none; padding-top:26px; padding-bottom:0px;\">";
 	} else {
 		echo "<td class=\"center\" width=\"200px\" style=\"padding-top:6px;\">";	
 	}
