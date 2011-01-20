@@ -1394,7 +1394,7 @@ function print_changes_table($change_ids) {
 			if ($SHOW_MARRIED_NAMES) {
 				foreach ($record->getAllNames() as $name) {
 					if ($name['type']=='_MARNM') {
-						echo "<br /><a title=\"_MARNM\" href=\"", $record->getHtmlUrl(), "\" class=\"list_item\">", PrintReady($name['full']), "</a>";
+						echo "<br /><a title=\"", translate_fact('_MARNM'),"\" href=\"", $record->getHtmlUrl(), "\" class=\"list_item\">", PrintReady($name['full']), "</a>";
 					}
 				}
 			}
@@ -1441,9 +1441,29 @@ function print_changes_table($change_ids) {
  */
 function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $sort_by_event=false) {
 	global $TEXT_DIRECTION, $WT_IMAGES;
-	require_once WT_ROOT.'js/sorttable.js.htm';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
-
+	echo WT_JS_START.'var table_id = "'.$table_id.'"'.WT_JS_END;
+	?>
+	<script type="text/javascript" src="js/jquery/jquery.dataTables.min.js"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function(){
+			jQuery('#'+table_id).dataTable( {
+				"bPaginate": false,
+				"bLengthChange": false,
+				"bFilter": false,
+				"bInfo": false,
+				"bJQueryUI": false,
+				"aoColumns": [
+					null,
+					{ "bVisible": false },
+					null,
+					null,
+					null
+				]
+			});		
+		});
+	</script>
+	<?php
 	// Did we have any output?  Did we skip anything?
 	$output = 0;
 	$filter = 0;
@@ -1484,13 +1504,13 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		if ($output==1) {
 			//-- First table row:  start table headers, etc. first
 			$return .= "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-			$return .= "<tr>";
-			$return .= "<th class=\"list_label\">".WT_I18N::translate('Record')."</th>";
-			$return .= "<th style=\"display:none\">GIVN</th>";
-			$return .= "<th class=\"list_label\">".translate_fact('DATE')."</th>";
-			$return .= "<th class=\"list_label\"><img src=\"".$WT_IMAGES["reminder"]."\" alt=\"".WT_I18N::translate('Anniversary')."\" title=\"".WT_I18N::translate('Anniversary')."\" border=\"0\" /></th>";
-			$return .= "<th class=\"list_label\">".translate_fact('EVEN')."</th>";
-			$return .= "</tr>";
+			$return .= "<thead><tr>";
+			$return .= "<th style=\"cursor:pointer;\" class=\"list_label\">".WT_I18N::translate('Record')."</th>";
+			$return .= "<th>GIVN</th>";
+			$return .= "<th style=\"cursor:pointer;\" class=\"list_label\">".translate_fact('DATE')."</th>";
+			$return .= "<th style=\"cursor:pointer;\" class=\"list_label\"><img src=\"".$WT_IMAGES["reminder"]."\" alt=\"".WT_I18N::translate('Anniversary')."\" title=\"".WT_I18N::translate('Anniversary')."\" border=\"0\" /></th>";
+			$return .= "<th style=\"cursor:pointer;\" class=\"list_label\">".translate_fact('EVEN')."</th>";
+			$return .= "</tr></thead><tbody>";
 		}
 
 		$value['name'] = $record->getListName();
@@ -1504,11 +1524,11 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	}
 
 	// Now we've filtered the list, we can sort by event, if required
-	if ($sort_by_event=="anniv") {
-		uasort($filtered_events, 'event_sort');
-	} elseif ($sort_by_event) {
-		uasort($filtered_events, 'event_sort_name');
-	}
+//	if ($sort_by_event=="anniv") {
+//		uasort($filtered_events, 'event_sort');
+//	} elseif ($sort_by_event) {
+//		uasort($filtered_events, 'event_sort_name');
+//	}
 
 	foreach ($filtered_events as $value) {
 		$return .= "<tr>";
@@ -1541,8 +1561,10 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		//-- Anniversary
 		$return .= "<td class=\"list_value_wrap rela\">";
 		$anniv = $value['anniv'];
-		if ($anniv==0) $return .= '<a name="-1">&nbsp;</a>';
-		else $return .= "<a name=\"{$anniv}\">{$anniv}</a>";
+//		if ($anniv==0) $return .= '<a name="-1">&nbsp;</a>';
+		if ($anniv==0) $return .= '&nbsp;';
+//		else $return .= "<a name=\"{$anniv}\">{$anniv}</a>";
+		else $return .= $anniv;
 		$return .= "</td>";
 		//-- Event name
 		$return .= "<td class=\"list_value_wrap\">";
@@ -1554,7 +1576,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 
 	if ($output!=0) {
 		//-- table footer
-		$return .= "<tr class=\"sortbottom\">";
+		$return .= "</tbody><tfoot><tr class=\"sortbottom\">";
 		$return .= "<td class=\"list_label\">";
 		$return .= "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"cb_parents_$table_id\">&nbsp;&nbsp;".WT_I18N::translate('Show parents')."</label><br />";
 		$return .= "</td><td class=\"list_label\" colspan=\"3\">";
@@ -1562,7 +1584,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		$return .= "</td>";
 		$return .= "<td></td>";
 		$return .= "<td></td>";
-		$return .= "</tr>";
+		$return .= "</tr></tfoot>";
 		$return .= "</table>";
 	}
 
