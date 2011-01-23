@@ -186,19 +186,16 @@ function create_map() {
 	
 	} else {
 	
-		if ($latlng[0]['sv_lati']==null) {		
+		if ($latlng[0]['sv_lati']==null && WT_USER_IS_ADMIN) {		
 			?>
 			<style>
   			#warning {
     			margin: 0 auto;
     			width: 520px;
     			height: 100px;
-				border:0px solid black;
 				text-align: left;
-				font: 12px verdana; color:red;
-				padding-left: 4px;
 				margin-top:-5px;
-				font-weight: normal;
+  				padding-bottom: 140px; 
   			}
   			#warning h5 {
   				font: 12px verdana; color:red;
@@ -208,6 +205,8 @@ function create_map() {
 			<div id="warning">
 			<h5>
 				<br /><br /><br />
+			<?php	
+			echo WT_I18n::translate('
 				<b>No Streetview coordinates are saved yet.</b><br />
 				<br />
 				a. 	If no Streetview is displayed in the pane below right,  <br />&nbsp;&nbsp;&nbsp;
@@ -215,9 +214,10 @@ function create_map() {
 				b. 	When the Streetview is displayed, adjust as necessary to enable the required view. <br />
 					&nbsp;&nbsp;&nbsp; (Right mouse click the "Steetview" pane to toggle Street view navigation arrows.) <br /> 
 				c. 	When the required view is displayed, click the button "Save View".
+		    ');
+			?>
 			</h5>
 			</div>
-			<br /><br /><br /><br /><br /><br /><br /><br /><br />
 			<?php
 		}
 		
@@ -314,9 +314,12 @@ function create_map() {
 				
 				// If Streetview coordinates are stored, bring up the regular Streetview -------
 		  		if ($latlng[0]['sv_lati']!=null) {
+		  			$_map = WT_I18N::translate('Map');
+		  			$_reset = WT_I18N::translate('Reset');
+		  			$_streetview = WT_I18N::translate('Streetview');
 					?>
 					<div>
-					<iframe style="background:transparent; margin-top:-3px; margin-left:2px; width:530px;height:405px;padding:0;border:solid 0px black" src="modules/googlemap/wt_v3_street_view.php?x=<?php echo $sv_lng; ?>&y=<?php echo $sv_lat; ?>&z=18&t=2&c=1&s=1&b=<?php echo $sv_dir; ?>&p=<?php echo $sv_pitch; ?>&m=<?php echo $sv_zoom; ?>&j=1&k=1&v=1" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe>
+					<iframe style="background:transparent; margin-top:-3px; margin-left:2px; width:530px;height:405px;padding:0;border:solid 0px black" src="modules/googlemap/wt_v3_street_view.php?x=<?php echo $sv_lng; ?>&y=<?php echo $sv_lat; ?>&z=18&t=2&c=1&s=1&b=<?php echo $sv_dir; ?>&p=<?php echo $sv_pitch; ?>&m=<?php echo $sv_zoom; ?>&j=1&k=1&v=1&map=<?php echo $_map; ?>&reset=<?php echo $_reset; ?>&streetview=<?php echo $_streetview; ?>" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe>
 					</div>
 					<?php			
 						$list_latlon = ("
@@ -335,7 +338,7 @@ function create_map() {
 						echo "<form style=\"text-align:left; margin-left:5px; font:11px verdana; color:blue;\" method=\"post\" action=\"\">";
 						echo $list_latlon;
 						echo "";
-						echo "<input type=\"submit\" name=\"Submit\" onClick=\"update_sv_params($placeid);\" value=\"", WT_I18N::translate('Save View'), "\">";
+						echo "<input type=\"submit\" name=\"Submit\" onClick=\"update_sv_params($placeid);\" value=\"", WT_I18N::translate('Save'), "\">";
 						echo "</form>";
 						echo "</td></tr>\n";
 						echo "</table>\n";	
@@ -360,7 +363,7 @@ function create_map() {
 							echo "<form style=\"text-align:left; margin-left:5px; font:11px verdana; color:blue;\" method=\"post\" action=\"\">";
 							echo $list_latlon;
 							echo "";
-							echo "<input type=\"submit\" name=\"Submit\" onClick=\"update_sv_params($placeid);\" value=\"", WT_I18n::translate('Save View'), "\">";
+							echo "<input type=\"submit\" name=\"Submit\" onClick=\"update_sv_params($placeid);\" value=\"", WT_I18n::translate('Save'), "\">";
 							echo "</form>";
 						echo "</td></tr>\n";
 						echo "</table>\n";			

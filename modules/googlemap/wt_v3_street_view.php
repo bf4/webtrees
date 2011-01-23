@@ -308,14 +308,17 @@ function initialize() {
 
 }  // end init
 
-function toggleStreetView() {
+var mapbutt = "<?php echo $_GET['map']; ?>";
+var svbutt = "<?php echo $_GET['streetview']; ?>";
+  	
+function toggleStreetView() { 
     var toggle = panorama.getVisible();
     if (toggle == false) {
       	panorama.setVisible(true);
-	  	document.myForm.butt1.value="Map"	  	
+	  	document.myForm.butt1.value=mapbutt;	  	
     } else {
       	panorama.setVisible(false);
-      	document.myForm.butt1.value="Streetview";
+      	document.myForm.butt1.value=svbutt;
     }
 }
 
@@ -366,8 +369,14 @@ google.maps.event.addDomListener(window, 'load', initialize);
 <!--
 			<input type="button" value="street" name="sv_btn" onClick="addStreetViewOverlay()"></input>
 -->
-  			<input id="butt1" name ="butt1" type="button" value="Map" onclick="toggleStreetView();"></input>
-  			<input id="butt2" name ="butt2" type="button" value="Reset" onclick="resetview();"></input>
+
+  			<?php
+  			$map = $_GET["map"];
+  			$reset = $_GET["reset"]; 
+  			echo "<input id=\"butt1\" name =\"butt1\" type=\"button\" value=\"$map\" onclick=\"toggleStreetView();\"></input>";
+  			echo "<input id=\"butt2\" name =\"butt2\" type=\"button\" value=\"$reset\" onclick=\"resetview();\"></input>";
+  			?>
+  			
   		</form>
   	</div>
   		
