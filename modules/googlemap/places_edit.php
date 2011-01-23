@@ -262,25 +262,25 @@ echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false
 ?>
 
 <script type="text/javascript">
-<!--
+
 	if (window.attachEvent) {
 		window.attachEvent("onload", function() {
 			loadMap(); // Internet Explorer
 		});
-//		window.attachEvent("onunload", function() {
-//			GUnload(); // Internet Explorer
-//		});
+		window.attachEvent("onunload", function() {
+			GUnload(); // Internet Explorer
+		});
 	} else {
 		window.addEventListener("load", function() {
 			loadMap(); // Firefox and standard browsers
 		}, false);
-//		window.addEventListener("unload", function() {
-//			GUnload(); // Firefox and standard browsers
-//		}, false);
+		window.addEventListener("unload", function() {
+			GUnload(); // Firefox and standard browsers
+		}, false);
 	}
 	var childplaces = [];
 	var geocoder = new GClientGeocoder();
-<!--
+
 	function updateMap() {
 		var point;
 		var zoom;
