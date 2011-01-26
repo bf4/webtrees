@@ -1,34 +1,27 @@
 <?php
-
-/**
-* Various functions used by the media DB interface
-*
-* webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
-* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
-*
-* Modifications Copyright (c) 2010 Greg Roach
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*
-* @package webtrees
-* @subpackage MediaDB
-* @version $Id$
-*/
+// Various functions used by the media DB interface
+//
+// webtrees: Web based Family History software
+// Copyright (C) 2011 webtrees development team.
+//
+// Derived from PhpGedView
+// Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// $Id$
 
 if (!defined('WT_WEBTREES')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -1074,7 +1067,7 @@ function process_uploadMedia_form() {
 /**
 * print a form for uploading media files
 * @param string $URL  the URL the input form is to execute when the "Submit" button is pressed
-* @param bool   $showthumb the setting of the "show thumbnail" option (required by media.php)
+* @param bool   $showthumb the setting of the "show thumbnail" option (required by admin_media.php)
 */
 function show_mediaUpload_form($URL, $showthumb=false) {
 	global $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
@@ -1543,7 +1536,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	}
 	echo "</table>";
 ?>
-		<script language="JavaScript" type="text/javascript">
+		<script type="text/javascript">
 			var formid = '<?php echo $formid; ?>';
 			function updateFormat(filename) {
 				var extsearch=/\.([a-zA-Z]{3,4})$/;
@@ -1590,7 +1583,7 @@ function findImageSize($file) {
 * Print the list of persons, families, and sources that are mentioned in
 * the "LINKS" array of the current item from the Media list.
 *
-* This function is called from media.php, medialist.php, and random_media.php
+* This function is called from admin_media.php, medialist.php, and random_media.php
 */
 
 function PrintMediaLinks($links, $size = "small") {
