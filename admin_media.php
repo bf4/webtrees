@@ -1128,7 +1128,7 @@ echo WT_JS_START; ?>
 							if (!empty($media["XREF"])) {
 								$tempURL = WT_SCRIPT_NAME.'?';
 								if (!empty($filter)) $tempURL .= "filter={$filter}&amp;";
-								$tempURL .= "action=removeobjectamp;&showthumb={$showthumb}amp;&sortby={$sortby}amp;&filter={$filter}amp;&subclick={$subclick}amp;&filename=".rawurlencode($media['FILE'])."amp;&directory={$directory}amp;&level={$level}amp;&xref={$media['XREF']}amp;&gedfile={$media['GEDFILE']}";
+								$tempURL .= "action=removeobject&amp;showthumb={$showthumb}&amp;sortby={$sortby}&amp;filter={$filter}&amp;subclick={$subclick}&amp;filename=".rawurlencode($media['FILE'])."&amp;directory={$directory}&amp;level={$level}&amp;xref={$media['XREF']}&amp;gedfile={$media['GEDFILE']}";
 								echo "<a href=\"".$tempURL."\" onclick=\"return confirm('".WT_I18N::translate('Are you sure you want to remove this object from the database?')."');\">".WT_I18N::translate('Remove object')."</a><br />";
 							}
 
@@ -1211,21 +1211,7 @@ echo WT_JS_START; ?>
 
 						//-- name and size field
 						echo "<td class=\" $changeClass $TEXT_DIRECTION wrap\">";
-						if ($media["TITL"]!="" && begRTLText($media["TITL"]) && $TEXT_DIRECTION=="ltr") {
-							if (!empty($media["XREF"])) {
-								echo "(".$media["XREF"].")";
-								echo "&nbsp;&nbsp;&nbsp;";
-							}
-							if ($media["TITL"]!="") echo "<b>".PrintReady($media["TITL"])."</b><br />";
-						} else {
-							if ($media["TITL"]!="") echo "<b>".PrintReady($media["TITL"])."</b>&nbsp;&nbsp;&nbsp;";
-							if (!empty($media["XREF"])) {
-								if ($TEXT_DIRECTION=="rtl") echo getRLM();
-								echo "(".$media["XREF"].")";
-								if ($TEXT_DIRECTION=="rtl") echo getRLM();
-								echo "<br />";
-							}
-						}
+						if ($media["TITL"]!="") echo "<b>".PrintReady($media["TITL"])."</b><br />";
 						if (!$isExternal && !$media["EXISTS"]) echo "<span dir=\"ltr\">".PrintReady($media["FILE"])."</span><br /><span class=\"error\">".WT_I18N::translate('The filename entered does not exist.')."</span><br />";
 						else {
 							if (substr($mediaInfo['type'], 0, 4) == 'url_') $tempText = 'URL';
