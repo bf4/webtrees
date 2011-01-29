@@ -254,20 +254,20 @@ if ($action=="add") {
 }
 
 // v2 ----------------------------------------------------------------------------------------------
-
+/*
 	echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=$GOOGLEMAP_API_KEY" type="text/javascript"></script>';
 	include_once 'places_edit.js.php';
 	$api="v2";
-
+*/
 // v2 ----------------------------------------------------------------------------------------------
 
 
 // v3 ----------------------------------------------------------------------------------------------
-/*
+
 	echo '<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>';
  	include_once 'wt_v3_places_edit.js.php';
  	$api="v3";
-*/
+
 // v3 ----------------------------------------------------------------------------------------------
 
 ?>
@@ -354,7 +354,7 @@ if ($action=="add") {
 				<option value="PL_N" <?php if ($place_lati > 0) echo " selected=\"selected\""; echo ">", WT_I18N::translate_c('North', 'N'); ?></option>
 				<option value="PL_S" <?php if ($place_lati < 0) echo " selected=\"selected\""; echo ">", WT_I18N::translate_c('South', 'S'); ?></option>
 			</select>
-			<input type="text" name="NEW_PLACE_LATI" value="<?php if ($place_lati != null) echo abs($place_lati); ?>" size="20" onchange="updateMap();" /></td>
+			<input type="text" id="NEW_PLACE_LATI" name="NEW_PLACE_LATI" value="<?php if ($place_lati != null) echo abs($place_lati); ?>" size="20" onchange="updateMap();" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php echo translate_fact('LONG'), help_link('PLE_LATLON_CTRL','googlemap'); ?></td>
@@ -364,7 +364,7 @@ if ($action=="add") {
 				<option value="PL_E" <?php if ($place_long > 0) echo " selected=\"selected\""; echo ">", WT_I18N::translate_c('East', 'E'); ?></option>
 				<option value="PL_W" <?php if ($place_long < 0) echo " selected=\"selected\""; echo ">", WT_I18N::translate_c('West', 'W'); ?></option>
 			</select>
-			<input type="text" name="NEW_PLACE_LONG" value="<?php if ($place_long != null) echo abs($place_long); ?>" size="20" onchange="updateMap();" /></td>
+			<input type="text" id="NEW_PLACE_LONG" name="NEW_PLACE_LONG" value="<?php if ($place_long != null) echo abs($place_long); ?>" size="20" onchange="updateMap();" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php echo WT_I18N::translate('Zoom factor'), help_link('PLE_ZOOM','googlemap'); ?></td>
@@ -390,6 +390,6 @@ if ($action=="add") {
 	<input name="save2" type="submit" value="<?php echo WT_I18N::translate('Save'); ?>" /><br />
 </form>
 <?php
-echo "<center><br /><br /><br /><a href=\"javascript:;\" onclick=\"edit_close('')\">", WT_I18N::translate('Close Window'), "</a><br /></center>\n";
+echo "<center><a href=\"javascript:;\" onclick=\"edit_close('')\">", WT_I18N::translate('Close Window'), "</a><br /></center>\n";
 
 print_simple_footer();
