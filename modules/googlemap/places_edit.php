@@ -3,7 +3,7 @@
  * Interface to edit place locations
  *
  * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
+ * Copyright (C) 2011 webtrees development team.
  *
  * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
@@ -253,26 +253,11 @@ if ($action=="add") {
 	echo "</b><br />";
 }
 
-// v2 ----------------------------------------------------------------------------------------------
-/*
-	echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=$GOOGLEMAP_API_KEY" type="text/javascript"></script>';
-	include_once 'places_edit.js.php';
-	$api="v2";
-*/
-// v2 ----------------------------------------------------------------------------------------------
-
-
-// v3 ----------------------------------------------------------------------------------------------
-
-	echo '<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>';
- 	include_once 'wt_v3_places_edit.js.php';
- 	$api="v3";
-
-// v3 ----------------------------------------------------------------------------------------------
+echo '<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>';
+include_once 'wt_v3_places_edit.js.php';
+$api="v3";
 
 ?>
-
-
 
 <form method="post" id="editplaces" name="editplaces" action="module.php?mod=googlemap&amp;mod_action=places_edit">
 	<input type="hidden" name="action" value="<?php echo $action; ?>record" />

@@ -5,9 +5,6 @@
  * webtrees: Web based Family History software
  * Copyright (C) 2011 webtrees development team.
  *
- * Derived from PhpGedView
- * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
