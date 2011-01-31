@@ -29,7 +29,8 @@ function overlays() {
 		// show nothing
 	}
 	
-	// Set borders and fill parameters
+/*	
+	// Set borders and fill parameters - Not finished yet. ---------------------------------
 	if (map.mapTypeId == 'roadmap') {
 		var colorStroke 	= "#444444";
 		var weightStroke	= 1.2;
@@ -47,9 +48,10 @@ function overlays() {
 		var weightStroke	= 1.2;
 		var opacityFill		= 0;
 	} 
-	
+*/	
+
 	// Calculate polygon
-	if (num_arrays == 1) {   
+	if (num_arrays > 0) {   
 		var geomAry1 = new Array(); 
 		geomAry1 = returnGeom1.split('|'); 
 		var XY1 = new Array(); 
@@ -64,15 +66,15 @@ function overlays() {
     	  strokeColor: "#888888",
     	  strokeOpacity: 0.8,
     	  strokeWeight: 1,
-    	  fillColor: "#000000",
-    	  fillOpacity: 0
+    	  fillColor: "#ff0000",
+    	  fillOpacity: 0.15
     	});
     	polygon1.setMap(map);
     }
     
     // If showing two countries at the same time (num_arrays == 2) -------------------------
 
-	if (num_arrays == 2) {   
+	if (num_arrays > 1) {   
 		// Calculate polygon
 		var geomAry2 = new Array(); 
 		geomAry2 = returnGeom2.split('|'); 
@@ -85,9 +87,9 @@ function overlays() {
     	// Construct the polygon	
     	polygon2 = new google.maps.Polygon({
     	  paths: points2,
-    	  strokeColor: "#f33f00",
+    	  strokeColor: "#888888",
     	  strokeOpacity: 0.8,
-    	  strokeWeight: 1.5,
+    	  strokeWeight: 1,
     	  fillColor: "#ff0000",
     	  fillOpacity: 0.15
     	});  

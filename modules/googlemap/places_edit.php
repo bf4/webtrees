@@ -296,7 +296,7 @@ if ($action=="add") {
 		<td class="optionbox center" colspan="2">
 		<?php
 			if ($api=="v3") {
-		 		echo WT_I18N::translate('Drag the Marker in the Map above to re-position the place location');
+		 		echo WT_I18N::translate('Drag the Marker in the Map above, or use parameters below, to re-position the place location');
 			}
 		?>
 		</td>
