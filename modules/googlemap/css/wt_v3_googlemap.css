@@ -20,7 +20,7 @@
  *
  * @package webtrees
  * @subpackage Module
- * $Id: wt_v3_jquery_custom.css 9140 2010-07-21 16:01:50Z greg $
+ * $Id: wt_v3_googlemap.css 9140 2010-07-21 16:01:50Z greg $
  *
  * @author Brian Holland
 */
@@ -232,10 +232,8 @@ ul.tabs a.current {
 /* place_hierarchy elements */
 #place_hierarchy {
 /* float:left; 
-margin-left:-130px; *
+margin-left:-130px; */
 }
-
-
 
 /*  === Elements To be defined later (leave as dislay:none; for now) ==== */ 
 

@@ -34,6 +34,7 @@
 
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 	<script type="text/javascript" src="modules/googlemap/wt_v3_places_edit_overlays.js.php"></script>
+	<link type="text/css" href="modules/googlemap/css/wt_v3_places_edit.css" rel="stylesheet" />
 
 	<script type="text/javascript">
 
@@ -221,10 +222,6 @@
 		google.maps.event.addListener(map, 'zoom_changed', function() {
 			document.editplaces.NEW_ZOOM_FACTOR.value = map.zoom;        
   		});	
-	
-		var infowindow = new google.maps.InfoWindow({ 
-			content: '<div id="gmedit_iw" style="width:200px; height: 45px;" class="iwstyle"><br />test</div>'
-		});
 
 		// Create the Main Location Marker
 		<?php 
@@ -366,8 +363,8 @@
 		} else {	
 			if (response.length > 0) {
 				for (i=0; i<response.length; i++) {    		  		
-    		  		var name  = '<div id="gmedit_iw" class="iwstyle" style="vertical-align:text-middle; white-space:pre-wrap; width:200px; height: 45px;">'+i+'. '+response[i].address_components[0].short_name+''
-						name +=	"<br /><a href=\"javascript:;\" onclick=\"setLoc(" + response[i].geometry.location.lat() + ", " + response[i].geometry.location.lng() + ");\"><?php echo PrintReady(WT_I18N::translate('Use this value')); ?></a>"
+    		  		var name  = '<div id="gname" class="iwstyle">'+response[i].address_components[0].short_name+'<br /> '+response[i].geometry.location+''
+						name +=	"<br /><a href=\"javascript:;\" onclick=\"setLoc(" + response[i].geometry.location.lat() + ", " + response[i].geometry.location.lng() + ");\"><div id=\"namelink\"><?php echo PrintReady(WT_I18N::translate('Use this value')); ?></div></a>"
 						name += "</div>"
     		  		var point = response[i].geometry.location;
     		  		var marker = createMarker(i, point, name);	
