@@ -129,14 +129,14 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 					echo "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" />";
 					echo "<div id=\"map_pane\" style=\"border: 1px solid gray; color:black; width: 100%; height: ".$GOOGLEMAP_YSIZE."px\"></div>";
 					if (WT_USER_IS_ADMIN) {
-						echo "<table width=\"100%\"><tr>";
-						echo "<td width=\"33%\" align=\"left\">";
+						echo "<table style=\"font-size:13px; \" width=\"100%\"><tr>";
+						echo "<td width=\"40%\" align=\"left\">";
 						echo "<a href=\"module.php?mod=".$this->getName()."&amp;mod_action=admin_editconfig\">".WT_I18N::translate('Manage GoogleMap configuration')."</a>";
 						echo "</td>";
-						echo "<td width=\"34%\" align=\"center\">";
+						echo "<td width=\"35%\" align=\"center\">";
 						echo "<a href=\"module.php?mod=".$this->getName()."&amp;mod_action=admin_places\">".WT_I18N::translate('Edit geographic place locations')."</a>";
 						echo "</td>";
-						echo "<td width=\"33%\" align=\"right\">";
+						echo "<td width=\"25%\" align=\"right\">";
 						echo "<a href=\"module.php?mod=".$this->getName()."&amp;mod_action=admin_placecheck\">".WT_I18N::translate('Place Check')."</a>";
 						echo "</td>";
 						echo "</tr></table>";
