@@ -377,10 +377,12 @@ case 'update':
 }
 
 print_header(WT_I18N::translate('Family tree configuration'));
+if (get_gedcom_count()==1) { //Removed becasue it doesn't work here for multiple GEDCOMs. Can be reinstated when fixed (https://bugs.launchpad.net/webtrees/+bug/613235)
+	if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm'; 
+}
 ?>
 <script type="text/javascript">
 //<![CDATA[
-  jQuery.noConflict();
   jQuery(document).ready(function() {
   jQuery("#tabs").tabs();
   });
@@ -435,7 +437,7 @@ print_header(WT_I18N::translate('Family tree configuration'));
 						<td>
 							<?php echo WT_I18N::translate('Default person for pedigree and descendancy charts'), help_link('PEDIGREE_ROOT_ID'); ?>
 						</td>
-						<td class="  wrap">
+						<td class="wrap">
 							<input type="text" name="NEW_PEDIGREE_ROOT_ID" id="NEW_PEDIGREE_ROOT_ID" value="<?php echo $PEDIGREE_ROOT_ID; ?>" size="5" />
 							<?php
 								print_findindi_link("NEW_PEDIGREE_ROOT_ID", "");

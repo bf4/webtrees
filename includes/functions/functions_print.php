@@ -364,27 +364,98 @@ function print_header($title) {
 	global $GEDCOM, $GEDCOM_TITLE, $action, $query, $theme_name;
 	global $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $print_headerfile;
 	global $WT_IMAGES, $TEXT_DIRECTION, $REQUIRE_AUTHENTICATION;
+	global $controller;
 
 	header('Content-Type: text/html; charset=UTF-8');
 
-	$META_DESCRIPTION=get_gedcom_setting(WT_GED_ID, 'META_DESCRIPTION');
-	$META_ROBOTS=get_gedcom_setting(WT_GED_ID, 'META_ROBOTS');
-	$META_TITLE=get_gedcom_setting(WT_GED_ID, 'META_TITLE');
+	$GEDCOM_TITLE = get_gedcom_setting(WT_GED_ID, 'title');
+	$META_DESCRIPTION='';
+	$META_ROBOTS='noindex,nofollow';
+	$META_GENERATOR='';
+	$LINK_CANONICAL='';
+
+	if (preg_match("/index,( *)follow/", get_gedcom_setting(WT_GED_ID, 'META_ROBOTS')) > 0) { // need to convert this to a boolean setting
+		$index_this_page=false;
+
+		if (isset($controller) && (in_array(WT_SCRIPT_NAME, array('family.php', 'individual.php', 'note.php', 'repo.php', 'source.php' )))) {
+			switch (get_class($controller)) {
+			case 'WT_Controller_Family':
+				// family.php
+				if ($controller->family) {
+					$LINK_CANONICAL=$controller->family->getHtmlUrl();
+					if ($controller->family->canDisplayName()) $index_this_page=true;
+				}
+				break;
+			case 'WT_Controller_Individual':
+				// individual.php
+				if ($controller->indi) {
+					$LINK_CANONICAL=$controller->indi->getHtmlUrl();
+					if ($controller->indi->canDisplayName()) $index_this_page=true;
+				}
+				break;
+			case 'WT_Controller_Note':
+				// note.php
+				if ($controller->note) {
+					$LINK_CANONICAL=$controller->note->getHtmlUrl();
+					if ($controller->note->canDisplayName()) $index_this_page=true;
+				}
+				break;
+			case 'WT_Controller_Repository':
+				// repo.php
+				if ($controller->repository) {
+					$LINK_CANONICAL=$controller->repository->getHtmlUrl();
+					if ($controller->repository->canDisplayName()) $index_this_page=true;
+				}
+				break;
+			case 'WT_Controller_Source':
+				// source.php
+				if ($controller->source) {
+					$LINK_CANONICAL=$controller->source->getHtmlUrl();
+					if ($controller->source->canDisplayName()) $index_this_page=true;
+				}
+				break;
+			default:
+				break;
+			}
+		}
+
+		if (WT_SCRIPT_NAME=='index.php') {
+			$LINK_CANONICAL='index.php?ctype=gedcom&amp;ged='.WT_GEDURL;
+			$index_this_page=true;
+		}
+
+		if ($index_this_page) {
+			$META_ROBOTS='index,follow';
+		}
+
+		// pages we want search engines to follow, but not index
+		if (in_array(WT_SCRIPT_NAME, array('famlist.php', 'indilist.php', 'notelist.php', 'repolist.php', 'sourcelist.php'))) {
+			$META_ROBOTS='noindex,follow';
+		}
+	}
+
+	if ($view!='simple') {
+		$META_DESCRIPTION=get_gedcom_setting(WT_GED_ID, 'META_DESCRIPTION');
+		if (empty($META_DESCRIPTION)) {
+			$META_DESCRIPTION=$GEDCOM_TITLE;
+		}
+		$META_GENERATOR=WT_WEBTREES.' - '.WT_WEBTREES_URL;
+	}
 
 	// The title often includes the names of records, which may have markup
 	// that cannot be used in the page title.
 	$title=strip_tags($title);
 
+	$META_TITLE=get_gedcom_setting(WT_GED_ID, 'META_TITLE');
 	if ($META_TITLE) {
 		$title.=' - '.$META_TITLE;
 	}
-	$GEDCOM_TITLE = get_gedcom_setting(WT_GED_ID, 'title');
 	$javascript=
 		'<script type="text/javascript" src="js/jquery/jquery.min.js"></script>'.
 		'<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>'.
 		'<script type="text/javascript" src="js/jquery/jquery.tablesorter.js"></script>'. // Deprecated - use datatables
 		'<script type="text/javascript" src="js/jquery/jquery.tablesorter.pager.js"></script>'. // Deprecated - use datatables
-		'<script type="text/javascript" src="js/jquery/jquery.jeditable.js"></script>'.
+		'<script type="text/javascript" src="js/jquery/jquery.jeditable.min.js"></script>'.
 		'<script type="text/javascript" src="js/jquery/jquery.dataTables.min.js"></script>'.
 		WT_JS_START.'
 		/* setup some javascript variables */
@@ -1021,7 +1092,7 @@ function help_link($help_topic, $module='') {
 
 	if ($_SESSION['show_context_help']) {
 		return
-			'<a class="help" tabindex="-1" href="javascript: '.$help_topic.'" onclick="helpPopup(\''.$help_topic.'\',\''.$module.'\'); return false;">&nbsp;'.
+			'<a class="help icon-help-15" tabindex="-1" href="javascript: '.$help_topic.'" onclick="helpPopup(\''.$help_topic.'\',\''.$module.'\'); return false;">&nbsp;'.
 			($WT_USE_HELPIMG ?  '<img src="'.$WT_IMAGES['help'].'" class="icon" width="15" height="15" alt="" />' : WT_I18N::translate('?')).
 			'&nbsp;</a>';
 	} else {

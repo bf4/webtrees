@@ -34,6 +34,7 @@ echo
 	'<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />',
 	'<link rel="stylesheet" href="', WT_THEME_DIR, 'jquery/jquery-ui_theme.css" type="text/css" />',
 	'<link rel="stylesheet" href="', $stylesheet, '" type="text/css" media="all" />',
+	'<meta name="robots" content="noindex,nofollow" />',
 	$javascript,
 	'</head>';
 ?>
@@ -112,14 +113,14 @@ echo
 	'</ul></li>';
 if (WT_USER_IS_ADMIN) {
 	echo
-		'<li><a ', (WT_SCRIPT_NAME=="admin_users_list.php" ? 'class="current" ' : ''), 'href="useradmin.php">',
+		'<li><a ', (WT_SCRIPT_NAME=="admin_users.php" && safe_GET('action')=="listusers" ? 'class="current" ' : ''), 'href="admin_users.php?action=listusers">',
 		WT_I18N::translate('Users'),
 		'</a></li>',
 		'<li><ul>',
-		'<li><a ', (WT_SCRIPT_NAME=="admin_users_add.php" ? 'class="current" ' : ''), 'href="admin_users_add.php?action=createform">', WT_I18N::translate('Add a new user'), '</a></li>',
+		'<li><a ', (WT_SCRIPT_NAME=="admin_users.php" && safe_GET('action')=="createform" ? 'class="current" ' : ''), 'href="admin_users.php?action=createform">', WT_I18N::translate('Add a new user'), '</a></li>',
 		'<li><a ', (WT_SCRIPT_NAME=="admin_users_bulk.php" ? 'class="current" ' : ''), 'href="admin_users_bulk.php">',
 		WT_I18N::translate('Send broadcast messages'),
-		'<li><a ', (WT_SCRIPT_NAME=="admin_users_clean.php" ? 'class="current" ' : ''), 'href="admin_users_clean.php?action=cleanup">',
+		'<li><a ', (WT_SCRIPT_NAME=="admin_users.php" && safe_GET('action')=="cleanup" ? 'class="current" ' : ''), 'href="admin_users.php?action=cleanup">',
 		WT_I18N::translate('Delete inactive users'),
 		'</a></li>',
 		'</ul></li>',

@@ -2450,7 +2450,7 @@ case 'help_contents_help':
 			.WT_I18N::translate('My account').'</a></li><li><a href="?help=mypage_portal">'.WT_I18N::translate('My Page').'</a></li><li><a href="?help=edituser_password">'.WT_I18N::translate('Password').'</a></li><li><a href="?help=pedigree.php">'.WT_I18N::translate('Pedigree Tree').'</a></li><li><a href="?help=timeline.php">'.WT_I18N::translate('Timeline chart').'</a></li><li><a href="?help=edituser_username">'.WT_I18N::translate('Username').'</a></li></ul></td>';
 		if (WT_USER_IS_ADMIN) {
 			$text.='<td valign="top"><span class="helpstart">'.WT_I18N::translate('Administrator help items').'</span><ul><li><a href="?help=admin.php">'.WT_I18N::translate('Administration').'</a></li><li><a href="?help=help_editconfig.php">'.WT_I18N::translate('Configure').'</a></li><li><a href="?help=help_faq.php">'
-			.WT_I18N::translate('FAQ List: Edit').'</a></li><li><a href="?help=edit_gedcoms">'.WT_I18N::translate('GEDCOM: Administration page').'</a></li><li><a href="?help=edit_config_gedcom">'.WT_I18N::translate('GEDCOM: Configure').'</a></li><li><a href="?help=default_gedcom">'.WT_I18N::translate('GEDCOM: Default').'</a></li><li><a href="readme.html">'.WT_I18N::translate('View readme.html file').'</a></li><li><a href="?help=help_useradmin.php">'.WT_I18N::translate('User administration').'</a></li></ul></td>';
+			.WT_I18N::translate('FAQ List: Edit').'</a></li><li><a href="?help=edit_gedcoms">'.WT_I18N::translate('GEDCOM: Administration page').'</a></li><li><a href="?help=edit_config_gedcom">'.WT_I18N::translate('GEDCOM: Configure').'</a></li><li><a href="?help=default_gedcom">'.WT_I18N::translate('GEDCOM: Default').'</a></li><li><a href="readme.html">'.WT_I18N::translate('View readme.html file').'</a></li><li><a href="?help=help_admin_users.php">'.WT_I18N::translate('User administration').'</a></li></ul></td>';
 		}
 	$text.=('</tr></table>');
 	break;
@@ -2543,11 +2543,6 @@ case 'index_onthisday':
 case 'index_portal':
 	$title=WT_I18N::translate('Home page');
 	$text=WT_I18N::translate('The Home page consists of several separate blocks, and can be customized. On sites that have more than one genealogical database, you may see a different Home page for each.  Depending on how the administrator customized the site, you may see any of the following blocks on the Home Page:<ul><li><a href="?help=index_charts"><b>Charts</b></a></li><li><a href="?help=index_favorites"><b>GEDCOM favorites</b></a></li><li><a href="?help=index_gedcom_news"><b>GEDCOM news</b></a></li><li><a href="?help=index_stats"><b>GEDCOM statistics</b></a></li><li><a href="?help=index_login"><b>Login</b></a></li><li><a href="?help=index_loggedin"><b>Logged in users</b></a></li><li><a href="?help=index_common_names"><b>Most common surnames</b></a></li><li><a href="?help=index_onthisday"><b>On this day in your history</b></a></li><li><a href="?help=index_media"><b>Random media</b></a></li><li><a href="?help=recent_changes"><b>Recent changes</b></a></li><li><a href="?help=index_events"><b>Upcoming events</b></a></li><li><a href="?help=index_welcome"><b>Welcome</b></a></li></ul>');
-	break;
-
-case 'index_stats':
-	$title=WT_I18N::translate('GEDCOM statistics block');
-	$text=WT_I18N::translate('In this block you will see some statistics about the current GEDCOM file.  If you need more information than is listed, send a message to the contact at the bottom of the page.');
 	break;
 
 case 'index_top10_pageviews':
@@ -3016,7 +3011,7 @@ case 'upload_server_file':
 
 case 'upload_server_folder':
 	$title=WT_I18N::translate('Folder name on server');
-	$text=WT_I18N::translate('The administrator has enabled up to %s folder levels below the default <b>%s</b>.  This helps to organize the media files and reduces the possibility of name collisions.<br /><br />In this field, you specify the destination folder where the uploaded media file should be stored.  The matching thumbnail file, either uploaded separately or generated automatically, will be stored in a similar folder structure starting at <b>%sthumbs/</b> instead of <b>%s</b>.  You do not need to enter the <b>%s</b> part of the destination folder name.<br /><br />If you are not sure about what to enter here, you should contact your site administrator for advice.', $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY, $MEDIA_DIRECTORY, $MEDIA_DIRECTORY);
+	$text=WT_I18N::translate('The administrator has enabled up to %s folder levels below the default <b>%s</b>.  This helps to organize the media files and reduces the possibility of name collisions.<br /><br />In this field, you specify the destination folder where the uploaded media file should be stored.  The matching thumbnail file, either uploaded separately or generated automatically, will be stored in a similar folder structure starting at <b>%sthumbs/</b> instead of <b>%s</b>.  You do not need to enter the <b>%s</b> part of the destination folder name.<br /><br />If you are not sure about what to enter here, you should contact your site administrator for advice.', $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY, $MEDIA_DIRECTORY, $MEDIA_DIRECTORY, $MEDIA_DIRECTORY);
 	break;
 
 case 'upload_thumbnail_file':
