@@ -579,8 +579,15 @@
        		var sv_elevation = locations[i][18];					// Street View elevation
        		var sv_zoom = locations[i][19];							// Street View zoom
        		
-       		var sv_point = new google.maps.LatLng(sv_lati,sv_long); // StreetView Latitude and Longitide
-       		       		
+			// Employ of image tab function using an information image -----       		
+       		if (media == null || media == "") {
+       			media = "modules/googlemap/images/facts/v3_image_info.png";
+       		} else {       			
+       			media = media;
+       		}
+			// -------------------------------------------------------------
+       		
+       		var sv_point = new google.maps.LatLng(sv_lati,sv_long); // StreetView Latitude and Longitide       		       		
        		if (document.getElementById("golfbox").checked == false) { 
        			var category = "theatre";							// Category for future pedigree map use etc
        			var addr2 = locations[i][10];						// printable address for marker title
@@ -640,11 +647,7 @@
           					'<div id = "pane3">',
           						divhead,
           						'<div id = "pane3_text">',
-          							'<br />Old Photo, Painting, etc.',
-          							'<br />',
-          							'<br />Perhaps these should be eventually stored in the Media Places subdirectory ???',
-       								'<br />',
-       								'<br />This feature to be implemented later.',
+          							'<img style="margin-left: -10px;" src="'+media+'" height= "217px" width= "298px" />',
        							'<\/div>',
        						'<\/div>',
        			
