@@ -42,9 +42,56 @@ if (!defined('WT_WEBTREES')) {
 
 //<![CDATA[
 
+// The HomeControl returns the map to the original position and style ==============
+function HomeControl(controlDiv, pm_map) {
+  	// Set CSS styles for the DIV containing the control
+  	// Setting padding to 5 px will offset the control from the edge of the map
+  	controlDiv.style.paddingTop = '5px';
+  	controlDiv.style.paddingRight = '0px';
 
+  	// Set CSS for the control border
+  	var controlUI = document.createElement('DIV');
+  	controlUI.style.backgroundColor = 'white';
+  	controlUI.style.color = 'black';
+  	controlUI.style.borderColor = 'black';
+  	controlUI.style.borderColor = 'black';
+  	controlUI.style.borderStyle = 'solid';
+  	controlUI.style.borderWidth = '2px';
+  	controlUI.style.cursor = 'pointer';
+  	controlUI.style.textAlign = 'center';
+  	controlUI.title = '<?php echo WT_i18n::translate('Click to reset the map to the original view')?>';
+  	controlDiv.appendChild(controlUI);
 
-// if (GBrowserIsCompatible()) {
+  	// Set CSS for the control interior
+  	var controlText = document.createElement('DIV');
+  	controlText.style.fontFamily = 'Arial,sans-serif';
+  	controlText.style.fontSize = '12px';
+  	controlText.style.paddingLeft = '15px';
+  	controlText.style.paddingRight = '15px';
+  	controlText.innerHTML = '<b><?php echo WT_i18n::translate('Redraw map')?><\/b>';
+  	controlUI.appendChild(controlText);
+
+  	// Setup the click event listeners: simply set the map to original LatLng
+  	google.maps.event.addDomListener(controlUI, 'click', function() {
+    	pm_map.setMapTypeId(google.maps.MapTypeId.TERRAIN),
+    	pm_map.fitBounds(bounds),
+    	pm_map.setCenter(bounds.getCenter()),
+    	infowindow.close()
+		if (document.getElementById(lastlinkid) != null) {
+			document.getElementById(lastlinkid).className = 'person_box:target';
+		}
+  	});
+}
+	
+// This function picks up the click and opens the corresponding info window
+function myclick(i) {
+	if (document.getElementById(lastlinkid) != null) {
+		document.getElementById(lastlinkid).className = 'person_box:target';
+	}
+	google.maps.event.trigger(gmarkers[i], "click");
+}
+	
+
 
 // this variable will collect the html which will eventually be placed in the side_bar
 var side_bar_html = "";
@@ -58,6 +105,7 @@ var lastlinkid;
 var infowindow = new google.maps.InfoWindow({ 
 	//	
 });	
+
 
 // === Create an associative array of GIcons() =====================================================
 var gicons = [];
@@ -363,13 +411,8 @@ function createMarker(point, name, html, mhtml, icontype) {
 	return marker;	
 };
 
-// This function picks up the click and opens the corresponding info window
-function myclick(i) {
-	if (document.getElementById(lastlinkid) != null) {
-		document.getElementById(lastlinkid).className = 'person_box:target';
-	}
-	google.maps.event.trigger(gmarkers[i], "click");
-}
+
+
 
 // create the map
 var myOptions = {
@@ -397,8 +440,15 @@ google.maps.event.addListener(pm_map, 'click', function() 	{
 	if (document.getElementById(lastlinkid) != null) {
 		document.getElementById(lastlinkid).className = 'person_box:target';
 	}
-	infowindow.close();
+infowindow.close();
 });
+	
+// Create the DIV to hold the control and call HomeControl() passing in this DIV. --
+var homeControlDiv = document.createElement('DIV');
+var homeControl = new HomeControl(homeControlDiv, pm_map);
+homeControlDiv.index = 1;
+pm_map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
+// ---------------------------------------------------------------------------------
 
 
 // create the map bounds
@@ -574,6 +624,7 @@ for ($i=0; $i<($controller->treesize); $i++) {
 pm_map.setCenter(bounds.getCenter());
 
 
+
 // Close the sidebar highlight when the infowindow is closed ------
 google.maps.event.addListener(infowindow, "closeclick", function() {
 	document.getElementById(lastlinkid).className = 'person_box:target';
@@ -585,71 +636,71 @@ document.getElementById("side_bar").innerHTML = side_bar_html;
 
 
 // === create the context menu div ===
-	  var contextmenu = document.createElement("div");
-	  contextmenu.style.visibility="hidden";
-	  contextmenu.innerHTML = '<a href="javascript:zoomIn()"><div class="optionbox">&nbsp;&nbsp;<?php echo WT_I18N::translate('Zoom in'); ?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:zoomOut()"><div class="optionbox">&nbsp;&nbsp;<?php echo WT_I18N::translate('Zoom out'); ?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:zoomInHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo WT_I18N::translate('Zoom in here'); ?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:zoomOutHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo WT_I18N::translate('Zoom out here'); ?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:centreMapHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo WT_I18N::translate('Center map here'); ?>&nbsp;&nbsp;</div></a>';
-//BH	  pm_map.getContainer().appendChild(contextmenu);
+var contextmenu = document.createElement("div");
+	contextmenu.style.visibility="hidden";
+	contextmenu.innerHTML = '<a href="javascript:zoomIn()"><div class="optionbox">&nbsp;&nbsp;<?php echo WT_I18N::translate('Zoom in'); ?>&nbsp;&nbsp;</div></a>'
+						  + '<a href="javascript:zoomOut()"><div class="optionbox">&nbsp;&nbsp;<?php echo WT_I18N::translate('Zoom out'); ?>&nbsp;&nbsp;</div></a>'
+						  + '<a href="javascript:zoomInHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo WT_I18N::translate('Zoom in here'); ?>&nbsp;&nbsp;</div></a>'
+						  + '<a href="javascript:zoomOutHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo WT_I18N::translate('Zoom out here'); ?>&nbsp;&nbsp;</div></a>'
+						  + '<a href="javascript:centreMapHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo WT_I18N::translate('Center map here'); ?>&nbsp;&nbsp;</div></a>';
+//BH pm_map.getContainer().appendChild(contextmenu);
 
-	  // === listen for singlerightclick ===
-	  google.maps.event.addListener(pm_map,"singlerightclick",function(pixel,tile) {
-		// store the "pixel" info in case we need it later
-		// adjust the context menu location if near an egde
-		// create a GControlPosition
-		// apply it to the context menu, and make the context menu visible
-		clickedPixel = pixel;
-		var x=pixel.x;
-		var y=pixel.y;
-		if (x > pm_map.getSize().width - 120) { x = pm_map.getSize().width - 120 }
-		if (y > pm_map.getSize().height - 100) { y = pm_map.getSize().height - 100 }
-		var pos = new GControlPosition(G_ANCHOR_TOP_LEFT, new GSize(x,y));
-		pos.apply(contextmenu);
-		contextmenu.style.visibility = "visible";
-	  });
+// === listen for singlerightclick ===
+google.maps.event.addListener(pm_map,"singlerightclick",function(pixel,tile) {
+	// store the "pixel" info in case we need it later
+	// adjust the context menu location if near an egde
+	// create a GControlPosition
+	// apply it to the context menu, and make the context menu visible
+	clickedPixel = pixel;
+	var x=pixel.x;
+	var y=pixel.y;
+	if (x > pm_map.getSize().width - 120) { x = pm_map.getSize().width - 120 }
+	if (y > pm_map.getSize().height - 100) { y = pm_map.getSize().height - 100 }
+	var pos = new GControlPosition(G_ANCHOR_TOP_LEFT, new GSize(x,y));
+	pos.apply(contextmenu);
+	contextmenu.style.visibility = "visible";
+});
 
-	  // === functions that perform the context menu options ===
-	  function zoomIn() {
-		// perform the requested operation
-		pm_map.zoomIn();
-		// hide the context menu now that it has been used
-		contextmenu.style.visibility="hidden";
-	  }
-	  function zoomOut() {
-		// perform the requested operation
-		pm_map.zoomOut();
-		// hide the context menu now that it has been used
-		contextmenu.style.visibility="hidden";
-	  }
-	  function zoomInHere() {
-		// perform the requested operation
-		var point = pm_map.fromContainerPixelToLatLng(clickedPixel)
-		pm_map.zoomIn(point,true);
-		// hide the context menu now that it has been used
-		contextmenu.style.visibility="hidden";
-	  }
-	  function zoomOutHere() {
-		// perform the requested operation
-		var point = pm_map.fromContainerPixelToLatLng(clickedPixel)
-		pm_map.setCenter(point,pm_map.getZoom()-1); // There is no pm_map.zoomOut() equivalent
-		// hide the context menu now that it has been used
-		contextmenu.style.visibility="hidden";
-	  }
-	  function centreMapHere() {
-		// perform the requested operation
-		var point = pm_map.fromContainerPixelToLatLng(clickedPixel)
-		pm_map.setCenter(point);
-		// hide the context menu now that it has been used
-		contextmenu.style.visibility="hidden";
-	  }
+// === functions that perform the context menu options ===
+function zoomIn() {
+	// perform the requested operation
+	pm_map.zoomIn();
+	// hide the context menu now that it has been used
+	contextmenu.style.visibility="hidden";
+}
+function zoomOut() {
+	// perform the requested operation
+	pm_map.zoomOut();
+	// hide the context menu now that it has been used
+	contextmenu.style.visibility="hidden";
+}
+function zoomInHere() {
+	// perform the requested operation
+	var point = pm_map.fromContainerPixelToLatLng(clickedPixel)
+	pm_map.zoomIn(point,true);
+	// hide the context menu now that it has been used
+	contextmenu.style.visibility="hidden";
+}
+function zoomOutHere() {
+	// perform the requested operation
+	var point = pm_map.fromContainerPixelToLatLng(clickedPixel)
+	pm_map.setCenter(point,pm_map.getZoom()-1); // There is no pm_map.zoomOut() equivalent
+	// hide the context menu now that it has been used
+	contextmenu.style.visibility="hidden";
+}
+function centreMapHere() {
+	// perform the requested operation
+	var point = pm_map.fromContainerPixelToLatLng(clickedPixel)
+	pm_map.setCenter(point);
+	// hide the context menu now that it has been used
+	contextmenu.style.visibility="hidden";
+}
 
+// === If the user clicks on the map, close the context menu ===
+google.maps.event.addListener(pm_map, "click", function() {
+	contextmenu.style.visibility="hidden";
+});
 
-	  // === If the user clicks on the map, close the context menu ===
-	  google.maps.event.addListener(pm_map, "click", function() {
-		contextmenu.style.visibility="hidden";
-	  });
 
 //]]>
 </script>
