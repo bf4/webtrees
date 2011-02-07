@@ -288,7 +288,7 @@ function setup_map() {
 	?>
 	
 	<!--  V3 ============ -->
-		<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+		<script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false" type="text/javascript"></script>
 	<!--  V3 ============ -->
 	
 	<script type="text/javascript">
