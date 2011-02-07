@@ -173,7 +173,7 @@ function initialize() {
     var panoramaOptions = {
       	navigationControl: false,
       	navigationControlOptions: {
-      		position: google.maps.ControlPosition.TOP_LEFT,		// BOTTOM, BOTTOM_LEFT, LEFT, TOP, etc
+      		position: google.maps.ControlPosition.TOP_RIGHT,	// BOTTOM, BOTTOM_LEFT, LEFT, TOP, etc
       		style: google.maps.NavigationControlStyle.SMALL  	// ANDROID, DEFAULT, SMALL, ZOOM_PAN
       	},
       	linksControl: false,
@@ -195,7 +195,7 @@ function initialize() {
 	panorama = new google.maps.StreetViewPanorama(document.getElementById("mapCanvas"), panoramaOptions);
 	panorama.setPosition(latLng);
 
-	
+/*	
     	// Enable navigator contol and address control to be toggled with right mouse button -------
 		var aLink = document.createElement('a');
 		aLink.href = "javascript:void(0)"; onmousedown=function(e) {
@@ -228,6 +228,7 @@ function initialize() {
 		};
 		panorama.controls[google.maps.ControlPosition.TOP_RIGHT].push(aLink);
 		// -----------------------------------------------------------------------------------------
+*/
 
   	// Update current position info.
   	updateMarkerPosition(latLng);
@@ -306,8 +307,7 @@ function initialize() {
 }  // end init
 
 var mapbutt = "<?php echo $_GET['map']; ?>";
-var svbutt = "<?php echo $_GET['streetview']; ?>";
-  	
+var svbutt = "<?php echo $_GET['streetview']; ?>";  	
 function toggleStreetView() { 
     var toggle = panorama.getVisible();
     if (toggle == false) {
@@ -319,8 +319,25 @@ function toggleStreetView() {
     }
 }
 
+function toggleStreetViewControls() { 
+	if (panorama.get('addressControl') == false) {
+		panorama.set('navigationControl', true);
+		panorama.set('addressControl', true);
+		panorama.set('linksControl', true);
+		document.myForm.butt0.value="SV controls OFF";
+	} else {
+		panorama.set('navigationControl', false);
+		panorama.set('addressControl', false);
+		panorama.set('linksControl', false);
+		document.myForm.butt0.value="SV controls ON ";
+	}
+}
+
+
+
 function resetview() {
 	initialize();
+	document.myForm.butt0.value="SV controls ON ";
 }
 
 // Onload handler to fire off the app.
@@ -332,6 +349,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
 <body>
 
   	<style>
+  	#butt0 {
+  		width:105px;
+  	}
   	#butt1, #butt2 {
   		width:90px;
   	}
@@ -369,7 +389,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
   			<?php
   			$map = $_GET["map"];
-  			$reset = $_GET["reset"]; 
+  			$reset = $_GET["reset"];
+  			echo "<input id=\"butt0\" name =\"butt0\" type=\"button\" value=\"SV controls ON \" onclick=\"toggleStreetViewControls();\"></input>";
   			echo "<input id=\"butt1\" name =\"butt1\" type=\"button\" value=\"$map\" onclick=\"toggleStreetView();\"></input>";
   			echo "<input id=\"butt2\" name =\"butt2\" type=\"button\" value=\"$reset\" onclick=\"resetview();\"></input>";
   			?>
