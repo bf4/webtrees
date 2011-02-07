@@ -647,7 +647,7 @@
           					'<div id = "pane3">',
           						divhead,
           						'<div id = "pane3_text">',
-          							'<img style="margin-left: -10px;" src="'+media+'" height= "217px" width= "298px" />',
+          							'<img style="margin-left: -10px; margin-top: 1px;" src="'+media+'" height= "216px" width= "298px" />',
        							'<\/div>',
        						'<\/div>',
        			       			
