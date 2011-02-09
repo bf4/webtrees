@@ -633,7 +633,7 @@ html[dir='rtl'] .icon, html[dir='rtl'] .adminicon {
 	font-weight: bold;
 }
 
-.helpcontent {
+.helptab {
 	margin-left: 10px;
 	margin-right:10px;
 }
@@ -663,7 +663,7 @@ html[dir='rtl'] .icon, html[dir='rtl'] .adminicon {
 
 
 	
-#content {
+#tab {
 	margin-left: 1px;
 }
 
@@ -695,7 +695,7 @@ html[dir='rtl'] .icon, html[dir='rtl'] .adminicon {
 	padding: 1px;
 }
 
-.blockcontent {
+.blocktab {
 	margin-left:auto;
 	margin-right:auto;
 	margin-bottom:10px;
@@ -1374,6 +1374,7 @@ text-align: center;
 
 dl {
 	margin: 0;
+	white-space:nowrap;
 }
 
 dt {
@@ -1393,7 +1394,7 @@ dd {
 	margin: 0;
 }
 
-#facts_content dd {
+#facts_tab dd {
 	float:left;
 	width: 70%;
 }
@@ -1407,8 +1408,8 @@ dd {
 #indi_header h1 {
 	color: #555555;
 	font-size: 2em;
-	padding: 0 .5em;
-	margin: 0.25em 0 0 0;
+	padding: 0;
+	margin: 0;
 }
 
 #indi_header a {
@@ -1429,16 +1430,13 @@ dd {
 
 #indi_name_details {
 	vertical-align:	top;
-	float: left;
-	margin: 10px 0 0 0;
-	width: 85%;
 }
 
 #indi_name_details a {
 	color: #333377;
 }
 
-#indi_name_details dt:after { content: ":"; }
+#indi_name_details dt:after { tab: ":"; }
 
 #indi_note {
 	margin:	0 0 5px 0;
@@ -1461,8 +1459,7 @@ dd {
 
 #indi_facts {
 	float:left;
-	padding: 0 15px 0 0;
-	width: 45%;
+	padding: 0 15px 0 5px;
 }
 
 #sex {
@@ -1473,6 +1470,8 @@ dd {
 	display: block;
 	margin-bottom:10px;
 	padding-left: 10px;
+	float:left;
+	clear:left;
 }
 /* =================================== */
 
@@ -1648,7 +1647,7 @@ div.faq_body {
 /*--- edit links ---*/
 
 .edit_link:after { /* used only on the user list */
-	content: " " url(images/edit_sm.png);
+	tab: " " url(images/edit_sm.png);
 }
 
 td.descriptionbox  a { /* this keeps the tag color the same when it is a link as when not */
@@ -1689,3 +1688,54 @@ td.descriptionbox  a { /* this keeps the tag color the same when it is a link as
 .logo {
 	text-align: center;
 }
+
+
+/* EXPERIMENTAL sidebar2 */
+#main {overflow:hidden;}
+
+#tabs,#sidebar2 {
+ /*   line-height: 300px;
+    text-align: center;*/
+    border: 1px solid;
+}
+ 
+#sidebar2 {
+    background-color: #DEF;
+    border-color: #BCD;
+    display: none;
+}
+#tabs {
+    background-color: #EFE;
+    border-color: #CDC;
+    width: 97%;
+}
+ 
+.use-sidebar #tabs {width: 76%;}
+.use-sidebar #sidebar2 {
+    display: block;
+}
+ 
+.sidebar-at-left #sidebar2 {}
+.sidebar-at-right #sidebar2 {}
+ 
+.sidebar-at-left #tabs, .use-sidebar.sidebar-at-right #sidebar2, .sidebar-at-right #separator {float: right;}
+.sidebar-at-right #tabs, .use-sidebar.sidebar-at-left #sidebar2, .sidebar-at-left #separator {float: left;}
+ 
+#separator {
+    background-color: red;
+    border: 1px solid red;
+    display: block;
+    outline: none;
+    width: 1%;
+}
+.use-sidebar #separator {
+    background: url('img/vertical-separator.gif') repeat-y center top;
+    border-color: red;
+}
+#separator:hover {
+    border-color: red;
+    background: red;
+}
+
+#header_accordion { float:left; min-width:400px; margin-right:300px; position:absolute; z-index:80;}
+#indi_header {float:left; min-height:150px;}
