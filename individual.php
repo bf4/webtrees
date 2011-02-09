@@ -136,16 +136,16 @@ if ((empty($SEARCH_SPIDER))&&($controller->accept_success)) echo "<b>", WT_I18N:
 if ($controller->indi->isMarkedDeleted()) echo "<span class=\"error\">".WT_I18N::translate('This record has been marked for deletion upon admin approval.')."</span>";
 if (strlen($controller->indi->getAddName()) > 0) echo "<span class=\"name_head\">", PrintReady($controller->indi->getAddName()), "</span><br />";
 
-echo '<div id="main" class="use-sidebar sidebar-at-right">';
+echo '<div id="main" class="use-sidebar sidebar-at-right">'; //overall page container
 
-echo '<div id="indi_mainimage">';
+echo '<div id="indi_mainimage">'; // highlighted image
 	if ($controller->canShowHighlightedObject()) {
 		echo $controller->getHighlightedObject();
 	}
 echo '</div>';
 echo
-	'<div id="indi_header">',
-	'<h1>';
+	'<div id="indi_header">', // container for indi header details
+		'<h1>'; // Main name
 		if ($TEXT_DIRECTION=="rtl") echo "&nbsp;"; {
 			echo PrintReady($controller->indi->getFullName());
 		}
@@ -159,10 +159,10 @@ echo
 		}
 	echo
 		'</h1>',
-		'<div id="header_accordion">';
+		'<div id="header_accordion">'; // accordion for name details and other facts
 		if ($controller->indi->canDisplayDetails()) {
 			echo
-				'<h3>Name Details</h3>',
+				'<h3>Name Details</h3>', //1st accordion element
 				'<div id="indi_name_details">';
 				//Display name details
 					$globalfacts=$controller->getGlobalFacts();
@@ -185,36 +185,37 @@ echo
 			echo '</div>';
 			//Display facts
 			echo
-				'<h3>Other facts</h3>',
+				'<h3>Other facts</h3>', // 2nd accordion element
 				'<div id="indi_facts">';
-				//Display gender
-				foreach ($globalfacts as $key=>$value) {
-					$fact = $value->getTag();
-					if (in_array($fact, $nameSex)) {
-						if ($fact=="SEX") $controller->print_sex_record($value);
+					//Display gender
+					foreach ($globalfacts as $key=>$value) {
+						$fact = $value->getTag();
+						if (in_array($fact, $nameSex)) {
+							if ($fact=="SEX") $controller->print_sex_record($value);
+						}
 					}
-				}
-				// Display summary birth/death info.
-				$summary=$controller->indi->format_first_major_fact(WT_EVENTS_BIRT, 2);
-				// If alive display age
-				if (!$controller->indi->isDead()) {
-					$bdate=$controller->indi->getBirthDate();
-					$age = WT_Date::GetAgeGedcom($bdate);
-					if ($age!="") $summary.= "<dl><dt class=\"label\">".WT_I18N::translate('Age')."</dt><span class=\"field\">".get_age_at_event($age, true)."</span></dl>";
-				}
-				$summary.=$controller->indi->format_first_major_fact(WT_EVENTS_DEAT, 2);
-				if ($SHOW_LDS_AT_GLANCE) {
-					$summary.="<dl><span><b>".get_lds_glance($controller->indi->getGedcomRecord())."</b></span></dl>";
-				}
-				if ($summary) {
-					echo $summary;
-				}
+					// Display summary birth/death info.
+					$summary=$controller->indi->format_first_major_fact(WT_EVENTS_BIRT, 2);
+					// If alive display age
+					if (!$controller->indi->isDead()) {
+						$bdate=$controller->indi->getBirthDate();
+						$age = WT_Date::GetAgeGedcom($bdate);
+						if ($age!="") $summary.= "<dl><dt class=\"label\">".WT_I18N::translate('Age')."</dt><span class=\"field\">".get_age_at_event($age, true)."</span></dl>";
+					}
+					$summary.=$controller->indi->format_first_major_fact(WT_EVENTS_DEAT, 2);
+					if ($SHOW_LDS_AT_GLANCE) {
+						$summary.="<dl><span><b>".get_lds_glance($controller->indi->getGedcomRecord())."</b></span></dl>";
+					}
+					if ($summary) {
+						echo $summary;
+					}
+			echo '</div>'; // close #indi_facts
 		}
-		echo '</div>';
-	echo '</div>';
-echo '</div>';
-echo WT_JS_START,'jQuery("#header_accordion").accordion({active:false, autoHeight:false, collapsible: true});',	WT_JS_END;
-echo '<div id="sidebar2">';
+	echo '</div>'; // close #header_accordion
+echo '</div>'; // close #indi_header
+echo WT_JS_START,'jQuery("#header_accordion").accordion({active:false, autoHeight:true, collapsible: true});',	WT_JS_END; //accordion details
+
+echo '<div id="sidebar2">'; // sidebar code
 	if (!$controller->indi->canDisplayDetails()) {
 		echo "<table><tr><td class=\"facts_value\" >";
 		print_privacy_error();
@@ -223,23 +224,22 @@ echo '<div id="sidebar2">';
 		require './sidebar.php';
 	}
 echo
-	'</div>',
-	'<a href="#" id="separator"></a>';
-	//'<div class="clearer">&nbsp;</div>';
+	'</div>',  // close #sidebar2
+	'<a href="#" id="separator"></a>'; //clickable element to open/close sidebar
 
-	echo '<div id="hitcounter">';
+echo '<div id="hitcounter">';
 	if ($SHOW_COUNTER && (empty($SEARCH_SPIDER))) {
 		//print indi counter only if displaying a non-private person
 		require WT_ROOT.'includes/hitcount.php';
 		echo WT_I18N::translate('Hit Count:'), " ", $hitCount;
 	}
-echo '</div>';
+echo '</div>'; // close #hitcounter
 
+// ===================================== main content tabs
 foreach ($controller->tabs as $tab) {
 	echo $tab->getPreLoadContent();
 }
 $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
-// =====================================
 	echo '<div id="tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">';
 	echo '<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">';
 	foreach ($controller->tabs as $tab) {
@@ -269,9 +269,9 @@ $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 			}
 		}
 	}
-	echo '</div>'; // tabs 
+	echo '</div>'; // close #tabs 
 
-echo '</div>'; // main
+echo '</div>'; // close #main
 echo WT_JS_START;
 echo 'var catch_and_ignore; function paste_id(value) {catch_and_ignore = value;}';
 echo 'if (typeof toggleByClassName == "undefined") {';
