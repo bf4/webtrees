@@ -403,10 +403,6 @@ display:inline;
 visibility:visible;
 }
 
-#calendar_page #day {
-border:1px solid #ccc;
-}
-
 #index_title {
 float: left;
 }
@@ -1835,4 +1831,12 @@ td.descriptionbox  a {
 	background: url(images/delete.png) no-repeat left center;
 	width: 20px;
 	float: left;
+}
+
+.place {
+	padding-top: 5px;
+}
+
+.logo {
+	text-align: center;
 }
