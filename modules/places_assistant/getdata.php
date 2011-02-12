@@ -3,7 +3,7 @@
  * GET data from a server file to populate a contextual place list
  *
  * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
+ * Copyright (C) 2011 webtrees development team.
  *
  * Derived from PhpGedView
  * Copyright (C) 2002 to 2007  John Finlay and Others
@@ -28,8 +28,8 @@
  * @see functions_places.php
  */
 
-define('WT_SCRIPT_NAME', 'places/getdata.php');
-require '../includes/session.php';
+define('WT_SCRIPT_NAME', 'modules/places_assistant/getdata.php');
+require '../../includes/session.php';
 
 $localized=safe_GET('localized');
 $field=safe_GET('field');
