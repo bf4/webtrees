@@ -360,6 +360,7 @@ class relatives_WT_Module extends WT_Module implements WT_Module_Tab {
 		$ABBREVIATE_CHART_LABELS = false; // Override GEDCOM configuration
 
 		ob_start();
+		include './indi_header.php';
 		?>
 		<table class="facts_table"><tr><td style="width:20%; padding:4px"></td><td class="descriptionbox rela">
 		<input id="checkbox_elder" type="checkbox" onclick="toggleByClassName('DIV', 'elderdate');" <?php if ($SHOW_AGE_DIFF) echo "checked=\"checked\""; ?>/>

@@ -169,7 +169,7 @@ table.center {
 }
 
 .facts_table, .facts_table_rtl {
-	width: 99%;
+	width: 100%;
 }
 
 .facts_label {
@@ -1403,10 +1403,15 @@ dd {
 /* Classes for the INDI page header */
 
 #indi_header h1 {
+   color: #555555;
+    font-size: 150%;
+    margin: 0 0 10px;
+}
+
+#indi_header h3 {
 	color: #555555;
-	font-size: 2em;
-	padding: 0 .5em;
-	margin: 0.25em 0 0 0;
+    font-size: 80%;
+    margin: 0;
 }
 
 #indi_header a {
@@ -1420,16 +1425,15 @@ dd {
 }
 
 #indi_mainimage {
-	margin-right:	15px;
-	vertical-align:	top;
-	float: 			left;
+	margin-right:15px;
+	vertical-align:top;
+	float: left;
 }
 
 #indi_name_details {
-	vertical-align:	top;
-	float: left;
-	margin: 10px 0 0 0;
-	width: 85%;
+	padding: 0;
+	margin: 0;
+	font-size:80%;
 }
 
 #indi_name_details a {
@@ -1443,9 +1447,6 @@ dd {
 }
 
 #nameparts1 {
-	float: left;
-	margin-right: 20px;
-	max-width:50%;
 }
 
 #nameparts2, #nameparts3, #nameparts4, #nameparts5, #nameparts6  {
@@ -1458,9 +1459,9 @@ dd {
 }
 
 #indi_facts {
-	float:left;
-	padding: 0 15px 0 0;
-	width: 45%;
+	padding: 0;
+	margin: 0;
+	font-size:80%;
 }
 
 #sex {
@@ -1468,7 +1469,7 @@ dd {
 }
 
 #hitcounter {
-	display: block;
+	clear: left;
 	margin-bottom:10px;
 	padding-left: 10px;
 }
@@ -1713,7 +1714,7 @@ td.descriptionbox  a { /* this keeps the tag color the same when it is a link as
     width: 97%;
 }
  
-.use-sidebar #tabs {width: 76%;}
+.use-sidebar #tabs {width: 77%;}
 .use-sidebar #sidebar2 {
     display: block;
 }
@@ -1740,5 +1741,6 @@ td.descriptionbox  a { /* this keeps the tag color the same when it is a link as
     background: red;
 }
 
-#header_accordion { float:left; min-width:400px; margin-right:300px; position:absolute; z-index:80;}
+#header_accordion { float:left; min-width:400px; position:absolute; z-index:80;}
 #indi_header {float:left; min-height:150px;}
+.indi_table {clear:left;}

@@ -58,7 +58,9 @@ class personal_facts_WT_Module extends WT_Module implements WT_Module_Tab {
 		}
 
 		ob_start();
+		include './indi_header.php';
 		?>
+		<div class="indi_table">
 		<table class="facts_table" style="margin-top:-2px;" cellpadding="0">
 		<?php if (!$this->controller->indi->canDisplayDetails()) {
 			echo '<tr><td class="facts_value" colspan="2">';
@@ -108,7 +110,7 @@ class personal_facts_WT_Module extends WT_Module implements WT_Module_Tab {
 		if ($this->controller->indi->canEdit()) {
 			print_add_new_fact($this->controller->pid, $indifacts, 'INDI');
 		}
-		echo '</table><br />';
+		echo '</table></div>';
 		echo WT_JS_START;
 		if (!$EXPAND_RELATIVES_EVENTS) {
 			echo "toggleByClassName('TR', 'row_rela');";
