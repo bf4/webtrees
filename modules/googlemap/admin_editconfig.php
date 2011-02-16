@@ -87,7 +87,7 @@ function print_level_config_table($level) {
 <?php
 }
 
-print_header(WT_I18N::translate('GoogleMap Configuration'));
+print_header(WT_I18N::translate('Google Maps configuration'));
 
 if (!WT_USER_IS_ADMIN) {
 	echo '<div>', WT_I18N::translate('Page only for Administrators'), '</div>';
@@ -95,16 +95,15 @@ if (!WT_USER_IS_ADMIN) {
 	exit;
 } else { 
 	echo '<table id="gm_config"><tr>',
-		'<th><a ', (safe_GET('mod_action')=="admin_editconfig" ? 'class="current" ' : ''), 'href="module.php?mod=googlemap&mod_action=admin_editconfig">', WT_I18N::translate('Manage GoogleMap configuration'), '</a>', help_link('GOOGLEMAP_CONFIG','googlemap'), '</th>',
+		'<th><a ', (safe_GET('mod_action')=="admin_editconfig" ? 'class="current" ' : ''), 'href="module.php?mod=googlemap&mod_action=admin_editconfig">', WT_I18N::translate('Google Maps configuration'), '</a>', help_link('GOOGLEMAP_CONFIG','googlemap'), '</th>',
 		'<th><a ', (safe_GET('mod_action')=="admin_places" ? 'class="current" ' : ''), 'href="module.php?mod=googlemap&mod_action=admin_places">', WT_I18N::translate('Edit geographic place locations'), '</a>', help_link('PLE_EDIT','googlemap'), '</th>',
 		'<th><a ', (safe_GET('mod_action')=="admin_placecheck" ? 'class="current" ' : ''), 'href="module.php?mod=googlemap&mod_action=admin_placecheck">', WT_I18N::translate('Place Check'), '</a>', help_link('GOOGLEMAP_PLACECHECK','googlemap'), '</th>',
 	'</tr></table>';
 }
 
 if ($action=="update" && !isset($security_user)) {
-	set_module_setting('googlemap', 'GM_ENABLED',           $_POST['NEW_GM_ENABLE']);
-	set_module_setting('googlemap', 'GM_API_KEY',           $_POST['NEW_GM_API_KEY']);
 	set_module_setting('googlemap', 'GM_MAP_TYPE',          $_POST['NEW_GM_MAP_TYPE']);
+	set_module_setting('googlemap', 'GM_USE_STREETVIEW',    $_POST['NEW_GM_USE_STREETVIEW']);
 	set_module_setting('googlemap', 'GM_MIN_ZOOM',          $_POST['NEW_GM_MIN_ZOOM']);
 	set_module_setting('googlemap', 'GM_MAX_ZOOM',          $_POST['NEW_GM_MAX_ZOOM']);
 	set_module_setting('googlemap', 'GM_XSIZE',             $_POST['NEW_GM_XSIZE']);
@@ -197,14 +196,6 @@ if ($action=="update" && !isset($security_user)) {
 
 <table id="gm_edit_config">
 	<tr>
-		<th><?php echo WT_I18N::translate('Enable GoogleMap'), help_link('GOOGLEMAP_ENABLE','googlemap'); ?></th>
-		<td><?php echo edit_field_yes_no('NEW_GM_ENABLE', $GOOGLEMAP_ENABLED); ?></td>
-	</tr>
-	<tr>
-		<th><?php echo WT_I18N::translate('GoogleMap API key'), help_link('GOOGLEMAP_API_KEY','googlemap'); ?></th>
-		<td><input type="text" name="NEW_GM_API_KEY" value="<?php echo $GOOGLEMAP_API_KEY; ?>" size="60" /></td>
-	</tr>
-	<tr>
 		<th><?php echo WT_I18N::translate('Default map type'), help_link('GOOGLEMAP_MAP_TYPE','googlemap'); ?></th>
 		<td>
 			<select name="NEW_GM_MAP_TYPE">
@@ -214,6 +205,10 @@ if ($action=="update" && !isset($security_user)) {
 				<option value="G_PHYSICAL_MAP" <?php if ($GOOGLEMAP_MAP_TYPE=="G_PHYSICAL_MAP") echo "selected=\"selected\""; ?>><?php echo WT_I18N::translate('Terrain'); ?></option>
 			</select>
 		</td>
+	</tr>
+	<tr>
+		<th><?php echo WT_I18N::translate('Enable Google Street View'), help_link('STREETVIEW_ENABLE','googlemap'); ?></th>
+		<td><?php echo edit_field_yes_no('NEW_GM_USE_STREETVIEW', get_module_setting('googlemap', 'GM_USE_STREETVIEW')); ?></td>
 	</tr>
 	<tr>
 		<th><?php echo WT_I18N::translate('Size of map (in pixels)'), help_link('GOOGLEMAP_MAP_SIZE','googlemap'); ?></th>

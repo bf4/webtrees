@@ -361,7 +361,7 @@ function print_pedigree_person($person, $style=1, $count=0, $personcount="1") {
 */
 function print_header($title) {
 	global $bwidth, $BROWSERTYPE, $SEARCH_SPIDER, $view, $cart;
-	global $GEDCOM, $GEDCOM_TITLE, $action, $query, $theme_name;
+	global $GEDCOM, $GEDCOM_TITLE, $action, $query;
 	global $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $print_headerfile;
 	global $WT_IMAGES, $TEXT_DIRECTION, $REQUIRE_AUTHENTICATION;
 	global $controller;
@@ -427,7 +427,7 @@ function print_header($title) {
 		$index_this_page=true;
 	}
 
-	if ($index_this_page && (preg_match("/index,( *)follow/", get_gedcom_setting(WT_GED_ID, 'META_ROBOTS')) > 0)) { // need to convert this to a boolean setting
+	if ($index_this_page) {
 		$META_ROBOTS='index,follow';
 	}
 
@@ -463,7 +463,6 @@ function print_header($title) {
 		/* setup some javascript variables */
 		var textDirection = "'.$TEXT_DIRECTION.'";
 		var browserType = "'.$BROWSERTYPE.'";
-		var themeName = "'.$theme_name.'";
 		var SCRIPT_NAME = "'.WT_SCRIPT_NAME.'";
 		/* keep the session id when opening new windows */
 		var sessionid = "'.Zend_Session::getId().'";
@@ -548,7 +547,7 @@ function print_simple_header($title) {
 
 // -- print the html to close the page
 function print_footer() {
-	global $SHOW_STATS, $footerfile, $printlink, $theme_name, $WT_IMAGES, $TEXT_DIRECTION, $footer_count;
+	global $SHOW_STATS, $footerfile, $printlink, $WT_IMAGES, $TEXT_DIRECTION, $footer_count;
 
 	if (!isset($footer_count)) $footer_count = 1;
 	else $footer_count++;

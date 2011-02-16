@@ -85,13 +85,8 @@ if (!defined('WT_WEBTREES')) {
 								<font size=1>
 								<?php
 								// Header text with "Head" button =================================================
-								if (isset($WT_IMAGES["button_head"])) {
-									$headImg  = "<img class=\"headimg vmiddle\" src=\"".$WT_IMAGES["button_head"]."\" />";
-									$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"".$WT_IMAGES["button_head"]."\" alt=\"".WT_I18N::translate('Click to choose person as Head of family.')."\" title=\"".WT_I18N::translate('Click to choose person as Head of family.')."\" />";
-								} else {
-									$headImg  = "<img class=\"headimg vmiddle\" src=\"images/buttons/head.gif\" />";
-									$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"images/buttons/head.gif\" alt=\"".WT_I18N::translate('Click to choose person as Head of family.')."\" title=\"".WT_I18N::translate('Click to choose person as Head of family.')."\" />";
-								}
+								$headImg  = "<img class=\"headimg vmiddle\" src=\"".$WT_IMAGES["button_head"]."\" />";
+								$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"".$WT_IMAGES["button_head"]."\" alt=\"".WT_I18N::translate('Click to choose person as Head of family.')."\" title=\"".WT_I18N::translate('Click to choose person as Head of family.')."\" />";
 								global $tempStringHead;
 								$tempStringHead = PrintReady($headImg);
 								echo WT_I18N::translate('Click %s to choose person as Head of family.', $tempStringHead);
@@ -1476,7 +1471,7 @@ function print_pedigree_person_nav2($pid, $style=1, $count=0, $personcount="1", 
 	global $CHART_BOX_TAGS, $SHOW_LDS_AT_GLANCE, $PEDIGREE_SHOW_GENDER;
 	global $SEARCH_SPIDER;
 
-	global $spouselinks, $parentlinks, $step_parentlinks, $persons, $person_step, $person_parent, $tabno, $theme_name, $spousetag;
+	global $spouselinks, $parentlinks, $step_parentlinks, $persons, $person_step, $person_parent, $tabno, $spousetag;
 	global $natdad, $natmom, $censyear, $censdate;
 	// global $pHusbFBP, $pHusbMBP, $pWifeFBP, $pWifeMBP;
 	// global $phusb, $pwife, $pwhusb, $pwwife;

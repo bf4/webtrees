@@ -5,7 +5,7 @@
  * To learn more about CSS visit http: //www.w3.org/TR/REC-CSS2/
  *
  * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
+ * Copyright (C) 2011 webtrees development team.
  *
  * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
@@ -406,14 +406,16 @@ a:hover .nameZoom {
 
 .pedigree_image_portrait, .pedigree_image_landscape {
 	float: left;
-	height: 50px;
+	max-height: 50px;
+	max-width: 100px;
 	border: solid black 1px;
 	margin-right: 3px;
 }
 
 .pedigree_image_portrait_rtl, .pedigree_image_landscape_rtl {
 	float: right;
-	height: 50px;
+	max-height: 50px;
+	max-width: 100px;
 	border: solid black 1px;
 	margin-left: 3px;
 }
@@ -552,7 +554,6 @@ html[dir='rtl'] .icon, html[dir='rtl'] .adminicon {
 	color: #555555;
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
-	text-align: center;
 	padding: 1px;
 }
 
@@ -560,7 +561,6 @@ html[dir='rtl'] .icon, html[dir='rtl'] .adminicon {
 	color: black;
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
-	text-align: center;
 	padding: 1px;
 }
 
@@ -661,9 +661,11 @@ html[dir='rtl'] .icon, html[dir='rtl'] .adminicon {
 	color: black;
 }
 
-
-	
+<<<<<<< .working
 #tab {
+=======
+#content {
+>>>>>>> .merge-right.r10837
 	margin-left: 1px;
 }
 
@@ -1687,6 +1689,8 @@ td.descriptionbox  a { /* this keeps the tag color the same when it is a link as
 .logo {
 	text-align: center;
 }
+<<<<<<< .working
+<<<<<<< .working
 
 
 /* EXPERIMENTAL sidebar2 */
@@ -1737,4 +1741,15 @@ td.descriptionbox  a { /* this keeps the tag color the same when it is a link as
 }
 
 #header_accordion { float:left; min-width:400px; margin-right:300px; position:absolute; z-index:80;}
-#indi_header {float:left; min-height:150px;}
+#indi_header {float:left; min-height:150px;}=======
+#topMenu {
+	margin-left:5%;
+	width:92.5%;
+}
+>>>>>>> .merge-right.r10837
+=======
+#topMenu {
+	margin-left:5%;
+	width:92.5%;
+}
+>>>>>>> .merge-right.r10837

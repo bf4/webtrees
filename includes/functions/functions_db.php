@@ -1198,8 +1198,8 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 * @param int $jd, leave empty to include all
 */
 function get_recent_changes($jd=0, $allgeds=false) {
-	$sql="SELECT d_gid FROM `##dates` WHERE d_fact='CHAN' AND d_julianday1>=? AND d_gid NOT LIKE ?";
-	$vars=array($jd, '%:%');
+	$sql="SELECT d_gid FROM `##dates` WHERE d_fact='CHAN' AND d_julianday1>=?";
+	$vars=array($jd);
 	if (!$allgeds) {
 		$sql.=" AND d_file=?";
 		$vars[]=WT_GED_ID;
@@ -1852,8 +1852,8 @@ function get_anniversary_events($jd, $facts='', $ged_id=WT_GED_ID) {
 		$where.=" AND d_file=".$ged_id;
 
 		// Now fetch these anniversaries
-		$ind_sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, d_type, d_day, d_month, d_year, d_fact, d_type FROM `##dates`, `##individuals` {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
-		$fam_sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_numchil, d_type, d_day, d_month, d_year, d_fact, d_type FROM `##dates`, `##families` {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
+		$ind_sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, d_type, d_day, d_month, d_year, d_fact FROM `##dates`, `##individuals` {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
+		$fam_sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_numchil, d_type, d_day, d_month, d_year, d_fact FROM `##dates`, `##families` {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
 		foreach (array($ind_sql, $fam_sql) as $sql) {
 			$rows=WT_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 			foreach ($rows as $row) {
@@ -1863,8 +1863,8 @@ function get_anniversary_events($jd, $facts='', $ged_id=WT_GED_ID) {
 					$record=WT_Family::getInstance($row);
 				}
 				// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
-				// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
-				// to be cached.  We should store the level1 fact here (or somewhere)
+				// TODO having to go back to the original gedcom is lame.  This is why it is so slow.
+				// We should store the level1 fact here (or in a "facts" table)
 				if ($row['d_type']=='@#DJULIAN@') {
 					if ($row['d_year']<0) {
 						$year_regex=$row['d_year'].' ?[Bb]\.? ?[Cc]\.\ ?';
@@ -2353,15 +2353,21 @@ function get_user_blocks($user_id, $gedcom_id=WT_GED_ID) {
 				)->execute(array($user_id, $n, $block));
 			}
 		}
+		$block_found=false;
 		foreach (array('user_welcome', 'random_media', 'upcoming_events', 'logged_in') as $n=>$block) {
 			if (array_key_exists($block, $active_blocks)) {
 				WT_DB::prepare(
 					"INSERT INTO `##block` (user_id, location, block_order, module_name) VALUES ".
 					"(?, 'side', ?, ?)"
 				)->execute(array($user_id, $n, $block));
+				$block_found=true;
 			}
 		}
-		return get_user_blocks($user_id);
+		if ($block_found) {
+			return get_user_blocks($user_id);
+		} else {
+			return $blocks;
+		}
 	}
 }
 
@@ -2391,15 +2397,21 @@ function get_gedcom_blocks($gedcom_id) {
 				)->execute(array($gedcom_id, $n, $block));
 			}
 		}
+		$block_found=false;
 		foreach (array('gedcom_block', 'random_media', 'todays_events', 'logged_in') as $n=>$block) {
 			if (array_key_exists($block, $active_blocks)) {
 				WT_DB::prepare(
 					"INSERT INTO `##block` (gedcom_id, location, block_order, module_name) VALUES ".
 					"(?, 'side', ?, ?)"
 				)->execute(array($gedcom_id, $n, $block));
+				$block_found=true;
 			}
 		}
-		return get_gedcom_blocks($gedcom_id);
+		if ($block_found) {
+			return get_gedcom_blocks($user_id);
+		} else {
+			return $blocks;
+		}
 	}
 }
 

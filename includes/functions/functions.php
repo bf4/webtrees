@@ -3,7 +3,7 @@
  * Core Functions
  *
  * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
+ * Copyright (C) 2011 webtrees development team.
  *
  * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
@@ -301,7 +301,6 @@ function load_gedcom_settings($ged_id=WT_GED_ID) {
 	global $SHOW_RELATIVES_EVENTS;        $SHOW_RELATIVES_EVENTS        =get_gedcom_setting($ged_id, 'SHOW_RELATIVES_EVENTS');
 	global $SHOW_STATS;                   $SHOW_STATS                   =get_gedcom_setting($ged_id, 'SHOW_STATS');
 	global $SOURCE_ID_PREFIX;             $SOURCE_ID_PREFIX             =get_gedcom_setting($ged_id, 'SOURCE_ID_PREFIX');
-	global $SPLIT_PLACES;                 $SPLIT_PLACES                 =get_gedcom_setting($ged_id, 'SPLIT_PLACES');
 	global $SURNAME_LIST_STYLE;           $SURNAME_LIST_STYLE           =get_gedcom_setting($ged_id, 'SURNAME_LIST_STYLE');
 	global $THUMBNAIL_WIDTH;              $THUMBNAIL_WIDTH              =get_gedcom_setting($ged_id, 'THUMBNAIL_WIDTH');
 	global $UNDERLINE_NAME_QUOTES;        $UNDERLINE_NAME_QUOTES        =get_gedcom_setting($ged_id, 'UNDERLINE_NAME_QUOTES');
@@ -1036,7 +1035,7 @@ function event_sort($a, $b) {
 			return utf8_strcasecmp($a['fact'], $b['fact']);
 		}
 		else {
-			return utf8_strcasecmp($a['anniv'], $b['anniv']);
+			return $a['anniv']-$b['anniv'];
 		}
 	} else {
 		return $a['jd']-$b['jd'];
@@ -1410,7 +1409,9 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		$end_time = microtime(true);
 		$exectime = $end_time - $start_time;
 		if (($time_limit>1)&&($exectime > $time_limit-1)) {
+			echo '<div>';
 			echo "<span class=\"error\">", WT_I18N::translate('The script timed out before a relationship could be found.'), "</span>";
+			echo '</div>';
 			return false;
 		}
 		if (count($p1nodes)==0) {
@@ -1795,50 +1796,41 @@ function cousin_name($n, $sex) {
 }
 
 // A variation on cousin_name(), for constructs such as "sixth great-nephew"
+// Currently used only by Spanish relationship names.
 function cousin_name2($n, $sex, $relation) {
 	switch ($sex) {
 	case 'M':
 		switch ($n) {
-		case  1: // I18N: %s is a relationship name, such as "great-uncle".  This is not used by all languages.
+		case  1: // I18N: A Spanish relationship name, such as third great-nephew
 		         return WT_I18N::translate_c('MALE', 'first %s', $relation);
 		case  2: return WT_I18N::translate_c('MALE', 'second %s', $relation);
 		case  3: return WT_I18N::translate_c('MALE', 'third %s', $relation);
 		case  4: return WT_I18N::translate_c('MALE', 'fourth %s', $relation);
 		case  5: return WT_I18N::translate_c('MALE', 'fifth %s', $relation);
-		case  6: return WT_I18N::translate_c('MALE', 'sixth %s', $relation);
-		case  7: return WT_I18N::translate_c('MALE', 'seventh %s', $relation);
-		case  8: return WT_I18N::translate_c('MALE', 'eighth %s', $relation);
-		case  9: return WT_I18N::translate_c('MALE', 'ninth %s', $relation);
-		case 10: return WT_I18N::translate_c('MALE', 'tenth %s', $relation);
-		default: return WT_I18N::translate_c('MALE', '%1$d x %2$s', $n, $relation);
+		default: // I18N: A Spanish relationship name, such as third great-nephew
+		         return WT_I18N::translate_c('MALE', '%1$d x %2$s', $n, $relation);
 		}
 	case 'F':
 		switch ($n) {
-		case  1: return WT_I18N::translate_c('FEMALE', 'first %s', $relation);
+		case  1: // I18N: A Spanish relationship name, such as third great-nephew
+		         return WT_I18N::translate_c('FEMALE', 'first %s', $relation);
 		case  2: return WT_I18N::translate_c('FEMALE', 'second %s', $relation);
 		case  3: return WT_I18N::translate_c('FEMALE', 'third %s', $relation);
 		case  4: return WT_I18N::translate_c('FEMALE', 'fourth %s', $relation);
 		case  5: return WT_I18N::translate_c('FEMALE', 'fifth %s', $relation);
-		case  6: return WT_I18N::translate_c('FEMALE', 'sixth %s', $relation);
-		case  7: return WT_I18N::translate_c('FEMALE', 'seventh %s', $relation);
-		case  8: return WT_I18N::translate_c('FEMALE', 'eighth %s', $relation);
-		case  9: return WT_I18N::translate_c('FEMALE', 'ninth %s', $relation);
-		case 10: return WT_I18N::translate_c('FEMALE', 'tenth %s', $relation);
-		default: return WT_I18N::translate_c('FEMALE', '%1$d x %2$s', $n, $relation);
+		default: // I18N: A Spanish relationship name, such as third great-nephew
+		         return WT_I18N::translate_c('FEMALE', '%1$d x %2$s', $n, $relation);
 		}
 	case 'U':
 		switch ($n) {
-		case  1: return WT_I18N::translate_c('MALE/FEMALE', 'first %s', $relation);
+		case  1: // I18N: A Spanish relationship name, such as third great-nephew
+		         return WT_I18N::translate_c('MALE/FEMALE', 'first %s', $relation);
 		case  2: return WT_I18N::translate_c('MALE/FEMALE', 'second %s', $relation);
 		case  3: return WT_I18N::translate_c('MALE/FEMALE', 'third %s', $relation);
 		case  4: return WT_I18N::translate_c('MALE/FEMALE', 'fourth %s', $relation);
 		case  5: return WT_I18N::translate_c('MALE/FEMALE', 'fifth %s', $relation);
-		case  6: return WT_I18N::translate_c('MALE/FEMALE', 'sixth %s', $relation);
-		case  7: return WT_I18N::translate_c('MALE/FEMALE', 'seventh %s', $relation);
-		case  8: return WT_I18N::translate_c('MALE/FEMALE', 'eighth %s', $relation);
-		case  9: return WT_I18N::translate_c('MALE/FEMALE', 'ninth %s', $relation);
-		case 10: return WT_I18N::translate_c('MALE/FEMALE', 'tenth %s', $relation);
-		default: return WT_I18N::translate_c('MALE/FEMALE', '%1$d x %2$s', $n, $relation);
+		default: // I18N: A Spanish relationship name, such as third great-nephew
+		         return WT_I18N::translate_c('MALE/FEMALE', '%1$d x %2$s', $n, $relation);
 		}
 	}
 }
@@ -2882,16 +2874,13 @@ function get_theme_names() {
 	static $themes;
 	if ($themes===null) {
 		$themes = array();
-		$d = dir(WT_ROOT.'themes');
+		$d = dir(WT_ROOT.WT_THEMES_DIR);
 		while (false !== ($entry = $d->read())) {
-			if ($entry[0]!='.' && $entry[0]!='_' && is_dir(WT_ROOT.'themes/'.$entry) && file_exists(WT_ROOT.'themes/'.$entry.'/theme.php')) {
-				$themefile = implode('', file(WT_ROOT.'themes/'.$entry.'/theme.php'));
-				$tt = preg_match('/theme_name\s*=\s*"(.*)";/', $themefile, $match);
-				if ($tt>0)
-					$themename = trim($match[1]);
-				else
-					$themename = "themes/$entry";
-				$themes[WT_I18N::translate('%s', $themename)] = "themes/$entry/";
+			if ($entry[0]!='.' && $entry[0]!='_' && is_dir(WT_ROOT.WT_THEMES_DIR.$entry) && file_exists(WT_ROOT.WT_THEMES_DIR.$entry.'/theme.php')) {
+				$themefile = implode('', file(WT_ROOT.WT_THEMES_DIR.$entry.'/theme.php'));
+				if (preg_match('/theme_name\s*=\s*"(.*)";/', $themefile, $match)) {
+					$themes[WT_I18N::translate('%s', $match[1])] = $entry;
+				}
 			}
 		}
 		$d->close();
@@ -3345,30 +3334,30 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $admin=
 	$width = '';
 	switch ($type) {
 		case 'url_flv':
-			$thumb = isset($WT_IMAGES["media_flashrem"]) ? $WT_IMAGES["media_flashrem"] : 'images/media/flashrem.png';
+			$thumb = $WT_IMAGES['media_flashrem'];
 			break;
 		case 'local_flv':
-			$thumb = isset($WT_IMAGES["media_flash"]) ? $WT_IMAGES["media_flash"] : 'images/media/flash.png';
+			$thumb = $WT_IMAGES['media_flash'];
 			break;
 		case 'url_wmv':
-			$thumb = isset($WT_IMAGES["media_wmvrem"]) ? $WT_IMAGES["media_wmvrem"] : 'images/media/wmvrem.png';
+			$thumb = $WT_IMAGES['media_wmvrem'];
 			break;
 		case 'local_wmv':
-			$thumb = isset($WT_IMAGES["media_wmv"]) ? $WT_IMAGES["media_wmv"] : 'images/media/wmv.png';
+			$thumb = $WT_IMAGES['media_wmv'];
 			break;
 		case 'url_picasa':
-			$thumb = isset($WT_IMAGES["media_picasa"]) ? $WT_IMAGES["media_picasa"] : 'images/media/picasa.png';
+			$thumb = $WT_IMAGES['media_picasa'];
 			break;
 		case 'url_page':
 		case 'url_other':
-			$thumb = isset($WT_IMAGES["media_globe"]) ? $WT_IMAGES["media_globe"] : 'images/media/globe.png';
+			$thumb = $WT_IMAGES['media_globe'];
 			break;
 		case 'local_page':
-			$thumb = isset($WT_IMAGES["media_doc"]) ? $WT_IMAGES["media_doc"] : 'images/media/doc.gif';
+			$thumb = $WT_IMAGES['media_doc'];
 			break;
 		case 'url_audio':
 		case 'local_audio':
-			$thumb = isset($WT_IMAGES["media_audio"]) ? $WT_IMAGES["media_audio"] : 'images/media/audio.png';
+			$thumb = $WT_IMAGES['media_audio'];
 			break;
 		case 'url_streetview':
 			$thumb = null;
@@ -3382,7 +3371,7 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $admin=
 
 	// -- Use an overriding thumbnail if one has been provided
 	// Don't accept any overriding thumbnails that are in the "images" or "themes" directories
-	if (substr($thumbName, 0, 7)!='images/' && substr($thumbName, 0, 7)!='themes/') {
+	if (strpos($thumbName, 'images/')!==0 && strpos($thumbName, WT_THEMES_DIR)!==0) {
 		if ($USE_MEDIA_FIREWALL && $MEDIA_FIREWALL_THUMBS) {
 			$tempThumbName = get_media_firewall_path($thumbName);
 		} else {

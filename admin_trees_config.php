@@ -222,7 +222,6 @@ case 'update':
 	set_gedcom_setting(WT_GED_ID, 'SOUR_FACTS_ADD',               str_replace(' ', '', safe_POST('NEW_SOUR_FACTS_ADD')));
 	set_gedcom_setting(WT_GED_ID, 'SOUR_FACTS_QUICK',             str_replace(' ', '', safe_POST('NEW_SOUR_FACTS_QUICK')));
 	set_gedcom_setting(WT_GED_ID, 'SOUR_FACTS_UNIQUE',            str_replace(' ', '', safe_POST('NEW_SOUR_FACTS_UNIQUE')));
-	set_gedcom_setting(WT_GED_ID, 'SPLIT_PLACES',                 safe_POST_bool('NEW_SPLIT_PLACES'));
 	set_gedcom_setting(WT_GED_ID, 'SUBLIST_TRIGGER_F',            safe_POST('NEW_SUBLIST_TRIGGER_F', WT_REGEX_INTEGER, 200));
 	set_gedcom_setting(WT_GED_ID, 'SUBLIST_TRIGGER_I',            safe_POST('NEW_SUBLIST_TRIGGER_I', WT_REGEX_INTEGER, 200));
 	set_gedcom_setting(WT_GED_ID, 'SURNAME_LIST_STYLE',           safe_POST('NEW_SURNAME_LIST_STYLE'));
@@ -380,25 +379,18 @@ print_header(WT_I18N::translate('Family tree configuration'));
 if (get_gedcom_count()==1) { //Removed becasue it doesn't work here for multiple GEDCOMs. Can be reinstated when fixed (https://bugs.launchpad.net/webtrees/+bug/613235)
 	if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm'; 
 }
-?>
-<script type="text/javascript">
-//<![CDATA[
-  jQuery(document).ready(function() {
-  jQuery("#tabs").tabs();
-  });
-//]]>
-</script>
-<script type="text/javascript">
-<!--
+
+echo WT_JS_START;?>
+	jQuery(document).ready(function() {
+		jQuery("#tabs").tabs();
+	});
 	var pastefield;
 	function paste_id(value) {
 		pastefield.value=value;
 	}
-//-->
-</script>
+<?php echo WT_JS_END; ?>
 
-	<form enctype="multipart/form-data" method="post" id="configform" name="configform" action="<?php echo WT_SCRIPT_NAME; ?>">
-
+<form enctype="multipart/form-data" method="post" id="configform" name="configform" action="<?php echo WT_SCRIPT_NAME; ?>">
 <input type="hidden" name="action" value="update" />
 <?php
 	if (!empty($error_msg)) echo "<br /><span class=\"error\">".$error_msg."</span><br />";
@@ -1624,14 +1616,6 @@ if (get_gedcom_count()==1) { //Removed becasue it doesn't work here for multiple
 				<tr>
 					<th colspan="2">
 						<?php echo WT_I18N::translate('Other settings'); ?>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<?php echo WT_I18N::translate('Split places in edit mode'), help_link('SPLIT_PLACES'); ?>
-					</td>
-					<td>
-						<?php echo edit_field_yes_no('NEW_SPLIT_PLACES', get_gedcom_setting(WT_GED_ID, 'SPLIT_PLACES')); ?>
 					</td>
 				</tr>
 				<tr>

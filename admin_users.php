@@ -47,18 +47,12 @@ $ALL_EDIT_OPTIONS=array(
 	'admin' => /* I18N: Listbox entry; name of a role */ WT_I18N::translate('Manager')
 );
 
-// Extract form actions (GET overrides POST if both set)
-$action                  =safe_POST('action',  $ALL_ACTIONS);
-$usrlang                 =safe_POST('usrlang', array_keys(WT_I18N::installed_languages()));
+// Form actions
+$action                  =safe_GET('action',   $ALL_ACTIONS, 'listusers');
+$usrlang                 =safe_POST('usrlang',  array_keys(WT_I18N::installed_languages()));
 $username                =safe_POST('username', WT_REGEX_USERNAME);
-$filter                  =safe_POST('filter'   );
-$ged                     =safe_POST('ged'      );
-
-$action                  =safe_GET('action',   $ALL_ACTIONS,                            $action);
-$usrlang                 =safe_GET('usrlang',  array_keys(WT_I18N::installed_languages()), $usrlang);
-$username                =safe_GET('username', WT_REGEX_USERNAME,                      $username);
-$filter                  =safe_GET('filter',   WT_REGEX_NOSCRIPT,                      $filter);
-$ged                     =safe_GET('ged',      WT_REGEX_NOSCRIPT,                      $ged);
+$filter                  =safe_POST('filter',   WT_REGEX_NOSCRIPT);
+$ged                     =safe_POST('ged',      WT_REGEX_NOSCRIPT);
 
 // Extract form variables
 $oldusername             =safe_POST('oldusername',     WT_REGEX_USERNAME);
@@ -92,11 +86,13 @@ asort($all_gedcoms);
 switch ($action) {
 case 'deleteuser':
 	// Delete a user - but don't delete ourselves!
+	$username=safe_GET('username');
 	$user_id=get_user_id($username);
-	if ($user_id!=WT_USER_ID) {
+	if ($user_id && $user_id!=WT_USER_ID) {
 		delete_user($user_id);
 		AddToLog("deleted user ->{$username}<-", 'auth');
 	}
+	$action='listusers';
 	break;
 case 'loadrows':
 	// Generate an AJAX/JSON response for datatables to load a block of rows
@@ -142,7 +138,7 @@ case 'loadrows':
 	}
 	
 	$sql=
-		"SELECT SQL_CACHE SQL_CALC_FOUND_ROWS '', u.user_id, user_name, real_name, email, us1.setting_value, us2.setting_value, us2.setting_value, us3.setting_value, us3.setting_value, us4.setting_value, us5.setting_value".
+		"SELECT SQL_CACHE SQL_CALC_FOUND_ROWS '', u.user_id, user_name, real_name, email, '', us1.setting_value, us2.setting_value, us2.setting_value, us3.setting_value, us3.setting_value, us4.setting_value, us5.setting_value".
 		" FROM `##user` u".
 		" LEFT JOIN `##user_setting` us1 ON (u.user_id=us1.user_id AND us1.setting_name='language')".
 		" LEFT JOIN `##user_setting` us2 ON (u.user_id=us2.user_id AND us2.setting_name='reg_timestamp')".
@@ -160,23 +156,36 @@ case 'loadrows':
 	foreach ($aaData as &$aData) {
 		// $aData[0] is a dummy column for the expand-details icon
 		// $aData[1] is the user ID
-		$aData[2]=edit_field_inline('user-user_name-'.$aData[1], $aData[2]);
-		$aData[3]=edit_field_inline('user-real_name-'.$aData[1], $aData[3]);
-		$aData[4]=edit_field_inline('user-email-'.    $aData[1], $aData[4]);
-		$aData[5]=edit_field_language_inline('user_setting-langugage-'.$aData[1], $aData[5]);
-		// $aData[6] is the sortable registration timestamp
-		$aData[7]=format_timestamp($aData[7]);
-		if (date("U") - $aData[6] > 604800 && !$aData[10]) {
-			$aData[7]='<span class="red">'.$aData[7].'</span>';
+		$user_id  =$aData[1];
+		$user_name=$aData[2];
+		$aData[2]=edit_field_inline('user-user_name-'.$user_id, $aData[2]);
+		$aData[3]=edit_field_inline('user-real_name-'.$user_id, $aData[3]);
+		$aData[4]=edit_field_inline('user-email-'.    $user_id, $aData[4]);
+		// $aData[5] is a link to an email icon
+		if ($user_id != WT_USER_ID) {
+			$aData[5]='<div class="icon-email" onclick="return message(\''.$user_name.'\');"></div>';
 		}
-		// $aData[8] is the sortable last-login timestamp
-		if ($aData[8]) {
-			$aData[9]=format_timestamp($aData[8]).'<br />'.WT_I18N::time_ago(time() - $aData[8]);
+		$aData[6]=edit_field_language_inline('user_setting-langugage-'.$user_id, $aData[6]);
+		// $aData[7] is the sortable registration timestamp
+		$aData[8]=format_timestamp($aData[8]);
+		if (date("U") - $aData[7] > 604800 && !$aData[11]) {
+			$aData[8]='<span class="red">'.$aData[8].'</span>';
+		}
+		// $aData[9] is the sortable last-login timestamp
+		if ($aData[9]) {
+			$aData[10]=format_timestamp($aData[9]).'<br />'.WT_I18N::time_ago(time() - $aData[9]);
 		} else {
-			$aData[9]=WT_I18N::translate('Never');
+			$aData[10]=WT_I18N::translate('Never');
 		}
-		$aData[10]=edit_field_yes_no_inline('user_setting-verified-'.         $aData[1], $aData[10]);
-		$aData[11]=edit_field_yes_no_inline('user_setting-verified_by_admin-'.$aData[1], $aData[11]);
+		$aData[11]=edit_field_yes_no_inline('user_setting-verified-'.         $user_id, $aData[11]);
+		$aData[12]=edit_field_yes_no_inline('user_setting-verified_by_admin-'.$user_id, $aData[12]);
+		// Add extra column for "delete" action
+		if ($user_id != WT_USER_ID) {
+			$aData[13]='<div class="icon-delete" onclick="if (confirm(\''.htmlspecialchars(WT_I18N::translate('Permanently delete "%s"?', $user_name)).'\')) { document.location=\''.WT_SCRIPT_NAME.'?action=deleteuser&username='.htmlspecialchars($user_name).'\'; }"></div>';
+		} else {
+			// Do not delete ourself!
+			$aData[13]='';
+		}
 	}
 	
 	// Total filtered/unfiltered rows
@@ -196,27 +205,101 @@ case 'load1row':
 	$user_id=(int)safe_GET('user_id');
 	header('Content-type: text/html; charset=UTF-8');
 	echo '<dl>';
+	echo '<h2>', WT_I18N::translate('Details'), '</h2>';
 	echo '<dt>', WT_I18N::translate('Administrator'), '</dt>';
 	echo '<dd>', edit_field_yes_no_inline('user_setting-canadmin-'.$user_id, get_user_setting($user_id, 'canadmin')), '</dd>';
+
+	echo '<dt>', WT_I18N::translate('Password'), '</dt>';
+	echo '<dd>', edit_field_inline('user-password-'.$user_id, ''), '</dd>';
+
 	echo '<dt>', WT_I18N::translate('Preferred contact method'), '</dt>';
-	echo '<dd>', get_user_setting($user_id, 'canadmin'), '</dd>';
-	echo '<dt>TODO ...</dt>';
-	echo '<dd>... the rest of the settings</dd>';
+	echo '<dd>', edit_field_contact_inline('new_contact_method', get_user_setting($user_id, 'contactmethod')), '</dd>';
+
+	echo '<dt>', WT_I18N::translate('Allow this user to edit his account information'), '</dt>';
+	echo '<dd>', edit_field_yes_no_inline('user_setting-editaccount-'.$user_id, get_user_setting($user_id, 'editaccount')), '</dd>';
+
+	echo '<dt>', WT_I18N::translate('Automatically approve changes made by this user'), '</dt>';
+	echo '<dd>', edit_field_yes_no_inline('user_setting-auto_accept-'.$user_id, get_user_setting($user_id, 'auto_accept')), '</dd>';
+
+	echo '<dt>', WT_I18N::translate('Theme'), '</dt>';
+	echo '<dd>', select_edit_control_inline('user_setting-canedit-'.$user_id, array_flip(get_theme_names()), WT_I18N::translate('&lt;default theme&gt;'), get_user_setting($user_id, 'theme')), '</dd>';
+
+	echo '<dt>', WT_I18N::translate('Default Tab to show on Individual Information page'), '</dt>';
+	echo '<dd>', edit_field_default_tab_inline('new_default_tab', get_user_setting($user_id, 'defaulttab', 'personal_facts')), '</dd>';
+
+	echo '<dt>', WT_I18N::translate('Visible to other users when online'), '</dt>';
+	echo '<dd>', edit_field_yes_no_inline('user_setting-visibleonline-'.$user_id, get_user_setting($user_id, 'visibleonline')), '</dd>';
+
+	echo '<dt>', WT_I18N::translate('Admin comments on user'), '</dt>';
+	echo '<dd>', edit_field_inline('user_setting-comment-'.$user_id, get_user_setting($user_id, 'admin_comment')), '</dd>';
+
+	echo '<dt>', WT_I18N::translate('Date'), '</dt>';
+	echo '<dd>', edit_field_inline('user_setting-commentexp-'.$user_id, get_user_setting($user_id, 'admin_comment')), '</dd>';
 	echo '</dd>';
+	echo '</dl>';
+
+	// Column One - details
+
+	echo
+		'<div id="access">',
+		'<h2>', WT_I18N::translate('Family tree access and settings'), '</h2>',
+		'<table><tr>',
+		'<th>', WT_I18N::translate('Family tree'), '</th>',
+		'<th>', WT_I18N::translate('Pedigree chart root person'), help_link('useradmin_rootid'), '</th>',
+		'<th>', WT_I18N::translate('Individual record'), help_link('useradmin_gedcomid'), '</th>',
+		'<th>', WT_I18N::translate('Role'), help_link('role'), '</th>',
+		'<th>', WT_I18N::translate('Restrict to immediate family'), help_link('RELATIONSHIP_PATH_LENGTH'), '</th>',
+		'</tr>';
+
+	foreach ($all_gedcoms as $ged_id=>$ged_name) {
+		echo '<tr>',
+			'<td >', WT_I18N::translate('%s', get_gedcom_setting($ged_id, 'title')), '</td>',
+			//Pedigree root person
+			'<td>';
+				$varname='rootid'.$ged_id;
+				echo '<input type="text" name="', $varname, '" id="', $varname, '" value="';
+				$pid=get_user_gedcom_setting($user_id, $ged_id, 'rootid');
+				echo $pid, '" />', print_findindi_link($varname, "", false, false, $ged_name);
+				$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
+				$person=WT_Person::getInstance($pid);
+				if ($person) {
+					echo '<div class="list_item"><a href="', $person->getHtmlUrl(), '">', PrintReady($person->getFullName()), '</a></div>';
+				}
+			echo '</td>',						
+			// GEDCOM INDI Record ID
+			'<td>';
+				$varname='gedcomid'.$ged_id;
+				echo '<input type="text" name="',$varname, '" id="',$varname, '" value="';
+				$pid=get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
+				echo $pid, '" />';
+				print_findindi_link($varname, "", false, false, $ged_name);
+				$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
+				$person=WT_Person::getInstance($pid);
+				if ($person) {
+					echo ' <div class="list_item"><a href="', $person->getHtmlUrl(), '">', PrintReady($person->getFullName()), '</a></div>';
+				}
+			echo
+				'</td>';
+			echo '<td>', select_edit_control_inline('user_gedcom_setting-'.$user_id.'-'.$ged_id.'-canedit', $ALL_EDIT_OPTIONS, null, get_user_gedcom_setting($user_id, $ged_id, 'canedit', 'none')), '</td>';
+			//Relationship path
+			echo '<td>', select_edit_control_inline('user_gedcom_setting-'.$user_id.'-'.$ged_id.'-RELATIONSHIP_PATH_LENGTH', array(0=>WT_I18N::translate('No'), 1=>1, 2=>2, 3=>3, 4=>4, 5=>5, 6=>6, 7=>7, 8=>8, 9=>9, 10=>10), null, get_user_gedcom_setting($user_id, $ged_id, 'RELATIONSHIP_PATH_LENGTH', '0')), '</td>';
+			echo '</tr>';
+	}
+	echo '</table>';
+
+	echo '</td></tr></table></div>';
 	exit;
 }
 
+print_header(WT_I18N::translate('User administration'));
 // Save new user info to the database
 if ($action=='createuser' || $action=='edituser2') {
 	if (($action=='createuser' || $action=='edituser2' && $username!=$oldusername) && get_user_id($username)) {
-		print_header(WT_I18N::translate('User administration'));
 		echo "<span class=\"error\">", WT_I18N::translate('Duplicate user name.  A user with that user name already exists.  Please choose another user name.'), "</span><br />";
 	} elseif (($action=='createuser' || $action=='edituser2' && $emailaddress!=$oldemailaddress) && get_user_by_email($emailaddress)) {
-		print_header(WT_I18N::translate('User administration'));
 		echo "<span class=\"error\">", WT_I18N::translate('Duplicate email address.  A user with that email already exists.'), "</span><br />";
 	} else {
 		if ($pass1!=$pass2) {
-			print_header(WT_I18N::translate('User administration'));
 			echo "<span class=\"error\">", WT_I18N::translate('Passwords do not match.'), "</span><br />";
 		} else {
 			// New user
@@ -296,341 +379,18 @@ if ($action=='createuser' || $action=='edituser2') {
 				$message["method"]="messaging2";
 				addMessage($message); */
 			}
-			// Reload the form cleanly, to allow the user to verify their changes
-			header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH."admin_users.php?action=edituser&username=".rawurlencode($username)."&ged=".rawurlencode($ged));
-			exit;
 		}
 	}
 } else {
-	print_header(WT_I18N::translate('User administration'));
 	if (get_gedcom_count()==1) { //Removed becasue it doesn't work here for multiple GEDCOMs. Can be reinstated when fixed (https://bugs.launchpad.net/webtrees/+bug/613235)
 		if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm'; 
 	}
 }
 
-// Print the form to edit a user
-if ($action=="edituser") {
-	$user_id=get_user_id($username);
-	init_calendar_popup();
-	?>
-	<script type="text/javascript">
-	<!--
-	function checkform(frm) {
-		if (frm.username.value=="") {
-			alert("<?php echo WT_I18N::translate('You must enter a user name.'); ?>");
-			frm.username.focus();
-			return false;
-		}
-		if (frm.realname.value=="") {
-			alert("<?php echo WT_I18N::translate('You must enter a real name.'); ?>");
-			frm.realname.focus();
-			return false;
-		}
-		if ((frm.pass1.value!="")&&(frm.pass1.value.length < 6)) {
-			alert("<?php echo WT_I18N::translate('Passwords must contain at least 6 characters.'); ?>");
-			frm.pass1.value = "";
-			frm.pass2.value = "";
-			frm.pass1.focus();
-			return false;
-		}
-		if ((frm.emailaddress.value!="")&&(frm.emailaddress.value.indexOf("@")==-1)) {
-			alert("<?php echo WT_I18N::translate('You must enter an email address.'); ?>");
-			frm.emailaddress.focus();
-			return false;
-		}
-		return true;
-	}
-	var pastefield;
-	function paste_id(value) {
-		pastefield.value=value;
-	}
-	jQuery(document).ready(function() {
-		jQuery('.relpath').change(function() {
-			var fieldIDx = jQuery(this).attr('id');
-			var idNum = fieldIDx.replace('RELATIONSHIP_PATH_LENGTH','');
-			var newIDx = "gedcomid"+idNum;
-			if (jQuery('#'+newIDx).val()=='') {
-				alert("<?php echo WT_I18N::translate('You must specify an individual record before you can restrict the user to their immediate family.'); ?>");
-				jQuery(this).val('');
-			}
-		});
-	});
-	//-->
-	</script>
-
-	<form name="editform" method="post" action="admin_users.php" onsubmit="return checkform(this);" autocomplete="off">
-		<input type="hidden" name="action" value="edituser2" />
-		<input type="hidden" name="filter" value="<?php echo $filter; ?>" />
-		<input type="hidden" name="usrlang" value="<?php echo $usrlang; ?>" />
-		<input type="hidden" name="oldusername" value="<?php echo $username; ?>" />
-		<input type="hidden" name="oldemailaddress" value="<?php echo getUserEmail($user_id); ?>" />
-		<!--table-->
-		<table  id="adduser">
-			<tr>
-				<td><?php echo WT_I18N::translate('User name'), help_link('useradmin_username'); ?></td>
-				<td colspan="3"><input type="text" name="username" value="<?php echo $username; ?>" autofocus /></td>
-			</tr>
-			<tr>
-				<td><?php echo WT_I18N::translate('Real name'), help_link('useradmin_realname'); ?></td>
-				<td colspan="3"><input type="text" name="realname" value="<?php echo getUserFullName($user_id); ?>" size="50" /></td>
-			</tr>
-			<tr>
-				<td><?php echo WT_I18N::translate('Password'), help_link('useradmin_password'); ?></td>
-				<td><input type="password" name="pass1" /></td>
-				<td><?php echo WT_I18N::translate('Confirm password'), help_link('useradmin_conf_password'); ?></td>
-				<td><input type="password" name="pass2" /></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="3"><?php echo WT_I18N::translate('Leave password blank if you want to keep the current password.'); ?></td>
-			<tr>
-				<td><?php echo WT_I18N::translate('Email address'), help_link('useradmin_email'); ?></td>
-				<td><input type="text" name="emailaddress" dir="ltr" value="<?php echo getUserEmail($user_id); ?>" size="50" /></td>
-				<td><?php echo WT_I18N::translate('Preferred contact method'), help_link('useradmin_user_contact'); ?></td>
-				<td>
-					<?php
-						echo edit_field_contact('new_contact_method', get_user_setting($user_id, 'contactmethod'));
-					?>
-				</td>
-			</tr>
-			<tr>
-				<td><?php echo WT_I18N::translate('Email verified'), help_link('useradmin_verification'); ?></td>
-				<td><input type="checkbox" name="verified" value="1" <?php if (get_user_setting($user_id, 'verified')) echo "checked=\"checked\""; ?> /></td>
-				<td><?php echo WT_I18N::translate('Approved by administrator'), help_link('useradmin_verification'); ?></td>
-				<td><input type="checkbox" name="verified_by_admin" value="1" <?php if (get_user_setting($user_id, 'verified_by_admin')) echo "checked=\"checked\""; ?> /></td>
-			</tr>
-			<tr>
-				<td><?php echo WT_I18N::translate('Automatically approve changes made by this user'), help_link('useradmin_auto_accept'); ?></td>
-				<td><input type="checkbox" name="new_auto_accept" value="1" <?php if (get_user_setting($user_id, 'auto_accept')) echo "checked=\"checked\""; ?> /></td>
-				<td><?php echo WT_I18N::translate('Allow this user to edit his account information'), help_link('useradmin_editaccount'); ?></td>
-				<td><input type="checkbox" name="editaccount" value="1" <?php if (get_user_setting($user_id, 'editaccount')) echo "checked=\"checked\""; ?> /></td>
-			</tr>
-			<tr>
-				<td><?php echo WT_I18N::translate('Administrator'), help_link('role'); ?></td>
-				<?php
-					// Forms won't send the value of checkboxes if they are disabled, so use a hidden field
-					echo '<td>';
-					echo two_state_checkbox('canadmin', get_user_setting($user_id, 'canadmin'), ($user_id==WT_USER_ID) ? 'disabled="disabled"' : '');
-					echo '</td>';
-				?>
-				<td><?php echo WT_I18N::translate('Visible to other users when online'), help_link('useradmin_visibleonline'); ?></td>
-				<td><input type="checkbox" name="visibleonline" value="1" <?php if (get_user_setting($user_id, 'visibleonline')) echo "checked=\"checked\""; ?> /></td>
-			</tr>
-			<tr>
-				<td><?php echo WT_I18N::translate('Admin comments on user'), help_link('useradmin_comment'); ?></td>
-				<td><textarea cols="38" rows="5" name="new_comment"><?php $tmp = PrintReady(get_user_setting($user_id, 'comment')); echo $tmp; ?></textarea></td>
-				<td><?php echo WT_I18N::translate('Admin warning at date'), help_link('useradmin_comment_exp'); ?></td>
-				<td><input type="text" name="new_comment_exp" id="new_comment_exp" value="<?php echo get_user_setting($user_id, 'comment_exp'); ?>" />&nbsp;&nbsp;<?php print_calendar_popup("new_comment_exp"); ?></td>
-			</tr>
-			<tr>
-				<td><?php echo WT_I18N::translate('Language'), help_link('edituser_change_lang'); ?></td>
-				<td colspan="3">
-					<?php
-						echo edit_field_language('user_language', get_user_setting($user_id, 'language'));
-					?>
-				</td>
-			</tr>
-			<tr>
-				<td><?php echo WT_I18N::translate('Theme'), help_link('THEME'); ?></td>
-				<td colspan="3">
-					<select name="user_theme" dir="ltr">
-					<option value=""><?php echo WT_I18N::translate('&lt;default theme&gt;'); ?></option>
-					<?php
-					foreach (get_theme_names() as $themename=>$themedir) {
-						echo "<option value=\"", $themedir, "\"";
-						if ($themedir == get_user_setting($user_id, 'theme')) echo " selected=\"selected\"";
-						echo ">", $themename, "</option>";
-					}
-					?></select>
-				</td>
-			</tr>
-			<tr>
-				<td><?php echo WT_I18N::translate('Default Tab to show on Individual Information page'), help_link('useradmin_user_default_tab'); ?></td>
-				<td colspan="3">
-					<?php echo edit_field_default_tab('new_default_tab', get_user_setting($user_id, 'defaulttab')); ?>
-				</td>
-			</tr>
-			<!-- access and relationship path details -->
-			<tr>
-				<td class="subbar" colspan="4"><?php print WT_I18N::translate('Family tree access and settings'); ?></td>
-			</tr>
-			<tr>
-				<td colspan="4">
-					<table id="adduser2">
-						<tr>
-							<th><?php echo WT_I18N::translate('Family tree'); ?></th>
-							<th><?php echo WT_I18N::translate('Pedigree chart root person'), help_link('useradmin_rootid'); ?></th>
-							<th><?php echo WT_I18N::translate('Individual record'), help_link('useradmin_gedcomid'); ?></th>
-							<th><?php echo WT_I18N::translate('Role'), help_link('role'); ?></th>
-							<th><?php echo WT_I18N::translate('Restrict to immediate family'), help_link('RELATIONSHIP_PATH_LENGTH'); ?></th>
-						</tr>
-						<?php
-							foreach ($all_gedcoms as $ged_id=>$ged_name) {
-								echo '<tr>',
-									'<td >', WT_I18N::translate('%s', get_gedcom_setting($ged_id, 'title')), '</td>',
-									//Pedigree root person
-									'<td>';
-										$varname='rootid'.$ged_id;
-										echo '<input type="text" name="', $varname, '" id="', $varname, '" value="';
-										$pid=get_user_gedcom_setting($user_id, $ged_id, 'rootid');
-										echo $pid, '" />', print_findindi_link($varname, "", false, false, $ged_name);
-										$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
-										$person=WT_Person::getInstance($pid);
-										if ($person) {
-											echo '<div class="list_item"><a href="', $person->getHtmlUrl(), '">', PrintReady($person->getFullName()), '</a></div>';
-										}
-									echo '</td>',						
-									// GEDCOM INDI Record ID
-									'<td>';
-										$varname='gedcomid'.$ged_id;
-										echo '<input type="text" name="',$varname, '" id="',$varname, '" value="';
-										$pid=get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
-										echo $pid, '" />';
-										print_findindi_link($varname, "", false, false, $ged_name);
-										$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
-										$person=WT_Person::getInstance($pid);
-										if ($person) {
-											echo ' <div class="list_item"><a href="', $person->getHtmlUrl(), '">', PrintReady($person->getFullName()), '</a></div>';
-										}
-									echo '</td>',
-									'<td>';
-										$varname='canedit'.$ged_id;
-										echo '<select name="', $varname, '" id="', $varname, '">';
-										foreach ($ALL_EDIT_OPTIONS as $EDIT_OPTION=>$desc) {
-											echo '<option value="', $EDIT_OPTION, '" ';
-											if (get_user_gedcom_setting($user_id, $ged_id, 'canedit')==$EDIT_OPTION) {
-												echo 'selected="selected" ';
-											}
-											echo '>', $desc, '</option>';
-										}
-										echo '</select>',
-									'</td>',
-									//Relationship path
-									'<td>';
-										$varname = 'RELATIONSHIP_PATH_LENGTH'.$ged_id;
-										echo '<select name="', $varname, '" id="', $varname, '" class="relpath" />';
-											for ($n=0; $n<=10; ++$n) {
-												echo
-													'<option value="', $n, '"',
-													get_user_gedcom_setting($user_id, $ged_id, 'RELATIONSHIP_PATH_LENGTH')==$n ? ' selected="selected"' : '',				
-													'>',
-													$n ? $n : WT_I18N::translate('No'),
-													'</option>';
-											}
-										echo '</select>',
-									'</td>',
-								'</tr>';
-							}
-						?>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="4">
-					<input type="submit" value="<?php echo WT_I18N::translate('Update user account'); ?>" />
-					<input type="button" value="<?php echo WT_I18N::translate('Back'); ?>" onclick="window.location='<?php echo "admin_users.php?action=listusers&amp;filter={$filter}&amp;usrlang={$usrlang}"; ?>';"/>
-				</td>
-			</tr>
-		</table>
-	</form>
-	<?php
-	print_footer();
-	exit;
-}
-
-echo WT_JS_START;
-?>
-	jQuery(document).ready(function(){
-		var oTable = jQuery('#list').dataTable( {
-			"oLanguage": {
-				"sLengthMenu": '<?php echo /* I18N: %s is a placeholder for listbox containing numeric options */ WT_I18N::translate('Display %s records', '<select><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="50">50</option><option value="-1">'.WT_I18N::translate('All').'</option></select>'); ?>',
-				"sZeroRecords": '<?php echo WT_I18N::translate('No records to display');?>',
-				"sInfo": '<?php echo /* I18N: %s' are placeholders for numbers */ WT_I18N::translate('Showing %1$s to %2$s of %3$s', '_START_', '_END_', '_TOTAL_'); ?>',
-				"sInfoEmpty": '<?php echo /* I18N: %s' are placeholders for numbers */ WT_I18N::translate('Showing %1$s to %2$s of %3$s', '0', '0', '0'); ?>',
-				"sInfoFiltered": '<?php echo /* I18N: %s  is a placeholder for numbers */ WT_I18N::translate('(filtered from %s total entries)', '_MAX_'); ?>',
-				"sSearch": '<?php echo WT_I18N::translate('Search');?>:',
-				"oPaginate": {
-					"sFirst": '<?php echo WT_I18N::translate_c('first page', 'first');?>',
-					"sLast": '<?php echo WT_I18N::translate('last');?>',
-					"sNext": '<?php echo WT_I18N::translate('next');?>',
-					"sPrevious": '<?php echo WT_I18N::translate('previous');?>'
-				}
-			},
-			"bProcessing"     : true,
-			"bServerSide"     : true,
-			"sAjaxSource"     : "<?php echo WT_SCRIPT_NAME.'?action=loadrows'; ?>",
-			"bJQueryUI": true,
-			"bAutoWidth":false,
-			"iDisplayLength": 10,
-			"sPaginationType": "full_numbers",
-			"aaSorting": [[2,'asc']],
-			"aoColumns": [
-				/* details           */ { bSortable:false, sClass:"icon-open" },
-				/* user-id           */ { bVisible:false },
-				/* user_name         */ null,
-				/* real_name         */ null,
-				/* email             */ null,
-				/* language          */ null,
-				/* registered (sort) */ { bVisible:false },
-				/* registered        */ { iDataSort:6 },
-				/* last_login (sort) */ { bVisible:false },
-				/* last_login        */ { iDataSort:8 },
-				/* verified          */ null,
-				/* approved          */ null
-			]
-		});
-		
-		/* When clicking on the +/- icon, we expand/collapse the details block */
-		jQuery('#list tbody td.icon-close').live('click', function () {
-			var nTr=this.parentNode;
-			jQuery(this).removeClass("icon-close");
-			oTable.fnClose(nTr);
-			jQuery(this).addClass("icon-open");
-		});
-		jQuery('#list tbody td.icon-open').live('click', function () {
-			var nTr=this.parentNode;
-			jQuery(this).removeClass("icon-open");
-			var aData=oTable.fnGetData(nTr);
-			jQuery.get("<?php echo WT_SCRIPT_NAME.'?action=load1row&user_id='; ?>"+aData[1], function(data) {
-				oTable.fnOpen(nTr, data, "details");
-			});
-			jQuery(this).addClass("icon-close");
-		});
-	
-	});
-<?php
-echo WT_JS_END;
-
-//-- echo out a list of the current users
-if ($action == "listusers") {
-	echo
-		'<table id="list">',
-			'<thead>',
-				'<tr>',
-					'<th>', WT_I18N::translate('Details'), '</th>',
-					'<th> user-id</th>',
-					'<th>', WT_I18N::translate('User name'), '</th>',
-					'<th>', WT_I18N::translate('Real name'), '</th>',
-					'<th>', WT_I18N::translate('Email'), '</th>',
-					'<th>', WT_I18N::translate('Language'), '</th>',
-					'<th> date_registered </th>',
-					'<th>', WT_I18N::translate('Date registered'), '</th>',
-					'<th> last_login </th>',
-					'<th>', WT_I18N::translate('Last logged in'), '</th>',
-					'<th>', WT_I18N::translate('Verified'), '</th>',
-					'<th>', WT_I18N::translate('Approved'), '</th>',
-				'</tr>',
-			'</thead>',
-			'<tbody>',
-			'</tbody>',
-		'</table>';
-	print_footer();
-	exit;
-}
-
 // -- echo out the form to add a new user
 // NOTE: WORKING
-if ($action == "createform") {
+switch ($action) {
+case 'createform':
 	init_calendar_popup();
 	?>
 	<script type="text/javascript">
@@ -689,8 +449,7 @@ if ($action == "createform") {
 	//-->
 	</script>
 
-	<form name="newform" method="post" action="admin_users.php?action=listusers" onsubmit="return checkform(this);" autocomplete="off">
-		<input type="hidden" name="action" value="createuser" />
+	<form name="newform" method="post" action="admin_users.php?action=createuser" onsubmit="return checkform(this);" autocomplete="off">
 		<!--table-->
 		<table id="adduser">
 			<tr>
@@ -830,22 +589,15 @@ if ($action == "createform") {
 			</tr>
 				<td colspan="4">
 					<input type="submit" value="<?php echo WT_I18N::translate('Create User'); ?>" />
-					<input type="button" value="<?php echo WT_I18N::translate('Back'); ?>" onclick="window.location='admin_users.php?action=listusers;"/>
 				</td>
 			</tr>	
 		</table>
 	</form>
 	<?php
-	print_footer();
-	exit;
-}
-
-// Cleanup users and user rights
-//NOTE: WORKING
-if ($action == "cleanup") {
+	break;
+case 'cleanup':
 	?>
-	<form name="cleanupform" method="post" action="admin_users.php&action=cleanup">
-	<input type="hidden" name="action" value="cleanup2" />
+	<form name="cleanupform" method="post" action="admin_users.php&action=cleanup2">
 	<table id="clean" class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php
 	// Check for idle users
@@ -907,14 +659,11 @@ if ($action == "cleanup") {
 	if ($ucnt >0) {
 		?><input type="submit" value="<?php echo WT_I18N::translate('Continue'); ?>" />&nbsp;&nbsp;<?php
 	} ?>
-	<input type="button" value="<?php echo WT_I18N::translate('Back'); ?>" onclick="window.location='admin_users.php?action=listusers';"/>
+	<input type="button" value="<?php echo WT_I18N::translate('Back'); ?>" onclick="window.location='admin_users.php';"/>
 	</p>
 	</form><?php
-	print_footer();
-	exit;
-}
-// NOTE: No table parts
-if ($action == "cleanup2") {
+	break;
+case 'cleanup2':
 	foreach (get_all_users() as $user_id=>$user_name) {
 		$var = "del_".str_replace(array(".", "-", " "), array("_", "_", "_"), $user_name);
 		if (safe_POST($var)=='1') {
@@ -954,5 +703,98 @@ if ($action == "cleanup2") {
 			}
 		}
 	}
+	break;
+case 'listusers':
+default:
+	echo
+		'<table id="list">',
+			'<thead>',
+				'<tr>',
+					'<th style="margin:0 -2px 1px 1px; padding:6px 0 5px;"> </th>',
+					'<th> user-id </th>',
+					'<th>', WT_I18N::translate('User name'), '</th>',
+					'<th>', WT_I18N::translate('Real name'), '</th>',
+					'<th>', WT_I18N::translate('Email'), '</th>',
+					'<th> </th>', /* COLSPAN does not work? */
+					'<th>', WT_I18N::translate('Language'), '</th>',
+					'<th> date_registered </th>',
+					'<th>', WT_I18N::translate('Date registered'), '</th>',
+					'<th> last_login </th>',
+					'<th>', WT_I18N::translate('Last logged in'), '</th>',
+					'<th>', WT_I18N::translate('Verified'), '</th>',
+					'<th>', WT_I18N::translate('Approved'), '</th>',
+					'<th style="margin:0 -2px 1px 1px; padding:3px 0 4px;"> </th>',
+				'</tr>',
+			'</thead>',
+			'<tbody>',
+			'</tbody>',
+		'</table>';
+	echo WT_JS_START;
+	?>
+		jQuery(document).ready(function(){
+			var oTable = jQuery('#list').dataTable( {
+				"oLanguage": {
+					"sLengthMenu": '<?php echo /* I18N: %s is a placeholder for listbox containing numeric options */ WT_I18N::translate('Display %s records', '<select><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="50">50</option><option value="-1">'.WT_I18N::translate('All').'</option></select>'); ?>',
+					"sZeroRecords": '<?php echo WT_I18N::translate('No records to display');?>',
+					"sInfo": '<?php echo /* I18N: %s' are placeholders for numbers */ WT_I18N::translate('Showing %1$s to %2$s of %3$s', '_START_', '_END_', '_TOTAL_'); ?>',
+					"sInfoEmpty": '<?php echo /* I18N: %s' are placeholders for numbers */ WT_I18N::translate('Showing %1$s to %2$s of %3$s', '0', '0', '0'); ?>',
+					"sInfoFiltered": '<?php echo /* I18N: %s  is a placeholder for numbers */ WT_I18N::translate('(filtered from %s total entries)', '_MAX_'); ?>',
+					"sProcessing": '<?php echo WT_I18N::translate('Loading...');?>',
+					"sSearch": '<?php echo WT_I18N::translate('Search');?>:',
+					"oPaginate": {
+						"sFirst": '<?php echo WT_I18N::translate_c('first page', 'first');?>',
+						"sLast": '<?php echo WT_I18N::translate('last');?>',
+						"sNext": '<?php echo WT_I18N::translate('next');?>',
+						"sPrevious": '<?php echo WT_I18N::translate('previous');?>'
+					}
+				},
+				"bProcessing"     : true,
+				"bServerSide"     : true,
+				"sAjaxSource"     : "<?php echo WT_SCRIPT_NAME.'?action=loadrows'; ?>",
+				"bJQueryUI": true,
+				"bAutoWidth":false,
+				"iDisplayLength": 10,
+				"sPaginationType": "full_numbers",
+				"aaSorting": [[2,'asc']],
+				"aoColumns": [
+					/* details           */ { bSortable:false, sClass:"icon-open" },
+					/* user-id           */ { bVisible:false },
+					/* user_name         */ null,
+					/* real_name         */ null,
+					/* email             */ null,
+					/* email link        */ { bSortable:false },
+					/* language          */ null,
+					/* registered (sort) */ { bVisible:false },
+					/* registered        */ { iDataSort:7 },
+					/* last_login (sort) */ { bVisible:false },
+					/* last_login        */ { iDataSort:9 },
+					/* verified          */ { sClass:"center" },
+					/* approved          */ { sClass:"center" },
+					/* delete            */ { bSortable:false }
+				]
+			});
+			
+			/* When clicking on the +/- icon, we expand/collapse the details block */
+			jQuery('#list tbody td.icon-close').live('click', function () {
+				var nTr=this.parentNode;
+				jQuery(this).removeClass("icon-close");
+				oTable.fnClose(nTr);
+				jQuery(this).addClass("icon-open");
+			});
+			jQuery('#list tbody td.icon-open').live('click', function () {
+				var nTr=this.parentNode;
+				jQuery(this).removeClass("icon-open");
+				var aData=oTable.fnGetData(nTr);
+				jQuery.get("<?php echo WT_SCRIPT_NAME.'?action=load1row&user_id='; ?>"+aData[1], function(data) {
+					oTable.fnOpen(nTr, data, "details");
+				});
+				jQuery(this).addClass("icon-close");
+			});
+	
+		});
+	<?php
+	echo WT_JS_END;
+	break;
 }
+
 print_footer();

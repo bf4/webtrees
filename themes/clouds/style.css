@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 Rob Peters
+ * Copyright (c) 2011 Rob Peters
  *
  * Derived from PhpGedView Cloudy theme
  * Original author w.a. bastein http://genealogy.bastein.biz
@@ -820,14 +820,15 @@ vertical-align: middle;
 
 .pedigree_image_portrait, .pedigree_image_landscape {
 float: left;
-height: 50px;
+max-height: 50px;
+max-width: 100px;
 margin-right: 3px;
 }
 
 .pedigree_image_portrait_rtl, .pedigree_image_landscape_rtl {
 float: right;
-height: 50px;
-border: solid black 1px;
+max-height: 50px;
+max-width: 100px;
 margin-left: 3px;
 }
 
@@ -1831,4 +1832,12 @@ td.descriptionbox  a {
 	background: url(images/delete.png) no-repeat left center;
 	width: 20px;
 	float: left;
+}
+
+.place {
+	padding-top: 5px;
+}
+
+.logo {
+	text-align: center;
 }
