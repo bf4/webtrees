@@ -599,7 +599,7 @@ function build_indiv_map($indifacts, $famids) {
 		
 		// === Include css and js files ============================================================
 		echo '<link type="text/css" href="modules/googlemap/css/wt_v3_googlemap.css" rel="stylesheet" />';
-		echo '<script type="text/javascript" src="modules/googlemap/infobubble.js.php"></script>';
+		// echo '<script type="text/javascript" src="modules/googlemap/infobubble.js.php"></script>';
 		
 		if ($STREETVIEW) {
 			require_once WT_ROOT.'modules/googlemap/wt_v3_googlemap.js.php';
