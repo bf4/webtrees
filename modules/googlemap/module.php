@@ -31,7 +31,7 @@ if (!defined('WT_WEBTREES')) {
 class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Module_Tab {
 	// Extend WT_Module
 	public function getTitle() {
-		return WT_I18N::translate('Googlemap');
+		return /* I18N: http://en.wikipedia.org/wiki/Google_maps */ WT_I18N::translate('Google Maps');
 	}
 
 	// Extend WT_Module
@@ -84,7 +84,7 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 	// Implement WT_Module_Tab
 	public function getTabContent() {
 		global $SEARCH_SPIDER, $WT_IMAGES;
-		global $GOOGLEMAP_ENABLED, $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
+		global $GOOGLEMAP_ENABLED, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
 		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $SHOW_LIVING_NAMES;
 		global $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD, $GOOGLEMAP_PH_CONTROLS;
 		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
@@ -102,7 +102,7 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 			echo "<tr><td id=\"no_tab8\" colspan=\"2\" class=\"facts_value\">".WT_I18N::translate('GoogleMap module disabled')."</td></tr>";
 			if (WT_USER_IS_ADMIN) {
 				echo "<tr><td align=\"center\" colspan=\"2\">";
-				echo "<a href=\"module.php?mod=".$this->getName()."&amp;mod_action=admin_editconfig\">".WT_I18N::translate('Manage GoogleMap configuration')."</a>";
+				echo "<a href=\"module.php?mod=".$this->getName()."&amp;mod_action=admin_editconfig\">".WT_I18N::translate('Google Maps configuration')."</a>";
 				echo "</td>";
 				echo "</tr>";
 			}
@@ -131,7 +131,7 @@ class googlemap_WT_Module extends WT_Module implements WT_Module_Config, WT_Modu
 					if (WT_USER_IS_ADMIN) {
 						echo "<table style=\"font-size:13px; \" width=\"100%\"><tr>";
 						echo "<td width=\"40%\" align=\"left\">";
-						echo "<a href=\"module.php?mod=".$this->getName()."&amp;mod_action=admin_editconfig\">".WT_I18N::translate('Manage GoogleMap configuration')."</a>";
+						echo "<a href=\"module.php?mod=".$this->getName()."&amp;mod_action=admin_editconfig\">".WT_I18N::translate('Google Maps configuration')."</a>";
 						echo "</td>";
 						echo "<td width=\"35%\" align=\"center\">";
 						echo "<a href=\"module.php?mod=".$this->getName()."&amp;mod_action=admin_places\">".WT_I18N::translate('Edit geographic place locations')."</a>";

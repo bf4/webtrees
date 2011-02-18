@@ -3,7 +3,7 @@
 * Various functions used by the Edit interface
 *
 * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
+ * Copyright (C) 2011 webtrees development team.
  *
  * Derived from PhpGedView
 * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
@@ -44,7 +44,7 @@ function edit_field_inline($name, $value) {
 	return
 		'<span class="editable" id="' . $name . '">' . htmlspecialchars($value) . '</span>' .
 		WT_JS_START .
-		'jQuery("#' . $name . '").editable("' . WT_SERVER_NAME . WT_SCRIPT_PATH . 'save.php", {submit:"' . WT_I18N::translate('OK') . '", style:"inherit"})' .
+		'jQuery("#' . $name . '").editable("' . WT_SERVER_NAME . WT_SCRIPT_PATH . 'save.php", {submit:"&nbsp;&nbsp;' . WT_I18N::translate('OK') . '&nbsp;&nbsp;", style:"inherit", placeholder: "'.WT_I18N::translate('click to edit').'"})' .
 		WT_JS_END;
 }
 
@@ -94,7 +94,7 @@ function select_edit_control_inline($name, $values, $empty, $selected, $extra=''
 		(array_key_exists($selected, $values) ? htmlspecialchars($values[$selected]) : '').
 		'</span>' .
 		WT_JS_START .
-		'jQuery("#' . $name . '").editable("' . WT_SERVER_NAME . WT_SCRIPT_PATH . 'save.php", {type:"select", data:' . json_encode($values) . ', submit:"' . WT_I18N::translate('OK') . '", style:"inherit", callback:function(value, settings) {jQuery(this).html(settings.data[value]);} })' .
+		'jQuery("#' . $name . '").editable("' . WT_SERVER_NAME . WT_SCRIPT_PATH . 'save.php", {type:"select", data:' . json_encode($values) . ', submit:"&nbsp;&nbsp;' . WT_I18N::translate('OK') . '&nbsp;&nbsp;", style:"inherit", callback:function(value, settings) {jQuery(this).html(settings.data[value]);} })' .
 		WT_JS_END;
 }
 
@@ -715,25 +715,25 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 			case 'addspouseaction':
 				if ($famtag=='WIFE' && preg_match('/\/(.*)\//', $indi_name, $match)) {
 					if ($SURNAME_TRADITION=='polish') {
-						$match[1]=preg_replace(array('/ski$/', '/cki$/', '/dzki$/'), array('ska', 'cka', 'dzka'), $match[1]);
+						$match[1]=preg_replace(array('/ski$/', '/cki$/', '/dzki$/', '/żki$/'), array('ska', 'cka', 'dzka', 'żka'), $match[1]);
 					}
 					$new_marnm=$match[1];
 				}
 				break;
 			case 'addchildaction':
 				if (preg_match('/\/((?:[a-z]{2,3}\s+)*)(.*)\//i', $father_name, $match)) {
+					$name_fields['SURN']=$match[2];
 					if ($SURNAME_TRADITION=='polish' && $sextag=='F') {
-						$match[2]=preg_replace(array('/ski$/', '/cki$/', '/dzki$/'), array('ska', 'cka', 'dzka'), $match[2]);
+						$match[2]=preg_replace(array('/ski$/', '/cki$/', '/dzki$/', '/żki$/'), array('ska', 'cka', 'dzka', 'żka'), $match[2]);
 					}
 					$name_fields['SPFX']=trim($match[1]);
-					$name_fields['SURN']=$match[2];
 					$name_fields['NAME']="/{$match[1]}{$match[2]}/";
 				}
 				break;
 			case 'addnewparentaction':
 				if ($famtag=='HUSB' && preg_match('/\/((?:[a-z]{2,3}\s+)*)(.*)\//i', $indi_name, $match)) {
 					if ($SURNAME_TRADITION=='polish' && $sextag=='M') {
-						$match[2]=preg_replace(array('/ska$/', '/cka$/', '/dzka$/'), array('ski', 'cki', 'dzki'), $match[2]);
+						$match[2]=preg_replace(array('/ska$/', '/cka$/', '/dzka$/', '/żka$/'), array('ski', 'cki', 'dzki', 'żki'), $match[2]);
 					}
 					$name_fields['SPFX']=trim($match[1]);
 					$name_fields['SURN']=$match[2];
@@ -945,6 +945,12 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 		var spfx=frm.SPFX.value;
 		var surn=frm.SURN.value;
 		var nsfx=frm.NSFX.value;
+		<?php if ($SURNAME_TRADITION=='polish' && $sextag=='F') { ?>
+			surn=surn.replace(/ski$/, 'ska');
+			surn=surn.replace(/cki$/, 'cka');
+			surn=surn.replace(/dzki$/, 'dzka');
+			surn=surn.replace(/żki$/, 'żka');
+		<?php } ?>
 		return trim(npfx+" "+givn+" /"+trim(spfx+" "+surn.replace(/ *, */, " "))+"/ "+nsfx);
 	}
 
@@ -1230,7 +1236,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	global $WT_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
 	global $tags, $emptyfacts, $main_fact, $TEXT_DIRECTION;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
-	global $STATUS_CODES, $SPLIT_PLACES, $pid, $gender, $linkToID;
+	global $STATUS_CODES, $pid, $gender, $linkToID;
 	global $bdm;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $PREFER_LEVEL2_SOURCES;
 	global $action, $event_add;
@@ -1608,12 +1614,9 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			print_findplace_link($element_id);
 			echo "</div>";
 			echo "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"", $WT_IMAGES["target"], "\" border=\"0\" align=\"middle\" alt=\"", translate_fact('LATI'), " / ", translate_fact('LONG'), "\" title=\"", translate_fact('LATI'), " / ", translate_fact('LONG'), "\" /></a>";
-			if ($SPLIT_PLACES) {
-				if (!function_exists("print_place_subfields")) {
-					require WT_ROOT.'includes/functions/functions_places.php';
-				}
-				setup_place_subfields($element_id);
-				print_place_subfields($element_id);
+			if (array_key_exists('places_assistant', WT_Module::getActiveModules())) {
+				places_assistant_WT_Module::setup_place_subfields($element_id);
+				places_assistant_WT_Module::print_place_subfields($element_id);
 			}
 		}
 		else if (($cols>20 || $fact=="NPFX") && $readOnly=='') print_specialchar_link($element_id, false);

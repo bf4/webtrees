@@ -66,7 +66,6 @@ $user_language           =safe_POST('user_language',            array_keys(WT_I1
 $new_contact_method      =safe_POST('new_contact_method');
 $new_default_tab         =safe_POST('new_default_tab',          array_keys(WT_Module::getActiveTabs()), get_gedcom_setting(WT_GED_ID, 'GEDCOM_DEFAULT_TAB'));
 $new_comment             =safe_POST('new_comment',              WT_REGEX_UNSAFE);
-$new_comment_exp         =safe_POST('new_comment_exp'           );
 $new_auto_accept         =safe_POST_bool('new_auto_accept');
 $canadmin                =safe_POST_bool('canadmin');
 $visibleonline           =safe_POST_bool('visibleonline');
@@ -86,8 +85,9 @@ asort($all_gedcoms);
 switch ($action) {
 case 'deleteuser':
 	// Delete a user - but don't delete ourselves!
+	$username=safe_GET('username');
 	$user_id=get_user_id($username);
-	if ($user_id!=WT_USER_ID) {
+	if ($user_id && $user_id!=WT_USER_ID) {
 		delete_user($user_id);
 		AddToLog("deleted user ->{$username}<-", 'auth');
 	}
@@ -164,7 +164,7 @@ case 'loadrows':
 		if ($user_id != WT_USER_ID) {
 			$aData[5]='<div class="icon-email" onclick="return message(\''.$user_name.'\');"></div>';
 		}
-		$aData[6]=edit_field_language_inline('user_setting-langugage-'.$user_id, $aData[6]);
+		$aData[6]=edit_field_language_inline('user_setting-'.$user_id.'-language', $aData[6]);
 		// $aData[7] is the sortable registration timestamp
 		$aData[8]=format_timestamp($aData[8]);
 		if (date("U") - $aData[7] > 604800 && !$aData[11]) {
@@ -176,8 +176,8 @@ case 'loadrows':
 		} else {
 			$aData[10]=WT_I18N::translate('Never');
 		}
-		$aData[11]=edit_field_yes_no_inline('user_setting-verified-'.         $user_id, $aData[11]);
-		$aData[12]=edit_field_yes_no_inline('user_setting-verified_by_admin-'.$user_id, $aData[12]);
+		$aData[11]=edit_field_yes_no_inline('user_setting-'.$user_id.'-verified-',          $aData[11]);
+		$aData[12]=edit_field_yes_no_inline('user_setting-'.$user_id.'-verified_by_admin-', $aData[12]);
 		// Add extra column for "delete" action
 		if ($user_id != WT_USER_ID) {
 			$aData[13]='<div class="icon-delete" onclick="if (confirm(\''.htmlspecialchars(WT_I18N::translate('Permanently delete "%s"?', $user_name)).'\')) { document.location=\''.WT_SCRIPT_NAME.'?action=deleteuser&username='.htmlspecialchars($user_name).'\'; }"></div>';
@@ -206,35 +206,32 @@ case 'load1row':
 	echo '<dl>';
 	echo '<h2>', WT_I18N::translate('Details'), '</h2>';
 	echo '<dt>', WT_I18N::translate('Administrator'), '</dt>';
-	echo '<dd>', edit_field_yes_no_inline('user_setting-canadmin-'.$user_id, get_user_setting($user_id, 'canadmin')), '</dd>';
+	echo '<dd>', edit_field_yes_no_inline('user_setting-'.$user_id.'-canadmin', get_user_setting($user_id, 'canadmin')), '</dd>';
 
 	echo '<dt>', WT_I18N::translate('Password'), '</dt>';
-	echo '<dd>', edit_field_inline('user-password-'.$user_id, ''), '</dd>';
+	echo '<dd>', edit_field_inline('user-password-'.$user_id, '********'), '</dd>';
 
 	echo '<dt>', WT_I18N::translate('Preferred contact method'), '</dt>';
-	echo '<dd>', edit_field_contact_inline('new_contact_method', get_user_setting($user_id, 'contactmethod')), '</dd>';
+	echo '<dd>', edit_field_contact_inline('user_setting-'.$user_id.'-contactmethod', get_user_setting($user_id, 'contactmethod')), '</dd>';
 
 	echo '<dt>', WT_I18N::translate('Allow this user to edit his account information'), '</dt>';
-	echo '<dd>', edit_field_yes_no_inline('user_setting-editaccount-'.$user_id, get_user_setting($user_id, 'editaccount')), '</dd>';
+	echo '<dd>', edit_field_yes_no_inline('user_setting-'.$user_id.'-editaccount', get_user_setting($user_id, 'editaccount')), '</dd>';
 
 	echo '<dt>', WT_I18N::translate('Automatically approve changes made by this user'), '</dt>';
-	echo '<dd>', edit_field_yes_no_inline('user_setting-auto_accept-'.$user_id, get_user_setting($user_id, 'auto_accept')), '</dd>';
+	echo '<dd>', edit_field_yes_no_inline('user_setting-'.$user_id.'-auto_accept', get_user_setting($user_id, 'auto_accept')), '</dd>';
 
 	echo '<dt>', WT_I18N::translate('Theme'), '</dt>';
-	echo '<dd>', select_edit_control_inline('user_setting-canedit-'.$user_id, array_flip(get_theme_names()), WT_I18N::translate('&lt;default theme&gt;'), get_user_setting($user_id, 'theme')), '</dd>';
+	echo '<dd>', select_edit_control_inline('user_setting-'.$user_id.'-canedit', array_flip(get_theme_names()), WT_I18N::translate('&lt;default theme&gt;'), get_user_setting($user_id, 'theme')), '</dd>';
 
 	echo '<dt>', WT_I18N::translate('Default Tab to show on Individual Information page'), '</dt>';
-	echo '<dd>', edit_field_default_tab_inline('new_default_tab', get_user_setting($user_id, 'defaulttab', 'personal_facts')), '</dd>';
+	echo '<dd>', edit_field_default_tab_inline('user_setting-'.$user_id.'-defaulttab', get_user_setting($user_id, 'defaulttab', 'personal_facts')), '</dd>';
 
 	echo '<dt>', WT_I18N::translate('Visible to other users when online'), '</dt>';
-	echo '<dd>', edit_field_yes_no_inline('user_setting-visibleonline-'.$user_id, get_user_setting($user_id, 'visibleonline')), '</dd>';
+	echo '<dd>', edit_field_yes_no_inline('user_setting-'.$user_id.'-visibleonline', get_user_setting($user_id, 'visibleonline')), '</dd>';
 
-	echo '<dt>', WT_I18N::translate('Admin comments on user'), '</dt>';
-	echo '<dd>', edit_field_inline('user_setting-comment-'.$user_id, get_user_setting($user_id, 'admin_comment')), '</dd>';
+	echo '<dt>', WT_I18N::translate('Comments'), '</dt>';
+	echo '<dd>', edit_field_inline('user_setting-'.$user_id.'-comment', get_user_setting($user_id, 'comment')), '</dd>';
 
-	echo '<dt>', WT_I18N::translate('Date'), '</dt>';
-	echo '<dd>', edit_field_inline('user_setting-commentexp-'.$user_id, get_user_setting($user_id, 'admin_comment')), '</dd>';
-	echo '</dd>';
 	echo '</dl>';
 
 	// Column One - details
@@ -251,38 +248,21 @@ case 'load1row':
 		'</tr>';
 
 	foreach ($all_gedcoms as $ged_id=>$ged_name) {
-		echo '<tr>',
-			'<td >', WT_I18N::translate('%s', get_gedcom_setting($ged_id, 'title')), '</td>',
+		echo
+			'<tr><td >',
+			WT_I18N::translate('%s', get_gedcom_setting($ged_id, 'title')), 
 			//Pedigree root person
-			'<td>';
-				$varname='rootid'.$ged_id;
-				echo '<input type="text" name="', $varname, '" id="', $varname, '" value="';
-				$pid=get_user_gedcom_setting($user_id, $ged_id, 'rootid');
-				echo $pid, '" />', print_findindi_link($varname, "", false, false, $ged_name);
-				$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
-				$person=WT_Person::getInstance($pid);
-				if ($person) {
-					echo '<div class="list_item"><a href="', $person->getHtmlUrl(), '">', PrintReady($person->getFullName()), '</a></div>';
-				}
-			echo '</td>',						
-			// GEDCOM INDI Record ID
-			'<td>';
-				$varname='gedcomid'.$ged_id;
-				echo '<input type="text" name="',$varname, '" id="',$varname, '" value="';
-				$pid=get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
-				echo $pid, '" />';
-				print_findindi_link($varname, "", false, false, $ged_name);
-				$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
-				$person=WT_Person::getInstance($pid);
-				if ($person) {
-					echo ' <div class="list_item"><a href="', $person->getHtmlUrl(), '">', PrintReady($person->getFullName()), '</a></div>';
-				}
-			echo
-				'</td>';
-			echo '<td>', select_edit_control_inline('user_gedcom_setting-'.$user_id.'-'.$ged_id.'-canedit', $ALL_EDIT_OPTIONS, null, get_user_gedcom_setting($user_id, $ged_id, 'canedit', 'none')), '</td>';
-			//Relationship path
-			echo '<td>', select_edit_control_inline('user_gedcom_setting-'.$user_id.'-'.$ged_id.'-RELATIONSHIP_PATH_LENGTH', array(0=>WT_I18N::translate('No'), 1=>1, 2=>2, 3=>3, 4=>4, 5=>5, 6=>6, 7=>7, 8=>8, 9=>9, 10=>10), null, get_user_gedcom_setting($user_id, $ged_id, 'RELATIONSHIP_PATH_LENGTH', '0')), '</td>';
-			echo '</tr>';
+			'</td><td>',
+			// TODO: autocomplete/find/etc. for this field
+			edit_field_inline('user_gedcom_setting-'.$user_id.'-'.$ged_id.'-rootid', get_user_gedcom_setting($user_id, $ged_id, 'rootid')),
+			'</td><td>',
+			// TODO: autocomplete/find/etc. for this field
+			edit_field_inline('user_gedcom_setting-'.$user_id.'-'.$ged_id.'-gedcomid', get_user_gedcom_setting($user_id, $ged_id, 'gedcomid')),
+			'</td><td>',
+			select_edit_control_inline('user_gedcom_setting-'.$user_id.'-'.$ged_id.'-canedit', $ALL_EDIT_OPTIONS, null, get_user_gedcom_setting($user_id, $ged_id, 'canedit', 'none')),
+			'</td><td>',
+			select_edit_control_inline('user_gedcom_setting-'.$user_id.'-'.$ged_id.'-RELATIONSHIP_PATH_LENGTH', array(0=>WT_I18N::translate('no'), 1=>1, 2=>2, 3=>3, 4=>4, 5=>5, 6=>6, 7=>7, 8=>8, 9=>9, 10=>10), null, get_user_gedcom_setting($user_id, $ged_id, 'RELATIONSHIP_PATH_LENGTH', '0')),
+			'</td></tr>';
 	}
 	echo '</table>';
 
@@ -317,7 +297,6 @@ if ($action=='createuser' || $action=='edituser2') {
 			// Change password
 			if ($action=='edituser2' && !empty($pass1)) {
 				set_user_password($user_id, crypt($pass1));
-				AddToLog("User ->{$oldusername}<- had password changed", 'auth');
 			}
 			// Change username
 			if ($action=='edituser2' && $username!=$oldusername) {
@@ -335,7 +314,6 @@ if ($action=='createuser' || $action=='edituser2') {
 			set_user_setting($user_id, 'contactmethod',        $new_contact_method);
 			set_user_setting($user_id, 'defaulttab',           $new_default_tab);
 			set_user_setting($user_id, 'comment',              $new_comment);
-			set_user_setting($user_id, 'comment_exp',          $new_comment_exp);
 			set_user_setting($user_id, 'auto_accept',          $new_auto_accept);
 			set_user_setting($user_id, 'canadmin',             $canadmin);
 			set_user_setting($user_id, 'visibleonline',        $visibleonline);
@@ -497,9 +475,7 @@ case 'createform':
 			<?php if (WT_USER_IS_ADMIN) { ?>
 			<tr>
 				<td><?php echo WT_I18N::translate('Admin comments on user'), help_link('useradmin_comment'); ?></td>
-				<td ><textarea cols="38" rows="5" name="new_comment"></textarea></td>
-				<td><?php echo WT_I18N::translate('Date'), help_link('useradmin_comment_exp'); ?></td>
-				<td ><input type="text" name="new_comment_exp" id="new_comment_exp" />&nbsp;&nbsp;<?php print_calendar_popup("new_comment_exp"); ?></td>
+				<td colspan="3"><textarea cols="80" rows="5" name="new_comment"></textarea></td>
 			</tr>
 			<?php } ?>
 			<tr>
@@ -733,11 +709,12 @@ default:
 		jQuery(document).ready(function(){
 			var oTable = jQuery('#list').dataTable( {
 				"oLanguage": {
-					"sLengthMenu": '<?php echo /* I18N: %s is a placeholder for listbox containing numeric options */ WT_I18N::translate('Display %s records', '<select><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="50">50</option><option value="-1">'.WT_I18N::translate('All').'</option></select>'); ?>',
+					"sLengthMenu": '<?php echo /* I18N: %s is a placeholder for listbox containing numeric options */ WT_I18N::translate('Display %s records', '<select><option value="5">5</option><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">'.WT_I18N::translate('All').'</option></select>'); ?>',
 					"sZeroRecords": '<?php echo WT_I18N::translate('No records to display');?>',
 					"sInfo": '<?php echo /* I18N: %s' are placeholders for numbers */ WT_I18N::translate('Showing %1$s to %2$s of %3$s', '_START_', '_END_', '_TOTAL_'); ?>',
 					"sInfoEmpty": '<?php echo /* I18N: %s' are placeholders for numbers */ WT_I18N::translate('Showing %1$s to %2$s of %3$s', '0', '0', '0'); ?>',
 					"sInfoFiltered": '<?php echo /* I18N: %s  is a placeholder for numbers */ WT_I18N::translate('(filtered from %s total entries)', '_MAX_'); ?>',
+					"sProcessing": '<?php echo WT_I18N::translate('Loading...');?>',
 					"sSearch": '<?php echo WT_I18N::translate('Search');?>:',
 					"oPaginate": {
 						"sFirst": '<?php echo WT_I18N::translate_c('first page', 'first');?>',
@@ -746,6 +723,7 @@ default:
 						"sPrevious": '<?php echo WT_I18N::translate('previous');?>'
 					}
 				},
+				"sDom"            : '<"H"prf>t<"F"il>',
 				"bProcessing"     : true,
 				"bServerSide"     : true,
 				"sAjaxSource"     : "<?php echo WT_SCRIPT_NAME.'?action=loadrows'; ?>",

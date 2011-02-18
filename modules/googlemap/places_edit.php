@@ -131,7 +131,7 @@ if ($action=='updaterecord' && WT_USER_IS_ADMIN) {
 
 // Update placelocation STREETVIEW fields ----------------------------------------------------------
 if ($action=='update_sv_params' && WT_USER_IS_ADMIN) {	
-	echo "Streetview parameters updated";
+	echo "Google Street View parameters updated";
 	echo "<br /><br />";
 	echo "LATI = ".$_REQUEST['svlati']."<br />";
 	echo "LONG = ".$_REQUEST['svlong']."<br />";
@@ -145,7 +145,7 @@ if ($action=='update_sv_params' && WT_USER_IS_ADMIN) {
 	if (!WT_DEBUG) {
 		echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 	}
-	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();return false;\">", i18n::translate('Close Window'), "</a></div><br />\n";
+	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();return false;\">", WT_I18N::translate('Close Window'), "</a></div><br />\n";
 	print_simple_footer();
 	exit;
 }
@@ -365,7 +365,7 @@ $api="v3";
 				<a href="javascript:;" onclick="change_icon();return false;"><?php echo WT_I18N::translate('Change flag'); ?></a>
 <?php   }
 		else { ?>
-				<img alt="<?php echo /* I18N: The emblem of a country or region */ WT_I18N::translate('Flag'); ?>" src="<?php echo $place_icon; ?>"/>&nbsp;&nbsp;
+				<img alt="<?php echo /* I18N: The emblem of a country or region */ WT_I18N::translate('Flag'); ?>" src="modules/googlemap/<?php echo $place_icon; ?>"/>&nbsp;&nbsp;
 				<a href="javascript:;" onclick="change_icon();return false;"><?php echo WT_I18N::translate('Change flag'); ?></a>&nbsp;&nbsp;
 				<a href="javascript:;" onclick="remove_icon();return false;"><?php echo WT_I18N::translate('Remove flag'); ?></a>
 <?php   } ?>

@@ -35,6 +35,8 @@
 <![endif]-->
 <script type="text/javascript">
 
+
+
 //<![CDATA[
     
     // this variable will collect the html which will eventually be placed in the side_bar 
@@ -583,7 +585,7 @@
        		if (media == null || media == "") {
        			media = "modules/googlemap/images/facts/v3_image_info.png";
        		} else {       			
-       			media = media;
+       			media = "media/places/"+media;
        		}
 			// -------------------------------------------------------------
        		

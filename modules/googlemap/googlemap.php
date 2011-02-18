@@ -205,7 +205,7 @@ function create_possible_place_names ($placename, $level) {
 		$retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
 		$retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
 		break;
-	case 2:     // 2 = Normal name, Postfix, Prefxi, Both
+	case 2:     // 2 = Normal name, Postfix, Prefix, Both
 		$retlist[] = $placename;
 		$retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
 		$retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
@@ -281,7 +281,7 @@ function get_lati_long_placelocation ($place) {
 }
 
 function setup_map() {
-	global $GOOGLEMAP_ENABLED, $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM;
+	global $GOOGLEMAP_ENABLED, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM;
 	if (!$GOOGLEMAP_ENABLED) {
 		return;
 	}
@@ -300,7 +300,7 @@ function setup_map() {
 }
 
 function build_indiv_map($indifacts, $famids) {
-	global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
+	global $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
 	global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $SHOW_LIVING_NAMES;
 	global $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
 	
@@ -450,20 +450,20 @@ function build_indiv_map($indifacts, $famids) {
 										$markers[$i]=array('index'=>'', 'tabindex'=>'', 'placed'=>'no');
 										if (strpos($srec, "\n1 SEX F")!==false) {
 											$markers[$i]["fact"] = WT_I18N::translate('Daughter');
-											$markers[$i]["class"]  = "person_boxF";
+											$markers[$i]["class"] = "person_boxF";
 										} else
 											if (strpos($srec, "\n1 SEX M")!==false) {
 												$markers[$i]["fact"] = WT_I18N::translate('Son');
-												$markers[$i]["class"]  = "person_box";
+												$markers[$i]["class"] = "person_box";
 											} else {
-												$markers[$i]["fact"]     = translate_fact('CHIL');
-												$markers[$i]["class"]    = "person_boxNN";
+												$markers[$i]["fact"]  = translate_fact('CHIL');
+												$markers[$i]["class"] = "person_boxNN";
 											}
 										$markers[$i]["placerec"] = $placerec;
 										$match1[1] = trim($match1[1]);
 										$match2[1] = trim($match2[1]);
 										$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.'), $match1[1]);
-										$markers[$i]["lng"]  = str_replace(array('E', 'W', ','), array('', '-', '.'), $match2[1]);
+										$markers[$i]["lng"] = str_replace(array('E', 'W', ','), array('', '-', '.'), $match2[1]);
 										if ($ctd > 0) {
 											$markers[$i]["date"] = $matchd[1];
 										}
@@ -483,27 +483,27 @@ function build_indiv_map($indifacts, $famids) {
 											if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
 												$i = $i + 1;
 												$markers[$i]=array('index'=>'', 'tabindex'=>'', 'placed'=>'no');
-												$markers[$i]["fact"]     = translate_fact('CHIL');
-												$markers[$i]["class"]    = "option_boxNN";
+												$markers[$i]["fact"]	= translate_fact('CHIL');
+												$markers[$i]["class"]	= "option_boxNN";
 												if (strpos($srec, "\n1 SEX F")!==false) {
 													$markers[$i]["fact"] = WT_I18N::translate('Daughter');
-													$markers[$i]["class"]  = "person_boxF";
+													$markers[$i]["class"] = "person_boxF";
 												}
 												if (strpos($srec, "\n1 SEX M")!==false) {
 													$markers[$i]["fact"] = WT_I18N::translate('Son');
-													$markers[$i]["class"]  = "person_box";
+													$markers[$i]["class"] = "person_box";
 												}
 												$markers[$i]["icon"] = $latlongval["icon"];
 												$markers[$i]["placerec"] = $placerec;
 												if ($zoomLevel > $latlongval["zoom"]) {
 													$zoomLevel = $latlongval["zoom"];
 												}
-												$markers[$i]["lati"]     = str_replace(array('N', 'S', ','), array('', '-', '.'), $latlongval["lati"]);
-												$markers[$i]["lng"]      = str_replace(array('E', 'W', ','), array('', '-', '.'), $latlongval["long"]);
+												$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.'), $latlongval["lati"]);
+												$markers[$i]["lng"]  = str_replace(array('E', 'W', ','), array('', '-', '.'), $latlongval["long"]);
 												if ($ctd > 0) {
 													$markers[$i]["date"] = $matchd[1];
 												}
-												$markers[$i]["name"]   = $smatch[$j][1];
+												$markers[$i]["name"] = $smatch[$j][1];
 												
 												$markers[$i]["media"] = $latlongval["media"];
 												$markers[$i]["sv_lati"] = $latlongval["sv_lati"];
@@ -531,7 +531,7 @@ function build_indiv_map($indifacts, $famids) {
 		echo "</td></tr>";
 		if (WT_USER_IS_ADMIN) {
 			echo "<tr><td align=\"center\" colspan=\"2\">";
-			echo "<a href=\"module.php?mod=googlemap&mod_action=admin_editconfig\">", WT_I18N::translate('Manage GoogleMap configuration'), "</a>";
+			echo "<a href=\"module.php?mod=googlemap&mod_action=admin_editconfig\">", WT_I18N::translate('Google Maps configuration'), "</a>";
 			echo "</td></tr>";
 		}
 
@@ -569,7 +569,7 @@ function build_indiv_map($indifacts, $famids) {
 							$markers[$k]["index"] = $indexcounter;							
 							// if ($tabcounter == 4) {
 							// V3 ==============================
-							if ($tabcounter == 30) {  
+							if ($tabcounter == 30) {
 							// V3 ==============================
 
 								$indexcounter = $indexcounter + 1;
@@ -588,37 +588,22 @@ function build_indiv_map($indifacts, $famids) {
 
 		// === add $gmarks array to the required wt_v3_googlemap.js.php ============================		
 		$gmarks = $markers;
-
-		// Convert $gmarks array to xml file =======================================================
-		require_once WT_ROOT.'modules/googlemap/Array-XML.php';		
-		$xml = generate_valid_xml_from_array($gmarks, "markers", "marker");
-		$xml = str_replace('&lt;', '<', $xml);
-		$xml = str_replace('&gt;', '>', $xml);
-		$xml = str_replace('<br /><br />', '', $xml);
-		$xml = str_replace('<br />', '', $xml);
-		$xml = str_replace(' "', '" ', $xml);
-		$xml = str_replace('2 PLAC ', '', $xml);		
-		$temp_xml_filename = WT_ROOT.'modules/googlemap/wt_v3_temp.xml';
-		if (file_exists($temp_xml_filename)) {
-			unlink($temp_xml_filename);
-		}
-		$Content = $xml; 
-		$handle = fopen($temp_xml_filename, 'x+');
-		fwrite($handle, $Content);
-		fclose($handle);	
-		
+	
 		global $controller;
 		$pid=$controller->indi->getXref();
 		
 		
-		// *** ENABLE STREETVIEW *** (yes/no) ======================================================
-		$STREETVIEW='yes';
+		// *** ENABLE STREETVIEW *** (boolean) ======================================================
+		$STREETVIEW=get_module_setting('googlemap', 'GM_USE_STREETVIEW');
 		// =========================================================================================
 		
 		// === Include css and js files ============================================================
 		echo '<link type="text/css" href="modules/googlemap/css/wt_v3_googlemap.css" rel="stylesheet" />';
-		if ($STREETVIEW=='yes') {
+		echo '<script type="text/javascript" src="modules/googlemap/infobubble.js.php"></script>';
+		
+		if ($STREETVIEW) {
 			require_once WT_ROOT.'modules/googlemap/wt_v3_googlemap.js.php';
+			// require_once WT_ROOT.'modules/googlemap/infobubble2.php';
 		} else {
 			require_once WT_ROOT.'modules/googlemap/wt_v3_googlemap.js_noSV.php';		
 		}
@@ -663,40 +648,40 @@ function build_indiv_map($indifacts, $famids) {
 	
 	// ======= More V3 api stuff (not displayed now) but will be sorted later ==========	
 	?>
-   	<table id="s_bar" style="display:none;">
-   	  	<tr>
-   	    	<td valign="top" style="padding-left:5px; width:360px; text-decoration:none; color:#4444ff; background:#aabbd8;">
-       	   		<div id="side_bar"></div>
-       		</td>
-     		</tr>
-   	</table>
-   	<table style="display:none;">   
-   		<tr>
-   			<td style="width: 360px; text-align:center;">
-   				<form style="width: 360px; id="form1" action="#">
-   				
-      				<!-- Event Map:<input 	name= "radio1" type="checkbox" id="theatrebox" onclick="boxclick(this,'theatre')" checked /> &nbsp; -->
-					Street View Only:<input name= "radio2" type="checkbox" id="golfbox" onclick="boxclick(this,'golf')" /> &nbsp;     				
-      				<!-- Other Map:<input type="checkbox" id="infobox" onclick="boxclick(this,'info')" /> -->
+	<table id="s_bar" style="display:none;">
+		<tr>
+			<td valign="top" style="padding-left:5px; width:360px; text-decoration:none; color:#4444ff; background:#aabbd8;">
+				<div id="side_bar"></div>
+			</td>
+			</tr>
+	</table>
+	<table style="display:none;">
+		<tr>
+			<td style="width: 360px; text-align:center;">
+				<form style="width: 360px;" id="form1" action="#">
+				
+					<!-- Event Map:<input 	name= "radio1" type="checkbox" id="theatrebox" onclick="boxclick(this,'theatre')" checked /> &nbsp; -->
+					Street View Only:<input name= "radio2" type="checkbox" id="golfbox" onclick="boxclick(this,'golf')" /> &nbsp;
+					<!-- Other Map:<input type="checkbox" id="infobox" onclick="boxclick(this,'info')" /> -->
 
 					<?php
 					// --------- Maybe for later use ---------------
 					/*					
-					 Other Map:<input type="checkbox" id="infobox" onclick="boxclick(this,'info')" /> 					
-      				<b>Pedigree Map:</b><input id="sel2" name="select" type=radio  />
+					 Other Map:<input type="checkbox" id="infobox" onclick="boxclick(this,'info')" />
+					<b>Pedigree Map:</b><input id="sel2" name="select" type=radio />
 					&nbsp;&nbsp;
-      				Parents: <input type="checkbox" id="parentsbox" onclick="boxclick(this,'gen1')" /> &nbsp;&nbsp;
-      				Grandparents: <input type="checkbox" id="gparentsbox" onclick="boxclick(this,'gen2')" /> &nbsp;&nbsp;
-      				Great Grandparents: <input type="checkbox" id="ggparentsbox" onclick="boxclick(this,'gen3')" /><br />
-      				*/
+					Parents: <input type="checkbox" id="parentsbox" onclick="boxclick(this,'gen1')" /> &nbsp;&nbsp;
+					Grandparents: <input type="checkbox" id="gparentsbox" onclick="boxclick(this,'gen2')" /> &nbsp;&nbsp;
+					Great Grandparents: <input type="checkbox" id="ggparentsbox" onclick="boxclick(this,'gen3')" /><br />
+					*/
 					?>
 
- 		   		</form> 
-    		</td>
-    		<td style="width: 200px;">
-    		</td>
-    	</tr>
-   	</table>  
+				</form> 
+			</td>
+			<td style="width: 200px;">
+			</td>
+		</tr>
+	</table>
 	<?php
 	// =================================================================================
 	

@@ -172,7 +172,7 @@ if ($action=="ExportFile" && WT_USER_IS_ADMIN) {
 print_header(WT_I18N::translate('Edit geographic place locations'));
 
 echo '<table id="gm_config"><tr>',
-	'<th><a ', (safe_GET('mod_action')=="admin_editconfig" ? 'class="current" ' : ''), 'href="module.php?mod=googlemap&mod_action=admin_editconfig">', WT_I18N::translate('Manage GoogleMap configuration'), '</a>', help_link('GOOGLEMAP_CONFIG','googlemap'), '</th>',
+	'<th><a ', (safe_GET('mod_action')=="admin_editconfig" ? 'class="current" ' : ''), 'href="module.php?mod=googlemap&mod_action=admin_editconfig">', WT_I18N::translate('Google Maps configuration'), '</a>', help_link('GOOGLEMAP_CONFIG','googlemap'), '</th>',
 	'<th><a ', (safe_GET('mod_action')=="admin_places" ? 'class="current" ' : ''), 'href="module.php?mod=googlemap&mod_action=admin_places">', WT_I18N::translate('Edit geographic place locations'), '</a>', help_link('PLE_EDIT','googlemap'), '</th>',
 	'<th><a ', (safe_GET('mod_action')=="admin_placecheck" ? 'class="current" ' : ''), 'href="module.php?mod=googlemap&mod_action=admin_placecheck">', WT_I18N::translate('Place Check'), '</a>', help_link('GOOGLEMAP_PLACECHECK','googlemap'), '</th>',
 '</tr></table>';
@@ -517,12 +517,12 @@ function showchanges() {
 }
 
 function edit_place_location(placeid) {
-	window.open('module.php?mod=googlemap&mod_action=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50, left=50, width=600, height=650, resizable=1, scrollbars=1');
+	window.open('module.php?mod=googlemap&mod_action=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50, left=50, width=690, height=630, resizable=1, scrollbars=1');
 	return false;
 }
 
 function add_place_location(placeid) {
-	window.open('module.php?mod=googlemap&mod_action=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50, left=50, width=600, height=650, resizable=1, scrollbars=1');
+	window.open('module.php?mod=googlemap&mod_action=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50, left=50, width=690, height=630, resizable=1, scrollbars=1');
 	return false;
 }
 
@@ -596,7 +596,7 @@ foreach ($placelist as $place) {
 			echo "<img src=\"http://labs.google.com/ridefinder/images/mm_20_red.png\">";
 		}
 	} else {
-		echo "<img src=\"", $place["icon"], " \"width=\"25\" height=\"15\">";
+		echo "<img src=\"modules/googlemap/", $place["icon"], " \"width=\"25\" height=\"15\">";
 	}
 	echo "</td>";
 	echo "<td class=\"narrow\"><a href=\"javascript:;\" onclick=\"edit_place_location({$place['place_id']});return false;\"><img src=\"", $WT_IMAGES["edit"], "\" border=\"0\" alt=\"", WT_I18N::translate("Edit"), "\" /></a></td>";

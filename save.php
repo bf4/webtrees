@@ -50,147 +50,178 @@ $value=safe_POST('value', WT_REGEX_UNSAFE);
 // Every switch must have a default case, and every case must end in ok() or fail()
 
 switch ($table) {
-case 'block_setting':
-	//////////////////////////////////////////////////////////////////////////////
-	// Table name: WT_BLOCK_SETTING
-	//////////////////////////////////////////////////////////////////////////////
-	fail();
-
-case 'gedcom_setting':
-	//////////////////////////////////////////////////////////////////////////////
-	// Table name: WT_GEDCOM_SETTING
-	//////////////////////////////////////////////////////////////////////////////
-	fail();
-
-case 'ip_address':
-	//////////////////////////////////////////////////////////////////////////////
-	// Table name: WT_IP_ADDRESS
-	//////////////////////////////////////////////////////////////////////////////
-	fail();
-
-case 'module_privacy':
-	//////////////////////////////////////////////////////////////////////////////
-	// Table name: WT_MODULE_PRIVACY
-	//////////////////////////////////////////////////////////////////////////////
-	fail();
-
-case 'module_setting':
-	//////////////////////////////////////////////////////////////////////////////
-	// Table name: WT_MODULE_SETTING
-	//////////////////////////////////////////////////////////////////////////////
-	fail();
-
 case 'site_setting':
 	//////////////////////////////////////////////////////////////////////////////
 	// Table name: WT_SITE_SETTING
 	// ID format:  site_setting-{setting_name}
-	// Access:     administrator only
 	//////////////////////////////////////////////////////////////////////////////
+
+	// Authorisation
 	if (!WT_USER_IS_ADMIN) {
 		fail();
 	}
+
+	// Validation
 	switch ($id1) {
-	case 'INDEX_DIRECTORY':
-	case 'THEME':
-	case 'ALLOW_CHANGE_GEDCOM':
-	case 'ALLOW_USER_THEMES':
-	case 'SMTP_AUTH':
-	case 'SMTP_SIMPLE_MAIL':
-	case 'STORE_MESSAGES':
-	case 'REQUIRE_ADMIN_AUTH_REGISTRATION':
-	case 'USE_REGISTRATION_MODULE':
 	case 'MAX_EXECUTION_TIME':
 	case 'SESSION_TIME':
 	case 'SMTP_PORT':
-	case 'SERVER_URL':
-	case 'LOGIN_URL':
+		if (!is_numeric($value)) {
+			fail();
+		}
+		break;
+	case 'INDEX_DIRECTORY':
+		if (!is_dir($value) || substr($value, -1)!='/') {
+			fail();
+		}
+		break;
 	case 'MEMORY_LIMIT':
-	case 'SMTP_SSL':
+		// Must specify K, M or G.
+		if (!preg_match('/^[0-9]+[KMG]$/', $value)) {
+			fail();
+		}
+		break;
+	case 'STORE_MESSAGES':
+	case 'USE_REGISTRATION_MODULE':
+	case 'REQUIRE_ADMIN_AUTH_REGISTRATION':
+	case 'ALLOW_USER_THEMES':
+	case 'ALLOW_CHANGE_GEDCOM':
+	case 'SMTP_SIMPLE_MAIL':
+	case 'SMTP_AUTH':
+		$value=(int)$value;
+		break;
+	case 'THEME_DIR':
+	case 'LOGIN_URL':
+	case 'SERVER_URL':
 	case 'SMTP_ACTIVE':
-	case 'SMTP_HOST':
-	case 'SMTP_HELO':
 	case 'SMTP_AUTH_USER':
-	case 'SMTP_AUTH_PASS':
 	case 'SMTP_FROM_NAME':
+	case 'SMTP_HELO':
+	case 'SMTP_HOST':
+	case 'SMTP_SSL':
+		break;
+	case 'SMTP_AUTH_PASS':
+		// The password will be displayed as ***** on screen.
+		// Accept the update, but pretend to fail.  This will leave the ***** on screen
 		set_site_setting($id1, $value);
-		ok();
+		fail();
+		break;
 	default:
 		// An unrecognised setting
 		fail();
 	}
+
+	// Authorised and valid - make update
+	set_site_setting($id1, $value);
+	ok();
 
 case 'user':
 	//////////////////////////////////////////////////////////////////////////////
 	// Table name: WT_USER
 	// ID format:  user-{column_name}-{user_id}
-	// Access:     administrator
-	//             user (if they have "editaccount" rights)
 	//////////////////////////////////////////////////////////////////////////////
+
+	// Authorisation
+	if (!(WT_USER_IS_ADMIN || WT_USER_ID && WT_USER==$id2)) {
+		fail();
+	}
+
+	// Validation
 	switch ($id1) {
+	case 'password':
+		// The password will be displayed as ***** on screen.
+		// Accept the update, but pretend to fail.  This will leave the ***** on screen
+		set_user_password($id2, crypt($value));
+		AddToLog('User ID: '.$user_id. ' changed password', 'auth');
+		fail();
 	case 'user_name':
 	case 'real_name':
 	case 'email':
-		if (WT_USER_IS_ADMIN || WT_USER==$id2 && get_user_setting($id2, 'editaccount')) {
-			try {
-				WT_DB::prepare("UPDATE `##user` SET {$id1}=? WHERE user_id=?")
-					->execute(array($value, $id2));
-			} catch (PDOException $ex) {
-				// Duplicate email or username? How can we display an error message?
-				fail();
-			}
-			ok();
-		} else {
-			// Not allowed
-			fail();
-		}
+		break;
 	default:
 		// An unrecognised setting
+		fail();
+	}
+
+	// Authorised and valid - make update
+	try {
+		WT_DB::prepare("UPDATE `##user` SET {$id1}=? WHERE user_id=?")
+			->execute(array($value, $id2));
+		AddToLog('User ID: '.$id2. ' changed '.$id1.' to '.$value, 'auth');
+		ok();
+	} catch (PDOException $ex) {
+		// Duplicate email or username?
 		fail();
 	}
 
 case 'user_gedcom_setting':
 	//////////////////////////////////////////////////////////////////////////////
 	// Table name: WT_USER_GEDCOM_SETTING
+	// ID format:  user_gedcom_setting-{user_id}-{gedcom_id}-{setting_name}
 	//////////////////////////////////////////////////////////////////////////////
-	fail();
 
-case 'user_setting':
-	//////////////////////////////////////////////////////////////////////////////
-	// Table name: WT_USER_SETTING
-	// ID format:  user_setting-{setting_name}-{user_id}
-	// Access:     administrator
-	//             member (some fields only - if they have "editaccount" rights)
-	//////////////////////////////////////////////////////////////////////////////
-	switch ($id1) {
-	case 'auto_accept':
-	case 'canadmin':
-	case 'editaccount':
-	case 'verified':
-	case 'verified_by_admin':
-	case 'contactmethod':
-	case 'max_relation_path':
-	case 'comment':
-		if (WT_USER_IS_ADMIN) {
-			set_user_setting($id2, $id1, $value);
-			ok();
-		} else {
-			// Not allowed
-			fail();
-		}
-	case 'defaulttab':
-	case 'language':
-	case 'visible_online':
-		if (WT_USER_IS_ADMIN || WT_USER==$id2 && get_user_setting($id2, 'editaccount')) {
-			set_user_setting($id2, $id1, $value);
-			ok();
-		} else {
-			// Not allowed
-			fail();
-		}
+	// Authorisation
+	if (!(WT_USER_IS_ADMIN || userGedcomAdmin($id2, $id3))) {
+		fail();
+	}
+
+	// Validation
+	switch($id3) {
+	case 'rootid':
+	case 'gedcomid':
+	case 'canedit':
+	case 'RELATIONSHIP_PATH_LENGTH':
+		break;
 	default:
 		// An unrecognised setting
 		fail();
 	}
+
+	// Authorised and valid - make update
+	set_user_gedcom_setting($id1, $id2, $id3, $value);
+	ok();
+
+case 'user_setting':
+	//////////////////////////////////////////////////////////////////////////////
+	// Table name: WT_USER_SETTING
+	// ID format:  user_setting-{user_id}-{setting_name}
+	//////////////////////////////////////////////////////////////////////////////
+
+	// Authorisation
+	if (!(WT_USER_IS_ADMIN || WT_USER_ID && get_user_setting($id1, 'editaccount') && _array($id2, array('language','defaulttab','visible_online','contact_method')))) {
+		fail();
+	}
+
+	// Validation
+	switch ($id2) {
+	case 'canadmin':
+		// Cannot change our own admin status - either to add it or remove it
+		if (WT_USER_ID==$id1) {
+			fail();
+		}
+		break;
+	case 'auto_accept':
+	case 'editaccount':
+	case 'verified':
+	case 'verified_by_admin':
+	case 'visibleonline':
+	case 'max_relation_path':
+		$value=(int)$value;
+		break;
+	case 'contactmethod':
+	case 'comment':
+	case 'defaulttab':
+	case 'language':
+	case 'theme':
+		break;
+	default:
+		// An unrecognised setting
+		fail();
+	}
+
+	// Authorised and valid - make update
+	set_user_setting($id1, $id2, $value);
+	ok();
 
 default:
 	// An unrecognised table

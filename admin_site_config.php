@@ -74,7 +74,7 @@ echo
 					'<dt>', WT_I18N::translate('Allow users to select their own theme'), help_link('ALLOW_USER_THEMES'), '</dt>',
 					'<dd>', edit_field_yes_no_inline('site_setting-ALLOW_USER_THEMES', get_site_setting('ALLOW_USER_THEMES')), '</dd>',
 					'<dt>', WT_I18N::translate('Default Theme'), help_link('THEME'), '</dt>',
-					'<dd>', select_edit_control_inline('site_setting-THEME', array_flip(get_theme_names()), null, get_site_setting('THEME')), '</dd>',
+					'<dd>', select_edit_control_inline('site_setting-THEME_DIR', array_flip(get_theme_names()), null, get_site_setting('THEME_DIR')), '</dd>',
 					'<dt>', WT_I18N::translate('Allow GEDCOM switching'), help_link('ALLOW_CHANGE_GEDCOM'), '</dt>',
 					'<dd>', edit_field_yes_no_inline('site_setting-ALLOW_CHANGE_GEDCOM', get_site_setting('ALLOW_CHANGE_GEDCOM')), '</dd>',
 					'<dt>', WT_I18N::translate('Session timeout'), help_link('SESSION_TIME'), '</dt>',
@@ -98,7 +98,8 @@ echo
 					'<dt>', WT_I18N::translate('Username'), help_link('SMTP_AUTH_USER'), '</dt>',
 					'<dd>', edit_field_inline('site_setting-SMTP_AUTH_USER', get_site_setting('SMTP_AUTH_USER')), '</dd>',
 					'<dt>', WT_I18N::translate('Password'), help_link('SMTP_AUTH_PASS'), '</dt>',
-					'<dd>', edit_field_inline('site_setting-SMTP_AUTH_PASS', get_site_setting('SMTP_AUTH_PASS')), '</dd>',
+					// Don't show password.  save.php has special code for this.
+					'<dd>', edit_field_inline('site_setting-SMTP_AUTH_PASS', '********'), '</dd>',
 					'<dt>', WT_I18N::translate('Security'), help_link('SMTP_SSL'), '</dt>',
 					'<dd>', select_edit_control_inline('site_setting-SMTP_SSL', array('none'=>WT_I18N::translate('none'), 'ssl'=>WT_I18N::translate('ssl'), 'tls'=>WT_I18N::translate('tls')), null, get_site_setting('SMTP_SSL')), '</dd>',
 					'<dt>', WT_I18N::translate('From email address'), help_link('SMTP_FROM_NAME'), '</dt>',

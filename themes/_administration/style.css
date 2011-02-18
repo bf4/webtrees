@@ -23,7 +23,7 @@
  *
  * @package webtrees
  * @subpackage Administration
- * @version $Id:style.css 10346 2011-01-05 04:21:50Z nigel $
+ * @version $Id$
  */
 
 /* general styles */
@@ -66,6 +66,7 @@ td {vertical-align:top;}
 /* jQuery.datatable styling over-rides */
 .odd {background-color:#dfd;}
 .even {background-color:#efe;}
+.fg-button {padding:2px 6px;}
 
 /* Drag-n-drop sorting for modules, etc. */
 .sortme {cursor:move;}
@@ -214,14 +215,22 @@ table#list  {width:100%}
 #list dd {border-bottom: 1px solid #999; margin-left: 300px; min-width: 300px; padding: 5px;}
 #access {float:left; margin-left:20px;}
 #access table {margin-bottom:20px;}
-#access th {background-color:#dcdcdc; text-align:left; padding:0; font-size:100%; white-space:nowrap;}
+#access th {background-color:#dcdcdc; text-align:center; padding:0; font-size:100%; min-width:150px;}
 #access td, #access td+td, #access td+td+td, #access td+td+td+td {background-color:#eceadf; padding:0;width:auto;}
 #access td+td+td+td {text-align:center;}
 td.details {background-color:#D1CFD0;border:2px solid #A19B9E;}
-#list_length {float:left;}
-#list_filter {float:right;}
-#list_info {float:left;}
-#list_paginate {float:right;}
+td.details:hover {color: black;}
+#list_paginate   { float:left;  }
+#list_processing { float:left;  }
+#list_filter     { float:right; }
+#list_info       { float:left;  }
+#list_length     { float:right; }
+
+html[dir='rtl'] #list_paginate   { float:right; }
+html[dir='rtl'] #list_processing { float:right; }
+html[dir='rtl'] #list_filter     { float:left;  }
+html[dir='rtl'] #list_info       { float:right; }
+html[dir='rtl'] #list_length     { float:left;  }
 
 /* USER ADD & EDIT */
 table#adduser  {width:100%;}

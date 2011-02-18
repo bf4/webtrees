@@ -5,7 +5,7 @@
  * To learn more about CSS visit http: //www.w3.org/TR/REC-CSS2/
  *
  * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
+ * Copyright (C) 2011 webtrees development team.
  *
  * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
@@ -95,7 +95,7 @@ img.block, #calendar_img, #biglink img, #mycart img  {
 	height: 15px;
 }
 
-.optionbox a img, #imgnew_comment_exp {
+.optionbox a img {
 	vertical-align: top;
 }
 
@@ -406,16 +406,16 @@ a:hover .nameZoom {
 
 .pedigree_image_portrait, .pedigree_image_landscape {
 	float: left;
-	height: 50px;
-	border: solid black 1px;
-	margin-right: 3px;
+	max-height: 50px;
+	max-width: 50px;
+	margin-right: 4px;
 }
 
 .pedigree_image_portrait_rtl, .pedigree_image_landscape_rtl {
 	float: right;
-	height: 50px;
-	border: solid black 1px;
-	margin-left: 3px;
+	max-height: 50px;
+	max-width: 50px;
+	margin-left: 4px;
 }
 
 .pedigree_form {
@@ -552,7 +552,6 @@ html[dir='rtl'] .icon, html[dir='rtl'] .adminicon {
 	color: #555555;
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
-	text-align: center;
 	padding: 1px;
 }
 
@@ -560,7 +559,6 @@ html[dir='rtl'] .icon, html[dir='rtl'] .adminicon {
 	color: black;
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
-	text-align: center;
 	padding: 1px;
 }
 
@@ -661,8 +659,6 @@ html[dir='rtl'] .icon, html[dir='rtl'] .adminicon {
 	color: black;
 }
 
-
-	
 #content {
 	margin-left: 1px;
 }
@@ -1688,4 +1684,8 @@ td.descriptionbox  a { /* this keeps the tag color the same when it is a link as
 
 .logo {
 	text-align: center;
+}
+#topMenu {
+	margin-left:5%;
+	width:92.5%;
 }
