@@ -55,11 +55,11 @@ if (file_exists(WT_THEME_DIR.$BROWSERTYPE.'.css')) {
 // Additional css files required (Only if Lightbox installed)
 if (WT_USE_LIGHTBOX) {
 	if ($TEXT_DIRECTION=='rtl') {
-		echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />';
-		echo '<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';
+		echo '<link rel="stylesheet" href="', WT_MODULES_DIR, 'lightbox/css/clearbox_music_RTL.css" type="text/css" />';
+		echo '<link rel="stylesheet" href="', WT_MODULES_DIR, 'lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';
 	} else {
-		echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music.css" type="text/css" />';
-		echo '<link rel="stylesheet" href="modules/lightbox/css/album_page.css" type="text/css" media="screen" />';
+		echo '<link rel="stylesheet" href="', WT_MODULES_DIR, 'lightbox/css/clearbox_music.css" type="text/css" />';
+		echo '<link rel="stylesheet" href="', WT_MODULES_DIR, 'lightbox/css/album_page.css" type="text/css" media="screen" />';
 	}
 }
 
@@ -85,7 +85,7 @@ if ($TEXT_DIRECTION=='rtl') {
 }
 echo
 	'<link type="text/css" href="', WT_THEME_DIR, 'modules.css" rel="Stylesheet" />',
-	'</head>';
+	'</head>',
 	'<body id="body">';
 
 // begin header section

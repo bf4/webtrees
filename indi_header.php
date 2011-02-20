@@ -45,7 +45,7 @@ $controller->init();
 //Zend_Session::writeClose();
 
 //print_header($controller->getPageTitle());
-
+global $SHOW_LDS_AT_GLANCE; //NOT THE RIGHT SOLUTION BUT TEMPORARILY FIXES A PROBLEM :-)
 if (!$controller->indi) {
 	echo "<b>", WT_I18N::translate('Unable to find record with ID'), "</b><br /><br />";
 	print_footer();

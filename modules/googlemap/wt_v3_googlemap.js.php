@@ -421,8 +421,8 @@
 						$image = "<img class='icon_birt' src='././images/pix1.gif' />";
 					} else if ($gmark['fact'] == 'Baptism' || $gmark['fact'] == 'Christening') {
 						$image = "<img class='icon_bapm' src='././images/pix1.gif' />";
-					} else if ($gmark['fact'] == 'Marriage') {
-						$image = "<img class='icon_marr' src='././images/pix1.gif' />";
+					} else if ($gmark['fact'] == 'Military') {
+						$image = "<img class='icon_mili' src='././images/pix1.gif' />";
 					} else if ($gmark['fact'] == 'Occupation') {
 						$image = "<img class='icon_occu' src='././images/pix1.gif' />";
 					} else if ($gmark['fact'] == 'Residence') {
@@ -581,7 +581,7 @@
 			
 			// Employ of image tab function using an information image -----
 			if (media == null || media == "") {
-				media = "modules/googlemap/images/facts/v3_image_info.png";
+				media = "<?php echo WT_MODULES_DIR; ?>googlemap/images/facts/v3_image_info.png";
 			} else {
 				media = media;
 			}
@@ -631,7 +631,7 @@
  			 	
 						'<ul class="tabs" >',
 		 					'<li><a href="#event" id="EV"><?php echo WT_I18N::translate('Events'); ?><\/a><\/li>',
-							'<li><a href="#sview" id="SV"><?php echo WT_I18N::translate('Street View'); ?><\/a><\/li>',
+							'<li><a href="#sview" id="SV"><?php echo WT_I18N::translate('Google Street View'); ?><\/a><\/li>',
 					//		'<li><a href="#image" id="PH">Image<\/a><\/li>',
 					//		'<li><a href="#" id="SP">Aerial<\/a><\/li>',
 						'<\/ul>',

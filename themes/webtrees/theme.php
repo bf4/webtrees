@@ -97,6 +97,7 @@ $WT_IMAGES=array(
 	'target'=>WT_THEME_DIR.'images/buttons/target.gif',
 	'timeline'=>WT_THEME_DIR.'images/timeline.png',
 	'tree'=>WT_THEME_DIR.'images/tree.png',
+	'warning'=>WT_THEME_DIR.'images/warning.gif',
 	'wiki'=>WT_THEME_DIR.'images/w_22.png',
 
 	//- buttons for data entry pages
@@ -150,7 +151,6 @@ $WT_IMAGES=array(
 	'rdarrow'=>WT_THEME_DIR.'images/rdarrow.gif',
 	'remove'=>WT_THEME_DIR.'images/remove.gif',
 	'spacer'=>WT_THEME_DIR.'images/spacer.gif',
-	'trashcan'=>WT_THEME_DIR.'images/trashcan.gif',
 	'uarrow'=>WT_THEME_DIR.'images/uarrow.gif',
 	'uarrow2'=>WT_THEME_DIR.'images/uarrow2.gif',
 	'uarrow3'=>WT_THEME_DIR.'images/uarrow3.gif',

@@ -33,8 +33,8 @@ require_once WT_ROOT.'includes/functions/functions_print_lists.php';
 
 $use_googlemap = false;
 
-if (file_exists(WT_ROOT.'modules/googlemap/placehierarchy.php')) {
-	require WT_ROOT.'modules/googlemap/placehierarchy.php';
+if (file_exists(WT_ROOT.WT_MODULES_DIR.'googlemap/placehierarchy.php')) {
+	require WT_ROOT.WT_MODULES_DIR.'googlemap/placehierarchy.php';
 	if (isset($GOOGLEMAP_ENABLED) && $GOOGLEMAP_ENABLED && isset($GOOGLEMAP_PLACE_HIERARCHY) && $GOOGLEMAP_PLACE_HIERARCHY) {
 		$use_googlemap = true;
 	}
@@ -74,13 +74,9 @@ if (isset($parent) && is_array($parent)) {
 	$parentKeys = array_keys($parent);
 	$highKey = max($parentKeys);
 	
-	$levelm = set_levelm($level, $parent);
-	$latlng = WT_DB::prepare("SELECT pl_place, pl_id, pl_lati, pl_long, pl_zoom, sv_long, sv_lati, sv_bearing, sv_elevation, sv_zoom FROM ##placelocation WHERE pl_id='{$levelm}'")->fetch(PDO::FETCH_ASSOC);	
 	for ($j=0; $j<=$highKey; $j++) {
 		if (!isset($parent[$j])) {
 			$parent[$j] = "";
-		} else {
-			$parent[$level-1] = $latlng['pl_place'];
 		}
 	}
 	ksort($parent, SORT_NUMERIC);
@@ -129,7 +125,7 @@ if ($display=="hierarchy") {
 		$action="show";
 	}
 	
-	echo '<link type="text/css" href="modules/googlemap/css/wt_v3_googlemap.css" rel="stylesheet" />';
+	echo '<link type="text/css" href="', WT_MODULES_DIR, 'googlemap/css/wt_v3_googlemap.css" rel="stylesheet" />';
 
 	// -- echo the breadcrumb hierarchy
 	$numls=0;

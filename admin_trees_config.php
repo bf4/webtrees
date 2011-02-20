@@ -243,7 +243,9 @@ case 'update':
 	set_gedcom_setting(WT_GED_ID, 'WELCOME_TEXT_CUST_HEAD',       safe_POST_bool('NEW_WELCOME_TEXT_CUST_HEAD'));
 	set_gedcom_setting(WT_GED_ID, 'WORD_WRAPPED_NOTES',           safe_POST_bool('NEW_WORD_WRAPPED_NOTES'));
 	set_gedcom_setting(WT_GED_ID, 'ZOOM_BOXES',                   safe_POST('NEW_ZOOM_BOXES'));
-	set_gedcom_setting(WT_GED_ID, 'title',                        safe_POST('gedcom_title', WT_REGEX_UNSAFE));
+	if (safe_POST('gedcom_title', WT_REGEX_UNSAFE)) {
+		set_gedcom_setting(WT_GED_ID, 'title',                        safe_POST('gedcom_title', WT_REGEX_UNSAFE));
+	}
 
 	if (!$_POST["NEW_MEDIA_FIREWALL_ROOTDIR"]) {
 		$NEW_MEDIA_FIREWALL_ROOTDIR = $INDEX_DIRECTORY;
@@ -456,14 +458,13 @@ echo WT_JS_START;?>
 								$CALENDAR_FORMATS[]='none';	
 							}
 							foreach (array(
-								'none'=>WT_I18N::translate('No calendar conversion'),
-								'gregorian'=>WT_I18N::translate('Gregorian'),
-								'julian'=>WT_I18N::translate('Julian'),
-								'french'=>WT_I18N::translate('French'),
-								'jewish'=>WT_I18N::translate('Jewish'),
-								'hebrew'=>WT_I18N::translate('Hebrew'),
-								'hijri'=>WT_I18N::translate('Hijri'),
-								'arabic'=>WT_I18N::translate('Arabic')
+								'none'     =>WT_I18N::translate('No calendar conversion'),
+								'gregorian'=>WT_Date_Gregorian::calendarName(),
+								'julian'   =>WT_Date_Julian::calendarName(),
+								'french'   =>WT_Date_French::calendarName(),
+								'jewish'   =>WT_Date_Jewish::calendarName(),
+								'hijri'    =>WT_Date_Hijri::calendarName(),
+								'jalali'   =>WT_Date_Jalali::calendarName(),
 							) as $cal=>$name) {
 								echo '<option value="', $cal, '"';
 								if ($CALENDAR_FORMATS[0]==$cal) {

@@ -95,7 +95,7 @@ img.block, #calendar_img, #biglink img, #mycart img  {
 	height: 15px;
 }
 
-.optionbox a img, #imgnew_comment_exp {
+.optionbox a img {
 	vertical-align: top;
 }
 
@@ -407,17 +407,15 @@ a:hover .nameZoom {
 .pedigree_image_portrait, .pedigree_image_landscape {
 	float: left;
 	max-height: 50px;
-	max-width: 100px;
-	border: solid black 1px;
-	margin-right: 3px;
+	max-width: 50px;
+	margin-right: 4px;
 }
 
 .pedigree_image_portrait_rtl, .pedigree_image_landscape_rtl {
 	float: right;
 	max-height: 50px;
-	max-width: 100px;
-	border: solid black 1px;
-	margin-left: 3px;
+	max-width: 50px;
+	margin-left: 4px;
 }
 
 .pedigree_form {
@@ -1719,8 +1717,8 @@ td.descriptionbox  a { /* this keeps the tag color the same when it is a link as
     display: block;
 }
  
-.sidebar-at-left #sidebar2 {}
-.sidebar-at-right #sidebar2 {}
+.sidebar-at-left #sidebar2 {width:20%;}
+.sidebar-at-right #sidebar2 {width:20%;}
  
 .sidebar-at-left #tabs, .use-sidebar.sidebar-at-right #sidebar2, .sidebar-at-right #separator {float: right;}
 .sidebar-at-right #tabs, .use-sidebar.sidebar-at-left #sidebar2, .sidebar-at-left #separator {float: left;}

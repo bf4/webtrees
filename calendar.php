@@ -54,6 +54,16 @@ if (empty($filterev)) $filterev='bdm';
 if (empty($filterof)) $filterof='all';
 if (empty($filtersx)) $filtersx='';
 
+if ($cal.$day.$month.$year=='') {
+	// No date specified?  Use the most likely calendar
+	switch (WT_LOCALE) {
+	case 'fa': $cal='@#DJALALI@';    break;
+	case 'ar': $cal='@#DHIJRI@';     break;
+	case 'he': $cal='@#DHEBREW@';    break;
+	default:   $cal='@#DGREGORIAN@'; break;
+	}
+}
+
 // Create a WT_Date_Calendar from the parameters
 
 // advance-year "year range"
@@ -138,7 +148,8 @@ echo '<tr><td class="descriptionbox vmiddle">';
 echo WT_I18N::translate('Day'), help_link('annivers_date_select'), '</td><td colspan="3" class="optionbox">';
 for ($d=1; $d<=$days_in_month; $d++) {
 	// Format the day number using the calendar
-	$tmp=new WT_Date($cal_date->Format("%@ {$d} %O %E")); $d_fmt=$tmp->date1->Format('%j');
+	$tmp=new WT_Date($cal_date->Format("%@ {$d} %O %E"));
+	$d_fmt=$tmp->date1->Format('%j');
 	if ($d==$cal_date->d)
 		echo "<span class=\"error\">{$d_fmt}</span>";
 	else
@@ -295,11 +306,12 @@ echo help_link('day_month');
 echo '</td><td class="topbottombar width50">';
 $n=0;
 foreach (array(
-	'gregorian'=>WT_I18N::translate('Gregorian'),
-	'julian'=>WT_I18N::translate('Julian'),
-	'jewish'=>WT_I18N::translate('Jewish'),
-	'french'=>WT_I18N::translate('French'),
-	'hijri'=>WT_I18N::translate('Hijri')
+	'gregorian'=>WT_Date_Gregorian::calendarName(),
+	'julian'   =>WT_Date_Julian::calendarName(),
+	'jewish'   =>WT_Date_Jewish::calendarName(),
+	'french'   =>WT_Date_French::calendarName(),
+	'hijri'    =>WT_Date_Hijri::calendarName(),
+	'jalali'   =>WT_Date_Jalali::calendarName(),
 ) as $newcal=>$cal_name) {
 	$tmp=$cal_date->convert_to_cal($newcal);
 	if ($tmp->InValidRange()) {
