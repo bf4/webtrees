@@ -184,16 +184,6 @@ if ($display=="hierarchy") {
 	}
 	echo '</a>', help_link('ppp_levels');
 
-	if ($use_googlemap) {
-		create_map();
-	}
-	else {
-		echo "<br /><br />";
-		if (array_key_exists('places_assistant', WT_Module::getActiveModules())) {
-			// show clickable map if found
-			places_assistant_WT_Module::display_map($level, $parent);
-		}
-	}
 
 	//-- create a string to hold the variable links and place names
 	$linklevels="";
@@ -211,6 +201,18 @@ if ($display=="hierarchy") {
 			}
 		}
 	}
+
+	if ($use_googlemap) {
+		create_map($placelevels);
+	}
+	else {
+		echo "<br /><br />";
+		if (array_key_exists('places_assistant', WT_Module::getActiveModules())) {
+			// show clickable map if found
+			places_assistant_WT_Module::display_map($level, $parent);
+		}
+	}
+
 	$i=0;
 	$ct1=count($placelist);
 
@@ -222,7 +224,7 @@ if ($display=="hierarchy") {
 				echo " dir=\"rtl\"";
 			}
 			echo ">\n\t\t<tr>\n\t\t";
-			echo"<br /><td class=\"list_label\" ";
+			echo"<td class=\"list_label\" ";
 			if ($ct1 > 20) {
 				echo "colspan=\"3\"";
 			} elseif ($ct1 > 4) {
@@ -231,12 +233,10 @@ if ($display=="hierarchy") {
 			echo ">&nbsp;";
 			echo "<img src=\"", $WT_IMAGES["place"], "\" border=\"0\" title=\"", WT_I18N::translate('Place'), "\" alt=\"", WT_I18N::translate('Place'), "\" />&nbsp;&nbsp;";
 			if ($level>0) {
-				echo " ", WT_I18N::translate('Place Hierarchy after'), ": ";
-				echo PrintReady($num_place);
+				echo /* I18N: %s is a country or region */WT_I18N::translate('Places in %s', $num_place);
 			} else {
 				echo WT_I18N::translate('Place hierarchy');
 			}
-			echo help_link('ppp_placelist');
 			echo "</td></tr><tr><td class=\"list_value\"><ul>";
 		}
 

@@ -33,7 +33,7 @@ if (!defined('WT_SCRIPT_NAME')) {
 
 // Identify ourself
 define('WT_WEBTREES',        'webtrees');
-define('WT_VERSION',         '1.1.0');
+define('WT_VERSION',         '1.1.1');
 define('WT_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
 define('WT_VERSION_TEXT',    trim(WT_VERSION.' '.WT_VERSION_RELEASE));
 define('WT_WEBTREES_URL',    'http://webtrees.net');
@@ -41,7 +41,7 @@ define('WT_WEBTREES_WIKI',   'http://wiki.webtrees.net');
 define('WT_TRANSLATORS_URL', 'https://translations.launchpad.net/webtrees');
 
 // Location of our modules and themes.  These are used as URLs and directory paths.
-define('WT_MODULES_DIR', 'modules/');
+define('WT_MODULES_DIR', 'modules_v2/');
 define('WT_THEMES_DIR',  'themes/' );
 
 // Enable debugging output?
@@ -72,6 +72,7 @@ define('WT_REGEX_UNSAFE',   '[\x00-\xFF]*'); // Use with care and apply addition
 define('WT_UTF8_BOM',    "\xEF\xBB\xBF"); // U+FEFF
 define('WT_UTF8_MALE',   "\xE2\x99\x82"); // U+2642
 define('WT_UTF8_FEMALE', "\xE2\x99\x80"); // U+2640
+define('WT_UTF8_NO_SEX', "\xE2\x9A\xAA"); // U+26AA
 
 // UTF8 control codes affecting the BiDirectional algorithm (see http://www.unicode.org/reports/tr9/)
 define('WT_UTF8_LRM',    "\xE2\x80\x8E"); // U+200E  (Left to Right mark:  zero-width character with LTR directionality)
@@ -198,7 +199,7 @@ set_error_handler('wt_error_handler');
 if (file_exists(WT_ROOT.'data/config.ini.php')) {
 	$dbconfig=parse_ini_file(WT_ROOT.'data/config.ini.php');
 	// Invalid/unreadable config file?
-	if (!is_array($dbconfig)) {
+	if (!is_array($dbconfig) || file_exists(WT_ROOT.'data/offline.txt')) {
 		header('Location: '.WT_SERVER_NAME.WT_SCRIPT_PATH.'site-unavailable.php');
 		exit;
 	}
@@ -281,14 +282,20 @@ if ($SEARCH_SPIDER && !in_array(WT_SCRIPT_NAME , array(
 }
 
 // Store our session data in the database.
-session_set_save_handler(
-	create_function('', 'return true;'), // open
-	create_function('', 'return true;'), // close
-	create_function('$id', 'return WT_DB::prepare("SELECT session_data FROM `##session` WHERE session_id=?")->execute(array($id))->fetchOne();'), // read
-	create_function('$id,$data', 'WT_DB::prepare("REPLACE INTO `##session` (session_id, user_id, ip_address, session_data) VALUES (?,?,?,?)")->execute(array($id, WT_USER_ID, $_SERVER["REMOTE_ADDR"], $data));return true;'), // write
-	create_function('$id', 'WT_DB::prepare("DELETE FROM `##session` WHERE session_id=?")->execute(array($id));return true;'), // destroy
-	create_function('$maxlifetime', 'WT_DB::prepare("DELETE FROM `##session` WHERE session_time < DATE_SUB(NOW(), INTERVAL ? SECOND)")->execute(array($maxlifetime));return true;') // gc
-);
+// NOTE: this causes problems for sites using PHP/APC
+// For APC sites, we skip this, and rely on default
+// session handling.  This will stop us from detecting
+// who is logged in.
+if (ini_get('apc.enabled')==false) {
+	session_set_save_handler(
+		create_function('', 'return true;'), // open
+		create_function('', 'return true;'), // close
+		create_function('$id', 'return WT_DB::prepare("SELECT session_data FROM `##session` WHERE session_id=?")->execute(array($id))->fetchOne();'), // read
+		create_function('$id,$data', 'WT_DB::prepare("REPLACE INTO `##session` (session_id, user_id, ip_address, session_data) VALUES (?,?,?,?)")->execute(array($id, WT_USER_ID, $_SERVER["REMOTE_ADDR"], $data));return true;'), // write
+		create_function('$id', 'WT_DB::prepare("DELETE FROM `##session` WHERE session_id=?")->execute(array($id));return true;'), // destroy
+		create_function('$maxlifetime', 'WT_DB::prepare("DELETE FROM `##session` WHERE session_time < DATE_SUB(NOW(), INTERVAL ? SECOND)")->execute(array($maxlifetime));return true;') // gc
+	);
+}
 
 // Use the Zend_Session object to start the session.
 // This allows all the other Zend Framework components to integrate with the session
@@ -496,12 +503,12 @@ if (substr(WT_SCRIPT_NAME, 0, 5)=='admin' || WT_SCRIPT_NAME=='module.php' && sub
 		}
 	}
 	define('WT_THEME_DIR', WT_THEMES_DIR.$THEME_DIR.'/');
+	// Remember this setting
+	if (WT_THEME_DIR!=WT_THEMES_DIR.'_administration/') {
+		$_SESSION['theme_dir']=$THEME_DIR;
+	}
 }
 
-// Remember this setting
-if (WT_THEME_DIR!=WT_THEMES_DIR.'_administration/') {
-	$_SESSION['theme_dir']=WT_THEME_DIR;
-}
 
 require WT_ROOT.WT_THEME_DIR.'theme.php';
 

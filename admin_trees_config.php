@@ -133,8 +133,8 @@ case 'update':
 	// For backwards compatibility with webtrees 1.x we store the two calendar formats in one variable
 	// e.g. "gregorian_and_jewish"
 	set_gedcom_setting(WT_GED_ID, 'CALENDAR_FORMAT',              implode('_and_', array_unique(array(
-		safe_POST('NEW_CALENDAR_FORMAT0', 'gregorian|julian|french|jewish|hebrew|hijri|arabic', 'none'),
-		safe_POST('NEW_CALENDAR_FORMAT1', 'gregorian|julian|french|jewish|hebrew|hijri|arabic', 'none')
+		safe_POST('NEW_CALENDAR_FORMAT0', 'gregorian|julian|french|jewish|hijri|jalali', 'none'),
+		safe_POST('NEW_CALENDAR_FORMAT1', 'gregorian|julian|french|jewish|hijri|jalali', 'none')
 	))));
 	set_gedcom_setting(WT_GED_ID, 'CHART_BOX_TAGS',               safe_POST('NEW_CHART_BOX_TAGS'));
 	set_gedcom_setting(WT_GED_ID, 'COMMON_NAMES_ADD',             str_replace(' ', '', safe_POST('NEW_COMMON_NAMES_ADD')));
@@ -174,7 +174,6 @@ case 'update':
 	set_gedcom_setting(WT_GED_ID, 'MEDIA_FIREWALL_THUMBS',        safe_POST_bool('NEW_MEDIA_FIREWALL_THUMBS'));
 	set_gedcom_setting(WT_GED_ID, 'MEDIA_ID_PREFIX',              safe_POST('NEW_MEDIA_ID_PREFIX'));
 	set_gedcom_setting(WT_GED_ID, 'META_DESCRIPTION',             safe_POST('NEW_META_DESCRIPTION'));
-	set_gedcom_setting(WT_GED_ID, 'META_ROBOTS',                  safe_POST('NEW_META_ROBOTS'));
 	set_gedcom_setting(WT_GED_ID, 'META_TITLE',                   safe_POST('NEW_META_TITLE'));
 	set_gedcom_setting(WT_GED_ID, 'MULTI_MEDIA',                  safe_POST_bool('NEW_MULTI_MEDIA'));
 	set_gedcom_setting(WT_GED_ID, 'NOTE_ID_PREFIX',               safe_POST('NEW_NOTE_ID_PREFIX'));
@@ -262,7 +261,7 @@ case 'update':
 		// create the media directory
 		// if NEW_MEDIA_FIREWALL_ROOTDIR is the INDEX_DIRECTORY, WT will have perms to create it
 		// if WT is unable to create the directory, tell the user to create it
-		if ($_POST["NEW_USE_MEDIA_FIREWALL"]==true) {
+		if ($_POST["NEW_USE_MEDIA_FIREWALL"]==true && $USE_MEDIA_FIREWALL==false) {
 			if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY)) {
 				@mkdir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY, WT_PERM_EXE);
 				if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY)) {
@@ -274,7 +273,7 @@ case 'update':
 	}
 	if (!$errors) {
 		// create the thumbs dir to make sure we have write perms
-		if ($_POST["NEW_USE_MEDIA_FIREWALL"]==true) {
+		if ($_POST["NEW_USE_MEDIA_FIREWALL"]==true && $USE_MEDIA_FIREWALL==false) {
 			if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs")) {
 				@mkdir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs", WT_PERM_EXE);
 				if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs")) {
@@ -286,7 +285,7 @@ case 'update':
 	}
 	if (!$errors) {
 		// copy the .htaccess file from INDEX_DIRECTORY to NEW_MEDIA_FIREWALL_ROOTDIR in case it is still in a web-accessible area
-		if ($_POST["NEW_USE_MEDIA_FIREWALL"]==true) {
+		if ($_POST["NEW_USE_MEDIA_FIREWALL"]==true && $USE_MEDIA_FIREWALL==false) {
 			if ((file_exists($INDEX_DIRECTORY.".htaccess")) && (is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY)) && (!file_exists($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.".htaccess")) ) {
 				@copy($INDEX_DIRECTORY.".htaccess", $NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.".htaccess");
 				if (!file_exists($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.".htaccess")) {
@@ -300,7 +299,7 @@ case 'update':
 		set_gedcom_setting(WT_GED_ID, 'MEDIA_FIREWALL_ROOTDIR', safe_POST('NEW_MEDIA_FIREWALL_ROOTDIR'));
 	}
 
-	if ($_POST["NEW_USE_MEDIA_FIREWALL"]==true ) {
+	if ($_POST["NEW_USE_MEDIA_FIREWALL"]==true && $USE_MEDIA_FIREWALL==false) {
 		AddToLog("Media Firewall enabled", 'config');
 
 		if (!$errors) {
@@ -338,7 +337,7 @@ case 'update':
 				chmod($whichFile, 0644); // Make sure apache can read this file
 			}
 		}
-	} elseif ($_POST["NEW_USE_MEDIA_FIREWALL"]==false) {
+	} elseif ($_POST["NEW_USE_MEDIA_FIREWALL"]==false && $USE_MEDIA_FIREWALL==true) {
 		AddToLog("Media Firewall disabled", 'config');
 
 		if (file_exists($MEDIA_DIRECTORY.".htaccess")) {
@@ -378,7 +377,7 @@ case 'update':
 }
 
 print_header(WT_I18N::translate('Family tree configuration'));
-if (get_gedcom_count()==1) { //Removed becasue it doesn't work here for multiple GEDCOMs. Can be reinstated when fixed (https://bugs.launchpad.net/webtrees/+bug/613235)
+if (get_gedcom_count()==1) { //Removed because it doesn't work here for multiple GEDCOMs. Can be reinstated when fixed (https://bugs.launchpad.net/webtrees/+bug/613235)
 	if ($ENABLE_AUTOCOMPLETE) require WT_ROOT.'js/autocomplete.js.htm'; 
 }
 
@@ -474,18 +473,17 @@ echo WT_JS_START;?>
 							}
 							?>
 						</select>
-						<br/>
+
 						<select id="NEW_CALENDAR_FORMAT1" name="NEW_CALENDAR_FORMAT1">
 							<?php
 							foreach (array(
-								'none'=>WT_I18N::translate('No calendar conversion'),
-								'gregorian'=>WT_I18N::translate('Gregorian'),
-								'julian'=>WT_I18N::translate('Julian'),
-								'french'=>WT_I18N::translate('French'),
-								'jewish'=>WT_I18N::translate('Jewish'),
-								'hebrew'=>WT_I18N::translate('Hebrew'),
-								'hijri'=>WT_I18N::translate('Hijri'),
-								'arabic'=>WT_I18N::translate('Arabic')
+								'none'     =>WT_I18N::translate('No calendar conversion'),
+								'gregorian'=>WT_Date_Gregorian::calendarName(),
+								'julian'   =>WT_Date_Julian::calendarName(),
+								'french'   =>WT_Date_French::calendarName(),
+								'jewish'   =>WT_Date_Jewish::calendarName(),
+								'hijri'    =>WT_Date_Hijri::calendarName(),
+								'jalali'   =>WT_Date_Jalali::calendarName(),
 							) as $cal=>$name) {
 								echo '<option value="', $cal, '"';
 								if ($CALENDAR_FORMATS[1]==$cal) {
@@ -641,13 +639,6 @@ echo WT_JS_START;?>
 						</td>
 						<td><input type="text" dir="ltr" name="NEW_META_DESCRIPTION" value="<?php echo get_gedcom_setting(WT_GED_ID, 'META_DESCRIPTION'); ?>" /><br />
 						<?php echo WT_I18N::translate('Leave this field empty to use the title of the currently active database.'); ?></td>
-					</tr>
-					<tr>
-						<td>
-							<?php echo WT_I18N::translate('Robots META tag'), help_link('META_ROBOTS'); ?>
-						</td>
-						<td><input type="text" dir="ltr" name="NEW_META_ROBOTS" value="<?php echo get_gedcom_setting(WT_GED_ID, 'META_ROBOTS'); ?>" /><br />
-						</td>
 					</tr>
 				</table>
 			</div>

@@ -96,6 +96,11 @@ jQuery(document).ready(function() {
 
 jQuery(document).ready(function(){
 
+	//function to reset page to top
+	jQuery('a.goToTop').click(function() {
+		jQuery('html').animate({scrollTop : 0},'slow');
+	});
+		
 	// Variables
 	var objMain = jQuery('#main');
 
@@ -138,6 +143,18 @@ if (strlen($controller->indi->getAddName()) > 0) echo "<span class=\"name_head\"
 
 echo '<div id="main" class="use-sidebar sidebar-at-right">'; //overall page container
 
+echo '<div id="indi_header" style="width:100%;">';
+	require './indi_header.php';
+echo '</div>';
+
+echo '<div id="hitcounter">';
+	if ($SHOW_COUNTER && (empty($SEARCH_SPIDER))) {
+		//print indi counter only if displaying a non-private person
+		require WT_ROOT.'includes/hitcount.php';
+		echo WT_I18N::translate('Hit Count:'), " ", $hitCount;
+	}
+echo '</div>'; // close #hitcounter
+
 echo '<div id="sidebar2">'; // sidebar code
 	if (!$controller->indi->canDisplayDetails()) {
 		echo "<table><tr><td class=\"facts_value\" >";
@@ -150,6 +167,7 @@ echo
 	'</div>',  // close #sidebar2
 	'<a href="#" id="separator"></a>'; //clickable element to open/close sidebar
 
+
 // ===================================== main content tabs
 foreach ($controller->tabs as $tab) {
 	echo $tab->getPreLoadContent();
@@ -159,19 +177,17 @@ $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 	echo '<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">';
 	foreach ($controller->tabs as $tab) {
 		if ($tab->hasTabContent()) {
-			// jQuery UI uses the title attribute to link named tabs to content-divs.
-			// Unfortunately, this shows in a tool-tip.  How to improve this?
 			if ($tab->getName()==$controller->default_tab) {
 				// Default tab loads immediately
-				echo '<li class="ui-state-default ui-corner-top ui-tabs-selected"><a title="', $tab->getName(), '" href="#', $tab->getName(), '">';
+				echo '<li class="ui-state-default ui-corner-top ui-tabs-selected"><a class="goToTop" title="', $tab->getName(), '" href="#', $tab->getName(), '">';
 			} elseif ($tab->canLoadAjax()) {
 				// AJAX tabs load later
-				echo '<li class="ui-state-default ui-corner-top"><a title="', $tab->getName(), '" href="',$controller->indi->getHtmlUrl(),'&amp;action=ajax&amp;module=', $tab->getName(), '">';
+				echo '<li class="ui-state-default ui-corner-top"><a class="goToTop" title="', $tab->getName(), '" href="',$controller->indi->getHtmlUrl(),'&amp;action=ajax&amp;module=', $tab->getName(), '">';
 			} else {
 				// Non-AJAX tabs load immediately (search engines don't load ajax)
-				echo '<li class="ui-state-default ui-corner-top"><a title="', $tab->getName(), '" href="#', $tab->getName(), '">';
+				echo '<li class="ui-state-default ui-corner-top"><a class="goToTop" title="', $tab->getName(), '" href="#', $tab->getName(), '">';
 			}
-			echo '<span>', $tab->getTitle(), '</span></a></li>';
+			echo '<span title="', $tab->getTitle(), '">', $tab->getTitle(), '</span></a></li>';
 		}
 	}
 	echo '</ul>';
@@ -185,13 +201,6 @@ $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 		}
 	}
 	echo '</div>'; // close #tabs 
-	echo '<div id="hitcounter">';
-		if ($SHOW_COUNTER && (empty($SEARCH_SPIDER))) {
-			//print indi counter only if displaying a non-private person
-			require WT_ROOT.'includes/hitcount.php';
-			echo WT_I18N::translate('Hit Count:'), " ", $hitCount;
-		}
-	echo '</div>'; // close #hitcounter
 
 echo '</div>'; // close #main
 echo WT_JS_START;

@@ -359,8 +359,8 @@ function print_pedigree_person($person, $style=1, $count=0, $personcount="1") {
 *
 * @param string $title the title to put in the <TITLE></TITLE> header tags
 */
-function print_header($title) {
-	global $bwidth, $BROWSERTYPE, $SEARCH_SPIDER, $view, $cart;
+function print_header($title, $view='full') {
+	global $bwidth, $BROWSERTYPE, $SEARCH_SPIDER, $cart;
 	global $GEDCOM, $GEDCOM_TITLE, $action, $query;
 	global $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $print_headerfile;
 	global $WT_IMAGES, $TEXT_DIRECTION, $REQUIRE_AUTHENTICATION;
@@ -431,7 +431,7 @@ function print_header($title) {
 		$META_ROBOTS='index,follow';
 	}
 
-	if ($view!='simple') {
+	if ($view=='full') {
 		$META_DESCRIPTION=get_gedcom_setting(WT_GED_ID, 'META_DESCRIPTION');
 		if (empty($META_DESCRIPTION)) {
 			$META_DESCRIPTION=$GEDCOM_TITLE;
@@ -543,22 +543,32 @@ function print_header($title) {
 
 */
 function print_simple_header($title) {
-	global $view;
-	$view = 'simple';
-	print_header($title);
+	print_header($title, 'simple');
 }
 
 // -- print the html to close the page
-function print_footer() {
+function print_footer($view='full') {
 	global $SHOW_STATS, $footerfile, $printlink, $WT_IMAGES, $TEXT_DIRECTION, $footer_count;
 
-	if (!isset($footer_count)) $footer_count = 1;
-	else $footer_count++;
-	echo "<!-- begin footer -->";
-	require WT_ROOT.$footerfile;
-	if (function_exists("load_behaviour")) {
-		load_behaviour();  // @see function_print_lists.php
+	// If the main script hasn't closed its session, do it now.
+	// If we rely on PHP to close the session, it may not do it
+	// until after it has closed the DB connection - which it needs!
+	Zend_Session::writeClose();
+
+	if ($view=='full') {
+		if (!isset($footer_count)) $footer_count = 1;
+		else $footer_count++;
+		echo "<!-- begin footer -->";
+		require WT_ROOT.$footerfile;
+		if (function_exists("load_behaviour")) {
+			load_behaviour();  // @see function_print_lists.php
+		}
+	} else {
+		if ($SHOW_STATS || WT_DEBUG) {
+			echo execution_stats();
+		}
 	}
+
 	if (WT_DEBUG_SQL) {
 		echo WT_DB::getQueryLog();
 	}
@@ -568,15 +578,7 @@ function print_footer() {
 
 // Page footer for popup/edit windows
 function print_simple_footer() {
-	global $SHOW_STATS;
-
-	if ($SHOW_STATS || WT_DEBUG) {
-		echo execution_stats();
-	}
-	if (WT_DEBUG_SQL) {
-		echo WT_DB::getQueryLog();
-	}
-	echo '</body></html>';
+	print_footer('simple');
 }
 
 /**
@@ -1570,7 +1572,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 * @param boolean $lds option to print LDS TEMPle and STATus
 */
 function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
-	global $SHOW_PEDIGREE_PLACES, $TEMPLE_CODES, $SEARCH_SPIDER, $STATUS_CODES;
+	global $SHOW_PEDIGREE_PLACES, $SEARCH_SPIDER;
 	if ($eventObj==null) return '';
 	if (!is_object($eventObj)) {
 		trigger_error("Object was not sent in, please use Event object", E_USER_WARNING);
@@ -1658,14 +1660,10 @@ function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 	if ($lds) {
 		if (preg_match('/2 TEMP (.*)/', $factrec, $match)) {
 			$tcode=trim($match[1]);
-			if (array_key_exists($tcode, $TEMPLE_CODES)) {
-				$html.='<br/>'.WT_I18N::translate('LDS Temple').': '.$TEMPLE_CODES[$tcode];
-			} else {
-				$html.='<br/>'.WT_I18N::translate('LDS Temple Code:').$tcode;
-			}
+			$html.='<br/>'.WT_I18N::translate('LDS Temple').': '.WT_Gedcom_LDS::templeName($match[1]);
 		}
 		if (preg_match('/2 STAT (.*)/', $factrec, $match)) {
-			$html.='<br />'.WT_I18N::translate('Status').': '.(array_key_exists($match[1], $STATUS_CODES) ? $STATUS_CODES[$match[1]] : $match[1]);
+			$html.='<br />'.WT_I18N::translate('Status').': '.WT_Gedcom_LDS::statusName($match[1]);
 			if (preg_match('/3 DATE (.*)/', $factrec, $match)) {
 				$date=new WT_Date($match[1]);
 				$html.=', '.translate_fact('STAT:DATE').': '.$date->Display(false);

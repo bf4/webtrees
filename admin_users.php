@@ -221,7 +221,7 @@ case 'load1row':
 	echo '<dd>', edit_field_yes_no_inline('user_setting-'.$user_id.'-auto_accept', get_user_setting($user_id, 'auto_accept')), '</dd>';
 
 	echo '<dt>', WT_I18N::translate('Theme'), '</dt>';
-	echo '<dd>', select_edit_control_inline('user_setting-'.$user_id.'-canedit', array_flip(get_theme_names()), WT_I18N::translate('&lt;default theme&gt;'), get_user_setting($user_id, 'theme')), '</dd>';
+	echo '<dd>', select_edit_control_inline('user_setting-'.$user_id.'-theme', array_flip(get_theme_names()), WT_I18N::translate('&lt;default theme&gt;'), get_user_setting($user_id, 'theme')), '</dd>';
 
 	echo '<dt>', WT_I18N::translate('Default Tab to show on Individual Information page'), '</dt>';
 	echo '<dd>', edit_field_default_tab_inline('user_setting-'.$user_id.'-defaulttab', get_user_setting($user_id, 'defaulttab', 'personal_facts')), '</dd>';
@@ -747,7 +747,18 @@ default:
 					/* verified          */ { sClass:"center" },
 					/* approved          */ { sClass:"center" },
 					/* delete            */ { bSortable:false }
-				]
+				],
+				"fnDrawCallback": function() {
+					// Our JSON responses include JavaScript as well as HTML.  This does not get
+					// executed (except for some versions of Firefox?).  So, extract it, and add
+					// it to its own DOM element
+					jQuery('#list script').each(function() {
+						var script=document.createElement('script');
+						script.type='text/javascript';
+						jQuery(script).text(jQuery(this).text());
+						document.body.appendChild(script);
+					}).remove();
+				}
 			});
 			
 			/* When clicking on the +/- icon, we expand/collapse the details block */

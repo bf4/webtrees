@@ -190,7 +190,7 @@ function fetch_remote_file($host, $path, $timeout=3) {
 // the webtrees.net server, so only check it infrequently, and cache the result.
 function fetch_latest_version() {
 	$last_update_timestamp=get_site_setting('LATEST_WT_VERSION_TIMESTAMP');
-	if ($last_update_timestamp < time()-24*60*60) {
+	if ($last_update_timestamp < time()-24*60*60*3) {
 		$latest_version_txt=fetch_remote_file('webtrees.net', '/latest-version.txt');
 		if ($latest_version_txt) {
 			set_site_setting('LATEST_WT_VERSION', $latest_version_txt);
@@ -1835,6 +1835,7 @@ function cousin_name2($n, $sex, $relation) {
 	}
 }
 
+
 function get_relationship_name_from_path($path, $pid1, $pid2) {
 	if (!preg_match('/^(mot|fat|par|hus|wif|spo|son|dau|chi|bro|sis|sib)*$/', $path)) {
 		// TODO: Update all the "3 RELA " values in class_person
@@ -2745,13 +2746,13 @@ function get_relationship_name_from_path($path, $pid1, $pid2) {
 			// Source: Wes Groleau.  See http://UniGen.us/Parentesco.html & http://UniGen.us/Parentesco-D.html
 			if ($down==$up) {
 				return cousin_name($cousin, $sex2);
-			} elseif ($down>$up) {
-				return cousin_name2($cousin, $sex2, get_relationship_name_from_path('sib' . $descent, null, null));
+			} elseif ($down<$up) {
+				return cousin_name2($cousin+1, $sex2, get_relationship_name_from_path('sib' . $descent, null, null));
 			} else {
 				switch ($sex2) {
-				case 'M': return cousin_name2($cousin, $sex2, get_relationship_name_from_path('bro' . $descent, null, null));
-				case 'F': return cousin_name2($cousin, $sex2, get_relationship_name_from_path('sis' . $descent, null, null));
-				case 'U': return cousin_name2($cousin, $sex2, get_relationship_name_from_path('sib' . $descent, null, null));
+				case 'M': return cousin_name2($cousin+1, $sex2, get_relationship_name_from_path('bro' . $descent, null, null));
+				case 'F': return cousin_name2($cousin+1, $sex2, get_relationship_name_from_path('sis' . $descent, null, null));
+				case 'U': return cousin_name2($cousin+1, $sex2, get_relationship_name_from_path('sib' . $descent, null, null));
 				}
 			}
 		case 'en': // See: http://en.wikipedia.org/wiki/File:CousinTree.svg
@@ -3225,10 +3226,12 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $admin=
 		$type .= 'picasa';
 	} else if (preg_match('/\.(jpg|jpeg|gif|png)$/i', $fileName)) {
 		$type .= 'image';
-	} else if (preg_match('/\.(pdf|avi|txt)$/i', $fileName)) {
+	} else if (preg_match('/\.(avi|txt)$/i', $fileName)) {
 		$type .= 'page';
 	} else if (preg_match('/\.mp3$/i', $fileName)) {
 		$type .= 'audio';
+	} else if (preg_match('/\.pdf$/i', $fileName)) {
+		$type .= 'pdf';
 	} else if (preg_match('/\.wmv$/i', $fileName)) {
 		$type .= 'wmv';
 	} else if (strpos($fileName, 'http://maps.google.')===0) {
@@ -3264,8 +3267,10 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $admin=
 				break 2;
 			case 'url_picasa':
 			case 'url_page':
+			case 'url_pdf':
 			case 'url_other':
 			case 'local_page':
+			case 'local_pdf':
 			// case 'local_other':
 				$url = $fileName . "\" rel='clearbox({$LB_URL_WIDTH}, {$LB_URL_HEIGHT}, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes);
 				break 2;
@@ -3301,11 +3306,13 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $admin=
 			break 2;
 		case 'url_picasa':
 		case 'url_page':
+		case 'url_pdf':
 		case 'url_other':
 		case 'local_other';
 			$url = "javascript:;\" onclick=\"var winurl = window.open('".$fileName."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
 			break 2;
 		case 'local_page':
+		case 'local_pdf':
 			$url = "javascript:;\" onclick=\"var winurl = window.open('".WT_SERVER_NAME.WT_SCRIPT_PATH.$fileName."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
 			break 2;
 		case 'url_streetview':
@@ -3354,6 +3361,10 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $admin=
 			break;
 		case 'local_page':
 			$thumb = $WT_IMAGES['media_doc'];
+			break;
+		case 'url_pdf':
+		case 'local_pdf':
+			$thumb = $WT_IMAGES['media_pdf'];
 			break;
 		case 'url_audio':
 		case 'local_audio':

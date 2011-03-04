@@ -70,7 +70,7 @@ function expand_urls($text) {
  */
 function print_fact(&$eventObj) {
 	global $nonfacts, $GEDCOM, $WORD_WRAPPED_NOTES;
-	global $TEXT_DIRECTION, $HIDE_GEDCOM_ERRORS, $FACTS, $FACTS_M, $FACTS_F, $SHOW_FACT_ICONS, $SHOW_MEDIA_FILENAME;
+	global $TEXT_DIRECTION, $HIDE_GEDCOM_ERRORS, $SHOW_FACT_ICONS, $SHOW_MEDIA_FILENAME;
 	global $n_chil, $n_gchi, $SEARCH_SPIDER;
 
 	if (!$eventObj->canShow()) {
@@ -79,7 +79,7 @@ function print_fact(&$eventObj) {
 
 	$noedit=!$eventObj->canEdit();
 	$fact  = $eventObj->getTag();
-	if ($HIDE_GEDCOM_ERRORS && !array_key_exists($fact, $FACTS) && !array_key_exists($fact, $FACTS_M) && !array_key_exists($fact, $FACTS_F)) {
+	if ($HIDE_GEDCOM_ERRORS && !WT_Gedcom_Tag::isTag($fact)) {
 		return;
 	}
 
@@ -147,7 +147,9 @@ function print_fact(&$eventObj) {
 			echo "<div class=\"copylink\"><a onclick=\"return copy_record('$pid', $linenum);\" href=\"javascript:;\" title=\"".WT_I18N::translate('Copy')."\"><span class=\"link_text\">".WT_I18N::translate('Copy')."</span></a></div>";
 			echo "<div class=\"deletelink\"><a onclick=\"return delete_record('$pid', $linenum);\" href=\"javascript:;\" title=\"".WT_I18N::translate('Delete')."\"><span class=\"link_text\">".WT_I18N::translate('Delete')."</span></a></div>";
 			echo "</div>";
-		} else {echo translate_fact($factref, $label_person);}
+		} else {
+			echo translate_fact($factref, $label_person);
+		}
 		if ($fact=="_BIRT_CHIL") echo "<br />", WT_I18N::translate('#%d', $n_chil++);
 		if (preg_match("/_BIRT_GCH[I12]/", $fact)) echo "<br />", WT_I18N::translate('#%d', $n_gchi++);
 		echo "</td>";
@@ -155,10 +157,17 @@ function print_fact(&$eventObj) {
 		if ($fact == "OBJE") return false;
 		// -- find generic type for each fact
 		$ct = preg_match("/2 TYPE (.*)/", $factrec, $match);
-		if ($ct>0) $factref = trim($match[1]);
-		else $factref = $fact;
-		if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
-		else $rowID = "row_".$styleadd;
+		if ($ct>0) {
+			// Some users (just Meliza?) use "1 EVEN/2 TYPE BIRT".  Translate the TYPE, if we can.
+			$factref = strip_tags(translate_fact($match[1], $label_person));
+		} else {
+			$factref = $fact;
+		}
+		if ($styleadd=="") {
+			$rowID = "row_".floor(microtime()*1000000);
+		} else {
+			$rowID = "row_".$styleadd;
+		}
 		echo "<tr class=\"", $rowID, "\">";
 		echo "<td class=\"descriptionbox $styleadd width20\">";
 		if ($SHOW_FACT_ICONS)
@@ -417,7 +426,7 @@ function print_fact(&$eventObj) {
 				$factref = $match[$i][1];
 				if (!in_array($factref, $special_facts)) {
 					$label = translate_fact($fact.':'.$factref, $label_person);
-					if (!$HIDE_GEDCOM_ERRORS || array_key_exists($factref, $FACTS)) {
+					if (!$HIDE_GEDCOM_ERRORS || WT_Gedcom_Tag::isTag($factref)) {
 						if ($SHOW_FACT_ICONS && file_exists(WT_THEME_DIR."images/facts/".$factref.".gif")) {
 							echo "<img src=\"".WT_THEME_DIR."images/facts/", $factref, ".gif\" alt=\"{$label}\" title=\"{$label}\" align=\"middle\" /> ";
 						} else {
@@ -569,7 +578,7 @@ function print_media_links($factrec, $level, $pid='') {
 	global $SEARCH_SPIDER;
 	global $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT;
-	global $GEDCOM, $MEDIA_TYPES;
+	global $GEDCOM;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 	if (!$MULTI_MEDIA) return;
 	$nlevel = $level+1;
@@ -671,13 +680,7 @@ function print_media_links($factrec, $level, $pid='') {
 			}
 			$ttype = preg_match("/".($nlevel+1)." TYPE (.*)/", $row["m_gedrec"], $match);
 			if ($ttype>0) {
-				$mediaType = $match[1];
-				$varName = strtolower($mediaType);
-				if (array_key_exists($varName, $MEDIA_TYPES)) {
-					$mediaType = $MEDIA_TYPES[$varName];
-				} else {
-					$mediaType = WT_I18N::translate('Other');
-				}
+				$mediaType = WT_Gedcom_Tag::getFileFormTypeValue($match[1]);
 				echo "<br /><span class=\"label\">", WT_I18N::translate('Type'), ": </span> <span class=\"field\">$mediaType</span>";
 			}
 			//echo "</span>";
@@ -1388,7 +1391,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
  * @param string $pid The record id this media item was attached to
  */
 function print_main_media_row($rtype, $rowm, $pid) {
-	global $WT_IMAGES, $TEXT_DIRECTION, $GEDCOM, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $SEARCH_SPIDER, $MEDIA_TYPES;
+	global $WT_IMAGES, $TEXT_DIRECTION, $GEDCOM, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $SEARCH_SPIDER;
 
 	if (!canDisplayRecord($rowm['m_gedfile'], $rowm['m_gedrec'])) {
 		return false;
@@ -1498,13 +1501,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	}
 	$ttype = preg_match("/\d TYPE (.*)/", $rowm["m_gedrec"], $match);
 	if ($ttype>0) {
-		$mediaType = trim($match[1]);
-		$varName = strtolower($mediaType);
-		if (array_key_exists($varName, $MEDIA_TYPES)) {
-			$mediaType = $MEDIA_TYPES[$varName];
-		} else {
-			$mediaType = WT_I18N::translate('Other');
-		}
+		$mediaType = WT_Gedcom_Tag::getFileFormTypeValue($match[1]);
 		echo "<br /><span class=\"label\">", WT_I18N::translate('Type'), ": </span> <span class=\"field\">$mediaType</span>";
 	}
 	echo "</span>";

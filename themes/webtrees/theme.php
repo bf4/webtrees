@@ -36,7 +36,6 @@ if (!defined('WT_WEBTREES')) {
 
 $theme_name = "webtrees"; // need double quotes, as file is scanned/parsed by script
 $stylesheet       = WT_THEME_DIR.'style.css';
-$rtl_stylesheet   = WT_THEME_DIR.'style_rtl.css';
 $print_stylesheet = WT_THEME_DIR.'print.css';
 $headerfile       = WT_THEME_DIR.'header.php';
 $footerfile       = WT_THEME_DIR.'footer.php';
@@ -149,7 +148,7 @@ $WT_IMAGES=array(
 	'rarrow'=>WT_THEME_DIR.'images/rarrow.gif',
 	'rarrow2'=>WT_THEME_DIR.'images/rarrow2.gif',
 	'rdarrow'=>WT_THEME_DIR.'images/rdarrow.gif',
-	'remove'=>WT_THEME_DIR.'images/remove.gif',
+	'remove'=>WT_THEME_DIR.'images/delete.png',
 	'spacer'=>WT_THEME_DIR.'images/spacer.gif',
 	'uarrow'=>WT_THEME_DIR.'images/uarrow.gif',
 	'uarrow2'=>WT_THEME_DIR.'images/uarrow2.gif',
