@@ -1335,7 +1335,7 @@ function print_asso_rela_record($event) {
 		if (!$person) {
 			$person=new WT_Person('');
 		}
-		if (preg_match('/\n3 RELA (.+)/', $amatch[2], $rmatch)) {
+		if (preg_match('/\n[23] RELA (.+)/', $amatch[2], $rmatch)) {
 			$rela=$rmatch[1];
 		} else {
 			$rela='';
@@ -1348,7 +1348,7 @@ function print_asso_rela_record($event) {
 					if (preg_match('/^(mot|fat|par|hus|wif|spo|son|dau|chi|bro|sis|sib)*$/', $rela)) {
 						$label=get_relationship_name_from_path($rela, $associate->getXref(), $person->getXref());
 					} else {
-						$label=translate_rela($rela, $person->getSex());
+						$label=WT_Gedcom_Code_Rela::getValue($rela, $person);
 					}
 				} else {
 					// Generate an automatic RELA
@@ -1660,10 +1660,10 @@ function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 	if ($lds) {
 		if (preg_match('/2 TEMP (.*)/', $factrec, $match)) {
 			$tcode=trim($match[1]);
-			$html.='<br/>'.WT_I18N::translate('LDS Temple').': '.WT_Gedcom_LDS::templeName($match[1]);
+			$html.='<br/>'.WT_I18N::translate('LDS Temple').': '.WT_Gedcom_Code_LDS::templeName($match[1]);
 		}
 		if (preg_match('/2 STAT (.*)/', $factrec, $match)) {
-			$html.='<br />'.WT_I18N::translate('Status').': '.WT_Gedcom_LDS::statusName($match[1]);
+			$html.='<br />'.WT_I18N::translate('Status').': '.WT_Gedcom_Code_LDS::statusName($match[1]);
 			if (preg_match('/3 DATE (.*)/', $factrec, $match)) {
 				$date=new WT_Date($match[1]);
 				$html.=', '.translate_fact('STAT:DATE').': '.$date->Display(false);

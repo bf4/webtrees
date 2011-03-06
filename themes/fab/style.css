@@ -8,23 +8,6 @@
 * $Id$
 */
 
-/* temp stuff - for old PGV menus */
-.submenu, .sublinks_table {
-	background-color:#EEE;
-	border:thin solid #AAA;
-}
-.sublinks_cell {
-	text-align:center;
-}
-.sublinks_cell .icon {
-	display:none;
-}
-@media print {
-.submenu, .sublinks_table, .help {
-	display:none;
-	}
-}
-
 /* Thin grey borders around block-level elements */
 input,
 textarea,
@@ -1148,11 +1131,6 @@ div.faq_body {
 td.descriptionbox  a { 
 }
 
-.editfacts { /* a container for the following three links */
-	clear: left;
-	padding-top: 15px;
-}
-
 .editfacts  a:hover { 
 	background-color: transparent;
 }
@@ -1166,11 +1144,19 @@ td.descriptionbox  a {
 	width: 20px;
 	float: left;
 }
+html[dir='rtl'] .editlink, html[dir='rtl'] editlink  {
+	background: url(images/edit_sm.png) no-repeat right center;
+	float: right;
+}
 
 .copylink  {
 	background: url(images/copy.png) no-repeat left center;
 	width: 20px;
 	float: left;
+}
+html[dir='rtl'] .copylink, html[dir='rtl'] copylink  {
+	background: url(images/copy.png) no-repeat right center;
+	float: right;
 }
 
 .deletelink  {
@@ -1178,3 +1164,8 @@ td.descriptionbox  a {
 	width: 20px;
 	float: left;
 }
+html[dir='rtl'] .deletelink, html[dir='rtl'] deletelink  {
+	background: url(images/delete.png) no-repeat right center;
+	float: right;
+}
+

@@ -251,49 +251,42 @@ function edit_field_username($name, $selected='', $extra='') {
 
 // Print an edit control for a ADOP field
 function edit_field_adop_u($name, $selected='', $extra='') {
-	global $ADOP_CODES;
-	return select_edit_control($name, $ADOP_CODES, null, $selected, $extra);
+	return select_edit_control($name, WT_Gedcom_Code_Adop::getValues(), null, $selected, $extra);
 }
 
 // Print an edit control for a ADOP female field
 function edit_field_adop_f($name, $selected='', $extra='') {
-	global $ADOP_CODES_F;
-	return select_edit_control($name, $ADOP_CODES_F, null, $selected, $extra);
+	return select_edit_control($name, WT_Gedcom_Code_Adop::getValues(new WT_Person("0 @XXX@ INDI\n1 SEX F")), null, $selected, $extra);
 }
 
 // Print an edit control for a ADOP male field
 function edit_field_adop_m($name, $selected='', $extra='') {
-	global $ADOP_CODES_M;
-	return select_edit_control($name, $ADOP_CODES_M, null, $selected, $extra);
+	return select_edit_control($name, WT_Gedcom_Code_Adop::getValues(new WT_Person("0 @XXX@ INDI\n1 SEX M")), null, $selected, $extra);
 }
 
 // Print an edit control for a PEDI field
 function edit_field_pedi_u($name, $selected='', $extra='') {
-	global $PEDI_CODES;
-	return select_edit_control($name, $PEDI_CODES, '', $selected, $extra);
+	return select_edit_control($name, WT_Gedcom_Code_Pedi::getValues(), '', $selected, $extra);
 }
 
 // Print an edit control for a PEDI female field
 function edit_field_pedi_f($name, $selected='', $extra='') {
-	global $PEDI_CODES_F;
-	return select_edit_control($name, $PEDI_CODES_F, '', $selected, $extra);
+	return select_edit_control($name, WT_Gedcom_Code_Pedi::getValues(new WT_Person("0 @XXX@ INDI\n1 SEX F")), '', $selected, $extra);
 }
 
 // Print an edit control for a PEDI male field
 function edit_field_pedi_m($name, $selected='', $extra='') {
-	global $PEDI_CODES_M;
-	return select_edit_control($name, $PEDI_CODES_M, '', $selected, $extra);
+	return select_edit_control($name, WT_Gedcom_Code_Pedi::getValues(new WT_Person("0 @XXX@ INDI\n1 SEX M")), '', $selected, $extra);
 }
 
 // Print an edit control for a RELA field
 function edit_field_rela($name, $selected='', $extra='') {
-	global $RELA_CODES;
-	uasort($RELA_CODES, 'strcasecmp');
+	$rela_codes=WT_Gedcom_Code_Rela::getValues();
 	// The user is allowed to specify values that aren't in the list.
-	if (!array_key_exists($selected, $RELA_CODES)) {
-		$RELA_CODES[$selected]=$selected;
+	if (!array_key_exists($selected, $rela_codes)) {
+		$rela_codes[$selected]=$selected;
 	}
-	return select_edit_control($name, $RELA_CODES, '', $selected, $extra);
+	return select_edit_control($name, $rela_codes, '', $selected, $extra);
 }
 
 // Print an edit control for a default tab field
@@ -1529,7 +1522,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 */
 
 	} else if ($fact=="TEMP") {
-		echo select_edit_control($element_name, WT_Gedcom_LDS::templeNames(), WT_I18N::translate('No Temple - Living Ordinance'), $value);
+		echo select_edit_control($element_name, WT_Gedcom_Code_LDS::templeNames(), WT_I18N::translate('No Temple - Living Ordinance'), $value);
 	} else if ($fact=="ADOP") {
 		switch ($gender) {
 		case 'M': echo edit_field_adop_m($element_name, $value); break;
@@ -1543,7 +1536,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		default:  echo edit_field_pedi_u($element_name, $value); break;
 		}
 	} else if ($fact=="STAT") {
-		echo select_edit_control($element_name, WT_Gedcom_LDS::statusNames($upperlevel), '', $value);
+		echo select_edit_control($element_name, WT_Gedcom_Code_LDS::statusNames($upperlevel), '', $value);
 	} else if ($fact=="RELA") {
 		echo edit_field_rela($element_name, strtolower($value));
 	} else if ($fact=="_WT_USER") {
@@ -2488,7 +2481,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 		if ($level==2 && $type=='DATE' && in_array($level1type, $date_and_time) && !in_array('TIME', $subtags)) {
 			add_simple_tag("3 TIME"); // TIME is NOT a valid 5.5.1 tag
 		}
-		if ($level==2 && $type=='STAT' && WT_Gedcom_LDS::isTagLDS($level1type) && !in_array('DATE', $subtags)) {
+		if ($level==2 && $type=='STAT' && WT_Gedcom_Code_LDS::isTagLDS($level1type) && !in_array('DATE', $subtags)) {
 			add_simple_tag("3 DATE", '', translate_fact('STAT:DATE'));
 		}
 
@@ -2561,7 +2554,7 @@ function insert_missing_subtags($level1tag, $add_date=false) {
 					add_simple_tag("3 PLAC");
 					break;
 				case "STAT":
-					if (WT_Gedcom_LDS::isTagLDS($level1tag)) {
+					if (WT_Gedcom_Code_LDS::isTagLDS($level1tag)) {
 						add_simple_tag("3 DATE", '', translate_fact('STAT:DATE'));
 					}
 					break;

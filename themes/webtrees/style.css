@@ -80,9 +80,9 @@ img {
 }
 
 legend img {
-	height: 25px;
+	height: 20px;
 	vertical-align: middle;
-	width: 25px;
+	width: 20px;
 }
 
 img.block, #calendar_img, #biglink img, #mycart img  {
@@ -735,7 +735,7 @@ right:10px;
 
 /*-- descendancy chart specific stylesheets --*/
 #descendancy_chart ul {
-	background-image:url(images/vline.gif);
+	background-image:url(images/vline.png);
 	background-repeat: repeat-y;
 	background-position: left top;
 	list-style: none;
@@ -774,7 +774,7 @@ html[dir='rtl'] #relationship_chart {
 
 /*-- ancestry chart specific stylesheets --*/
 #ancestry_chart ul {
-	background-image: url(images/vline.gif);
+	background-image: url(images/vline.png);
 	background-repeat: repeat-y;
 	background-position: left top;
 	list-style: none;
@@ -1689,7 +1689,7 @@ html[dir='rtl'] #extra-menu.makeMenu li ul {
 /*--- edit links ---*/
 
 .edit_link:after { /* used only on the user list */
-	content: " " url(images/edit_sm.png);
+	content: " " url(images/edit.png);
 }
 
 td.descriptionbox  a { /* this keeps the tag color the same when it is a link as when not */
@@ -1706,9 +1706,13 @@ td.descriptionbox  a { /* this keeps the tag color the same when it is a link as
 }
 
 .editlink  {
-	background: url(images/edit_sm.png) no-repeat left center;
+	background: url(images/edit.png) no-repeat left center;
 	width: 20px;
 	float: left;
+}
+html[dir='rtl'] .editlink {
+	background: url(images/edit.png) no-repeat right center;
+	float: right;
 }
 
 .copylink  {
@@ -1716,11 +1720,19 @@ td.descriptionbox  a { /* this keeps the tag color the same when it is a link as
 	width: 20px;
 	float: left;
 }
+html[dir='rtl'] .copylink {
+	background: url(images/copy.png) no-repeat right center;
+	float: right;
+}
 
 .deletelink  {
 	background: url(images/delete.png) no-repeat left center;
 	width: 20px;
 	float: left;
+}
+html[dir='rtl'] .deletelink {
+	background: url(images/delete.png) no-repeat right center;
+	float: right;
 }
 
 .place {
@@ -1768,19 +1780,19 @@ td.descriptionbox  a { /* this keeps the tag color the same when it is a link as
 .sidebar-at-right #tabs, .use-sidebar.sidebar-at-left #sidebar2, .sidebar-at-left #separator {float: left;}
  
 #separator {
-    background-color: red;
-    border: 1px solid red;
     display: block;
     outline: none;
-    width: 1%;
+	
 }
 .use-sidebar #separator {
-    background: url('img/vertical-separator.gif') repeat-y center top;
-    border-color: red;
+	display: block; 
+    background: #81A9CB url('images/sidebar_sprite.png') no-repeat 2px center;
+    border-color: green;
+	width: 13px;
+	vertical-align: bottom;
 }
 #separator:hover {
     border-color: red;
-    background: red;
 }
 
 #header_accordion { float:left; min-width:400px; position:absolute; z-index:80;}
