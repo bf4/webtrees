@@ -1781,7 +1781,7 @@ html[dir='rtl'] .deletelink {
  
 #separator {
 	display: block; 
-    background: #81A9CB url('images/sidebar_sprite.png') no-repeat 42px center;
+    background: #81A9CB url('images/sidebar_sprite.png') no-repeat -42px center;
 	width: 13px;
 }
 .use-sidebar #separator {
