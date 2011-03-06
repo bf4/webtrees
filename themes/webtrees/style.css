@@ -1780,19 +1780,14 @@ html[dir='rtl'] .deletelink {
 .sidebar-at-right #tabs, .use-sidebar.sidebar-at-left #sidebar2, .sidebar-at-left #separator {float: left;}
  
 #separator {
-    display: block;
-    outline: none;
-	
+	display: block; 
+    background: #81A9CB url('images/sidebar_sprite.png') no-repeat 42px center;
+	width: 13px;
 }
 .use-sidebar #separator {
 	display: block; 
     background: #81A9CB url('images/sidebar_sprite.png') no-repeat 2px center;
-    border-color: green;
 	width: 13px;
-	vertical-align: bottom;
-}
-#separator:hover {
-    border-color: red;
 }
 
 #header_accordion { float:left; min-width:400px; position:absolute; z-index:80;}
