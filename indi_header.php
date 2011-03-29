@@ -80,7 +80,7 @@ echo
 	echo
 		'</h1>';
 		if ($controller->indi->canDisplayDetails()) {
-			echo '<div id="accordion_left"', //left group of accordions
+			echo '<div id="accordion_left">', //left group of accordions
 				'<div id="header_accordion1">', // accordion for primary name
 				'<h3>Primary Name</h3>', //1st accordion element
 				'<div id="indi_name_details">';
