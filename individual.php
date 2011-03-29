@@ -80,7 +80,6 @@ jQuery('#main').removeClass('use-sidebar'); // Hide
 jQuery('#main').toggleClass('use-sidebar'); // Toggle
 
 var tabCache = new Array();
-var pinned = false;
 
 jQuery(document).ready(function() {
 	// TODO: change images directory when the common images will be deleted.
