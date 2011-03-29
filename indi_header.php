@@ -78,11 +78,11 @@ echo
 				}
 			}
 	echo
-		'</h1>',
-		'<div id="header_accordion">'; // accordion for name details and other facts
+		'</h1>';
 		if ($controller->indi->canDisplayDetails()) {
-			echo
-				'<h3>Name Details</h3>', //1st accordion element
+			echo '<div id="accordion_left"', //left group of accordions
+				'<div id="header_accordion1">', // accordion for primary name
+				'<h3>Primary Name</h3>', //1st accordion element
 				'<div id="indi_name_details">';
 				//Display name details
 					$globalfacts=$controller->getGlobalFacts();
@@ -94,7 +94,17 @@ echo
 							if (in_array($fact, $nameSex)) {
 								if ($fact=="NAME") $controller->print_name_record($value);
 							}
-						} else {
+						}
+					}
+			echo '</div>', // close indi_name_details
+
+				'<h3>Other names</h3>', //1st accordion element
+				'<div id="indi_name_details">';
+				//Display name details
+					$globalfacts=$controller->getGlobalFacts();
+					$nameSex = array('NAME', 'SEX');
+					foreach ($globalfacts as $key=>$value) {
+						if ($key != 0) {
 							// 2nd and more names
 							$fact = $value->getTag();
 							if (in_array($fact, $nameSex)) {
@@ -102,10 +112,14 @@ echo
 							}
 						}
 					}
-			echo '</div>';
+			echo '</div>', // close indi_name_details
+
+			'</div>', // close header_accordion1
+				'</div>'; // close accordion_left
 			//Display facts
-			echo
-				'<h3>Other facts</h3>', // 2nd accordion element
+			echo '<div id="accordion_right">',
+				'<div id="header_accordion2">',
+				'<h3>Major facts</h3>', // 3rd accordion element
 				'<div id="indi_facts">';
 					//Display gender
 					foreach ($globalfacts as $key=>$value) {
@@ -129,8 +143,16 @@ echo
 					if ($summary) {
 						echo $summary;
 					}
-			echo '</div>'; // close #indi_facts
+			echo '</div>', // close #indi_facts
+
+				'<h3>Other facts</h3>', // 3rd accordion element
+				'<div id="indi_facts">';
+				// put details for more facts in here
+			echo '</div>', // close #indi_facts
+			'</div>', // close header_accordion2
+			'</div>'; // close accordion_right
 		}
-	echo '</div>'; // close #header_accordion
-echo '</div>'; // close #indi_header
-echo WT_JS_START,'jQuery("#header_accordion").accordion({active:false, autoHeight:true, collapsible: true});',	WT_JS_END; //accordion details
+
+		echo '</div>'; // close #indi_header
+echo WT_JS_START,'jQuery("#header_accordion1").accordion({active:0, autoHeight:true, collapsible: true});',	WT_JS_END; //accordion details
+echo WT_JS_START,'jQuery("#header_accordion2").accordion({active:0, autoHeight:true, collapsible: true});',	WT_JS_END; //accordion details

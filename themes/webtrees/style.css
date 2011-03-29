@@ -553,6 +553,7 @@ html[dir='rtl'] .icon, html[dir='rtl'] .adminicon {
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
 	padding: 1px;
+	text-align:center;
 }
 
 .menuitem_hover {
@@ -560,6 +561,7 @@ html[dir='rtl'] .icon, html[dir='rtl'] .adminicon {
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
 	padding: 1px;
+	text-align:center;
 }
 
 .submenu {
@@ -942,6 +944,9 @@ html[dir='rtl'] .header_img {
 
 .header_search {
 	float:right;
+}
+html[dir='rtl'] .header_search {
+	float:left;
 }
 
 /* Styles for the option boxes */
@@ -1449,6 +1454,7 @@ dd {
 	padding: 0;
 	margin: 0;
 	font-size:80%;
+	min-height:80px;
 }
 
 #indi_name_details a {
@@ -1477,6 +1483,7 @@ dd {
 	padding: 0;
 	margin: 0;
 	font-size:80%;
+	min-height:80px;
 }
 
 #sex {
@@ -1651,10 +1658,6 @@ html[dir='rtl'] .makeMenu li ul {
 .makeMenu li ul li {
 	padding: 2px;
 	display:block;
-	text-align:left;
-}
-html[dir='rtl'] li up li {
-	text-align:right;
 }
 
 .makeMenu, .makeMenu li ul {
@@ -1752,8 +1755,6 @@ html[dir='rtl'] .deletelink {
 #main {overflow:hidden;}
 
 #tabs,#sidebar2 {
- /*   line-height: 300px;
-    text-align: center;*/
     border: 1px solid;
 }
  
@@ -1773,23 +1774,32 @@ html[dir='rtl'] .deletelink {
     display: block;
 }
  
-.sidebar-at-left #sidebar2 {width:20%;}
-.sidebar-at-right #sidebar2 {width:20%;}
+.sidebar-at-left #sidebar2 {}
+.sidebar-at-right #sidebar2 {}
  
 .sidebar-at-left #tabs, .use-sidebar.sidebar-at-right #sidebar2, .sidebar-at-right #separator {float: right;}
 .sidebar-at-right #tabs, .use-sidebar.sidebar-at-left #sidebar2, .sidebar-at-left #separator {float: left;}
  
 #separator {
 	display: block; 
-    background: #81A9CB url('images/sidebar_sprite.png') no-repeat -42px center;
+    background: #99c2ff url('images/sidebar_sprite.png') no-repeat -42px center;
 	width: 13px;
+	border: 1px solid #2694E8;
+	-moz-border-radius-topleft: 3px;
+    -moz-border-radius-topright: 3px;
 }
 .use-sidebar #separator {
 	display: block; 
-    background: #81A9CB url('images/sidebar_sprite.png') no-repeat 2px center;
+    background: #99c2ff url('images/sidebar_sprite.png') no-repeat 2px center;
 	width: 13px;
 }
 
 #header_accordion { float:left; min-width:400px; position:absolute; width:90%; z-index:80;}
-#indi_header {float:left; min-height:150px;}
+#indi_header {float:left; min-height:150px; width:90%; font-size: 1em;}
 .indi_table {clear:left;}
+
+#accordion_left, #accordion_right {
+	float:left;
+	width:48%;
+	margin-right:2%;
+}

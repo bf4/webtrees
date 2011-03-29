@@ -9,6 +9,8 @@
 // Derived from PhpGedView
 // Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
 //
+// Sidebar controls courtesy of http://devheart.org/articles/jquery-collapsible-sidebar-layout/
+//
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation; either version 2 of the License, or
@@ -73,6 +75,10 @@ function showchanges() {
 }
 <?php } ?>
 
+jQuery('#main').addClass('use-sidebar'); // Show
+jQuery('#main').removeClass('use-sidebar'); // Hide
+jQuery('#main').toggleClass('use-sidebar'); // Toggle
+
 var tabCache = new Array();
 var pinned = false;
 
@@ -95,11 +101,6 @@ jQuery(document).ready(function() {
 
 jQuery(document).ready(function(){
 
-	//function to reset page to top
-	jQuery('a.goToTop').click(function() {
-		jQuery('html').animate({scrollTop : 0},'slow');
-	});
-		
 	// Variables
 	var objMain = jQuery('#main');
 
@@ -136,6 +137,7 @@ jQuery(document).ready(function(){
 
 <?php
 echo WT_JS_END;
+
 if ((empty($SEARCH_SPIDER))&&($controller->accept_success)) echo "<b>", WT_I18N::translate('Changes successfully accepted into database'), "</b><br />";
 if ($controller->indi->isMarkedDeleted()) echo "<span class=\"error\">".WT_I18N::translate('This record has been marked for deletion upon admin approval.')."</span>";
 if (strlen($controller->indi->getAddName()) > 0) echo "<span class=\"name_head\">", PrintReady($controller->indi->getAddName()), "</span><br />";
