@@ -101,23 +101,26 @@ jQuery(document).ready(function() {
 jQuery(document).ready(function(){
 
 	// Variables
-	var objMain = jQuery('#main');
-
+	var objMain			= jQuery('#main');
+	var objTabs			= jQuery('#tabs');
+	var objBar			= jQuery('#sidebar2');
+	var objSeparator	= jQuery('#separator');
+	
 	// Show sidebar
 	function showSidebar(){
 		objMain.addClass('use-sidebar');
+		objSeparator.css('height', objBar.outerHeight() + 'px');
 		jQuery.cookie('sidebar-pref', 'use-sidebar', { expires: 30 });
 	}
 
 	// Hide sidebar
 	function hideSidebar(){
 		objMain.removeClass('use-sidebar');
+		objSeparator.css('height', objTabs.outerHeight() + 'px');
 		jQuery.cookie('sidebar-pref', null, { expires: 30 });
 	}
 
 	// Sidebar separator
-	var objSeparator = jQuery('#separator');
-
 	objSeparator.click(function(e){
 		e.preventDefault();
 		if ( objMain.hasClass('use-sidebar') ){
@@ -126,17 +129,23 @@ jQuery(document).ready(function(){
 		else {
 			showSidebar();
 		}
-	}).css('height', objSeparator.parent().outerHeight() + 'px');
+	});
+;
 
 	// Load preference
 	if ( jQuery.cookie('sidebar-pref') == null ){
 		objMain.removeClass('use-sidebar');
+		objSeparator.css('height', objTabs.outerHeight() + 'px');
+	} else {
+		objSeparator.css('height', objBar.outerHeight() + 'px');
 	}
+	
 });
 
 <?php
 echo WT_JS_END;
 
+// ===================================== header area
 if ((empty($SEARCH_SPIDER))&&($controller->accept_success)) echo "<b>", WT_I18N::translate('Changes successfully accepted into database'), "</b><br />";
 if ($controller->indi->isMarkedDeleted()) echo "<span class=\"error\">".WT_I18N::translate('This record has been marked for deletion upon admin approval.')."</span>";
 if (strlen($controller->indi->getAddName()) > 0) echo "<span class=\"name_head\">", PrintReady($controller->indi->getAddName()), "</span><br />";
@@ -160,19 +169,19 @@ foreach ($controller->tabs as $tab) {
 	echo $tab->getPreLoadContent();
 }
 $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
-	echo '<div id="tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">';
-	echo '<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">';
+	echo '<div id="tabs" >';
+	echo '<ul>';
 	foreach ($controller->tabs as $tab) {
 		if ($tab->hasTabContent()) {
 			if ($tab->getName()==$controller->default_tab) {
 				// Default tab loads immediately
-				echo '<li class="ui-state-default ui-corner-top ui-tabs-selected"><a class="goToTop" title="', $tab->getName(), '" href="#', $tab->getName(), '">';
+				echo '<li><a class="goToTop" title="', $tab->getName(), '" href="#', $tab->getName(), '">';
 			} elseif ($tab->canLoadAjax()) {
 				// AJAX tabs load later
-				echo '<li class="ui-state-default ui-corner-top"><a class="goToTop" title="', $tab->getName(), '" href="',$controller->indi->getHtmlUrl(),'&amp;action=ajax&amp;module=', $tab->getName(), '">';
+				echo '<li><a class="goToTop" title="', $tab->getName(), '" href="',$controller->indi->getHtmlUrl(),'&amp;action=ajax&amp;module=', $tab->getName(), '">';
 			} else {
 				// Non-AJAX tabs load immediately (search engines don't load ajax)
-				echo '<li class="ui-state-default ui-corner-top"><a class="goToTop" title="', $tab->getName(), '" href="#', $tab->getName(), '">';
+				echo '<li><a class="goToTop" title="', $tab->getName(), '" href="#', $tab->getName(), '">';
 			}
 			echo '<span title="', $tab->getTitle(), '">', $tab->getTitle(), '</span></a></li>';
 		}
@@ -181,7 +190,7 @@ $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 	foreach ($controller->tabs as $tab) {
 		if ($tab->hasTabContent()) {
 			if ($tab->getName()==$controller->default_tab || !$tab->canLoadAjax()) {
-				echo '<div id="', $tab->getName(), '" class="ui-tabs-panel ui-widget-content ui-corner-bottom">';
+				echo '<div id="', $tab->getName(), '">';
 				echo $tab->getTabContent();
 				echo '</div>';
 			}
@@ -189,6 +198,7 @@ $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 	}
 	echo '</div>'; // close #tabs 
 
+// ===================================== sidebar area
 	echo '<div id="sidebar2">'; // sidebar code
 	if (!$controller->indi->canDisplayDetails()) {
 		echo "<table><tr><td class=\"facts_value\" >";
@@ -199,14 +209,15 @@ $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 	}
 echo
 	'</div>',  // close #sidebar2
-	'<a href="#" id="separator"></a>'; //clickable element to open/close sidebar
+	'<a href="#" id="separator" title="Click here to open or close the sidebar"></a>'; //clickable element to open/close sidebar
 
-echo '</div>'; // close #main
-echo WT_JS_START;
-echo 'var catch_and_ignore; function paste_id(value) {catch_and_ignore = value;}';
-echo 'if (typeof toggleByClassName == "undefined") {';
-echo 'alert("webtrees.js: A javascript function is missing.  Please clear your Web browser cache");';
-echo '}';
-echo WT_JS_END;
+// =======================================footer and other items 
+echo '</div>', // close #main
+		WT_JS_START,
+		'var catch_and_ignore; function paste_id(value) {catch_and_ignore = value;}',
+		'if (typeof toggleByClassName == "undefined") {',
+		'alert("webtrees.js: A javascript function is missing.  Please clear your Web browser cache");',
+		'}',
+		WT_JS_END;
 
 print_footer();
