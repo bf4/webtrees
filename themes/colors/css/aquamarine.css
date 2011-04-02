@@ -1899,3 +1899,64 @@ html[dir='rtl'] .deletelink, html[dir='rtl'] editlink  {
 .logo {
 	text-align: center;
 }
+
+/* sidebar */
+#main {
+	overflow:hidden;
+	min-width:1000px;
+}
+
+#tabs,#sidebar {
+    border: 1px solid;
+}
+ 
+#sidebar {
+    background-color: #DEF;
+    border-color: #BCD;
+    display: none;
+	margin:0 12px 0 0 !important;
+	height:auto !important;
+	position:relative !important;
+}
+#tabs {
+    background-color: #EFE;
+    border-color: #CDC;
+    width: 97%;
+	
+}
+ 
+.use-sidebar #tabs {
+	width: 76%;
+}
+
+.use-sidebar #sidebar {
+    display: block;
+}
+ 
+.sidebar-at-left #sidebar,
+.sidebar-at-right #sidebar {
+	width:20%;
+	max-width:260px;
+}
+ 
+.sidebar-at-left #tabs, .use-sidebar.sidebar-at-right #sidebar, .sidebar-at-right #separator {float: right;}
+.sidebar-at-right #tabs, .use-sidebar.sidebar-at-left #sidebar, .sidebar-at-left #separator {float: left;}
+ 
+#separator {
+	display: block; 
+    background: #00A9C7 url('../images/indi_sprite.png') no-repeat -26px 100px;
+	width: 10px;
+	border: 1px solid #999999;
+	-moz-border-radius-topleft: 3px;
+    -moz-border-radius-topright: 3px;
+}
+
+.use-sidebar #separator {
+    background: #00A9C7 url('../images/indi_sprite.png') no-repeat -1px 100px;
+}
+
+/*  Indi header  */
+#header_accordion { float:left; min-width:400px; position:absolute; width:90%; z-index:80;}
+#indi_header {float:left; min-height:150px; width:90%; font-size: 1em;}
+.indi_table {clear:left;}
+#accordion_left, #accordion_right {float:left; width:48%; margin-right:2%;}

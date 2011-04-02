@@ -103,7 +103,7 @@ jQuery(document).ready(function(){
 	// Variables
 	var objMain			= jQuery('#main');
 	var objTabs			= jQuery('#tabs');
-	var objBar			= jQuery('#sidebar2');
+	var objBar			= jQuery('#sidebar');
 	var objSeparator	= jQuery('#separator');
 	
 	// Show sidebar
@@ -199,7 +199,7 @@ $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 	echo '</div>'; // close #tabs 
 
 // ===================================== sidebar area
-	echo '<div id="sidebar2">'; // sidebar code
+	echo '<div id="sidebar">'; // sidebar code
 	if (!$controller->indi->canDisplayDetails()) {
 		echo "<table><tr><td class=\"facts_value\" >";
 		print_privacy_error();
@@ -208,7 +208,7 @@ $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 		require './sidebar.php';
 	}
 echo
-	'</div>',  // close #sidebar2
+	'</div>',  // close #sidebar
 	'<a href="#" id="separator" title="Click here to open or close the sidebar"></a>'; //clickable element to open/close sidebar
 
 // =======================================footer and other items 

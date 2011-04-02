@@ -11,52 +11,6 @@
 .ui-accordion .ui-accordion-content { padding: 1em 1em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: visible; display: none; }
 .ui-accordion .ui-accordion-content-active { display: block;}
 
-
-#sidebar {
-	position: absolute;
-	left: 1px;
-	width: 0px;
-	margin-right:0px;
-	margin-top: 4px;
-	margin-left: 14px;
-	background-color: transparent;
-}
-#sidebar_controls {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	margin: 0;
-	height: 24px; 
-	width: 24px;
-	z-index: 10;
-	border: none;
-	background-color: transparent;
-}
-#sidebar_open {
-	padding: 0;
-}
-#sidebar_open img {
-	position: absolute;
-	padding-top: 1px;
-	padding-bottom: 0px;
-	margin-left: 0px;
-	height: 22px;
-	width: 20px;
-	background: transparent;
-}
-#sidebar_pin {
-	position: absolute;
-	margin-top: 4px;
-	margin-right: -30px;
-	padding-top: 1px;
-	padding-bottom: 0px;
-	background: transparent;
-}
-#sidebar_pin img {
-	padding-right: 4px;
-	padding-left: 4px;
-}
-
 /* Navigator & Flyout menu Styles ------*/
 .nav_content {
 	width: 235px;
