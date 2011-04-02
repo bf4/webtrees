@@ -1322,12 +1322,12 @@ case 'ALLOW_CHANGE_GEDCOM':
 	break;
 
 case 'ALLOW_EDIT_GEDCOM':
-	$title=WT_I18N::translate('Enable online editing');
+	$title=WT_I18N::translate('Online editing');
 	$text=WT_I18N::translate('This option enables online editing features for this database so that users with Edit privileges may update data online.');
 	break;
 
 case 'ALLOW_THEME_DROPDOWN':
-	$title=WT_I18N::translate('Display theme dropdown selector for theme changes');
+	$title=WT_I18N::translate('Theme dropdown selector for theme changes');
 	$text=WT_I18N::translate('Gives users the option of selecting their own theme from a menu.<br /><br />Even with this option set, the theme currently in effect may not provide for such a menu.  To be effective, this option requires the <b>Allow users to select their own theme</b> option to be set as well.');
 	break;
 
@@ -1337,7 +1337,7 @@ case 'ALLOW_USER_THEMES':
 	break;
 
 case 'AUTO_GENERATE_THUMBS':
-	$title=WT_I18N::translate('Automatically generated thumbnails');
+	$title=WT_I18N::translate('Automatically generate thumbnails');
 	$text=WT_I18N::translate('Should the system automatically generate thumbnails for images that do not have them.  Your PHP installation might not support this functionality.');
 	break;
 
@@ -1396,7 +1396,7 @@ case 'CONTACT_USER_ID':
 	break;
 
 case 'DEFAULT_PEDIGREE_GENERATIONS':
-	$title=WT_I18N::translate('Pedigree generations');
+	$title=WT_I18N::translate('Default pedigree generations');
 	$text=WT_I18N::translate('Set the default number of generations to display on Descendancy and Pedigree charts.');
 	break;
 
@@ -1411,7 +1411,7 @@ case 'DISPLAY_JEWISH_THOUSANDS':
 	break;
 
 case 'ENABLE_AUTOCOMPLETE':
-	$title=WT_I18N::translate('Enable autocomplete');
+	$title=WT_I18N::translate('Autocomplete');
 	$text=WT_I18N::translate('This option determines whether Autocomplete should be active while information is being entered into certain fields on input forms.  When this option is set to <b>Yes</b>, text input fields for which Autocomplete is possible are indicated by a differently colored background.<br /><br />When Autocomplete is active, <b>webtrees</b> will search its database for possible matches according to what you have already entered.  As you enter more information, the list of possible matches is refined.  When you see the desired input in the list of matches, you can move the mouse cursor to that line of the list and then click the left mouse button to complete the input.<br /><br />The disadvantages of Autocomplete are that it slows the program, entails significant database activity, and also results in more data being sent to the browser.');
 	break;
 
@@ -1471,12 +1471,12 @@ case 'GENERATE_GUID':
 	break;
 
 case 'HIDE_GEDCOM_ERRORS':
-	$title=WT_I18N::translate('Hide GEDCOM errors');
+	$title=WT_I18N::translate('GEDCOM errors');
 	$text=WT_I18N::translate('Many genealogy programs create GEDCOM files with custom tags, and <b>webtrees</b> understands most of them.  When unrecognised tags are found, this option lets you choose whether to ignore them or display a warning message.');
 	break;
 
 case 'HIDE_LIVE_PEOPLE':
-        $title=WT_I18N::translate('Enable privacy');
+        $title=WT_I18N::translate('Privacy options');
         $text=WT_I18N::translate('This option will enable all privacy settings and hide the details of living people, as defined or modified on the Privacy tab of each GEDCOM\'s configuration page.');
         $text .= '<p>';
 		$text .= WT_I18N::plural('Note: "living" is defined (if no death or burial is known) as ending %d year after birth or estimated birth.','Note: "living" is defined (if no death or burial is known) as ending %d years after birth or estimated birth.', get_gedcom_setting(WT_GED_ID, 'MAX_ALIVE_AGE'), get_gedcom_setting(WT_GED_ID, 'MAX_ALIVE_AGE'));
@@ -1513,7 +1513,7 @@ case 'INDI_FACTS_UNIQUE':
 	break;
 
 case 'KEEP_ALIVE':
-	$title=WT_I18N::translate('Apply living rules to recently deceased');
+	$title=WT_I18N::translate('Extend privacy to dead people');
 	$text=WT_I18N::translate('In some countries, privacy laws apply not only to living people, but also to those who have died recently.  This option will allow you to extend the privacy rules for living people to those who were born or died within a specified number of years.  Leave these values empty to disable this feature.');
 	break;
 
@@ -1570,7 +1570,7 @@ case 'MEDIA_DIRECTORY_LEVELS':
 	break;
 
 case 'MEDIA_DIRECTORY':
-	$title=WT_I18N::translate('Multimedia directory');
+	$title=WT_I18N::translate('Media directory');
 	$text=WT_I18N::translate('The path to a readable and writable directory where <b>webtrees</b> should store media files (include the trailing "/").  <b>webtrees</b> does not require this directory\'s name to be "media".  You can choose any name you like.<br /><br />Even though the Media Firewall feature lets you store media files in an area of the server\'s file space that is not accessible from the Internet, the directory named here must still exist and must be readable from the Internet and writable by <b>webtrees</b>.  For more information, please refer to the Media Firewall configuration options in the Multimedia section of the GEDCOM configuration page.');
 	break;
 
@@ -1627,7 +1627,7 @@ case 'NOTE_ID_PREFIX':
 	break;
 
 case 'PEDIGREE_FULL_DETAILS':
-	$title=WT_I18N::translate('Show birth and death details on charts');
+	$title=WT_I18N::translate('Birth and death details on charts');
 	$text=WT_I18N::translate('This option controls whether or not to show the Birth and Death details of an individual on charts.');
 	break;
 
@@ -1647,7 +1647,7 @@ case 'PEDIGREE_ROOT_ID':
 	break;
 
 case 'PEDIGREE_SHOW_GENDER':
-	$title=WT_I18N::translate('Show gender icon on charts');
+	$title=WT_I18N::translate('Gender icon on charts');
 	$text=WT_I18N::translate('This option controls whether or not to show the individual\'s gender icon on charts.<br /><br />Since the gender is also indicated by the color of the box, this option doesn\'t conceal the gender. The option simply removes some duplicate information from the box.');
 	break;
 
@@ -1797,12 +1797,12 @@ case 'SHOW_AGE_DIFF':
 	break;
 
 case 'SHOW_CONTEXT_HELP':
-	$title=WT_I18N::translate('Show contextual <b>?</b> help links');
+	$title=WT_I18N::translate('Contextual Help links');
 	$text=WT_I18N::translate('This option will enable links, identified by question marks, next to items on many pages.  These links allow users to get information or help about those items.');
 	break;
 
 case 'SHOW_COUNTER':
-	$title=WT_I18N::translate('Show hit counters');
+	$title=WT_I18N::translate('Hit counters');
 	$text=WT_I18N::translate('Show hit counters on Portal and Individual pages.');
 	break;
 
@@ -1812,12 +1812,12 @@ case 'SHOW_DEAD_PEOPLE':
 	break;
 
 case 'SHOW_EMPTY_BOXES':
-	$title=WT_I18N::translate('Show empty boxes on pedigree charts');
+	$title=WT_I18N::translate('Empty boxes on pedigree charts');
 	$text=WT_I18N::translate('This option controls whether or not to show empty boxes on Pedigree charts.');
 	break;
 
 case 'SHOW_EST_LIST_DATES':
-	$title=WT_I18N::translate('Show estimated dates for birth and death');
+	$title=WT_I18N::translate('Estimated dates for birth and death');
 	$text=WT_I18N::translate('This option controls whether or not to show estimated dates for birth and death instead of leaving blanks on individual lists and charts for individuals whose dates are not known.');
 	break;
 
@@ -1842,7 +1842,7 @@ case 'SHOW_LAST_CHANGE':
 	break;
 
 case 'SHOW_LDS_AT_GLANCE':
-	$title=WT_I18N::translate('Show LDS ordinance codes in chart boxes');
+	$title=WT_I18N::translate('LDS ordinance codes in chart boxes');
 	$text=WT_I18N::translate('Setting this option to <b>Yes</b> will show status codes for LDS ordinances in chart boxes.<ul><li><b>B</b> - Baptism</li><li><b>E</b> - Endowed</li><li><b>S</b> - Sealed to spouse</li><li><b>P</b> - Sealed to parents</li></ul>A person who has all of the ordinances done will have <b>BESP</b> printed after their name.  Missing ordinances are indicated by <b>_</b> in place of the corresponding letter code.  For example, <b>BE__</b> indicates missing <b>S</b> and <b>P</b> ordinances.');
 	break;
 
@@ -1907,7 +1907,7 @@ case 'SHOW_RELATIVES_EVENTS':
 	break;
 
 case 'SHOW_STATS':
-	$title=WT_I18N::translate('Show execution statistics');
+	$title=WT_I18N::translate('Execution statistics');
 	$text=WT_I18N::translate('Show runtime statistics and database queries at the bottom of every page.');
 	break;
 
@@ -1932,12 +1932,12 @@ case 'SOUR_FACTS_UNIQUE':
 	break;
 
 case 'SUBLIST_TRIGGER_F':
-	$title=WT_I18N::translate('Maximum number of family names');
+	$title=WT_I18N::translate('Maximum number of surnames on family list');
 	$text=WT_I18N::translate('Long lists of families with the same name can be broken into smaller sub-lists according to the first letter of the given name.<br /><br />This option determines when sub-listing of family names will occur.  To disable sub-listing completely, set this option to zero.');
 	break;
 
 case 'SUBLIST_TRIGGER_I':
-	$title=WT_I18N::translate('Maximum number of surnames');
+	$title=WT_I18N::translate('Maximum number of surnames on individual list');
 	$text=WT_I18N::translate('Long lists of persons with the same surname can be broken into smaller sub-lists according to the first letter of the individual\'s given name.<br /><br />This option determines when sub-listing of surnames will occur.  To disable sub-listing completely, set this option to zero.');
 	break;
 
@@ -1970,7 +1970,7 @@ case 'UNDERLINE_NAME_QUOTES':
 	break;
 
 case 'USE_GEONAMES':
-	$title=WT_I18N::translate('Use GeoNames database');
+	$title=WT_I18N::translate('Use GeoNames database for autocomplete on places');
 	$text=WT_I18N::translate('Should the GeoNames database be used to provide more suggestions for place names?<br /><br />When this option is set to <b>Yes</b>, the GeoNames database will be queried to supply suggestions for the place name being entered.  When set to <b>No</b>, only the current genealogical database will be searched.  As you enter more of the place name, the suggestion will become more precise.  This option can slow down data entry, particularly if your Internet connection is slow.<br /><br />The GeoNames geographical database is accessible free of charge. It currently contains over 8,000,000 geographical names.');
 	break;
 
@@ -2503,11 +2503,6 @@ case 'index_add_favorites':
 	$text=WT_I18N::translate('This form allows you to add a new favorite item to your list of favorites.<br /><br />You must enter either an ID for the person, family, or source you want to store as a favorite, or you must enter a URL and a title.  The Note field is optional and can be used to describe the favorite.  Anything entered in the Note field will be displayed in the Favorites block after the item.');
 	break;
 
-case 'index_common_given_names':
-	$title=WT_I18N::translate('Most common given names block');
-	$text=WT_I18N::translate('This block displays a list of frequently occurring given names from this database. You can configure how many given names should appear in the list.');
-	break;
-
 case 'index_common_names':
 	$title=WT_I18N::translate('Most common surnames block');
 	$text=WT_I18N::translate('This block displays a list of frequently occurring surnames from this database. A surname must occur at least %s times before it will appear in this list.  The administrator has control over this threshold.<br /><br />When you click on a surname in this list, you will be taken to the Individuals, where you will get more details about that name.', get_gedcom_setting(WT_GED_ID, 'COMMON_NAMES_THRESHOLD'));
@@ -2810,11 +2805,6 @@ case 'rootid':
 	$text=WT_I18N::translate('If you want to display a chart with a new starting (root) person, the ID of that new starting person is typed here.<br /><br />If you don\'t know the ID of that person, use the <b>Find ID</b> link.<br /><br /><b>ID NUMBER</b><br />The ID numbers used inside <b>webtrees</b> are <u>not</u> the identification numbers issued by various governments (driving permit or passport numbers, for instance).  The ID number referred to here is simply a number used within the database to uniquely identify each individual; it was assigned by the ancestry program that created the GEDCOM file which was imported into <b>webtrees</b>.');
 	break;
 
-case 'search_enter_terms':
-	$title=WT_I18N::translate('Enter search terms');
-	$text=WT_I18N::translate('In this Search box you can enter criteria such as dates, given names, surnames, places, multimedia, etc.<br /><br /><b>Wildcards</b><br />Wildcards, as you probably know them (like * or ?), are not allowed, but the program will automatically assume wildcards.<br /><br />Suppose you type in the Search box the following: <b>Pete</b>.  The result could be, assuming the names are in the database:<div style="padding-left:30px;"><b>Pete</b> Smith<br /><b>Pete</b>r Johnes<br />Will <b>Pete</b>rson<br />somebody --Born 01 January 1901 <b>Pete</b>rsburg<br />etc.</div><br /><b>Dates</b><br />Typing a year in the Search box will result in a list of individuals who are somehow connected to that year.<br /><br />If you type <b>1950</b>, the result will be all individuals with an event that occurred in 1950.  These events could be births, deaths, marriages, Bar Mitzvahs, LDS Sealings, etc.<br /><br />If you type <b>4 Dec</b>, all persons connected to an event that occurred on 4 December of whatever year will be listed.  Persons connected to an event on 14 or 24 December will be listed as well.  As you see, wildcards are always assumed, so you do not have to type them.  Sometimes, the results can be surprising.<br /><br /><b>Proper dates</b><br /><b>webtrees</b> searches for data, as they are stored in the GEDCOM file.  If, for example, you want to search for an event on December 14, you should type <b>14&nbsp;dec</b> because this is how the date is stored in the database.<br /><br />If you were to type <b>dec&nbsp;14</b>, the result could be a person connected to an event on 08&nbsp;<b>dec</b>ember&nbsp;18<b>14</b>.  Again, the results can be surprising.<br /><br />You can use regular expressions in your search if you are familiar with them.  For example, if you wanted to find all of the people who have dates in the 20th century, you could enter the search <b>19[0-9][0-9]</b> and you would get all of the people with dates from 1900-1999.<br /><br />If you need more help with this searching system, please let us know, so that we can extend this Help file as well.<br /><br />~Search the way you think the name is written (Soundex)~<br /><br />Soundex is a method of coding words according to their pronunciation.  This allows you to search the database for names and places when you don\'t know precisely how they are written.  <b>webtrees</b> supports two different Soundex algorithms that produce vastly different results.<ul><li><b>Basic</b><br />This method, patented in 1918 by Russell, is very simple and can be done by hand.<br /><br />Because the Basic method retains the first letter of the name as part of the resultant code, it is not very helpful when you are unsure of that first letter.  The Basic algorithm is not well suited to names that were originally in languages other than English, and even with English names the results are very surprising.  For example, a Basic Soundex search for <b>Smith</b> will return not only <b>Smith, Smid, Smit, Schmidt, Smyth, Smithe, Smithee, Schmitt</b>, all of which are clearly variations of <b>Smith</b>, but also <b>Smead, Sneed, Smoote, Sammett, Shand,</b> and <b>Snoddy</b>.  <br /><br /></li><li><b>Daitch-Mokotoff</b><br />This method, developed in 1985, is much more complex than the Basic method and is not easily done by hand.<br /><br />A Soundex search using this method produces much more accurate results.</li></ul>For details on both Soundex algorithms, visit this <a href="http://www.jewishgen.org/infofiles/soundex.html" target=_blank><b>Jewish Genealogical Society</b></a> web page.<br /><br /> ~Search and Replace~<br /><br />Here, you can search for a misspelling or other inaccurate information and replace it with correct information.<br /><br /><b>Searching</b><br />This feature performs searching just like a <a href="help_text.php?help=search_enter_terms_help">normal search</a>.<br /><br /><b>Replacing</b><br />All instances of the search term that are found are replaced by the replacement term in the database.<br /><br /><b>For Example...</b><br />Suppose you accidentally misspell your great-grandpa Michael\'s name.  You accidentally entered \'Micheal.\' <br /><br />You would type <b>Micheal</b> in the Search box, and <b>Michael</b> in the Replace box.<br />Every instance of "Micheal" would then be replaced by "Michael"<br /><br /><b>Search for...</b><br />Select the scope of the search.  You can limit the search to names or places, or apply no limit (search everything).  The <i>Whole words only</i> option will only search for your term in the place field as a whole word.  This means that searching for <i>UT</i> would only match <b>UT</b> and not <i>UT</i> in the other words such as Connectic<b>ut</b>.<br /><br />Don\'t worry if you accidentally replace something where you don\'t want to.  Just click the "Accept/Reject Changes" link at the bottom of the page to accept the changes you want, and reject the changes you don\'t want.<br /><br />If you need more help with this searching system, please let us know, so that we can improve this Help file as well.');
-	break;
-
 case 'search_exclude_tags':
 	$title=WT_I18N::translate('Exclude filter');
 	$text=WT_I18N::translate('The <b>Exclude some non-genealogical data</b> choice will cause the Search function to ignore the following GEDCOM tags:<div style="padding-left:30px;"><b>_WT_USER</b> - Last change by<br /><b>CHAN</b> - Last change date<br /><b>FILE</b> - External File<br /><b>FORM</b> - Format<br /><b>TYPE</b> - Type<br /><b>SUBM</b> - Submitter<br /><b>REFN</b> - Reference Number</div><br />In addition to these optionally excluded tags, the Search function always excludes these tags:<div style="padding-left:30px;"><b>_UID</b> - Globally unique Identifier<br /><b>RESN</b> - Restriction</div>');
@@ -2823,11 +2813,6 @@ case 'search_exclude_tags':
 case 'search_include_ASSO':
 	$title=WT_I18N::translate('Associates');
 	$text=WT_I18N::translate('This option causes <b>webtrees</b> to show all individuals who are recorded as having an association relationship to the person or family that was found as a direct result of the search.  The inverse, where all persons or families are shown when a person found as a direct result of the search has an association relationship to these other persons or families, is not possible.<br /><br />Example:  Suppose person <b>A</b> is godparent to person <b>B</b>.  This relationship is recorded in the GEDCOM record of person <b>B</b> by means of an ASSO tag.  No corresponding tag exists in the GEDCOM record of person <b>A</b>.<br /><br />When this option is set to <b>Yes</b> and the Search results list includes <b>B</b>, <b>A</b> will be included automatically because of the ASSO tag in the GEDCOM record of <b>B</b>.  However, if the Search results list includes <b>A</b>, <b>B</b> will not be included automatically since there is no matching ASSO tag in the GEDCOM record of person <b>A</b>.');
-	break;
-
-case 'search_replace':
-	$title=WT_I18N::translate('Search and replace');
-	$text=WT_I18N::translate('Here, you can search for a misspelling or other inaccurate information and replace it with correct information.<br /><br /><b>Searching</b><br />This feature performs searching just like a <a href="help_text.php?help=search_enter_terms_help">normal search</a>.<br /><br /><b>Replacing</b><br />All instances of the search term that are found are replaced by the replacement term in the database.<br /><br /><b>For Example...</b><br />Suppose you accidentally misspell your great-grandpa Michael\'s name.  You accidentally entered \'Micheal.\' <br /><br />You would type <b>Micheal</b> in the Search box, and <b>Michael</b> in the Replace box.<br />Every instance of "Micheal" would then be replaced by "Michael"<br /><br /><b>Search for...</b><br />Select the scope of the search.  You can limit the search to names or places, or apply no limit (search everything).  The <i>Whole words only</i> option will only search for your term in the place field as a whole word.  This means that searching for <i>UT</i> would only match <b>UT</b> and not <i>UT</i> in the other words such as Connectic<b>ut</b>.<br /><br />Don\'t worry if you accidentally replace something where you don\'t want to.  Just click the "Accept/Reject Changes" link at the bottom of the page to accept the changes you want, and reject the changes you don\'t want.<br /><br />If you need more help with this searching system, please let us know, so that we can improve this Help file as well.');
 	break;
 
 case 'setperms':
@@ -2935,11 +2920,6 @@ case 'talloffset':
 case 'timeline_chart':
 	$title=WT_I18N::translate('Timeline chart');
 	$text=WT_I18N::translate('On this chart you can display one or more persons along a timeline.  You can, for example, visualize the status of two or more persons at a certain moment.<br /><br />If you click the <b>Time Line</b> link on an other page you will already see one person on the Time Line.  If you clicked the <b>Time Line</b> menu item in a page header, you have to supply the starting person\'s ID.');
-	break;
-
-case 'timeline_control':
-	$title=WT_I18N::translate('Timeline control');
-	$text=WT_I18N::translate('Click the drop down menu to change the speed at which the timeline scrolls.<br/><br/>~Begin Year~<br/>Enter the starting year of the range.<br/><br/>~End Year~<br/>Enter the ending year of the range.<br/><br/>~Search~<br/>Click the Search button to begin searching for events that occurred within the range identified by the Begin Year and End Year fields.');
 	break;
 
 case 'treenav':

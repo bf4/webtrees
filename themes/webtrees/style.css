@@ -943,6 +943,9 @@ html[dir='rtl'] .header_img {
 .header_search {
 	float:right;
 }
+html[dir='rtl'] .header_search {
+	float:left;
+}
 
 /* Styles for the option boxes */
 

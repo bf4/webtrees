@@ -135,63 +135,60 @@ function paste_id(value) {
 -->
 </script>
 <?php
-
+echo '<h2>', WT_I18N::translate('My account'), '</h2>', "\n";
 // show the form to edit a user account details
 $tab=0;
 echo '<form name="editform" method="post" action="" onsubmit="return checkform(this);" autocomplete="off">';
-echo '<input type="hidden" name="form_action" value="update" />';
-echo '<table class="list_table center ', $TEXT_DIRECTION, '">';
-
-echo '<tr><td class="topbottombar" colspan="2"><h2>', WT_I18N::translate('My account'), '</h2></td></tr>';
-
-echo '<tr><td class="descriptionbox width20 wrap">';
-echo WT_I18N::translate('User name'), help_link('edituser_username'), '</td><td class="optionbox">';
+echo '<input type="hidden" name="form_action" value="update" />', "\n";
+echo '<dl>', "\n";
+echo '<dt id="username" class="descriptionbox">', WT_I18N::translate('User name'), help_link('edituser_username'), '</dt><dd class="optionbox">';
 echo '<input type="text" name="form_username" value="', WT_USER_NAME, '" autofocus />';
-echo '</td></tr>';
+echo '</dd>', "\n";
 
-echo '<tr><td class="descriptionbox wrap">';
-echo WT_I18N::translate('Real name'), help_link('edituser_realname'), '</td><td class="optionbox">';
+echo '<dt id="realname" class="descriptionbox">';
+echo WT_I18N::translate('Real name'), help_link('edituser_realname'), '</dt><dd class="optionbox">';
 echo '<input type="text" name="form_realname" value="', getUserFullName(WT_USER_ID), '" />';
-echo '</td></tr>';
+echo '</dd>', "\n";
 
 $person=WT_Person::getInstance(WT_USER_GEDCOM_ID);
 if ($person) {
-	echo '<tr><td class="descriptionbox wrap">';
-	echo WT_I18N::translate('Individual record'), help_link('edituser_gedcomid'), '</td><td class="optionbox">';
+	echo '<dt id="gedcomid" class="descriptionbox">';
+	echo WT_I18N::translate('Individual record'), help_link('edituser_gedcomid'), '</dt><dd class="optionbox">';
 	echo $person->format_list('span');
-	echo '</td></tr>';
+	echo '</dd>', "\n";
 }
 
 $person=WT_Person::getInstance(WT_USER_ROOT_ID);
-echo '<tr><td class="descriptionbox wrap">';
-echo WT_I18N::translate('Pedigree chart root person'), help_link('edituser_rootid'), '</td><td class="optionbox">';
+echo '<dt id="rootid" class="descriptionbox">';
+echo WT_I18N::translate('Pedigree chart root person'), help_link('edituser_rootid'), '</dt><dd class="optionbox">';
 echo '<input type="text" name="form_rootid" id="rootid" value="', WT_USER_ROOT_ID, '" />';
 echo print_findindi_link('rootid', '', true), '<br/>';
 if ($person) {
 	echo $person->format_list('span');
 }
-echo '</td></tr>';
+echo '</dd>', "\n";
 
-echo '<tr><td class="descriptionbox wrap">';
-echo WT_I18N::translate('Password'), '</td><td class="optionbox">';
-echo '<input type="password" name="form_pass1" /> ', WT_I18N::translate('Leave password blank if you want to keep the current password.'), help_link('edituser_password'), '</td></tr>';
+echo '<dt class="descriptionbox">';
+echo WT_I18N::translate('Password'), '</dt><dd class="optionbox">';
+echo '<input type="password" name="form_pass1" /> ', WT_I18N::translate('Leave password blank if you want to keep the current password.'), help_link('edituser_password');
+echo '</dd>', "\n";
 
-echo '<tr><td class="descriptionbox wrap">';
-echo WT_I18N::translate('Confirm password'), help_link('edituser_conf_password'), '</td><td class="optionbox">';
-echo '<input type="password" name="form_pass2" /></td></tr>';
+echo '<dt class="descriptionbox">';
+echo WT_I18N::translate('Confirm password'), help_link('edituser_conf_password'), '</dt><dd class="optionbox">';
+echo '<input type="password" name="form_pass2" /></dd>', "\n";
 
-echo '<tr><td class="descriptionbox wrap">';
+echo '<dt class="descriptionbox">';
 echo WT_I18N::translate('Language'), help_link('edituser_change_lang');
-echo '</td><td class="optionbox" valign="top">';
+echo '</dt><dd class="optionbox">';
 echo edit_field_language('form_language', get_user_setting(WT_USER_ID, 'language'));
-echo '</td></tr>';
+echo '</dd>', "\n";
 
-echo '<tr><td class="descriptionbox wrap">';
-echo WT_I18N::translate('Email address'), help_link('edituser_email'), '</td><td class="optionbox" valign="top">';
-echo '<input type="text" name="form_email" value="', getUserEmail(WT_USER_ID), '" size="50" /></td></tr>';
+echo '<dt class="descriptionbox">';
+echo WT_I18N::translate('Email address'), help_link('edituser_email'), '</dt><dd class="optionbox">';
+echo '<input type="text" name="form_email" value="', getUserEmail(WT_USER_ID), '" size="50" /></dd>', "\n";
 
-echo '<tr><td class="descriptionbox wrap">';
-echo WT_I18N::translate('Theme'), help_link('THEME'), '</td><td class="optionbox" valign="top">';
+echo '<dt class="descriptionbox">';
+echo WT_I18N::translate('Theme'), help_link('THEME'), '</dt><dd class="optionbox">';
 echo '<select name="form_theme">';
 echo '<option value="">', /* I18N: default option in list of themes */ WT_I18N::translate('&lt;default theme&gt;'), '</option>';
 foreach (get_theme_names() as $themename=>$themedir) {
@@ -201,27 +198,27 @@ foreach (get_theme_names() as $themename=>$themedir) {
 	}
 	echo '>', $themename, '</option>';
 }
-echo '</select></td></tr>';
+echo '</select></dd>', "\n";
 
-echo '<tr><td class="descriptionbox wrap">';
+echo '<dt class="descriptionbox">';
 echo WT_I18N::translate('Preferred contact method'), help_link('edituser_contact_meth');
-echo '</td><td class="optionbox">';
+echo '</dt><dd class="optionbox">';
 echo edit_field_contact('form_contact_method', get_user_setting(WT_USER_ID, 'contactmethod'));
-echo '</td></tr>';
+echo '</dd>', "\n";
 
-echo '<tr><td class="descriptionbox wrap">';
+echo '<dt class="descriptionbox">';
 echo WT_I18N::translate('Visible to other users when online'), help_link('useradmin_visibleonline');
-echo '</td><td class="optionbox">';
+echo '</dt><dd class="optionbox">';
 echo checkbox('form_visible_online', get_user_setting(WT_USER_ID, 'visibleonline'));
-echo '</td></tr>';
+echo '</dd>', "\n";
 
-echo '<tr><td class="descriptionbox wrap">';
-echo WT_I18N::translate('Default Tab to show on Individual Information page'), help_link('edituser_user_default_tab'), '</td><td class="optionbox">';
+echo '<dt class="descriptionbox">';
+echo WT_I18N::translate('Default Tab to show on Individual Information page'), help_link('edituser_user_default_tab'), '</dt><dd class="optionbox">';
 echo edit_field_default_tab('form_default_tab', get_user_setting(WT_USER_ID, 'defaulttab'));
-echo '</td></tr>';
+echo '</dd>', "\n", '</dl>', "\n";
 
-echo '<tr><td class="topbottombar" colspan="2"><input type="submit" value="', WT_I18N::translate('Save'), '" /></td></tr>';
+echo '<div class="topbottombar"><input type="submit" value="', WT_I18N::translate('Save'), '" /></div>';
 
-echo '</table></form>';
+echo '</form>';
 
 print_footer();

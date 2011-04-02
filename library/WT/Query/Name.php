@@ -62,7 +62,7 @@ class WT_Query_Name {
 			);
 		case 'he':
 			return array(
-				'א','ב','ג','ד','ה','ו','ז','ח','ט','י','כ','ך','ל','מ','ם','נ','ן','ס','ע','פ','ף','צ','ץ','ק','ר','ש','ת'
+				'א','ב','ג','ד','ה','ו','ז','ח','ט','י','כ','ל','מ','נ','ס','ע','פ','צ','ק','ר','ש','ת'
 			);
 		case 'hu':
 			return array(
@@ -191,7 +191,7 @@ class WT_Query_Name {
 		foreach (self::_getAlphabet() as $n=>$letter) {
 			$sql.=" AND n_surn NOT LIKE '".$letter."%' COLLATE ".WT_I18N::$collation;
 		}
-		$sql.=" GROUP BY LEFT(n_surn, 1) ORDER BY LEFT(n_surn, 1)<>'', LEFT(n_surn, 1)<>'@', LEFT(n_surn, 1)";
+		$sql.=" GROUP BY LEFT(n_surn, 1) ORDER BY LEFT(n_surn, 1)='', LEFT(n_surn, 1)='@', LEFT(n_surn, 1)";
 		foreach (WT_DB::prepare($sql)->fetchAssoc() as $alpha=>$count) {
 			if ($alpha=='') {
 				// Special code to indicate "no surname"
@@ -266,7 +266,7 @@ class WT_Query_Name {
 		foreach (self::_getAlphabet() as $n=>$letter) {
 			$sql.=" AND n_givn NOT LIKE '".$letter."%' COLLATE ".WT_I18N::$collation;
 		}
-		$sql.=" GROUP BY LEFT(n_givn, 1) ORDER BY LEFT(n_givn, 1)<>'@', LEFT(n_givn, 1)<>'', LEFT(n_givn, 1)";
+		$sql.=" GROUP BY LEFT(n_givn, 1) ORDER BY LEFT(n_givn, 1)='@', LEFT(n_givn, 1)='', LEFT(n_givn, 1)";
 		foreach (WT_DB::prepare($sql)->fetchAssoc() as $alpha=>$count) {
 			$alphas[$alpha]=$count;
 		}
