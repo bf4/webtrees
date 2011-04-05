@@ -189,7 +189,7 @@ echo '<div id="indi_header">'; // container for indi header details
 	
 		echo '<div id="accordion_left">', //left group of accordions
 			'<div id="header_accordion1">', // accordion for primary name
-			'<h3>Primary Name</h3>', //1st accordion element
+			'<h3>', WT_I18N::translate('Primary Name'), '</h3>', //1st accordion element
 			'<div id="indi_name_details">';
 			//Display name details
 				foreach ($globalfacts as $key=>$value) {
@@ -203,7 +203,7 @@ echo '<div id="indi_header">'; // container for indi header details
 				}
 		echo '</div>', // close indi_name_details
 
-			'<h3>Other names</h3>', //1st accordion element
+			'<h3>', WT_I18N::translate('Other names'), '</h3>', //1st accordion element
 			'<div id="indi_name_details">';
 			//Display name details
 				$globalfacts=$controller->getGlobalFacts();
@@ -224,7 +224,7 @@ echo '<div id="indi_header">'; // container for indi header details
 		//Display facts
 		echo '<div id="accordion_right">',
 			'<div id="header_accordion2">',
-			'<h3>Major facts</h3>', // 3rd accordion element
+			'<h3>', WT_I18N::translate('Major facts'), '</h3>', // 3rd accordion element
 			'<div id="indi_facts">';
 				// Display summary birth/death info.
 				$summary=$controller->indi->format_first_major_fact(WT_EVENTS_BIRT, 2);
@@ -243,7 +243,7 @@ echo '<div id="indi_header">'; // container for indi header details
 				}
 		echo '</div>', // close #indi_facts
 
-			'<h3>Other facts</h3>', // 3rd accordion element
+			'<h3>', WT_I18N::translate('Other facts'), '</h3>', // 3rd accordion element
 			'<div id="indi_facts">';
 			// put details for more facts in here
 		echo '</div>', // close #indi_facts
@@ -274,13 +274,13 @@ $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 		if ($tab->hasTabContent()) {
 			if ($tab->getName()==$controller->default_tab) {
 				// Default tab loads immediately
-				echo '<li><a class="goToTop" title="', $tab->getName(), '" href="#', $tab->getName(), '">';
+				echo '<li><a title="', $tab->getName(), '" href="#', $tab->getName(), '">';
 			} elseif ($tab->canLoadAjax()) {
 				// AJAX tabs load later
-				echo '<li><a class="goToTop" title="', $tab->getName(), '" href="',$controller->indi->getHtmlUrl(),'&amp;action=ajax&amp;module=', $tab->getName(), '">';
+				echo '<li><a title="', $tab->getName(), '" href="',$controller->indi->getHtmlUrl(),'&amp;action=ajax&amp;module=', $tab->getName(), '">';
 			} else {
 				// Non-AJAX tabs load immediately (search engines don't load ajax)
-				echo '<li><a class="goToTop" title="', $tab->getName(), '" href="#', $tab->getName(), '">';
+				echo '<li><a title="', $tab->getName(), '" href="#', $tab->getName(), '">';
 			}
 			echo '<span title="', $tab->getTitle(), '">', $tab->getTitle(), '</span></a></li>';
 		}
@@ -308,7 +308,7 @@ $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 	}
 echo
 	'</div>',  // close #sidebar
-	'<a href="#" id="separator" title="Click here to open or close the sidebar"></a>'; //clickable element to open/close sidebar
+	'<a href="#" id="separator" title="', WT_I18N::translate('Click here to open or close the sidebar'), '"></a>'; //clickable element to open/close sidebar
 
 // =======================================footer and other items 
 echo '</div>', // close #main
