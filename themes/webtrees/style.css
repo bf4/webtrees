@@ -318,9 +318,6 @@ a:hover .nameZoom {
 	font: bold 14px tahoma, arial, helvetica, sans-serif;
 }
 
-.details1 {
-	font: normal 10px tahoma, arial, helvetica, sans-serif;
-}
 
 .name2 {
 	color: #333;
@@ -1484,10 +1481,6 @@ dd {
 	min-height:80px;
 }
 
-#sex {
-	margin-top: 3px;
-}
-
 #hitcounter {
 	clear: left;
 	margin-bottom:10px;
@@ -1811,4 +1804,31 @@ html[dir='rtl'] .deletelink {
 #header_accordion { float:left; min-width:400px; position:absolute; width:90%; z-index:80;}
 #indi_header {float:left; min-height:150px; width:90%; font-size: 1em;}
 .indi_table {clear:left;}
-#accordion_left, #accordion_right {float:left; width:48%; margin-right:2%;}
+#accordion_left {clear:left; float:left; width:48%; margin-right:2%;}
+
+#accordion_right {float:left; width:48%; margin-right:2%;}
+
+#sub_header {
+}
+
+#sex {
+	float:left;
+	width:32px;
+}
+
+#dates {
+   color: #555555;
+    font-size: 150%;
+    margin: 5px 0 10px 0;
+	float:left;
+}
+
+.details1 { } /* birth - death dates  */
+
+/* INDI IMAGE SPRITE */
+.male_gender, .female_gender, .unknown_gender
+{ display: block; background: url('images/indi_sprite.png') no-repeat; }
+
+.female_gender { background-position: -45px 0px; width: 32px; height: 32px; }
+.male_gender { background-position: -75px 0px; width: 32px; height: 32px; }
+.unknown_gender { background-position: -105px 0px; width: 32px; height: 32px; }

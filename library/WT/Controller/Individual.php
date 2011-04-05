@@ -335,7 +335,7 @@ class WT_Controller_Individual extends WT_Controller_Base {
 		for ($i=0; $i<$ct; $i++) {
 			echo '<div>';
 				$fact = trim($nmatch[$i][1]);
-				if (($fact!="SOUR")&&($fact!="NOTE")) {
+				if (($fact!="SOUR")&&($fact!="NOTE")&&($fact!="GIVN")&&($fact!="SURN")&&($fact!="SPFX")) {
 					echo '<dl><dt class="label">', WT_Gedcom_Tag::getLabel($fact, $this->indi), '</dt>';
 					echo '<dd class="field">';
 						if (isset($nmatch[$i][2])) {
@@ -378,27 +378,25 @@ class WT_Controller_Individual extends WT_Controller_Base {
 		$factrec = $event->getGedComRecord();
 		$sex = $event->getDetail();
 		if (empty($sex)) $sex = 'U';
-		echo '<div id="sex"';
+		echo '<span id="sex"';
 			if (strpos($factrec, "\nWT_OLD")!==false) {
 				echo ' class="namered"';
 			}
 			if (strpos($factrec, "\nWT_NEW")!==false) {
 				echo ' class="nameblue"';
 			}
-			echo '>';
-			echo '<dl><dt class="label">', WT_I18N::translate('Gender'), '</dt>';
-			echo '<dd class="field">';
 			switch ($sex) {
 			case 'M':
-				echo WT_I18N::translate('Male'), WT_Person::sexImage('M', 'small', '', WT_I18N::translate('Male'));
+				echo ' class="male_gender"';
 				break;
 			case 'F':
-				echo WT_I18N::translate('Female'), WT_Person::sexImage('F', 'small', '', WT_I18N::translate('Female'));
+				echo ' class="female_gender"';
 				break;
 			case 'U':
-				echo WT_I18N::translate_c('unknown gender', 'Unknown'), WT_Person::sexImage('U', 'small', '', WT_I18N::translate_c('unknown gender', 'Unknown'));
+				echo ' class="unknown_gender"';
 				break;
 			}
+			echo '>&nbsp;';
 			if ($this->SEX_COUNT>1) {
 				if ($this->indi->canEdit() && strpos($factrec, "\nWT_OLD")===false) {
 					if ($event->getLineNumber()=="new") {
@@ -409,13 +407,11 @@ class WT_Controller_Individual extends WT_Controller_Base {
 					}
 				}
 			}
-			echo '</dd>';
-			echo '</dl>';
 			// -- find sources
-			print_fact_sources($event->getGedComRecord(), 2);
+//			print_fact_sources($event->getGedComRecord(), 2);
 			//-- find the notes
 			print_fact_notes($event->getGedComRecord(), 2);
-		echo '</div>';
+		echo '</span>';
 	}
 	/**
 	* get edit menu

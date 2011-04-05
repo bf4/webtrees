@@ -118,9 +118,7 @@ define ('WT_ROOT', realpath(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR);
 $start_time=microtime(true);
 $PRIVACY_CHECKS=0;
 
-ini_set('arg_separator.output', '&amp;');
-ini_set('error_reporting', E_ALL | E_STRICT);
-ini_set('display_errors', '1');
+// We want to know about all PHP errors
 error_reporting(E_ALL | E_STRICT);
 
 // Invoke the Zend Framework Autoloader, so we can use Zend_XXXXX and WT_XXXXX classes
@@ -314,7 +312,7 @@ $cfg=array(
 // Search engines don't send cookies, and so create a new session with every visit.
 // Make sure they always use the same one
 if ($SEARCH_SPIDER) {
-	Zend_Session::setId('search_engine_'.$_SERVER['REMOTE_ADDR']);
+	Zend_Session::setId('search-engine-'.str_replace('.', '-', $_SERVER['REMOTE_ADDR']));
 }
 
 Zend_Session::start($cfg);

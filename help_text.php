@@ -1322,12 +1322,12 @@ case 'ALLOW_CHANGE_GEDCOM':
 	break;
 
 case 'ALLOW_EDIT_GEDCOM':
-	$title=WT_I18N::translate('Enable online editing');
+	$title=WT_I18N::translate('Online editing');
 	$text=WT_I18N::translate('This option enables online editing features for this database so that users with Edit privileges may update data online.');
 	break;
 
 case 'ALLOW_THEME_DROPDOWN':
-	$title=WT_I18N::translate('Display theme dropdown selector for theme changes');
+	$title=WT_I18N::translate('Theme dropdown selector for theme changes');
 	$text=WT_I18N::translate('Gives users the option of selecting their own theme from a menu.<br /><br />Even with this option set, the theme currently in effect may not provide for such a menu.  To be effective, this option requires the <b>Allow users to select their own theme</b> option to be set as well.');
 	break;
 
@@ -1337,7 +1337,7 @@ case 'ALLOW_USER_THEMES':
 	break;
 
 case 'AUTO_GENERATE_THUMBS':
-	$title=WT_I18N::translate('Automatically generated thumbnails');
+	$title=WT_I18N::translate('Automatically generate thumbnails');
 	$text=WT_I18N::translate('Should the system automatically generate thumbnails for images that do not have them.  Your PHP installation might not support this functionality.');
 	break;
 
@@ -1396,7 +1396,7 @@ case 'CONTACT_USER_ID':
 	break;
 
 case 'DEFAULT_PEDIGREE_GENERATIONS':
-	$title=WT_I18N::translate('Pedigree generations');
+	$title=WT_I18N::translate('Default pedigree generations');
 	$text=WT_I18N::translate('Set the default number of generations to display on Descendancy and Pedigree charts.');
 	break;
 
@@ -1411,7 +1411,7 @@ case 'DISPLAY_JEWISH_THOUSANDS':
 	break;
 
 case 'ENABLE_AUTOCOMPLETE':
-	$title=WT_I18N::translate('Enable autocomplete');
+	$title=WT_I18N::translate('Autocomplete');
 	$text=WT_I18N::translate('This option determines whether Autocomplete should be active while information is being entered into certain fields on input forms.  When this option is set to <b>Yes</b>, text input fields for which Autocomplete is possible are indicated by a differently colored background.<br /><br />When Autocomplete is active, <b>webtrees</b> will search its database for possible matches according to what you have already entered.  As you enter more information, the list of possible matches is refined.  When you see the desired input in the list of matches, you can move the mouse cursor to that line of the list and then click the left mouse button to complete the input.<br /><br />The disadvantages of Autocomplete are that it slows the program, entails significant database activity, and also results in more data being sent to the browser.');
 	break;
 
@@ -1471,12 +1471,12 @@ case 'GENERATE_GUID':
 	break;
 
 case 'HIDE_GEDCOM_ERRORS':
-	$title=WT_I18N::translate('Hide GEDCOM errors');
+	$title=WT_I18N::translate('GEDCOM errors');
 	$text=WT_I18N::translate('Many genealogy programs create GEDCOM files with custom tags, and <b>webtrees</b> understands most of them.  When unrecognised tags are found, this option lets you choose whether to ignore them or display a warning message.');
 	break;
 
 case 'HIDE_LIVE_PEOPLE':
-        $title=WT_I18N::translate('Enable privacy');
+        $title=WT_I18N::translate('Privacy options');
         $text=WT_I18N::translate('This option will enable all privacy settings and hide the details of living people, as defined or modified on the Privacy tab of each GEDCOM\'s configuration page.');
         $text .= '<p>';
 		$text .= WT_I18N::plural('Note: "living" is defined (if no death or burial is known) as ending %d year after birth or estimated birth.','Note: "living" is defined (if no death or burial is known) as ending %d years after birth or estimated birth.', get_gedcom_setting(WT_GED_ID, 'MAX_ALIVE_AGE'), get_gedcom_setting(WT_GED_ID, 'MAX_ALIVE_AGE'));
@@ -1513,7 +1513,7 @@ case 'INDI_FACTS_UNIQUE':
 	break;
 
 case 'KEEP_ALIVE':
-	$title=WT_I18N::translate('Apply living rules to recently deceased');
+	$title=WT_I18N::translate('Extend privacy to dead people');
 	$text=WT_I18N::translate('In some countries, privacy laws apply not only to living people, but also to those who have died recently.  This option will allow you to extend the privacy rules for living people to those who were born or died within a specified number of years.  Leave these values empty to disable this feature.');
 	break;
 
@@ -1570,8 +1570,19 @@ case 'MEDIA_DIRECTORY_LEVELS':
 	break;
 
 case 'MEDIA_DIRECTORY':
-	$title=WT_I18N::translate('Multimedia directory');
-	$text=WT_I18N::translate('The path to a readable and writable directory where <b>webtrees</b> should store media files (include the trailing "/").  <b>webtrees</b> does not require this directory\'s name to be "media".  You can choose any name you like.<br /><br />Even though the Media Firewall feature lets you store media files in an area of the server\'s file space that is not accessible from the Internet, the directory named here must still exist and must be readable from the Internet and writable by <b>webtrees</b>.  For more information, please refer to the Media Firewall configuration options in the Multimedia section of the GEDCOM configuration page.');
+	$MEDIA_DIRECTORY=get_gedcom_setting(WT_GED_ID, 'MEDIA_DIRECTORY');
+	$title=WT_I18N::translate('Media directory');
+	$text=
+		'<p>'.
+		/* I18N: %1$s is an example media directory, such as "media/", %2$s is an example URL, such as "http://localhost/webtrees/media/img123.jpg", and %3$s is an example file path, such as "/home/greg/public_html/webtrees/media/img123.jpg" */
+		WT_I18N::translate('The media directory is used to create URLs for your media items.  It is also the sub-directory in which the media items are stored.  For example, a media directory of %1$s will create URLs of the form %2$s and store these items as %3$s.', '<tt style="white-space:nowrap; color:#0000ff; font-weight:bold;">'.$MEDIA_DIRECTORY.'</tt>', '<tt style="white-space:nowrap; font-weight:bold;">'.WT_SERVER_NAME.WT_SCRIPT_PATH.'<span style="color:#0000ff;">'.$MEDIA_DIRECTORY.'</span>img123.jpg</tt>', '<tt style="white-space:nowrap; font-weight:bold;">'.WT_ROOT.'<span style="color:#0000ff;">'.$MEDIA_DIRECTORY.'</span>img123.jpg</tt>').
+		'</p><p>'.
+		/* I18N: %1$s and %2$s are both directory names */ WT_I18N::translate('If your server supports it, you can enable the media firewall.  This changes the location of the media directory from the public directory %1$s to a private directory such as %2$s.  This allows webtrees to apply privacy filtering to media items.', '<tt style="white-space:nowrap; font-weight:bold;">'.WT_ROOT.'<span style="color:#0000ff;">'.$MEDIA_DIRECTORY.'</span></tt>', '<tt style="white-space:nowrap; font-weight:bold;">'.WT_DATA_DIR.'<span style="color:#0000ff;">'.$MEDIA_DIRECTORY.'</span></tt>').
+		'</p><p>'.
+		/* I18N: %s is a directory name */ WT_I18N::translate('The media directory %s must exist, and the webserver must have read and write access to it.', '<tt style="white-space:nowrap; font-weight:bold;">'.WT_ROOT.'<span style="color:#0000ff;">'.$MEDIA_DIRECTORY.'</span></tt>').
+		'</p><p>'.
+		WT_I18N::translate('If two family trees share the same media directory, then they will be able to share media items.  If they use different media directories, then they will be able to use the same filename to access different media items.').
+		'</p>';
 	break;
 
 case 'MEDIA_EXTERNAL':
@@ -1627,7 +1638,7 @@ case 'NOTE_ID_PREFIX':
 	break;
 
 case 'PEDIGREE_FULL_DETAILS':
-	$title=WT_I18N::translate('Show birth and death details on charts');
+	$title=WT_I18N::translate('Birth and death details on charts');
 	$text=WT_I18N::translate('This option controls whether or not to show the Birth and Death details of an individual on charts.');
 	break;
 
@@ -1647,7 +1658,7 @@ case 'PEDIGREE_ROOT_ID':
 	break;
 
 case 'PEDIGREE_SHOW_GENDER':
-	$title=WT_I18N::translate('Show gender icon on charts');
+	$title=WT_I18N::translate('Gender icon on charts');
 	$text=WT_I18N::translate('This option controls whether or not to show the individual\'s gender icon on charts.<br /><br />Since the gender is also indicated by the color of the box, this option doesn\'t conceal the gender. The option simply removes some duplicate information from the box.');
 	break;
 
@@ -1797,12 +1808,12 @@ case 'SHOW_AGE_DIFF':
 	break;
 
 case 'SHOW_CONTEXT_HELP':
-	$title=WT_I18N::translate('Show contextual <b>?</b> help links');
+	$title=WT_I18N::translate('Contextual Help links');
 	$text=WT_I18N::translate('This option will enable links, identified by question marks, next to items on many pages.  These links allow users to get information or help about those items.');
 	break;
 
 case 'SHOW_COUNTER':
-	$title=WT_I18N::translate('Show hit counters');
+	$title=WT_I18N::translate('Hit counters');
 	$text=WT_I18N::translate('Show hit counters on Portal and Individual pages.');
 	break;
 
@@ -1812,12 +1823,12 @@ case 'SHOW_DEAD_PEOPLE':
 	break;
 
 case 'SHOW_EMPTY_BOXES':
-	$title=WT_I18N::translate('Show empty boxes on pedigree charts');
+	$title=WT_I18N::translate('Empty boxes on pedigree charts');
 	$text=WT_I18N::translate('This option controls whether or not to show empty boxes on Pedigree charts.');
 	break;
 
 case 'SHOW_EST_LIST_DATES':
-	$title=WT_I18N::translate('Show estimated dates for birth and death');
+	$title=WT_I18N::translate('Estimated dates for birth and death');
 	$text=WT_I18N::translate('This option controls whether or not to show estimated dates for birth and death instead of leaving blanks on individual lists and charts for individuals whose dates are not known.');
 	break;
 
@@ -1842,7 +1853,7 @@ case 'SHOW_LAST_CHANGE':
 	break;
 
 case 'SHOW_LDS_AT_GLANCE':
-	$title=WT_I18N::translate('Show LDS ordinance codes in chart boxes');
+	$title=WT_I18N::translate('LDS ordinance codes in chart boxes');
 	$text=WT_I18N::translate('Setting this option to <b>Yes</b> will show status codes for LDS ordinances in chart boxes.<ul><li><b>B</b> - Baptism</li><li><b>E</b> - Endowed</li><li><b>S</b> - Sealed to spouse</li><li><b>P</b> - Sealed to parents</li></ul>A person who has all of the ordinances done will have <b>BESP</b> printed after their name.  Missing ordinances are indicated by <b>_</b> in place of the corresponding letter code.  For example, <b>BE__</b> indicates missing <b>S</b> and <b>P</b> ordinances.');
 	break;
 
@@ -1907,7 +1918,7 @@ case 'SHOW_RELATIVES_EVENTS':
 	break;
 
 case 'SHOW_STATS':
-	$title=WT_I18N::translate('Show execution statistics');
+	$title=WT_I18N::translate('Execution statistics');
 	$text=WT_I18N::translate('Show runtime statistics and database queries at the bottom of every page.');
 	break;
 
@@ -1932,12 +1943,12 @@ case 'SOUR_FACTS_UNIQUE':
 	break;
 
 case 'SUBLIST_TRIGGER_F':
-	$title=WT_I18N::translate('Maximum number of family names');
+	$title=WT_I18N::translate('Maximum number of surnames on family list');
 	$text=WT_I18N::translate('Long lists of families with the same name can be broken into smaller sub-lists according to the first letter of the given name.<br /><br />This option determines when sub-listing of family names will occur.  To disable sub-listing completely, set this option to zero.');
 	break;
 
 case 'SUBLIST_TRIGGER_I':
-	$title=WT_I18N::translate('Maximum number of surnames');
+	$title=WT_I18N::translate('Maximum number of surnames on individual list');
 	$text=WT_I18N::translate('Long lists of persons with the same surname can be broken into smaller sub-lists according to the first letter of the individual\'s given name.<br /><br />This option determines when sub-listing of surnames will occur.  To disable sub-listing completely, set this option to zero.');
 	break;
 
@@ -1948,7 +1959,19 @@ case 'SURNAME_LIST_STYLE':
 
 case 'SURNAME_TRADITION':
 	$title=WT_I18N::translate('Surname tradition');
-	$text=WT_I18N::translate('When you add new members to a family, <b>webtrees</b> can supply default values for surnames according to regional custom.<br /><br /><ul><li>In the <b>Paternal</b> tradition, all family members share the father\'s surname.</li><li>In the <b>Spanish</b> and <b>Portuguese</b> tradition, children receive a surname from each parent.</li><li>In the <b>Icelandic</b> tradition, children receive their male parent\'s given name as a surname, with a suffix that denotes gender.</li><li>In the <b>Polish</b> tradition, all family members share the father\'s surname. For some surnames, the suffix indicates gender.  The suffixes <i>ski</i>, <i>cki</i>, and <i>dzki</i> indicate male, while the corresponding suffixes <i>ska</i>, <i>cka</i>, and <i>dzka</i> indicate female.</li></ul>');
+	$text=
+		WT_I18N::translate('When you add new members to a family, <b>webtrees</b> can supply default values for surnames according to regional custom.').
+		'<br /><br /><ul><li>'.
+		WT_I18N::translate('In the <b>Paternal</b> tradition, all family members share the father\'s surname.').
+		'</li><li>'.
+		WT_I18N::translate('In the <b>Spanish</b> and <b>Portuguese</b> tradition, children receive a surname from each parent.').
+		'</li><li>'.
+		WT_I18N::translate('In the <b>Icelandic</b> tradition, children receive their male parent\'s given name as a surname, with a suffix that denotes gender.').
+		'</li><li>'.
+		WT_I18N::translate('In the <b>Polish</b> tradition, all family members share the father\'s surname. For some surnames, the suffix indicates gender.  The suffixes <i>ski</i>, <i>cki</i>, <i>dzki</i>, and <i>żki</i> indicate male, while the corresponding suffixes <i>ska</i>, <i>cka</i>, <i>dzka</i>, and <i>żka</i> indicate female.').
+		'</li><li>'.
+		WT_I18N::translate('In the <b>Lithuanian</b> tradition, all family members share the fathers surname. For married females the suffix changes to <i>ienė</i>. While unmarried females suffixes depend on their faters suffix: <i>as</i>, <i>a</i>, <i>is</i>, <i>ys</i>, <i>ius</i> and <i>us</i> change to <i>aitė</i>, <i>aitė</i>, <i>ytė</i>, <i>ytė</i>, <i>iūtė</i> and <i>utė</i>.').
+		'</li></ul>';
 	break;
 
 case 'THEME':
@@ -1970,7 +1993,7 @@ case 'UNDERLINE_NAME_QUOTES':
 	break;
 
 case 'USE_GEONAMES':
-	$title=WT_I18N::translate('Use GeoNames database');
+	$title=WT_I18N::translate('Use GeoNames database for autocomplete on places');
 	$text=WT_I18N::translate('Should the GeoNames database be used to provide more suggestions for place names?<br /><br />When this option is set to <b>Yes</b>, the GeoNames database will be queried to supply suggestions for the place name being entered.  When set to <b>No</b>, only the current genealogical database will be searched.  As you enter more of the place name, the suggestion will become more precise.  This option can slow down data entry, particularly if your Internet connection is slow.<br /><br />The GeoNames geographical database is accessible free of charge. It currently contains over 8,000,000 geographical names.');
 	break;
 

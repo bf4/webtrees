@@ -138,6 +138,13 @@ html[dir='rtl'] .favorites_form {
 	color: #666;
 }
 
+/* sub-sub-menus */
+#topMenu ul ul ul {
+	z-index:2100;
+	top:0;
+	left:100px;
+}
+
 #topMenu ul ul li {
 	border: 0px;
 	left:auto;  /*resets the left:50% on the parent li */
@@ -165,7 +172,7 @@ html[dir='rtl'] .favorites_form {
 	color: black;
 }
 
-#topMenu ul li:hover ul {
+#topMenu ul li:hover > ul {
 	display: block;
 	text-align: left;
 	position: absolute;
@@ -428,7 +435,6 @@ table.center{
 }
 
 .details1 {
-	font: normal 10px tahoma, arial, helvetica, sans-serif;
 }
 
 .name2 {
@@ -1362,10 +1368,10 @@ dd {
 }
 
 #indi_name_details {
-	vertical-align:	top;
-	float: left;
-	margin: 10px 0 0 0;
-	width: 85%;
+	padding: 0;
+	margin: 0;
+	font-size:80%;
+	min-height:80px;
 }
 
 #indi_name_details a {
@@ -1379,9 +1385,6 @@ dd {
 }
 
 #nameparts1 {
-	float: left;
-	margin-right: 20px;
-	max-width:50%;
 }
 
 #nameparts2, #nameparts3, #nameparts4, #nameparts5, #nameparts6  {
@@ -1394,12 +1397,13 @@ dd {
 }
 
 #indi_facts {
-	float:left;
-	padding: 0 15px 0 0;
-	width: 45%;
+	padding: 0;
+	margin: 0;
+	font-size:80%;
+	min-height:80px;
 }
 
-#sex, #mainfacts {
+#mainfacts {
 	vertical-align:	top;
 }
 
@@ -1633,4 +1637,31 @@ html[dir='rtl'] .editlink, html[dir='rtl'] .copylink , html[dir='rtl'] .deleteli
 #header_accordion { float:left; min-width:400px; position:absolute; width:90%; z-index:80;}
 #indi_header {float:left; min-height:150px; width:90%; font-size: 1em;}
 .indi_table {clear:left;}
-#accordion_left, #accordion_right {float:left; width:48%; margin-right:2%;}
+#accordion_left {clear:left; float:left; width:48%; margin-right:2%;}
+
+#accordion_right {float:left; width:48%; margin-right:2%;}
+
+#sub_header {
+}
+
+#sex {
+	float:left;
+	width:32px;
+}
+
+#dates {
+   color: #555555;
+    font-size: 150%;
+    margin: 5px 0 10px 0;
+	float:left;
+}
+
+.details1 { } /* birth - death dates  */
+
+/* INDI IMAGE SPRITE */
+.male_gender, .female_gender, .unknown_gender
+{ display: block; background: url('images/indi_sprite.png') no-repeat; }
+
+.female_gender { background-position: -45px 0px; width: 32px; height: 32px; }
+.male_gender { background-position: -75px 0px; width: 32px; height: 32px; }
+.unknown_gender { background-position: -105px 0px; width: 32px; height: 32px; }

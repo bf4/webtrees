@@ -760,8 +760,6 @@ font-weight: bold;
 }
 
 .details1 {
-font-size: 10px;
-text-decoration:none;
 }
 
 .details2 {
@@ -1594,10 +1592,10 @@ margin: 0;
 }
 
 #indi_name_details {
-	vertical-align:	top;
-	float: left;
-	margin: 10px 0 0 0;
-	width: 85%;
+	padding: 0;
+	margin: 0;
+	font-size:80%;
+	min-height:80px;
 }
 
 #indi_name_details a {
@@ -1611,9 +1609,6 @@ margin: 0;
 }
 
 #nameparts1 {
-	float: left;
-	margin-right: 20px;
-	max-width:50%;
 }
 
 #nameparts2, #nameparts3, #nameparts4, #nameparts5, #nameparts6  {
@@ -1626,12 +1621,13 @@ margin: 0;
 }
 
 #indi_facts {
-	float:left;
-	padding: 3px 15px 0 0;
-	width: 45%;
+	padding: 0;
+	margin: 0;
+	font-size:80%;
+	min-height:80px;
 }
 
-#sex, #mainfacts {
+#mainfacts {
 	vertical-align:	top;
 }
 
@@ -1956,4 +1952,31 @@ html[dir='rtl'] .deletelink, html[dir='rtl'] deletelink  {
 #header_accordion { float:left; min-width:400px; position:absolute; width:90%; z-index:80;}
 #indi_header {float:left; min-height:150px; width:90%; font-size: 1em;}
 .indi_table {clear:left;}
-#accordion_left, #accordion_right {float:left; width:48%; margin-right:2%;}
+#accordion_left {clear:left; float:left; width:48%; margin-right:2%;}
+
+#accordion_right {float:left; width:48%; margin-right:2%;}
+
+#sub_header {
+}
+
+#sex {
+	float:left;
+	width:32px;
+}
+
+#dates {
+   color: #555555;
+    font-size: 150%;
+    margin: 5px 0 10px 0;
+	float:left;
+}
+
+.details1 { } /* birth - death dates  */
+
+/* INDI IMAGE SPRITE */
+.male_gender, .female_gender, .unknown_gender
+{ display: block; background: url('images/indi_sprite.png') no-repeat; }
+
+.female_gender { background-position: -45px 0px; width: 32px; height: 32px; }
+.male_gender { background-position: -75px 0px; width: 32px; height: 32px; }
+.unknown_gender { background-position: -105px 0px; width: 32px; height: 32px; }

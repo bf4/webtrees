@@ -161,6 +161,17 @@ html[dir='rtl'] .makeMenu li ul {
 	right:0px;
 }
 
+/* position sub-sub-menus */
+.makeMenu ul ul {
+	top:0;
+	left:100px;
+}
+html[dir='rtl'] .makeMenu ul ul {
+	top:0;
+	left:auto;
+	right:100px;
+}
+
 .makeMenu li ul li {
 	display:block;
 	text-align:left;
@@ -176,14 +187,14 @@ html[dir='rtl'] .makeMenu li ul li {
 	padding:1px;
 }
 
-.makeMenu li:hover ul {
+.makeMenu li:hover > ul {
 	display:block;
 }
 
 .makeMenu ul li a {
-    background-color: #EEE;
+	background-color: #EEE;
 	padding: 0px 5px 0px 2px;
-    display: block;
+	display: block;
 }
 
 .makeMenu ul li a:hover  {
@@ -951,10 +962,10 @@ dd {
 }
 
 #indi_name_details {
-	vertical-align:	top;
-	float: left;
-	margin: 10px 0 0 0;
-	width: 85%;
+	padding: 0;
+	margin: 0;
+	font-size:80%;
+	min-height:80px;
 }
 
 #indi_name_details a {
@@ -968,9 +979,6 @@ dd {
 }
 
 #nameparts1 {
-	float: left;
-	margin-right: 20px;
-	max-width:50%;
 }
 
 #nameparts2, #nameparts3, #nameparts4, #nameparts5, #nameparts6  {
@@ -983,12 +991,13 @@ dd {
 }
 
 #indi_facts {
-	float:left;
-	padding: 3px 15px 0 0;
-	width: 45%;
+	padding: 0;
+	margin: 0;
+	font-size:80%;
+	min-height:80px;
 }
 
-#sex, #mainfacts {
+#mainfacts {
 	vertical-align:	top;
 }
 
@@ -1238,4 +1247,31 @@ html[dir='rtl'] .deletelink, html[dir='rtl'] deletelink  {
 #header_accordion { float:left; min-width:400px; position:absolute; width:90%; z-index:80;}
 #indi_header {float:left; min-height:150px; width:90%; font-size: 1em;}
 .indi_table {clear:left;}
-#accordion_left, #accordion_right {float:left; width:48%; margin-right:2%;}
+#accordion_left {clear:left; float:left; width:48%; margin-right:2%;}
+
+#accordion_right {float:left; width:48%; margin-right:2%;}
+
+#sub_header {
+}
+
+#sex {
+	float:left;
+	width:32px;
+}
+
+#dates {
+   color: #555555;
+    font-size: 150%;
+    margin: 5px 0 10px 0;
+	float:left;
+}
+
+.details1 { } /* birth - death dates  */
+
+/* INDI IMAGE SPRITE */
+.male_gender, .female_gender, .unknown_gender
+{ display: block; background: url('images/indi_sprite.png') no-repeat; }
+
+.female_gender { background-position: -45px 0px; width: 32px; height: 32px; }
+.male_gender { background-position: -75px 0px; width: 32px; height: 32px; }
+.unknown_gender { background-position: -105px 0px; width: 32px; height: 32px; }
